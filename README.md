@@ -16,7 +16,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org)
-[![Vue](https://img.shields.io/badge/Vue-3.4+-green.svg)](https://vuejs.org)
+[![React](https://img.shields.io/badge/React-18+-61DAFB.svg)](https://reactjs.org)
+[![Vite](https://img.shields.io/badge/Vite-5.4-646CFF.svg)](https://vitejs.dev)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-brightgreen.svg)](https://nodejs.org)
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
 [![GitHub Stars](https://img.shields.io/github/stars/YYC-Cube/yyc3-catering-platform?style=social)](https://github.com/YYC-Cube/yyc3-catering-platform)
@@ -82,7 +83,7 @@ YYC³餐饮行业智能化平台是一个面向现代餐饮企业的全栈智能
 
 - **Node.js**：18+
 - **TypeScript**：5.0+
-- **Bun**：1.0+ (推荐)
+- **npm**：9.0+ 或 **pnpm**：8.0+ (推荐)
 - **PostgreSQL**：13+
 - **Redis**：6.0+
 - **Git**：2.30+
@@ -94,8 +95,9 @@ YYC³餐饮行业智能化平台是一个面向现代餐饮企业的全栈智能
 git clone https://github.com/YYC-Cube/yyc3-catering-platform.git
 cd yyc3-catering-platform
 
-# 安装依赖（推荐使用Bun）
-bun install
+# 安装依赖（推荐使用pnpm）
+cd ui
+pnpm install
 
 # 或使用npm
 npm install
@@ -105,16 +107,16 @@ cp .env.example .env
 # 编辑 .env 文件，填入必要的配置
 
 # 启动开发服务器
-bun run dev:all
+pnpm run dev
 
-# 或分别启动
-bun run dev:frontend  # 前端服务 (端口: 3100)
-bun run dev:backend   # 后端服务 (端口: 3000)
+# 或使用npm
+npm run dev
 ```
 
 ### 访问应用
 
-- **管理后台**：<http://localhost:3100>
+- **UI演示页面**：<http://localhost:5173>
+- **组件演示**：<http://localhost:5173/demos>
 - **API文档**：<http://localhost:3000/api-docs>
 - **健康检查**：<http://localhost:3000/health>
 
@@ -185,12 +187,14 @@ bun run dev:backend   # 后端服务 (端口: 3000)
 
 ### 前端技术栈
 
-- **框架**：Vue 3.4 + TypeScript 5.3
-- **UI库**：Element Plus 2.4 + @element-plus/icons-vue
-- **图表**：ECharts 5.4 + vue-echarts 6.6
-- **状态管理**：Pinia 2.1
-- **路由**：Vue Router 4.2
-- **构建工具**：Vite 5.4 + Bun 1.0
+- **框架**：React 18+ + TypeScript 5.3+
+- **构建工具**：Vite 5.4+
+- **UI组件库**：自定义组件系统（YUButton、YUTable、YUAvatar等）
+- **状态管理**：React Hooks + Context API
+- **路由**：React Router 6+
+- **样式方案**：CSS Modules + Tailwind CSS（可选）
+- **图表库**：ECharts 5.4+
+- **测试框架**：Vitest + @testing-library/react + @testing-library/jest-dom
 - **开发工具**：ESLint + Prettier + TypeScript
 
 ### 后端技术栈
@@ -225,13 +229,30 @@ bun run dev:backend   # 后端服务 (端口: 3000)
 
 ```
 yyc3-catering-platform/
-├── frontend/                      # 前端应用目录
-│   ├── apps/
-│   │   ├── admin-dashboard/     # 管理后台应用
-│   │   ├── staff-app/           # 员工端应用
-│   │   └── customer-app/        # 顾客端应用
-│   └── packages/
-│       └── ui-system/           # UI组件库
+├── ui/                            # React前端应用
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/        # 核心UI组件
+│   │   │   │   ├── YUButton.tsx   # 按钮组件
+│   │   │   │   ├── YUTable.tsx    # 表格组件
+│   │   │   │   ├── YUAvatar.tsx   # 头像组件
+│   │   │   │   ├── YUInput.tsx    # 输入框组件
+│   │   │   │   └── ...            # 其他组件
+│   │   │   ├── demos/             # 业务演示页面
+│   │   │   │   ├── DemoIndex.tsx  # 演示中心
+│   │   │   │   ├── OrderManagementDemo.tsx  # 订单管理演示
+│   │   │   │   └── MenuManagementDemo.tsx    # 菜单管理演示
+│   │   │   ├── CustomerMenuPage.tsx  # 顾客菜单页面
+│   │   │   └── ComponentShowcase.tsx  # 组件展示页面
+│   │   ├── styles/                # 全局样式
+│   │   ├── types/                 # TypeScript类型定义
+│   │   └── __tests__/             # 测试文件
+│   │       └── components/        # 组件测试
+│   ├── public/                    # 静态资源
+│   ├── package.json               # 前端依赖配置
+│   ├── vite.config.ts             # Vite配置
+│   ├── vitest.config.ts           # Vitest测试配置
+│   └── vitest.setup.ts            # 测试环境设置
 ├── backend/                       # 后端服务目录
 │   ├── api-gateway/              # API网关服务
 │   ├── services/                 # 微服务集群
@@ -252,6 +273,9 @@ yyc3-catering-platform/
 │   │   ├── systems/              # 智能系统目录
 │   │   └── utils/                # 工具函数目录
 ├── docs/                          # 文档目录
+│   ├── YYC3-CP-设计文档/         # 设计文档
+│   │   ├── UI设计与业务功能融合可视化展示.md
+│   │   └── UI交互体验演示文档.md
 │   ├── api/                       # API文档目录
 │   ├── YYC3-Cater-Platform-文档闭环/  # 项目文档
 │   └── 智枢服务化平台/            # 服务化平台文档
@@ -261,7 +285,6 @@ yyc3-catering-platform/
 ├── docker-compose.yaml            # Docker编排文件
 ├── package.json                   # 项目配置文件
 ├── tsconfig.json                  # TypeScript配置文件
-├── vitest.config.ts               # 测试配置文件
 └── README.md                      # 项目说明文件
 ```
 
@@ -273,22 +296,25 @@ yyc3-catering-platform/
 
 | 模块 | 完成度 | 状态 |
 |------|--------|------|
-| **前端应用** | 90% | ✅ 基础功能完整 |
+| **前端应用** | 95% | ✅ 核心功能完整 |
 | **后端服务** | 100% | ✅ 核心架构完整 |
 | **AI集成** | 100% | ✅ 多模型支持 |
 | **数据库** | 100% | ✅ 企业级架构 |
+| **测试框架** | 100% | ✅ 测试环境完整 |
 | **部署配置** | 0% | ❌ 待开发 |
-| **测试框架** | 0% | ❌ 待开发 |
 
 ### 已完成核心组件
 
-#### 前端组件 (19个Vue文件)
+#### 前端组件（React + TypeScript）
 
-- ✅ 管理后台：Dashboard、Login、布局组件、图表组件、通用组件
-- ✅ 员工端：基础框架、订单状态管理
-- ✅ 顾客端：基础用户功能
+- ✅ **核心UI组件**：YUButton、YUTable、YUAvatar、YUInput、YUSelect、YUTag、YUBadge等
+- ✅ **业务演示页面**：订单管理演示、菜单管理演示、演示中心
+- ✅ **测试覆盖**：45个测试用例全部通过（YUButton 18个、YUTable 27个）
+- ✅ **主题系统**：模块化主题配色（海洋蓝、紫罗兰、翡翠绿、珊瑚橙等）
+- ✅ **响应式设计**：移动端、平板、桌面端适配
+- ✅ **交互体验**：加载状态、悬停效果、过渡动画
 
-#### 后端组件 (32个TypeScript文件)
+#### 后端组件（32个TypeScript文件）
 
 - ✅ API网关：认证、授权、限流、日志、多租户
 - ✅ 智能代理核心：AgenticCore、GoalManager、ActionPlanner
@@ -300,8 +326,8 @@ yyc3-catering-platform/
 #### 🔴 高优先级 (立即处理)
 
 1. **Docker部署配置** - 创建Dockerfile + docker-compose.yml
-2. **前端应用完善** - 补全员工端业务组件和路由配置
-3. **测试框架建设** - 集成Jest + 编写测试用例
+2. **业务页面开发** - 基于演示页面开发实际业务功能
+3. **API集成** - 前后端API对接
 
 #### 🟠 中优先级 (1个月内)
 
@@ -325,25 +351,27 @@ yyc3-catering-platform/
 git clone https://github.com/YYC-Cube/yyc3-catering-platform.git
 cd yyc3-catering-platform
 
-# 2. 安装依赖
-bun install
+# 2. 安装前端依赖
+cd ui
+pnpm install
 
 # 3. 配置环境变量
 cp .env.example .env
 vim .env
 
-# 4. 初始化数据库
-bun run db:migrate
+# 4. 启动前端开发服务器
+pnpm run dev
 
-# 5. 启动开发服务器
-bun run dev:all
+# 5. 运行测试
+pnpm run test
 ```
 
 ### 生产环境部署
 
 ```bash
 # 1. 构建生产版本
-bun run build
+cd ui
+pnpm run build
 
 # 2. 使用Docker部署
 docker-compose -f docker-compose.prod.yml up -d
@@ -370,6 +398,11 @@ curl http://localhost:3001/api/knowledge-base/health
 ---
 
 ## 📖 文档
+
+### 设计文档
+
+- [UI设计与业务功能融合可视化展示](./docs/YYC3-CP-设计文档/UI设计与业务功能融合可视化展示.md) - 业务模块架构、组件映射、页面布局示例
+- [UI交互体验演示文档](./docs/YYC3-CP-设计文档/UI交互体验演示文档.md) - 交互状态、动画效果、响应式设计、可访问性
 
 ### 项目文档
 

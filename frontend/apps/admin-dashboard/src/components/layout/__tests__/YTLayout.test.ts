@@ -39,7 +39,7 @@ describe('YTLayout', () => {
   })
 
   const createWrapper = (options: any = {}) => {
-    return createWrapper(, {
+    return mount(YTLayout, {
       global: {
         plugins: [router],
         stubs: {

@@ -41,6 +41,17 @@ export class ExportController {
     try {
       const { format, filters }: ExportRequest = req.body;
       
+      // SECURITY FIX: Validate format parameter
+      const allowedFormats = ['excel', 'pdf', 'csv'];
+      if (!format || !allowedFormats.includes(format)) {
+        return res.status(400).json({
+          success: false,
+          data: null,
+          message: 'Invalid export format. Allowed formats: excel, pdf, csv',
+          timestamp: Date.now()
+        });
+      }
+      
       // 获取订单数据
       const orderQueue = await this.orderService.getOrderQueue('', 'all', 10000, 0);
       
@@ -52,32 +63,37 @@ export class ExportController {
       let contentType: string;
       let filename: string;
       
+      // SECURITY FIX: Generate safe filename with sanitization
+      const timestamp = Date.now();
+      const safeFilename = this.generateSafeFilename(timestamp, format);
+      
       switch (format) {
         case 'excel':
           exportData = this.generateExcelData(orderQueue.orders, dishes);
           contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-          filename = `dashboard-export-${Date.now()}.xlsx`;
+          filename = `${safeFilename}.xlsx`;
           break;
           
         case 'pdf':
           exportData = this.generatePdfData(orderQueue.orders, dishes);
           contentType = 'application/pdf';
-          filename = `dashboard-export-${Date.now()}.pdf`;
+          filename = `${safeFilename}.pdf`;
           break;
           
         case 'csv':
           exportData = this.generateCsvData(orderQueue.orders, dishes);
           contentType = 'text/csv';
-          filename = `dashboard-export-${Date.now()}.csv`;
+          filename = `${safeFilename}.csv`;
           break;
           
         default:
           throw new Error('不支持的导出格式');
       }
       
-      // 设置响应头
+      // SECURITY FIX: Properly escape filename in Content-Disposition header
+      const escapedFilename = filename.replace(/["\\]/g, '\\$&');
       res.setHeader('Content-Type', contentType);
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Disposition', `attachment; filename="${escapedFilename}"`);
       
       // 返回导出数据
       res.send(exportData);
@@ -91,6 +107,15 @@ export class ExportController {
         timestamp: Date.now()
       });
     }
+  }
+
+  /**
+   * SECURITY: Generate safe filename to prevent directory traversal
+   */
+  private generateSafeFilename(timestamp: number, format: string): string {
+    // Only allow alphanumeric characters and hyphens
+    const safeFormat = format.replace(/[^a-z0-9-]/gi, '');
+    return `dashboard-export-${timestamp}-${safeFormat}`;
   }
 
   private generateExcelData(orders: any[], dishes: any[]) {

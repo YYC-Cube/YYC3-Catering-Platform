@@ -67,8 +67,14 @@ app.use(helmet()); // 安全中间件
 app.use(requestLogger);
 
 // CORS配置
+// SECURITY FIX: Use specific origins instead of wildcard
+const corsOrigin = process.env.CORS_ORIGIN;
+if (!corsOrigin) {
+  logger.warn('CORS_ORIGIN not set, defaulting to localhost - this is insecure for production!');
+}
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || '*',
+  origin: corsOrigin ? corsOrigin.split(',').map(o => o.trim()) : ['http://localhost:3000', 'http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,

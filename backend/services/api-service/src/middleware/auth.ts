@@ -8,6 +8,7 @@
  * @license MIT
  */
 
+import jwt from 'jsonwebtoken';
 import { dbManager } from '../config/database';
 
 // JWT相关接口定义
@@ -49,7 +50,13 @@ export class AuthenticationMiddleware {
   private jwtExpiresIn: string;
 
   constructor() {
-    this.jwtSecret = process.env.JWT_SECRET || 'yyc3-super-secret-jwt-key-for-api-service-2025';
+    // SECURITY FIX: Require JWT_SECRET to be set in environment
+    // Remove hardcoded fallback secret
+    const secret = process.env.JWT_SECRET;
+    if (!secret || secret.length < 32) {
+      throw new Error('JWT_SECRET environment variable must be set with at least 32 characters');
+    }
+    this.jwtSecret = secret;
     this.jwtExpiresIn = process.env.JWT_EXPIRES_IN || '24h';
   }
 
@@ -57,26 +64,12 @@ export class AuthenticationMiddleware {
    * 生成JWT令牌
    */
   public generateToken(payload: Omit<JWTPayload, 'iat' | 'exp'>): string {
-    const header = {
-      alg: 'HS256',
-      typ: 'JWT'
-    };
-
-    const now = Math.floor(Date.now() / 1000);
-    const payloadWithTime = {
-      ...payload,
-      iat: now,
-      exp: now + (24 * 60 * 60) // 24小时后过期
-    };
-
-    // 简单的JWT实现（生产环境建议使用专业库）
-    const encodedHeader = this.base64UrlEncode(JSON.stringify(header));
-    const encodedPayload = this.base64UrlEncode(JSON.stringify(payloadWithTime));
-
-    const signature = this.hmacSha256(`${encodedHeader}.${encodedPayload}`, this.jwtSecret);
-    const encodedSignature = this.base64UrlEncode(signature);
-
-    return `${encodedHeader}.${encodedPayload}.${encodedSignature}`;
+    // SECURITY FIX: Use jsonwebtoken library instead of custom implementation
+    return jwt.sign(payload, this.jwtSecret, {
+      expiresIn: this.jwtExpiresIn,
+      issuer: 'yyc3-catering-platform',
+      audience: 'yyc3-api'
+    });
   }
 
   /**
@@ -103,39 +96,28 @@ export class AuthenticationMiddleware {
         };
       }
 
-      const parts = cleanToken.split('.');
-      if (parts.length !== 3) {
-        return {
-          success: false,
-          error: '无效的身份验证令牌结构',
-          code: 'INVALID_TOKEN_STRUCTURE'
-        };
-      }
-
-      const [header, payload, signature] = parts;
-
-      // 验证签名
-      const expectedSignature = this.hmacSha256(`${header}.${payload}`, this.jwtSecret);
-      const expectedEncodedSignature = this.base64UrlEncode(expectedSignature);
-
-      if (signature !== expectedEncodedSignature) {
-        return {
-          success: false,
-          error: '无效的身份验证签名',
-          code: 'INVALID_SIGNATURE'
-        };
-      }
-
-      // 解码载荷
-      const decodedPayload = JSON.parse(this.base64UrlDecode(payload));
-
-      // 检查过期时间
-      if (decodedPayload.exp && decodedPayload.exp < Math.floor(Date.now() / 1000)) {
-        return {
-          success: false,
-          error: '身份验证令牌已过期',
-          code: 'TOKEN_EXPIRED'
-        };
+      // SECURITY FIX: Use jsonwebtoken library for secure verification
+      let decodedPayload: JWTPayload;
+      try {
+        decodedPayload = jwt.verify(cleanToken, this.jwtSecret, {
+          issuer: 'yyc3-catering-platform',
+          audience: 'yyc3-api'
+        }) as JWTPayload;
+      } catch (jwtError: any) {
+        if (jwtError.name === 'TokenExpiredError') {
+          return {
+            success: false,
+            error: '身份验证令牌已过期',
+            code: 'TOKEN_EXPIRED'
+          };
+        } else if (jwtError.name === 'JsonWebTokenError') {
+          return {
+            success: false,
+            error: '无效的身份验证签名',
+            code: 'INVALID_SIGNATURE'
+          };
+        }
+        throw jwtError;
       }
 
       // 从数据库验证用户
@@ -367,35 +349,6 @@ export class AuthenticationMiddleware {
     }
 
     return new Response(null, { status: 200 });
-  }
-
-  // 工具方法
-
-  /**
-   * Base64URL编码
-   */
-  private base64UrlEncode(str: string): string {
-    return Buffer.from(str)
-      .toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '');
-  }
-
-  /**
-   * Base64URL解码
-   */
-  private base64UrlDecode(str: string): string {
-    str += '='.repeat((4 - str.length % 4) % 4);
-    return Buffer.from(str.replace(/\-/g, '+').replace(/_/g, '/'), 'base64').toString();
-  }
-
-  /**
-   * HMAC-SHA256签名
-   */
-  private hmacSha256(data: string, secret: string): string {
-    const crypto = require('crypto');
-    return crypto.createHmac('sha256', secret).update(data).digest('hex');
   }
 }
 

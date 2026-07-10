@@ -40,10 +40,7 @@
               <div class="stat-label">总订单数</div>
             </div>
             <div class="stat-progress">
-              <el-progress
-                :percentage="orderProgress"
-                :color="getProgressColor(orderProgress)"
-              />
+              <el-progress :percentage="orderProgress" :color="getProgressColor(orderProgress)" />
             </div>
           </el-card>
         </el-col>
@@ -96,16 +93,8 @@
     <div class="today-tasks">
       <el-card title="今日任务">
         <div class="task-list">
-          <div
-            v-for="task in todayTasks"
-            :key="task.id"
-            class="task-item"
-            :class="{ 'completed': task.completed }"
-          >
-            <el-checkbox
-              v-model="task.completed"
-              @change="updateTaskStatus(task)"
-            >
+          <div v-for="task in todayTasks" :key="task.id" class="task-item" :class="{ completed: task.completed }">
+            <el-checkbox v-model="task.completed" @change="updateTaskStatus(task)">
               {{ task.title }}
             </el-checkbox>
             <el-tag :type="task.priority === 'high' ? 'danger' : 'info'" size="small">
@@ -119,176 +108,176 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import { ElMessage } from 'element-plus'
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
+import { ElMessage } from 'element-plus';
 
 interface QuickAction {
-  name: string
-  icon: string
-  color: string
-  route: string
-  count?: number
+  name: string;
+  icon: string;
+  color: string;
+  route: string;
+  count?: number;
 }
 
 interface TodayStats {
-  orders: number
-  completed: number
-  pending: number
-  rating: number
-  reviews: number
+  orders: number;
+  completed: number;
+  pending: number;
+  rating: number;
+  reviews: number;
 }
 
 interface Activity {
-  id: string
-  description: string
-  timestamp: string
-  type: 'primary' | 'success' | 'warning' | 'danger'
+  id: string;
+  description: string;
+  timestamp: string;
+  type: 'primary' | 'success' | 'warning' | 'danger';
 }
 
 interface Task {
-  id: string
-  title: string
-  completed: boolean
-  priority: 'high' | 'normal'
+  id: string;
+  title: string;
+  completed: boolean;
+  priority: 'high' | 'normal';
 }
 
-const router = useRouter()
-const authStore = useAuthStore()
+const router = useRouter();
+const authStore = useAuthStore();
 
 // 响应式数据
-const currentTime = ref(new Date().toLocaleString())
+const currentTime = ref(new Date().toLocaleString());
 const quickActions = ref<QuickAction[]>([
   {
     name: '接单',
     icon: 'Plus',
     color: '#67c23a',
     route: '/orders',
-    count: 3
+    count: 3,
   },
   {
     name: '厨房',
     icon: 'KnifeAndSpoon',
     color: '#e6a23c',
-    route: '/kitchen'
+    route: '/kitchen',
   },
   {
     name: '预约',
     icon: 'Calendar',
     color: '#409eff',
     route: '/reservations',
-    count: 2
+    count: 2,
   },
   {
     name: '客服',
     icon: 'Service',
     color: '#f56c6c',
-    route: '/customer-service'
+    route: '/customer-service',
   },
   {
     name: '库存',
     icon: 'Box',
     color: '#909399',
-    route: '/inventory'
+    route: '/inventory',
   },
   {
     name: '报表',
     icon: 'DataAnalysis',
     color: '#67c23a',
-    route: '/reports'
-  }
-])
+    route: '/reports',
+  },
+]);
 
 const todayStats = ref<TodayStats>({
   orders: 0,
   completed: 0,
   pending: 0,
   rating: 0,
-  reviews: 0
-})
+  reviews: 0,
+});
 
 const recentActivities = ref<Activity[]>([
   {
     id: '1',
     description: '新订单 #12345 需要处理',
     timestamp: '5分钟前',
-    type: 'warning'
+    type: 'warning',
   },
   {
     id: '2',
     description: '桌号 A12 客户已入座',
     timestamp: '10分钟前',
-    type: 'success'
+    type: 'success',
   },
   {
     id: '3',
     description: '厨房完成订单 #12343',
     timestamp: '15分钟前',
-    type: 'primary'
+    type: 'primary',
   },
   {
     id: '4',
     description: '客户投诉需要处理',
     timestamp: '30分钟前',
-    type: 'danger'
-  }
-])
+    type: 'danger',
+  },
+]);
 
 const todayTasks = ref<Task[]>([
   {
     id: '1',
     title: '检查今日预订情况',
     completed: false,
-    priority: 'high'
+    priority: 'high',
   },
   {
     id: '2',
     title: '更新菜单价格',
     completed: false,
-    priority: 'normal'
+    priority: 'normal',
   },
   {
     id: '3',
     title: '盘点厨房库存',
     completed: false,
-    priority: 'high'
+    priority: 'high',
   },
   {
     id: '4',
     title: '准备明日采购清单',
     completed: false,
-    priority: 'normal'
-  }
-])
+    priority: 'normal',
+  },
+]);
 
 // 计算属性
-const currentUser = computed(() => authStore.user)
+const currentUser = computed(() => authStore.user);
 
 const orderProgress = computed(() => {
-  const total = todayStats.value.orders
-  const completed = todayStats.value.completed
-  return total > 0 ? Math.round((completed / total) * 100) : 0
-})
+  const total = todayStats.value.orders;
+  const completed = todayStats.value.completed;
+  return total > 0 ? Math.round((completed / total) * 100) : 0;
+});
 
 // 方法
 const handleQuickAction = (action: QuickAction) => {
-  router.push(action.route)
-}
+  router.push(action.route);
+};
 
 const getProgressColor = (percentage: number): string => {
-  if (percentage >= 80) return '#67c23a'
-  if (percentage >= 60) return '#e6a23c'
-  return '#f56c6c'
-}
+  if (percentage >= 80) return '#67c23a';
+  if (percentage >= 60) return '#e6a23c';
+  return '#f56c6c';
+};
 
 const updateTaskStatus = (task: Task) => {
-  ElMessage.success(`任务"${task.title}"状态已更新`)
-}
+  ElMessage.success(`任务"${task.title}"状态已更新`);
+};
 
 const updateCurrentTime = () => {
-  currentTime.value = new Date().toLocaleString()
-}
+  currentTime.value = new Date().toLocaleString();
+};
 
 const loadTodayStats = async () => {
   try {
@@ -299,28 +288,28 @@ const loadTodayStats = async () => {
         completed: 38,
         pending: 7,
         rating: 4.6,
-        reviews: 23
-      }
-    }, 1000)
+        reviews: 23,
+      };
+    }, 1000);
   } catch (error) {
-    console.error('Failed to load today stats:', error)
+    console.error('Failed to load today stats:', error);
   }
-}
+};
 
 // 生命周期
-let timeInterval: NodeJS.Timeout
+let timeInterval: NodeJS.Timeout;
 
 onMounted(() => {
-  updateCurrentTime()
-  timeInterval = setInterval(updateCurrentTime, 1000)
-  loadTodayStats()
-})
+  updateCurrentTime();
+  timeInterval = setInterval(updateCurrentTime, 1000);
+  loadTodayStats();
+});
 
 onUnmounted(() => {
   if (timeInterval) {
-    clearInterval(timeInterval)
+    clearInterval(timeInterval);
   }
-})
+});
 </script>
 
 <style lang="scss" scoped>

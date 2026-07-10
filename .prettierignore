@@ -1,0 +1,9 @@
+# 排除非源代码目录(避免格式化基础设施配置/构建产物)
+grafana/
+infra/
+helm/
+archive/
+dist/
+coverage/
+node_modules/
+pnpm-lock.yaml

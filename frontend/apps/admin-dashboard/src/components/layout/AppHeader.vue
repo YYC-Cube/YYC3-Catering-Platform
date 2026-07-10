@@ -117,8 +117,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { useNavigationState } from '@/composables/useNavigationState'
 import { useShortcuts } from '@/composables/useShortcuts'
-import BreadcrumbNavigation from '@/components/common/BreadcrumbNavigation.vue'
-import ShortcutHelp from '@/components/common/ShortcutHelp.vue'
+import BreadcrumbNavigation from '@/components/Common/BreadcrumbNavigation.vue'
+import ShortcutHelp from '@/components/Common/ShortcutHelp.vue'
 
 interface User {
   id: string

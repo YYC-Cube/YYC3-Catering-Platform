@@ -11,7 +11,7 @@
     "dev:backend": "pnpm --filter yyc3-catering-api-service dev",
     "dev:all": "concurrently \"pnpm dev:admin\" \"pnpm dev:customer\" \"pnpm dev:staff\" \"pnpm dev:backend\"",
     "build": "pnpm build:frontend && pnpm build:backend",
-    "build:frontend": "pnpm --filter \"frontend/*\" build",
+    "build:frontend": "pnpm --filter \"./frontend/apps/*\" build",
     "build:backend": "pnpm --filter \"backend/services/*\" build",
     "preview": "pnpm --filter @yyc3/admin-dashboard preview",
     "test": "pnpm test:unit && pnpm test:integration",

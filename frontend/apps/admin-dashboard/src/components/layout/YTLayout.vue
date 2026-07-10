@@ -138,9 +138,9 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import NavigationLoader from '@/components/common/NavigationLoader.vue'
-import NavigationErrorAlert from '@/components/common/NavigationErrorAlert.vue'
-import NavigationProgressBar from '@/components/common/NavigationProgressBar.vue'
+import NavigationLoader from '@/components/Common/NavigationLoader.vue'
+import NavigationErrorAlert from '@/components/Common/NavigationErrorAlert.vue'
+import NavigationProgressBar from '@/components/Common/NavigationProgressBar.vue'
 import { useNavigationState } from '@/composables/useNavigationState'
 
 interface Props {

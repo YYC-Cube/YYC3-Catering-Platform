@@ -5,11 +5,11 @@ on:
   push:
     branches: [main, develop, feature/*]
     paths:
-      - 'backend/gateway/**'
+      - "backend/gateway/**"
   pull_request:
     branches: [main, develop]
     paths:
-      - 'backend/gateway/**'
+      - "backend/gateway/**"
 
 env:
   NODE_ENV: test
@@ -81,7 +81,7 @@ jobs:
         run: bun run test:coverage
 
       - name: Run SonarQube analysis
-        uses: SonarSource/sonarqube-scan-action@v1
+        uses: SonarSource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -89,7 +89,7 @@ jobs:
           projectBaseDir: ./backend/gateway
 
       - name: Wait for Quality Gate
-        uses: SonarSource/sonarqube-quality-gate-action@v1
+        uses: SonarSource/sonarqube-quality-gate-action@master
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -187,14 +187,14 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ steps.build.outputs.digest }}
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+          format: "sarif"
+          output: "trivy-results.sarif"
 
       - name: Upload Trivy scan results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: "trivy-results.sarif"
 
   # 集成测试
   integration-test:
@@ -298,7 +298,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          channel: '#deployments'
+          channel: "#deployments"
           webhook_url: ${{ secrets.SLACK_WEBHOOK }}
           message: |
             YYC³ Gateway deployed to staging
@@ -343,7 +343,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          channel: '#deployments'
+          channel: "#deployments"
           webhook_url: ${{ secrets.SLACK_WEBHOOK }}
           message: |
             🎉 YYC³ Gateway deployed to production!

@@ -1,0 +1,26 @@
+# CodeQL 扫描路径配置
+# 详见 https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#changing-the-languages-that-are-analyzed
+
+# 仅扫描项目核心代码,排除文档/归档/基础设施
+paths:
+  - frontend/apps
+  - backend/services
+  - backend/shared
+  - backend/common
+  - agentic-core
+
+paths-ignore:
+  - '**/node_modules'
+  - '**/dist'
+  - '**/coverage'
+  - '**/__tests__'
+  - '**/*.test.ts'
+  - '**/*.spec.ts'
+  - '**/*.d.ts'
+  - '**/test-results'
+  - archive
+  - docs
+
+# 排除已知的废弃代码
+queries:
+  - uses: +security-and-quality

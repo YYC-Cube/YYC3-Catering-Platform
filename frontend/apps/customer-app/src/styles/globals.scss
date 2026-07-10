@@ -6,11 +6,8 @@
  * @created 2024-10-15
  */
 
-// 引入统一的设计令牌系统
-@import '@yyc3/ui-system/src/styles/design-tokens.scss';
-
-// 引入统一的全局样式
-@import '@yyc3/ui-system/src/styles/global.scss';
+// 引入共享设计令牌和全局样式
+@import './_shared.scss';
 
 // 特定于customer-app的样式
 body {

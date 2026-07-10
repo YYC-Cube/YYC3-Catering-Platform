@@ -135,7 +135,7 @@ class DynamicPriceController {
     try {
       const menuItemId = parseInt(req.params.menuItemId);
       const { historical_data } = req.body;
-      
+
       if (!Array.isArray(historical_data)) {
         return res.status(400).json({ success: false, message: '历史数据必须是数组' });
       }
@@ -164,7 +164,7 @@ class DynamicPriceController {
   async batchTrainAIModels(req: Request, res: Response) {
     try {
       const { training_jobs } = req.body;
-      
+
       if (!Array.isArray(training_jobs)) {
         return res.status(400).json({ success: false, message: '训练任务必须是数组' });
       }

@@ -20,7 +20,9 @@ export class VersionRepository {
   private versionsFile: string;
   private versions: Map<string, DocumentVersion[]>;
 
-  constructor(dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据') {
+  constructor(
+    dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据',
+  ) {
     this.logger = new Logger('VersionRepository');
     this.dataDir = dataDir;
     this.versionsFile = path.join(dataDir, 'versions.json');
@@ -54,12 +56,12 @@ export class VersionRepository {
     try {
       const data = await fs.readFile(this.versionsFile, 'utf-8');
       const versionsData = JSON.parse(data);
-      
+
       this.versions.clear();
       for (const [documentId, versions] of Object.entries(versionsData)) {
         this.versions.set(documentId, versions as DocumentVersion[]);
       }
-      
+
       this.logger.info('Versions loaded successfully', { count: this.versions.size });
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
@@ -80,7 +82,7 @@ export class VersionRepository {
       this.versions.forEach((versions, documentId) => {
         versionsData[documentId] = versions;
       });
-      
+
       await fs.writeFile(this.versionsFile, JSON.stringify(versionsData, null, 2), 'utf-8');
       this.logger.info('Versions persisted successfully');
     } catch (error) {

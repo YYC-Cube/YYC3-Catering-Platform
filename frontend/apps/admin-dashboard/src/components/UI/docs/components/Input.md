@@ -14,7 +14,7 @@
 基本的输入框用法。
 
 ```tsx
-import { Input } from '@/components/UI'
+import { Input } from "@/components/UI";
 
 export default function InputBasic() {
   return (
@@ -22,7 +22,7 @@ export default function InputBasic() {
       <Input placeholder="请输入内容" />
       <Input placeholder="请输入密码" type="password" />
     </div>
-  )
+  );
 }
 ```
 
@@ -31,12 +31,10 @@ export default function InputBasic() {
 通过 `disabled` 属性指定是否禁用。
 
 ```tsx
-import { Input } from '@/components/UI'
+import { Input } from "@/components/UI";
 
 export default function InputDisabled() {
-  return (
-    <Input placeholder="禁用状态" disabled />
-  )
+  return <Input placeholder="禁用状态" disabled />;
 }
 ```
 
@@ -45,12 +43,10 @@ export default function InputDisabled() {
 使用 `clearable` 属性即可得到一个可清空的输入框。
 
 ```tsx
-import { Input } from '@/components/UI'
+import { Input } from "@/components/UI";
 
 export default function InputClearable() {
-  return (
-    <Input placeholder="可清空" clearable />
-  )
+  return <Input placeholder="可清空" clearable />;
 }
 ```
 
@@ -59,8 +55,8 @@ export default function InputClearable() {
 通过 `prefix` 和 `suffix` 插槽可以在输入框前后添加图标。
 
 ```tsx
-import { Input } from '@/components/UI'
-import { Search, User } from 'lucide-vue-next'
+import { Input } from "@/components/UI";
+import { Search, User } from "lucide-vue-next";
 
 export default function InputIcon() {
   return (
@@ -68,7 +64,7 @@ export default function InputIcon() {
       <Input placeholder="请输入用户名" prefix={<User size={16} />} />
       <Input placeholder="请输入搜索内容" suffix={<Search size={16} />} />
     </div>
-  )
+  );
 }
 ```
 
@@ -77,7 +73,7 @@ export default function InputIcon() {
 通过 `size` 属性指定输入框的尺寸。
 
 ```tsx
-import { Input } from '@/components/UI'
+import { Input } from "@/components/UI";
 
 export default function InputSize() {
   return (
@@ -86,7 +82,7 @@ export default function InputSize() {
       <Input placeholder="默认输入框" />
       <Input size="lg" placeholder="大型输入框" />
     </div>
-  )
+  );
 }
 ```
 
@@ -95,21 +91,15 @@ export default function InputSize() {
 通过前置和后置的插槽可以对输入框进行组合。
 
 ```tsx
-import { Input } from '@/components/UI'
+import { Input } from "@/components/UI";
 
 export default function InputGroup() {
   return (
     <div class="space-y-4">
-      <Input
-        placeholder="https://example.com"
-        prefix="https://"
-      />
-      <Input
-        placeholder="请选择"
-        suffix=".com"
-      />
+      <Input placeholder="https://example.com" prefix="https://" />
+      <Input placeholder="请选择" suffix=".com" />
     </div>
-  )
+  );
 }
 ```
 
@@ -117,37 +107,37 @@ export default function InputGroup() {
 
 ### Input Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-|------|------|------|--------|--------|
-| modelValue | 绑定值 | `string \| number` | - | `''` |
-| type | 类型 | `string` | `text` / `password` / `email` / `number` / `tel` / `url` / `search` | `text` |
-| placeholder | 占位文本 | `string` | - | `''` |
-| disabled | 是否禁用 | `boolean` | - | `false` |
-| readonly | 是否只读 | `boolean` | - | `false` |
-| required | 是否必填 | `boolean` | - | `false` |
-| size | 尺寸 | `string` | `sm` / `md` / `lg` | `md` |
-| error | 是否错误状态 | `boolean` | - | `false` |
-| errorMessage | 错误提示信息 | `string` | - | `''` |
-| prefix | 前置图标或文本 | `string \| Component` | - | - |
-| suffix | 后置图标或文本 | `string \| Component` | - | - |
-| clearable | 是否可清空 | `boolean` | - | `false` |
-| maxLength | 最大输入长度 | `number` | - | - |
-| showWordLimit | 是否显示字数统计 | `boolean` | - | `false` |
-| autocomplete | 自动完成 | `string` | - | - |
+| 参数          | 说明             | 类型                  | 可选值                                                              | 默认值  |
+| ------------- | ---------------- | --------------------- | ------------------------------------------------------------------- | ------- |
+| modelValue    | 绑定值           | `string \| number`    | -                                                                   | `''`    |
+| type          | 类型             | `string`              | `text` / `password` / `email` / `number` / `tel` / `url` / `search` | `text`  |
+| placeholder   | 占位文本         | `string`              | -                                                                   | `''`    |
+| disabled      | 是否禁用         | `boolean`             | -                                                                   | `false` |
+| readonly      | 是否只读         | `boolean`             | -                                                                   | `false` |
+| required      | 是否必填         | `boolean`             | -                                                                   | `false` |
+| size          | 尺寸             | `string`              | `sm` / `md` / `lg`                                                  | `md`    |
+| error         | 是否错误状态     | `boolean`             | -                                                                   | `false` |
+| errorMessage  | 错误提示信息     | `string`              | -                                                                   | `''`    |
+| prefix        | 前置图标或文本   | `string \| Component` | -                                                                   | -       |
+| suffix        | 后置图标或文本   | `string \| Component` | -                                                                   | -       |
+| clearable     | 是否可清空       | `boolean`             | -                                                                   | `false` |
+| maxLength     | 最大输入长度     | `number`              | -                                                                   | -       |
+| showWordLimit | 是否显示字数统计 | `boolean`             | -                                                                   | `false` |
+| autocomplete  | 自动完成         | `string`              | -                                                                   | -       |
 
 ### Input Events
 
-| 事件名 | 说明 | 回调参数 |
-|--------|------|----------|
-| update:modelValue | 值改变时触发 | `(value: string \| number) => void` |
-| focus | 获得焦点时触发 | `(event: FocusEvent) => void` |
-| blur | 失去焦点时触发 | `(event: FocusEvent) => void` |
-| change | 值改变且失焦后触发 | `(value: string \| number) => void` |
-| keydown | 按下键盘时触发 | `(event: KeyboardEvent) => void` |
-| keyup | 松开键盘时触发 | `(event: KeyboardEvent) => void` |
-| keypress | 按下字符键时触发 | `(event: KeyboardEvent) => void` |
-| enter | 按下回车键时触发 | `(event: KeyboardEvent) => void` |
-| clear | 点击清空按钮时触发 | `() => void` |
+| 事件名            | 说明               | 回调参数                            |
+| ----------------- | ------------------ | ----------------------------------- |
+| update:modelValue | 值改变时触发       | `(value: string \| number) => void` |
+| focus             | 获得焦点时触发     | `(event: FocusEvent) => void`       |
+| blur              | 失去焦点时触发     | `(event: FocusEvent) => void`       |
+| change            | 值改变且失焦后触发 | `(value: string \| number) => void` |
+| keydown           | 按下键盘时触发     | `(event: KeyboardEvent) => void`    |
+| keyup             | 松开键盘时触发     | `(event: KeyboardEvent) => void`    |
+| keypress          | 按下字符键时触发   | `(event: KeyboardEvent) => void`    |
+| enter             | 按下回车键时触发   | `(event: KeyboardEvent) => void`    |
+| clear             | 点击清空按钮时触发 | `() => void`                        |
 
 ## 样式定制
 

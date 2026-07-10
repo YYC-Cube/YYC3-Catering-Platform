@@ -27,19 +27,19 @@ class SmartOpsService {
 
   constructor() {
     this.app = express();
-    
+
     // 初始化服务
     this.resourcePredictionService = new ResourcePredictionService();
     this.faultRecoveryService = new FaultRecoveryService();
     this.performanceOptimizationService = new PerformanceOptimizationService();
     this.backupRecoveryService = new BackupRecoveryService();
-    
+
     // 初始化控制器
     this.opsController = new OpsController(
       this.resourcePredictionService,
       this.faultRecoveryService,
       this.performanceOptimizationService,
-      this.backupRecoveryService
+      this.backupRecoveryService,
     );
 
     this.configureMiddleware();
@@ -68,24 +68,27 @@ class SmartOpsService {
 
     // API路由
     const apiRouter = express.Router();
-    
+
     // 资源预测相关路由
     apiRouter.get('/resource-prediction', this.opsController.getResourcePrediction.bind(this.opsController));
-    apiRouter.post('/resource-prediction/schedule', this.opsController.scheduleResourcePrediction.bind(this.opsController));
-    
+    apiRouter.post(
+      '/resource-prediction/schedule',
+      this.opsController.scheduleResourcePrediction.bind(this.opsController),
+    );
+
     // 故障自愈相关路由
     apiRouter.get('/fault-recovery/status', this.opsController.getFaultRecoveryStatus.bind(this.opsController));
     apiRouter.post('/fault-recovery/manual', this.opsController.manualFaultRecovery.bind(this.opsController));
-    
+
     // 性能优化相关路由
     apiRouter.get('/performance/optimization', this.opsController.getPerformanceOptimization.bind(this.opsController));
     apiRouter.post('/performance/optimize', this.opsController.optimizePerformance.bind(this.opsController));
-    
+
     // 备份恢复相关路由
     apiRouter.get('/backup/status', this.opsController.getBackupStatus.bind(this.opsController));
     apiRouter.post('/backup/schedule', this.opsController.scheduleBackup.bind(this.opsController));
     apiRouter.post('/backup/restore', this.opsController.restoreBackup.bind(this.opsController));
-    
+
     // 挂载API路由
     this.app.use('/api/v1', apiRouter);
   }
@@ -96,13 +99,13 @@ class SmartOpsService {
   private startScheduledTasks(): void {
     // 启动资源预测定时任务
     this.resourcePredictionService.startScheduledPredictions();
-    
+
     // 启动故障检测定时任务
     this.faultRecoveryService.startScheduledFaultDetection();
-    
+
     // 启动性能优化定时任务
     this.performanceOptimizationService.startScheduledOptimizations();
-    
+
     // 启动备份定时任务
     this.backupRecoveryService.startScheduledBackups();
   }
@@ -113,7 +116,7 @@ class SmartOpsService {
   public start(): void {
     const port = config.server.port || 3205;
     const host = config.server.host || '0.0.0.0';
-    
+
     this.app.listen(port, host, () => {
       console.log(`[SmartOpsService] 🚀 服务启动成功！`);
       console.log(`[SmartOpsService] 📍 监听地址: http://${host}:${port}`);

@@ -7,21 +7,9 @@
   },
   "versioning_strategy": {
     "type": "semantic",
-    "major_increment": [
-      "breaking_change",
-      "架构重构",
-      "重大变更"
-    ],
-    "minor_increment": [
-      "new_feature",
-      "功能新增",
-      "新增功能"
-    ],
-    "patch_increment": [
-      "bug_fix",
-      "修复",
-      "优化"
-    ]
+    "major_increment": ["breaking_change", "架构重构", "重大变更"],
+    "minor_increment": ["new_feature", "功能新增", "新增功能"],
+    "patch_increment": ["bug_fix", "修复", "优化"]
   },
   "status_workflow": [
     {

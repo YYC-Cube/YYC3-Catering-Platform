@@ -77,7 +77,6 @@ class DatabaseManager {
       await this.initializeRedis();
 
       this.logger.info('Database connections initialized successfully');
-
     } catch (error) {
       this.logger.error('Failed to initialize database connections:', error);
       throw error;
@@ -163,11 +162,9 @@ class DatabaseManager {
     options?: {
       useMaster?: boolean;
       tenantId?: string;
-    }
+    },
   ): Promise<any> {
-    const pool = options?.useMaster
-      ? await this.getMasterConnection()
-      : await this.getReplicaConnection();
+    const pool = options?.useMaster ? await this.getMasterConnection() : await this.getReplicaConnection();
 
     let finalSql = sql;
 
@@ -183,7 +180,7 @@ class DatabaseManager {
       this.logger.error('Database query error:', {
         sql: finalSql,
         params,
-        error: error instanceof Error ? error.message : String(error)
+        error: error instanceof Error ? error.message : String(error),
       });
       throw error;
     }
@@ -196,7 +193,7 @@ class DatabaseManager {
     callback: (client: any) => Promise<T>,
     options?: {
       tenantId?: string;
-    }
+    },
   ): Promise<T> {
     const pool = await this.getMasterConnection();
     const client = await pool.connect();
@@ -232,7 +229,7 @@ class DatabaseManager {
     const health = {
       master: false,
       replicas: [] as boolean[],
-      redis: false
+      redis: false,
     };
 
     // 检查主库
@@ -274,16 +271,18 @@ class DatabaseManager {
     replicas: any[];
   } {
     return {
-      master: this.masterPool ? {
-        totalCount: this.masterPool.totalCount,
-        idleCount: this.masterPool.idleCount,
-        waitingCount: this.masterPool.waitingCount
-      } : null,
+      master: this.masterPool
+        ? {
+            totalCount: this.masterPool.totalCount,
+            idleCount: this.masterPool.idleCount,
+            waitingCount: this.masterPool.waitingCount,
+          }
+        : null,
       replicas: this.replicaPools.map(pool => ({
         totalCount: pool.totalCount,
         idleCount: pool.idleCount,
-        waitingCount: pool.waitingCount
-      }))
+        waitingCount: pool.waitingCount,
+      })),
     };
   }
 
@@ -313,7 +312,6 @@ class DatabaseManager {
       }
 
       this.logger.info('Database connections closed successfully');
-
     } catch (error) {
       this.logger.error('Error closing database connections:', error);
       throw error;
@@ -336,7 +334,7 @@ class DatabaseManager {
       idleTimeoutMillis: this.config.master.pool?.idleTimeoutMillis || 30000,
       connectionTimeoutMillis: 2000,
       statement_timeout: 30000,
-      query_timeout: 30000
+      query_timeout: 30000,
     };
 
     this.masterPool = new Pool(poolConfig);
@@ -346,7 +344,7 @@ class DatabaseManager {
       this.logger.debug('Master database connected');
     });
 
-    this.masterPool.on('error', (error) => {
+    this.masterPool.on('error', error => {
       this.logger.error('Master database pool error:', error);
     });
 
@@ -372,7 +370,7 @@ class DatabaseManager {
         idleTimeoutMillis: replicaConfig.pool?.idleTimeoutMillis || 30000,
         connectionTimeoutMillis: 2000,
         statement_timeout: 30000,
-        query_timeout: 30000
+        query_timeout: 30000,
       };
 
       const pool = new Pool(poolConfig);
@@ -382,7 +380,7 @@ class DatabaseManager {
         this.logger.debug(`Replica database connected (${replicaConfig.host}:${replicaConfig.port})`);
       });
 
-      pool.on('error', (error) => {
+      pool.on('error', error => {
         this.logger.error(`Replica database pool error (${replicaConfig.host}:${replicaConfig.port}):`, error);
       });
 
@@ -401,10 +399,10 @@ class DatabaseManager {
     this.redisClient = createClient({
       socket: {
         host: this.config.redis.host,
-        port: this.config.redis.port
+        port: this.config.redis.port,
       },
       password: this.config.redis.password,
-      database: this.config.redis.database || 0
+      database: this.config.redis.database || 0,
     });
 
     // 键前缀已在创建客户端时设置
@@ -414,7 +412,7 @@ class DatabaseManager {
       this.logger.debug('Redis connected');
     });
 
-    this.redisClient.on('error', (error) => {
+    this.redisClient.on('error', error => {
       this.logger.error('Redis client error:', error);
     });
 

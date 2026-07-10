@@ -126,10 +126,7 @@ describe('HealthCheckService', () => {
       healthCheckService.start();
       await vi.runAllTimersAsync();
 
-      expect(axios.get).toHaveBeenCalledWith(
-        'http://localhost:3001/health',
-        { timeout: 5000 }
-      );
+      expect(axios.get).toHaveBeenCalledWith('http://localhost:3001/health', { timeout: 5000 });
     });
 
     it('应该记录健康检查成功', async () => {
@@ -297,11 +294,10 @@ describe('HealthCheckService', () => {
         },
       ]);
 
-      vi.mocked(axios.get)
-        .mockImplementation(async () => {
-          await new Promise(resolve => setTimeout(resolve, 100));
-          return { status: 200, data: { status: 'ok' } };
-        });
+      vi.mocked(axios.get).mockImplementation(async () => {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        return { status: 200, data: { status: 'ok' } };
+      });
 
       healthCheckService.start();
       await vi.runAllTimersAsync();
@@ -422,10 +418,10 @@ describe('HealthCheckService', () => {
       // 直接调用健康检查方法来模拟多次检查
       healthCheckService['checkAllServices']();
       await vi.runAllTimersAsync();
-      
+
       healthCheckService['checkAllServices']();
       await vi.runAllTimersAsync();
-      
+
       healthCheckService['checkAllServices']();
       await vi.runAllTimersAsync();
 
@@ -435,7 +431,7 @@ describe('HealthCheckService', () => {
         expect.objectContaining({
           serviceName: 'test-service',
           failures: 3,
-        })
+        }),
       );
     });
   });

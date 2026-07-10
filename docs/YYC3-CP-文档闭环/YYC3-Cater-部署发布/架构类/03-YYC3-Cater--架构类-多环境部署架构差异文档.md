@@ -10,28 +10,29 @@
 **@tags**：架构设计,部署,YYC³,容器化
 
 ---
+
 # 🔖 YYC³ 多环境部署架构差异文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
+| 属性         | 内容                        |
+| ------------ | --------------------------- |
 | **文档标题** | YYC³ 多环境部署架构差异文档 |
-| **文档类型** | 架构类文档 |
-| **所属阶段** | 部署发布 |
-| **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **文档类型** | 架构类文档                  |
+| **所属阶段** | 部署发布                    |
+| **遵循规范** | YYC³ 团队标准化规范 v1.0.0  |
+| **版本号**   | v1.0.0                      |
+| **创建日期** | 2025-01-30                  |
+| **作者**     | YYC³ Team                   |
+| **更新日期** | 2025-01-30                  |
 
 ---
 
@@ -57,6 +58,7 @@
 本文档是YYC³餐饮行业智能化平台文档体系的重要组成部分，旨在提供清晰、完整、准确的信息。
 
 通过本文档，读者可以：
+
 - 了解相关概念和背景
 - 掌握核心内容和要点
 - 获得实用的指导和帮助
@@ -140,40 +142,40 @@
 ```typescript
 // config/environments.ts
 export enum Environment {
-  DEVELOPMENT = 'development',
-  TESTING = 'testing',
-  STAGING = 'staging',
-  PRODUCTION = 'production',
+  DEVELOPMENT = "development",
+  TESTING = "testing",
+  STAGING = "staging",
+  PRODUCTION = "production",
 }
 
 export const environmentConfig = {
   [Environment.DEVELOPMENT]: {
-    name: '开发环境',
-    domain: 'dev.yyc3-cater.com',
+    name: "开发环境",
+    domain: "dev.yyc3-cater.com",
     port: 3200,
-    database: 'yyc3_cater_dev',
-    redis: { host: 'localhost', port: 6379 },
+    database: "yyc3_cater_dev",
+    redis: { host: "localhost", port: 6379 },
   },
   [Environment.TESTING]: {
-    name: '测试环境',
-    domain: 'test.yyc3-cater.com',
+    name: "测试环境",
+    domain: "test.yyc3-cater.com",
     port: 3201,
-    database: 'yyc3_cater_test',
-    redis: { host: 'redis-test', port: 6379 },
+    database: "yyc3_cater_test",
+    redis: { host: "redis-test", port: 6379 },
   },
   [Environment.STAGING]: {
-    name: '预发布环境',
-    domain: 'staging.yyc3-cater.com',
+    name: "预发布环境",
+    domain: "staging.yyc3-cater.com",
     port: 3202,
-    database: 'yyc3_cater_staging',
-    redis: { host: 'redis-staging', port: 6379 },
+    database: "yyc3_cater_staging",
+    redis: { host: "redis-staging", port: 6379 },
   },
   [Environment.PRODUCTION]: {
-    name: '生产环境',
-    domain: 'www.yyc3-cater.com',
+    name: "生产环境",
+    domain: "www.yyc3-cater.com",
     port: 3203,
-    database: 'yyc3_cater_prod',
-    redis: { host: 'redis-prod', port: 6379 },
+    database: "yyc3_cater_prod",
+    redis: { host: "redis-prod", port: 6379 },
   },
 };
 ```
@@ -186,7 +188,7 @@ export const environmentConfig = {
 
 ```yaml
 # docker-compose.dev.yml
-version: '3.8'
+version: "3.8"
 
 services:
   web:
@@ -296,44 +298,44 @@ spec:
         component: web
     spec:
       containers:
-      - name: web
-        image: ghcr.io/yyc3-cater/web:latest
-        ports:
-        - containerPort: 3200
-        env:
-        - name: NODE_ENV
-          value: "testing"
-        - name: NEXT_PUBLIC_API_URL
-          value: "https://api-test.yyc3-cater.com"
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-cater-secrets
-              key: database-url
-        - name: REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-cater-secrets
-              key: redis-url
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3200
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3200
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        - name: web
+          image: ghcr.io/yyc3-cater/web:latest
+          ports:
+            - containerPort: 3200
+          env:
+            - name: NODE_ENV
+              value: "testing"
+            - name: NEXT_PUBLIC_API_URL
+              value: "https://api-test.yyc3-cater.com"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-cater-secrets
+                  key: database-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-cater-secrets
+                  key: redis-url
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3200
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3200
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ```
 
 ### 3.2 测试数据
@@ -389,44 +391,44 @@ spec:
         component: web
     spec:
       containers:
-      - name: web
-        image: ghcr.io/yyc3-cater/web:staging
-        ports:
-        - containerPort: 3200
-        env:
-        - name: NODE_ENV
-          value: "staging"
-        - name: NEXT_PUBLIC_API_URL
-          value: "https://api-staging.yyc3-cater.com"
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-cater-secrets
-              key: database-url
-        - name: REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-cater-secrets
-              key: redis-url
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "500m"
-          limits:
-            memory: "1Gi"
-            cpu: "1000m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3200
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3200
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        - name: web
+          image: ghcr.io/yyc3-cater/web:staging
+          ports:
+            - containerPort: 3200
+          env:
+            - name: NODE_ENV
+              value: "staging"
+            - name: NEXT_PUBLIC_API_URL
+              value: "https://api-staging.yyc3-cater.com"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-cater-secrets
+                  key: database-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-cater-secrets
+                  key: redis-url
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3200
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3200
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ```
 
 ### 4.2 数据同步
@@ -498,58 +500,58 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - yyc3-cater
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - yyc3-cater
+                topologyKey: kubernetes.io/hostname
       containers:
-      - name: web
-        image: ghcr.io/yyc3-cater/web:latest
-        ports:
-        - containerPort: 3200
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: NEXT_PUBLIC_API_URL
-          value: "https://api.yyc3-cater.com"
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-cater-secrets
-              key: database-url
-        - name: REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-cater-secrets
-              key: redis-url
-        resources:
-          requests:
-            memory: "1Gi"
-            cpu: "1000m"
-          limits:
-            memory: "2Gi"
-            cpu: "2000m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3200
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3200
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
+        - name: web
+          image: ghcr.io/yyc3-cater/web:latest
+          ports:
+            - containerPort: 3200
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: NEXT_PUBLIC_API_URL
+              value: "https://api.yyc3-cater.com"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-cater-secrets
+                  key: database-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-cater-secrets
+                  key: redis-url
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "1000m"
+            limits:
+              memory: "2Gi"
+              cpu: "2000m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3200
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3200
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
 ```
 
 ### 5.2 高可用配置
@@ -569,31 +571,31 @@ spec:
   minReplicas: 5
   maxReplicas: 20
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 300
       policies:
-      - type: Percent
-        value: 50
-        periodSeconds: 60
+        - type: Percent
+          value: 50
+          periodSeconds: 60
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
-      - type: Percent
-        value: 100
-        periodSeconds: 60
+        - type: Percent
+          value: 100
+          periodSeconds: 60
 ```
 
 ---
@@ -602,30 +604,30 @@ spec:
 
 ### 6.1 配置差异
 
-| 配置项 | 开发环境 | 测试环境 | 预发布环境 | 生产环境 |
-|--------|---------|---------|-----------|---------|
-| Node.js 版本 | 18.x | 18.x | 18.x | 18.x |
-| 副本数 | 1 | 2 | 3 | 5+ |
-| CPU 限制 | 500m | 500m | 1000m | 2000m |
-| 内存限制 | 512Mi | 512Mi | 1Gi | 2Gi |
-| 数据库 | 本地 | 测试库 | 预发布库 | 生产库 |
-| Redis | 本地 | 测试Redis | 预发布Redis | 生产Redis |
-| 日志级别 | debug | info | warn | error |
-| 监控 | 基础 | 基础 | 完整 | 完整 |
-| 备份 | 无 | 每日 | 每日 | 实时 |
+| 配置项       | 开发环境 | 测试环境  | 预发布环境  | 生产环境  |
+| ------------ | -------- | --------- | ----------- | --------- |
+| Node.js 版本 | 18.x     | 18.x      | 18.x        | 18.x      |
+| 副本数       | 1        | 2         | 3           | 5+        |
+| CPU 限制     | 500m     | 500m      | 1000m       | 2000m     |
+| 内存限制     | 512Mi    | 512Mi     | 1Gi         | 2Gi       |
+| 数据库       | 本地     | 测试库    | 预发布库    | 生产库    |
+| Redis        | 本地     | 测试Redis | 预发布Redis | 生产Redis |
+| 日志级别     | debug    | info      | warn        | error     |
+| 监控         | 基础     | 基础      | 完整        | 完整      |
+| 备份         | 无       | 每日      | 每日        | 实时      |
 
 ### 6.2 功能差异
 
-| 功能 | 开发环境 | 测试环境 | 预发布环境 | 生产环境 |
-|------|---------|---------|-----------|---------|
-| 热重载 | ✅ | ❌ | ❌ | ❌ |
-| 调试工具 | ✅ | ❌ | ❌ | ❌ |
-| 模拟数据 | ✅ | ✅ | ❌ | ❌ |
-| 真实数据 | ❌ | ❌ | ✅ | ✅ |
-| 性能测试 | ❌ | ✅ | ✅ | ✅ |
-| 安全扫描 | ❌ | ✅ | ✅ | ✅ |
-| 压力测试 | ❌ | ✅ | ✅ | ❌ |
-| 监控告警 | ❌ | ✅ | ✅ | ✅ |
+| 功能     | 开发环境 | 测试环境 | 预发布环境 | 生产环境 |
+| -------- | -------- | -------- | ---------- | -------- |
+| 热重载   | ✅       | ❌       | ❌         | ❌       |
+| 调试工具 | ✅       | ❌       | ❌         | ❌       |
+| 模拟数据 | ✅       | ✅       | ❌         | ❌       |
+| 真实数据 | ❌       | ❌       | ✅         | ✅       |
+| 性能测试 | ❌       | ✅       | ✅         | ✅       |
+| 安全扫描 | ❌       | ✅       | ✅         | ✅       |
+| 压力测试 | ❌       | ✅       | ✅         | ❌       |
+| 监控告警 | ❌       | ✅       | ✅         | ✅       |
 
 ---
 
@@ -635,8 +637,8 @@ spec:
 
 ```typescript
 // scripts/deploy.ts
-import { execSync } from 'child_process';
-import { Environment } from '../config/environments';
+import { execSync } from "child_process";
+import { Environment } from "../config/environments";
 
 interface DeployOptions {
   environment: Environment;
@@ -650,54 +652,51 @@ async function deploy(options: DeployOptions) {
 
   // 1. 运行测试
   if (!options.skipTests) {
-    console.log('运行测试...');
-    execSync('pnpm test', { stdio: 'inherit' });
+    console.log("运行测试...");
+    execSync("pnpm test", { stdio: "inherit" });
   }
 
   // 2. 构建镜像
-  console.log('构建镜像...');
+  console.log("构建镜像...");
   execSync(`docker build -t ghcr.io/yyc3-cater/web:${options.version} .`, {
-    stdio: 'inherit',
+    stdio: "inherit",
   });
 
   // 3. 推送镜像
-  console.log('推送镜像...');
+  console.log("推送镜像...");
   execSync(`docker push ghcr.io/yyc3-cater/web:${options.version}`, {
-    stdio: 'inherit',
+    stdio: "inherit",
   });
 
   // 4. 备份（仅生产环境）
   if (options.environment === Environment.PRODUCTION && !options.skipBackup) {
-    console.log('备份数据...');
-    execSync('./scripts/backup.sh', { stdio: 'inherit' });
+    console.log("备份数据...");
+    execSync("./scripts/backup.sh", { stdio: "inherit" });
   }
 
   // 5. 更新部署
-  console.log('更新部署...');
+  console.log("更新部署...");
   const namespace = options.environment;
   execSync(
     `kubectl set image deployment/yyc3-cater-web web=ghcr.io/yyc3-cater/web:${options.version} -n ${namespace}`,
-    { stdio: 'inherit' }
+    { stdio: "inherit" }
   );
 
   // 6. 等待部署完成
-  console.log('等待部署完成...');
-  execSync(
-    `kubectl rollout status deployment/yyc3-cater-web -n ${namespace} --timeout=10m`,
-    { stdio: 'inherit' }
-  );
+  console.log("等待部署完成...");
+  execSync(`kubectl rollout status deployment/yyc3-cater-web -n ${namespace} --timeout=10m`, { stdio: "inherit" });
 
   // 7. 健康检查
-  console.log('健康检查...');
-  execSync(`./scripts/health-check.sh ${options.environment}`, { stdio: 'inherit' });
+  console.log("健康检查...");
+  execSync(`./scripts/health-check.sh ${options.environment}`, { stdio: "inherit" });
 
-  console.log('部署完成！');
+  console.log("部署完成！");
 }
 
 // 使用示例
 deploy({
   environment: Environment.STAGING,
-  version: 'v1.0.0',
+  version: "v1.0.0",
 });
 ```
 
@@ -707,18 +706,21 @@ deploy({
 ## 部署前检查清单
 
 ### 开发环境
+
 - [ ] 代码已提交到 develop 分支
 - [ ] 单元测试通过
 - [ ] 本地构建成功
 - [ ] 代码审查通过
 
 ### 测试环境
+
 - [ ] 开发环境验证通过
 - [ ] 集成测试通过
 - [ ] 测试数据准备完成
 - [ ] 测试环境配置正确
 
 ### 预发布环境
+
 - [ ] 测试环境验证通过
 - [ ] E2E 测试通过
 - [ ] 性能测试通过
@@ -726,6 +728,7 @@ deploy({
 - [ ] 安全扫描通过
 
 ### 生产环境
+
 - [ ] 预发布环境验证通过
 - [ ] 回滚计划准备完成
 - [ ] 数据备份完成
@@ -741,7 +744,7 @@ deploy({
 
 ```typescript
 // scripts/migrate.ts
-import { Pool } from 'pg';
+import { Pool } from "pg";
 
 interface Migration {
   name: string;
@@ -752,9 +755,9 @@ interface Migration {
 
 const migrations: Migration[] = [
   {
-    name: 'create-users-table',
-    version: '001',
-    up: async (pool) => {
+    name: "create-users-table",
+    version: "001",
+    up: async pool => {
       await pool.query(`
         CREATE TABLE IF NOT EXISTS users (
           id VARCHAR(255) PRIMARY KEY,
@@ -767,21 +770,21 @@ const migrations: Migration[] = [
         );
       `);
     },
-    down: async (pool) => {
-      await pool.query('DROP TABLE IF EXISTS users;');
+    down: async pool => {
+      await pool.query("DROP TABLE IF EXISTS users;");
     },
   },
   // 更多迁移...
 ];
 
-async function runMigrations(pool: Pool, direction: 'up' | 'down' = 'up') {
+async function runMigrations(pool: Pool, direction: "up" | "down" = "up") {
   console.log(`开始运行迁移 (${direction})...`);
 
   for (const migration of migrations) {
     console.log(`执行迁移: ${migration.name} (${migration.version})`);
 
     try {
-      if (direction === 'up') {
+      if (direction === "up") {
         await migration.up(pool);
       } else {
         await migration.down(pool);
@@ -801,7 +804,7 @@ async function runMigrations(pool: Pool, direction: 'up' | 'down' = 'up') {
     }
   }
 
-  console.log('所有迁移完成');
+  console.log("所有迁移完成");
 }
 
 // 使用示例
@@ -809,7 +812,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-runMigrations(pool, 'up');
+runMigrations(pool, "up");
 ```
 
 ### 8.2 数据迁移脚本
@@ -862,31 +865,31 @@ spec:
     matchLabels:
       app: yyc3-cater
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: ingress-nginx
-    ports:
-    - protocol: TCP
-      port: 3200
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3200
   egress:
-  - to:
-    - namespaceSelector:
-        matchLabels:
-          name: production
-    ports:
-    - protocol: TCP
-      port: 5432  # PostgreSQL
-    - protocol: TCP
-      port: 6379  # Redis
-  - to:
-    - namespaceSelector: {}
-    ports:
-    - protocol: TCP
-      port: 443  # HTTPS
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: production
+      ports:
+        - protocol: TCP
+          port: 5432 # PostgreSQL
+        - protocol: TCP
+          port: 6379 # Redis
+    - to:
+        - namespaceSelector: {}
+      ports:
+        - protocol: TCP
+          port: 443 # HTTPS
 ```
 
 ### 9.2 资源隔离
@@ -920,32 +923,32 @@ spec:
 export const environmentPrinciples = {
   // 1. 环境一致性
   consistency: {
-    description: '所有环境使用相同的配置管理方式',
-    implementation: '使用 Helm Charts 或 Kustomize 管理配置',
+    description: "所有环境使用相同的配置管理方式",
+    implementation: "使用 Helm Charts 或 Kustomize 管理配置",
   },
 
   // 2. 最小权限
   leastPrivilege: {
-    description: '每个环境只授予必要的权限',
-    implementation: '使用 RBAC 和 Service Account',
+    description: "每个环境只授予必要的权限",
+    implementation: "使用 RBAC 和 Service Account",
   },
 
   // 3. 数据隔离
   dataIsolation: {
-    description: '不同环境使用独立的数据库',
-    implementation: '使用不同的数据库实例和命名空间',
+    description: "不同环境使用独立的数据库",
+    implementation: "使用不同的数据库实例和命名空间",
   },
 
   // 4. 可追溯性
   traceability: {
-    description: '所有变更可追溯',
-    implementation: '使用 Git 标签和版本号',
+    description: "所有变更可追溯",
+    implementation: "使用 Git 标签和版本号",
   },
 
   // 5. 自动化
   automation: {
-    description: '环境部署和配置自动化',
-    implementation: '使用 CI/CD 流水线',
+    description: "环境部署和配置自动化",
+    implementation: "使用 CI/CD 流水线",
   },
 };
 ```
@@ -954,28 +957,28 @@ export const environmentPrinciples = {
 
 ```typescript
 // monitoring/environment-monitor.ts
-import { promClient } from './prometheus';
+import { promClient } from "./prometheus";
 
 const environmentMetrics = {
   // 环境健康度
   environmentHealth: new promClient.Gauge({
-    name: 'yyc3_environment_health',
-    help: 'Environment health status',
-    labelNames: ['environment', 'component'],
+    name: "yyc3_environment_health",
+    help: "Environment health status",
+    labelNames: ["environment", "component"],
   }),
 
   // 部署成功率
   deploymentSuccessRate: new promClient.Gauge({
-    name: 'yyc3_deployment_success_rate',
-    help: 'Deployment success rate',
-    labelNames: ['environment'],
+    name: "yyc3_deployment_success_rate",
+    help: "Deployment success rate",
+    labelNames: ["environment"],
   }),
 
   // 环境响应时间
   responseTime: new promClient.Histogram({
-    name: 'yyc3_response_time',
-    help: 'Response time',
-    labelNames: ['environment', 'endpoint'],
+    name: "yyc3_response_time",
+    help: "Response time",
+    labelNames: ["environment", "endpoint"],
     buckets: [0.1, 0.5, 1, 2, 5, 10],
   }),
 };
@@ -983,24 +986,14 @@ const environmentMetrics = {
 // 监控环境健康度
 async function monitorEnvironmentHealth(environment: string) {
   const health = await checkEnvironmentHealth(environment);
-  environmentMetrics.environmentHealth.set(
-    { environment, component: 'web' },
-    health.web ? 1 : 0
-  );
-  environmentMetrics.environmentHealth.set(
-    { environment, component: 'api' },
-    health.api ? 1 : 0
-  );
+  environmentMetrics.environmentHealth.set({ environment, component: "web" }, health.web ? 1 : 0);
+  environmentMetrics.environmentHealth.set({ environment, component: "api" }, health.api ? 1 : 0);
 }
 
 // 检查环境健康度
 async function checkEnvironmentHealth(environment: string) {
-  const webHealth = await checkServiceHealth(
-    `https://${environment}.yyc3-cater.com/health`
-  );
-  const apiHealth = await checkServiceHealth(
-    `https://api-${environment}.yyc3-cater.com/health`
-  );
+  const webHealth = await checkServiceHealth(`https://${environment}.yyc3-cater.com/health`);
+  const apiHealth = await checkServiceHealth(`https://api-${environment}.yyc3-cater.com/health`);
 
   return { web: webHealth, api: apiHealth };
 }
@@ -1020,13 +1013,10 @@ async function checkServiceHealth(url: string): Promise<boolean> {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1049,8 +1039,6 @@ async function checkServiceHealth(url: string): Promise<boolean> {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1084,8 +1072,6 @@ async function checkServiceHealth(url: string): Promise<boolean> {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1108,46 +1094,46 @@ async function checkServiceHealth(url: string): Promise<boolean> {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1160,6 +1146,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1169,6 +1156,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1178,6 +1166,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1194,16 +1183,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1213,13 +1203,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1228,6 +1216,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1246,6 +1235,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1261,6 +1251,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1280,28 +1271,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1310,44 +1300,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1361,13 +1349,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1376,18 +1364,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1397,37 +1388,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1436,28 +1430,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1466,21 +1458,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1489,10 +1483,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1518,16 +1509,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1536,25 +1527,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

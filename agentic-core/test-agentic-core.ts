@@ -17,19 +17,19 @@ async function testAgenticCore() {
         name: '数据分析',
         description: '分析餐厅运营数据',
         enabled: true,
-        config: {}
+        config: {},
       },
       {
         name: '行动规划',
         description: '为餐厅优化生成行动方案',
         enabled: true,
-        config: {}
-      }
+        config: {},
+      },
     ],
     learningEnabled: true,
     autonomousMode: false,
     communicationEnabled: true,
-    updateInterval: 300000 // 5分钟
+    updateInterval: 300000, // 5分钟
   };
 
   // 创建AgenticCore实例
@@ -46,13 +46,13 @@ async function testAgenticCore() {
       environment: {
         name: 'development',
         businessDomain: 'catering',
-        availableResources: ['kitchen', 'waitstaff', 'inventory']
+        availableResources: ['kitchen', 'waitstaff', 'inventory'],
       },
       goals: [],
       constraints: {
         maxTime: 3600000, // 1小时
-        maxResources: ['waitstaff', 'inventory']
-      }
+        maxResources: ['waitstaff', 'inventory'],
+      },
     };
 
     agenticCore.setContext(contextData);
@@ -65,7 +65,7 @@ async function testAgenticCore() {
       priority: 1,
       deadline: new Date(Date.now() + 24 * 60 * 60 * 1000),
       subGoals: [],
-      dependencies: []
+      dependencies: [],
     };
 
     const goalId = await agenticCore.addGoal(testGoal);
@@ -77,9 +77,9 @@ async function testAgenticCore() {
       {
         target: 'restaurant_operations',
         timeRange: 'last_7_days',
-        metrics: ['turnover_rate', 'service_time']
+        metrics: ['turnover_rate', 'service_time'],
       },
-      contextData
+      contextData,
     );
 
     console.log('✅ 行动执行成功:', actionResult);
@@ -89,7 +89,6 @@ async function testAgenticCore() {
     console.log('✅ 系统状态获取成功:', status);
 
     console.log('🎉 所有测试通过！AgenticCore实现正确。');
-
   } catch (error) {
     console.error('❌ 测试失败:', error);
   } finally {

@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ 部署问题排查指南
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 部署问题排查指南 |
-| **文档类型** | 技巧类文档 |
-| **所属阶段** | 部署发布 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 部署问题排查指南      |
+| **文档类型** | 技巧类文档                 |
+| **所属阶段** | 部署发布                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -101,6 +102,7 @@
 ### 1.1 问题排查方法论
 
 **系统化排查流程**
+
 ```mermaid
 graph TD
     A[发现问题] --> B[问题分类]
@@ -131,20 +133,21 @@ graph TD
 
 ### 1.2 问题分类体系
 
-| 问题类别 | 子类别 | 常见症状 | 优先级 |
-|---------|--------|----------|--------|
-| 环境问题 | 资源不足、配置错误、依赖缺失 | 部署失败、启动失败 | 高 |
-| 容器问题 | 镜像问题、运行时错误、资源限制 | 容器崩溃、无法启动 | 高 |
-| K8s问题 | 调度失败、状态异常、配置错误 | Pod未就绪、服务不可用 | 高 |
-| 网络问题 | 连接超时、DNS解析、端口冲突 | 无法访问、网络不通 | 高 |
-| 存储问题 | 挂载失败、容量不足、权限问题 | 数据丢失、无法读写 | 高 |
-| 应用问题 | 代码错误、配置错误、依赖问题 | 功能异常、报错 | 中 |
-| 性能问题 | 响应慢、吞吐量低、资源占用高 | 用户体验差 | 中 |
-| 安全问题 | 漏洞、权限问题、配置不当 | 安全风险 | 高 |
+| 问题类别 | 子类别                         | 常见症状              | 优先级 |
+| -------- | ------------------------------ | --------------------- | ------ |
+| 环境问题 | 资源不足、配置错误、依赖缺失   | 部署失败、启动失败    | 高     |
+| 容器问题 | 镜像问题、运行时错误、资源限制 | 容器崩溃、无法启动    | 高     |
+| K8s问题  | 调度失败、状态异常、配置错误   | Pod未就绪、服务不可用 | 高     |
+| 网络问题 | 连接超时、DNS解析、端口冲突    | 无法访问、网络不通    | 高     |
+| 存储问题 | 挂载失败、容量不足、权限问题   | 数据丢失、无法读写    | 高     |
+| 应用问题 | 代码错误、配置错误、依赖问题   | 功能异常、报错        | 中     |
+| 性能问题 | 响应慢、吞吐量低、资源占用高   | 用户体验差            | 中     |
+| 安全问题 | 漏洞、权限问题、配置不当       | 安全风险              | 高     |
 
 ### 1.3 排查工具清单
 
 **必备工具**
+
 ```bash
 # 系统工具
 top              # 进程监控
@@ -191,11 +194,13 @@ k9s              # K8s交互式管理
 ### 2.1 资源不足问题
 
 **问题症状**
+
 - 部署失败
 - 容器无法启动
 - 系统响应缓慢
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -244,6 +249,7 @@ cat /proc/sys/fs/file-nr
 ```
 
 **解决方案**
+
 ```bash
 # 1. 清理不必要的进程
 kill -9 <PID>
@@ -271,11 +277,13 @@ echo "* hard nproc 4096" >> /etc/security/limits.conf
 ### 2.2 配置错误问题
 
 **问题症状**
+
 - 应用无法启动
 - 配置不生效
 - 行为异常
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -313,6 +321,7 @@ diff /etc/yyc3/config.json /etc/yyc3/config.json.bak
 ```
 
 **解决方案**
+
 ```bash
 # 1. 修复配置文件
 # 备份当前配置
@@ -334,11 +343,13 @@ curl http://localhost:3200/health
 ### 2.3 依赖缺失问题
 
 **问题症状**
+
 - 构建失败
 - 运行时错误
 - 模块找不到
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -379,6 +390,7 @@ which docker
 ```
 
 **解决方案**
+
 ```bash
 # 1. 安装缺失依赖
 npm install
@@ -410,11 +422,13 @@ nvm use 18
 ### 3.1 镜像问题
 
 **问题症状**
+
 - 镜像拉取失败
 - 镜像启动失败
 - 镜像大小过大
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -448,6 +462,7 @@ docker run --rm yyc3-web:latest echo "镜像测试成功"
 ```
 
 **解决方案**
+
 ```bash
 # 1. 清理无用镜像
 docker image prune -a
@@ -480,11 +495,13 @@ docker push yyc3-web:latest
 ### 3.2 容器运行时错误
 
 **问题症状**
+
 - 容器无法启动
 - 容器频繁重启
 - 容器无响应
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -523,6 +540,7 @@ docker exec -it yyc3-web sh
 ```
 
 **解决方案**
+
 ```bash
 # 1. 查看容器日志
 docker logs yyc3-web -f
@@ -550,11 +568,13 @@ docker run -d \
 ### 3.3 资源限制问题
 
 **问题症状**
+
 - 容器被OOM杀死
 - 容器性能下降
 - 容器无法启动
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -588,6 +608,7 @@ dmesg | grep -i "out of memory"
 ```
 
 **解决方案**
+
 ```bash
 # 1. 调整内存限制
 docker update --memory="1g" yyc3-web
@@ -612,11 +633,13 @@ swapon /swapfile
 ### 4.1 Pod状态异常
 
 **问题症状**
+
 - Pod处于Pending状态
 - Pod处于CrashLoopBackOff状态
 - Pod处于ImagePullBackOff状态
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -654,6 +677,7 @@ kubectl top pods -n $NAMESPACE
 ```
 
 **解决方案**
+
 ```bash
 # 1. Pending状态处理
 # 检查调度失败原因
@@ -686,11 +710,13 @@ kubectl delete pod <pod-name> -n <namespace>
 ### 4.2 Service问题
 
 **问题症状**
+
 - Service无法访问
 - Service负载均衡不工作
 - Service DNS解析失败
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -728,6 +754,7 @@ kubectl run -it --rm debug --image=busybox --restart=Never -- wget -O- http://yy
 ```
 
 **解决方案**
+
 ```bash
 # 1. 检查Service选择器
 kubectl get svc yyc3-web -n <namespace> -o yaml | grep selector
@@ -749,11 +776,13 @@ kubectl apply -f service.yaml
 ### 4.3 Ingress问题
 
 **问题症状**
+
 - Ingress无法访问
 - Ingress路由不工作
 - Ingress证书问题
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -791,6 +820,7 @@ curl -I https://yyc3.example.com
 ```
 
 **解决方案**
+
 ```bash
 # 1. 检查Ingress规则
 kubectl get ingress yyc3-web -n <namespace> -o yaml | grep -A 10 rules
@@ -815,11 +845,13 @@ kubectl rollout restart deployment/ingress-nginx-controller -n ingress-nginx
 ### 5.1 连接超时问题
 
 **问题症状**
+
 - 无法访问服务
 - 连接超时
 - 请求失败
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -863,6 +895,7 @@ curl -v http://yyc3.example.com:3200/health
 ```
 
 **解决方案**
+
 ```bash
 # 1. 检查防火墙规则
 iptables -L -n
@@ -884,11 +917,13 @@ ip route add 10.0.0.0/24 via 192.168.1.1
 ### 5.2 DNS解析问题
 
 **问题症状**
+
 - 域名无法解析
 - DNS查询超时
 - 解析结果不正确
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -922,6 +957,7 @@ time nslookup yyc3.example.com
 ```
 
 **解决方案**
+
 ```bash
 # 1. 修改DNS服务器
 vim /etc/resolv.conf
@@ -947,11 +983,13 @@ echo "192.168.1.100 yyc3.example.com" >> /etc/hosts
 ### 5.3 端口冲突问题
 
 **问题症状**
+
 - 服务无法启动
 - 端口已被占用
 - 绑定失败
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -985,6 +1023,7 @@ ss -tuln | grep 3200
 ```
 
 **解决方案**
+
 ```bash
 # 1. 查找占用端口的进程
 lsof -i :3200
@@ -1011,11 +1050,13 @@ sysctl -w net.ipv4.tcp_fin_timeout=30
 ### 6.1 挂载失败问题
 
 **问题症状**
+
 - Pod无法启动
 - 存储卷无法挂载
 - 数据无法访问
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1053,6 +1094,7 @@ kubectl get events -n $NAMESPACE --field-selector reason=FailedMount
 ```
 
 **解决方案**
+
 ```bash
 # 1. 检查PV绑定状态
 kubectl get pv <pv-name> -o yaml | grep -A 5 status
@@ -1074,11 +1116,13 @@ df -h
 ### 6.2 容量不足问题
 
 **问题症状**
+
 - 无法写入数据
 - 磁盘空间不足
 - 性能下降
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1112,6 +1156,7 @@ du -sh /var/log/*
 ```
 
 **解决方案**
+
 ```bash
 # 1. 清理日志文件
 find /var/log -type f -name "*.log" -mtime +7 -delete
@@ -1134,11 +1179,13 @@ logrotate -f /etc/logrotate.conf
 ### 6.3 权限问题
 
 **问题症状**
+
 - 无法读写文件
 - 权限被拒绝
 - 访问失败
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1172,6 +1219,7 @@ mount | grep /data
 ```
 
 **解决方案**
+
 ```bash
 # 1. 修改文件权限
 chmod 755 /data
@@ -1196,11 +1244,13 @@ usermod -a -G yyc3 yyc3
 ### 7.1 应用启动失败
 
 **问题症状**
+
 - 应用无法启动
 - 启动报错
 - 启动超时
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1234,6 +1284,7 @@ netstat -tuln | grep 3200
 ```
 
 **解决方案**
+
 ```bash
 # 1. 查看应用日志
 tail -f /var/log/yyc3/application.log
@@ -1255,11 +1306,13 @@ NODE_ENV=development npm start
 ### 7.2 应用运行时错误
 
 **问题症状**
+
 - 应用报错
 - 功能异常
 - 性能下降
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1294,6 +1347,7 @@ npm list --depth=0
 ```
 
 **解决方案**
+
 ```bash
 # 1. 查看错误日志
 tail -f /var/log/yyc3/application.log | grep -i error
@@ -1318,11 +1372,13 @@ systemctl restart yyc3-web
 ### 7.3 配置问题
 
 **问题症状**
+
 - 配置不生效
 - 配置错误
 - 行为异常
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1356,6 +1412,7 @@ ls -la /etc/yyc3/config.json
 ```
 
 **解决方案**
+
 ```bash
 # 1. 备份当前配置
 cp /etc/yyc3/config.json /etc/yyc3/config.json.bak
@@ -1380,11 +1437,13 @@ curl http://localhost:3200/config
 ### 8.1 响应慢问题
 
 **问题症状**
+
 - 页面加载慢
 - API响应慢
 - 用户体验差
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1418,6 +1477,7 @@ sar -n DEV 1 3
 ```
 
 **解决方案**
+
 ```bash
 # 1. 优化应用代码
 # 添加缓存
@@ -1445,11 +1505,13 @@ sar -n DEV 1 3
 ### 8.2 吞吐量低问题
 
 **问题症状**
+
 - 并发能力差
 - 请求处理慢
 - 系统负载高
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1483,6 +1545,7 @@ ps aux | wc -l
 ```
 
 **解决方案**
+
 ```bash
 # 1. 增加应用实例
 # 使用Docker Compose扩展
@@ -1514,11 +1577,13 @@ kubectl scale deployment yyc3-web --replicas=3
 ### 8.3 资源占用高问题
 
 **问题症状**
+
 - CPU占用高
 - 内存占用高
 - 磁盘占用高
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1553,6 +1618,7 @@ netstat -an | wc -l
 ```
 
 **解决方案**
+
 ```bash
 # 1. 优化应用代码
 # 减少内存泄漏
@@ -1595,11 +1661,13 @@ kubectl autoscale deployment yyc3-web --cpu-percent=80 --min=2 --max=10
 ### 9.1 漏洞问题
 
 **问题症状**
+
 - 存在安全漏洞
 - 依赖版本过旧
 - 配置不当
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1634,6 +1702,7 @@ ls -la /etc/yyc3/
 ```
 
 **解决方案**
+
 ```bash
 # 1. 修复npm漏洞
 npm audit fix
@@ -1657,11 +1726,13 @@ apt-get upgrade
 ### 9.2 权限问题
 
 **问题症状**
+
 - 权限过大
 - 权限不足
 - 未授权访问
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1695,6 +1766,7 @@ sudo -l
 ```
 
 **解决方案**
+
 ```bash
 # 1. 最小权限原则
 # 只授予必要的权限
@@ -1729,11 +1801,13 @@ kubectl create rolebinding yyc3-admin \
 ### 9.3 配置安全问题
 
 **问题症状**
+
 - 硬编码密码
 - 敏感信息泄露
 - 配置不当
 
 **排查步骤**
+
 ```bash
 #!/bin/bash
 
@@ -1767,6 +1841,7 @@ grep -i "password\|secret\|token" /var/log/yyc3/application.log
 ```
 
 **解决方案**
+
 ```bash
 # 1. 使用环境变量
 # .env文件
@@ -1799,6 +1874,7 @@ echo "password" | openssl enc -aes-256-cbc -salt -out password.enc
 **Q: 部署失败怎么办？**
 
 A: 按照以下步骤排查：
+
 ```bash
 # 1. 检查部署状态
 kubectl get deployment yyc3-web -n yyc3-production
@@ -1819,6 +1895,7 @@ kubectl get events -n yyc3-production
 **Q: 如何回滚部署？**
 
 A: 使用以下命令回滚：
+
 ```bash
 # 回滚到上一个版本
 kubectl rollout undo deployment/yyc3-web -n yyc3-production
@@ -1833,6 +1910,7 @@ kubectl rollout history deployment/yyc3-web -n yyc3-production
 **Q: 如何快速扩容？**
 
 A: 使用以下命令扩容：
+
 ```bash
 # 手动扩容
 kubectl scale deployment yyc3-web --replicas=5 -n yyc3-production
@@ -1846,6 +1924,7 @@ kubectl autoscale deployment yyc3-web --cpu-percent=80 --min=2 --max=10 -n yyc3-
 **Q: 容器无法启动怎么办？**
 
 A: 按照以下步骤排查：
+
 ```bash
 # 1. 查看容器状态
 docker ps -a
@@ -1868,6 +1947,7 @@ docker run -d --name yyc3-web -p 3200:3200 yyc3-web:latest
 **Q: 如何清理Docker资源？**
 
 A: 使用以下命令清理：
+
 ```bash
 # 清理未使用的镜像
 docker image prune -a
@@ -1887,6 +1967,7 @@ docker system prune -a
 **Q: 无法访问服务怎么办？**
 
 A: 按照以下步骤排查：
+
 ```bash
 # 1. 检查服务状态
 kubectl get svc yyc3-web -n yyc3-production
@@ -1907,6 +1988,7 @@ kubectl get networkpolicies -n yyc3-production
 **Q: DNS解析失败怎么办？**
 
 A: 按照以下步骤排查：
+
 ```bash
 # 1. 检查DNS配置
 cat /etc/resolv.conf
@@ -1929,6 +2011,7 @@ kubectl rollout restart deployment/coredns -n kube-system
 **Q: 应用响应慢怎么办？**
 
 A: 按照以下步骤排查：
+
 ```bash
 # 1. 检查响应时间
 curl -w "@curl-format.txt" -o /dev/null -s http://localhost:3200/health
@@ -1952,6 +2035,7 @@ ab -n 1000 -c 10 http://localhost:3200/health
 **Q: 内存占用高怎么办？**
 
 A: 按照以下步骤排查：
+
 ```bash
 # 1. 检查内存使用
 kubectl top pods -n yyc3-production
@@ -1976,13 +2060,10 @@ kubectl set resources deployment yyc3-web --limits=memory=1Gi -n yyc3-production
 
 ## 📄 文档标尾
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -2003,8 +2084,6 @@ kubectl set resources deployment yyc3-web --limits=memory=1Gi -n yyc3-production
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -2033,8 +2112,6 @@ kubectl set resources deployment yyc3-web --limits=memory=1Gi -n yyc3-production
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -2072,7 +2149,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -2088,8 +2165,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -2102,7 +2177,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -2117,9 +2192,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -2127,9 +2202,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -2137,20 +2215,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -2159,6 +2235,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -2174,17 +2251,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -2192,6 +2270,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -2202,6 +2281,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -2210,8 +2290,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -2219,21 +2297,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2242,10 +2322,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2271,16 +2348,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2289,26 +2366,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -2324,7 +2396,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -2356,14 +2428,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -2374,17 +2444,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -2394,17 +2467,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -2414,22 +2490,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
-
 
 ## 最佳实践
 
@@ -2438,21 +2515,23 @@ const useStore = create((set) => ({
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2461,10 +2540,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2490,16 +2566,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2508,25 +2584,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

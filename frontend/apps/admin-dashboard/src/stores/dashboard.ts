@@ -13,7 +13,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     totalRevenue: 0,
     totalOrders: 0,
     averageOrderValue: 0,
-    customerCount: 0
+    customerCount: 0,
   });
   const revenueData = ref<RevenueData[]>([]);
   const recentOrders = ref<Order[]>([]);
@@ -32,14 +32,15 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const loadDashboardData = async (filters?: DashboardFilters) => {
     loading.value = true;
     try {
-      const [metricsResponse, revenueResponse, ordersResponse, distributionResponse, dishesResponse, flowResponse] = await Promise.all([
-        dashboardApi.getCoreMetrics(filters),
-        dashboardApi.getRevenueData(filters),
-        dashboardApi.getRecentOrders(10),
-        dashboardApi.getOrderDistribution(filters),
-        dashboardApi.getTopDishes(filters),
-        dashboardApi.getCustomerFlow(filters)
-      ]);
+      const [metricsResponse, revenueResponse, ordersResponse, distributionResponse, dishesResponse, flowResponse] =
+        await Promise.all([
+          dashboardApi.getCoreMetrics(filters),
+          dashboardApi.getRevenueData(filters),
+          dashboardApi.getRecentOrders(10),
+          dashboardApi.getOrderDistribution(filters),
+          dashboardApi.getTopDishes(filters),
+          dashboardApi.getCustomerFlow(filters),
+        ]);
 
       if (metricsResponse.success) {
         coreMetrics.value = metricsResponse.data;
@@ -76,7 +77,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     loading.value = true;
     try {
       const blob = await dashboardApi.exportReport(format, filters);
-      
+
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -104,15 +105,15 @@ export const useDashboardStore = defineStore('dashboard', () => {
         total: orderTotal,
         status: order.status || 'pending',
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
-      
+
       recentOrders.value.unshift(newOrder);
-      
+
       coreMetrics.value.totalOrders += 1;
       coreMetrics.value.totalRevenue += orderTotal;
       coreMetrics.value.averageOrderValue = Math.round(coreMetrics.value.totalRevenue / coreMetrics.value.totalOrders);
-      
+
       return newOrder;
     } catch (error) {
       console.error('Failed to add order:', error);
@@ -153,6 +154,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     loadDashboardData,
     exportReport,
     addOrder,
-    updateOrderStatus
+    updateOrderStatus,
   };
 });

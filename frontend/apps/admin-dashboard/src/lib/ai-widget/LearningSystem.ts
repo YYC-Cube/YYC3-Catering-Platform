@@ -2,14 +2,7 @@
  * YYC³ 学习系统 - 自主学习和优化
  */
 
-import {
-  LearningConfig,
-  LearningInsight,
-  PerformanceMetric,
-  UserFeedback,
-  UserMessage,
-  AIResponse,
-} from './types';
+import { LearningConfig, LearningInsight, PerformanceMetric, UserFeedback, UserMessage, AIResponse } from './types';
 
 export class LearningSystem {
   private config: LearningConfig;
@@ -28,10 +21,7 @@ export class LearningSystem {
   /**
    * 记录交互
    */
-  async recordInteraction(
-    userMessage: UserMessage,
-    aiResponse: AIResponse
-  ): Promise<void> {
+  async recordInteraction(userMessage: UserMessage, aiResponse: AIResponse): Promise<void> {
     // 计算性能指标
     const performance = await this.evaluatePerformance(userMessage, aiResponse);
 
@@ -60,10 +50,7 @@ export class LearningSystem {
   /**
    * 评估性能
    */
-  private async evaluatePerformance(
-    userMessage: UserMessage,
-    aiResponse: AIResponse
-  ): Promise<PerformanceMetric> {
+  private async evaluatePerformance(userMessage: UserMessage, aiResponse: AIResponse): Promise<PerformanceMetric> {
     // 响应时间已经在response中
     const responseTime = aiResponse.responseTime;
 
@@ -86,8 +73,8 @@ export class LearningSystem {
     const userWords = userContent.toLowerCase().split(/\s+/);
     const aiWords = aiContent.toLowerCase().split(/\s+/);
 
-    const matchCount = userWords.filter((word) =>
-      aiWords.some((aiWord) => aiWord.includes(word) || word.includes(aiWord))
+    const matchCount = userWords.filter(word =>
+      aiWords.some(aiWord => aiWord.includes(word) || word.includes(aiWord)),
     ).length;
 
     return Math.min(matchCount / userWords.length, 1);
@@ -118,10 +105,7 @@ export class LearningSystem {
   /**
    * 分析模式
    */
-  private async analyzePatterns(
-    userMessage: UserMessage,
-    aiResponse: AIResponse
-  ): Promise<void> {
+  private async analyzePatterns(userMessage: UserMessage, aiResponse: AIResponse): Promise<void> {
     // 提取关键词模式
     const keywords = this.extractKeywords(userMessage.content);
 
@@ -149,10 +133,7 @@ export class LearningSystem {
           confidence,
           evidence: [{ pattern, count }],
           actionable: true,
-          suggestedActions: [
-            `创建关于"${pattern}"的快捷回答`,
-            `优化"${pattern}"相关的工具`,
-          ],
+          suggestedActions: [`创建关于"${pattern}"的快捷回答`, `优化"${pattern}"相关的工具`],
           timestamp: new Date(),
         });
       }
@@ -170,18 +151,13 @@ export class LearningSystem {
     const words = content.toLowerCase().split(/\s+/);
     const stopWords = new Set(['的', '是', '在', '有', '和', '了', '吗', '呢', '啊']);
 
-    return words
-      .filter((word) => word.length > 1 && !stopWords.has(word))
-      .slice(0, 5);
+    return words.filter(word => word.length > 1 && !stopWords.has(word)).slice(0, 5);
   }
 
   /**
    * 知识提取
    */
-  private async extractKnowledge(
-    userMessage: UserMessage,
-    aiResponse: AIResponse
-  ): Promise<void> {
+  private async extractKnowledge(userMessage: UserMessage, aiResponse: AIResponse): Promise<void> {
     // 自动总结
     if (this.config.knowledgeExtraction?.autoSummarize) {
       // 这里可以调用模型进行总结
@@ -206,9 +182,7 @@ export class LearningSystem {
    */
   async learnFromFeedback(feedback: UserFeedback): Promise<void> {
     // 找到对应的交互
-    const interaction = this.interactions.find(
-      (i) => i.aiResponse.id === feedback.messageId
-    );
+    const interaction = this.interactions.find(i => i.aiResponse.id === feedback.messageId);
 
     if (interaction && interaction.performance) {
       // 更新用户满意度
@@ -224,10 +198,7 @@ export class LearningSystem {
           confidence: 1.0,
           evidence: [{ feedback, interaction }],
           actionable: true,
-          suggestedActions: [
-            '分析用户期望与实际响应的差距',
-            '优化相关提示词',
-          ],
+          suggestedActions: ['分析用户期望与实际响应的差距', '优化相关提示词'],
           timestamp: new Date(),
         });
       }
@@ -239,23 +210,17 @@ export class LearningSystem {
    */
   async generateInsights(): Promise<LearningInsight[]> {
     const recentPerformance = this.interactions
-      .filter((i) => i.performance)
+      .filter(i => i.performance)
       .slice(-50)
-      .map((i) => i.performance!);
+      .map(i => i.performance!);
 
     // 计算平均指标
     if (recentPerformance.length > 0) {
-      const avgResponseTime =
-        recentPerformance.reduce((sum, p) => sum + p.responseTime, 0) /
-        recentPerformance.length;
+      const avgResponseTime = recentPerformance.reduce((sum, p) => sum + p.responseTime, 0) / recentPerformance.length;
 
-      const avgRelevance =
-        recentPerformance.reduce((sum, p) => sum + p.relevance, 0) /
-        recentPerformance.length;
+      const avgRelevance = recentPerformance.reduce((sum, p) => sum + p.relevance, 0) / recentPerformance.length;
 
-      const avgUsefulness =
-        recentPerformance.reduce((sum, p) => sum + p.usefulness, 0) /
-        recentPerformance.length;
+      const avgUsefulness = recentPerformance.reduce((sum, p) => sum + p.usefulness, 0) / recentPerformance.length;
 
       // 生成性能洞察
       if (avgResponseTime > 5000) {
@@ -267,11 +232,7 @@ export class LearningSystem {
           confidence: 0.9,
           evidence: [{ avgResponseTime, sampleSize: recentPerformance.length }],
           actionable: true,
-          suggestedActions: [
-            '优化提示词长度',
-            '减少不必要的工具调用',
-            '考虑使用更快的模型',
-          ],
+          suggestedActions: ['优化提示词长度', '减少不必要的工具调用', '考虑使用更快的模型'],
           timestamp: new Date(),
         });
       }
@@ -285,11 +246,7 @@ export class LearningSystem {
           confidence: 0.85,
           evidence: [{ avgRelevance, sampleSize: recentPerformance.length }],
           actionable: true,
-          suggestedActions: [
-            '改进上下文理解',
-            '优化工具选择逻辑',
-            '增强提示词指导',
-          ],
+          suggestedActions: ['改进上下文理解', '优化工具选择逻辑', '增强提示词指导'],
           timestamp: new Date(),
         });
       }
@@ -302,9 +259,7 @@ export class LearningSystem {
    * 获取最近洞察
    */
   async getRecentInsights(count: number): Promise<LearningInsight[]> {
-    return this.insights
-      .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
-      .slice(0, count);
+    return this.insights.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(0, count);
   }
 
   /**
@@ -319,30 +274,22 @@ export class LearningSystem {
    */
   async getPerformanceStats() {
     const recentPerformance = this.interactions
-      .filter((i) => i.performance)
+      .filter(i => i.performance)
       .slice(-100)
-      .map((i) => i.performance!);
+      .map(i => i.performance!);
 
     if (recentPerformance.length === 0) {
       return null;
     }
 
     return {
-      avgResponseTime:
-        recentPerformance.reduce((sum, p) => sum + p.responseTime, 0) /
-        recentPerformance.length,
-      avgRelevance:
-        recentPerformance.reduce((sum, p) => sum + p.relevance, 0) /
-        recentPerformance.length,
-      avgUsefulness:
-        recentPerformance.reduce((sum, p) => sum + p.usefulness, 0) /
-        recentPerformance.length,
+      avgResponseTime: recentPerformance.reduce((sum, p) => sum + p.responseTime, 0) / recentPerformance.length,
+      avgRelevance: recentPerformance.reduce((sum, p) => sum + p.relevance, 0) / recentPerformance.length,
+      avgUsefulness: recentPerformance.reduce((sum, p) => sum + p.usefulness, 0) / recentPerformance.length,
       avgSatisfaction:
-        recentPerformance.filter((p) => p.userSatisfaction).length > 0
-          ? recentPerformance
-              .filter((p) => p.userSatisfaction)
-              .reduce((sum, p) => sum + (p.userSatisfaction || 0), 0) /
-            recentPerformance.filter((p) => p.userSatisfaction).length
+        recentPerformance.filter(p => p.userSatisfaction).length > 0
+          ? recentPerformance.filter(p => p.userSatisfaction).reduce((sum, p) => sum + (p.userSatisfaction || 0), 0) /
+            recentPerformance.filter(p => p.userSatisfaction).length
           : undefined,
       sampleSize: recentPerformance.length,
     };

@@ -15,7 +15,15 @@
 
 import { dbManager } from '../config/database';
 import { generateToken, verifyToken } from '../middleware/auth';
-import { loginRateLimit, registerRateLimit, validate, validateBody, sanitize, validationMiddleware, rateLimiter } from '../middleware';
+import {
+  loginRateLimit,
+  registerRateLimit,
+  validate,
+  validateBody,
+  sanitize,
+  validationMiddleware,
+  rateLimiter,
+} from '../middleware';
 
 // 简化的验证函数
 const validateEmail = (email: string): boolean => {
@@ -39,8 +47,8 @@ const refreshTokenSchema = {
   refreshToken: {
     type: 'string',
     required: true,
-    minLength: 1
-  }
+    minLength: 1,
+  },
 };
 
 const validateRefreshTokenData = (data: any): { isValid: boolean; errors: string[] } => {
@@ -52,7 +60,7 @@ const validateRefreshTokenData = (data: any): { isValid: boolean; errors: string
 
   return {
     isValid: errors.length === 0,
-    errors
+    errors,
   };
 };
 
@@ -124,11 +132,11 @@ export const login = async (request: Request): Promise<Response> => {
         success: false,
         error: '请求体解析失败',
         code: 'INVALID_JSON',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       return new Response(JSON.stringify(errorResponse), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -140,11 +148,11 @@ export const login = async (request: Request): Promise<Response> => {
         error: '请求数据验证失败',
         code: 'VALIDATION_ERROR',
         errors: validation.errors,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       return new Response(JSON.stringify(errorResponse), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -154,23 +162,26 @@ export const login = async (request: Request): Promise<Response> => {
 
     try {
       // 查找用户 - 使用实际的数据库结构
-      const userResult = await dbManager.query(`
+      const userResult = await dbManager.query(
+        `
         SELECT id, email, password_hash, name, role, status, last_login_at
         FROM users
         WHERE email = $1
-      `, [sanitizedEmail]);
+      `,
+        [sanitizedEmail]
+      );
 
       if (userResult.rows.length === 0) {
         const errorResponse = {
           success: false,
           error: '邮箱或密码错误',
           code: 'INVALID_CREDENTIALS',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
 
         return new Response(JSON.stringify(errorResponse), {
           status: 401,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
         });
       }
 
@@ -182,12 +193,12 @@ export const login = async (request: Request): Promise<Response> => {
           success: false,
           error: '账户已被禁用，请联系管理员',
           code: 'ACCOUNT_DISABLED',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
 
         return new Response(JSON.stringify(errorResponse), {
           status: 403,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
         });
       }
 
@@ -200,12 +211,12 @@ export const login = async (request: Request): Promise<Response> => {
           success: false,
           error: '邮箱或密码错误',
           code: 'INVALID_CREDENTIALS',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
 
         return new Response(JSON.stringify(errorResponse), {
           status: 401,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
         });
       }
 
@@ -213,22 +224,25 @@ export const login = async (request: Request): Promise<Response> => {
       const token = generateToken({
         userId: user.id,
         email: user.email,
-        role: user.role
+        role: user.role,
       });
 
       // 生成刷新令牌
       const refreshToken = generateToken({
         userId: user.id,
         email: user.email,
-        role: user.role
+        role: user.role,
       });
 
       // 更新最后登录时间
-      await dbManager.query(`
+      await dbManager.query(
+        `
         UPDATE users
         SET last_login_at = NOW()
         WHERE id = $1
-      `, [user.id]);
+      `,
+        [user.id]
+      );
 
       // 返回用户信息和令牌
       const response = {
@@ -239,45 +253,45 @@ export const login = async (request: Request): Promise<Response> => {
             email: user.email,
             name: user.name,
             role: user.role,
-            lastLoginAt: user.last_login_at
+            lastLoginAt: user.last_login_at,
           },
           token,
           refreshToken,
-          expiresIn: '24h'
+          expiresIn: '24h',
         },
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       return new Response(JSON.stringify(response), {
         status: 200,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     } catch (dbError) {
       console.error('数据库操作错误，使用模拟登录模式:', dbError);
       // 数据库连接失败，使用模拟模式
-      
+
       // 生成模拟用户数据
       const mockUser = {
         id: crypto.randomUUID(),
         email: sanitizedEmail,
         name: '模拟用户',
         role: 'user',
-        lastLoginAt: new Date().toISOString()
+        lastLoginAt: new Date().toISOString(),
       };
-      
+
       // 生成令牌
       const token = generateToken({
         userId: mockUser.id,
         email: mockUser.email,
-        role: mockUser.role
+        role: mockUser.role,
       });
-      
+
       const refreshToken = generateToken({
         userId: mockUser.id,
         email: mockUser.email,
-        role: mockUser.role
+        role: mockUser.role,
       });
-      
+
       // 返回模拟响应
       const response = {
         success: true,
@@ -285,30 +299,29 @@ export const login = async (request: Request): Promise<Response> => {
           user: mockUser,
           token,
           refreshToken,
-          expiresIn: '24h'
+          expiresIn: '24h',
         },
         message: '登录成功（模拟模式）',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-      
+
       return new Response(JSON.stringify(response), {
         status: 200,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
-
   } catch (error) {
     console.error('登录错误:', error);
     const errorResponse = {
       success: false,
       error: '登录过程中发生错误',
       code: 'LOGIN_ERROR',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(errorResponse), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 };
@@ -331,11 +344,11 @@ export const register = async (request: Request): Promise<Response> => {
         success: false,
         error: '请求体解析失败',
         code: 'INVALID_JSON',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       return new Response(JSON.stringify(errorResponse), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -347,11 +360,11 @@ export const register = async (request: Request): Promise<Response> => {
         error: '请求数据验证失败',
         code: 'VALIDATION_ERROR',
         errors: validation.errors,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       return new Response(JSON.stringify(errorResponse), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -362,21 +375,24 @@ export const register = async (request: Request): Promise<Response> => {
 
     try {
       // 检查邮箱是否已存在
-      const existingUserResult = await dbManager.query(`
+      const existingUserResult = await dbManager.query(
+        `
         SELECT id FROM users WHERE email = $1
-      `, [sanitizedEmail]);
+      `,
+        [sanitizedEmail]
+      );
 
       if (existingUserResult.rows.length > 0) {
         const errorResponse = {
           success: false,
           error: '邮箱已被注册',
           code: 'EMAIL_EXISTS',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
 
         return new Response(JSON.stringify(errorResponse), {
           status: 409,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
         });
       }
 
@@ -385,15 +401,14 @@ export const register = async (request: Request): Promise<Response> => {
       const passwordHash = await bcrypt.hash(password, 10);
 
       // 创建用户 - 使用实际的数据库结构
-      const createUserResult = await dbManager.query(`
+      const createUserResult = await dbManager.query(
+        `
         INSERT INTO users (email, password_hash, name, role)
         VALUES ($1, $2, $3, 'user')
         RETURNING id, created_at
-      `, [
-        sanitizedEmail,
-        passwordHash,
-        sanitizedName
-      ]);
+      `,
+        [sanitizedEmail, passwordHash, sanitizedName]
+      );
 
       const newUser = createUserResult.rows[0];
 
@@ -401,13 +416,13 @@ export const register = async (request: Request): Promise<Response> => {
       const token = generateToken({
         userId: newUser.id,
         email: sanitizedEmail,
-        role: 'user'
+        role: 'user',
       });
 
       const refreshToken = generateToken({
         userId: newUser.id,
         email: sanitizedEmail,
-        role: 'user'
+        role: 'user',
       });
 
       // 返回注册结果
@@ -419,46 +434,46 @@ export const register = async (request: Request): Promise<Response> => {
             email: sanitizedEmail,
             name: sanitizedName,
             role: 'user',
-            createdAt: newUser.created_at
+            createdAt: newUser.created_at,
           },
           token,
           refreshToken,
-          expiresIn: '24h'
+          expiresIn: '24h',
         },
         message: '注册成功',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       return new Response(JSON.stringify(response), {
         status: 201,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     } catch (dbError) {
       console.error('数据库操作错误，使用模拟注册模式:', dbError);
       // 数据库连接失败，使用模拟模式
-      
+
       // 生成模拟用户数据
       const mockUser = {
         id: crypto.randomUUID(),
         email: sanitizedEmail,
         name: sanitizedName,
         role: 'user',
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       };
-      
+
       // 生成令牌
       const token = generateToken({
         userId: mockUser.id,
         email: mockUser.email,
-        role: mockUser.role
+        role: mockUser.role,
       });
-      
+
       const refreshToken = generateToken({
         userId: mockUser.id,
         email: mockUser.email,
-        role: mockUser.role
+        role: mockUser.role,
       });
-      
+
       // 返回模拟响应
       const response = {
         success: true,
@@ -466,30 +481,29 @@ export const register = async (request: Request): Promise<Response> => {
           user: mockUser,
           token,
           refreshToken,
-          expiresIn: '24h'
+          expiresIn: '24h',
         },
         message: '注册成功（模拟模式）',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-      
+
       return new Response(JSON.stringify(response), {
         status: 201,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
-
   } catch (error) {
     console.error('注册错误:', error);
     const errorResponse = {
       success: false,
       error: '注册过程中发生错误',
       code: 'REGISTRATION_ERROR',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(errorResponse), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 };
@@ -505,11 +519,11 @@ export const refreshToken = async (request: Request): Promise<Response> => {
         success: false,
         error: '请求体解析失败',
         code: 'INVALID_JSON',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       return new Response(JSON.stringify(errorResponse), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -520,11 +534,11 @@ export const refreshToken = async (request: Request): Promise<Response> => {
         error: '请求数据验证失败',
         code: 'VALIDATION_ERROR',
         errors: validation.errors,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       return new Response(JSON.stringify(errorResponse), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -537,12 +551,12 @@ export const refreshToken = async (request: Request): Promise<Response> => {
         success: false,
         error: '无效的刷新令牌',
         code: 'INVALID_REFRESH_TOKEN',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       return new Response(JSON.stringify(errorResponse), {
         status: 401,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -551,14 +565,14 @@ export const refreshToken = async (request: Request): Promise<Response> => {
       userId: tokenResult.user!.id,
       email: tokenResult.user!.email,
       role: tokenResult.user!.role,
-      restaurantId: tokenResult.user!.restaurantId
+      restaurantId: tokenResult.user!.restaurantId,
     });
 
     const newRefreshToken = generateToken({
       userId: tokenResult.user!.id,
       email: tokenResult.user!.email,
       role: tokenResult.user!.role,
-      restaurantId: tokenResult.user!.restaurantId
+      restaurantId: tokenResult.user!.restaurantId,
     });
 
     const response = {
@@ -566,28 +580,27 @@ export const refreshToken = async (request: Request): Promise<Response> => {
       data: {
         token: newToken,
         refreshToken: newRefreshToken,
-        expiresIn: '24h'
+        expiresIn: '24h',
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(response), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('刷新令牌错误:', error);
     const errorResponse = {
       success: false,
       error: '刷新令牌过程中发生错误',
       code: 'REFRESH_TOKEN_ERROR',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(errorResponse), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 };
@@ -604,12 +617,12 @@ export const verifyTokenEndpoint = async (request: Request): Promise<Response> =
         success: false,
         error: '缺少Authorization头',
         code: 'MISSING_AUTH_HEADER',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       return new Response(JSON.stringify(errorResponse), {
         status: 401,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -617,31 +630,32 @@ export const verifyTokenEndpoint = async (request: Request): Promise<Response> =
 
     const response = {
       success: tokenResult.success,
-      data: tokenResult.success ? {
-        user: tokenResult.user
-      } : null,
+      data: tokenResult.success
+        ? {
+            user: tokenResult.user,
+          }
+        : null,
       error: tokenResult.error,
       code: tokenResult.code,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(response), {
       status: tokenResult.success ? 200 : 401,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('验证令牌错误:', error);
     const errorResponse = {
       success: false,
       error: '验证令牌过程中发生错误',
       code: 'VERIFY_TOKEN_ERROR',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(errorResponse), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 };
@@ -656,26 +670,25 @@ export const logout = async (request: Request): Promise<Response> => {
     const response = {
       success: true,
       message: '登出成功',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(response), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('登出错误:', error);
     const errorResponse = {
       success: false,
       error: '登出过程中发生错误',
       code: 'LOGOUT_ERROR',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(errorResponse), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 };
@@ -686,5 +699,5 @@ export const authRoutes = {
   'POST /api/v1/auth/register': register,
   'POST /api/v1/auth/refresh-token': refreshToken,
   'GET /api/v1/auth/verify': verifyTokenEndpoint,
-  'POST /api/v1/auth/logout': logout
+  'POST /api/v1/auth/logout': logout,
 };

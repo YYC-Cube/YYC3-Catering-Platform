@@ -30,18 +30,13 @@ export enum ErrorCode {
   SERVICE_UNAVAILABLE = 'SERVICE_UNAVAILABLE',
   RATE_LIMIT_EXCEEDED = 'RATE_LIMIT_EXCEEDED',
   PAYLOAD_TOO_LARGE = 'PAYLOAD_TOO_LARGE',
-  BAD_REQUEST = 'BAD_REQUEST'
+  BAD_REQUEST = 'BAD_REQUEST',
 }
 
 /**
  * HTTP 错误处理器类型
  */
-export type HttpErrorHandler = (
-  err: AppError | Error | unknown,
-  req: unknown,
-  res: unknown,
-  next: unknown
-) => void;
+export type HttpErrorHandler = (err: AppError | Error | unknown, req: unknown, res: unknown, next: unknown) => void;
 
 /**
  * 错误响应接口

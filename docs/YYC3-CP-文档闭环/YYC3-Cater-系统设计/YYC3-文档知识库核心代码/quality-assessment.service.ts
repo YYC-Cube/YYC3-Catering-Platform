@@ -190,7 +190,7 @@ export class QualityAssessmentService {
     let score = 0;
 
     // 检查平均句子长度
-    const sentences = content.split(/[.!?]+/).filter((s) => s.trim().length > 0);
+    const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
     const avgSentenceLength = sentences.reduce((sum, s) => sum + s.length, 0) / sentences.length;
 
     if (avgSentenceLength < 100) score += 30;
@@ -198,7 +198,7 @@ export class QualityAssessmentService {
     else if (avgSentenceLength < 200) score += 10;
 
     // 检查段落长度
-    const paragraphs = content.split(/\n\n+/).filter((p) => p.trim().length > 0);
+    const paragraphs = content.split(/\n\n+/).filter(p => p.trim().length > 0);
     const avgParagraphLength = paragraphs.reduce((sum, p) => sum + p.length, 0) / paragraphs.length;
 
     if (avgParagraphLength < 500) score += 30;
@@ -365,7 +365,7 @@ export class QualityAssessmentService {
         .toLowerCase()
         .replace(/[^\w\s\u4e00-\u9fa5]/g, '')
         .split(/\s+/)
-        .filter((word) => word.length > 2);
+        .filter(word => word.length > 2);
 
       // 统计词频
       const wordCount = new Map<string, number>();

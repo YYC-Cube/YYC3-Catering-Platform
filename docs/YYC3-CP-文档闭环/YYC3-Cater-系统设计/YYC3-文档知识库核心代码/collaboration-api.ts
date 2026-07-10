@@ -71,7 +71,7 @@ const replyCommentSchema = z.object({
  * @access 需要用户认证
  * @returns {Promise<Response>} 会话信息
  */
-app.post('/sessions/:documentId/join', zValidator('json', joinSessionSchema), async (c) => {
+app.post('/sessions/:documentId/join', zValidator('json', joinSessionSchema), async c => {
   try {
     const documentId = c.req.param('documentId');
     const { userId, userName } = c.req.valid('json');
@@ -86,10 +86,13 @@ app.post('/sessions/:documentId/join', zValidator('json', joinSessionSchema), as
     });
   } catch (error) {
     logger.error('Join collaboration session failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '加入协作会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '加入协作会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -99,17 +102,20 @@ app.post('/sessions/:documentId/join', zValidator('json', joinSessionSchema), as
  * @access 需要用户认证
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/sessions/:documentId/leave', async (c) => {
+app.post('/sessions/:documentId/leave', async c => {
   try {
     const documentId = c.req.param('documentId');
     const body = await c.req.json();
     const { userId } = body;
 
     if (!userId) {
-      return c.json({
-        success: false,
-        error: '必须提供用户ID',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '必须提供用户ID',
+        },
+        400,
+      );
     }
 
     logger.info('Leave collaboration session requested', { documentId, userId });
@@ -122,10 +128,13 @@ app.post('/sessions/:documentId/leave', async (c) => {
     });
   } catch (error) {
     logger.error('Leave collaboration session failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '离开协作会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '离开协作会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -135,7 +144,7 @@ app.post('/sessions/:documentId/leave', async (c) => {
  * @access 需要用户认证
  * @returns {Promise<Response>} 活跃会话列表
  */
-app.get('/sessions/:documentId/active', async (c) => {
+app.get('/sessions/:documentId/active', async c => {
   try {
     const documentId = c.req.param('documentId');
 
@@ -153,10 +162,13 @@ app.get('/sessions/:documentId/active', async (c) => {
     });
   } catch (error) {
     logger.error('Get active sessions failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取活跃会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取活跃会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -166,7 +178,7 @@ app.get('/sessions/:documentId/active', async (c) => {
  * @access 需要用户认证
  * @returns {Promise<Response>} 操作结果
  */
-app.put('/sessions/:documentId/cursor', zValidator('json', cursorSchema), async (c) => {
+app.put('/sessions/:documentId/cursor', zValidator('json', cursorSchema), async c => {
   try {
     const documentId = c.req.param('documentId');
     const cursor = c.req.valid('json');
@@ -174,10 +186,13 @@ app.put('/sessions/:documentId/cursor', zValidator('json', cursorSchema), async 
     const { userId } = body;
 
     if (!userId) {
-      return c.json({
-        success: false,
-        error: '必须提供用户ID',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '必须提供用户ID',
+        },
+        400,
+      );
     }
 
     logger.info('Update cursor requested', { documentId, userId, cursor });
@@ -190,10 +205,13 @@ app.put('/sessions/:documentId/cursor', zValidator('json', cursorSchema), async 
     });
   } catch (error) {
     logger.error('Update cursor failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '更新光标位置失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '更新光标位置失败',
+      },
+      500,
+    );
   }
 });
 
@@ -203,7 +221,7 @@ app.put('/sessions/:documentId/cursor', zValidator('json', cursorSchema), async 
  * @access 需要用户认证
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/operations', zValidator('json', editOperationSchema), async (c) => {
+app.post('/operations', zValidator('json', editOperationSchema), async c => {
   try {
     const operation = c.req.valid('json');
 
@@ -221,10 +239,13 @@ app.post('/operations', zValidator('json', editOperationSchema), async (c) => {
     });
   } catch (error) {
     logger.error('Apply edit operation failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '应用编辑操作失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '应用编辑操作失败',
+      },
+      500,
+    );
   }
 });
 
@@ -234,7 +255,7 @@ app.post('/operations', zValidator('json', editOperationSchema), async (c) => {
  * @access 需要用户认证
  * @returns {Promise<Response>} 编辑历史
  */
-app.get('/documents/:documentId/operations', async (c) => {
+app.get('/documents/:documentId/operations', async c => {
   try {
     const documentId = c.req.param('documentId');
     const limit = parseInt(c.req.query('limit') || '50');
@@ -254,10 +275,13 @@ app.get('/documents/:documentId/operations', async (c) => {
     });
   } catch (error) {
     logger.error('Get edit history failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取编辑历史失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取编辑历史失败',
+      },
+      500,
+    );
   }
 });
 
@@ -267,7 +291,7 @@ app.get('/documents/:documentId/operations', async (c) => {
  * @access 需要用户认证
  * @returns {Promise<Response>} 评论信息
  */
-app.post('/documents/:documentId/comments', zValidator('json', addCommentSchema), async (c) => {
+app.post('/documents/:documentId/comments', zValidator('json', addCommentSchema), async c => {
   try {
     const documentId = c.req.param('documentId');
     const { userId, userName, position, content } = c.req.valid('json');
@@ -282,10 +306,13 @@ app.post('/documents/:documentId/comments', zValidator('json', addCommentSchema)
     });
   } catch (error) {
     logger.error('Add comment failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '添加评论失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '添加评论失败',
+      },
+      500,
+    );
   }
 });
 
@@ -295,7 +322,7 @@ app.post('/documents/:documentId/comments', zValidator('json', addCommentSchema)
  * @access 需要用户认证
  * @returns {Promise<Response>} 回复信息
  */
-app.post('/documents/:documentId/comments/:commentId/replies', zValidator('json', replyCommentSchema), async (c) => {
+app.post('/documents/:documentId/comments/:commentId/replies', zValidator('json', replyCommentSchema), async c => {
   try {
     const documentId = c.req.param('documentId');
     const commentId = c.req.param('commentId');
@@ -311,10 +338,13 @@ app.post('/documents/:documentId/comments/:commentId/replies', zValidator('json'
     });
   } catch (error) {
     logger.error('Reply comment failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '回复评论失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '回复评论失败',
+      },
+      500,
+    );
   }
 });
 
@@ -324,7 +354,7 @@ app.post('/documents/:documentId/comments/:commentId/replies', zValidator('json'
  * @access 需要用户认证
  * @returns {Promise<Response>} 操作结果
  */
-app.put('/documents/:documentId/comments/:commentId/resolve', async (c) => {
+app.put('/documents/:documentId/comments/:commentId/resolve', async c => {
   try {
     const documentId = c.req.param('documentId');
     const commentId = c.req.param('commentId');
@@ -332,10 +362,13 @@ app.put('/documents/:documentId/comments/:commentId/resolve', async (c) => {
     const { resolved } = body;
 
     if (typeof resolved !== 'boolean') {
-      return c.json({
-        success: false,
-        error: '必须提供resolved参数',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '必须提供resolved参数',
+        },
+        400,
+      );
     }
 
     logger.info('Resolve comment requested', { documentId, commentId, resolved });
@@ -348,10 +381,13 @@ app.put('/documents/:documentId/comments/:commentId/resolve', async (c) => {
     });
   } catch (error) {
     logger.error('Resolve comment failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '解决评论失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '解决评论失败',
+      },
+      500,
+    );
   }
 });
 
@@ -361,7 +397,7 @@ app.put('/documents/:documentId/comments/:commentId/resolve', async (c) => {
  * @access 需要用户认证
  * @returns {Promise<Response>} 评论列表
  */
-app.get('/documents/:documentId/comments', async (c) => {
+app.get('/documents/:documentId/comments', async c => {
   try {
     const documentId = c.req.param('documentId');
     const includeResolved = c.req.query('includeResolved') === 'true';
@@ -380,10 +416,13 @@ app.get('/documents/:documentId/comments', async (c) => {
     });
   } catch (error) {
     logger.error('Get comments failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取评论失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取评论失败',
+      },
+      500,
+    );
   }
 });
 
@@ -393,7 +432,7 @@ app.get('/documents/:documentId/comments', async (c) => {
  * @access 需要用户认证
  * @returns {Promise<Response>} 操作结果
  */
-app.delete('/documents/:documentId/comments/:commentId', async (c) => {
+app.delete('/documents/:documentId/comments/:commentId', async c => {
   try {
     const documentId = c.req.param('documentId');
     const commentId = c.req.param('commentId');
@@ -408,10 +447,13 @@ app.delete('/documents/:documentId/comments/:commentId', async (c) => {
     });
   } catch (error) {
     logger.error('Delete comment failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '删除评论失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '删除评论失败',
+      },
+      500,
+    );
   }
 });
 
@@ -421,7 +463,7 @@ app.delete('/documents/:documentId/comments/:commentId', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/cleanup', async (c) => {
+app.post('/cleanup', async c => {
   try {
     const body = await c.req.json();
     const { timeoutMinutes = 30 } = body;
@@ -436,10 +478,13 @@ app.post('/cleanup', async (c) => {
     });
   } catch (error) {
     logger.error('Cleanup inactive sessions failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '清理不活跃会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '清理不活跃会话失败',
+      },
+      500,
+    );
   }
 });
 

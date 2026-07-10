@@ -21,4 +21,4 @@ export const closedLoopConfig = {
       expectations: ['ROI', '市场份额', '创新能力'],
     },
   ],
-}
+};

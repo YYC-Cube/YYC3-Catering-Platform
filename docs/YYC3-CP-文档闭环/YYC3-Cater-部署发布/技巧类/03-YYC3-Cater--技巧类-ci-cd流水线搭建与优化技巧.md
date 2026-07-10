@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ CI/CD流水线搭建与优化技巧
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
+| 属性         | 内容                           |
+| ------------ | ------------------------------ |
 | **文档标题** | YYC³ CI/CD流水线搭建与优化技巧 |
-| **文档类型** | 技巧类文档 |
-| **所属阶段** | 部署发布 |
-| **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **文档类型** | 技巧类文档                     |
+| **所属阶段** | 部署发布                       |
+| **遵循规范** | YYC³ 团队标准化规范 v1.0.0     |
+| **版本号**   | v1.0.0                         |
+| **创建日期** | 2025-01-30                     |
+| **作者**     | YYC³ Team                      |
+| **更新日期** | 2025-01-30                     |
 
 ---
 
@@ -141,7 +142,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '18'
+  NODE_VERSION: "18"
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
@@ -158,7 +159,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -185,7 +186,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -236,7 +237,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -308,14 +309,14 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ needs.build.outputs.image-tag }}
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+          format: "sarif"
+          output: "trivy-results.sarif"
 
       - name: Upload Trivy results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: "trivy-results.sarif"
 
   # 部署到测试环境
   deploy-staging:
@@ -391,7 +392,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          text: 'Production deployment completed'
+          text: "Production deployment completed"
           webhook_url: ${{ secrets.SLACK_WEBHOOK }}
         if: always()
 ```
@@ -550,86 +551,73 @@ deploy:production:
 // .eslintrc.js
 module.exports = {
   root: true,
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2022,
-    sourceType: 'module',
-    project: './tsconfig.json',
+    sourceType: "module",
+    project: "./tsconfig.json",
     tsconfigRootDir: __dirname,
   },
-  plugins: [
-    '@typescript-eslint',
-    'import',
-    'jsx-a11y',
-    'react',
-    'react-hooks',
-  ],
+  plugins: ["@typescript-eslint", "import", "jsx-a11y", "react", "react-hooks"],
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:jsx-a11y/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'prettier',
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier",
   ],
   rules: {
     // TypeScript规则
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/strict-boolean-expressions': 'error',
-    '@typescript-eslint/no-floating-promises': 'error',
-    '@typescript-eslint/no-misused-promises': 'error',
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/strict-boolean-expressions": "error",
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-misused-promises": "error",
 
     // React规则
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
 
     // Import规则
-    'import/order': [
-      'error',
+    "import/order": [
+      "error",
       {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-        ],
-        'newlines-between': 'always',
+        groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
         alphabetize: {
-          order: 'asc',
+          order: "asc",
           caseInsensitive: true,
         },
       },
     ],
-    'import/no-unresolved': 'error',
-    'import/no-cycle': 'error',
+    "import/no-unresolved": "error",
+    "import/no-cycle": "error",
 
     // 通用规则
-    'no-console': ['warn', { allow: ['warn', 'error'] }],
-    'no-debugger': 'error',
-    'no-alert': 'error',
-    'no-var': 'error',
-    'prefer-const': 'error',
-    'eqeqeq': ['error', 'always'],
-    'curly': ['error', 'all'],
+    "no-console": ["warn", { allow: ["warn", "error"] }],
+    "no-debugger": "error",
+    "no-alert": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    eqeqeq: ["error", "always"],
+    curly: ["error", "all"],
   },
   settings: {
     react: {
-      version: 'detect',
+      version: "detect",
     },
-    'import/resolver': {
+    "import/resolver": {
       typescript: {
         alwaysTryTypes: true,
-        project: './tsconfig.json',
+        project: "./tsconfig.json",
       },
     },
   },
@@ -646,16 +634,16 @@ module.exports = {
   useTabs: false,
   semi: true,
   singleQuote: true,
-  quoteProps: 'as-needed',
+  quoteProps: "as-needed",
   jsxSingleQuote: false,
-  trailingComma: 'all',
+  trailingComma: "all",
   bracketSpacing: true,
   bracketSameLine: false,
-  arrowParens: 'always',
-  proseWrap: 'preserve',
-  htmlWhitespaceSensitivity: 'css',
-  endOfLine: 'lf',
-  embeddedLanguageFormatting: 'auto',
+  arrowParens: "always",
+  proseWrap: "preserve",
+  htmlWhitespaceSensitivity: "css",
+  endOfLine: "lf",
+  embeddedLanguageFormatting: "auto",
   singleAttributePerLine: false,
 };
 ```
@@ -712,43 +700,37 @@ module.exports = {
 
 ```typescript
 // vitest.config.ts
-import { defineConfig } from 'vitest/config';
-import react from '@vitejs/plugin-react';
-import path from 'path';
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
+    environment: "jsdom",
+    setupFiles: ["./src/test/setup.ts"],
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html', 'lcov'],
-      exclude: [
-        'node_modules/',
-        'src/test/',
-        '**/*.d.ts',
-        '**/*.config.*',
-        '**/mockData',
-      ],
+      provider: "v8",
+      reporter: ["text", "json", "html", "lcov"],
+      exclude: ["node_modules/", "src/test/", "**/*.d.ts", "**/*.config.*", "**/mockData"],
       lines: 80,
       functions: 80,
       branches: 80,
       statements: 80,
     },
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
-    exclude: ['node_modules', 'dist', '.next', 'build'],
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    exclude: ["node_modules", "dist", ".next", "build"],
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@/components': path.resolve(__dirname, './src/components'),
-      '@/lib': path.resolve(__dirname, './src/lib'),
-      '@/hooks': path.resolve(__dirname, './src/hooks'),
-      '@/utils': path.resolve(__dirname, './src/utils'),
-      '@/types': path.resolve(__dirname, './src/types'),
-      '@/config': path.resolve(__dirname, './src/config'),
+      "@": path.resolve(__dirname, "./src"),
+      "@/components": path.resolve(__dirname, "./src/components"),
+      "@/lib": path.resolve(__dirname, "./src/lib"),
+      "@/hooks": path.resolve(__dirname, "./src/hooks"),
+      "@/utils": path.resolve(__dirname, "./src/utils"),
+      "@/types": path.resolve(__dirname, "./src/types"),
+      "@/config": path.resolve(__dirname, "./src/config"),
     },
   },
 });
@@ -758,47 +740,47 @@ export default defineConfig({
 
 ```typescript
 // src/lib/utils.test.ts
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { formatDate, formatCurrency, debounce } from './utils';
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { formatDate, formatCurrency, debounce } from "./utils";
 
-describe('Utils', () => {
-  describe('formatDate', () => {
-    it('应该正确格式化日期', () => {
-      const date = new Date('2025-01-30');
-      expect(formatDate(date)).toBe('2025-01-30');
+describe("Utils", () => {
+  describe("formatDate", () => {
+    it("应该正确格式化日期", () => {
+      const date = new Date("2025-01-30");
+      expect(formatDate(date)).toBe("2025-01-30");
     });
 
-    it('应该支持自定义格式', () => {
-      const date = new Date('2025-01-30');
-      expect(formatDate(date, 'YYYY/MM/DD')).toBe('2025/01/30');
+    it("应该支持自定义格式", () => {
+      const date = new Date("2025-01-30");
+      expect(formatDate(date, "YYYY/MM/DD")).toBe("2025/01/30");
     });
 
-    it('应该处理无效日期', () => {
-      expect(formatDate(null as any)).toBe('');
-      expect(formatDate(undefined as any)).toBe('');
-    });
-  });
-
-  describe('formatCurrency', () => {
-    it('应该正确格式化货币', () => {
-      expect(formatCurrency(1234.56)).toBe('¥1,234.56');
-    });
-
-    it('应该支持自定义货币符号', () => {
-      expect(formatCurrency(1234.56, '$')).toBe('$1,234.56');
-    });
-
-    it('应该处理负数', () => {
-      expect(formatCurrency(-1234.56)).toBe('-¥1,234.56');
+    it("应该处理无效日期", () => {
+      expect(formatDate(null as any)).toBe("");
+      expect(formatDate(undefined as any)).toBe("");
     });
   });
 
-  describe('debounce', () => {
+  describe("formatCurrency", () => {
+    it("应该正确格式化货币", () => {
+      expect(formatCurrency(1234.56)).toBe("¥1,234.56");
+    });
+
+    it("应该支持自定义货币符号", () => {
+      expect(formatCurrency(1234.56, "$")).toBe("$1,234.56");
+    });
+
+    it("应该处理负数", () => {
+      expect(formatCurrency(-1234.56)).toBe("-¥1,234.56");
+    });
+  });
+
+  describe("debounce", () => {
     beforeEach(() => {
       vi.useFakeTimers();
     });
 
-    it('应该延迟执行函数', () => {
+    it("应该延迟执行函数", () => {
       const fn = vi.fn();
       const debouncedFn = debounce(fn, 100);
 
@@ -809,7 +791,7 @@ describe('Utils', () => {
       expect(fn).toHaveBeenCalledTimes(1);
     });
 
-    it('应该取消之前的调用', () => {
+    it("应该取消之前的调用", () => {
       const fn = vi.fn();
       const debouncedFn = debounce(fn, 100);
 
@@ -828,43 +810,40 @@ describe('Utils', () => {
 
 ```typescript
 // src/test/integration/api.test.ts
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { setupServer } from 'msw/node';
-import { rest } from 'msw';
-import { apiClient } from '@/lib/api-client';
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { setupServer } from "msw/node";
+import { rest } from "msw";
+import { apiClient } from "@/lib/api-client";
 
 const server = setupServer(
-  rest.get('/api/users', (req, res, ctx) => {
+  rest.get("/api/users", (req, res, ctx) => {
     return res(
       ctx.json([
-        { id: 1, name: 'User 1' },
-        { id: 2, name: 'User 2' },
+        { id: 1, name: "User 1" },
+        { id: 2, name: "User 2" },
       ])
     );
   }),
 
-  rest.post('/api/users', (req, res, ctx) => {
-    return res(
-      ctx.status(201),
-      ctx.json({ id: 3, name: 'New User' })
-    );
+  rest.post("/api/users", (req, res, ctx) => {
+    return res(ctx.status(201), ctx.json({ id: 3, name: "New User" }));
   })
 );
 
-describe('API Integration Tests', () => {
+describe("API Integration Tests", () => {
   beforeAll(() => server.listen());
   afterAll(() => server.close());
 
-  it('应该获取用户列表', async () => {
+  it("应该获取用户列表", async () => {
     const users = await apiClient.getUsers();
     expect(users).toHaveLength(2);
-    expect(users[0].name).toBe('User 1');
+    expect(users[0].name).toBe("User 1");
   });
 
-  it('应该创建新用户', async () => {
-    const newUser = await apiClient.createUser({ name: 'New User' });
+  it("应该创建新用户", async () => {
+    const newUser = await apiClient.createUser({ name: "New User" });
     expect(newUser.id).toBe(3);
-    expect(newUser.name).toBe('New User');
+    expect(newUser.name).toBe("New User");
   });
 });
 ```
@@ -886,31 +865,31 @@ const nextConfig = {
 
   // 环境变量
   env: {
-    NEXT_PUBLIC_APP_NAME: 'YYC³ Web',
+    NEXT_PUBLIC_APP_NAME: "YYC³ Web",
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
 
   // 图片优化
   images: {
-    domains: ['yyc3.com'],
-    formats: ['image/avif', 'image/webp'],
+    domains: ["yyc3.com"],
+    formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
   // 输出配置
-  output: 'standalone',
-  outputMode: 'export',
+  output: "standalone",
+  outputMode: "export",
 
   // 实验性功能
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    optimizePackageImports: ["lucide-react", "@radix-ui/react-icons"],
   },
 
   // 性能优化
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
 
   // Webpack配置
@@ -1326,31 +1305,31 @@ echo "✅ 回滚完成"
 
 ```typescript
 // src/config/env.ts
-import { z } from 'zod';
+import { z } from "zod";
 
 const envSchema = z.object({
   // 应用配置
-  NODE_ENV: z.enum(['development', 'staging', 'production']).default('development'),
-  PORT: z.string().default('3200'),
-  APP_NAME: z.string().default('YYC³ Web'),
+  NODE_ENV: z.enum(["development", "staging", "production"]).default("development"),
+  PORT: z.string().default("3200"),
+  APP_NAME: z.string().default("YYC³ Web"),
   APP_URL: z.string().url(),
 
   // 数据库配置
   DATABASE_URL: z.string().url(),
-  DATABASE_POOL_MIN: z.string().default('2'),
-  DATABASE_POOL_MAX: z.string().default('10'),
+  DATABASE_POOL_MIN: z.string().default("2"),
+  DATABASE_POOL_MAX: z.string().default("10"),
 
   // Redis配置
   REDIS_URL: z.string().url(),
-  REDIS_PREFIX: z.string().default('yyc3:'),
+  REDIS_PREFIX: z.string().default("yyc3:"),
 
   // JWT配置
   JWT_SECRET: z.string().min(32),
-  JWT_EXPIRES_IN: z.string().default('7d'),
+  JWT_EXPIRES_IN: z.string().default("7d"),
 
   // 第三方服务
   SMTP_HOST: z.string().optional(),
-  SMTP_PORT: z.string().default('587'),
+  SMTP_PORT: z.string().default("587"),
   SMTP_USER: z.string().optional(),
   SMTP_PASS: z.string().optional(),
 
@@ -1359,8 +1338,8 @@ const envSchema = z.object({
   SENTRY_ENVIRONMENT: z.string().optional(),
 
   // 日志配置
-  LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
-  LOG_FORMAT: z.enum(['json', 'text']).default('json'),
+  LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
+  LOG_FORMAT: z.enum(["json", "text"]).default("json"),
 });
 
 export const env = envSchema.parse(process.env);
@@ -1550,55 +1529,55 @@ metadata:
     release: prometheus
 spec:
   groups:
-  - name: deployment.rules
-    rules:
-    # 部署失败告警
-    - alert: DeploymentFailed
-      expr: |
-        kube_deployment_status_replicas_unavailable{deployment="yyc3-web"} > 0
-      for: 5m
-      labels:
-        severity: critical
-        team: yyc3
-      annotations:
-        summary: "Deployment {{ $labels.deployment }} has unavailable replicas"
-        description: "Deployment {{ $labels.deployment }} has {{ $value }} unavailable replicas for more than 5 minutes"
+    - name: deployment.rules
+      rules:
+        # 部署失败告警
+        - alert: DeploymentFailed
+          expr: |
+            kube_deployment_status_replicas_unavailable{deployment="yyc3-web"} > 0
+          for: 5m
+          labels:
+            severity: critical
+            team: yyc3
+          annotations:
+            summary: "Deployment {{ $labels.deployment }} has unavailable replicas"
+            description: "Deployment {{ $labels.deployment }} has {{ $value }} unavailable replicas for more than 5 minutes"
 
-    # Pod重启告警
-    - alert: PodRestarting
-      expr: |
-        increase(kube_pod_container_status_restarts_total{container="web"}[15m]) > 0
-      for: 5m
-      labels:
-        severity: warning
-        team: yyc3
-      annotations:
-        summary: "Pod {{ $labels.pod }} is restarting"
-        description: "Pod {{ $labels.pod }} has restarted {{ $value }} times in the last 15 minutes"
+        # Pod重启告警
+        - alert: PodRestarting
+          expr: |
+            increase(kube_pod_container_status_restarts_total{container="web"}[15m]) > 0
+          for: 5m
+          labels:
+            severity: warning
+            team: yyc3
+          annotations:
+            summary: "Pod {{ $labels.pod }} is restarting"
+            description: "Pod {{ $labels.pod }} has restarted {{ $value }} times in the last 15 minutes"
 
-    # 镜像拉取失败告警
-    - alert: ImagePullBackOff
-      expr: |
-        kube_pod_container_status_waiting_reason{reason="ImagePullBackOff"} > 0
-      for: 5m
-      labels:
-        severity: critical
-        team: yyc3
-      annotations:
-        summary: "Pod {{ $labels.pod }} has ImagePullBackOff"
-        description: "Pod {{ $labels.pod }} cannot pull image {{ $labels.image }}"
+        # 镜像拉取失败告警
+        - alert: ImagePullBackOff
+          expr: |
+            kube_pod_container_status_waiting_reason{reason="ImagePullBackOff"} > 0
+          for: 5m
+          labels:
+            severity: critical
+            team: yyc3
+          annotations:
+            summary: "Pod {{ $labels.pod }} has ImagePullBackOff"
+            description: "Pod {{ $labels.pod }} cannot pull image {{ $labels.image }}"
 
-    # 部署回滚告警
-    - alert: DeploymentRolledBack
-      expr: |
-        increase(kube_deployment_status_replicas_updated{deployment="yyc3-web"}[1h]) < 0
-      for: 1m
-      labels:
-        severity: warning
-        team: yyc3
-      annotations:
-        summary: "Deployment {{ $labels.deployment }} has been rolled back"
-        description: "Deployment {{ $labels.deployment }} has been rolled back"
+        # 部署回滚告警
+        - alert: DeploymentRolledBack
+          expr: |
+            increase(kube_deployment_status_replicas_updated{deployment="yyc3-web"}[1h]) < 0
+          for: 1m
+          labels:
+            severity: warning
+            team: yyc3
+          annotations:
+            summary: "Deployment {{ $labels.deployment }} has been rolled back"
+            description: "Deployment {{ $labels.deployment }} has been rolled back"
 ```
 
 ### 9.3 通知配置
@@ -1666,8 +1645,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -1733,8 +1712,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       # Next.js缓存
       - name: Cache Next.js build
@@ -1801,7 +1780,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -1874,8 +1853,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -1932,13 +1911,10 @@ jobs:
 
 ## 📄 文档标尾
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1959,8 +1935,6 @@ jobs:
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -1989,8 +1963,6 @@ jobs:
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -2028,7 +2000,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -2044,8 +2016,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -2058,7 +2028,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -2073,9 +2043,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -2083,9 +2053,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -2093,20 +2066,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -2115,6 +2086,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -2130,17 +2102,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -2148,6 +2121,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -2158,6 +2132,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -2166,8 +2141,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -2175,21 +2148,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2198,10 +2173,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2227,16 +2199,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2245,26 +2217,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -2280,7 +2247,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -2312,14 +2279,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -2330,17 +2295,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -2350,17 +2318,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -2370,21 +2341,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

@@ -113,10 +113,7 @@ class AIQAService {
    * @param question 用户问题
    * @returns 答案结果
    */
-  async processQuestion(
-    sessionId: string,
-    question: string
-  ): Promise<AnswerResult> {
+  async processQuestion(sessionId: string, question: string): Promise<AnswerResult> {
     const session = this.sessions.get(sessionId);
     if (!session) {
       throw new Error('Session not found');
@@ -206,7 +203,7 @@ class AIQAService {
   private async generateAnswer(
     question: string,
     messages: ChatMessage[],
-    retrievalResults: RetrievalResult[]
+    retrievalResults: RetrievalResult[],
   ): Promise<Omit<AnswerResult, 'relatedQuestions'>> {
     // 构建上下文
     const context = this.buildContext(messages, retrievalResults);
@@ -233,10 +230,7 @@ class AIQAService {
    * @param retrievalResults 检索结果
    * @returns 上下文字符串
    */
-  private buildContext(
-    messages: ChatMessage[],
-    retrievalResults: RetrievalResult[]
-  ): string {
+  private buildContext(messages: ChatMessage[], retrievalResults: RetrievalResult[]): string {
     let context = '';
 
     // 添加检索到的文档内容
@@ -293,17 +287,13 @@ class AIQAService {
    * @param question 用户问题
    * @returns 生成的答案
    */
-  private async callLLM(
-    systemPrompt: string,
-    context: string,
-    question: string
-  ): Promise<string> {
+  private async callLLM(systemPrompt: string, context: string, question: string): Promise<string> {
     try {
       // 这里应该调用实际的LLM API（如GPT-4、Claude-3等）
       // 由于这是一个示例，我们使用模拟实现
 
       // 模拟LLM调用延迟
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       // 模拟答案生成
       const answer = this.generateMockAnswer(question, context);
@@ -349,10 +339,7 @@ class AIQAService {
    * @param retrievalResults 检索结果
    * @returns 置信度分数（0-1）
    */
-  private calculateConfidence(
-    answer: string,
-    retrievalResults: RetrievalResult[]
-  ): number {
+  private calculateConfidence(answer: string, retrievalResults: RetrievalResult[]): number {
     // 简化的置信度计算
     // 实际应用中应该使用更复杂的算法
 
@@ -360,9 +347,7 @@ class AIQAService {
       return 0.3;
     }
 
-    const avgRelevanceScore =
-      retrievalResults.reduce((sum, r) => sum + r.relevanceScore, 0) /
-      retrievalResults.length;
+    const avgRelevanceScore = retrievalResults.reduce((sum, r) => sum + r.relevanceScore, 0) / retrievalResults.length;
 
     return Math.min(avgRelevanceScore, 1.0);
   }
@@ -373,10 +358,7 @@ class AIQAService {
    * @param answer 答案
    * @returns 相关问题列表
    */
-  private async generateRelatedQuestions(
-    question: string,
-    answer: string
-  ): Promise<string[]> {
+  private async generateRelatedQuestions(question: string, answer: string): Promise<string[]> {
     // 简化的相关问题生成
     // 实际应用中应该使用LLM或推荐算法
 
@@ -558,12 +540,14 @@ class AIQAService {
    * @param sessionId 会话ID
    * @returns 统计信息
    */
-  getSessionStats(sessionId: string): {
-    messageCount: number;
-    userMessageCount: number;
-    assistantMessageCount: number;
-    duration: number;
-  } | undefined {
+  getSessionStats(sessionId: string):
+    | {
+        messageCount: number;
+        userMessageCount: number;
+        assistantMessageCount: number;
+        duration: number;
+      }
+    | undefined {
     const session = this.sessions.get(sessionId);
     if (!session) {
       return undefined;

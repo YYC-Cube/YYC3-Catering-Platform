@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ CI/CD 流水线架构文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ CI/CD 流水线架构文档 |
-| **文档类型** | 架构类文档 |
-| **所属阶段** | 部署发布 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ CI/CD 流水线架构文档  |
+| **文档类型** | 架构类文档                 |
+| **所属阶段** | 部署发布                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -57,6 +58,7 @@
 本文档是YYC³餐饮行业智能化平台文档体系的重要组成部分，旨在提供清晰、完整、准确的信息。
 
 通过本文档，读者可以：
+
 - 了解相关概念和背景
 - 掌握核心内容和要点
 - 获得实用的指导和帮助
@@ -138,29 +140,29 @@
 
 ### 1.2 技术栈
 
-| 组件 | 技术选型 | 说明 |
-|------|---------|------|
-| CI/CD 平台 | GitHub Actions | 持续集成与持续部署 |
-| 代码检查 | ESLint, Prettier | 代码风格和质量检查 |
-| 测试框架 | Jest, Vitest | 单元测试和集成测试 |
-| E2E 测试 | Playwright | 端到端测试 |
-| 容器化 | Docker | 应用容器化 |
-| 镜像仓库 | GitHub Container Registry | Docker 镜像存储 |
-| 部署工具 | kubectl, Helm | Kubernetes 部署 |
-| 监控 | Prometheus, Grafana | 应用监控和告警 |
+| 组件       | 技术选型                  | 说明               |
+| ---------- | ------------------------- | ------------------ |
+| CI/CD 平台 | GitHub Actions            | 持续集成与持续部署 |
+| 代码检查   | ESLint, Prettier          | 代码风格和质量检查 |
+| 测试框架   | Jest, Vitest              | 单元测试和集成测试 |
+| E2E 测试   | Playwright                | 端到端测试         |
+| 容器化     | Docker                    | 应用容器化         |
+| 镜像仓库   | GitHub Container Registry | Docker 镜像存储    |
+| 部署工具   | kubectl, Helm             | Kubernetes 部署    |
+| 监控       | Prometheus, Grafana       | 应用监控和告警     |
 
 ### 1.3 流水线阶段
 
 ```yaml
 stages:
-  - lint:          # 代码检查
-  - test:          # 测试
-  - build:         # 构建
-  - security:      # 安全扫描
+  - lint: # 代码检查
+  - test: # 测试
+  - build: # 构建
+  - security: # 安全扫描
   - deploy-staging: # 部署到预发布环境
-  - e2e:           # E2E 测试
-  - deploy-prod:   # 部署到生产环境
-  - notify:        # 通知
+  - e2e: # E2E 测试
+  - deploy-prod: # 部署到生产环境
+  - notify: # 通知
 ```
 
 ---
@@ -179,41 +181,36 @@ module.exports = {
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:prettier/recommended',
-    'next/core-web-vitals',
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "next/core-web-vitals",
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  plugins: [
-    '@typescript-eslint',
-    'react',
-    'react-hooks',
-    'prettier',
-  ],
+  plugins: ["@typescript-eslint", "react", "react-hooks", "prettier"],
   rules: {
-    'prettier/prettier': 'error',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
   },
   settings: {
     react: {
-      version: 'detect',
+      version: "detect",
     },
   },
 };
@@ -225,13 +222,13 @@ module.exports = {
 // .prettierrc.js
 module.exports = {
   semi: true,
-  trailingComma: 'es5',
+  trailingComma: "es5",
   singleQuote: true,
   printWidth: 100,
   tabWidth: 2,
   useTabs: false,
-  arrowParens: 'always',
-  endOfLine: 'lf',
+  arrowParens: "always",
+  endOfLine: "lf",
   bracketSpacing: true,
   jsxSingleQuote: false,
   jsxBracketSameLine: false,
@@ -260,8 +257,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'pnpm'
+          node-version: "18"
+          cache: "pnpm"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -289,31 +286,25 @@ jobs:
 
 ```typescript
 // vitest.config.ts
-import { defineConfig } from 'vitest/config';
-import react from '@vitejs/plugin-react';
-import path from 'path';
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
+    environment: "jsdom",
+    setupFiles: ["./src/test/setup.ts"],
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'src/test/',
-        '**/*.d.ts',
-        '**/*.config.*',
-        '**/mockData',
-      ],
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      exclude: ["node_modules/", "src/test/", "**/*.d.ts", "**/*.config.*", "**/mockData"],
     },
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 });
@@ -323,9 +314,9 @@ export default defineConfig({
 
 ```typescript
 // src/test/setup.ts
-import { expect, afterEach } from 'vitest';
-import { cleanup } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { expect, afterEach } from "vitest";
+import { cleanup } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 // 清理 DOM
 afterEach(() => {
@@ -362,7 +353,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -390,39 +381,39 @@ jobs:
 
 ```typescript
 // playwright.config.ts
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './e2e',
+  testDir: "./e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: "html",
   use: {
-    baseURL: 'http://localhost:3200',
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
+    baseURL: "http://localhost:3200",
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
   },
 
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
   ],
 
   webServer: {
-    command: 'pnpm dev',
-    url: 'http://localhost:3200',
+    command: "pnpm dev",
+    url: "http://localhost:3200",
     reuseExistingServer: !process.env.CI,
   },
 });
@@ -440,15 +431,15 @@ export default defineConfig({
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'standalone',
+  output: "standalone",
   images: {
-    domains: ['cdn.yyc3-cater.com'],
+    domains: ["cdn.yyc3-cater.com"],
   },
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
 };
 
@@ -477,8 +468,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'pnpm'
+          node-version: "18"
+          cache: "pnpm"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -563,7 +554,7 @@ on:
   push:
     branches: [main, develop]
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
   pull_request:
     branches: [main, develop]
 
@@ -669,7 +660,7 @@ name: Deploy to Production
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
   deploy-production:
@@ -711,7 +702,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          text: 'Production deployment completed'
+          text: "Production deployment completed"
           webhook_url: ${{ secrets.SLACK_WEBHOOK }}
         if: always()
 ```
@@ -726,30 +717,30 @@ jobs:
 // config/environments.ts
 export const environments = {
   development: {
-    name: 'development',
-    apiUrl: 'http://localhost:3201',
-    webUrl: 'http://localhost:3200',
-    databaseUrl: 'postgresql://user:password@localhost:5432/yyc3_cater_dev',
-    redisUrl: 'redis://localhost:6379',
+    name: "development",
+    apiUrl: "http://localhost:3201",
+    webUrl: "http://localhost:3200",
+    databaseUrl: "postgresql://user:password@localhost:5432/yyc3_cater_dev",
+    redisUrl: "redis://localhost:6379",
   },
   staging: {
-    name: 'staging',
-    apiUrl: 'https://api-staging.yyc3-cater.com',
-    webUrl: 'https://staging.yyc3-cater.com',
+    name: "staging",
+    apiUrl: "https://api-staging.yyc3-cater.com",
+    webUrl: "https://staging.yyc3-cater.com",
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: process.env.REDIS_URL,
   },
   production: {
-    name: 'production',
-    apiUrl: 'https://api.yyc3-cater.com',
-    webUrl: 'https://www.yyc3-cater.com',
+    name: "production",
+    apiUrl: "https://api.yyc3-cater.com",
+    webUrl: "https://www.yyc3-cater.com",
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: process.env.REDIS_URL,
   },
 };
 
 export function getEnvConfig() {
-  const env = process.env.NODE_ENV || 'development';
+  const env = process.env.NODE_ENV || "development";
   return environments[env as keyof typeof environments] || environments.development;
 }
 ```
@@ -785,7 +776,7 @@ name: Monitor
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # 每 5 分钟执行一次
+    - cron: "*/5 * * * *" # 每 5 分钟执行一次
 
 jobs:
   monitor:
@@ -803,8 +794,8 @@ jobs:
         if: failure()
         uses: 8398a7/action-slack@v3
         with:
-          status: 'failure'
-          text: 'Application health check failed'
+          status: "failure"
+          text: "Application health check failed"
           webhook_url: ${{ secrets.SLACK_WEBHOOK }}
 ```
 
@@ -813,25 +804,25 @@ jobs:
 ```yaml
 # Prometheus 告警规则
 groups:
-- name: deployment-alerts
-  rules:
-  - alert: DeploymentFailed
-    expr: kube_deployment_status_replicas_available{deployment="yyc3-cater-web"} < kube_deployment_spec_replicas{deployment="yyc3-cater-web"}
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "Deployment failed"
-      description: "Deployment {{ $labels.deployment }} has {{ $value }} available replicas, expected {{ $labels.spec_replicas }}"
+  - name: deployment-alerts
+    rules:
+      - alert: DeploymentFailed
+        expr: kube_deployment_status_replicas_available{deployment="yyc3-cater-web"} < kube_deployment_spec_replicas{deployment="yyc3-cater-web"}
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Deployment failed"
+          description: "Deployment {{ $labels.deployment }} has {{ $value }} available replicas, expected {{ $labels.spec_replicas }}"
 
-  - alert: PodCrashLooping
-    expr: rate(kube_pod_container_status_restarts_total[15m]) > 0
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Pod is crash looping"
-      description: "Pod {{ $labels.pod }} is restarting frequently"
+      - alert: PodCrashLooping
+        expr: rate(kube_pod_container_status_restarts_total[15m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod is crash looping"
+          description: "Pod {{ $labels.pod }} is restarting frequently"
 ```
 
 ---
@@ -848,15 +839,15 @@ on:
   workflow_dispatch:
     inputs:
       deployment:
-        description: 'Deployment name'
+        description: "Deployment name"
         required: true
-        default: 'yyc3-cater-web'
+        default: "yyc3-cater-web"
       namespace:
-        description: 'Namespace'
+        description: "Namespace"
         required: true
-        default: 'production'
+        default: "production"
       revision:
-        description: 'Revision to rollback to'
+        description: "Revision to rollback to"
         required: true
 
 jobs:
@@ -889,7 +880,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          text: 'Rollback completed'
+          text: "Rollback completed"
           webhook_url: ${{ secrets.SLACK_WEBHOOK }}
 ```
 
@@ -970,13 +961,10 @@ main (生产)
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -999,8 +987,6 @@ main (生产)
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1034,8 +1020,6 @@ main (生产)
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1058,46 +1042,46 @@ main (生产)
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1110,6 +1094,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1119,6 +1104,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1128,6 +1114,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1144,16 +1131,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1163,13 +1151,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1178,6 +1164,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1196,6 +1183,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1211,6 +1199,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1230,28 +1219,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1260,44 +1248,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1311,13 +1297,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1326,18 +1312,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1347,37 +1336,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1386,28 +1378,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1416,21 +1406,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1439,10 +1431,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1468,16 +1457,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1486,25 +1475,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

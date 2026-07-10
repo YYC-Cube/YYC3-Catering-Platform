@@ -27,7 +27,7 @@ const logFormat = winston.format.combine(
     const serviceName = service || process.env.SERVICE_NAME || 'analytics-service';
     const metaString = Object.keys(meta).length ? JSON.stringify(meta) : '';
     return `${timestamp} [${serviceName}] ${level.toUpperCase()}: ${message} ${metaString}`;
-  })
+  }),
 );
 
 // 创建日志记录器
@@ -40,10 +40,7 @@ const logger = winston.createLogger({
   transports: [
     // 控制台输出
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        logFormat
-      ),
+      format: winston.format.combine(winston.format.colorize(), logFormat),
     }),
     // 错误日志文件（每天轮换）
     new DailyRotateFile({

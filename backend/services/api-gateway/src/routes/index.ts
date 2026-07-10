@@ -52,12 +52,12 @@ export function createRoutes(): Router {
    */
   const createProxyRoute = (path: string, serviceName: string, secure: boolean = true): void => {
     const serviceConfig = servicesConfig[serviceName];
-    
+
     if (!serviceConfig) {
       logger.error('服务配置不存在', { serviceName });
       return;
     }
-    
+
     const proxyOptions: Options = {
       target: serviceConfig.url,
       changeOrigin: true,
@@ -73,7 +73,7 @@ export function createRoutes(): Router {
       },
       onProxyReq: (proxyReq, req, _res) => {
         logger.info('代理请求', { serviceName, url: req.url, method: req.method });
-        
+
         // 转发认证信息
         if ((req as any).user) {
           proxyReq.setHeader('X-User-ID', (req as any).user.userId);
@@ -86,7 +86,7 @@ export function createRoutes(): Router {
     };
 
     const proxy = createProxyMiddleware(proxyOptions);
-    
+
     // 根据是否需要认证选择中间件
     if (secure) {
       router.use(path, authMiddleware, proxy);

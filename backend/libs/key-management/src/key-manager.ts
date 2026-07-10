@@ -6,7 +6,16 @@
  * @created 2025-01-10
  */
 
-import { KeyManager, KeyManagerConfig, Key, KeyType, KeyPurpose, KeyRotationOptions, EncryptionOptions, DecryptionOptions } from './types';
+import {
+  KeyManager,
+  KeyManagerConfig,
+  Key,
+  KeyType,
+  KeyPurpose,
+  KeyRotationOptions,
+  EncryptionOptions,
+  DecryptionOptions,
+} from './types';
 import { KeyStore, KeyStoreFactory } from './key-store';
 import crypto from 'crypto';
 import { scheduleJob } from 'node-schedule';
@@ -218,14 +227,17 @@ export class KeyManagerImpl implements KeyManager {
   /**
    * 加密数据
    */
-  async encrypt(data: string | Buffer, options?: EncryptionOptions): Promise<{
+  async encrypt(
+    data: string | Buffer,
+    options?: EncryptionOptions,
+  ): Promise<{
     encryptedData: Buffer;
     iv: Buffer;
     authTag?: Buffer;
     keyId: string;
   }> {
     // 获取加密密钥
-    const key = options?.keyId 
+    const key = options?.keyId
       ? await this.keyStore.getKey(options.keyId)
       : await this.keyStore.getActiveKey(KeyPurpose.DATA_ENCRYPTION, KeyType.SYMMETRIC);
 
@@ -263,7 +275,7 @@ export class KeyManagerImpl implements KeyManager {
    */
   async decrypt(encryptedData: Buffer, options: DecryptionOptions): Promise<Buffer> {
     // 获取解密密钥
-    const key = options?.keyId 
+    const key = options?.keyId
       ? await this.keyStore.getKey(options.keyId)
       : await this.keyStore.getActiveKey(KeyPurpose.DATA_ENCRYPTION, KeyType.SYMMETRIC);
 
@@ -296,15 +308,18 @@ export class KeyManagerImpl implements KeyManager {
   /**
    * 签名数据
    */
-  async sign(data: string | Buffer, options?: {
-    keyId?: string;
-    algorithm?: string;
-  }): Promise<{
+  async sign(
+    data: string | Buffer,
+    options?: {
+      keyId?: string;
+      algorithm?: string;
+    },
+  ): Promise<{
     signature: Buffer;
     keyId: string;
   }> {
     // 获取签名密钥
-    const key = options?.keyId 
+    const key = options?.keyId
       ? await this.keyStore.getKey(options.keyId)
       : await this.keyStore.getActiveKey(KeyPurpose.JWT_SIGNING, KeyType.SYMMETRIC);
 
@@ -332,10 +347,10 @@ export class KeyManagerImpl implements KeyManager {
     options?: {
       keyId?: string;
       algorithm?: string;
-    }
+    },
   ): Promise<boolean> {
     // 获取验证密钥
-    const key = options?.keyId 
+    const key = options?.keyId
       ? await this.keyStore.getKey(options.keyId)
       : await this.keyStore.getActiveKey(KeyPurpose.JWT_SIGNING, KeyType.SYMMETRIC);
 
@@ -364,7 +379,7 @@ export class KeyManagerImpl implements KeyManager {
       // 检查密钥是否需要轮换（接近过期）
       if (key.expiresAt) {
         const daysUntilExpiration = Math.ceil((key.expiresAt.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-        
+
         // 如果密钥将在7天内过期，进行轮换
         if (daysUntilExpiration <= 7) {
           console.log(`Rotating key ${key.id} (${key.purpose}) - expires in ${daysUntilExpiration} days`);
@@ -421,7 +436,7 @@ export class KeyManagerImpl implements KeyManager {
    */
   private startAutoRotation(): void {
     console.log(`Starting auto rotation job - runs every ${this.config.rotationIntervalDays} days`);
-    
+
     // 每天检查一次，是否有需要轮换的密钥
     this.rotationSchedule = scheduleJob('0 0 * * *', async () => {
       await this.autoRotateKeys();
@@ -433,7 +448,7 @@ export class KeyManagerImpl implements KeyManager {
    */
   private startAutoBackup(): void {
     console.log(`Starting auto backup job - runs every ${this.config.backupStrategy.intervalDays} days`);
-    
+
     // 每天备份一次
     this.backupSchedule = scheduleJob('0 1 * * *', async () => {
       await this.autoBackupKeys();
@@ -445,7 +460,7 @@ export class KeyManagerImpl implements KeyManager {
    */
   private startHealthCheck(): void {
     console.log(`Starting health check job - runs every ${this.config.highAvailability.healthCheckInterval}ms`);
-    
+
     // 定期检查密钥存储健康状态
     this.healthCheckSchedule = setInterval(async () => {
       const isHealthy = await this.keyStore.healthCheck();

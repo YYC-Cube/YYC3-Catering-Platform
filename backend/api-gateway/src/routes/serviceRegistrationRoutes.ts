@@ -66,7 +66,7 @@ router.post(
   (req: Request, res: Response) => {
     try {
       const registration: ServiceRegistration = req.body;
-      
+
       // 添加默认元数据
       registration.metadata = {
         ...registration.metadata,
@@ -101,7 +101,7 @@ router.post(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -145,7 +145,7 @@ router.delete(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -221,7 +221,7 @@ router.get(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -273,7 +273,7 @@ router.get(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -314,7 +314,7 @@ router.put(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**

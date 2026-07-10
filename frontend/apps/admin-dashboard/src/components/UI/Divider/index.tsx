@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
 
 export const Divider = defineComponent({
   name: 'Divider',
@@ -51,96 +51,81 @@ export const Divider = defineComponent({
     const orientationClasses = computed(() => {
       switch (props.orientation) {
         case 'vertical':
-          return 'h-full w-px'
+          return 'h-full w-px';
         case 'horizontal':
         default:
-          return 'h-px w-full'
+          return 'h-px w-full';
       }
-    })
+    });
 
     const borderStyle = computed(() => {
       switch (props.variant) {
         case 'dashed':
-          return 'border-dashed'
+          return 'border-dashed';
         case 'dotted':
-          return 'border-dotted'
+          return 'border-dotted';
         case 'solid':
         default:
-          return 'border-solid'
+          return 'border-solid';
       }
-    })
+    });
 
     const marginStyle = computed(() => {
-      const marginValue = typeof props.margin === 'number' ? `${props.margin}px` : props.margin
+      const marginValue = typeof props.margin === 'number' ? `${props.margin}px` : props.margin;
       switch (props.orientation) {
         case 'vertical':
           return {
             margin: `0 ${marginValue}`,
-          }
+          };
         case 'horizontal':
         default:
           return {
             margin: `${marginValue} 0`,
-          }
+          };
       }
-    })
+    });
 
     const borderStyleValue = computed(() => {
-      const thicknessValue = typeof props.thickness === 'number' ? `${props.thickness}px` : props.thickness
+      const thicknessValue = typeof props.thickness === 'number' ? `${props.thickness}px` : props.thickness;
       switch (props.orientation) {
         case 'vertical':
           return {
             borderWidth: `0 0 0 ${thicknessValue}`,
             borderColor: props.color,
-          }
+          };
         case 'horizontal':
         default:
           return {
             borderWidth: `${thicknessValue} 0 0 0`,
             borderColor: props.color,
-          }
+          };
       }
-    })
+    });
 
     return () => (
       <div
-        class={cn(
-          'flex items-center',
-          props.orientation === 'horizontal' ? 'w-full' : 'h-full',
-          props.className
-        )}
+        class={cn('flex items-center', props.orientation === 'horizontal' ? 'w-full' : 'h-full', props.className)}
         style={marginStyle.value}
       >
         {slots.default && props.orientation === 'horizontal' ? (
           <>
-            <div
-              class={cn('flex-1', borderStyle.value)}
-              style={borderStyleValue.value}
-            />
-            <span
-              class={cn(
-                'px-4 text-sm text-neutral-500',
-                props.plain && 'text-neutral-400'
-              )}
-            >
+            <div class={cn('flex-1', borderStyle.value)} style={borderStyleValue.value} />
+            <span class={cn('px-4 text-sm text-neutral-500', props.plain && 'text-neutral-400')}>
               {slots.default?.()}
             </span>
-            <div
-              class={cn('flex-1', borderStyle.value)}
-              style={borderStyleValue.value}
-            />
+            <div class={cn('flex-1', borderStyle.value)} style={borderStyleValue.value} />
           </>
         ) : (
           <div
             class={cn(
               'flex-shrink-0',
               borderStyle.value,
-              props.orientation === 'vertical' ? 'h-full w-px' : 'h-px w-full'
+              props.orientation === 'vertical' ? 'h-full w-px' : 'h-px w-full',
             )}
             style={borderStyleValue.value}
           />
         )}
       </div>
-    )
+    );
   },
-})
+});

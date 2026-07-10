@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
 
 export const Skeleton = defineComponent({
   name: 'Skeleton',
@@ -50,72 +50,63 @@ export const Skeleton = defineComponent({
   setup(props, { attrs, slots }) {
     const widthStyle = computed(() => {
       if (typeof props.width === 'number') {
-        return { width: `${props.width}px` }
+        return { width: `${props.width}px` };
       }
-      return { width: props.width }
-    })
+      return { width: props.width };
+    });
 
     const heightStyle = computed(() => {
       if (typeof props.height === 'number') {
-        return { height: `${props.height}px` }
+        return { height: `${props.height}px` };
       }
-      return { height: props.height }
-    })
+      return { height: props.height };
+    });
 
     const variantClasses = computed(() => {
       switch (props.variant) {
         case 'circle':
-          return 'rounded-full'
+          return 'rounded-full';
         case 'rounded':
-          return 'rounded-lg'
+          return 'rounded-lg';
         case 'default':
         default:
-          return 'rounded-md'
+          return 'rounded-md';
       }
-    })
+    });
 
     const animationClasses = computed(() => {
       switch (props.animation) {
         case 'pulse':
-          return 'animate-pulse'
+          return 'animate-pulse';
         case 'wave':
-          return 'animate-shimmer'
+          return 'animate-shimmer';
         case 'none':
         default:
-          return ''
+          return '';
       }
-    })
+    });
 
     const renderSkeleton = () => {
-      const skeletons = []
+      const skeletons = [];
       for (let i = 0; i < props.count; i++) {
         skeletons.push(
           <div
             key={i}
-            class={cn(
-              'bg-neutral-200',
-              variantClasses.value,
-              animationClasses.value,
-              props.className
-            )}
+            class={cn('bg-neutral-200', variantClasses.value, animationClasses.value, props.className)}
             style={{
               ...widthStyle.value,
               ...heightStyle.value,
               backgroundColor: props.color === 'neutral-200' ? undefined : `var(--color-${props.color})`,
             }}
-          />
-        )
+          />,
+        );
       }
-      return skeletons
-    }
+      return skeletons;
+    };
 
-    return () => (
-      <div class="space-y-2">
-        {renderSkeleton()}
-      </div>
-    )
+    return () => <div class="space-y-2">{renderSkeleton()}</div>;
   },
-})
+});
 
 export const SkeletonAvatar = defineComponent({
   name: 'SkeletonAvatar',
@@ -141,8 +132,8 @@ export const SkeletonAvatar = defineComponent({
       lg: 48,
       xl: 64,
       xxl: 80,
-    }
-    const size = typeof props.size === 'number' ? props.size : sizeMap[props.size as keyof typeof sizeMap] || 40
+    };
+    const size = typeof props.size === 'number' ? props.size : sizeMap[props.size as keyof typeof sizeMap] || 40;
 
     return () => (
       <Skeleton
@@ -151,9 +142,9 @@ export const SkeletonAvatar = defineComponent({
         width={size}
         height={size}
       />
-    )
+    );
   },
-})
+});
 
 export const SkeletonText = defineComponent({
   name: 'SkeletonText',
@@ -187,9 +178,9 @@ export const SkeletonText = defineComponent({
           />
         ))}
       </div>
-    )
+    );
   },
-})
+});
 
 export const SkeletonButton = defineComponent({
   name: 'SkeletonButton',
@@ -208,16 +199,9 @@ export const SkeletonButton = defineComponent({
     },
   },
   setup(props, { attrs }) {
-    return () => (
-      <Skeleton
-        class={props.className}
-        variant="rounded"
-        width={props.width}
-        height={props.height}
-      />
-    )
+    return () => <Skeleton class={props.className} variant="rounded" width={props.width} height={props.height} />;
   },
-})
+});
 
 export const SkeletonInput = defineComponent({
   name: 'SkeletonInput',
@@ -236,16 +220,9 @@ export const SkeletonInput = defineComponent({
     },
   },
   setup(props, { attrs }) {
-    return () => (
-      <Skeleton
-        class={props.className}
-        variant="rounded"
-        width={props.width}
-        height={props.height}
-      />
-    )
+    return () => <Skeleton class={props.className} variant="rounded" width={props.width} height={props.height} />;
   },
-})
+});
 
 export const SkeletonImage = defineComponent({
   name: 'SkeletonImage',
@@ -264,13 +241,6 @@ export const SkeletonImage = defineComponent({
     },
   },
   setup(props, { attrs }) {
-    return () => (
-      <Skeleton
-        class={props.className}
-        variant="rounded"
-        width={props.width}
-        height={props.height}
-      />
-    )
+    return () => <Skeleton class={props.className} variant="rounded" width={props.width} height={props.height} />;
   },
-})
+});

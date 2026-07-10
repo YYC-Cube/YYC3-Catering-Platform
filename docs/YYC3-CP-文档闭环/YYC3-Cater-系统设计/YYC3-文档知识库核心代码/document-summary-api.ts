@@ -59,7 +59,7 @@ const getSummarySchema = z.object({
  * @access 公开
  * @returns {Promise<Response>} 摘要结果
  */
-app.post('/generate', zValidator('json', generateSummarySchema), async (c) => {
+app.post('/generate', zValidator('json', generateSummarySchema), async c => {
   try {
     const body = c.req.valid('json');
 
@@ -81,10 +81,13 @@ app.post('/generate', zValidator('json', generateSummarySchema), async (c) => {
     });
   } catch (error) {
     logger.error('Error generating summary:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '生成摘要失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '生成摘要失败',
+      },
+      500,
+    );
   }
 });
 
@@ -94,7 +97,7 @@ app.post('/generate', zValidator('json', generateSummarySchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 摘要结果列表
  */
-app.post('/batch', zValidator('json', batchSummarySchema), async (c) => {
+app.post('/batch', zValidator('json', batchSummarySchema), async c => {
   try {
     const body = c.req.valid('json');
 
@@ -116,10 +119,13 @@ app.post('/batch', zValidator('json', batchSummarySchema), async (c) => {
     });
   } catch (error) {
     logger.error('Error generating batch summary:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '批量生成摘要失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '批量生成摘要失败',
+      },
+      500,
+    );
   }
 });
 
@@ -129,16 +135,19 @@ app.post('/batch', zValidator('json', batchSummarySchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 配置模板
  */
-app.get('/templates/:type', async (c) => {
+app.get('/templates/:type', async c => {
   try {
     const type = c.req.param('type') as SummaryType;
 
     // 验证摘要类型
     if (!Object.values(SummaryType).includes(type)) {
-      return c.json({
-        success: false,
-        error: '无效的摘要类型',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '无效的摘要类型',
+        },
+        400,
+      );
     }
 
     // 获取配置模板
@@ -150,10 +159,13 @@ app.get('/templates/:type', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting template:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取配置模板失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取配置模板失败',
+      },
+      500,
+    );
   }
 });
 
@@ -163,9 +175,9 @@ app.get('/templates/:type', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 摘要类型列表
  */
-app.get('/types', async (c) => {
+app.get('/types', async c => {
   try {
-    const types = Object.values(SummaryType).map((type) => ({
+    const types = Object.values(SummaryType).map(type => ({
       value: type,
       label: {
         [SummaryType.SHORT]: '简短摘要',
@@ -189,10 +201,13 @@ app.get('/types', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting types:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取摘要类型失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取摘要类型失败',
+      },
+      500,
+    );
   }
 });
 
@@ -202,9 +217,9 @@ app.get('/types', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 摘要策略列表
  */
-app.get('/strategies', async (c) => {
+app.get('/strategies', async c => {
   try {
-    const strategies = Object.values(SummaryStrategy).map((strategy) => ({
+    const strategies = Object.values(SummaryStrategy).map(strategy => ({
       value: strategy,
       label: {
         [SummaryStrategy.EXTRACTIVE]: '抽取式摘要',
@@ -224,10 +239,13 @@ app.get('/strategies', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting strategies:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取摘要策略失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取摘要策略失败',
+      },
+      500,
+    );
   }
 });
 
@@ -237,7 +255,7 @@ app.get('/strategies', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 健康状态
  */
-app.get('/health', async (c) => {
+app.get('/health', async c => {
   return c.json({
     status: 'healthy',
     service: 'Document Summary Service',

@@ -27,7 +27,10 @@ const envSchema = z.object({
   DATABASE_NAME: z.string().default('yyc3_catering'),
   DATABASE_USER: z.string().default('yyc3_user'),
   DATABASE_PASSWORD: z.string().default('yyc3_password'),
-  DATABASE_SSL: z.string().transform(val => val === 'true').default('false'),
+  DATABASE_SSL: z
+    .string()
+    .transform(val => val === 'true')
+    .default('false'),
 
   // Redis配置
   REDIS_HOST: z.string().default('localhost'),
@@ -63,13 +66,22 @@ const envSchema = z.object({
 
   // 监控配置
   LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
-  ENABLE_METRICS: z.string().transform(val => val === 'true').default('true'),
+  ENABLE_METRICS: z
+    .string()
+    .transform(val => val === 'true')
+    .default('true'),
   METRICS_PORT: z.string().transform(Number).default('9090'),
 
   // 安全配置
   CORS_ORIGINS: z.string().default('http://localhost:3000'),
-  ENABLE_CSP: z.string().transform(val => val === 'true').default('true'),
-  ENABLE_HSTS: z.string().transform(val => val === 'true').default('true'),
+  ENABLE_CSP: z
+    .string()
+    .transform(val => val === 'true')
+    .default('true'),
+  ENABLE_HSTS: z
+    .string()
+    .transform(val => val === 'true')
+    .default('true'),
 });
 
 /**
@@ -204,23 +216,31 @@ export function createAppConfig(): AppConfig {
       allowedTypes: env.UPLOAD_ALLOWED_TYPES.split(','),
     },
 
-    email: env.SMTP_HOST ? {
-      host: env.SMTP_HOST,
-      port: env.SMTP_PORT,
-      user: env.SMTP_USER,
-      password: env.SMTP_PASSWORD,
-      from: env.SMTP_FROM,
-    } : undefined,
+    email: env.SMTP_HOST
+      ? {
+          host: env.SMTP_HOST,
+          port: env.SMTP_PORT,
+          user: env.SMTP_USER,
+          password: env.SMTP_PASSWORD,
+          from: env.SMTP_FROM,
+        }
+      : undefined,
 
     externalServices: {
-      wechat: env.WECHAT_APP_ID && env.WECHAT_APP_SECRET ? {
-        appId: env.WECHAT_APP_ID,
-        appSecret: env.WECHAT_APP_SECRET,
-      } : undefined,
-      aliyun: env.ALIYUN_ACCESS_KEY && env.ALIYUN_SECRET_KEY ? {
-        accessKey: env.ALIYUN_ACCESS_KEY,
-        secretKey: env.ALIYUN_SECRET_KEY,
-      } : undefined,
+      wechat:
+        env.WECHAT_APP_ID && env.WECHAT_APP_SECRET
+          ? {
+              appId: env.WECHAT_APP_ID,
+              appSecret: env.WECHAT_APP_SECRET,
+            }
+          : undefined,
+      aliyun:
+        env.ALIYUN_ACCESS_KEY && env.ALIYUN_SECRET_KEY
+          ? {
+              accessKey: env.ALIYUN_ACCESS_KEY,
+              secretKey: env.ALIYUN_SECRET_KEY,
+            }
+          : undefined,
     },
 
     monitoring: {

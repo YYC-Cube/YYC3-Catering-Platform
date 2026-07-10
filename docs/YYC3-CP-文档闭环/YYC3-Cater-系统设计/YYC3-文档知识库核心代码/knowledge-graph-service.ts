@@ -10,15 +10,7 @@
  */
 
 import { v4 as uuidv4 } from 'uuid';
-import {
-  KnowledgeGraph,
-  DocumentNode,
-  ConceptNode,
-  GraphEdge,
-  EdgeType,
-  Document,
-  Concept,
-} from './document.types';
+import { KnowledgeGraph, DocumentNode, ConceptNode, GraphEdge, EdgeType, Document, Concept } from './document.types';
 import { GraphRepository } from './graph.repository';
 import { ConceptRepository } from './concept.repository';
 import { Logger } from './logger';
@@ -44,7 +36,7 @@ export class KnowledgeGraphService {
       this.logger.info('Building knowledge graph', { documentCount: documents.length });
 
       // 创建文档节点
-      const documentNodes: DocumentNode[] = documents.map((doc) => ({
+      const documentNodes: DocumentNode[] = documents.map(doc => ({
         id: `node-doc-${doc.id}`,
         documentId: doc.id,
         type: 'document',
@@ -60,8 +52,8 @@ export class KnowledgeGraphService {
 
       // 提取概念并创建概念节点
       const conceptMap = new Map<string, ConceptNode>();
-      documents.forEach((doc) => {
-        doc.concepts.forEach((conceptName) => {
+      documents.forEach(doc => {
+        doc.concepts.forEach(conceptName => {
           if (!conceptMap.has(conceptName)) {
             const conceptNode: ConceptNode = {
               id: `node-concept-${uuidv4()}`,
@@ -88,10 +80,10 @@ export class KnowledgeGraphService {
       const edges: GraphEdge[] = [];
 
       // 文档-概念边（包含关系）
-      documents.forEach((doc) => {
-        doc.concepts.forEach((conceptName) => {
-          const docNode = documentNodes.find((n) => n.documentId === doc.id);
-          const conceptNode = conceptNodes.find((n) => n.properties.name === conceptName);
+      documents.forEach(doc => {
+        doc.concepts.forEach(conceptName => {
+          const docNode = documentNodes.find(n => n.documentId === doc.id);
+          const conceptNode = conceptNodes.find(n => n.properties.name === conceptName);
 
           if (docNode && conceptNode) {
             edges.push({
@@ -110,10 +102,10 @@ export class KnowledgeGraphService {
       });
 
       // 文档-文档边（引用关系）
-      documents.forEach((doc) => {
-        doc.references.forEach((refId) => {
-          const docNode = documentNodes.find((n) => n.documentId === doc.id);
-          const refNode = documentNodes.find((n) => n.documentId === refId);
+      documents.forEach(doc => {
+        doc.references.forEach(refId => {
+          const docNode = documentNodes.find(n => n.documentId === doc.id);
+          const refNode = documentNodes.find(n => n.documentId === refId);
 
           if (docNode && refNode) {
             edges.push({
@@ -134,8 +126,8 @@ export class KnowledgeGraphService {
       // 概念-概念边（相关关系）
       const conceptPairs = this.findRelatedConcepts(documents);
       conceptPairs.forEach(([concept1, concept2, strength]) => {
-        const node1 = conceptNodes.find((n) => n.properties.name === concept1);
-        const node2 = conceptNodes.find((n) => n.properties.name === concept2);
+        const node1 = conceptNodes.find(n => n.properties.name === concept1);
+        const node2 = conceptNodes.find(n => n.properties.name === concept2);
 
         if (node1 && node2) {
           edges.push({
@@ -231,9 +223,7 @@ export class KnowledgeGraphService {
 
       // 处理概念节点和边
       for (const conceptName of document.concepts) {
-        let conceptNode = graph.conceptNodes.find(
-          (n) => n.properties.name === conceptName
-        );
+        let conceptNode = graph.conceptNodes.find(n => n.properties.name === conceptName);
 
         if (!conceptNode) {
           conceptNode = {
@@ -323,12 +313,10 @@ export class KnowledgeGraphService {
 
       // 删除文档节点
       const docNodeId = `node-doc-${documentId}`;
-      graph.documentNodes = graph.documentNodes.filter((n) => n.id !== docNodeId);
+      graph.documentNodes = graph.documentNodes.filter(n => n.id !== docNodeId);
 
       // 删除相关边
-      graph.edges = graph.edges.filter(
-        (e) => e.source !== docNodeId && e.target !== docNodeId
-      );
+      graph.edges = graph.edges.filter(e => e.source !== docNodeId && e.target !== docNodeId);
 
       // 更新图统计
       graph.totalNodes = graph.documentNodes.length + graph.conceptNodes.length;
@@ -352,14 +340,16 @@ export class KnowledgeGraphService {
    * @param params 查询参数
    * @returns 知识图谱
    */
-  async getKnowledgeGraph(params: {
-    includeDocuments?: boolean;
-    includeConcepts?: boolean;
-    includeEdges?: boolean;
-    cluster?: number;
-    minImportance?: number;
-    limit?: number;
-  } = {}): Promise<KnowledgeGraph> {
+  async getKnowledgeGraph(
+    params: {
+      includeDocuments?: boolean;
+      includeConcepts?: boolean;
+      includeEdges?: boolean;
+      cluster?: number;
+      minImportance?: number;
+      limit?: number;
+    } = {},
+  ): Promise<KnowledgeGraph> {
     try {
       const graph = await this.graphRepository.getLatest();
       if (!graph) {
@@ -371,22 +361,16 @@ export class KnowledgeGraphService {
       let filteredConceptNodes = graph.conceptNodes;
 
       if (params.cluster !== undefined) {
-        filteredDocumentNodes = filteredDocumentNodes.filter(
-          (n) => n.properties.cluster === params.cluster
-        );
+        filteredDocumentNodes = filteredDocumentNodes.filter(n => n.properties.cluster === params.cluster);
         filteredConceptNodes = filteredConceptNodes.filter(
-          (n) => n.properties.cluster !== undefined && n.properties.cluster === params.cluster
+          n => n.properties.cluster !== undefined && n.properties.cluster === params.cluster,
         );
       }
 
       if (params.minImportance !== undefined) {
         const minImportance = params.minImportance;
-        filteredDocumentNodes = filteredDocumentNodes.filter(
-          (n) => n.properties.importance >= minImportance
-        );
-        filteredConceptNodes = filteredConceptNodes.filter(
-          (n) => n.properties.importance >= minImportance
-        );
+        filteredDocumentNodes = filteredDocumentNodes.filter(n => n.properties.importance >= minImportance);
+        filteredConceptNodes = filteredConceptNodes.filter(n => n.properties.importance >= minImportance);
       }
 
       if (params.limit !== undefined) {
@@ -421,12 +405,12 @@ export class KnowledgeGraphService {
         return null;
       }
 
-      const docNode = graph.documentNodes.find((n) => n.id === nodeId);
+      const docNode = graph.documentNodes.find(n => n.id === nodeId);
       if (docNode) {
         return docNode;
       }
 
-      const conceptNode = graph.conceptNodes.find((n) => n.id === nodeId);
+      const conceptNode = graph.conceptNodes.find(n => n.id === nodeId);
       if (conceptNode) {
         return conceptNode;
       }
@@ -450,7 +434,7 @@ export class KnowledgeGraphService {
       edgeType?: EdgeType;
       depth?: number;
       limit?: number;
-    } = {}
+    } = {},
   ): Promise<(DocumentNode | ConceptNode)[]> {
     try {
       const graph = await this.graphRepository.getLatest();
@@ -467,9 +451,9 @@ export class KnowledgeGraphService {
 
         for (const currentNodeId of currentLevel) {
           const relatedEdges = graph.edges.filter(
-            (e) =>
+            e =>
               (e.source === currentNodeId || e.target === currentNodeId) &&
-              (!params.edgeType || e.type === params.edgeType)
+              (!params.edgeType || e.type === params.edgeType),
           );
 
           for (const edge of relatedEdges) {
@@ -480,8 +464,7 @@ export class KnowledgeGraphService {
               nextLevel.push(neighborId);
 
               const neighbor =
-                graph.documentNodes.find((n) => n.id === neighborId) ||
-                graph.conceptNodes.find((n) => n.id === neighborId);
+                graph.documentNodes.find(n => n.id === neighborId) || graph.conceptNodes.find(n => n.id === neighborId);
 
               if (neighbor) {
                 neighbors.push(neighbor);
@@ -510,10 +493,7 @@ export class KnowledgeGraphService {
    * @param targetId 目标节点ID
    * @returns 路径节点列表
    */
-  async findShortestPath(
-    sourceId: string,
-    targetId: string
-  ): Promise<(DocumentNode | ConceptNode)[]> {
+  async findShortestPath(sourceId: string, targetId: string): Promise<(DocumentNode | ConceptNode)[]> {
     try {
       const graph = await this.graphRepository.getLatest();
       if (!graph) {
@@ -521,9 +501,7 @@ export class KnowledgeGraphService {
       }
 
       // BFS算法查找最短路径
-      const queue: { nodeId: string; path: string[] }[] = [
-        { nodeId: sourceId, path: [sourceId] },
-      ];
+      const queue: { nodeId: string; path: string[] }[] = [{ nodeId: sourceId, path: [sourceId] }];
       const visited = new Set<string>([sourceId]);
 
       while (queue.length > 0) {
@@ -531,16 +509,14 @@ export class KnowledgeGraphService {
 
         if (nodeId === targetId) {
           // 将节点ID转换为节点对象
-          return path.map((id) => {
-            const docNode = graph.documentNodes.find((n) => n.id === id);
-            const conceptNode = graph.conceptNodes.find((n) => n.id === id);
+          return path.map(id => {
+            const docNode = graph.documentNodes.find(n => n.id === id);
+            const conceptNode = graph.conceptNodes.find(n => n.id === id);
             return docNode || conceptNode!;
           });
         }
 
-        const relatedEdges = graph.edges.filter(
-          (e) => e.source === nodeId || e.target === nodeId
-        );
+        const relatedEdges = graph.edges.filter(e => e.source === nodeId || e.target === nodeId);
 
         for (const edge of relatedEdges) {
           const neighborId = edge.source === nodeId ? edge.target : edge.source;
@@ -576,29 +552,23 @@ export class KnowledgeGraphService {
       const relatedDocIds: string[] = [];
 
       // 查找直接引用的文档
-      const referenceEdges = graph.edges.filter(
-        (e) => e.source === docNodeId && e.type === EdgeType.REFERENCES
-      );
+      const referenceEdges = graph.edges.filter(e => e.source === docNodeId && e.type === EdgeType.REFERENCES);
 
       for (const edge of referenceEdges) {
-        const targetNode = graph.documentNodes.find((n) => n.id === edge.target);
+        const targetNode = graph.documentNodes.find(n => n.id === edge.target);
         if (targetNode) {
           relatedDocIds.push(targetNode.documentId);
         }
       }
 
       // 查找共享概念的文档
-      const conceptEdges = graph.edges.filter(
-        (e) => e.source === docNodeId && e.type === EdgeType.CONTAINS
-      );
+      const conceptEdges = graph.edges.filter(e => e.source === docNodeId && e.type === EdgeType.CONTAINS);
 
       for (const edge of conceptEdges) {
-        const conceptEdges2 = graph.edges.filter(
-          (e) => e.target === edge.target && e.type === EdgeType.CONTAINS
-        );
+        const conceptEdges2 = graph.edges.filter(e => e.target === edge.target && e.type === EdgeType.CONTAINS);
 
         for (const edge2 of conceptEdges2) {
-          const sourceNode = graph.documentNodes.find((n) => n.id === edge2.source);
+          const sourceNode = graph.documentNodes.find(n => n.id === edge2.source);
           if (sourceNode && sourceNode.documentId !== documentId) {
             if (!relatedDocIds.includes(sourceNode.documentId)) {
               relatedDocIds.push(sourceNode.documentId);
@@ -620,33 +590,27 @@ export class KnowledgeGraphService {
    * @param conceptNodes 概念节点
    * @param edges 边列表
    */
-  private calculateNodeMetrics(
-    documentNodes: DocumentNode[],
-    conceptNodes: ConceptNode[],
-    edges: GraphEdge[]
-  ): void {
+  private calculateNodeMetrics(documentNodes: DocumentNode[], conceptNodes: ConceptNode[], edges: GraphEdge[]): void {
     const allNodes = [...documentNodes, ...conceptNodes];
 
     // 计算文档节点的度中心性
-    documentNodes.forEach((node) => {
-      const degree = edges.filter((e) => e.source === node.id || e.target === node.id).length;
+    documentNodes.forEach(node => {
+      const degree = edges.filter(e => e.source === node.id || e.target === node.id).length;
       node.properties.centrality = degree / (allNodes.length - 1);
     });
 
     // 计算文档节点的重要性（基于中心性、质量）
-    documentNodes.forEach((node) => {
-      node.properties.importance =
-        node.properties.centrality * 0.5 + node.properties.qualityScore / 100 * 0.5;
+    documentNodes.forEach(node => {
+      node.properties.importance = node.properties.centrality * 0.5 + (node.properties.qualityScore / 100) * 0.5;
     });
 
     // 计算概念节点的重要性（基于频率）
-    conceptNodes.forEach((node) => {
+    conceptNodes.forEach(node => {
       // 计算概念节点的度中心性
-      const degree = edges.filter((e) => e.source === node.id || e.target === node.id).length;
+      const degree = edges.filter(e => e.source === node.id || e.target === node.id).length;
       const centrality = degree / (allNodes.length - 1);
-      
-      node.properties.importance =
-        centrality * 0.7 + node.properties.frequency / 100 * 0.3;
+
+      node.properties.importance = centrality * 0.7 + (node.properties.frequency / 100) * 0.3;
     });
   }
 
@@ -656,16 +620,12 @@ export class KnowledgeGraphService {
    * @param conceptNodes 概念节点
    * @param edges 边列表
    */
-  private clusterNodes(
-    documentNodes: DocumentNode[],
-    conceptNodes: ConceptNode[],
-    edges: GraphEdge[]
-  ): void {
+  private clusterNodes(documentNodes: DocumentNode[], conceptNodes: ConceptNode[], edges: GraphEdge[]): void {
     // 简单的基于分类的聚类
     const categoryClusters = new Map<string, number>();
     let clusterId = 0;
 
-    documentNodes.forEach((node) => {
+    documentNodes.forEach(node => {
       const category = node.properties.category;
       if (!categoryClusters.has(category)) {
         categoryClusters.set(category, clusterId++);
@@ -674,18 +634,13 @@ export class KnowledgeGraphService {
     });
 
     // 概念节点根据相关文档的聚类
-    conceptNodes.forEach((node) => {
-      const relatedDocNodes = documentNodes.filter((docNode) => {
-        return edges.some(
-          (e) =>
-            e.source === docNode.id &&
-            e.target === node.id &&
-            e.type === EdgeType.CONTAINS
-        );
+    conceptNodes.forEach(node => {
+      const relatedDocNodes = documentNodes.filter(docNode => {
+        return edges.some(e => e.source === docNode.id && e.target === node.id && e.type === EdgeType.CONTAINS);
       });
 
       if (relatedDocNodes.length > 0) {
-        const clusters = relatedDocNodes.map((n) => n.properties.cluster);
+        const clusters = relatedDocNodes.map(n => n.properties.cluster);
         const mostCommonCluster = this.getMostCommon(clusters);
         node.properties.cluster = mostCommonCluster;
       }
@@ -697,12 +652,10 @@ export class KnowledgeGraphService {
    * @param documents 文档列表
    * @returns 概念对和强度
    */
-  private findRelatedConcepts(
-    documents: Document[]
-  ): [string, string, number][] {
+  private findRelatedConcepts(documents: Document[]): [string, string, number][] {
     const conceptPairs = new Map<string, number>();
 
-    documents.forEach((doc) => {
+    documents.forEach(doc => {
       const concepts = doc.concepts;
       for (let i = 0; i < concepts.length; i++) {
         for (let j = i + 1; j < concepts.length; j++) {
@@ -743,7 +696,7 @@ export class KnowledgeGraphService {
     };
 
     for (const [category, keywords] of Object.entries(categories)) {
-      if (keywords.some((keyword) => conceptName.includes(keyword))) {
+      if (keywords.some(keyword => conceptName.includes(keyword))) {
         return category;
       }
     }
@@ -761,7 +714,7 @@ export class KnowledgeGraphService {
     let maxCount = 0;
     let mostCommon = array[0];
 
-    array.forEach((item) => {
+    array.forEach(item => {
       const count = (counts.get(item) || 0) + 1;
       counts.set(item, count);
 
@@ -781,11 +734,7 @@ export class KnowledgeGraphService {
    * @param limit 数量限制
    * @returns 概念节点列表
    */
-  async searchConcepts(
-    query: string,
-    category?: string,
-    limit: number = 20
-  ): Promise<ConceptNode[]> {
+  async searchConcepts(query: string, category?: string, limit: number = 20): Promise<ConceptNode[]> {
     try {
       this.logger.info('Searching concepts', { query, category, limit });
 
@@ -799,20 +748,16 @@ export class KnowledgeGraphService {
       // 按查询词过滤
       if (query) {
         const lowerQuery = query.toLowerCase();
-        concepts = concepts.filter((c) =>
-          c.properties.name.toLowerCase().includes(lowerQuery)
-        );
+        concepts = concepts.filter(c => c.properties.name.toLowerCase().includes(lowerQuery));
       }
 
       // 按分类过滤
       if (category) {
-        concepts = concepts.filter((c) => c.properties.category === category);
+        concepts = concepts.filter(c => c.properties.category === category);
       }
 
       // 按重要性排序并限制数量
-      concepts = concepts
-        .sort((a, b) => b.properties.importance - a.properties.importance)
-        .slice(0, limit);
+      concepts = concepts.sort((a, b) => b.properties.importance - a.properties.importance).slice(0, limit);
 
       this.logger.info('Concepts searched successfully', {
         query,
@@ -841,7 +786,7 @@ export class KnowledgeGraphService {
         return null;
       }
 
-      const concept = graph.conceptNodes.find((c) => c.id === conceptId);
+      const concept = graph.conceptNodes.find(c => c.id === conceptId);
       if (!concept) {
         return null;
       }
@@ -869,31 +814,23 @@ export class KnowledgeGraphService {
         throw new Error('Knowledge graph not found');
       }
 
-      const conceptNode = graph.conceptNodes.find((c) => c.id === conceptId);
+      const conceptNode = graph.conceptNodes.find(c => c.id === conceptId);
       if (!conceptNode) {
         throw new Error('Concept not found');
       }
 
       // 查找与该概念相关的边
       const relatedEdges = graph.edges.filter(
-        (e) =>
-          (e.source === conceptId || e.target === conceptId) &&
-          e.type === EdgeType.RELATED_TO
+        e => (e.source === conceptId || e.target === conceptId) && e.type === EdgeType.RELATED_TO,
       );
 
       // 获取相关概念节点
-      const relatedConceptIds = relatedEdges.map((e) =>
-        e.source === conceptId ? e.target : e.source
-      );
+      const relatedConceptIds = relatedEdges.map(e => (e.source === conceptId ? e.target : e.source));
 
-      const relatedConcepts = graph.conceptNodes.filter((c) =>
-        relatedConceptIds.includes(c.id)
-      );
+      const relatedConcepts = graph.conceptNodes.filter(c => relatedConceptIds.includes(c.id));
 
       // 按边权重排序并限制数量
-      const result = relatedConcepts
-        .sort((a, b) => b.properties.importance - a.properties.importance)
-        .slice(0, limit);
+      const result = relatedConcepts.sort((a, b) => b.properties.importance - a.properties.importance).slice(0, limit);
 
       this.logger.info('Related concepts retrieved successfully', {
         conceptId,
@@ -925,9 +862,7 @@ export class KnowledgeGraphService {
     try {
       this.logger.info('Getting graph statistics', { version });
 
-      const graph = version
-        ? await this.graphRepository.getByVersion(version)
-        : await this.graphRepository.getLatest();
+      const graph = version ? await this.graphRepository.getByVersion(version) : await this.graphRepository.getLatest();
 
       if (!graph) {
         throw new Error('Knowledge graph not found');
@@ -970,7 +905,7 @@ export class KnowledgeGraphService {
 
       const graphs = await this.graphRepository.getAll();
 
-      const versions = graphs.map((g) => ({
+      const versions = graphs.map(g => ({
         id: g.id,
         version: g.version,
         name: g.name,
@@ -1015,10 +950,7 @@ export class KnowledgeGraphService {
    * @param options 导出选项
    * @returns 导出数据
    */
-  async exportGraph(options: {
-    format: 'json' | 'gexf' | 'graphml';
-    version?: string;
-  }): Promise<{
+  async exportGraph(options: { format: 'json' | 'gexf' | 'graphml'; version?: string }): Promise<{
     format: string;
     data: string | object;
     filename: string;
@@ -1073,7 +1005,7 @@ export class KnowledgeGraphService {
    * @returns GEXF格式字符串
    */
   private exportToGEXF(graph: KnowledgeGraph): string {
-    const nodes = graph.documentNodes.map((node) => ({
+    const nodes = graph.documentNodes.map(node => ({
       id: node.id,
       label: node.properties.title,
       attributes: {
@@ -1084,7 +1016,7 @@ export class KnowledgeGraphService {
       },
     }));
 
-    const conceptNodes = graph.conceptNodes.map((node) => ({
+    const conceptNodes = graph.conceptNodes.map(node => ({
       id: node.id,
       label: node.properties.name,
       attributes: {
@@ -1095,7 +1027,7 @@ export class KnowledgeGraphService {
       },
     }));
 
-    const edges = graph.edges.map((edge) => ({
+    const edges = graph.edges.map(edge => ({
       id: edge.id,
       source: edge.source,
       target: edge.target,
@@ -1134,7 +1066,7 @@ export class KnowledgeGraphService {
     xml += '  <graph id="G" edgedefault="directed">\n';
 
     // 添加文档节点
-    graph.documentNodes.forEach((node) => {
+    graph.documentNodes.forEach(node => {
       xml += `    <node id="${node.id}">\n`;
       xml += `      <data key="d0">document</data>\n`;
       xml += `      <data key="d1">${node.properties.category}</data>\n`;
@@ -1143,7 +1075,7 @@ export class KnowledgeGraphService {
     });
 
     // 添加概念节点
-    graph.conceptNodes.forEach((node) => {
+    graph.conceptNodes.forEach(node => {
       xml += `    <node id="${node.id}">\n`;
       xml += `      <data key="d0">concept</data>\n`;
       xml += `      <data key="d1">${node.properties.category}</data>\n`;
@@ -1152,7 +1084,7 @@ export class KnowledgeGraphService {
     });
 
     // 添加边
-    graph.edges.forEach((edge) => {
+    graph.edges.forEach(edge => {
       xml += `    <edge id="${edge.id}" source="${edge.source}" target="${edge.target}">\n`;
       xml += `      <data key="d3">${edge.weight}</data>\n`;
       xml += `      <data key="d4">${edge.properties.relationship}</data>\n`;
@@ -1170,11 +1102,13 @@ export class KnowledgeGraphService {
    * @param options 可视化选项
    * @returns 可视化数据
    */
-  async visualize(options: {
-    cluster?: number;
-    minImportance?: number;
-    layout?: 'force' | 'circular' | 'hierarchical';
-  } = {}): Promise<{
+  async visualize(
+    options: {
+      cluster?: number;
+      minImportance?: number;
+      layout?: 'force' | 'circular' | 'hierarchical';
+    } = {},
+  ): Promise<{
     nodes: Array<{
       id: string;
       label: string;
@@ -1211,24 +1145,18 @@ export class KnowledgeGraphService {
       let filteredConceptNodes = graph.conceptNodes;
 
       if (options.cluster !== undefined) {
-        filteredDocNodes = filteredDocNodes.filter(
-          (n) => n.properties.cluster === options.cluster
-        );
+        filteredDocNodes = filteredDocNodes.filter(n => n.properties.cluster === options.cluster);
       }
 
       if (options.minImportance !== undefined) {
         const minImportance = options.minImportance;
-        filteredDocNodes = filteredDocNodes.filter(
-          (n) => n.properties.importance >= minImportance
-        );
-        filteredConceptNodes = filteredConceptNodes.filter(
-          (n) => n.properties.importance >= minImportance
-        );
+        filteredDocNodes = filteredDocNodes.filter(n => n.properties.importance >= minImportance);
+        filteredConceptNodes = filteredConceptNodes.filter(n => n.properties.importance >= minImportance);
       }
 
       // 转换节点格式
       const nodes = [
-        ...filteredDocNodes.map((node) => ({
+        ...filteredDocNodes.map(node => ({
           id: node.id,
           label: node.properties.title,
           type: 'document' as const,
@@ -1236,7 +1164,7 @@ export class KnowledgeGraphService {
           importance: node.properties.importance,
           cluster: node.properties.cluster,
         })),
-        ...filteredConceptNodes.map((node) => ({
+        ...filteredConceptNodes.map(node => ({
           id: node.id,
           label: node.properties.name,
           type: 'concept' as const,
@@ -1247,12 +1175,8 @@ export class KnowledgeGraphService {
 
       // 转换边格式
       const edges = graph.edges
-        .filter(
-          (e) =>
-            nodes.some((n) => n.id === e.source) &&
-            nodes.some((n) => n.id === e.target)
-        )
-        .map((edge) => ({
+        .filter(e => nodes.some(n => n.id === e.source) && nodes.some(n => n.id === e.target))
+        .map(edge => ({
           id: edge.id,
           source: edge.source,
           target: edge.target,

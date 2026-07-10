@@ -10,7 +10,11 @@
     "lint": "eslint src/**/*.ts",
     "test": "jest"
   },
-  "keywords": ["api-gateway", "catering-platform", "yyc3"],
+  "keywords": [
+    "api-gateway",
+    "catering-platform",
+    "yyc3"
+  ],
   "author": "YYC3",
   "license": "MIT",
   "dependencies": {

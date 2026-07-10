@@ -30,5 +30,5 @@ export enum DeliveryStatus {
   // 配送失败
   FAILED = 'failed',
   // 已取消
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }

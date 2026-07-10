@@ -101,6 +101,7 @@
 - **最少知识原则**：模块间最小化依赖，降低耦合度
 
 同时遵循YYC³「五高五标五化」核心理念：
+
 - **五高**：高可用、高性能、高安全、高扩展、高可维护
 - **五标**：标准化、规范化、自动化、智能化、可视化
 - **五化**：流程化、文档化、工具化、数字化、生态化
@@ -110,24 +111,28 @@
 技术栈选择基于以下考虑：
 
 **前端技术栈**
+
 - React 18+：采用现代化前端框架，组件化开发
 - TypeScript 5.0+：类型安全，提高代码质量
 - Next.js 14+：SSR/SSG支持，优化SEO和性能
 - Tailwind CSS：原子化CSS，快速构建UI
 
 **后端技术栈**
+
 - Node.js 18+：高性能JavaScript运行时
 - Express/Fastify：轻量级Web框架
 - PostgreSQL 15+：关系型数据库，ACID保证
 - Redis 7+：缓存和会话存储
 
 **基础设施**
+
 - Docker：容器化部署，环境一致性
 - Kubernetes：容器编排，自动化运维
 - Nginx：反向代理和负载均衡
 - Prometheus + Grafana：监控和告警
 
 **开发工具**
+
 - Git：版本控制
 - ESLint + Prettier：代码规范
 - Jest + Vitest：单元测试
@@ -140,27 +145,32 @@
 YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以下层次：
 
 **表现层（Presentation Layer）**
+
 - Web前端：React + Next.js构建的单页应用
 - 移动端：响应式设计，支持多设备访问
 - 管理后台：独立的管理界面
 
 **应用层（Application Layer）**
+
 - API网关：统一入口，路由分发
 - 业务服务：订单、用户、商品等核心业务逻辑
 - 认证授权：JWT认证，RBAC权限控制
 
 **领域层（Domain Layer）**
+
 - 领域模型：核心业务实体和规则
 - 领域服务：复杂业务逻辑封装
 - 仓储接口：数据访问抽象
 
 **基础设施层（Infrastructure Layer）**
+
 - 数据库：PostgreSQL主从架构
 - 缓存：Redis集群
 - 消息队列：RabbitMQ/Kafka
 - 文件存储：OSS/MinIO
 
 **跨层关注点**
+
 - 日志监控：ELK Stack
 - 配置管理：Apollo/Nacos
 - 服务发现：Consul/Eureka
@@ -171,36 +181,43 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 系统按照业务领域划分为以下核心模块：
 
 **用户模块（User Module）**
+
 - 用户注册、登录、认证
 - 用户信息管理
 - 权限和角色管理
 
 **商品模块（Product Module）**
+
 - 商品信息管理
 - 商品分类和标签
 - 库存管理
 
 **订单模块（Order Module）**
+
 - 订单创建和支付
 - 订单状态流转
 - 订单查询和统计
 
 **支付模块（Payment Module）**
+
 - 支付接口集成
 - 支付状态同步
 - 退款处理
 
 **营销模块（Marketing Module）**
+
 - 优惠券管理
 - 促销活动
 - 会员积分
 
 **报表模块（Report Module）**
+
 - 销售报表
 - 数据分析
 - 可视化展示
 
 **系统模块（System Module）**
+
 - 配置管理
 - 日志管理
 - 监控告警
@@ -247,6 +264,7 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 **@tags**：架构设计,智能化,YYC³,转型
 
 ---
+
 # YYC³餐饮平台全链路智能化转型技术实现计划
 
 ## 1. 技术实现总体目标
@@ -637,9 +655,6 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 
 未来，YYC³餐饮平台将持续进化和创新，不断引入新的技术和功能，打造一个领先的智能化餐饮管理系统，为餐饮行业的数字化和智能化转型提供最佳实践和解决方案。
 
-
-
-
 ## 概述
 
 ### 架构概述
@@ -661,8 +676,6 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -696,8 +709,6 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -720,46 +731,46 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -772,6 +783,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -781,6 +793,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -790,6 +803,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -806,16 +820,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -825,13 +840,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -840,6 +853,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -858,6 +872,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -873,6 +888,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -892,28 +908,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -922,44 +937,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -973,13 +986,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -988,18 +1001,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1009,37 +1025,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1048,28 +1067,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1078,21 +1095,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1101,10 +1120,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1130,16 +1146,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1148,25 +1164,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

@@ -10,9 +10,11 @@
 **@tags**：架构设计,YYC³,系统架构
 
 ---
+
 # 测试架构设计文档
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--测试验证
 - 遵循规范：五高五标五化要求
@@ -43,26 +45,26 @@
 interface TestArchitecturePrinciples {
   /** 测试金字塔原则 */
   pyramid: {
-    unit: number;      // 单元测试占比
+    unit: number; // 单元测试占比
     integration: number; // 集成测试占比
-    e2e: number;      // 端到端测试占比
+    e2e: number; // 端到端测试占比
   };
   /** 独立性原则 */
   independence: {
-    testIsolation: boolean;  // 测试隔离
+    testIsolation: boolean; // 测试隔离
     noSharedState: boolean; // 无共享状态
     parallelExecution: boolean; // 并行执行
   };
   /** 可重复性原则 */
   repeatability: {
-    deterministic: boolean;  // 确定性
-    idempotent: boolean;     // 幂等性
+    deterministic: boolean; // 确定性
+    idempotent: boolean; // 幂等性
     environmentIndependent: boolean; // 环境独立
   };
   /** 快速反馈原则 */
   fastFeedback: {
-    quickExecution: boolean;  // 快速执行
-    earlyFailure: boolean;   // 早期失败
+    quickExecution: boolean; // 快速执行
+    earlyFailure: boolean; // 早期失败
     continuousIntegration: boolean; // 持续集成
   };
 }
@@ -74,23 +76,23 @@ const DEFAULT_TEST_PRINCIPLES: TestArchitecturePrinciples = {
   pyramid: {
     unit: 70,
     integration: 20,
-    e2e: 10
+    e2e: 10,
   },
   independence: {
     testIsolation: true,
     noSharedState: true,
-    parallelExecution: true
+    parallelExecution: true,
   },
   repeatability: {
     deterministic: true,
     idempotent: true,
-    environmentIndependent: true
+    environmentIndependent: true,
   },
   fastFeedback: {
     quickExecution: true,
     earlyFailure: true,
-    continuousIntegration: true
-  }
+    continuousIntegration: true,
+  },
 };
 ```
 
@@ -110,63 +112,44 @@ class TestPyramid {
    */
   static unitTests = {
     ratio: 0.7,
-    executionTime: '< 1s',
-    scope: '函数/类/组件',
-    tools: ['Jest', 'Vitest', 'Mocha'],
-    characteristics: [
-      '快速执行',
-      '隔离性好',
-      '易于调试',
-      '成本低'
-    ]
+    executionTime: "< 1s",
+    scope: "函数/类/组件",
+    tools: ["Jest", "Vitest", "Mocha"],
+    characteristics: ["快速执行", "隔离性好", "易于调试", "成本低"],
   };
-  
+
   /**
    * 集成测试层
    */
   static integrationTests = {
     ratio: 0.2,
-    executionTime: '< 10s',
-    scope: '模块/服务/API',
-    tools: ['Supertest', 'Testcontainers', 'MSW'],
-    characteristics: [
-      '中等速度',
-      '验证集成',
-      '测试接口',
-      '中等成本'
-    ]
+    executionTime: "< 10s",
+    scope: "模块/服务/API",
+    tools: ["Supertest", "Testcontainers", "MSW"],
+    characteristics: ["中等速度", "验证集成", "测试接口", "中等成本"],
   };
-  
+
   /**
    * 端到端测试层
    */
   static e2eTests = {
     ratio: 0.1,
-    executionTime: '< 5min',
-    scope: '完整用户流程',
-    tools: ['Cypress', 'Playwright', 'Puppeteer'],
-    characteristics: [
-      '较慢执行',
-      '真实环境',
-      '用户视角',
-      '高成本'
-    ]
+    executionTime: "< 5min",
+    scope: "完整用户流程",
+    tools: ["Cypress", "Playwright", "Puppeteer"],
+    characteristics: ["较慢执行", "真实环境", "用户视角", "高成本"],
   };
-  
+
   /**
    * 验证测试比例
    */
   static validateRatio(unit: number, integration: number, e2e: number): boolean {
     const total = unit + integration + e2e;
     if (total !== 100) {
-      throw new Error('测试比例总和必须为100%');
+      throw new Error("测试比例总和必须为100%");
     }
-    
-    return (
-      unit >= 60 && unit <= 80 &&
-      integration >= 10 && integration <= 30 &&
-      e2e >= 5 && e2e <= 15
-    );
+
+    return unit >= 60 && unit <= 80 && integration >= 10 && integration <= 30 && e2e >= 5 && e2e <= 15;
   }
 }
 ```
@@ -179,15 +162,15 @@ class TestPyramid {
  */
 enum TestLayer {
   /** 单元测试 */
-  UNIT = 'unit',
+  UNIT = "unit",
   /** 集成测试 */
-  INTEGRATION = 'integration',
+  INTEGRATION = "integration",
   /** 端到端测试 */
-  E2E = 'e2e',
+  E2E = "e2e",
   /** 性能测试 */
-  PERFORMANCE = 'performance',
+  PERFORMANCE = "performance",
   /** 安全测试 */
-  SECURITY = 'security'
+  SECURITY = "security",
 }
 
 /**
@@ -205,7 +188,7 @@ interface TestLayerConfig {
   /** 重试次数 */
   retries: number;
   /** 测试环境 */
-  environment: 'local' | 'staging' | 'production';
+  environment: "local" | "staging" | "production";
   /** 数据准备 */
   dataSetup: () => Promise<void>;
   /** 数据清理 */
@@ -217,21 +200,21 @@ interface TestLayerConfig {
  */
 class TestLayerManager {
   private configs: Map<TestLayer, TestLayerConfig> = new Map();
-  
+
   /**
    * 注册测试层次
    */
   registerLayer(config: TestLayerConfig): void {
     this.configs.set(config.layer, config);
   }
-  
+
   /**
    * 获取层次配置
    */
   getLayerConfig(layer: TestLayer): TestLayerConfig | undefined {
     return this.configs.get(layer);
   }
-  
+
   /**
    * 执行层次测试
    */
@@ -240,10 +223,10 @@ class TestLayerManager {
     if (!config) {
       throw new Error(`层次 ${layer} 未配置`);
     }
-    
+
     // 数据准备
     await config.dataSetup();
-    
+
     try {
       // 执行测试
       const result = await this.runTests(config);
@@ -253,7 +236,7 @@ class TestLayerManager {
       await config.dataTeardown();
     }
   }
-  
+
   /**
    * 运行测试
    */
@@ -263,7 +246,7 @@ class TestLayerManager {
       passed: 0,
       failed: 0,
       skipped: 0,
-      duration: 0
+      duration: 0,
     };
   }
 }
@@ -295,19 +278,19 @@ interface TestResult {
  */
 enum TestComponentType {
   /** 测试运行器 */
-  RUNNER = 'runner',
+  RUNNER = "runner",
   /** 断言库 */
-  ASSERTION = 'assertion',
+  ASSERTION = "assertion",
   /** 模拟工具 */
-  MOCK = 'mock',
+  MOCK = "mock",
   /** 测试夹具 */
-  FIXTURE = 'fixture',
+  FIXTURE = "fixture",
   /** 测试报告 */
-  REPORTER = 'reporter',
+  REPORTER = "reporter",
   /** 测试覆盖率 */
-  COVERAGE = 'coverage',
+  COVERAGE = "coverage",
   /** 测试数据 */
-  DATA_PROVIDER = 'data_provider'
+  DATA_PROVIDER = "data_provider",
 }
 
 /**
@@ -349,7 +332,7 @@ interface TestContext {
  */
 class TestComponentManager {
   private components: Map<TestComponentType, TestComponent[]> = new Map();
-  
+
   /**
    * 注册组件
    */
@@ -358,14 +341,14 @@ class TestComponentManager {
     typeComponents.push(component);
     this.components.set(component.type, typeComponents);
   }
-  
+
   /**
    * 获取组件
    */
   getComponents(type: TestComponentType): TestComponent[] {
     return this.components.get(type) || [];
   }
-  
+
   /**
    * 初始化所有组件
    */
@@ -373,7 +356,7 @@ class TestComponentManager {
     const allComponents = Array.from(this.components.values()).flat();
     await Promise.all(allComponents.map(component => component.initialize()));
   }
-  
+
   /**
    * 清理所有组件
    */
@@ -392,25 +375,25 @@ class TestComponentManager {
  */
 class TestRunner implements TestComponent {
   type = TestComponentType.RUNNER;
-  name = 'Jest Runner';
-  version = '1.0.0';
-  
+  name = "Jest Runner";
+  version = "1.0.0";
+
   private tests: Test[] = [];
-  
+
   async initialize(): Promise<void> {
     // 初始化测试运行器
   }
-  
+
   async execute(context: TestContext): Promise<TestResult> {
     const results: TestResult = {
       passed: 0,
       failed: 0,
       skipped: 0,
-      duration: 0
+      duration: 0,
     };
-    
+
     const startTime = Date.now();
-    
+
     for (const test of this.tests) {
       try {
         await test.run(context);
@@ -419,15 +402,15 @@ class TestRunner implements TestComponent {
         results.failed++;
       }
     }
-    
+
     results.duration = Date.now() - startTime;
     return results;
   }
-  
+
   async cleanup(): Promise<void> {
     // 清理资源
   }
-  
+
   /**
    * 添加测试
    */
@@ -441,13 +424,13 @@ class TestRunner implements TestComponent {
  */
 class AssertionLibrary implements TestComponent {
   type = TestComponentType.ASSERTION;
-  name = 'Custom Assertion';
-  version = '1.0.0';
-  
+  name = "Custom Assertion";
+  version = "1.0.0";
+
   async initialize(): Promise<void> {
     // 初始化断言库
   }
-  
+
   async execute(context: TestContext): Promise<any> {
     return {
       equal: (actual: any, expected: any) => {
@@ -463,16 +446,16 @@ class AssertionLibrary implements TestComponent {
       throws: async (fn: () => Promise<any>, expectedError?: string) => {
         try {
           await fn();
-          throw new Error('Expected function to throw');
+          throw new Error("Expected function to throw");
         } catch (error) {
           if (expectedError && !error.message.includes(expectedError)) {
             throw new Error(`Expected error message to include "${expectedError}"`);
           }
         }
-      }
+      },
     };
   }
-  
+
   async cleanup(): Promise<void> {
     // 清理资源
   }
@@ -483,15 +466,15 @@ class AssertionLibrary implements TestComponent {
  */
 class MockTool implements TestComponent {
   type = TestComponentType.MOCK;
-  name = 'Mock Tool';
-  version = '1.0.0';
-  
+  name = "Mock Tool";
+  version = "1.0.0";
+
   private mocks: Map<string, any> = new Map();
-  
+
   async initialize(): Promise<void> {
     // 初始化模拟工具
   }
-  
+
   async execute(context: TestContext): Promise<any> {
     return {
       fn: (implementation?: Function) => {
@@ -499,7 +482,7 @@ class MockTool implements TestComponent {
           calls: [] as any[],
           mockImplementation: implementation || ((...args: any[]) => undefined),
           mockReturnValue: undefined as any,
-          ...jest.fn()
+          ...jest.fn(),
         };
         return mock;
       },
@@ -508,10 +491,10 @@ class MockTool implements TestComponent {
       },
       getMock: (name: string) => {
         return this.mocks.get(name);
-      }
+      },
     };
   }
-  
+
   async cleanup(): Promise<void> {
     this.mocks.clear();
   }
@@ -542,15 +525,15 @@ interface Test {
  */
 enum TestEnvironment {
   /** 本地环境 */
-  LOCAL = 'local',
+  LOCAL = "local",
   /** 开发环境 */
-  DEVELOPMENT = 'development',
+  DEVELOPMENT = "development",
   /** 测试环境 */
-  STAGING = 'staging',
+  STAGING = "staging",
   /** 预发布环境 */
-  PREPRODUCTION = 'preproduction',
+  PREPRODUCTION = "preproduction",
   /** 生产环境 */
-  PRODUCTION = 'production'
+  PRODUCTION = "production",
 }
 
 /**
@@ -587,14 +570,14 @@ interface EnvironmentConfig {
 class EnvironmentManager {
   private configs: Map<TestEnvironment, EnvironmentConfig> = new Map();
   private currentEnvironment: TestEnvironment = TestEnvironment.LOCAL;
-  
+
   /**
    * 注册环境配置
    */
   registerEnvironment(environment: TestEnvironment, config: EnvironmentConfig): void {
     this.configs.set(environment, config);
   }
-  
+
   /**
    * 设置当前环境
    */
@@ -604,14 +587,14 @@ class EnvironmentManager {
     }
     this.currentEnvironment = environment;
   }
-  
+
   /**
    * 获取当前环境配置
    */
   getCurrentConfig(): EnvironmentConfig {
     return this.configs.get(this.currentEnvironment)!;
   }
-  
+
   /**
    * 获取环境变量
    */
@@ -630,35 +613,35 @@ class EnvironmentManager {
  */
 class TestDataRepository {
   private data: Map<string, any> = new Map();
-  
+
   /**
    * 存储数据
    */
   store(key: string, value: any): void {
     this.data.set(key, value);
   }
-  
+
   /**
    * 获取数据
    */
   get(key: string): any {
     return this.data.get(key);
   }
-  
+
   /**
    * 删除数据
    */
   delete(key: string): void {
     this.data.delete(key);
   }
-  
+
   /**
    * 清空数据
    */
   clear(): void {
     this.data.clear();
   }
-  
+
   /**
    * 批量存储
    */
@@ -679,30 +662,30 @@ class TestDataFactory {
   static createUser(overrides?: Partial<User>): User {
     return {
       id: `user-${Date.now()}`,
-      name: 'Test User',
+      name: "Test User",
       email: `test-${Date.now()}@example.com`,
-      password: 'password123',
-      role: 'user',
+      password: "password123",
+      role: "user",
       createdAt: new Date(),
-      ...overrides
+      ...overrides,
     };
   }
-  
+
   /**
    * 创建订单数据
    */
   static createOrder(overrides?: Partial<Order>): Order {
     return {
       id: `order-${Date.now()}`,
-      userId: 'user-1',
+      userId: "user-1",
       items: [],
       total: 0,
-      status: 'pending',
+      status: "pending",
       createdAt: new Date(),
-      ...overrides
+      ...overrides,
     };
   }
-  
+
   /**
    * 批量创建数据
    */
@@ -748,15 +731,15 @@ interface Order {
  */
 enum TestLifecyclePhase {
   /** 初始化 */
-  INIT = 'init',
+  INIT = "init",
   /** 设置 */
-  SETUP = 'setup',
+  SETUP = "setup",
   /** 执行 */
-  EXECUTE = 'execute',
+  EXECUTE = "execute",
   /** 清理 */
-  TEARDOWN = 'cleanup',
+  TEARDOWN = "cleanup",
   /** 报告 */
-  REPORT = 'report'
+  REPORT = "report",
 }
 
 /**
@@ -764,7 +747,7 @@ enum TestLifecyclePhase {
  */
 class TestLifecycleManager {
   private hooks: Map<TestLifecyclePhase, Function[]> = new Map();
-  
+
   /**
    * 注册钩子
    */
@@ -773,7 +756,7 @@ class TestLifecycleManager {
     hooks.push(hook);
     this.hooks.set(phase, hooks);
   }
-  
+
   /**
    * 执行生命周期
    */
@@ -782,25 +765,24 @@ class TestLifecycleManager {
       passed: 0,
       failed: 0,
       skipped: 0,
-      duration: 0
+      duration: 0,
     };
-    
+
     const startTime = Date.now();
-    
+
     try {
       // 初始化阶段
       await this.executeHooks(TestLifecyclePhase.INIT);
-      
+
       // 设置阶段
       await this.executeHooks(TestLifecyclePhase.SETUP);
-      
+
       // 执行阶段
-      await test.run({ testName: test.name, testFile: '', testSuite: '', metadata: {}, sharedData: new Map() });
+      await test.run({ testName: test.name, testFile: "", testSuite: "", metadata: {}, sharedData: new Map() });
       result.passed++;
-      
+
       // 清理阶段
       await this.executeHooks(TestLifecyclePhase.TEARDOWN);
-      
     } catch (error) {
       result.failed++;
       // 即使失败也要执行清理
@@ -810,10 +792,10 @@ class TestLifecycleManager {
       await this.executeHooks(TestLifecyclePhase.REPORT);
       result.duration = Date.now() - startTime;
     }
-    
+
     return result;
   }
-  
+
   /**
    * 执行钩子
    */
@@ -835,12 +817,12 @@ class TestLifecycleManager {
 class TestExecutor {
   private lifecycleManager: TestLifecycleManager;
   private componentManager: TestComponentManager;
-  
+
   constructor() {
     this.lifecycleManager = new TestLifecycleManager();
     this.componentManager = new TestComponentManager();
   }
-  
+
   /**
    * 执行测试套件
    */
@@ -851,48 +833,48 @@ class TestExecutor {
       failed: 0,
       skipped: 0,
       duration: 0,
-      tests: []
+      tests: [],
     };
-    
+
     const startTime = Date.now();
-    
+
     for (const test of tests) {
       const result = await this.executeTest(test);
       suiteResult.tests.push(result);
-      
-      if (result.status === 'passed') {
+
+      if (result.status === "passed") {
         suiteResult.passed++;
-      } else if (result.status === 'failed') {
+      } else if (result.status === "failed") {
         suiteResult.failed++;
       } else {
         suiteResult.skipped++;
       }
     }
-    
+
     suiteResult.duration = Date.now() - startTime;
     return suiteResult;
   }
-  
+
   /**
    * 执行单个测试
    */
   async executeTest(test: Test): Promise<IndividualTestResult> {
     const result: IndividualTestResult = {
       name: test.name,
-      status: 'passed',
+      status: "passed",
       duration: 0,
-      error: undefined
+      error: undefined,
     };
-    
+
     const startTime = Date.now();
-    
+
     try {
       await this.lifecycleManager.executeLifecycle(test);
     } catch (error) {
-      result.status = 'failed';
+      result.status = "failed";
       result.error = error.message;
     }
-    
+
     result.duration = Date.now() - startTime;
     return result;
   }
@@ -923,7 +905,7 @@ interface IndividualTestResult {
   /** 测试名称 */
   name: string;
   /** 状态 */
-  status: 'passed' | 'failed' | 'skipped';
+  status: "passed" | "failed" | "skipped";
   /** 执行时长 */
   duration: number;
   /** 错误信息 */
@@ -943,13 +925,13 @@ interface IndividualTestResult {
  */
 enum ReportFormat {
   /** JSON格式 */
-  JSON = 'json',
+  JSON = "json",
   /** HTML格式 */
-  HTML = 'html',
+  HTML = "html",
   /** Markdown格式 */
-  MARKDOWN = 'markdown',
+  MARKDOWN = "markdown",
   /** JUnit格式 */
-  JUNIT = 'junit'
+  JUNIT = "junit",
 }
 
 /**
@@ -1005,14 +987,14 @@ class ReportGenerator {
         throw new Error(`不支持的报告格式: ${format}`);
     }
   }
-  
+
   /**
    * 生成JSON报告
    */
   private generateJSONReport(results: SuiteResult): string {
     return JSON.stringify(results, null, 2);
   }
-  
+
   /**
    * 生成HTML报告
    */
@@ -1021,7 +1003,7 @@ class ReportGenerator {
     const failed = results.failed;
     const total = results.total;
     const percentage = ((passed / total) * 100).toFixed(2);
-    
+
     return `
 <!DOCTYPE html>
 <html>
@@ -1052,20 +1034,24 @@ class ReportGenerator {
       <th>时长</th>
       <th>错误</th>
     </tr>
-    ${results.tests.map(test => `
+    ${results.tests
+      .map(
+        test => `
       <tr>
         <td>${test.name}</td>
         <td class="${test.status}">${test.status}</td>
         <td>${test.duration}ms</td>
-        <td>${test.error || ''}</td>
+        <td>${test.error || ""}</td>
       </tr>
-    `).join('')}
+    `
+      )
+      .join("")}
   </table>
 </body>
 </html>
     `;
   }
-  
+
   /**
    * 生成Markdown报告
    */
@@ -1074,7 +1060,7 @@ class ReportGenerator {
     const failed = results.failed;
     const total = results.total;
     const percentage = ((passed / total) * 100).toFixed(2);
-    
+
     return `
 # 测试报告
 
@@ -1089,12 +1075,10 @@ class ReportGenerator {
 
 | 测试名称 | 状态 | 时长 | 错误 |
 |---------|------|------|------|
-${results.tests.map(test => 
-  `| ${test.name} | ${test.status} | ${test.duration}ms | ${test.error || ''} |`
-).join('\n')}
+${results.tests.map(test => `| ${test.name} | ${test.status} | ${test.duration}ms | ${test.error || ""} |`).join("\n")}
     `;
   }
-  
+
   /**
    * 生成JUnit报告
    */
@@ -1103,11 +1087,15 @@ ${results.tests.map(test =>
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
   <testsuite name="${results.suite}" tests="${results.total}" failures="${results.failed}" time="${results.duration / 1000}">
-    ${results.tests.map(test => `
+    ${results.tests
+      .map(
+        test => `
     <testcase name="${test.name}" time="${test.duration / 1000}">
-      ${test.error ? `<failure message="${test.error}">${test.error}</failure>` : ''}
+      ${test.error ? `<failure message="${test.error}">${test.error}</failure>` : ""}
     </testcase>
-    `).join('')}
+    `
+      )
+      .join("")}
   </testsuite>
 </testsuites>
     `;
@@ -1126,34 +1114,34 @@ class ReportPublisher {
    * 发布到文件系统
    */
   async publishToFile(report: string, path: string): Promise<void> {
-    const fs = require('fs').promises;
-    await fs.writeFile(path, report, 'utf-8');
+    const fs = require("fs").promises;
+    await fs.writeFile(path, report, "utf-8");
   }
-  
+
   /**
    * 发布到控制台
    */
   async publishToConsole(report: string): Promise<void> {
     console.log(report);
   }
-  
+
   /**
    * 发布到Web服务
    */
   async publishToWeb(report: string, url: string): Promise<void> {
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ report })
+      body: JSON.stringify({ report }),
     });
-    
+
     if (!response.ok) {
-      throw new Error('发布报告失败');
+      throw new Error("发布报告失败");
     }
   }
-  
+
   /**
    * 发布到邮件
    */
@@ -1202,11 +1190,11 @@ interface CICDConfig {
  */
 class CICDManager {
   private config: CICDConfig;
-  
+
   constructor(config: CICDConfig) {
     this.config = config;
   }
-  
+
   /**
    * 执行CI流程
    */
@@ -1214,135 +1202,134 @@ class CICDManager {
     const result: CICDResult = {
       success: true,
       stages: [],
-      duration: 0
+      duration: 0,
     };
-    
+
     const startTime = Date.now();
-    
+
     try {
       // Lint阶段
       if (this.config.stages.lint) {
         await this.runLint();
-        result.stages.push({ name: 'lint', status: 'passed', duration: 0 });
+        result.stages.push({ name: "lint", status: "passed", duration: 0 });
       }
-      
+
       // 单元测试阶段
       if (this.config.stages.unit) {
         await this.runUnitTests();
-        result.stages.push({ name: 'unit', status: 'passed', duration: 0 });
+        result.stages.push({ name: "unit", status: "passed", duration: 0 });
       }
-      
+
       // 集成测试阶段
       if (this.config.stages.integration) {
         await this.runIntegrationTests();
-        result.stages.push({ name: 'integration', status: 'passed', duration: 0 });
+        result.stages.push({ name: "integration", status: "passed", duration: 0 });
       }
-      
+
       // E2E测试阶段
       if (this.config.stages.e2e) {
         await this.runE2ETests();
-        result.stages.push({ name: 'e2e', status: 'passed', duration: 0 });
+        result.stages.push({ name: "e2e", status: "passed", duration: 0 });
       }
-      
+
       // 构建阶段
       if (this.config.stages.build) {
         await this.runBuild();
-        result.stages.push({ name: 'build', status: 'passed', duration: 0 });
+        result.stages.push({ name: "build", status: "passed", duration: 0 });
       }
-      
     } catch (error) {
       result.success = false;
-      await this.sendNotification('CI失败', error.message);
+      await this.sendNotification("CI失败", error.message);
     }
-    
+
     result.duration = Date.now() - startTime;
-    
+
     if (result.success) {
-      await this.sendNotification('CI成功', '所有测试通过');
+      await this.sendNotification("CI成功", "所有测试通过");
     }
-    
+
     return result;
   }
-  
+
   /**
    * 执行CD流程
    */
   async executeCD(): Promise<CDResult> {
     const result: CDResult = {
       success: true,
-      stage: 'staging',
-      duration: 0
+      stage: "staging",
+      duration: 0,
     };
-    
+
     const startTime = Date.now();
-    
+
     try {
       if (this.config.stages.deploy) {
         await this.deployToStaging();
-        result.stage = 'staging';
-        
+        result.stage = "staging";
+
         // 如果是生产环境
         await this.deployToProduction();
-        result.stage = 'production';
+        result.stage = "production";
       }
     } catch (error) {
       result.success = false;
-      await this.sendNotification('CD失败', error.message);
+      await this.sendNotification("CD失败", error.message);
     }
-    
+
     result.duration = Date.now() - startTime;
     return result;
   }
-  
+
   /**
    * 运行Lint
    */
   private async runLint(): Promise<void> {
     // 实现Lint逻辑
   }
-  
+
   /**
    * 运行单元测试
    */
   private async runUnitTests(): Promise<void> {
     // 实现单元测试逻辑
   }
-  
+
   /**
    * 运行集成测试
    */
   private async runIntegrationTests(): Promise<void> {
     // 实现集成测试逻辑
   }
-  
+
   /**
    * 运行E2E测试
    */
   private async runE2ETests(): Promise<void> {
     // 实现E2E测试逻辑
   }
-  
+
   /**
    * 运行构建
    */
   private async runBuild(): Promise<void> {
     // 实现构建逻辑
   }
-  
+
   /**
    * 部署到测试环境
    */
   private async deployToStaging(): Promise<void> {
     // 实现部署逻辑
   }
-  
+
   /**
    * 部署到生产环境
    */
   private async deployToProduction(): Promise<void> {
     // 实现部署逻辑
   }
-  
+
   /**
    * 发送通知
    */
@@ -1350,11 +1337,11 @@ class CICDManager {
     if (this.config.notifications.slack) {
       // 发送Slack通知
     }
-    
+
     if (this.config.notifications.email) {
       // 发送邮件通知
     }
-    
+
     if (this.config.notifications.webhook) {
       // 发送Webhook通知
     }
@@ -1370,7 +1357,7 @@ interface CICDResult {
   /** 阶段结果 */
   stages: Array<{
     name: string;
-    status: 'passed' | 'failed';
+    status: "passed" | "failed";
     duration: number;
   }>;
   /** 执行时长 */
@@ -1384,7 +1371,7 @@ interface CDResult {
   /** 是否成功 */
   success: boolean;
   /** 部署阶段 */
-  stage: 'staging' | 'production';
+  stage: "staging" | "production";
   /** 执行时长 */
   duration: number;
 }
@@ -1409,12 +1396,12 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main ]
-  ${config.triggers.schedule ? `schedule:\n    - cron: '${config.triggers.schedule}'` : ''}
+  ${config.triggers.schedule ? `schedule:\n    - cron: '${config.triggers.schedule}'` : ""}
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-    ${config.stages.lint ? '' : 'if: false'}
+    ${config.stages.lint ? "" : "if: false"}
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
@@ -1428,7 +1415,7 @@ jobs:
 
   unit-tests:
     runs-on: ubuntu-latest
-    ${config.stages.unit ? '' : 'if: false'}
+    ${config.stages.unit ? "" : "if: false"}
     needs: lint
     steps:
       - uses: actions/checkout@v3
@@ -1447,7 +1434,7 @@ jobs:
 
   integration-tests:
     runs-on: ubuntu-latest
-    ${config.stages.integration ? '' : 'if: false'}
+    ${config.stages.integration ? "" : "if: false"}
     needs: unit-tests
     services:
       postgres:
@@ -1474,7 +1461,7 @@ jobs:
 
   e2e-tests:
     runs-on: ubuntu-latest
-    ${config.stages.e2e ? '' : 'if: false'}
+    ${config.stages.e2e ? "" : "if: false"}
     needs: integration-tests
     steps:
       - uses: actions/checkout@v3
@@ -1489,7 +1476,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    ${config.stages.build ? '' : 'if: false'}
+    ${config.stages.build ? "" : "if: false"}
     needs: [unit-tests, integration-tests, e2e-tests]
     steps:
       - uses: actions/checkout@v3
@@ -1509,7 +1496,7 @@ jobs:
 
   deploy-staging:
     runs-on: ubuntu-latest
-    ${config.stages.deploy ? '' : 'if: false'}
+    ${config.stages.deploy ? "" : "if: false"}
     needs: build
     if: github.ref == 'refs/heads/develop'
     environment: staging
@@ -1520,7 +1507,7 @@ jobs:
 
   deploy-production:
     runs-on: ubuntu-latest
-    ${config.stages.deploy ? '' : 'if: false'}
+    ${config.stages.deploy ? "" : "if: false"}
     needs: build
     if: github.ref == 'refs/heads/main'
     environment: production
@@ -1548,52 +1535,37 @@ class TestArchitectureBestPractices {
    * 测试隔离
    */
   static testIsolation = {
-    description: '每个测试应该独立运行，不依赖其他测试',
-    practices: [
-      '使用独立的测试数据',
-      '避免共享状态',
-      '在测试前后清理数据',
-      '使用随机数据生成器'
-    ]
+    description: "每个测试应该独立运行，不依赖其他测试",
+    practices: ["使用独立的测试数据", "避免共享状态", "在测试前后清理数据", "使用随机数据生成器"],
   };
-  
+
   /**
    * 测试可读性
    */
   static testReadability = {
-    description: '测试代码应该清晰易懂',
+    description: "测试代码应该清晰易懂",
     practices: [
-      '使用描述性的测试名称',
-      '遵循AAA模式（Arrange-Act-Assert）',
-      '提取重复的测试逻辑',
-      '使用有意义的断言消息'
-    ]
+      "使用描述性的测试名称",
+      "遵循AAA模式（Arrange-Act-Assert）",
+      "提取重复的测试逻辑",
+      "使用有意义的断言消息",
+    ],
   };
-  
+
   /**
    * 测试维护性
    */
   static testMaintainability = {
-    description: '测试代码应该易于维护和更新',
-    practices: [
-      '使用Page Object模式',
-      '提取测试工具函数',
-      '使用测试数据工厂',
-      '定期重构测试代码'
-    ]
+    description: "测试代码应该易于维护和更新",
+    practices: ["使用Page Object模式", "提取测试工具函数", "使用测试数据工厂", "定期重构测试代码"],
   };
-  
+
   /**
    * 测试性能
    */
   static testPerformance = {
-    description: '测试应该快速执行',
-    practices: [
-      '优先使用单元测试',
-      '并行执行测试',
-      '使用测试缓存',
-      '避免不必要的等待'
-    ]
+    description: "测试应该快速执行",
+    practices: ["优先使用单元测试", "并行执行测试", "使用测试缓存", "避免不必要的等待"],
   };
 }
 ```
@@ -1607,59 +1579,34 @@ class TestArchitectureBestPractices {
 class TestArchitectureChecklist {
   private static items = [
     {
-      category: '测试层次',
-      checks: [
-        '是否遵循测试金字塔原则',
-        '单元测试占比是否合理',
-        '集成测试覆盖关键路径',
-        'E2E测试覆盖核心流程'
-      ]
+      category: "测试层次",
+      checks: ["是否遵循测试金字塔原则", "单元测试占比是否合理", "集成测试覆盖关键路径", "E2E测试覆盖核心流程"],
     },
     {
-      category: '测试隔离',
-      checks: [
-        '测试之间是否独立',
-        '是否避免共享状态',
-        '是否正确清理测试数据',
-        '是否使用随机数据'
-      ]
+      category: "测试隔离",
+      checks: ["测试之间是否独立", "是否避免共享状态", "是否正确清理测试数据", "是否使用随机数据"],
     },
     {
-      category: '测试覆盖',
-      checks: [
-        '代码覆盖率是否达标',
-        '分支覆盖率是否充足',
-        '是否覆盖边界情况',
-        '是否覆盖错误场景'
-      ]
+      category: "测试覆盖",
+      checks: ["代码覆盖率是否达标", "分支覆盖率是否充足", "是否覆盖边界情况", "是否覆盖错误场景"],
     },
     {
-      category: '测试性能',
-      checks: [
-        '测试执行时间是否合理',
-        '是否支持并行执行',
-        '是否使用测试缓存',
-        '是否优化测试数据准备'
-      ]
+      category: "测试性能",
+      checks: ["测试执行时间是否合理", "是否支持并行执行", "是否使用测试缓存", "是否优化测试数据准备"],
     },
     {
-      category: 'CI/CD集成',
-      checks: [
-        '是否集成到CI/CD流程',
-        '是否自动运行测试',
-        '是否生成测试报告',
-        '是否配置测试通知'
-      ]
-    }
+      category: "CI/CD集成",
+      checks: ["是否集成到CI/CD流程", "是否自动运行测试", "是否生成测试报告", "是否配置测试通知"],
+    },
   ];
-  
+
   /**
    * 获取检查清单
    */
   static getChecklist(): typeof TestArchitectureChecklist.items {
     return this.items;
   }
-  
+
   /**
    * 检查完成情况
    */
@@ -1672,11 +1619,11 @@ class TestArchitectureChecklist {
     const completedItems = completed.filter(item => allItems.includes(item));
     const pendingItems = allItems.filter(item => !completed.includes(item));
     const progress = (completedItems.length / allItems.length) * 100;
-    
+
     return {
       completed: completedItems,
       pending: pendingItems,
-      progress
+      progress,
     };
   }
 }
@@ -1704,13 +1651,10 @@ class TestArchitectureChecklist {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1733,8 +1677,6 @@ class TestArchitectureChecklist {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1768,8 +1710,6 @@ class TestArchitectureChecklist {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1792,46 +1732,46 @@ class TestArchitectureChecklist {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1844,6 +1784,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1853,6 +1794,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1862,6 +1804,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1878,16 +1821,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1897,13 +1841,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1912,6 +1854,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1930,6 +1873,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1945,6 +1889,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1964,28 +1909,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1994,44 +1938,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2045,13 +1987,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2060,18 +2002,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2081,37 +2026,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2120,28 +2068,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2150,21 +2096,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2173,10 +2121,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2202,16 +2147,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2220,25 +2165,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

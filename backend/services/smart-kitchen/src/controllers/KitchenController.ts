@@ -54,27 +54,31 @@ export class KitchenController {
   async getKitchenStats(req: Request, res: Response) {
     try {
       const orderQueue = await this.orderService.getOrderQueue('', 'all', 1000, 0);
-      
+
       const inProgress = orderQueue.orders.filter((o: any) => o.status === 'in_progress').length;
       const pending = orderQueue.orders.filter((o: any) => o.status === 'pending').length;
       const completed = orderQueue.orders.filter((o: any) => o.status === 'completed').length;
-      
-      const avgPrepTime = orderQueue.orders.length > 0 
-        ? Math.round(orderQueue.orders.reduce((sum: number, o: any) => sum + (o.estimatedTime || 0), 0) / orderQueue.orders.length)
-        : 0;
+
+      const avgPrepTime =
+        orderQueue.orders.length > 0
+          ? Math.round(
+              orderQueue.orders.reduce((sum: number, o: any) => sum + (o.estimatedTime || 0), 0) /
+                orderQueue.orders.length,
+            )
+          : 0;
 
       const stats: KitchenStats = {
         inProgress,
         pending,
         completed,
-        avgPrepTime
+        avgPrepTime,
       };
 
       const response: ApiResponse<KitchenStats> = {
         success: true,
         data: stats,
         message: 'Kitchen stats retrieved successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -84,7 +88,7 @@ export class KitchenController {
         success: false,
         data: null,
         message: 'Failed to retrieve kitchen stats',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }
@@ -92,8 +96,8 @@ export class KitchenController {
   async getKitchenStatus(req: Request, res: Response) {
     try {
       const { status } = req.query;
-      const orderQueue = await this.orderService.getOrderQueue('', status as string || 'all', 1000, 0);
-      
+      const orderQueue = await this.orderService.getOrderQueue('', (status as string) || 'all', 1000, 0);
+
       const kitchenStatus: KitchenStatus[] = orderQueue.orders.map((order: any) => ({
         id: order.id,
         orderId: order.id,
@@ -104,14 +108,14 @@ export class KitchenController {
         estimatedTime: order.estimatedTime || 0,
         actualTime: order.actualTime,
         createdAt: order.createdAt,
-        updatedAt: order.updatedAt
+        updatedAt: order.updatedAt,
       }));
 
       const response: ApiResponse<KitchenStatus[]> = {
         success: true,
         data: kitchenStatus,
         message: 'Kitchen status retrieved successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -121,7 +125,7 @@ export class KitchenController {
         success: false,
         data: [],
         message: 'Failed to retrieve kitchen status',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }
@@ -137,7 +141,7 @@ export class KitchenController {
         success: true,
         data: true,
         message: 'Kitchen item status updated successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -147,7 +151,7 @@ export class KitchenController {
         success: false,
         data: false,
         message: 'Failed to update kitchen item status',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }

@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { User } from 'lucide-vue-next'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { User } from 'lucide-vue-next';
 
 export const Avatar = defineComponent({
   name: 'Avatar',
@@ -57,32 +57,32 @@ export const Avatar = defineComponent({
         lg: 48,
         xl: 64,
         xxl: 80,
-      }
-      const size = typeof props.size === 'number' ? props.size : sizeMap[props.size as keyof typeof sizeMap] || 40
+      };
+      const size = typeof props.size === 'number' ? props.size : sizeMap[props.size as keyof typeof sizeMap] || 40;
       return {
         width: `${size}px`,
         height: `${size}px`,
         fontSize: `${size * 0.4}px`,
-      }
-    })
+      };
+    });
 
     const shapeClass = computed(() => {
-      return props.shape === 'circle' ? 'rounded-full' : 'rounded-lg'
-    })
+      return props.shape === 'circle' ? 'rounded-full' : 'rounded-lg';
+    });
 
     const displayText = computed(() => {
       if (props.text) {
-        return props.text.slice(0, 2).toUpperCase()
+        return props.text.slice(0, 2).toUpperCase();
       }
-      return ''
-    })
+      return '';
+    });
 
     return () => (
       <div
         class={cn(
           'relative flex items-center justify-center overflow-hidden bg-neutral-200 text-neutral-600',
           shapeClass.value,
-          props.className
+          props.className,
         )}
         style={sizeStyle.value}
       >
@@ -92,8 +92,8 @@ export const Avatar = defineComponent({
             alt={props.alt}
             class="w-full h-full object-cover"
             onError={(e: Event) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = 'none'
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
             }}
           />
         ) : slots.default ? (
@@ -106,9 +106,9 @@ export const Avatar = defineComponent({
           <User size={sizeStyle.value.fontSize} />
         )}
       </div>
-    )
+    );
   },
-})
+});
 
 export const AvatarGroup = defineComponent({
   name: 'AvatarGroup',
@@ -136,20 +136,20 @@ export const AvatarGroup = defineComponent({
   },
   setup(props, { attrs, slots }) {
     const children = computed(() => {
-      const avatars = slots.default?.() || []
+      const avatars = slots.default?.() || [];
       if (props.max && avatars.length > props.max) {
-        return avatars.slice(0, props.max)
+        return avatars.slice(0, props.max);
       }
-      return avatars
-    })
+      return avatars;
+    });
 
     const remainingCount = computed(() => {
-      const avatars = slots.default?.() || []
+      const avatars = slots.default?.() || [];
       if (props.max && avatars.length > props.max) {
-        return avatars.length - props.max
+        return avatars.length - props.max;
       }
-      return 0
-    })
+      return 0;
+    });
 
     const sizeMap = {
       xs: 24,
@@ -158,21 +158,14 @@ export const AvatarGroup = defineComponent({
       lg: 48,
       xl: 64,
       xxl: 80,
-    }
-    const size = typeof props.size === 'number' ? props.size : sizeMap[props.size as keyof typeof sizeMap] || 40
-    const gap = size * 0.25
+    };
+    const size = typeof props.size === 'number' ? props.size : sizeMap[props.size as keyof typeof sizeMap] || 40;
+    const gap = size * 0.25;
 
     return () => (
-      <div
-        class={cn('flex items-center', props.className)}
-        style={{ marginLeft: `-${gap}px` }}
-      >
+      <div class={cn('flex items-center', props.className)} style={{ marginLeft: `-${gap}px` }}>
         {children.value.map((child, index) => (
-          <div
-            key={index}
-            class="relative"
-            style={{ marginLeft: index === 0 ? '0' : `${gap}px` }}
-          >
+          <div key={index} class="relative" style={{ marginLeft: index === 0 ? '0' : `${gap}px` }}>
             {child}
           </div>
         ))}
@@ -180,7 +173,7 @@ export const AvatarGroup = defineComponent({
           <div
             class={cn(
               'relative flex items-center justify-center bg-neutral-200 text-neutral-600 font-medium',
-              props.shape === 'circle' ? 'rounded-full' : 'rounded-lg'
+              props.shape === 'circle' ? 'rounded-full' : 'rounded-lg',
             )}
             style={{
               width: `${size}px`,
@@ -194,6 +187,6 @@ export const AvatarGroup = defineComponent({
           </div>
         )}
       </div>
-    )
+    );
   },
-})
+});

@@ -25,11 +25,11 @@ export const connectRedis = (): void => {
       port: parseInt(process.env.REDIS_PORT || '6379'),
       password: process.env.REDIS_PASSWORD || undefined,
       db: 0,
-      retryStrategy: (times) => {
+      retryStrategy: times => {
         const delay = Math.min(times * 50, 2000);
         return delay;
       },
-      reconnectOnError: (err) => {
+      reconnectOnError: err => {
         const targetError = 'READONLY';
         if (err.message.includes(targetError)) {
           // 当Redis是只读模式时，尝试重新连接
@@ -43,7 +43,7 @@ export const connectRedis = (): void => {
       logger.info('Redis连接成功');
     });
 
-    redisClient.on('error', (error) => {
+    redisClient.on('error', error => {
       logger.error('Redis连接错误: %s', error.message);
     });
 

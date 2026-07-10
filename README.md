@@ -13,7 +13,7 @@ alt="YYC³ 餐饮行业智能化平台" width="100%">
 
 **YYC³（YanYu Cloud Cube）**
 **标语**：万象归元于云枢 | 深栈智启新纪元
-***英文***：*All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era*
+**_英文_**：_All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era_
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org)
@@ -287,14 +287,14 @@ yyc3-catering-platform/                # pnpm 单仓多包
 
 ### 模块完成度
 
-| 模块 | 完成度 | 状态 |
-|------|--------|------|
-| **前端应用（admin/customer/staff）** | ~85% | ✅ Vue 3 核心功能完整 |
-| **后端微服务** | ~70% | ⚠️ 核心服务完整，4 个 stub 服务待实现（见 PLAN.md D4） |
-| **AI 集成** | ~80% | ✅ 多模型适配器 + agentic-core |
-| **数据库** | ~80% | ✅ MySQL + PostgreSQL 双栈 |
-| **测试框架** | ~60% | ⚠️ 核心 service 有单测，stub 服务缺失 |
-| **部署配置** | ~75% | ✅ Helm + 多云 IaC 已就绪（12 服务缺 Dockerfile，见 PLAN.md D6） |
+| 模块                                 | 完成度 | 状态                                                             |
+| ------------------------------------ | ------ | ---------------------------------------------------------------- |
+| **前端应用（admin/customer/staff）** | ~85%   | ✅ Vue 3 核心功能完整                                            |
+| **后端微服务**                       | ~70%   | ⚠️ 核心服务完整，4 个 stub 服务待实现（见 PLAN.md D4）           |
+| **AI 集成**                          | ~80%   | ✅ 多模型适配器 + agentic-core                                   |
+| **数据库**                           | ~80%   | ✅ MySQL + PostgreSQL 双栈                                       |
+| **测试框架**                         | ~60%   | ⚠️ 核心 service 有单测，stub 服务缺失                            |
+| **部署配置**                         | ~75%   | ✅ Helm + 多云 IaC 已就绪（12 服务缺 Dockerfile，见 PLAN.md D6） |
 
 ### 已完成核心组件
 
@@ -456,7 +456,7 @@ Made with ❤️ by YYC³ Team
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

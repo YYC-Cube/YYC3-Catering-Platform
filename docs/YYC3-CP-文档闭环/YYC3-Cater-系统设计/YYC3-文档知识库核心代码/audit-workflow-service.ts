@@ -144,12 +144,12 @@ export class AuditWorkflowService {
     documentRepository: DocumentRepository,
     qualityAssessmentService: QualityAssessmentService,
     logger: Logger,
-    config?: Partial<AuditConfig>
+    config?: Partial<AuditConfig>,
   ) {
     this.documentRepository = documentRepository;
     this.qualityAssessmentService = qualityAssessmentService;
     this.logger = logger;
-    
+
     this.config = {
       autoAuditEnabled: true,
       auditInterval: 24,
@@ -166,7 +166,7 @@ export class AuditWorkflowService {
     this.initializeDefaultRules();
     this.loadTasks();
     this.loadReports();
-    
+
     if (this.config.autoAuditEnabled) {
       this.startScheduledAudits();
     }
@@ -183,8 +183,8 @@ export class AuditWorkflowService {
       description: '检查文档质量评分是否达到最低要求',
       type: 'quality',
       severity: 'high',
-      condition: (doc) => true,
-      execute: async (doc) => {
+      condition: doc => true,
+      execute: async doc => {
         const assessment = await this.qualityAssessmentService.assessDocument(doc.id);
         const minScore = 70;
         if (assessment.overallScore < minScore) {
@@ -207,12 +207,12 @@ export class AuditWorkflowService {
       description: '检查文档内容长度是否合理',
       type: 'content',
       severity: 'medium',
-      condition: (doc) => true,
-      execute: async (doc) => {
+      condition: doc => true,
+      execute: async doc => {
         const minLength = 100;
         const maxLength = 100000;
         const contentLength = doc.content?.length || 0;
-        
+
         if (contentLength < minLength) {
           return {
             ruleId: 'content-length',
@@ -221,7 +221,7 @@ export class AuditWorkflowService {
             suggestion: '建议增加文档内容',
           };
         }
-        
+
         if (contentLength > maxLength) {
           return {
             ruleId: 'content-length',
@@ -230,7 +230,7 @@ export class AuditWorkflowService {
             suggestion: '建议拆分文档或精简内容',
           };
         }
-        
+
         return { ruleId: 'content-length', passed: true };
       },
       enabled: true,
@@ -243,15 +243,15 @@ export class AuditWorkflowService {
       description: '检查文档中是否包含敏感信息',
       type: 'security',
       severity: 'critical',
-      condition: (doc) => true,
-      execute: async (doc) => {
+      condition: doc => true,
+      execute: async doc => {
         const sensitivePatterns = [
           /password\s*[:=]\s*\S+/gi,
           /api[_-]?key\s*[:=]\s*\S+/gi,
           /secret\s*[:=]\s*\S+/gi,
           /token\s*[:=]\s*\S+/gi,
         ];
-        
+
         const content = doc.content || '';
         for (const pattern of sensitivePatterns) {
           const match = content.match(pattern);
@@ -264,7 +264,7 @@ export class AuditWorkflowService {
             };
           }
         }
-        
+
         return { ruleId: 'security-sensitive-info', passed: true };
       },
       enabled: true,
@@ -277,11 +277,11 @@ export class AuditWorkflowService {
       description: '检查文档元数据是否完整',
       type: 'compliance',
       severity: 'high',
-      condition: (doc) => true,
-      execute: async (doc) => {
+      condition: doc => true,
+      execute: async doc => {
         const requiredFields = ['title', 'author', 'category', 'tags'];
         const missingFields = requiredFields.filter(field => !doc[field]);
-        
+
         if (missingFields.length > 0) {
           return {
             ruleId: 'compliance-metadata',
@@ -290,7 +290,7 @@ export class AuditWorkflowService {
             suggestion: '请补充完整的文档元数据',
           };
         }
-        
+
         return { ruleId: 'compliance-metadata', passed: true };
       },
       enabled: true,
@@ -303,11 +303,11 @@ export class AuditWorkflowService {
       description: '检查文档格式是否符合规范',
       type: 'style',
       severity: 'low',
-      condition: (doc) => true,
-      execute: async (doc) => {
+      condition: doc => true,
+      execute: async doc => {
         const content = doc.content || '';
         const issues: string[] = [];
-        
+
         // 检查标题层级
         const headingLevels = content.match(/^#+\s/gm);
         if (headingLevels) {
@@ -320,7 +320,7 @@ export class AuditWorkflowService {
             prevLevel = level;
           }
         }
-        
+
         if (issues.length > 0) {
           return {
             ruleId: 'style-formatting',
@@ -329,7 +329,7 @@ export class AuditWorkflowService {
             suggestion: '请调整文档格式，保持标题层级一致',
           };
         }
-        
+
         return { ruleId: 'style-formatting', passed: true };
       },
       enabled: true,
@@ -394,7 +394,7 @@ export class AuditWorkflowService {
   async createAuditTask(
     documentId: string,
     type: 'auto' | 'manual' | 'scheduled' = 'auto',
-    priority: 'low' | 'medium' | 'high' | 'critical' = 'medium'
+    priority: 'low' | 'medium' | 'high' | 'critical' = 'medium',
   ): Promise<AuditTask> {
     const task: AuditTask = {
       id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -404,11 +404,11 @@ export class AuditWorkflowService {
       createdAt: new Date(),
       priority,
     };
-    
+
     this.tasks.set(task.id, task);
     this.saveTasks();
     this.logger.info(`审核任务已创建: ${task.id} (文档: ${documentId})`);
-    
+
     return task;
   }
 
@@ -496,10 +496,7 @@ export class AuditWorkflowService {
   /**
    * 批量审核文档
    */
-  async auditDocuments(
-    documentIds: string[],
-    auditor: string = 'system'
-  ): Promise<Map<string, AuditReport>> {
+  async auditDocuments(documentIds: string[], auditor: string = 'system'): Promise<Map<string, AuditReport>> {
     const reports = new Map<string, AuditReport>();
     const runningTasks: AuditTask[] = [];
 
@@ -514,9 +511,11 @@ export class AuditWorkflowService {
     for (let i = 0; i < runningTasks.length; i += batchSize) {
       const batch = runningTasks.slice(i, i + batchSize);
       await Promise.all(
-        batch.map(task => this.executeAuditTask(task.id, auditor).then(report => {
-          reports.set(task.documentId, report);
-        }))
+        batch.map(task =>
+          this.executeAuditTask(task.id, auditor).then(report => {
+            reports.set(task.documentId, report);
+          }),
+        ),
       );
     }
 
@@ -570,17 +569,20 @@ export class AuditWorkflowService {
       clearInterval(this.auditTimer);
     }
 
-    this.auditTimer = setInterval(async () => {
-      try {
-        this.logger.info('开始定时审核任务');
-        const documents = await this.documentRepository.getAll();
-        const documentIds = documents.map(doc => doc.id);
-        const reports = await this.auditDocuments(documentIds, 'system');
-        this.logger.info(`定时审核完成，共审核 ${reports.size} 个文档`);
-      } catch (error) {
-        this.logger.error('定时审核失败', { error });
-      }
-    }, this.config.auditInterval * 60 * 60 * 1000);
+    this.auditTimer = setInterval(
+      async () => {
+        try {
+          this.logger.info('开始定时审核任务');
+          const documents = await this.documentRepository.getAll();
+          const documentIds = documents.map(doc => doc.id);
+          const reports = await this.auditDocuments(documentIds, 'system');
+          this.logger.info(`定时审核完成，共审核 ${reports.size} 个文档`);
+        } catch (error) {
+          this.logger.error('定时审核失败', { error });
+        }
+      },
+      this.config.auditInterval * 60 * 60 * 1000,
+    );
 
     this.logger.info(`定时审核已启动，间隔: ${this.config.auditInterval} 小时`);
   }
@@ -602,7 +604,7 @@ export class AuditWorkflowService {
   updateConfig(config: Partial<AuditConfig>): void {
     this.config = { ...this.config, ...config };
     this.logger.info('审核配置已更新');
-    
+
     if (this.config.autoAuditEnabled && !this.auditTimer) {
       this.startScheduledAudits();
     } else if (!this.config.autoAuditEnabled && this.auditTimer) {
@@ -643,9 +645,7 @@ export class AuditWorkflowService {
       totalReports: reports.length,
       passedReports: reports.filter(r => r.passed).length,
       failedReports: reports.filter(r => !r.passed).length,
-      averageScore: reports.length > 0
-        ? reports.reduce((sum, r) => sum + r.score, 0) / reports.length
-        : 0,
+      averageScore: reports.length > 0 ? reports.reduce((sum, r) => sum + r.score, 0) / reports.length : 0,
     };
   }
 
@@ -654,9 +654,7 @@ export class AuditWorkflowService {
    */
   private sendAuditNotification(document: any, report: AuditReport): void {
     // 这里可以实现邮件、Slack等通知方式
-    this.logger.info(
-      `审核通知: 文档 ${document.title} (ID: ${document.id}) 审核未通过，评分: ${report.score}`
-    );
+    this.logger.info(`审核通知: 文档 ${document.title} (ID: ${document.id}) 审核未通过，评分: ${report.score}`);
   }
 
   /**

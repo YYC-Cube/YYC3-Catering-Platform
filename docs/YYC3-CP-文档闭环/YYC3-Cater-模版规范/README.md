@@ -25,7 +25,9 @@
 **@tags**：YYC³,文档
 
 ---
-# ![YYC³ 智能应用](public/github.png)  
+
+# ![YYC³ 智能应用](public/github.png)
+
 # 星云操作系统 - 企业级 AI 智能管理平台
 
 <p align="center">
@@ -55,7 +57,6 @@
   <a href="#"><img src="https://img.shields.io/badge/语言-中文支持-red" alt="中文支持" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License" /></a>
 </p>
-
 
 📦 项目特性
 
@@ -87,6 +88,7 @@
 ---
 
 ## 目录总览（高层）
+
 项目以功能分层与模块化组件组织，便于维护与逐步扩展。
 
 ```
@@ -149,14 +151,16 @@
 ---
 
 ## 关键设计原则
-- 单一职责：每个组件/模块聚焦一个功能，便于测试与复用。  
-- 分层清晰：UI / Hooks / Lib / Pages 明确分离，降低耦合。  
-- 可扩展与可替换：AI、通知、权限等子系统采用适配器模式，便于替换实现（例如本地 mock → 后端服务）。  
+
+- 单一职责：每个组件/模块聚焦一个功能，便于测试与复用。
+- 分层清晰：UI / Hooks / Lib / Pages 明确分离，降低耦合。
+- 可扩展与可替换：AI、通知、权限等子系统采用适配器模式，便于替换实现（例如本地 mock → 后端服务）。
 - 移动优先：提供移动专用组件目录，保证小屏可用性。
 
 ---
 
 ## 安装与启动（开发）
+
 先确保 Node.js 与 pnpm/yarn/npm 已安装，示例以 pnpm 为例：
 
 1. 安装依赖
@@ -175,47 +179,53 @@
 ---
 
 ## 代码约定
-- 使用 TypeScript（.tsx / .ts）与 React Hooks。  
-- 组件命名：驼峰且以功能结尾，如 MetricsCard、AuthGuard。  
-- 文件组织：页面放在 app 下；纯展示组件放 components/ui；复杂业务组件放 components/ 下对应子目录。  
-- 样式：优先使用 Tailwind + shadcn/ui 组件封装，避免在组件内大量写内联样式。  
+
+- 使用 TypeScript（.tsx / .ts）与 React Hooks。
+- 组件命名：驼峰且以功能结尾，如 MetricsCard、AuthGuard。
+- 文件组织：页面放在 app 下；纯展示组件放 components/ui；复杂业务组件放 components/ 下对应子目录。
+- 样式：优先使用 Tailwind + shadcn/ui 组件封装，避免在组件内大量写内联样式。
 - 测试：建议为关键逻辑（lib/ 下）和核心组件添加单元测试（Jest/Testing Library）。
 
 ---
 
 ## 权限与安全
-- 全局布局 layout.tsx 包含 AuthProvider，负责在页面路由级别提供会话/权限。  
-- auth/ 中封装鉴权逻辑（permission checks、role mapping、multi-tenant 支持）。  
+
+- 全局布局 layout.tsx 包含 AuthProvider，负责在页面路由级别提供会话/权限。
+- auth/ 中封装鉴权逻辑（permission checks、role mapping、multi-tenant 支持）。
 - 敏感操作需要在后端校验权限；前端只做界面层次的门控（UX）。
 
 ---
 
 ## 常见开发任务
-- 添加新页面：在 app/ 下新建子目录并添加 page.tsx（和可选的 layout.tsx / loading.tsx）。  
-- 添加可复用组件：components/<feature>/ 新建组件并在 components/ui 中复用基础 UI。  
+
+- 添加新页面：在 app/ 下新建子目录并添加 page.tsx（和可选的 layout.tsx / loading.tsx）。
+- 添加可复用组件：components/<feature>/ 新建组件并在 components/ui 中复用基础 UI。
 - 集成真实数据源：把 lib/<service> 的 mock 替换为 API 调用，保持接口适配层不变。
 
 ---
 
 ## 部署建议
-- 使用 Vercel / Netlify 进行静态 SSR 部署（Next.js App Router 支持）。  
-- 后端服务（AI 引擎、通知、权限）请分别容器化并提供稳定 API。  
+
+- 使用 Vercel / Netlify 进行静态 SSR 部署（Next.js App Router 支持）。
+- 后端服务（AI 引擎、通知、权限）请分别容器化并提供稳定 API。
 - 为关键路由与 API 启用监控与告警（Sentry / Prometheus / Grafana）。
 
 ---
 
 ## 贡献指南
-1. Fork -> 新建 feature 分支 (feat/xxx 或 fix/xxx)。  
-2. 提交遵循 Conventional Commits（feat/fix/docs/...）。  
-3. 发起 Pull Request，添加变更说明与关联 issue。  
+
+1. Fork -> 新建 feature 分支 (feat/xxx 或 fix/xxx)。
+2. 提交遵循 Conventional Commits（feat/fix/docs/...）。
+3. 发起 Pull Request，添加变更说明与关联 issue。
 4. 运行 linter 与测试：pnpm lint && pnpm test
 
 ---
 
 ## TODO / 后续扩展建议
-- 增加示例数据与 Storybook 展示组件状态。  
-- 为 charts 提供性能优化（虚拟化、大数据分页）。  
-- 引入 RBAC 管理后台页面（在 components/auth 中扩展）。  
+
+- 增加示例数据与 Storybook 展示组件状态。
+- 为 charts 提供性能优化（虚拟化、大数据分页）。
+- 引入 RBAC 管理后台页面（在 components/auth 中扩展）。
 - 完善移动端体验（离线支持与 PWA）。
 
 🔍 功能模块详解
@@ -225,6 +235,7 @@
 位置: `lib/ai-engine.ts`, `hooks/use-ai-analysis.ts`, `components/ai-insights-panel.tsx`
 
 **功能:**
+
 - 时间序列预测（移动平均算法）
 - 异常检测（Z-score 统计方法）
 - 趋势分析（线性回归）
@@ -235,6 +246,7 @@
 位置: `lib/auth/`, `components/auth/`
 
 **角色层级:**
+
 - 超级管理员 (super_admin)
 - 管理员 (admin)
 - 经理 (manager)
@@ -242,6 +254,7 @@
 - 查看者 (viewer)
 
 **权限类型:**
+
 - view:dashboard - 查看仪表板
 - view:analytics - 查看数据分析
 - view:data - 查看数据中心
@@ -268,7 +281,7 @@ const { user, hasPermission } = useAuth()
 
 // 使用权限门控组件
 <PermissionGate permission="view:analytics">
-  <AnalyticsContent />
+<AnalyticsContent />
 </PermissionGate>
 \`\`\`
 
@@ -277,6 +290,7 @@ const { user, hasPermission } = useAuth()
 位置: `components/charts/`
 
 **图表类型:**
+
 - **高级折线图** - 带渐变填充的时间序列图表
 - **热力图** - 24小时活动热力分析
 - **径向进度图** - 多指标环形展示
@@ -301,6 +315,7 @@ import { RealTimeGauge } from '@/components/charts/real-time-gauge'
 位置: `lib/notifications/`, `components/notifications/`
 
 **通知类型:**
+
 - info - 信息通知
 - success - 成功通知
 - warning - 警告通知
@@ -308,6 +323,7 @@ import { RealTimeGauge } from '@/components/charts/real-time-gauge'
 - system - 系统通知
 
 **优先级:**
+
 - low - 低优先级
 - medium - 中优先级
 - high - 高优先级
@@ -321,10 +337,10 @@ const { notifications, addNotification, markAsRead } = useNotifications()
 
 // 添加通知
 addNotification({
-  title: '系统更新',
-  message: '新版本已准备好安装',
-  type: 'info',
-  priority: 'medium'
+title: '系统更新',
+message: '新版本已准备好安装',
+type: 'info',
+priority: 'medium'
 })
 \`\`\`
 
@@ -333,6 +349,7 @@ addNotification({
 位置: `components/mobile/`, `hooks/use-mobile.ts`
 
 **移动端组件:**
+
 - MobileNav - 侧边抽屉导航
 - MobileBottomNav - 底部标签栏
 - MobileMetricCard - 优化的指标卡片
@@ -349,16 +366,16 @@ const isMobile = useMobile()
 
 ## 页面路由
 
-| 路由 | 页面 | 权限要求 |
-|------|------|----------|
-| `/` | 主仪表板 | view:dashboard |
-| `/analytics` | 数据分析 | view:analytics |
-| `/data-center` | 数据中心 | view:data |
-| `/network` | 网络监控 | view:network |
-| `/security` | 安全防护 | view:security |
-| `/console` | 系统控制台 | execute:commands |
-| `/communications` | 通讯中心 | 无 |
-| `/settings` | 系统设置 | manage:settings |
+| 路由              | 页面       | 权限要求         |
+| ----------------- | ---------- | ---------------- |
+| `/`               | 主仪表板   | view:dashboard   |
+| `/analytics`      | 数据分析   | view:analytics   |
+| `/data-center`    | 数据中心   | view:data        |
+| `/network`        | 网络监控   | view:network     |
+| `/security`       | 安全防护   | view:security    |
+| `/console`        | 系统控制台 | execute:commands |
+| `/communications` | 通讯中心   | 无               |
+| `/settings`       | 系统设置   | manage:settings  |
 
 ## 环境变量
 
@@ -372,11 +389,11 @@ const isMobile = useMobile()
 
 \`\`\`css
 :root {
-  --background: 0 0% 0%;
-  --foreground: 210 40% 98%;
-  --primary: 189 94% 43%;
-  --primary-foreground: 0 0% 100%;
-  /* ... 更多颜色变量 */
+--background: 0 0% 0%;
+--foreground: 210 40% 98%;
+--primary: 189 94% 43%;
+--primary-foreground: 0 0% 100%;
+/_ ... 更多颜色变量 _/
 }
 \`\`\`
 
@@ -388,16 +405,15 @@ const isMobile = useMobile()
 
 🧭 页面路由
 
-路由	页面	权限要求
-/	主仪表板	view:dashboard
-/analytics	数据分析	view:analytics
-/data-center	数据中心	view:data
-/network	网络监控	view:network
-/security	安全防护	view:security
-/console	系统控制台	execute:commands
-/communications	通讯中心	无
-/settings	系统设置	manage:settings
-
+路由 页面 权限要求
+/ 主仪表板 view:dashboard
+/analytics 数据分析 view:analytics
+/data-center 数据中心 view:data
+/network 网络监控 view:network
+/security 安全防护 view:security
+/console 系统控制台 execute:commands
+/communications 通讯中心 无
+/settings 系统设置 manage:settings
 
 🧪 性能优化
 
@@ -471,8 +487,6 @@ Fork 仓库：https://github.com/YYC-Cube/yyc3-Futuristic-Dashboard.git
 - 优化系统性能
 - 提升代码可维护性
 
-
-
 ## 核心概念
 
 ### 核心概念
@@ -500,8 +514,6 @@ Fork 仓库：https://github.com/YYC-Cube/yyc3-Futuristic-Dashboard.git
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -539,7 +551,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -555,8 +567,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -569,7 +579,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -584,9 +594,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -594,9 +604,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -604,20 +617,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -626,6 +637,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -641,17 +653,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -659,6 +672,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -669,6 +683,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -677,8 +692,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -686,21 +699,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -709,10 +724,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -738,16 +750,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -756,26 +768,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -791,7 +798,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -823,14 +830,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -841,17 +846,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -861,17 +869,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -881,22 +892,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
-
 
 ## 最佳实践
 
@@ -905,21 +917,23 @@ const useStore = create((set) => ({
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -928,10 +942,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -957,16 +968,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -975,23 +986,18 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-

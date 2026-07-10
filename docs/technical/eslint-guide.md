@@ -67,6 +67,7 @@ pnpm eslint . --rule '@typescript-eslint/no-explicit-any'
 ### 1. `no-explicit-any` 错误
 
 **错误信息**:
+
 ```
 @typescript-eslint/no-explicit-any: Unexpected any. Specify a different type.
 ```
@@ -94,16 +95,17 @@ function processData(data: Data) {
 
 // ✅ 正确 - 使用 unknown
 function processData(data: unknown) {
-  if (typeof data === 'object' && data !== null && 'value' in data) {
+  if (typeof data === "object" && data !== null && "value" in data) {
     return (data as { value: string }).value;
   }
-  throw new Error('Invalid data');
+  throw new Error("Invalid data");
 }
 ```
 
 ### 2. `no-floating-promises` 警告
 
 **警告信息**:
+
 ```
 @typescript-eslint/no-floating-promises: Promises must be awaited, or appropriately handled.
 ```
@@ -113,24 +115,25 @@ function processData(data: unknown) {
 ```typescript
 // ❌ 错误
 function fetchData() {
-  return axios.get('/api/data'); // 未处理的 Promise
+  return axios.get("/api/data"); // 未处理的 Promise
 }
 
 // ✅ 正确
 async function fetchData() {
-  const response = await axios.get('/api/data');
+  const response = await axios.get("/api/data");
   return response.data;
 }
 
 // ✅ 正确 - 明确返回 Promise
 function fetchData(): Promise<Data> {
-  return axios.get('/api/data').then(res => res.data);
+  return axios.get("/api/data").then(res => res.data);
 }
 ```
 
 ### 3. `explicit-module-boundary-types` 错误
 
 **错误信息**:
+
 ```
 @typescript-eslint/explicit-module-boundary-types: Missing return type on function.
 ```
@@ -157,6 +160,7 @@ export function getUser<T extends { id: string }>(id: string): T | undefined {
 ### 4. `no-unnecessary-type-assertion` 错误
 
 **错误信息**:
+
 ```
 @typescript-eslint/no-unnecessary-type-assertion: This assertion is unnecessary since it does not change the type of the expression.
 ```
@@ -171,7 +175,7 @@ const value = data as any;
 const value = data as DataType;
 
 // ✅ 正确 - 使用类型守卫
-if (typeof data === 'object' && data !== null) {
+if (typeof data === "object" && data !== null) {
   const value = data;
 }
 ```
@@ -191,12 +195,7 @@ if (typeof data === 'object' && data !== null) {
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ]
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 }
 ```
 

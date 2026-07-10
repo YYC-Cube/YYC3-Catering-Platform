@@ -25,12 +25,6 @@
     "typeRoots": ["./node_modules/@types", "./src/types", "../types"],
     "types": ["node"]
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "test-agentic-core.ts"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "test-agentic-core.ts"]
 }

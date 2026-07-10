@@ -21,24 +21,24 @@
 
 ```json
 {
-  "success": true,  // 请求是否成功
-  "data": {},       // 响应数据（请求成功时）
-  "error": "",     // 错误信息（请求失败时）
-  "code": "",      // 错误码（请求失败时）
-  "timestamp": ""  // 响应时间戳
+  "success": true, // 请求是否成功
+  "data": {}, // 响应数据（请求成功时）
+  "error": "", // 错误信息（请求失败时）
+  "code": "", // 错误码（请求失败时）
+  "timestamp": "" // 响应时间戳
 }
 ```
 
 ## 错误码
 
-| 错误码 | 描述 |
-|-------|------|
-| UNAUTHORIZED | 未授权访问 |
-| FORBIDDEN | 权限不足 |
-| NOT_FOUND | 资源不存在 |
-| BAD_REQUEST | 请求参数错误 |
+| 错误码                | 描述           |
+| --------------------- | -------------- |
+| UNAUTHORIZED          | 未授权访问     |
+| FORBIDDEN             | 权限不足       |
+| NOT_FOUND             | 资源不存在     |
+| BAD_REQUEST           | 请求参数错误   |
 | INTERNAL_SERVER_ERROR | 服务器内部错误 |
-| TOO_MANY_REQUESTS | 请求过于频繁 |
+| TOO_MANY_REQUESTS     | 请求过于频繁   |
 
 ## 版本控制
 

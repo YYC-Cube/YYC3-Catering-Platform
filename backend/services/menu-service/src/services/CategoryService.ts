@@ -68,8 +68,11 @@ export class CategoryService {
         where,
         offset,
         limit,
-        order: [['sort_order', 'ASC'], ['id', 'ASC']],
-        include: [{ model: Category, as: 'subcategories', separate: true, order: [['sort_order', 'ASC']] }]
+        order: [
+          ['sort_order', 'ASC'],
+          ['id', 'ASC'],
+        ],
+        include: [{ model: Category, as: 'subcategories', separate: true, order: [['sort_order', 'ASC']] }],
       });
 
       logger.info(`获取分类列表成功，共 ${count} 条记录`);
@@ -88,7 +91,7 @@ export class CategoryService {
   async getCategoryById(id: number): Promise<Category | null> {
     try {
       const category = await Category.findByPk(id, {
-        include: [{ model: Category, as: 'subcategories', order: [['sort_order', 'ASC']] }]
+        include: [{ model: Category, as: 'subcategories', order: [['sort_order', 'ASC']] }],
       });
       return category;
     } catch (error) {
@@ -163,7 +166,7 @@ export class CategoryService {
   async batchUpdateSortOrder(sortData: { id: number; sortOrder: number }[]): Promise<number> {
     try {
       const promises = sortData.map(item =>
-        Category.update({ sort_order: item.sortOrder }, { where: { id: item.id } })
+        Category.update({ sort_order: item.sortOrder }, { where: { id: item.id } }),
       );
 
       const results = await Promise.all(promises);
@@ -192,17 +195,24 @@ export class CategoryService {
 
       const categories = await Category.findAll({
         where,
-        order: [['sort_order', 'ASC'], ['id', 'ASC']],
-        include: [{ 
-          model: Category, 
-          as: 'subcategories', 
-          order: [['sort_order', 'ASC']],
-          include: [{ 
-            model: Category, 
-            as: 'subcategories', 
-            order: [['sort_order', 'ASC']]
-          }]
-        }]
+        order: [
+          ['sort_order', 'ASC'],
+          ['id', 'ASC'],
+        ],
+        include: [
+          {
+            model: Category,
+            as: 'subcategories',
+            order: [['sort_order', 'ASC']],
+            include: [
+              {
+                model: Category,
+                as: 'subcategories',
+                order: [['sort_order', 'ASC']],
+              },
+            ],
+          },
+        ],
       });
 
       logger.info(`获取分类树成功`);

@@ -11,151 +11,166 @@
 ### 基础用法
 
 ```tsx
-import { Drawer, DrawerHeader, DrawerBody, DrawerFooter } from '@/components/UI'
-import { Button } from '@/components/UI'
-import { ref } from 'vue'
+import { Drawer, DrawerHeader, DrawerBody, DrawerFooter } from "@/components/UI";
+import { Button } from "@/components/UI";
+import { ref } from "vue";
 
 export default function DrawerBasic() {
-  const visible = ref(false)
+  const visible = ref(false);
 
   return (
     <div>
-      <Button onClick={() => visible.value = true}>打开抽屉</Button>
-      <Drawer
-        visible={visible.value}
-        title="抽屉标题"
-        onClose={() => visible.value = false}
-      >
+      <Button onClick={() => (visible.value = true)}>打开抽屉</Button>
+      <Drawer visible={visible.value} title="抽屉标题" onClose={() => (visible.value = false)}>
         <DrawerBody>
           <p>抽屉内容</p>
         </DrawerBody>
         <DrawerFooter>
-          <Button onClick={() => visible.value = false}>关闭</Button>
+          <Button onClick={() => (visible.value = false)}>关闭</Button>
         </DrawerFooter>
       </Drawer>
     </div>
-  )
+  );
 }
 ```
 
 ### 位置
 
 ```tsx
-import { Drawer } from '@/components/UI'
-import { Button } from '@/components/UI'
-import { ref } from 'vue'
+import { Drawer } from "@/components/UI";
+import { Button } from "@/components/UI";
+import { ref } from "vue";
 
 export default function DrawerPlacement() {
-  const visible = ref(false)
-  const placement = ref('right')
+  const visible = ref(false);
+  const placement = ref("right");
 
   return (
     <div class="space-x-2">
-      <Button onClick={() => { visible.value = true; placement.value = 'left' }}>
+      <Button
+        onClick={() => {
+          visible.value = true;
+          placement.value = "left";
+        }}
+      >
         左侧
       </Button>
-      <Button onClick={() => { visible.value = true; placement.value = 'right' }}>
+      <Button
+        onClick={() => {
+          visible.value = true;
+          placement.value = "right";
+        }}
+      >
         右侧
       </Button>
-      <Button onClick={() => { visible.value = true; placement.value = 'top' }}>
+      <Button
+        onClick={() => {
+          visible.value = true;
+          placement.value = "top";
+        }}
+      >
         顶部
       </Button>
-      <Button onClick={() => { visible.value = true; placement.value = 'bottom' }}>
+      <Button
+        onClick={() => {
+          visible.value = true;
+          placement.value = "bottom";
+        }}
+      >
         底部
       </Button>
-      <Drawer
-        visible={visible.value}
-        placement={placement.value}
-        onClose={() => visible.value = false}
-      >
+      <Drawer visible={visible.value} placement={placement.value} onClose={() => (visible.value = false)}>
         <p>抽屉内容</p>
       </Drawer>
     </div>
-  )
+  );
 }
 ```
 
 ### 尺寸
 
 ```tsx
-import { Drawer } from '@/components/UI'
-import { Button } from '@/components/UI'
-import { ref } from 'vue'
+import { Drawer } from "@/components/UI";
+import { Button } from "@/components/UI";
+import { ref } from "vue";
 
 export default function DrawerSize() {
-  const visible = ref(false)
-  const size = ref('md')
+  const visible = ref(false);
+  const size = ref("md");
 
   return (
     <div class="space-x-2">
-      <Button onClick={() => { visible.value = true; size.value = 'sm' }}>
+      <Button
+        onClick={() => {
+          visible.value = true;
+          size.value = "sm";
+        }}
+      >
         小型
       </Button>
-      <Button onClick={() => { visible.value = true; size.value = 'md' }}>
+      <Button
+        onClick={() => {
+          visible.value = true;
+          size.value = "md";
+        }}
+      >
         中型
       </Button>
-      <Button onClick={() => { visible.value = true; size.value = 'lg' }}>
+      <Button
+        onClick={() => {
+          visible.value = true;
+          size.value = "lg";
+        }}
+      >
         大型
       </Button>
-      <Drawer
-        visible={visible.value}
-        size={size.value}
-        onClose={() => visible.value = false}
-      >
+      <Drawer visible={visible.value} size={size.value} onClose={() => (visible.value = false)}>
         <p>抽屉内容</p>
       </Drawer>
     </div>
-  )
+  );
 }
 ```
 
 ### 可关闭
 
 ```tsx
-import { Drawer } from '@/components/UI'
-import { Button } from '@/components/UI'
-import { ref } from 'vue'
+import { Drawer } from "@/components/UI";
+import { Button } from "@/components/UI";
+import { ref } from "vue";
 
 export default function DrawerClosable() {
-  const visible = ref(false)
+  const visible = ref(false);
 
   return (
     <div>
-      <Button onClick={() => visible.value = true}>打开抽屉</Button>
-      <Drawer
-        visible={visible.value}
-        closable
-        onClose={() => visible.value = false}
-      >
+      <Button onClick={() => (visible.value = true)}>打开抽屉</Button>
+      <Drawer visible={visible.value} closable onClose={() => (visible.value = false)}>
         <p>抽屉内容</p>
       </Drawer>
     </div>
-  )
+  );
 }
 ```
 
 ### 无遮罩
 
 ```tsx
-import { Drawer } from '@/components/UI'
-import { Button } from '@/components/UI'
-import { ref } from 'vue'
+import { Drawer } from "@/components/UI";
+import { Button } from "@/components/UI";
+import { ref } from "vue";
 
 export default function DrawerNoMask() {
-  const visible = ref(false)
+  const visible = ref(false);
 
   return (
     <div>
-      <Button onClick={() => visible.value = true}>打开抽屉</Button>
-      <Drawer
-        visible={visible.value}
-        mask={false}
-        onClose={() => visible.value = false}
-      >
+      <Button onClick={() => (visible.value = true)}>打开抽屉</Button>
+      <Drawer visible={visible.value} mask={false} onClose={() => (visible.value = false)}>
         <p>抽屉内容</p>
       </Drawer>
     </div>
-  )
+  );
 }
 ```
 
@@ -163,35 +178,35 @@ export default function DrawerNoMask() {
 
 ### Drawer Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| visible | 是否显示 | `boolean` | `false` |
-| title | 标题 | `string` | - |
-| placement | 位置 | `string` | `left` / `right` / `top` / `bottom` | `right` |
-| size | 尺寸 | `string` | `sm` / `md` / `lg` | `md` |
-| closable | 是否显示关闭按钮 | `boolean` | `true` |
-| mask | 是否显示遮罩 | `boolean` | `true` |
-| maskClosable | 点击遮罩是否关闭 | `boolean` | `true` |
-| onClose | 关闭回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数         | 说明             | 类型       | 默认值                              |
+| ------------ | ---------------- | ---------- | ----------------------------------- | ------- |
+| visible      | 是否显示         | `boolean`  | `false`                             |
+| title        | 标题             | `string`   | -                                   |
+| placement    | 位置             | `string`   | `left` / `right` / `top` / `bottom` | `right` |
+| size         | 尺寸             | `string`   | `sm` / `md` / `lg`                  | `md`    |
+| closable     | 是否显示关闭按钮 | `boolean`  | `true`                              |
+| mask         | 是否显示遮罩     | `boolean`  | `true`                              |
+| maskClosable | 点击遮罩是否关闭 | `boolean`  | `true`                              |
+| onClose      | 关闭回调         | `Function` | -                                   |
+| className    | 自定义类名       | `string`   | -                                   |
 
 ### DrawerHeader Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ### DrawerBody Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ### DrawerFooter Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ## 样式定制
 
@@ -225,19 +240,15 @@ export default function DrawerNoMask() {
 ### 1. 表单抽屉
 
 ```tsx
-const visible = ref(false)
-const formData = ref({})
+const visible = ref(false);
+const formData = ref({});
 
 const handleSubmit = () => {
-  api.submit(formData.value)
-  visible.value = false
-}
+  api.submit(formData.value);
+  visible.value = false;
+};
 
-<Drawer
-  visible={visible.value}
-  title="编辑用户"
-  onClose={() => visible.value = false}
->
+<Drawer visible={visible.value} title="编辑用户" onClose={() => (visible.value = false)}>
   <DrawerBody>
     <Form>
       <FormField name="username" label="用户名">
@@ -249,29 +260,27 @@ const handleSubmit = () => {
     </Form>
   </DrawerBody>
   <DrawerFooter>
-    <Button onClick={() => visible.value = false}>取消</Button>
-    <Button type="primary" onClick={handleSubmit}>确定</Button>
+    <Button onClick={() => (visible.value = false)}>取消</Button>
+    <Button type="primary" onClick={handleSubmit}>
+      确定
+    </Button>
   </DrawerFooter>
-</Drawer>
+</Drawer>;
 ```
 
 ### 2. 详情抽屉
 
 ```tsx
-const visible = ref(false)
-const detail = ref({})
+const visible = ref(false);
+const detail = ref({});
 
 const showDetail = async (id: string) => {
-  const result = await api.getDetail(id)
-  detail.value = result.data
-  visible.value = true
-}
+  const result = await api.getDetail(id);
+  detail.value = result.data;
+  visible.value = true;
+};
 
-<Drawer
-  visible={visible.value}
-  title="详情"
-  onClose={() => visible.value = false}
->
+<Drawer visible={visible.value} title="详情" onClose={() => (visible.value = false)}>
   <DrawerBody>
     <div>
       <p>用户名: {detail.value.username}</p>
@@ -279,37 +288,33 @@ const showDetail = async (id: string) => {
       <p>创建时间: {detail.value.createdAt}</p>
     </div>
   </DrawerBody>
-</Drawer>
+</Drawer>;
 ```
 
 ### 3. 设置抽屉
 
 ```tsx
-const visible = ref(false)
+const visible = ref(false);
 const settings = ref({
-  theme: 'light',
-  language: 'zh-CN',
-  notifications: true
-})
+  theme: "light",
+  language: "zh-CN",
+  notifications: true,
+});
 
 const handleSave = () => {
-  api.saveSettings(settings.value)
-  visible.value = false
-}
+  api.saveSettings(settings.value);
+  visible.value = false;
+};
 
-<Drawer
-  visible={visible.value}
-  title="设置"
-  onClose={() => visible.value = false}
->
+<Drawer visible={visible.value} title="设置" onClose={() => (visible.value = false)}>
   <DrawerBody>
     <Form>
       <FormField name="theme" label="主题">
         <Select
           v-model={settings.value.theme}
           options={[
-            { label: '浅色', value: 'light' },
-            { label: '深色', value: 'dark' }
+            { label: "浅色", value: "light" },
+            { label: "深色", value: "dark" },
           ]}
         />
       </FormField>
@@ -317,8 +322,8 @@ const handleSave = () => {
         <Select
           v-model={settings.value.language}
           options={[
-            { label: '中文', value: 'zh-CN' },
-            { label: 'English', value: 'en-US' }
+            { label: "中文", value: "zh-CN" },
+            { label: "English", value: "en-US" },
           ]}
         />
       </FormField>
@@ -328,10 +333,12 @@ const handleSave = () => {
     </Form>
   </DrawerBody>
   <DrawerFooter>
-    <Button onClick={() => visible.value = false}>取消</Button>
-    <Button type="primary" onClick={handleSave}>保存</Button>
+    <Button onClick={() => (visible.value = false)}>取消</Button>
+    <Button type="primary" onClick={handleSave}>
+      保存
+    </Button>
   </DrawerFooter>
-</Drawer>
+</Drawer>;
 ```
 
 ## 常见问题

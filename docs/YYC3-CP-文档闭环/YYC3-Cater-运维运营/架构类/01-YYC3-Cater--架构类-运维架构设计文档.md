@@ -10,28 +10,29 @@
 **@tags**：架构设计,YYC³,系统架构
 
 ---
+
 # 🔖 YYC³ 运维架构设计文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 运维架构设计文档 |
-| **文档类型** | 架构设计文档 |
-| **所属阶段** | 运维运营 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 运维架构设计文档      |
+| **文档类型** | 架构设计文档               |
+| **所属阶段** | 运维运营                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -73,6 +74,7 @@
 - **最少知识原则**：模块间最小化依赖，降低耦合度
 
 同时遵循YYC³「五高五标五化」核心理念：
+
 - **五高**：高可用、高性能、高安全、高扩展、高可维护
 - **五标**：标准化、规范化、自动化、智能化、可视化
 - **五化**：流程化、文档化、工具化、数字化、生态化
@@ -82,24 +84,28 @@
 技术栈选择基于以下考虑：
 
 **前端技术栈**
+
 - React 18+：采用现代化前端框架，组件化开发
 - TypeScript 5.0+：类型安全，提高代码质量
 - Next.js 14+：SSR/SSG支持，优化SEO和性能
 - Tailwind CSS：原子化CSS，快速构建UI
 
 **后端技术栈**
+
 - Node.js 18+：高性能JavaScript运行时
 - Express/Fastify：轻量级Web框架
 - PostgreSQL 15+：关系型数据库，ACID保证
 - Redis 7+：缓存和会话存储
 
 **基础设施**
+
 - Docker：容器化部署，环境一致性
 - Kubernetes：容器编排，自动化运维
 - Nginx：反向代理和负载均衡
 - Prometheus + Grafana：监控和告警
 
 **开发工具**
+
 - Git：版本控制
 - ESLint + Prettier：代码规范
 - Jest + Vitest：单元测试
@@ -112,27 +118,32 @@
 YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以下层次：
 
 **表现层（Presentation Layer）**
+
 - Web前端：React + Next.js构建的单页应用
 - 移动端：响应式设计，支持多设备访问
 - 管理后台：独立的管理界面
 
 **应用层（Application Layer）**
+
 - API网关：统一入口，路由分发
 - 业务服务：订单、用户、商品等核心业务逻辑
 - 认证授权：JWT认证，RBAC权限控制
 
 **领域层（Domain Layer）**
+
 - 领域模型：核心业务实体和规则
 - 领域服务：复杂业务逻辑封装
 - 仓储接口：数据访问抽象
 
 **基础设施层（Infrastructure Layer）**
+
 - 数据库：PostgreSQL主从架构
 - 缓存：Redis集群
 - 消息队列：RabbitMQ/Kafka
 - 文件存储：OSS/MinIO
 
 **跨层关注点**
+
 - 日志监控：ELK Stack
 - 配置管理：Apollo/Nacos
 - 服务发现：Consul/Eureka
@@ -143,36 +154,43 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 系统按照业务领域划分为以下核心模块：
 
 **用户模块（User Module）**
+
 - 用户注册、登录、认证
 - 用户信息管理
 - 权限和角色管理
 
 **商品模块（Product Module）**
+
 - 商品信息管理
 - 商品分类和标签
 - 库存管理
 
 **订单模块（Order Module）**
+
 - 订单创建和支付
 - 订单状态流转
 - 订单查询和统计
 
 **支付模块（Payment Module）**
+
 - 支付接口集成
 - 支付状态同步
 - 退款处理
 
 **营销模块（Marketing Module）**
+
 - 优惠券管理
 - 促销活动
 - 会员积分
 
 **报表模块（Report Module）**
+
 - 销售报表
 - 数据分析
 - 可视化展示
 
 **系统模块（System Module）**
+
 - 配置管理
 - 日志管理
 - 监控告警
@@ -401,10 +419,10 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1        # 最多可以多出 1 个 Pod
-      maxUnavailable: 0  # 最多允许 0 个 Pod 不可用
-  minReadySeconds: 10   # Pod 就绪后等待 10 秒
-  revisionHistoryLimit: 10  # 保留最近 10 个版本
+      maxSurge: 1 # 最多可以多出 1 个 Pod
+      maxUnavailable: 0 # 最多允许 0 个 Pod 不可用
+  minReadySeconds: 10 # Pod 就绪后等待 10 秒
+  revisionHistoryLimit: 10 # 保留最近 10 个版本
 ```
 
 #### 3.1.2 蓝绿部署策略
@@ -429,8 +447,8 @@ spec:
         version: blue
     spec:
       containers:
-      - name: backend
-        image: registry.yyc3.com/yyc3-backend:v1.0.0
+        - name: backend
+          image: registry.yyc3.com/yyc3-backend:v1.0.0
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -450,8 +468,8 @@ spec:
         version: green
     spec:
       containers:
-      - name: backend
-        image: registry.yyc3.com/yyc3-backend:v2.0.0
+        - name: backend
+          image: registry.yyc3.com/yyc3-backend:v2.0.0
 ---
 apiVersion: v1
 kind: Service
@@ -461,11 +479,11 @@ metadata:
 spec:
   selector:
     app: yyc3-backend
-    version: blue  # 切换到 green 即可完成切换
+    version: blue # 切换到 green 即可完成切换
   ports:
-  - protocol: TCP
-    port: 3000
-    targetPort: 3000
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
 ```
 
 ### 3.2 应用监控
@@ -483,38 +501,38 @@ spec:
   template:
     spec:
       containers:
-      - name: backend
-        image: registry.yyc3.com/yyc3-backend:v1.0.0
-        # 存活探针
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
-          successThreshold: 1
-        # 就绪探针
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
-          successThreshold: 1
-        # 启动探针
-        startupProbe:
-          httpGet:
-            path: /health
-            port: 3000
-          initialDelaySeconds: 0
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 30
-          successThreshold: 1
+        - name: backend
+          image: registry.yyc3.com/yyc3-backend:v1.0.0
+          # 存活探针
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          # 就绪探针
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+            successThreshold: 1
+          # 启动探针
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 30
+            successThreshold: 1
 ```
 
 ---
@@ -541,13 +559,13 @@ spec:
       file:
         path: /opt/{{ app_name }}
         state: directory
-        mode: '0755'
+        mode: "0755"
 
     - name: Download application package
       get_url:
         url: https://releases.yyc3.com/{{ app_name }}/{{ app_version }}/{{ app_name }}-{{ app_version }}.tar.gz
         dest: /tmp/{{ app_name }}-{{ app_version }}.tar.gz
-        mode: '0644'
+        mode: "0644"
 
     - name: Extract application package
       unarchive:
@@ -564,14 +582,14 @@ spec:
       template:
         src: templates/app.service.j2
         dest: /etc/systemd/system/{{ app_name }}.service
-        mode: '0644'
+        mode: "0644"
       notify:
         - Reload systemd
         - Restart application
 
     - name: Enable and start application service
       systemd:
-        name: {{ app_name }}
+        name: { { app_name } }
         enabled: yes
         state: started
 
@@ -582,7 +600,7 @@ spec:
 
     - name: Restart application
       systemd:
-        name: {{ app_name }}
+        name: { { app_name } }
         state: restarted
 ```
 
@@ -633,26 +651,26 @@ check_image() {
 # 部署应用
 deploy_app() {
     log_info "Deploying ${APP_NAME}:${APP_VERSION} to ${NAMESPACE}..."
-    
+
     # 更新 Deployment
     kubectl set image deployment/${APP_NAME} \
         ${APP_NAME}=${REGISTRY}/${APP_NAME}:${APP_VERSION} \
         -n ${NAMESPACE}
-    
+
     # 等待部署完成
     kubectl rollout status deployment/${APP_NAME} -n ${NAMESPACE} --timeout=5m
-    
+
     log_info "Deployment completed successfully"
 }
 
 # 验证部署
 verify_deployment() {
     log_info "Verifying deployment..."
-    
+
     # 检查 Pod 状态
     READY_PODS=$(kubectl get deployment/${APP_NAME} -n ${NAMESPACE} -o jsonpath='{.status.readyReplicas}')
     DESIRED_PODS=$(kubectl get deployment/${APP_NAME} -n ${NAMESPACE} -o jsonpath='{.spec.replicas}')
-    
+
     if [ "$READY_PODS" -eq "$DESIRED_PODS" ]; then
         log_info "All pods are ready (${READY_PODS}/${DESIRED_PODS})"
     else
@@ -712,13 +730,13 @@ main "$@"
 
 #### 5.2.1 故障分级标准
 
-| 等级 | 名称 | 响应时间 | 影响范围 | 示例 |
-|------|------|----------|----------|------|
-| P0 | 严重故障 | 15分钟 | 核心服务完全不可用 | 数据库宕机、支付服务不可用 |
-| P1 | 高级故障 | 30分钟 | 核心功能受影响 | 订单创建失败、用户无法登录 |
-| P2 | 中级故障 | 1小时 | 部分功能受影响 | 搜索功能异常、推荐服务不可用 |
-| P3 | 低级故障 | 4小时 | 非核心功能受影响 | 报表生成失败、统计延迟 |
-| P4 | 轻微故障 | 24小时 | 影响较小 | 页面样式异常、文案错误 |
+| 等级 | 名称     | 响应时间 | 影响范围           | 示例                         |
+| ---- | -------- | -------- | ------------------ | ---------------------------- |
+| P0   | 严重故障 | 15分钟   | 核心服务完全不可用 | 数据库宕机、支付服务不可用   |
+| P1   | 高级故障 | 30分钟   | 核心功能受影响     | 订单创建失败、用户无法登录   |
+| P2   | 中级故障 | 1小时    | 部分功能受影响     | 搜索功能异常、推荐服务不可用 |
+| P3   | 低级故障 | 4小时    | 非核心功能受影响   | 报表生成失败、统计延迟       |
+| P4   | 轻微故障 | 24小时   | 影响较小           | 页面样式异常、文案错误       |
 
 ### 5.3 故障处理脚本
 
@@ -734,8 +752,8 @@ main "$@"
  * @created 2025-01-30
  */
 
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from "child_process";
+import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
@@ -743,17 +761,17 @@ const execAsync = promisify(exec);
  * 故障类型
  */
 enum FaultType {
-  HighErrorRate = 'high_error_rate',
-  HighLatency = 'high_latency',
-  ServiceDown = 'service_down',
-  DatabaseConnectionError = 'database_connection_error',
+  HighErrorRate = "high_error_rate",
+  HighLatency = "high_latency",
+  ServiceDown = "service_down",
+  DatabaseConnectionError = "database_connection_error",
 }
 
 /**
  * 恢复动作
  */
 interface RecoveryAction {
-  type: 'restart_pod' | 'scale_up' | 'rollback' | 'switch_db';
+  type: "restart_pod" | "scale_up" | "rollback" | "switch_db";
   command: string;
   description: string;
 }
@@ -762,32 +780,41 @@ interface RecoveryAction {
  * 故障恢复策略
  */
 const recoveryStrategies: Map<FaultType, RecoveryAction[]> = new Map([
-  [FaultType.ServiceDown, [
-    {
-      type: 'restart_pod',
-      command: 'kubectl delete pod -l app=yyc3-backend -n yyc3-production',
-      description: '重启服务 Pod',
-    },
-    {
-      type: 'scale_up',
-      command: 'kubectl scale deployment yyc3-backend --replicas=5 -n yyc3-production',
-      description: '扩容服务',
-    },
-  ]],
-  [FaultType.HighErrorRate, [
-    {
-      type: 'rollback',
-      command: 'kubectl rollout undo deployment/yyc3-backend -n yyc3-production',
-      description: '回滚到上一个版本',
-    },
-  ]],
-  [FaultType.DatabaseConnectionError, [
-    {
-      type: 'switch_db',
-      command: 'kubectl patch configmap db-config -p \'{"data":{"db_host":"db-backup"}}\' -n yyc3-production',
-      description: '切换到备用数据库',
-    },
-  ]],
+  [
+    FaultType.ServiceDown,
+    [
+      {
+        type: "restart_pod",
+        command: "kubectl delete pod -l app=yyc3-backend -n yyc3-production",
+        description: "重启服务 Pod",
+      },
+      {
+        type: "scale_up",
+        command: "kubectl scale deployment yyc3-backend --replicas=5 -n yyc3-production",
+        description: "扩容服务",
+      },
+    ],
+  ],
+  [
+    FaultType.HighErrorRate,
+    [
+      {
+        type: "rollback",
+        command: "kubectl rollout undo deployment/yyc3-backend -n yyc3-production",
+        description: "回滚到上一个版本",
+      },
+    ],
+  ],
+  [
+    FaultType.DatabaseConnectionError,
+    [
+      {
+        type: "switch_db",
+        command: 'kubectl patch configmap db-config -p \'{"data":{"db_host":"db-backup"}}\' -n yyc3-production',
+        description: "切换到备用数据库",
+      },
+    ],
+  ],
 ]);
 
 /**
@@ -835,10 +862,10 @@ export async function autoRecovery(faultType: FaultType): Promise<void> {
   for (const action of strategies) {
     try {
       await executeRecovery(action);
-      
+
       // 等待一段时间验证恢复效果
       await new Promise(resolve => setTimeout(resolve, 30000));
-      
+
       // 检查故障是否已恢复
       if (!(await detectFault(faultType))) {
         console.log(`Fault recovered successfully`);
@@ -896,12 +923,12 @@ export async function autoRecovery(faultType: FaultType): Promise<void> {
 
 #### 6.2.1 变更审批规则
 
-| 变更类型 | 审批级别 | 审批人 | 审批时间 |
-|----------|----------|--------|----------|
-| 紧急变更 | P0 | 技术总监 | 即时 |
-| 标准变更 | P1 | 技术经理 | 1个工作日 |
-| 常规变更 | P2 | 团队负责人 | 2个工作日 |
-| 计划变更 | P3 | 技术经理 | 3个工作日 |
+| 变更类型 | 审批级别 | 审批人     | 审批时间  |
+| -------- | -------- | ---------- | --------- |
+| 紧急变更 | P0       | 技术总监   | 即时      |
+| 标准变更 | P1       | 技术经理   | 1个工作日 |
+| 常规变更 | P2       | 团队负责人 | 2个工作日 |
+| 计划变更 | P3       | 技术经理   | 3个工作日 |
 
 ---
 
@@ -927,25 +954,25 @@ export async function autoRecovery(faultType: FaultType): Promise<void> {
 interface CapacityMetrics {
   // CPU 使用率
   cpuUsage: number;
-  
+
   // 内存使用率
   memoryUsage: number;
-  
+
   // 磁盘使用率
   diskUsage: number;
-  
+
   // 网络带宽使用率
   networkUsage: number;
-  
+
   // 请求量
   requestRate: number;
-  
+
   // 并发连接数
   concurrentConnections: number;
-  
+
   // 响应时间
   responseTime: number;
-  
+
   // 错误率
   errorRate: number;
 }
@@ -958,12 +985,12 @@ interface CapacityThresholds {
   cpuWarning: number;
   // CPU 严重阈值
   cpuCritical: number;
-  
+
   // 内存警告阈值
   memoryWarning: number;
   // 内存严重阈值
   memoryCritical: number;
-  
+
   // 磁盘警告阈值
   diskWarning: number;
   // 磁盘严重阈值
@@ -975,20 +1002,20 @@ interface CapacityThresholds {
  */
 interface CapacityAssessment {
   // 当前状态
-  currentStatus: 'healthy' | 'warning' | 'critical';
-  
+  currentStatus: "healthy" | "warning" | "critical";
+
   // 预测状态
-  predictedStatus: 'healthy' | 'warning' | 'critical';
-  
+  predictedStatus: "healthy" | "warning" | "critical";
+
   // 预测时间
   predictedTime: Date;
-  
+
   // 扩容建议
   scalingRecommendation: {
     // 是否需要扩容
     needScaling: boolean;
     // 扩容类型
-    scalingType: 'horizontal' | 'vertical';
+    scalingType: "horizontal" | "vertical";
     // 扩容幅度
     scalingFactor: number;
     // 建议配置
@@ -1015,22 +1042,15 @@ export class CapacityPlanner {
    * @param history 历史数据
    * @returns 评估结果
    */
-  assessCapacity(
-    metrics: CapacityMetrics,
-    history: CapacityMetrics[]
-  ): CapacityAssessment {
+  assessCapacity(metrics: CapacityMetrics, history: CapacityMetrics[]): CapacityAssessment {
     // 评估当前状态
     const currentStatus = this.assessCurrentStatus(metrics);
-    
+
     // 预测未来状态
     const { predictedStatus, predictedTime } = this.predictFutureStatus(history);
-    
+
     // 生成扩容建议
-    const scalingRecommendation = this.generateScalingRecommendation(
-      metrics,
-      currentStatus,
-      predictedStatus
-    );
+    const scalingRecommendation = this.generateScalingRecommendation(metrics, currentStatus, predictedStatus);
 
     return {
       currentStatus,
@@ -1045,13 +1065,13 @@ export class CapacityPlanner {
    * @param metrics 容量指标
    * @returns 当前状态
    */
-  private assessCurrentStatus(metrics: CapacityMetrics): 'healthy' | 'warning' | 'critical' {
+  private assessCurrentStatus(metrics: CapacityMetrics): "healthy" | "warning" | "critical" {
     if (
       metrics.cpuUsage >= this.thresholds.cpuCritical ||
       metrics.memoryUsage >= this.thresholds.memoryCritical ||
       metrics.diskUsage >= this.thresholds.diskCritical
     ) {
-      return 'critical';
+      return "critical";
     }
 
     if (
@@ -1059,10 +1079,10 @@ export class CapacityPlanner {
       metrics.memoryUsage >= this.thresholds.memoryWarning ||
       metrics.diskUsage >= this.thresholds.diskWarning
     ) {
-      return 'warning';
+      return "warning";
     }
 
-    return 'healthy';
+    return "healthy";
   }
 
   /**
@@ -1070,13 +1090,14 @@ export class CapacityPlanner {
    * @param history 历史数据
    * @returns 预测状态和时间
    */
-  private predictFutureStatus(
-    history: CapacityMetrics[]
-  ): { predictedStatus: 'healthy' | 'warning' | 'critical'; predictedTime: Date } {
+  private predictFutureStatus(history: CapacityMetrics[]): {
+    predictedStatus: "healthy" | "warning" | "critical";
+    predictedTime: Date;
+  } {
     // 这里实现预测逻辑
     // 可以使用线性回归、时间序列分析等方法
     return {
-      predictedStatus: 'healthy',
+      predictedStatus: "healthy",
       predictedTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     };
   }
@@ -1090,45 +1111,45 @@ export class CapacityPlanner {
    */
   private generateScalingRecommendation(
     metrics: CapacityMetrics,
-    currentStatus: 'healthy' | 'warning' | 'critical',
-    predictedStatus: 'healthy' | 'warning' | 'critical'
-  ): CapacityAssessment['scalingRecommendation'] {
-    if (currentStatus === 'critical' || predictedStatus === 'critical') {
+    currentStatus: "healthy" | "warning" | "critical",
+    predictedStatus: "healthy" | "warning" | "critical"
+  ): CapacityAssessment["scalingRecommendation"] {
+    if (currentStatus === "critical" || predictedStatus === "critical") {
       return {
         needScaling: true,
-        scalingType: 'horizontal',
+        scalingType: "horizontal",
         scalingFactor: 2,
         recommendedConfig: {
           replicas: 6,
           resources: {
             requests: {
-              cpu: '500m',
-              memory: '512Mi',
+              cpu: "500m",
+              memory: "512Mi",
             },
             limits: {
-              cpu: '1000m',
-              memory: '1Gi',
+              cpu: "1000m",
+              memory: "1Gi",
             },
           },
         },
       };
     }
 
-    if (currentStatus === 'warning' || predictedStatus === 'warning') {
+    if (currentStatus === "warning" || predictedStatus === "warning") {
       return {
         needScaling: true,
-        scalingType: 'horizontal',
+        scalingType: "horizontal",
         scalingFactor: 1.5,
         recommendedConfig: {
           replicas: 4,
           resources: {
             requests: {
-              cpu: '300m',
-              memory: '384Mi',
+              cpu: "300m",
+              memory: "384Mi",
             },
             limits: {
-              cpu: '600m',
-              memory: '768Mi',
+              cpu: "600m",
+              memory: "768Mi",
             },
           },
         },
@@ -1137,7 +1158,7 @@ export class CapacityPlanner {
 
     return {
       needScaling: false,
-      scalingType: 'horizontal',
+      scalingType: "horizontal",
       scalingFactor: 1,
       recommendedConfig: null,
     };
@@ -1157,6 +1178,7 @@ export class CapacityPlanner {
 ## 日常运维检查清单
 
 ### 每日检查
+
 - [ ] 检查系统告警
 - [ ] 检查应用日志
 - [ ] 检查系统资源使用
@@ -1164,6 +1186,7 @@ export class CapacityPlanner {
 - [ ] 检查安全日志
 
 ### 每周检查
+
 - [ ] 检查系统性能趋势
 - [ ] 检查容量使用情况
 - [ ] 检查安全漏洞
@@ -1171,6 +1194,7 @@ export class CapacityPlanner {
 - [ ] 检查文档更新
 
 ### 每月检查
+
 - [ ] 检查 SLA 达成情况
 - [ ] 检查成本使用情况
 - [ ] 检查灾备演练
@@ -1188,49 +1212,65 @@ export class CapacityPlanner {
 ## 1. 系统概述
 
 ### 1.1 系统架构
+
 ### 1.2 技术栈
+
 ### 1.3 部署环境
 
 ## 2. 部署指南
 
 ### 2.1 环境准备
+
 ### 2.2 应用部署
+
 ### 2.3 配置管理
 
 ## 3. 监控告警
 
 ### 3.1 监控指标
+
 ### 3.2 告警规则
+
 ### 3.3 告警处理
 
 ## 4. 故障处理
 
 ### 4.1 常见故障
+
 ### 4.2 故障排查
+
 ### 4.3 故障恢复
 
 ## 5. 日常运维
 
 ### 5.1 巡检流程
+
 ### 5.2 备份恢复
+
 ### 5.3 性能优化
 
 ## 6. 安全管理
 
 ### 6.1 访问控制
+
 ### 6.2 安全加固
+
 ### 6.3 安全审计
 
 ## 7. 变更管理
 
 ### 7.1 变更流程
+
 ### 7.2 变更审批
+
 ### 7.3 变更记录
 
 ## 8. 应急响应
 
 ### 8.1 应急预案
+
 ### 8.2 应急联系人
+
 ### 8.3 应急演练
 ```
 
@@ -1238,13 +1278,10 @@ export class CapacityPlanner {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1267,8 +1304,6 @@ export class CapacityPlanner {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1302,8 +1337,6 @@ export class CapacityPlanner {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1326,46 +1359,46 @@ export class CapacityPlanner {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1378,6 +1411,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1387,6 +1421,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1396,6 +1431,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1412,16 +1448,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1431,13 +1468,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1446,6 +1481,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1464,6 +1500,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1479,6 +1516,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1498,28 +1536,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1528,44 +1565,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1579,13 +1614,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1594,18 +1629,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1615,37 +1653,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1654,28 +1695,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1684,21 +1723,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1707,10 +1748,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1736,16 +1774,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1754,25 +1792,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

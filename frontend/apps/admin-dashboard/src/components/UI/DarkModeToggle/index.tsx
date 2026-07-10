@@ -8,10 +8,10 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { useTheme } from './ThemeProvider'
-import { Moon, Sun, Monitor } from 'lucide-vue-next'
-import { cn } from '@/utils/cn'
+import { defineComponent, computed, type PropType } from 'vue';
+import { useTheme } from './ThemeProvider';
+import { Moon, Sun, Monitor } from 'lucide-vue-next';
+import { cn } from '@/utils/cn';
 
 export const DarkModeToggle = defineComponent({
   name: 'DarkModeToggle',
@@ -26,58 +26,60 @@ export const DarkModeToggle = defineComponent({
     },
   },
   setup(props) {
-    const theme = useTheme()
+    const theme = useTheme();
 
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'w-8 h-8'
+          return 'w-8 h-8';
         case 'lg':
-          return 'w-12 h-12'
+          return 'w-12 h-12';
         default:
-          return 'w-10 h-10'
+          return 'w-10 h-10';
       }
-    })
+    });
 
     const iconSize = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 16
+          return 16;
         case 'lg':
-          return 24
+          return 24;
         default:
-          return 20
+          return 20;
       }
-    })
+    });
 
     const currentIcon = computed(() => {
       if (theme.themeMode.value === 'dark') {
-        return Moon
+        return Moon;
       } else if (theme.themeMode.value === 'auto') {
-        return Monitor
+        return Monitor;
       } else {
-        return Sun
+        return Sun;
       }
-    })
+    });
 
     const toggleTheme = () => {
       if (theme.themeMode.value === 'light') {
-        theme.setThemeMode('dark')
+        theme.setThemeMode('dark');
       } else if (theme.themeMode.value === 'dark') {
-        theme.setThemeMode('auto')
+        theme.setThemeMode('auto');
       } else {
-        theme.setThemeMode('light')
+        theme.setThemeMode('light');
       }
-    }
+    };
 
     return () => (
       <button
         onClick={toggleTheme}
         class={cn(
           'inline-flex items-center justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500',
-          sizeClasses.value
+          sizeClasses.value,
         )}
-        title={theme.themeMode.value === 'dark' ? '深色模式' : theme.themeMode.value === 'auto' ? '跟随系统' : '浅色模式'}
+        title={
+          theme.themeMode.value === 'dark' ? '深色模式' : theme.themeMode.value === 'auto' ? '跟随系统' : '浅色模式'
+        }
       >
         <currentIcon.value size={iconSize.value} />
         {props.showLabel && (
@@ -86,6 +88,6 @@ export const DarkModeToggle = defineComponent({
           </span>
         )}
       </button>
-    )
+    );
   },
-})
+});

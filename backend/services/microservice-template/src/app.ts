@@ -44,11 +44,13 @@ const createApp = (): Application => {
   if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'));
   } else {
-    app.use(morgan('combined', {
-      stream: {
-        write: (message: string) => logger.info(message.trim()),
-      },
-    }));
+    app.use(
+      morgan('combined', {
+        stream: {
+          write: (message: string) => logger.info(message.trim()),
+        },
+      })
+    );
   }
 
   // 健康检查路由

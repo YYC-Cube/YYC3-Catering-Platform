@@ -24,7 +24,7 @@ describe('AIAssistantService', () => {
       knowledgeBaseEnabled: false,
       maxConversationHistory: 10,
       responseTimeout: 30000,
-      languageSupport: ['zh-CN', 'en-US']
+      languageSupport: ['zh-CN', 'en-US'],
     };
     aiAssistantService = new AIAssistantService(config);
   });
@@ -41,7 +41,7 @@ describe('AIAssistantService', () => {
         restaurantId: 'test-restaurant-456',
         timeRange: {
           startDate: '2025-01-08',
-          endDate: '2025-01-14'
+          endDate: '2025-01-14',
         },
         historicalData: [
           { date: '2025-01-01', sales: 1500, orders: 30, customers: 85 },
@@ -50,14 +50,14 @@ describe('AIAssistantService', () => {
           { date: '2025-01-04', sales: 1900, orders: 38, customers: 95 },
           { date: '2025-01-05', sales: 2400, orders: 50, customers: 120 },
           { date: '2025-01-06', sales: 2800, orders: 60, customers: 150 },
-          { date: '2025-01-07', sales: 3000, orders: 65, customers: 160 }
+          { date: '2025-01-07', sales: 3000, orders: 65, customers: 160 },
         ],
         factors: {
           promotions: true,
           holidays: false,
           weather: true,
-          events: true
-        }
+          events: true,
+        },
       };
 
       const result = await aiAssistantService.getSalesForecast(sessionId, context);
@@ -83,10 +83,10 @@ describe('AIAssistantService', () => {
         restaurantId: 'test-restaurant-012',
         timeRange: {
           startDate: '2025-01-08',
-          endDate: '2025-01-14'
+          endDate: '2025-01-14',
         },
         historicalData: [],
-        factors: {}
+        factors: {},
       };
 
       const result = await aiAssistantService.getSalesForecast(sessionId, context);
@@ -103,16 +103,16 @@ describe('AIAssistantService', () => {
         { startDate: '2025-01-08', endDate: '2025-01-10' },
         { startDate: '2025-01-08', endDate: '2025-01-14' },
         { startDate: '2025-01-08', endDate: '2025-01-21' },
-        { startDate: '2025-01-08', endDate: '2025-02-07' }
+        { startDate: '2025-01-08', endDate: '2025-02-07' },
       ];
       const sessionId = 'test-session-321';
       const baseContext = {
         restaurantId: 'test-restaurant-654',
         historicalData: [
           { date: '2025-01-01', sales: 1500, orders: 30, customers: 85 },
-          { date: '2025-01-02', sales: 1800, orders: 35, customers: 92 }
+          { date: '2025-01-02', sales: 1800, orders: 35, customers: 92 },
         ],
-        factors: {}
+        factors: {},
       };
 
       for (const timeRange of testCases) {
@@ -130,19 +130,19 @@ describe('AIAssistantService', () => {
         restaurantId: 'test-restaurant-987',
         timeRange: {
           startDate: '2025-01-08',
-          endDate: '2025-01-14'
+          endDate: '2025-01-14',
         },
         historicalData: [
           { date: '2025-01-01', sales: 1500, orders: 30, customers: 85 },
           { date: '2025-01-02', sales: 1800, orders: 35, customers: 92 },
-          { date: '2025-01-03', sales: 2200, orders: 45, customers: 110 }
+          { date: '2025-01-03', sales: 2200, orders: 45, customers: 110 },
         ],
         factors: {
           promotions: true,
           holidays: false,
           weather: true,
-          events: true
-        }
+          events: true,
+        },
       };
 
       const result = await aiAssistantService.getSalesForecast(sessionId, context);

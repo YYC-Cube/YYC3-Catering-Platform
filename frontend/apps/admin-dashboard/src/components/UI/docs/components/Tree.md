@@ -11,258 +11,225 @@
 ### 基础用法
 
 ```tsx
-import { Tree, TreeNode } from '@/components/UI'
+import { Tree, TreeNode } from "@/components/UI";
 
 export default function TreeBasic() {
   const treeData = [
     {
-      key: '1',
-      title: '节点一',
+      key: "1",
+      title: "节点一",
       children: [
-        { key: '1-1', title: '子节点一' },
-        { key: '1-2', title: '子节点二' },
-      ]
+        { key: "1-1", title: "子节点一" },
+        { key: "1-2", title: "子节点二" },
+      ],
     },
     {
-      key: '2',
-      title: '节点二',
+      key: "2",
+      title: "节点二",
       children: [
-        { key: '2-1', title: '子节点三' },
-        { key: '2-2', title: '子节点四' },
-      ]
+        { key: "2-1", title: "子节点三" },
+        { key: "2-2", title: "子节点四" },
+      ],
     },
-  ]
+  ];
 
-  return (
-    <Tree data={treeData} />
-  )
+  return <Tree data={treeData} />;
 }
 ```
 
 ### 可选择
 
 ```tsx
-import { Tree } from '@/components/UI'
-import { ref } from 'vue'
+import { Tree } from "@/components/UI";
+import { ref } from "vue";
 
 export default function TreeSelectable() {
-  const selectedKeys = ref(['1-1'])
-  
+  const selectedKeys = ref(["1-1"]);
+
   const treeData = [
     {
-      key: '1',
-      title: '节点一',
+      key: "1",
+      title: "节点一",
       children: [
-        { key: '1-1', title: '子节点一' },
-        { key: '1-2', title: '子节点二' },
-      ]
+        { key: "1-1", title: "子节点一" },
+        { key: "1-2", title: "子节点二" },
+      ],
     },
     {
-      key: '2',
-      title: '节点二',
+      key: "2",
+      title: "节点二",
       children: [
-        { key: '2-1', title: '子节点三' },
-        { key: '2-2', title: '子节点四' },
-      ]
+        { key: "2-1", title: "子节点三" },
+        { key: "2-2", title: "子节点四" },
+      ],
     },
-  ]
+  ];
 
   const handleSelect = (keys: string[]) => {
-    selectedKeys.value = keys
-  }
+    selectedKeys.value = keys;
+  };
 
-  return (
-    <Tree
-      data={treeData}
-      selectedKeys={selectedKeys.value}
-      onSelect={handleSelect}
-    />
-  )
+  return <Tree data={treeData} selectedKeys={selectedKeys.value} onSelect={handleSelect} />;
 }
 ```
 
 ### 可勾选
 
 ```tsx
-import { Tree } from '@/components/UI'
-import { ref } from 'vue'
+import { Tree } from "@/components/UI";
+import { ref } from "vue";
 
 export default function TreeCheckable() {
-  const checkedKeys = ref(['1-1'])
-  
+  const checkedKeys = ref(["1-1"]);
+
   const treeData = [
     {
-      key: '1',
-      title: '节点一',
+      key: "1",
+      title: "节点一",
       children: [
-        { key: '1-1', title: '子节点一' },
-        { key: '1-2', title: '子节点二' },
-      ]
+        { key: "1-1", title: "子节点一" },
+        { key: "1-2", title: "子节点二" },
+      ],
     },
     {
-      key: '2',
-      title: '节点二',
+      key: "2",
+      title: "节点二",
       children: [
-        { key: '2-1', title: '子节点三' },
-        { key: '2-2', title: '子节点四' },
-      ]
+        { key: "2-1", title: "子节点三" },
+        { key: "2-2", title: "子节点四" },
+      ],
     },
-  ]
+  ];
 
   const handleCheck = (keys: string[]) => {
-    checkedKeys.value = keys
-  }
+    checkedKeys.value = keys;
+  };
 
-  return (
-    <Tree
-      data={treeData}
-      checkable
-      checkedKeys={checkedKeys.value}
-      onCheck={handleCheck}
-    />
-  )
+  return <Tree data={treeData} checkable checkedKeys={checkedKeys.value} onCheck={handleCheck} />;
 }
 ```
 
 ### 可展开
 
 ```tsx
-import { Tree } from '@/components/UI'
-import { ref } from 'vue'
+import { Tree } from "@/components/UI";
+import { ref } from "vue";
 
 export default function TreeExpandable() {
-  const expandedKeys = ref(['1'])
-  
+  const expandedKeys = ref(["1"]);
+
   const treeData = [
     {
-      key: '1',
-      title: '节点一',
+      key: "1",
+      title: "节点一",
       children: [
-        { key: '1-1', title: '子节点一' },
-        { key: '1-2', title: '子节点二' },
-      ]
+        { key: "1-1", title: "子节点一" },
+        { key: "1-2", title: "子节点二" },
+      ],
     },
     {
-      key: '2',
-      title: '节点二',
+      key: "2",
+      title: "节点二",
       children: [
-        { key: '2-1', title: '子节点三' },
-        { key: '2-2', title: '子节点四' },
-      ]
+        { key: "2-1", title: "子节点三" },
+        { key: "2-2", title: "子节点四" },
+      ],
     },
-  ]
+  ];
 
   const handleExpand = (keys: string[]) => {
-    expandedKeys.value = keys
-  }
+    expandedKeys.value = keys;
+  };
 
-  return (
-    <Tree
-      data={treeData}
-      expandedKeys={expandedKeys.value}
-      onExpand={handleExpand}
-    />
-  )
+  return <Tree data={treeData} expandedKeys={expandedKeys.value} onExpand={handleExpand} />;
 }
 ```
 
 ### 禁用节点
 
 ```tsx
-import { Tree } from '@/components/UI'
+import { Tree } from "@/components/UI";
 
 export default function TreeDisabled() {
   const treeData = [
     {
-      key: '1',
-      title: '节点一',
+      key: "1",
+      title: "节点一",
       children: [
-        { key: '1-1', title: '子节点一', disabled: true },
-        { key: '1-2', title: '子节点二' },
-      ]
+        { key: "1-1", title: "子节点一", disabled: true },
+        { key: "1-2", title: "子节点二" },
+      ],
     },
     {
-      key: '2',
-      title: '节点二',
+      key: "2",
+      title: "节点二",
       disabled: true,
       children: [
-        { key: '2-1', title: '子节点三' },
-        { key: '2-2', title: '子节点四' },
-      ]
+        { key: "2-1", title: "子节点三" },
+        { key: "2-2", title: "子节点四" },
+      ],
     },
-  ]
+  ];
 
-  return (
-    <Tree data={treeData} />
-  )
+  return <Tree data={treeData} />;
 }
 ```
 
 ### 带图标
 
 ```tsx
-import { Tree } from '@/components/UI'
+import { Tree } from "@/components/UI";
 
 export default function TreeWithIcon() {
   const treeData = [
     {
-      key: '1',
-      title: '📁 文件夹一',
+      key: "1",
+      title: "📁 文件夹一",
       children: [
-        { key: '1-1', title: '📄 文件一' },
-        { key: '1-2', title: '📄 文件二' },
-      ]
+        { key: "1-1", title: "📄 文件一" },
+        { key: "1-2", title: "📄 文件二" },
+      ],
     },
     {
-      key: '2',
-      title: '📁 文件夹二',
+      key: "2",
+      title: "📁 文件夹二",
       children: [
-        { key: '2-1', title: '📄 文件三' },
-        { key: '2-2', title: '📄 文件四' },
-      ]
+        { key: "2-1", title: "📄 文件三" },
+        { key: "2-2", title: "📄 文件四" },
+      ],
     },
-  ]
+  ];
 
-  return (
-    <Tree
-      data={treeData}
-      showIcon
-    />
-  )
+  return <Tree data={treeData} showIcon />;
 }
 ```
 
 ### 可拖拽
 
 ```tsx
-import { Tree } from '@/components/UI'
+import { Tree } from "@/components/UI";
 
 export default function TreeDraggable() {
   const treeData = [
     {
-      key: '1',
-      title: '节点一',
+      key: "1",
+      title: "节点一",
       children: [
-        { key: '1-1', title: '子节点一' },
-        { key: '1-2', title: '子节点二' },
-      ]
+        { key: "1-1", title: "子节点一" },
+        { key: "1-2", title: "子节点二" },
+      ],
     },
     {
-      key: '2',
-      title: '节点二',
+      key: "2",
+      title: "节点二",
       children: [
-        { key: '2-1', title: '子节点三' },
-        { key: '2-2', title: '子节点四' },
-      ]
+        { key: "2-1", title: "子节点三" },
+        { key: "2-2", title: "子节点四" },
+      ],
     },
-  ]
+  ];
 
-  return (
-    <Tree
-      data={treeData}
-      draggable
-    />
-  )
+  return <Tree data={treeData} draggable />;
 }
 ```
 
@@ -270,32 +237,32 @@ export default function TreeDraggable() {
 
 ### Tree Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| data | 树形数据 | `TreeNode[]` | - |
-| selectedKeys | 选中的节点 | `string[]` | - |
-| checkedKeys | 勾选的节点 | `string[]` | - |
-| expandedKeys | 展开的节点 | `string[]` | - |
-| checkable | 是否可勾选 | `boolean` | `false` |
-| draggable | 是否可拖拽 | `boolean` | `false` |
-| disabled | 是否禁用 | `boolean` | `false` |
-| showIcon | 是否显示图标 | `boolean` | `false` |
-| showLine | 是否显示连线 | `boolean` | `false` |
-| onSelect | 选择回调 | `Function` | - |
-| onCheck | 勾选回调 | `Function` | - |
-| onExpand | 展开回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数         | 说明         | 类型         | 默认值  |
+| ------------ | ------------ | ------------ | ------- |
+| data         | 树形数据     | `TreeNode[]` | -       |
+| selectedKeys | 选中的节点   | `string[]`   | -       |
+| checkedKeys  | 勾选的节点   | `string[]`   | -       |
+| expandedKeys | 展开的节点   | `string[]`   | -       |
+| checkable    | 是否可勾选   | `boolean`    | `false` |
+| draggable    | 是否可拖拽   | `boolean`    | `false` |
+| disabled     | 是否禁用     | `boolean`    | `false` |
+| showIcon     | 是否显示图标 | `boolean`    | `false` |
+| showLine     | 是否显示连线 | `boolean`    | `false` |
+| onSelect     | 选择回调     | `Function`   | -       |
+| onCheck      | 勾选回调     | `Function`   | -       |
+| onExpand     | 展开回调     | `Function`   | -       |
+| className    | 自定义类名   | `string`     | -       |
 
 ### TreeNode 类型定义
 
 ```typescript
 interface TreeNode {
-  key: string
-  title: string | VNode
-  children?: TreeNode[]
-  disabled?: boolean
-  selectable?: boolean
-  checkable?: boolean
+  key: string;
+  title: string | VNode;
+  children?: TreeNode[];
+  disabled?: boolean;
+  selectable?: boolean;
+  checkable?: boolean;
 }
 ```
 

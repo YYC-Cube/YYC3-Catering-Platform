@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ 用户常见问题解答
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 用户常见问题解答 |
-| **文档类型** | 用户指南文档 |
-| **所属阶段** | 用户使用 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 用户常见问题解答      |
+| **文档类型** | 用户指南文档               |
+| **所属阶段** | 用户使用                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -115,6 +116,7 @@
 6. 验证成功后即可登录
 
 **注意事项**：
+
 - 用户名只能包含字母、数字和下划线
 - 邮箱和手机号必须真实有效，用于找回密码
 - 密码强度要求：至少包含一个大写字母、一个小写字母和一个数字
@@ -124,6 +126,7 @@
 **A**: 可以通过以下方式重置密码：
 
 **方式一：邮箱重置**
+
 1. 在登录页面点击"忘记密码"
 2. 选择"邮箱重置"
 3. 输入注册邮箱
@@ -135,6 +138,7 @@
 9. 点击"重置密码"按钮
 
 **方式二：手机重置**
+
 1. 在登录页面点击"忘记密码"
 2. 选择"手机重置"
 3. 输入绑定手机号
@@ -146,6 +150,7 @@
 9. 点击"重置密码"按钮
 
 **密码要求**：
+
 - 长度8-20位
 - 包含字母和数字
 - 不能与原密码相同
@@ -171,6 +176,7 @@
 8. 系统提示保存成功
 
 **注意事项**：
+
 - 修改邮箱和手机号需要验证
 - 头像上传支持 JPG、PNG、GIF 格式
 - 建议头像尺寸 200x200 像素
@@ -190,6 +196,7 @@
 9. 系统提示绑定成功
 
 **注意事项**：
+
 - 手机号必须是11位有效手机号
 - 验证码有效期为5分钟
 - 每个手机号每天最多发送5次验证码
@@ -208,12 +215,14 @@
 8. 系统提示修改成功
 
 **密码要求**：
+
 - 长度8-20位
 - 包含字母和数字
 - 不能与原密码相同
 - 不能包含用户名
 
 **安全建议**：
+
 - 定期修改密码（建议每3个月）
 - 不要使用简单密码（如123456、password）
 - 不要在多个平台使用相同密码
@@ -223,6 +232,7 @@
 **A**: 退出登录有两种方式：
 
 **方式一：正常退出**
+
 1. 点击页面右上角的用户头像
 2. 在下拉菜单中点击"退出登录"
 3. 系统提示确认退出
@@ -231,6 +241,7 @@
 
 **方式二：自动退出**
 以下情况系统会自动退出：
+
 - 登录状态超过7天未操作
 - 在其他设备登录同一账号
 - 账号被管理员禁用
@@ -249,6 +260,7 @@
 4. 审核通过后账号将自动解禁
 
 **常见禁用原因**：
+
 - 违反平台使用规范
 - 恶意刷单
 - 虚假交易
@@ -277,6 +289,7 @@
 8. 系统提示添加成功
 
 **商品信息填写规范**：
+
 - 商品名称：2-200个字符，不能包含特殊字符
 - 商品价格：必须大于0，保留两位小数
 - 商品库存：必须大于等于0，整数
@@ -288,18 +301,23 @@
 **A**: 商品图片上传失败的常见原因及解决方法：
 
 **原因一：图片格式不支持**
+
 - 解决方法：转换为 JPG、PNG、GIF 格式
 
 **原因二：图片大小超过限制**
+
 - 解决方法：压缩图片，建议不超过 5MB
 
 **原因三：图片尺寸不符合要求**
+
 - 解决方法：调整图片尺寸，建议 800x800 像素
 
 **原因四：网络连接问题**
+
 - 解决方法：检查网络连接，重新上传
 
 **原因五：浏览器兼容性问题**
+
 - 解决方法：更换浏览器（推荐使用 Chrome、Firefox）
 
 **如果以上方法都无法解决，请联系客服**
@@ -317,6 +335,7 @@
 7. 系统提示操作成功
 
 **注意事项**：
+
 - 一次最多可以选择100个商品
 - 批量操作后无法撤销
 - 建议先检查商品信息是否完整
@@ -338,6 +357,7 @@
 7. 系统提示添加成功
 
 **分类层级建议**：
+
 - 建议不超过3层
 - 示例：
   ```
@@ -355,6 +375,7 @@
 **A**: 商品库存不足的处理方法：
 
 **方法一：调整库存**
+
 1. 进入"库存管理"页面
 2. 找到库存不足的商品
 3. 点击"调整库存"按钮
@@ -365,6 +386,7 @@
 8. 系统提示调整成功
 
 **方法二：设置库存预警**
+
 1. 在商品列表中找到需要设置预警的商品
 2. 点击"设置预警"按钮
 3. 输入预警库存值
@@ -373,6 +395,7 @@
 6. 当库存低于预警值时，系统会自动通知
 
 **注意事项**：
+
 - 建议定期盘点库存
 - 及时补充库存
 - 避免库存积压
@@ -389,6 +412,7 @@
 6. 系统提示保存成功
 
 **编辑限制**：
+
 - 商品ID不能修改
 - 商品创建时间不能修改
 - 商品销量不能修改（系统自动统计）
@@ -405,10 +429,12 @@
 6. 系统提示删除成功
 
 **删除限制**：
+
 - 有未完成订单的商品不能删除
 - 建议先下架商品，确认无订单后再删除
 
 **建议**：
+
 - 对于不再销售的商品，建议先下架而不是删除
 - 下架的商品可以重新上架
 - 删除的商品无法恢复
@@ -429,6 +455,7 @@
 6. 显示订单完整信息
 
 **订单详情包含**：
+
 - 订单基本信息（订单号、创建时间、订单状态）
 - 用户信息（用户昵称、手机号、地址）
 - 商品信息（商品列表、数量、单价、小计）
@@ -450,11 +477,13 @@
 7. 订单状态变为"待配送"
 
 **注意事项**：
+
 - 确认前请仔细核对订单信息
 - 确认后订单将进入配送流程
 - 如有异常情况，请联系客户
 
 **建议**：
+
 - 及时确认订单（建议10分钟内）
 - 发现问题及时联系客户
 
@@ -476,6 +505,7 @@
 8. 订单状态变为"已取消"
 
 **取消限制**：
+
 - 已支付的订单需要先退款才能取消
 - 配送中的订单不能取消
 - 已完成的订单不能取消
@@ -502,6 +532,7 @@
 10. 等待审核（1-3个工作日）
 
 **退款审核流程**：
+
 1. 用户提交退款申请
 2. 商家审核退款申请
 3. 审核通过后，系统发起退款
@@ -510,6 +541,7 @@
 6. 系统通知用户退款结果
 
 **退款状态**：
+
 - 待审核：退款申请已提交，等待审核
 - 审核通过：退款申请审核通过，等待退款
 - 退款中：退款正在处理中
@@ -531,11 +563,13 @@
 8. 订单状态变为"配送中"
 
 **配送人员选择**：
+
 - 从配送人员列表中选择
 - 可以查看配送人员的工作状态
 - 可以查看配送人员的配送记录
 
 **预计配送时间**：
+
 - 根据配送距离和路况估算
 - 建议预留充足时间
 - 可以根据实际情况调整
@@ -555,6 +589,7 @@
 7. 自动下载到本地
 
 **导出内容**：
+
 - 订单基本信息
 - 用户信息
 - 商品信息
@@ -563,6 +598,7 @@
 - 配送信息
 
 **注意事项**：
+
 - 一次最多导出10000条订单
 - 导出时间取决于数据量
 - 建议在非高峰时段导出
@@ -575,14 +611,15 @@
 
 **A**: 平台支持以下支付方式：
 
-| 支付方式 | 说明 | 手续费 |
-|---------|------|--------|
-| **微信支付** | 扫码支付、H5支付、小程序支付 | 0.6% |
-| **支付宝** | 扫码支付、H5支付、APP支付 | 0.6% |
-| **银行卡** | 信用卡、借记卡 | 0.5% |
-| **余额支付** | 使用账户余额支付 | 0% |
+| 支付方式     | 说明                         | 手续费 |
+| ------------ | ---------------------------- | ------ |
+| **微信支付** | 扫码支付、H5支付、小程序支付 | 0.6%   |
+| **支付宝**   | 扫码支付、H5支付、APP支付    | 0.6%   |
+| **银行卡**   | 信用卡、借记卡               | 0.5%   |
+| **余额支付** | 使用账户余额支付             | 0%     |
 
 **支付方式配置**：
+
 1. 进入"支付管理"页面
 2. 点击"支付方式"子菜单
 3. 选择需要配置的支付方式
@@ -596,18 +633,23 @@
 **A**: 支付失败的常见原因及解决方法：
 
 **原因一：账户余额不足**
+
 - 解决方法：充值或选择其他支付方式
 
 **原因二：网络连接问题**
+
 - 解决方法：检查网络连接，重新支付
 
 **原因三：支付方式未配置**
+
 - 解决方法：联系商家配置支付方式
 
 **原因四：支付金额错误**
+
 - 解决方法：检查订单金额，重新支付
 
 **原因五：支付平台异常**
+
 - 解决方法：稍后重试或联系客服
 
 **如果以上方法都无法解决，请联系客服**
@@ -622,6 +664,7 @@
 4. 显示所有支付记录
 
 **支付记录字段**：
+
 - 交易号
 - 订单号
 - 支付方式
@@ -630,6 +673,7 @@
 - 支付时间
 
 **搜索和筛选**：
+
 - 支持按交易号、订单号搜索
 - 支持按支付方式、支付状态、时间范围筛选
 
@@ -647,12 +691,14 @@
 8. 等待到账（1-3个工作日）
 
 **提现规则**：
+
 - 最低提现金额：100元
 - 每日提现次数：最多3次
 - 提现手续费：0元（平台承担）
 - 到账时间：1-3个工作日
 
 **提现限制**：
+
 - 只能提现到绑定的银行卡
 - 提现金额不能超过账户余额
 - 提现申请提交后无法撤销
@@ -680,6 +726,7 @@
 10. 系统提示调整成功
 
 **调整类型说明**：
+
 - 入库：采购入库、退货入库
 - 出库：销售出库、损耗出库
 - 盘点：实际盘点、系统修正
@@ -697,12 +744,14 @@
 
 **预警通知**：
 当库存低于预警值时，系统会：
+
 - 在库存列表中显示预警状态（黄色）
 - 发送站内消息通知
 - 发送邮件通知（如已配置）
 - 发送短信通知（如已配置）
 
 **预警值设置建议**：
+
 - 根据日均销量设置
 - 建议设置为3-7天的销量
 - 可以根据实际情况调整
@@ -717,6 +766,7 @@
 4. 显示所有库存调整记录
 
 **库存记录字段**：
+
 - 记录ID
 - 商品ID
 - 商品名称
@@ -729,6 +779,7 @@
 - 操作时间
 
 **搜索和筛选**：
+
 - 支持按商品名称、调整原因搜索
 - 支持按调整类型、时间范围筛选
 
@@ -748,6 +799,7 @@
 6. 显示客户完整信息
 
 **客户详情包含**：
+
 - 基本信息（昵称、手机号、邮箱、性别、生日）
 - 账户信息（注册时间、最后登录、客户等级）
 - 订单信息（订单数、消费金额、平均客单价）
@@ -765,6 +817,7 @@
 5. 系统提示添加成功
 
 **常用标签**：
+
 - 高价值客户
 - 活跃客户
 - 潜力客户
@@ -773,6 +826,7 @@
 - VIP客户
 
 **标签用途**：
+
 - 客户分类管理
 - 精准营销
 - 个性化服务
@@ -783,14 +837,15 @@
 
 **等级规则**：
 
-| 等级 | 消费金额 | 优惠权益 |
-|------|---------|---------|
-| 青铜会员 | 0-999元 | 无 |
-| 白银会员 | 1000-4999元 | 9.8折 |
-| 黄金会员 | 5000-19999元 | 9.5折 |
-| 铂金会员 | 20000元以上 | 9折 |
+| 等级     | 消费金额     | 优惠权益 |
+| -------- | ------------ | -------- |
+| 青铜会员 | 0-999元      | 无       |
+| 白银会员 | 1000-4999元  | 9.8折    |
+| 黄金会员 | 5000-19999元 | 9.5折    |
+| 铂金会员 | 20000元以上  | 9折      |
 
 **升级规则**：
+
 - 每天凌晨自动计算客户等级
 - 达到升级条件后自动升级
 - 升级后发送通知消息
@@ -819,6 +874,7 @@
 7. 系统提示创建成功
 
 **优惠券类型**：
+
 - 满减券：满X元减Y元
 - 折扣券：享受X折优惠
 - 立减券：直接减Y元
@@ -838,6 +894,7 @@
 6. 系统提示发放成功
 
 **发放对象说明**：
+
 - 全部用户：所有注册用户
 - 指定用户：选择特定用户
 - 指定等级用户：选择特定等级的用户
@@ -860,6 +917,7 @@
 8. 系统提示创建成功
 
 **活动类型**：
+
 - 满减活动：满X元减Y元
 - 折扣活动：享受X折优惠
 - 秒杀活动：限时特价
@@ -878,6 +936,7 @@
 4. 显示销售数据统计
 
 **销售报表指标**：
+
 - 销售额：累计销售额
 - 订单量：累计订单量
 - 客单价：平均客单价
@@ -885,6 +944,7 @@
 - 退款率：订单退款率
 
 **时间范围选择**：
+
 - 今日
 - 昨日
 - 近7天
@@ -906,6 +966,7 @@
 7. 自动下载到本地
 
 **注意事项**：
+
 - 一次最多导出10000条数据
 - 导出时间取决于数据量
 - 建议在非高峰时段导出
@@ -946,6 +1007,7 @@
 5. 点击"保存"按钮
 
 **通知类型**：
+
 - 订单通知
 - 支付通知
 - 促销通知
@@ -976,19 +1038,23 @@
 **A**: 您可以通过以下方式联系客服：
 
 **方式一：在线客服**
+
 1. 点击页面右下角的"在线客服"图标
 2. 输入您的问题
 3. 客服会在第一时间回复您
 
 **方式二：电话客服**
+
 - 客服电话：400-123-4567
 - 服务时间：9:00-22:00（周一至周日）
 
 **方式三：邮件客服**
+
 - 客服邮箱：support@yyc3.com
 - 回复时间：24小时内
 
 **方式四：工单系统**
+
 1. 进入"帮助中心"页面
 2. 点击"提交工单"
 3. 填写工单信息
@@ -1010,12 +1076,14 @@
 6. 我们会认真处理您的反馈
 
 **反馈类型**：
+
 - 功能建议
 - 问题反馈
 - 体验优化
 - 其他建议
 
 **我们承诺**：
+
 - 认真对待每一条反馈
 - 及时处理和回复
 - 持续改进产品和服务
@@ -1024,13 +1092,10 @@
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1051,8 +1116,6 @@
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -1081,8 +1144,6 @@
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -1120,7 +1181,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -1136,8 +1197,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -1150,7 +1209,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1165,9 +1224,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1175,9 +1234,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1185,20 +1247,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1207,6 +1267,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1222,17 +1283,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1240,6 +1302,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1250,6 +1313,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1258,8 +1322,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1267,21 +1329,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1290,10 +1354,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1319,16 +1380,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1337,26 +1398,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1372,7 +1428,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1404,14 +1460,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1422,17 +1476,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1442,17 +1499,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1462,22 +1522,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
-
 
 ## 最佳实践
 
@@ -1486,21 +1547,23 @@ const useStore = create((set) => ({
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1509,10 +1572,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1538,16 +1598,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1556,25 +1616,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

@@ -10,42 +10,42 @@ export interface BackupRecord {
    * 备份ID
    */
   id: string;
-  
+
   /**
    * 备份类型
    */
   type: 'full' | 'incremental' | 'differential';
-  
+
   /**
    * 备份文件路径
    */
   path: string;
-  
+
   /**
    * 备份文件大小（字节）
    */
   size: number;
-  
+
   /**
    * 备份创建时间
    */
   createdAt: Date;
-  
+
   /**
    * 备份状态
    */
   status: 'pending' | 'in_progress' | 'completed' | 'failed';
-  
+
   /**
    * 备份持续时间（毫秒）
    */
   duration: number;
-  
+
   /**
    * 备份描述（可选）
    */
   description?: string;
-  
+
   /**
    * 备份检查点（可选）
    */

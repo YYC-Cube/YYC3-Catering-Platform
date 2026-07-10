@@ -10,13 +10,23 @@
  * @license MIT
  */
 
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo, Unique } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  ForeignKey,
+  BelongsTo,
+  Unique,
+} from 'sequelize-typescript';
 import { MenuItem } from './MenuItem';
 
 @Table({
   tableName: 'recommendations',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class Recommendation extends Model<Recommendation> {
   @PrimaryKey

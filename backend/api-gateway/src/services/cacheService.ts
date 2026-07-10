@@ -272,11 +272,7 @@ export class CacheService {
    * @param options 选项
    * @returns 缓存值
    */
-  async getOrSet<T>(
-    key: string,
-    factory: () => Promise<T>,
-    options?: CacheOptions
-  ): Promise<T> {
+  async getOrSet<T>(key: string, factory: () => Promise<T>, options?: CacheOptions): Promise<T> {
     // 尝试从缓存获取
     const cached = await this.get<T>(key, options);
     if (cached !== null) {
@@ -297,9 +293,7 @@ export class CacheService {
    */
   private updateStats(): void {
     this.stats.total = this.stats.hits + this.stats.misses;
-    this.stats.hitRate = this.stats.total > 0
-      ? (this.stats.hits / this.stats.total) * 100
-      : 0;
+    this.stats.hitRate = this.stats.total > 0 ? (this.stats.hits / this.stats.total) * 100 : 0;
   }
 
   /**

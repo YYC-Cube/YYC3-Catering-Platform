@@ -10,15 +10,17 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 数据访问层架构实现文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--开发实施
 - 遵循规范：五高五标五化要求
@@ -59,35 +61,35 @@
  */
 export enum DataAccessPrinciple {
   // 抽象原则
-  ABSTRACTION = 'ABSTRACTION',                   // 抽象数据源
-  ENCAPSULATION = 'ENCAPSULATION',               // 封装数据操作
-  SEPARATION_OF_CONCERNS = 'SEPARATION_OF_CONCERNS', // 关注点分离
-  
+  ABSTRACTION = "ABSTRACTION", // 抽象数据源
+  ENCAPSULATION = "ENCAPSULATION", // 封装数据操作
+  SEPARATION_OF_CONCERNS = "SEPARATION_OF_CONCERNS", // 关注点分离
+
   // 性能原则
-  LAZY_LOADING = 'LAZY_LOADING',                 // 延迟加载
-  EAGER_LOADING = 'EAGER_LOADING',               // 预加载
-  BATCHING = 'BATCHING',                         // 批量操作
-  
+  LAZY_LOADING = "LAZY_LOADING", // 延迟加载
+  EAGER_LOADING = "EAGER_LOADING", // 预加载
+  BATCHING = "BATCHING", // 批量操作
+
   // 可靠性原则
-  TRANSACTION_MANAGEMENT = 'TRANSACTION_MANAGEMENT', // 事务管理
-  CONNECTION_POOLING = 'CONNECTION_POOLING',     // 连接池
-  ERROR_HANDLING = 'ERROR_HANDLING',             // 错误处理
-  
+  TRANSACTION_MANAGEMENT = "TRANSACTION_MANAGEMENT", // 事务管理
+  CONNECTION_POOLING = "CONNECTION_POOLING", // 连接池
+  ERROR_HANDLING = "ERROR_HANDLING", // 错误处理
+
   // 安全原则
-  SQL_INJECTION_PREVENTION = 'SQL_INJECTION_PREVENTION', // SQL注入防护
-  DATA_VALIDATION = 'DATA_VALIDATION',           // 数据验证
-  ACCESS_CONTROL = 'ACCESS_CONTROL'              // 访问控制
+  SQL_INJECTION_PREVENTION = "SQL_INJECTION_PREVENTION", // SQL注入防护
+  DATA_VALIDATION = "DATA_VALIDATION", // 数据验证
+  ACCESS_CONTROL = "ACCESS_CONTROL", // 访问控制
 }
 
 /**
  * 数据源类型
  */
 export enum DataSourceType {
-  POSTGRESQL = 'POSTGRESQL',
-  MYSQL = 'MYSQL',
-  MONGODB = 'MONGODB',
-  REDIS = 'REDIS',
-  ELASTICSEARCH = 'ELASTICSEARCH'
+  POSTGRESQL = "POSTGRESQL",
+  MYSQL = "MYSQL",
+  MONGODB = "MONGODB",
+  REDIS = "REDIS",
+  ELASTICSEARCH = "ELASTICSEARCH",
 }
 
 /**
@@ -134,11 +136,7 @@ export class DataAccessLayer {
     const entityName = entityClass.name;
 
     if (!this.repositories.has(entityName)) {
-      const repository = new Repository<T>(
-        entityClass,
-        this.connectionPool,
-        this.cacheManager
-      );
+      const repository = new Repository<T>(entityClass, this.connectionPool, this.cacheManager);
       this.repositories.set(entityName, repository);
     }
 
@@ -163,7 +161,7 @@ export class DataAccessLayer {
    */
   async beginTransaction(): Promise<Transaction> {
     const connection = await this.connectionPool.getConnection();
-    await connection.query('BEGIN');
+    await connection.query("BEGIN");
     return new Transaction(connection, this.connectionPool);
   }
 
@@ -216,7 +214,7 @@ export function Column(options: {
     }
     target.constructor.columns.push({
       name: propertyKey,
-      ...options
+      ...options,
     });
   };
 }
@@ -230,10 +228,10 @@ export function OneToMany(targetEntity: any, foreignKey: string) {
       target.constructor.relations = [];
     }
     target.constructor.relations.push({
-      type: 'one-to-many',
+      type: "one-to-many",
       property: propertyKey,
       targetEntity,
-      foreignKey
+      foreignKey,
     });
   };
 }
@@ -241,24 +239,24 @@ export function OneToMany(targetEntity: any, foreignKey: string) {
 /**
  * 用户实体
  */
-@Entity('users')
+@Entity("users")
 export class User {
-  @Column({ type: 'uuid', primary: true })
+  @Column({ type: "uuid", primary: true })
   id: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
+  @Column({ type: "varchar", length: 255, nullable: false })
   name: string;
 
-  @Column({ type: 'varchar', length: 255, unique: true, nullable: false })
+  @Column({ type: "varchar", length: 255, unique: true, nullable: false })
   email: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
+  @Column({ type: "varchar", length: 255, nullable: false })
   password: string;
 
-  @Column({ type: 'timestamp', default: 'CURRENT_TIMESTAMP' })
+  @Column({ type: "timestamp", default: "CURRENT_TIMESTAMP" })
   createdAt: Date;
 
-  @Column({ type: 'timestamp', default: 'CURRENT_TIMESTAMP' })
+  @Column({ type: "timestamp", default: "CURRENT_TIMESTAMP" })
   updatedAt: Date;
 }
 ```
@@ -313,15 +311,13 @@ export class ORMMapper {
     const columns = constructor.columns || [];
     const dbObject = this.entityToDB(entity);
 
-    const columnNames = columns
-      .filter(col => !col.primary)
-      .map(col => col.name);
-    const placeholders = columnNames.map(() => '?');
+    const columnNames = columns.filter(col => !col.primary).map(col => col.name);
+    const placeholders = columnNames.map(() => "?");
     const values = columnNames.map(name => dbObject[name]);
 
     const sql = `
-      INSERT INTO ${tableName} (${columnNames.join(', ')})
-      VALUES (${placeholders.join(', ')})
+      INSERT INTO ${tableName} (${columnNames.join(", ")})
+      VALUES (${placeholders.join(", ")})
       RETURNING *
     `;
 
@@ -339,20 +335,18 @@ export class ORMMapper {
 
     const primaryColumn = columns.find(col => col.primary);
     if (!primaryColumn) {
-      throw new Error('Entity must have a primary key');
+      throw new Error("Entity must have a primary key");
     }
 
-    const setClauses = columns
-      .filter(col => !col.primary)
-      .map(col => `${col.name} = ?`);
+    const setClauses = columns.filter(col => !col.primary).map(col => `${col.name} = ?`);
     const values = [
       ...columns.filter(col => !col.primary).map(col => dbObject[col.name]),
-      dbObject[primaryColumn.name]
+      dbObject[primaryColumn.name],
     ];
 
     const sql = `
       UPDATE ${tableName}
-      SET ${setClauses.join(', ')}
+      SET ${setClauses.join(", ")}
       WHERE ${primaryColumn.name} = ?
       RETURNING *
     `;
@@ -371,7 +365,7 @@ export class ORMMapper {
 
     const primaryColumn = columns.find(col => col.primary);
     if (!primaryColumn) {
-      throw new Error('Entity must have a primary key');
+      throw new Error("Entity must have a primary key");
     }
 
     const sql = `
@@ -418,7 +412,7 @@ export interface IRepository<T> {
  */
 export interface FindOptions {
   where?: any;
-  orderBy?: { [key: string]: 'ASC' | 'DESC' };
+  orderBy?: { [key: string]: "ASC" | "DESC" };
   limit?: number;
   offset?: number;
   relations?: string[];
@@ -447,7 +441,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
   async findById(id: any): Promise<T | null> {
     const cacheKey = `${this.getTableName()}:${id}`;
     const cached = await this.cacheManager.get(cacheKey);
-    
+
     if (cached) {
       return ORMMapper.dbToEntity(this.entityClass, cached);
     }
@@ -455,10 +449,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
     const connection = await this.connectionPool.getConnection();
     try {
       const tableName = this.getTableName();
-      const result = await connection.query(
-        `SELECT * FROM ${tableName} WHERE id = $1`,
-        [id]
-      );
+      const result = await connection.query(`SELECT * FROM ${tableName} WHERE id = $1`, [id]);
 
       if (result.rows.length === 0) {
         return null;
@@ -466,7 +457,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
 
       const entity = ORMMapper.dbToEntity(this.entityClass, result.rows[0]);
       await this.cacheManager.set(cacheKey, result.rows[0], 3600);
-      
+
       return entity;
     } finally {
       this.connectionPool.releaseConnection(connection);
@@ -492,7 +483,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
       if (options?.orderBy) {
         const orderByClause = Object.entries(options.orderBy)
           .map(([column, direction]) => `${column} ${direction}`)
-          .join(', ');
+          .join(", ");
         sql += ` ORDER BY ${orderByClause}`;
       }
 
@@ -507,9 +498,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
       }
 
       const result = await connection.query(sql, params);
-      return result.rows.map(row => 
-        ORMMapper.dbToEntity(this.entityClass, row)
-      );
+      return result.rows.map(row => ORMMapper.dbToEntity(this.entityClass, row));
     } finally {
       this.connectionPool.releaseConnection(connection);
     }
@@ -532,10 +521,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
     const connection = await this.connectionPool.getConnection();
     try {
       const result = await connection.query(sql, params);
-      const createdEntity = ORMMapper.dbToEntity(
-        this.entityClass,
-        result.rows[0]
-      );
+      const createdEntity = ORMMapper.dbToEntity(this.entityClass, result.rows[0]);
 
       // 清除缓存
       await this.cacheManager.delete(`${this.getTableName()}:*`);
@@ -555,10 +541,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
     const connection = await this.connectionPool.getConnection();
     try {
       const result = await connection.query(sql, params);
-      const updatedEntity = ORMMapper.dbToEntity(
-        this.entityClass,
-        result.rows[0]
-      );
+      const updatedEntity = ORMMapper.dbToEntity(this.entityClass, result.rows[0]);
 
       // 清除缓存
       await this.cacheManager.delete(`${this.getTableName()}:*`);
@@ -576,10 +559,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
     const connection = await this.connectionPool.getConnection();
     try {
       const tableName = this.getTableName();
-      const result = await connection.query(
-        `DELETE FROM ${tableName} WHERE id = $1`,
-        [id]
-      );
+      const result = await connection.query(`DELETE FROM ${tableName} WHERE id = $1`, [id]);
 
       // 清除缓存
       await this.cacheManager.delete(`${this.getTableName()}:*`);
@@ -630,46 +610,46 @@ export abstract class BaseRepository<T> implements IRepository<T> {
     let paramIndex = 1;
 
     for (const [key, value] of Object.entries(where)) {
-      if (typeof value === 'object' && value !== null) {
+      if (typeof value === "object" && value !== null) {
         // 处理操作符
         for (const [operator, operand] of Object.entries(value)) {
           switch (operator) {
-            case '$eq':
+            case "$eq":
               conditions.push(`${key} = $${paramIndex}`);
               params.push(operand);
               paramIndex++;
               break;
-            case '$ne':
+            case "$ne":
               conditions.push(`${key} != $${paramIndex}`);
               params.push(operand);
               paramIndex++;
               break;
-            case '$gt':
+            case "$gt":
               conditions.push(`${key} > $${paramIndex}`);
               params.push(operand);
               paramIndex++;
               break;
-            case '$lt':
+            case "$lt":
               conditions.push(`${key} < $${paramIndex}`);
               params.push(operand);
               paramIndex++;
               break;
-            case '$gte':
+            case "$gte":
               conditions.push(`${key} >= $${paramIndex}`);
               params.push(operand);
               paramIndex++;
               break;
-            case '$lte':
+            case "$lte":
               conditions.push(`${key} <= $${paramIndex}`);
               params.push(operand);
               paramIndex++;
               break;
-            case '$in':
+            case "$in":
               conditions.push(`${key} = ANY($${paramIndex})`);
               params.push(operand);
               paramIndex++;
               break;
-            case '$like':
+            case "$like":
               conditions.push(`${key} LIKE $${paramIndex}`);
               params.push(operand);
               paramIndex++;
@@ -684,8 +664,8 @@ export abstract class BaseRepository<T> implements IRepository<T> {
     }
 
     return {
-      sql: conditions.join(' AND '),
-      params
+      sql: conditions.join(" AND "),
+      params,
     };
   }
 }
@@ -710,7 +690,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
  * 查询构建器
  */
 export class QueryBuilder<T> {
-  private selectColumns: string[] = ['*'];
+  private selectColumns: string[] = ["*"];
   private whereConditions: string[] = [];
   private whereParams: any[] = [];
   private orderByColumns: string[] = [];
@@ -766,9 +746,7 @@ export class QueryBuilder<T> {
    * WHERE BETWEEN条件
    */
   whereBetween(column: string, start: any, end: any): this {
-    this.whereConditions.push(
-      `${column} BETWEEN $${this.paramIndex} AND $${this.paramIndex + 1}`
-    );
+    this.whereConditions.push(`${column} BETWEEN $${this.paramIndex} AND $${this.paramIndex + 1}`);
     this.whereParams.push(start, end);
     this.paramIndex += 2;
     return this;
@@ -777,11 +755,7 @@ export class QueryBuilder<T> {
   /**
    * JOIN
    */
-  join(
-    table: string,
-    onCondition: string,
-    type: 'INNER' | 'LEFT' | 'RIGHT' = 'INNER'
-  ): this {
+  join(table: string, onCondition: string, type: "INNER" | "LEFT" | "RIGHT" = "INNER"): this {
     this.joinClauses.push(`${type} JOIN ${table} ON ${onCondition}`);
     return this;
   }
@@ -789,7 +763,7 @@ export class QueryBuilder<T> {
   /**
    * ORDER BY
    */
-  orderBy(column: string, direction: 'ASC' | 'DESC' = 'ASC'): this {
+  orderBy(column: string, direction: "ASC" | "DESC" = "ASC"): this {
     this.orderByColumns.push(`${column} ${direction}`);
     return this;
   }
@@ -832,26 +806,26 @@ export class QueryBuilder<T> {
    * 构建SQL
    */
   build(): { sql: string; params: any[] } {
-    let sql = `SELECT ${this.selectColumns.join(', ')} FROM ${this.tableName}`;
+    let sql = `SELECT ${this.selectColumns.join(", ")} FROM ${this.tableName}`;
 
     if (this.joinClauses.length > 0) {
-      sql += ' ' + this.joinClauses.join(' ');
+      sql += " " + this.joinClauses.join(" ");
     }
 
     if (this.whereConditions.length > 0) {
-      sql += ' WHERE ' + this.whereConditions.join(' AND ');
+      sql += " WHERE " + this.whereConditions.join(" AND ");
     }
 
     if (this.groupByColumns.length > 0) {
-      sql += ' GROUP BY ' + this.groupByColumns.join(', ');
+      sql += " GROUP BY " + this.groupByColumns.join(", ");
     }
 
     if (this.havingConditions.length > 0) {
-      sql += ' HAVING ' + this.havingConditions.join(' AND ');
+      sql += " HAVING " + this.havingConditions.join(" AND ");
     }
 
     if (this.orderByColumns.length > 0) {
-      sql += ' ORDER BY ' + this.orderByColumns.join(', ');
+      sql += " ORDER BY " + this.orderByColumns.join(", ");
     }
 
     if (this.limitValue !== undefined) {
@@ -864,7 +838,7 @@ export class QueryBuilder<T> {
 
     return {
       sql,
-      params: [...this.whereParams, ...this.havingParams]
+      params: [...this.whereParams, ...this.havingParams],
     };
   }
 
@@ -898,11 +872,11 @@ export class QueryBuilder<T> {
  * 缓存策略
  */
 export enum CacheStrategy {
-  NO_CACHE = 'NO_CACHE',
-  READ_THROUGH = 'READ_THROUGH',
-  WRITE_THROUGH = 'WRITE_THROUGH',
-  WRITE_BEHIND = 'WRITE_BEHIND',
-  REFRESH_AHEAD = 'REFRESH_AHEAD'
+  NO_CACHE = "NO_CACHE",
+  READ_THROUGH = "READ_THROUGH",
+  WRITE_THROUGH = "WRITE_THROUGH",
+  WRITE_BEHIND = "WRITE_BEHIND",
+  REFRESH_AHEAD = "REFRESH_AHEAD",
 }
 
 /**
@@ -912,7 +886,7 @@ export interface CacheConfig {
   strategy: CacheStrategy;
   ttl: number; // Time to live in seconds
   maxSize?: number;
-  evictionPolicy?: 'LRU' | 'LFU' | 'FIFO';
+  evictionPolicy?: "LRU" | "LFU" | "FIFO";
 }
 
 /**
@@ -921,7 +895,7 @@ export interface CacheConfig {
 export class CacheManager {
   private cache: Map<string, { data: any; expiry: number; accessCount: number }> = new Map();
   private maxSize: number = 1000;
-  private evictionPolicy: 'LRU' | 'LFU' | 'FIFO' = 'LRU';
+  private evictionPolicy: "LRU" | "LFU" | "FIFO" = "LRU";
 
   constructor(private config: CacheConfig) {
     if (config.maxSize) {
@@ -968,7 +942,7 @@ export class CacheManager {
     this.cache.set(key, {
       data,
       expiry: Date.now() + effectiveTTL * 1000,
-      accessCount: 0
+      accessCount: 0,
     });
   }
 
@@ -983,7 +957,7 @@ export class CacheManager {
    * 删除匹配模式的缓存
    */
   async deletePattern(pattern: string): Promise<void> {
-    const regex = new RegExp(pattern.replace('*', '.*'));
+    const regex = new RegExp(pattern.replace("*", ".*"));
     for (const key of this.cache.keys()) {
       if (regex.test(key)) {
         this.cache.delete(key);
@@ -1003,13 +977,13 @@ export class CacheManager {
    */
   private evict(): void {
     switch (this.evictionPolicy) {
-      case 'LRU':
+      case "LRU":
         this.evictLRU();
         break;
-      case 'LFU':
+      case "LFU":
         this.evictLFU();
         break;
-      case 'FIFO':
+      case "FIFO":
         this.evictFIFO();
         break;
     }
@@ -1023,7 +997,7 @@ export class CacheManager {
     let oldestAccessTime = Infinity;
 
     for (const [key, value] of this.cache.entries()) {
-      const accessTime = value.expiry - (this.config.ttl * 1000);
+      const accessTime = value.expiry - this.config.ttl * 1000;
       if (accessTime < oldestAccessTime) {
         oldestAccessTime = accessTime;
         oldestKey = key;
@@ -1075,7 +1049,7 @@ export class CacheManager {
     return {
       size: this.cache.size,
       maxSize: this.maxSize,
-      hitRate: this.calculateHitRate()
+      hitRate: this.calculateHitRate(),
     };
   }
 
@@ -1108,10 +1082,10 @@ export class CacheManager {
  * 事务隔离级别
  */
 export enum IsolationLevel {
-  READ_UNCOMMITTED = 'READ UNCOMMITTED',
-  READ_COMMITTED = 'READ COMMITTED',
-  REPEATABLE_READ = 'REPEATABLE READ',
-  SERIALIZABLE = 'SERIALIZABLE'
+  READ_UNCOMMITTED = "READ UNCOMMITTED",
+  READ_COMMITTED = "READ COMMITTED",
+  REPEATABLE_READ = "REPEATABLE READ",
+  SERIALIZABLE = "SERIALIZABLE",
 }
 
 /**
@@ -1140,10 +1114,10 @@ export class Transaction {
    */
   async commit(): Promise<void> {
     if (this.committed || this.rolledBack) {
-      throw new Error('Transaction already completed');
+      throw new Error("Transaction already completed");
     }
 
-    await this.connection.query('COMMIT');
+    await this.connection.query("COMMIT");
     this.committed = true;
     this.connectionPool.releaseConnection(this.connection);
   }
@@ -1153,10 +1127,10 @@ export class Transaction {
    */
   async rollback(): Promise<void> {
     if (this.committed || this.rolledBack) {
-      throw new Error('Transaction already completed');
+      throw new Error("Transaction already completed");
     }
 
-    await this.connection.query('ROLLBACK');
+    await this.connection.query("ROLLBACK");
     this.rolledBack = true;
     this.connectionPool.releaseConnection(this.connection);
   }
@@ -1166,7 +1140,7 @@ export class Transaction {
    */
   async query(sql: string, params?: any[]): Promise<any> {
     if (this.committed || this.rolledBack) {
-      throw new Error('Transaction already completed');
+      throw new Error("Transaction already completed");
     }
 
     return await this.connection.query(sql, params);
@@ -1195,13 +1169,11 @@ export class TransactionManager {
     try {
       // 设置隔离级别
       if (config?.isolationLevel) {
-        await connection.query(
-          `SET TRANSACTION ISOLATION LEVEL ${config.isolationLevel}`
-        );
+        await connection.query(`SET TRANSACTION ISOLATION LEVEL ${config.isolationLevel}`);
       }
 
       // 开始事务
-      await connection.query('BEGIN');
+      await connection.query("BEGIN");
 
       return new Transaction(connection, this.connectionPool);
     } catch (error) {
@@ -1293,7 +1265,7 @@ export class ConnectionPool {
         // 执行查询
         return { rows: [] };
       },
-      release: () => {}
+      release: () => {},
     };
   }
 
@@ -1322,10 +1294,10 @@ export class ConnectionPool {
         if (index > -1) {
           this.waitingQueue.splice(index, 1);
         }
-        reject(new Error('Connection acquire timeout'));
+        reject(new Error("Connection acquire timeout"));
       }, this.config.acquireTimeoutMillis);
 
-      this.waitingQueue.push((connection) => {
+      this.waitingQueue.push(connection => {
         clearTimeout(timeout);
         resolve(connection);
       });
@@ -1377,7 +1349,7 @@ export class ConnectionPool {
       total: this.activeConnections + this.pool.length,
       active: this.activeConnections,
       idle: this.pool.length,
-      waiting: this.waitingQueue.length
+      waiting: this.waitingQueue.length,
     };
   }
 }
@@ -1451,34 +1423,28 @@ export class MigrationManager {
     const connection = await this.connectionPool.getConnection();
     try {
       // 获取已执行的迁移
-      const executedResult = await connection.query(
-        'SELECT version FROM migrations ORDER BY version'
-      );
-      const executedVersions = new Set(
-        executedResult.rows.map((row: any) => row.version)
-      );
+      const executedResult = await connection.query("SELECT version FROM migrations ORDER BY version");
+      const executedVersions = new Set(executedResult.rows.map((row: any) => row.version));
 
       // 执行未执行的迁移
-      const sortedMigrations = Array.from(this.migrations.values()).sort(
-        (a, b) => a.version.localeCompare(b.version)
-      );
+      const sortedMigrations = Array.from(this.migrations.values()).sort((a, b) => a.version.localeCompare(b.version));
 
       for (const migration of sortedMigrations) {
         if (!executedVersions.has(migration.version)) {
           console.log(`Executing migration: ${migration.name}`);
-          
-          await connection.query('BEGIN');
+
+          await connection.query("BEGIN");
           try {
             await migration.up(connection);
-            await connection.query(
-              'INSERT INTO migrations (version, name) VALUES ($1, $2)',
-              [migration.version, migration.name]
-            );
-            await connection.query('COMMIT');
-            
+            await connection.query("INSERT INTO migrations (version, name) VALUES ($1, $2)", [
+              migration.version,
+              migration.name,
+            ]);
+            await connection.query("COMMIT");
+
             console.log(`Migration ${migration.name} completed`);
           } catch (error) {
-            await connection.query('ROLLBACK');
+            await connection.query("ROLLBACK");
             console.error(`Migration ${migration.name} failed:`, error);
             throw error;
           }
@@ -1496,9 +1462,7 @@ export class MigrationManager {
     const connection = await this.connectionPool.getConnection();
     try {
       // 获取已执行的迁移
-      const executedResult = await connection.query(
-        'SELECT version FROM migrations ORDER BY version DESC'
-      );
+      const executedResult = await connection.query("SELECT version FROM migrations ORDER BY version DESC");
       const executedVersions = executedResult.rows.map((row: any) => row.version);
 
       // 回滚迁移
@@ -1510,19 +1474,16 @@ export class MigrationManager {
         const migration = this.migrations.get(version);
         if (migration) {
           console.log(`Rolling back migration: ${migration.name}`);
-          
-          await connection.query('BEGIN');
+
+          await connection.query("BEGIN");
           try {
             await migration.down(connection);
-            await connection.query(
-              'DELETE FROM migrations WHERE version = $1',
-              [version]
-            );
-            await connection.query('COMMIT');
-            
+            await connection.query("DELETE FROM migrations WHERE version = $1", [version]);
+            await connection.query("COMMIT");
+
             console.log(`Migration ${migration.name} rolled back`);
           } catch (error) {
-            await connection.query('ROLLBACK');
+            await connection.query("ROLLBACK");
             console.error(`Migration ${migration.name} rollback failed:`, error);
             throw error;
           }
@@ -1536,27 +1497,24 @@ export class MigrationManager {
   /**
    * 获取迁移状态
    */
-  async getStatus(): Promise<Array<{
-    version: string;
-    name: string;
-    executed: boolean;
-    executedAt?: Date;
-  }>> {
+  async getStatus(): Promise<
+    Array<{
+      version: string;
+      name: string;
+      executed: boolean;
+      executedAt?: Date;
+    }>
+  > {
     const connection = await this.connectionPool.getConnection();
     try {
       const executedResult = await connection.query(
-        'SELECT version, name, executed_at FROM migrations ORDER BY version'
+        "SELECT version, name, executed_at FROM migrations ORDER BY version"
       );
       const executedMigrations = new Map(
-        executedResult.rows.map((row: any) => [
-          row.version,
-          { name: row.name, executedAt: row.executed_at }
-        ])
+        executedResult.rows.map((row: any) => [row.version, { name: row.name, executedAt: row.executed_at }])
       );
 
-      const sortedMigrations = Array.from(this.migrations.values()).sort(
-        (a, b) => a.version.localeCompare(b.version)
-      );
+      const sortedMigrations = Array.from(this.migrations.values()).sort((a, b) => a.version.localeCompare(b.version));
 
       return sortedMigrations.map(migration => {
         const executed = executedMigrations.get(migration.version);
@@ -1564,7 +1522,7 @@ export class MigrationManager {
           version: migration.version,
           name: migration.name,
           executed: !!executed,
-          executedAt: executed?.executedAt
+          executedAt: executed?.executedAt,
         };
       });
     } finally {
@@ -1604,30 +1562,30 @@ export class QueryOptimizer {
     let complexity = 0;
 
     // 检查SELECT *
-    if (query.includes('SELECT *')) {
-      suggestions.push('Avoid SELECT *, specify only needed columns');
+    if (query.includes("SELECT *")) {
+      suggestions.push("Avoid SELECT *, specify only needed columns");
       complexity += 10;
     }
 
     // 检查子查询
-    if (query.includes('(') && query.includes(')')) {
-      suggestions.push('Consider using JOINs instead of subqueries');
+    if (query.includes("(") && query.includes(")")) {
+      suggestions.push("Consider using JOINs instead of subqueries");
       complexity += 20;
     }
 
     // 检查LIKE操作符
     if (query.match(/LIKE\s+['"].*%/)) {
-      suggestions.push('Avoid leading wildcards in LIKE queries');
+      suggestions.push("Avoid leading wildcards in LIKE queries");
       complexity += 15;
     }
 
     // 检查ORDER BY
-    if (query.includes('ORDER BY')) {
+    if (query.includes("ORDER BY")) {
       complexity += 5;
     }
 
     // 检查GROUP BY
-    if (query.includes('GROUP BY')) {
+    if (query.includes("GROUP BY")) {
       complexity += 10;
     }
 
@@ -1644,14 +1602,14 @@ export class QueryOptimizer {
 
     if (whereMatches) {
       for (const match of whereMatches) {
-        const column = match.replace('WHERE ', '');
+        const column = match.replace("WHERE ", "");
         suggestions.push(`Consider adding index on ${column}`);
       }
     }
 
     if (joinMatches) {
       for (const match of joinMatches) {
-        const column = match.replace(/JOIN\s+\w+\s+ON\s+/, '');
+        const column = match.replace(/JOIN\s+\w+\s+ON\s+/, "");
         suggestions.push(`Consider adding index on ${column} for JOIN`);
       }
     }
@@ -1681,15 +1639,13 @@ export class BatchOperator {
 
     for (const batch of batches) {
       const columns = Object.keys(batch[0]);
-      const placeholders = columns.map(() => '?').join(', ');
+      const placeholders = columns.map(() => "?").join(", ");
       const sql = `
-        INSERT INTO ${tableName} (${columns.join(', ')})
+        INSERT INTO ${tableName} (${columns.join(", ")})
         VALUES (${placeholders})
       `;
 
-      const values = batch.flatMap(entity =>
-        columns.map(col => (entity as any)[col])
-      );
+      const values = batch.flatMap(entity => columns.map(col => (entity as any)[col]));
 
       await connection.query(sql, values);
     }
@@ -1707,8 +1663,8 @@ export class BatchOperator {
     const batches = this.chunk(entities, batchSize);
 
     for (const batch of batches) {
-      const columns = Object.keys(batch[0]).filter(col => col !== 'id');
-      const setClause = columns.map(col => `${col} = ?`).join(', ');
+      const columns = Object.keys(batch[0]).filter(col => col !== "id");
+      const setClause = columns.map(col => `${col} = ?`).join(", ");
       const sql = `
         UPDATE ${tableName}
         SET ${setClause}
@@ -1716,10 +1672,7 @@ export class BatchOperator {
       `;
 
       for (const entity of batch) {
-        const values = [
-          ...columns.map(col => (entity as any)[col]),
-          (entity as any).id
-        ];
+        const values = [...columns.map(col => (entity as any)[col]), (entity as any).id];
         await connection.query(sql, values);
       }
     }
@@ -1753,7 +1706,7 @@ export class BatchOperator {
  * @version 1.0.0
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 
 /**
  * 仓储测试基类
@@ -1794,7 +1747,7 @@ export abstract class RepositoryTestBase {
 /**
  * 用户仓储测试
  */
-describe('UserRepository', () => {
+describe("UserRepository", () => {
   let test: RepositoryTestBase;
 
   beforeEach(async () => {
@@ -1806,91 +1759,91 @@ describe('UserRepository', () => {
     await test.teardown();
   });
 
-  it('should create a user', async () => {
+  it("should create a user", async () => {
     const userData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'password123'
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
     };
 
     const user = await test.repository.create(userData);
-    
-    expect(user).toHaveProperty('id');
+
+    expect(user).toHaveProperty("id");
     expect(user.name).toBe(userData.name);
     expect(user.email).toBe(userData.email);
   });
 
-  it('should find user by id', async () => {
+  it("should find user by id", async () => {
     const userData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'password123'
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
     };
 
     const createdUser = await test.repository.create(userData);
     const foundUser = await test.repository.findById(createdUser.id);
-    
+
     expect(foundUser).not.toBeNull();
     expect(foundUser.id).toBe(createdUser.id);
   });
 
-  it('should find all users', async () => {
+  it("should find all users", async () => {
     const users = await test.repository.findAll();
-    
+
     expect(Array.isArray(users)).toBe(true);
   });
 
-  it('should update user', async () => {
+  it("should update user", async () => {
     const userData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'password123'
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
     };
 
     const createdUser = await test.repository.create(userData);
-    createdUser.name = 'Updated Name';
-    
+    createdUser.name = "Updated Name";
+
     const updatedUser = await test.repository.update(createdUser);
-    
-    expect(updatedUser.name).toBe('Updated Name');
+
+    expect(updatedUser.name).toBe("Updated Name");
   });
 
-  it('should delete user', async () => {
+  it("should delete user", async () => {
     const userData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'password123'
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
     };
 
     const createdUser = await test.repository.create(userData);
     const deleted = await test.repository.delete(createdUser.id);
-    
+
     expect(deleted).toBe(true);
-    
+
     const foundUser = await test.repository.findById(createdUser.id);
     expect(foundUser).toBeNull();
   });
 
-  it('should count users', async () => {
+  it("should count users", async () => {
     const count = await test.repository.count();
-    
-    expect(typeof count).toBe('number');
+
+    expect(typeof count).toBe("number");
     expect(count).toBeGreaterThanOrEqual(0);
   });
 
-  it('should check user exists', async () => {
+  it("should check user exists", async () => {
     const userData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'password123'
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
     };
 
     await test.repository.create(userData);
-    
+
     const exists = await test.repository.exists({
-      email: 'test@example.com'
+      email: "test@example.com",
     });
-    
+
     expect(exists).toBe(true);
   });
 });
@@ -1912,13 +1865,10 @@ class UserRepositoryTest extends RepositoryTestBase {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1941,8 +1891,6 @@ class UserRepositoryTest extends RepositoryTestBase {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1976,8 +1924,6 @@ class UserRepositoryTest extends RepositoryTestBase {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -2000,46 +1946,46 @@ class UserRepositoryTest extends RepositoryTestBase {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -2052,6 +1998,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -2061,6 +2008,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -2070,6 +2018,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -2086,16 +2035,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2105,13 +2055,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2120,6 +2068,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2138,6 +2087,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2153,6 +2103,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2172,28 +2123,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2202,44 +2152,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2253,13 +2201,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2268,18 +2216,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2289,37 +2240,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2328,28 +2282,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2358,21 +2310,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2381,10 +2335,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2410,16 +2361,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2428,26 +2379,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -2456,21 +2402,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2479,10 +2427,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2508,16 +2453,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2526,25 +2471,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

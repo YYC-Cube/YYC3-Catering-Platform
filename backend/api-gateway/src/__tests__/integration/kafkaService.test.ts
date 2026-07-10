@@ -104,7 +104,7 @@ describe('KafkaService Integration Tests', () => {
       const result = await kafkaService.sendMessage({
         topic: testTopic,
         message: { test: 'data' },
-        key: 'test-key'
+        key: 'test-key',
       });
       expect(result).toBe(true);
     });
@@ -137,7 +137,7 @@ describe('KafkaService Integration Tests', () => {
       const result = await disconnectedService.sendMessage({
         topic: testTopic,
         message: { test: 'data' },
-        key: 'test-key'
+        key: 'test-key',
       });
       expect(result).toBe(false);
 
@@ -157,17 +157,20 @@ describe('KafkaService Integration Tests', () => {
     it('应该成功订阅主题并接收消息', async () => {
       let messageReceived = false;
       let receivedMessage: any = null;
-      
+
       const messageHandler = (message: any) => {
         messageReceived = true;
         receivedMessage = message;
         logger.info('测试接收到消息', { message: message.value?.toString() });
       };
 
-      const consumerId = await kafkaService.subscribe({
-        topics: [testTopic],
-        groupId: testGroupId
-      }, messageHandler);
+      const consumerId = await kafkaService.subscribe(
+        {
+          topics: [testTopic],
+          groupId: testGroupId,
+        },
+        messageHandler,
+      );
 
       // 等待消费者完全启动
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -176,7 +179,7 @@ describe('KafkaService Integration Tests', () => {
       await kafkaService.sendMessage({
         topic: testTopic,
         message: { test: 'subscription' },
-        key: 'test-key'
+        key: 'test-key',
       });
 
       // 等待消息被接收（最多10秒）
@@ -190,7 +193,7 @@ describe('KafkaService Integration Tests', () => {
       expect(messageReceived).toBe(true);
       expect(receivedMessage).toBeDefined();
       expect(receivedMessage.value).toBeDefined();
-      
+
       // 清理
       await kafkaService.unsubscribe(consumerId);
     });
@@ -201,18 +204,21 @@ describe('KafkaService Integration Tests', () => {
         callCount++;
       };
 
-      const consumerId = await kafkaService.subscribe({
-        topics: [testTopic],
-        groupId: testGroupId
-      }, messageHandler);
-      
+      const consumerId = await kafkaService.subscribe(
+        {
+          topics: [testTopic],
+          groupId: testGroupId,
+        },
+        messageHandler,
+      );
+
       await kafkaService.unsubscribe(consumerId);
 
       // 发送测试消息
       await kafkaService.sendMessage({
         topic: testTopic,
         message: { test: 'unsubscribe' },
-        key: 'test-key'
+        key: 'test-key',
       });
 
       // 等待一段时间
@@ -243,7 +249,7 @@ describe('KafkaService Integration Tests', () => {
 
     it('应该处理发送到不存在主题的情况', async () => {
       const newTopic = 'auto-created-topic';
-      
+
       // 确保主题不存在
       try {
         await kafkaService.deleteTopic(newTopic);
@@ -255,16 +261,16 @@ describe('KafkaService Integration Tests', () => {
       const result = await kafkaService.sendMessage({
         topic: newTopic,
         message: { test: 'data' },
-        key: 'test'
+        key: 'test',
       });
-      
+
       // 验证发送成功（Kafka自动创建了主题）
       expect(result).toBe(true);
-      
+
       // 验证主题确实被创建了
       const topics = await kafkaService.listTopics();
       expect(topics).toContain(newTopic);
-      
+
       // 清理
       await kafkaService.deleteTopic(newTopic);
     });
@@ -276,7 +282,7 @@ describe('KafkaService Integration Tests', () => {
       const messages = Array.from({ length: messageCount }, (_, i) => ({
         topic: testTopic,
         message: { id: i, timestamp: Date.now() },
-        key: `perf-${i}`
+        key: `perf-${i}`,
       }));
 
       const startTime = Date.now();
@@ -298,8 +304,8 @@ describe('KafkaService Integration Tests', () => {
         kafkaService.sendMessage({
           topic: testTopic,
           message: { id: i },
-          key: `concurrent-${i}`
-        })
+          key: `concurrent-${i}`,
+        }),
       );
 
       const results = await Promise.all(promises);
@@ -311,9 +317,7 @@ describe('KafkaService Integration Tests', () => {
       const topicCount = 5;
       const topics = Array.from({ length: topicCount }, (_, i) => `concurrent-topic-${i}`);
 
-      const promises = topics.map(topic =>
-        kafkaService.createTopic(topic, 3, 1)
-      );
+      const promises = topics.map(topic => kafkaService.createTopic(topic, 3, 1));
 
       await expect(Promise.all(promises)).resolves.not.toThrow();
 

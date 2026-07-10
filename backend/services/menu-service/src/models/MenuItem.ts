@@ -10,7 +10,18 @@
  * @license MIT
  */
 
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo, HasMany, Index } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  ForeignKey,
+  BelongsTo,
+  HasMany,
+  Index,
+} from 'sequelize-typescript';
 import { Category } from './Category';
 import { MenuItemOption } from './MenuItemOption';
 import { MenuItemImage } from './MenuItemImage';
@@ -21,7 +32,7 @@ import { DishEntity } from './DishEntity';
 @Table({
   tableName: 'menu_items',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class MenuItem extends Model<MenuItem> {
   @PrimaryKey

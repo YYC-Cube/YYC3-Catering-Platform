@@ -189,7 +189,7 @@ export class ServiceDiscoveryClient {
    */
   private getWeightedInstance(instances: ServiceInstance[]): ServiceInstance {
     // 从元数据中获取权重
-    const weightedInstances = instances.map((instance) => ({
+    const weightedInstances = instances.map(instance => ({
       instance,
       weight: parseInt(instance.Meta.weight || '1', 10),
     }));
@@ -210,10 +210,7 @@ export class ServiceDiscoveryClient {
   /**
    * 调用服务
    */
-  public async callService<T = any>(
-    path: string,
-    options: RequestInit = {}
-  ): Promise<T> {
+  public async callService<T = any>(path: string, options: RequestInit = {}): Promise<T> {
     let lastError: Error | null = null;
 
     for (let attempt = 0; attempt < this.config.retryCount!; attempt++) {
@@ -322,7 +319,7 @@ export class ServiceDiscoveryClient {
    * 延迟函数
    */
   private sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /**
@@ -345,10 +342,7 @@ export class ServiceDiscoveryClientFactory {
   /**
    * 获取或创建服务发现客户端
    */
-  static getOrCreate(
-    serviceName: string,
-    config?: Partial<ServiceDiscoveryConfig>
-  ): ServiceDiscoveryClient {
+  static getOrCreate(serviceName: string, config?: Partial<ServiceDiscoveryConfig>): ServiceDiscoveryClient {
     let client = this.instances.get(serviceName);
 
     if (!client) {
@@ -367,7 +361,7 @@ export class ServiceDiscoveryClientFactory {
    * 关闭所有客户端
    */
   static async closeAll(): Promise<void> {
-    const promises = Array.from(this.instances.values()).map((client) => client.close());
+    const promises = Array.from(this.instances.values()).map(client => client.close());
     await Promise.all(promises);
     this.instances.clear();
   }

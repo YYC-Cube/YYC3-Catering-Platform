@@ -81,7 +81,7 @@ class MemoryCache {
 
   get<T>(key: string): T | null {
     const item = this.cache.get(key);
-    
+
     if (!item) {
       return null;
     }
@@ -96,7 +96,7 @@ class MemoryCache {
 
   has(key: string): boolean {
     const item = this.cache.get(key);
-    
+
     if (!item) {
       return false;
     }
@@ -140,9 +140,9 @@ class IndexedDBCache {
         resolve();
       };
 
-      request.onupgradeneeded = (event) => {
+      request.onupgradeneeded = event => {
         const db = (event.target as IDBOpenDBRequest).result;
-        
+
         if (!db.objectStoreNames.contains(this.storeName)) {
           const store = db.createObjectStore(this.storeName, { keyPath: 'key' });
           store.createIndex('timestamp', 'timestamp', { unique: false });
@@ -313,7 +313,7 @@ export class CacheManager {
 
         try {
           const parsed: CacheItem<T> = JSON.parse(item);
-          
+
           if (Date.now() - parsed.timestamp > parsed.ttl) {
             localStorage.removeItem(key);
             return null;
@@ -329,7 +329,7 @@ export class CacheManager {
 
         try {
           const parsed: CacheItem<T> = JSON.parse(sessionItem);
-          
+
           if (Date.now() - parsed.timestamp > parsed.ttl) {
             sessionStorage.removeItem(key);
             return null;
@@ -422,7 +422,7 @@ interface AppState {
 
 export const useAppStore = create<AppState>()(
   persist(
-    (set) => ({
+    set => ({
       user: {
         id: null,
         name: null,
@@ -437,23 +437,25 @@ export const useAppStore = create<AppState>()(
       theme: 'light',
       language: 'zh-CN',
       notifications: [],
-      setUser: (user) => set((state) => ({ user: { ...state.user, ...user } })),
-      setTenant: (tenant) => set((state) => ({ tenant: { ...state.tenant, ...tenant } })),
-      setTheme: (theme) => set({ theme }),
-      setLanguage: (language) => set({ language }),
-      addNotification: (notification) => set((state) => ({
-        notifications: [...state.notifications, notification],
-      })),
-      removeNotification: (id) => set((state) => ({
-        notifications: state.notifications.filter((n) => n.id !== id),
-      })),
+      setUser: user => set(state => ({ user: { ...state.user, ...user } })),
+      setTenant: tenant => set(state => ({ tenant: { ...state.tenant, ...tenant } })),
+      setTheme: theme => set({ theme }),
+      setLanguage: language => set({ language }),
+      addNotification: notification =>
+        set(state => ({
+          notifications: [...state.notifications, notification],
+        })),
+      removeNotification: id =>
+        set(state => ({
+          notifications: state.notifications.filter(n => n.id !== id),
+        })),
       clearNotifications: () => set({ notifications: [] }),
     }),
     {
       name: 'yyc3-app-store',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );
 
 /**
@@ -476,30 +478,33 @@ interface OrderState {
 }
 
 export const useOrderStore = create<OrderState>()(
-  immer((set) => ({
+  immer(set => ({
     orders: [],
     currentOrder: null,
     loading: false,
     error: null,
     syncStatus: SyncStatus.IDLE,
-    setOrders: (orders) => set({ orders }),
-    setCurrentOrder: (order) => set({ currentOrder: order }),
-    setLoading: (loading) => set({ loading }),
-    setError: (error) => set({ error }),
-    setSyncStatus: (status) => set({ syncStatus: status }),
-    addOrder: (order) => set((state) => {
-      state.orders.push(order);
-    }),
-    updateOrder: (orderId, updates) => set((state) => {
-      const index = state.orders.findIndex((o) => o.id === orderId);
-      if (index !== -1) {
-        Object.assign(state.orders[index], updates);
-      }
-    }),
-    removeOrder: (orderId) => set((state) => {
-      state.orders = state.orders.filter((o) => o.id !== orderId);
-    }),
-  }))
+    setOrders: orders => set({ orders }),
+    setCurrentOrder: order => set({ currentOrder: order }),
+    setLoading: loading => set({ loading }),
+    setError: error => set({ error }),
+    setSyncStatus: status => set({ syncStatus: status }),
+    addOrder: order =>
+      set(state => {
+        state.orders.push(order);
+      }),
+    updateOrder: (orderId, updates) =>
+      set(state => {
+        const index = state.orders.findIndex(o => o.id === orderId);
+        if (index !== -1) {
+          Object.assign(state.orders[index], updates);
+        }
+      }),
+    removeOrder: orderId =>
+      set(state => {
+        state.orders = state.orders.filter(o => o.id !== orderId);
+      }),
+  })),
 );
 
 /**
@@ -520,28 +525,31 @@ interface MenuState {
 }
 
 export const useMenuStore = create<MenuState>()(
-  immer((set) => ({
+  immer(set => ({
     menus: [],
     currentMenu: null,
     loading: false,
     error: null,
-    setMenus: (menus) => set({ menus }),
-    setCurrentMenu: (menu) => set({ currentMenu: menu }),
-    setLoading: (loading) => set({ loading }),
-    setError: (error) => set({ error }),
-    addMenu: (menu) => set((state) => {
-      state.menus.push(menu);
-    }),
-    updateMenu: (menuId, updates) => set((state) => {
-      const index = state.menus.findIndex((m) => m.id === menuId);
-      if (index !== -1) {
-        Object.assign(state.menus[index], updates);
-      }
-    }),
-    removeMenu: (menuId) => set((state) => {
-      state.menus = state.menus.filter((m) => m.id !== menuId);
-    }),
-  }))
+    setMenus: menus => set({ menus }),
+    setCurrentMenu: menu => set({ currentMenu: menu }),
+    setLoading: loading => set({ loading }),
+    setError: error => set({ error }),
+    addMenu: menu =>
+      set(state => {
+        state.menus.push(menu);
+      }),
+    updateMenu: (menuId, updates) =>
+      set(state => {
+        const index = state.menus.findIndex(m => m.id === menuId);
+        if (index !== -1) {
+          Object.assign(state.menus[index], updates);
+        }
+      }),
+    removeMenu: menuId =>
+      set(state => {
+        state.menus = state.menus.filter(m => m.id !== menuId);
+      }),
+  })),
 );
 
 /**
@@ -612,7 +620,7 @@ export class DataSyncManager {
       console.log(`WebSocket连接已建立 [${key}]`);
     };
 
-    ws.onmessage = (event) => {
+    ws.onmessage = event => {
       try {
         const message = JSON.parse(event.data);
         this.handleWebSocketMessage(key, message);
@@ -621,7 +629,7 @@ export class DataSyncManager {
       }
     };
 
-    ws.onerror = (error) => {
+    ws.onerror = error => {
       console.error(`WebSocket错误 [${key}]:`, error);
     };
 
@@ -659,11 +667,7 @@ export const dataSyncManager = new DataSyncManager();
 /**
  * React Hook - 使用缓存数据
  */
-export function useCachedData<T = any>(
-  key: string,
-  fetcher: () => Promise<T>,
-  config: CacheConfig<T>
-) {
+export function useCachedData<T = any>(key: string, fetcher: () => Promise<T>, config: CacheConfig<T>) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);

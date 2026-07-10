@@ -11,7 +11,7 @@ export enum OrderStatus {
   PENDING = 'pending',
   IN_PROGRESS = 'in_progress',
   COMPLETED = 'completed',
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }
 
 // 订单菜品接口
@@ -117,14 +117,16 @@ export class OrderModel {
         restaurantId: 'restaurant-1',
         customerId: 'customer-1',
         customer: undefined,
-        dishes: [{
-          id: 'dish-1',
-          dishId: 'dish-1',
-          name: 'Test Dish',
-          quantity: 1,
-          price: 50,
-          cookingTime: 10
-        }],
+        dishes: [
+          {
+            id: 'dish-1',
+            dishId: 'dish-1',
+            name: 'Test Dish',
+            quantity: 1,
+            price: 50,
+            cookingTime: 10,
+          },
+        ],
         totalAmount: 50,
         status: OrderStatus.PENDING,
         priority: 5,
@@ -141,7 +143,7 @@ export class OrderModel {
         updatedAt: new Date(),
         notes: undefined,
         reason: undefined,
-        cancellationReason: undefined
+        cancellationReason: undefined,
       });
     }
     return Promise.resolve(null);
@@ -152,9 +154,9 @@ export class OrderModel {
       ...order,
       id: order.id || 'test-order-id',
       createdAt: order.createdAt || new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
-    
+
     // 如果有dishes且没有dishId，添加dishId
     if (processedOrder.dishes && Array.isArray(processedOrder.dishes)) {
       processedOrder.dishes = processedOrder.dishes.map((dish: any) => {
@@ -164,7 +166,7 @@ export class OrderModel {
         return dish;
       });
     }
-    
+
     return Promise.resolve(processedOrder);
   }
 }

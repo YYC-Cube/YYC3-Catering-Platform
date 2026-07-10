@@ -49,13 +49,13 @@ async function generateToken() {
   const payload = {
     userId: 'test-user-123',
     role: 'admin', // 使用管理员角色以确保权限
-    restaurantId: 'test-restaurant-123'
+    restaurantId: 'test-restaurant-123',
   };
 
   const token = await new SignJWT({
     ...payload,
     iat: now,
-    exp: now + expiresIn
+    exp: now + expiresIn,
   })
     .setProtectedHeader({ alg: JWT_ALGORITHM })
     .sign(secretKey);
@@ -64,7 +64,7 @@ async function generateToken() {
   console.log(token);
   console.log('\nUse this token in the Authorization header as:');
   console.log(`Bearer ${token}`);
-  
+
   return token;
 }
 

@@ -39,9 +39,9 @@ export class ProxyService {
       }
 
       const targetUrl = `${instance.url}${path}`;
-      
+
       logger.info('转发请求: %s %s -> %s', req.method, req.path, targetUrl);
-      
+
       // 创建axios请求配置
       const axiosConfig = {
         method: req.method,
@@ -55,24 +55,24 @@ export class ProxyService {
         params: req.query,
         timeout: 60000,
       };
-      
+
       // 发送请求到目标服务
       const response = await axios(axiosConfig);
-      
+
       // 设置响应头
       Object.keys(response.headers).forEach(key => {
         if (!['content-length', 'content-encoding', 'transfer-encoding', 'connection'].includes(key.toLowerCase())) {
           res.setHeader(key, response.headers[key]);
         }
       });
-      
+
       // 设置响应状态码和响应体
       res.status(response.status).send(response.data);
-      
+
       logger.info('转发成功: %s %s -> %s %d', req.method, req.path, targetUrl, response.status);
     } catch (error: any) {
       logger.error('转发失败: %s %s -> %s, 错误: %s', req.method, req.path, serviceName, error.message);
-      
+
       // 处理不同类型的错误
       if (error.response) {
         // 目标服务返回错误状态码

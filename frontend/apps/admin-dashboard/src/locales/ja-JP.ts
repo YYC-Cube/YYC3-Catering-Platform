@@ -90,7 +90,7 @@ export default {
     lastMonth: '先月',
     thisYear: '今年',
     lastYear: '昨年',
-    custom: 'カスタム'
+    custom: 'カスタム',
   },
 
   // エラーメッセージ
@@ -111,7 +111,7 @@ export default {
     loadFailed: '読み込みに失敗しました。',
     loginFailed: 'ログインに失敗しました。',
     logoutFailed: 'ログアウトに失敗しました。',
-    sessionExpired: 'セッションが期限切れました。再度ログインしてください。'
+    sessionExpired: 'セッションが期限切れました。再度ログインしてください。',
   },
 
   // 成功メッセージ
@@ -128,7 +128,7 @@ export default {
     shared: '共有しました',
     loginSuccess: 'ログインしました',
     logoutSuccess: 'ログアウトしました',
-    operationSuccess: '操作が成功しました'
+    operationSuccess: '操作が成功しました',
   },
 
   // ナビゲーション
@@ -144,7 +144,7 @@ export default {
     reports: 'レポート管理',
     settings: 'システム設定',
     help: 'ヘルプセンター',
-    feedback: 'フィードバック'
+    feedback: 'フィードバック',
   },
 
   // ダッシュボード
@@ -162,7 +162,7 @@ export default {
     quickActions: 'クイックアクション',
     systemStatus: 'システムステータス',
     weatherInfo: '天気情報',
-    calendarEvents: 'カレンダーイベント'
+    calendarEvents: 'カレンダーイベント',
   },
 
   // メニュー管理
@@ -194,7 +194,7 @@ export default {
     categoryName: 'カテゴリ名',
     categoryDescription: 'カテゴリ説明',
     categoryImage: 'カテゴリ画像',
-    sortOrder: '並び順'
+    sortOrder: '並び順',
   },
 
   // 注文管理
@@ -234,7 +234,7 @@ export default {
     unpaid: '未支払い',
     refunded: '返金済み',
     notes: 'メモ',
-    specialRequests: '特別リクエスト'
+    specialRequests: '特別リクエスト',
   },
 
   // キ�室管理
@@ -282,7 +282,7 @@ export default {
     tasksByStatus: 'ステータス別タスク',
     tasksByStation: 'ステーション別タスク',
     peakHours: 'ピーク時間',
-    staffPerformance: 'スタッフ実績'
+    staffPerformance: 'スタッフ実績',
   },
 
   // データ分析
@@ -331,7 +331,7 @@ export default {
     kitchenEfficiency: 'キッチン効率',
     salesForecast: '売上予測',
     demandForecast: '需要予測',
-    riskAnalysis: 'リスク分析'
+    riskAnalysis: 'リスク分析',
   },
 
   // 顧客管理
@@ -359,7 +359,7 @@ export default {
     customerSegmentation: '顧客分類',
     retentionRate: '維持率',
     loyaltyPoints: 'ロイヤルティポイント',
-    membershipCard: 'メンバーシップカード'
+    membershipCard: 'メンバーシップカード',
   },
 
   // 通知
@@ -406,7 +406,7 @@ export default {
     templateName: 'テンプレート名',
     templateType: 'テンプレートタイプ',
     templateContent: 'テンプレートコンテンツ',
-    isActive: '有効'
+    isActive: '有効',
   },
 
   // 設定
@@ -435,7 +435,7 @@ export default {
     syncSettings: '同期設定',
     apiKeys: 'APIキー',
     webhooks: 'Webhooks',
-    thirdParty: 'サードパーティサービス'
+    thirdParty: 'サードパーティサービス',
   },
 
   // システム
@@ -463,7 +463,7 @@ export default {
     maintenance: 'メンテナンスモード',
     updateAvailable: 'アップデートあり',
     lastBackup: '最終バックアップ',
-    nextBackup: '次回バックアップ'
+    nextBackup: '次回バックアップ',
   },
 
   // レポート
@@ -482,7 +482,7 @@ export default {
     print: '印刷',
     share: '共有',
     schedule: 'スケジュール',
-    customReport: 'カスタムレポート'
+    customReport: 'カスタムレポート',
   },
 
   // フォーム検証
@@ -502,7 +502,7 @@ export default {
     date: '有効な日付を選択してください',
     time: '有効な時刻を選択してください',
     password: 'パスワードは8文字以上である必要があります',
-    passwordMatch: 'パスワードが一致しません'
+    passwordMatch: 'パスワードが一致しません',
   },
 
   // 時間関連
@@ -522,7 +522,7 @@ export default {
     until: 'まで',
     duration: '期間',
     recently: '最近',
-    soon: 'すぐに'
+    soon: 'すぐに',
   },
 
   // 単位
@@ -539,6 +539,6 @@ export default {
     liter: 'L',
     milliliter: 'mL',
     centimeter: 'cm',
-    meter: 'm'
-  }
-}
+    meter: 'm',
+  },
+};

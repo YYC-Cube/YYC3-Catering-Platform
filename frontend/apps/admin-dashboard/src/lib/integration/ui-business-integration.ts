@@ -56,7 +56,7 @@ export class ApiClient {
     this.baseUrl = baseUrl;
     this.defaultHeaders = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      Accept: 'application/json',
     };
   }
 
@@ -68,18 +68,8 @@ export class ApiClient {
     this.tenantId = tenantId;
   }
 
-  private async request<T>(
-    endpoint: string,
-    config: RequestConfig = {}
-  ): Promise<ApiResponse<T>> {
-    const {
-      method = 'GET',
-      headers = {},
-      params,
-      body,
-      timeout = 30000,
-      retries = 3,
-    } = config;
+  private async request<T>(endpoint: string, config: RequestConfig = {}): Promise<ApiResponse<T>> {
+    const { method = 'GET', headers = {}, params, body, timeout = 30000, retries = 3 } = config;
 
     const url = new URL(`${this.baseUrl}${endpoint}`);
 
@@ -134,7 +124,7 @@ export class ApiClient {
         return data;
       } catch (error) {
         lastError = error as Error;
-        
+
         if (attempt < retries - 1) {
           await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
         }
@@ -179,11 +169,7 @@ export const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_BASE_URL || '
 /**
  * React Hook - 使用API数据
  */
-export function useApi<T = any>(
-  endpoint: string,
-  config?: RequestConfig,
-  deps: any[] = []
-) {
+export function useApi<T = any>(endpoint: string, config?: RequestConfig, deps: any[] = []) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
@@ -194,7 +180,7 @@ export function useApi<T = any>(
 
     try {
       const response = await apiClient.get<T>(endpoint, config);
-      
+
       if (response.success && response.data) {
         setData(response.data);
       } else {
@@ -219,56 +205,59 @@ export function useApi<T = any>(
  */
 export function useApiMutation<T = any, P = any>(
   endpoint: string,
-  method: 'POST' | 'PUT' | 'DELETE' | 'PATCH' = 'POST'
+  method: 'POST' | 'PUT' | 'DELETE' | 'PATCH' = 'POST',
 ) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<T | null>(null);
 
-  const mutate = useCallback(async (payload?: P): Promise<ApiResponse<T>> => {
-    setLoading(true);
-    setError(null);
+  const mutate = useCallback(
+    async (payload?: P): Promise<ApiResponse<T>> => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      let response: ApiResponse<T>;
+      try {
+        let response: ApiResponse<T>;
 
-      switch (method) {
-        case 'POST':
-          response = await apiClient.post<T>(endpoint, payload);
-          break;
-        case 'PUT':
-          response = await apiClient.put<T>(endpoint, payload);
-          break;
-        case 'DELETE':
-          response = await apiClient.delete<T>(endpoint);
-          break;
-        case 'PATCH':
-          response = await apiClient.patch<T>(endpoint, payload);
-          break;
-        default:
-          throw new Error(`不支持的HTTP方法: ${method}`);
+        switch (method) {
+          case 'POST':
+            response = await apiClient.post<T>(endpoint, payload);
+            break;
+          case 'PUT':
+            response = await apiClient.put<T>(endpoint, payload);
+            break;
+          case 'DELETE':
+            response = await apiClient.delete<T>(endpoint);
+            break;
+          case 'PATCH':
+            response = await apiClient.patch<T>(endpoint, payload);
+            break;
+          default:
+            throw new Error(`不支持的HTTP方法: ${method}`);
+        }
+
+        if (response.success) {
+          setData(response.data || null);
+        } else {
+          throw new Error(response.error?.message || '操作失败');
+        }
+
+        return response;
+      } catch (err) {
+        setError(err as Error);
+        return {
+          success: false,
+          error: {
+            code: 'MUTATION_FAILED',
+            message: (err as Error).message,
+          },
+        };
+      } finally {
+        setLoading(false);
       }
-
-      if (response.success) {
-        setData(response.data || null);
-      } else {
-        throw new Error(response.error?.message || '操作失败');
-      }
-
-      return response;
-    } catch (err) {
-      setError(err as Error);
-      return {
-        success: false,
-        error: {
-          code: 'MUTATION_FAILED',
-          message: (err as Error).message,
-        },
-      };
-    } finally {
-      setLoading(false);
-    }
-  }, [endpoint, method]);
+    },
+    [endpoint, method],
+  );
 
   return { mutate, loading, error, data };
 }
@@ -276,11 +265,7 @@ export function useApiMutation<T = any, P = any>(
 /**
  * React Hook - 使用分页数据
  */
-export function usePaginatedApi<T = any>(
-  endpoint: string,
-  initialPage: number = 1,
-  pageSize: number = 20
-) {
+export function usePaginatedApi<T = any>(endpoint: string, initialPage: number = 1, pageSize: number = 20) {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
@@ -288,31 +273,34 @@ export function usePaginatedApi<T = any>(
   const [total, setTotal] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
-  const fetchPage = useCallback(async (pageNum: number) => {
-    setLoading(true);
-    setError(null);
+  const fetchPage = useCallback(
+    async (pageNum: number) => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await apiClient.get<{ items: T[]; total: number }>(endpoint, {
-        params: {
-          page: pageNum,
-          pageSize,
-        },
-      });
+      try {
+        const response = await apiClient.get<{ items: T[]; total: number }>(endpoint, {
+          params: {
+            page: pageNum,
+            pageSize,
+          },
+        });
 
-      if (response.success && response.data) {
-        setData(response.data.items);
-        setTotal(response.data.total);
-        setHasMore(pageNum * pageSize < response.data.total);
-      } else {
-        throw new Error(response.error?.message || '请求失败');
+        if (response.success && response.data) {
+          setData(response.data.items);
+          setTotal(response.data.total);
+          setHasMore(pageNum * pageSize < response.data.total);
+        } else {
+          throw new Error(response.error?.message || '请求失败');
+        }
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setLoading(false);
-    }
-  }, [endpoint, pageSize]);
+    },
+    [endpoint, pageSize],
+  );
 
   useEffect(() => {
     fetchPage(page);
@@ -345,10 +333,7 @@ export function usePaginatedApi<T = any>(
 /**
  * React Hook - 使用实时数据（WebSocket）
  */
-export function useRealtimeData<T = any>(
-  endpoint: string,
-  initialData?: T
-) {
+export function useRealtimeData<T = any>(endpoint: string, initialData?: T) {
   const [data, setData] = useState<T | null>(initialData || null);
   const [connected, setConnected] = useState<boolean>(false);
   const wsRef = useRef<WebSocket | null>(null);
@@ -362,7 +347,7 @@ export function useRealtimeData<T = any>(
       setConnected(true);
     };
 
-    ws.onmessage = (event) => {
+    ws.onmessage = event => {
       try {
         const message = JSON.parse(event.data);
         setData(message.data);
@@ -371,7 +356,7 @@ export function useRealtimeData<T = any>(
       }
     };
 
-    ws.onerror = (error) => {
+    ws.onerror = error => {
       console.error('WebSocket错误:', error);
       setConnected(false);
     };
@@ -391,36 +376,36 @@ export function useRealtimeData<T = any>(
 /**
  * React Hook - 使用乐观更新
  */
-export function useOptimisticUpdate<T = any>(
-  initialData: T,
-  updateFn: (data: T) => Promise<ApiResponse<T>>
-) {
+export function useOptimisticUpdate<T = any>(initialData: T, updateFn: (data: T) => Promise<ApiResponse<T>>) {
   const [data, setData] = useState<T>(initialData);
   const [optimisticData, setOptimisticData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const update = useCallback(async (newData: Partial<T>) => {
-    const optimisticValue = { ...data, ...newData };
-    setOptimisticData(optimisticValue);
-    setLoading(true);
-    setError(null);
+  const update = useCallback(
+    async (newData: Partial<T>) => {
+      const optimisticValue = { ...data, ...newData };
+      setOptimisticData(optimisticValue);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await updateFn(optimisticValue);
+      try {
+        const response = await updateFn(optimisticValue);
 
-      if (response.success && response.data) {
-        setData(response.data);
-      } else {
-        throw new Error(response.error?.message || '更新失败');
+        if (response.success && response.data) {
+          setData(response.data);
+        } else {
+          throw new Error(response.error?.message || '更新失败');
+        }
+      } catch (err) {
+        setError(err as Error);
+        setOptimisticData(null);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setError(err as Error);
-      setOptimisticData(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [data, updateFn]);
+    },
+    [data, updateFn],
+  );
 
   return {
     data: optimisticData || data,
@@ -466,10 +451,7 @@ export class OrderService {
     return this.apiClient.patch(`/orders/${orderId}/cancel`, { reason });
   }
 
-  async getOrderStats(params?: {
-    startDate?: string;
-    endDate?: string;
-  }) {
+  async getOrderStats(params?: { startDate?: string; endDate?: string }) {
     return this.apiClient.get('/orders/stats', { params });
   }
 }
@@ -484,11 +466,7 @@ export class MenuService {
     this.apiClient = apiClient;
   }
 
-  async getMenus(params?: {
-    page?: number;
-    pageSize?: number;
-    category?: string;
-  }) {
+  async getMenus(params?: { page?: number; pageSize?: number; category?: string }) {
     return this.apiClient.get('/menus', { params });
   }
 

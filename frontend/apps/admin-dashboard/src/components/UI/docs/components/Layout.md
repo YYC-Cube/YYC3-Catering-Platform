@@ -12,7 +12,7 @@
 ### 基础用法
 
 ```tsx
-import { Layout, LayoutHeader, LayoutContent, LayoutSider, LayoutFooter } from '@/components/UI'
+import { Layout, LayoutHeader, LayoutContent, LayoutSider, LayoutFooter } from "@/components/UI";
 
 export default function LayoutBasic() {
   return (
@@ -21,14 +21,14 @@ export default function LayoutBasic() {
       <LayoutContent>内容</LayoutContent>
       <LayoutFooter>底部</LayoutFooter>
     </Layout>
-  )
+  );
 }
 ```
 
 ### 带侧边栏
 
 ```tsx
-import { Layout, LayoutHeader, LayoutContent, LayoutSider, LayoutFooter } from '@/components/UI'
+import { Layout, LayoutHeader, LayoutContent, LayoutSider, LayoutFooter } from "@/components/UI";
 
 export default function LayoutWithSider() {
   return (
@@ -40,14 +40,14 @@ export default function LayoutWithSider() {
       </Layout>
       <LayoutFooter>底部</LayoutFooter>
     </Layout>
-  )
+  );
 }
 ```
 
 ### 固定头部
 
 ```tsx
-import { Layout, LayoutHeader, LayoutContent } from '@/components/UI'
+import { Layout, LayoutHeader, LayoutContent } from "@/components/UI";
 
 export default function LayoutFixedHeader() {
   return (
@@ -55,14 +55,14 @@ export default function LayoutFixedHeader() {
       <LayoutHeader fixed>固定头部</LayoutHeader>
       <LayoutContent>内容</LayoutContent>
     </Layout>
-  )
+  );
 }
 ```
 
 ### 固定侧边栏
 
 ```tsx
-import { Layout, LayoutContent, LayoutSider } from '@/components/UI'
+import { Layout, LayoutContent, LayoutSider } from "@/components/UI";
 
 export default function LayoutFixedSider() {
   return (
@@ -70,29 +70,27 @@ export default function LayoutFixedSider() {
       <LayoutSider fixed>固定侧边栏</LayoutSider>
       <LayoutContent>内容</LayoutContent>
     </Layout>
-  )
+  );
 }
 ```
 
 ### 可折叠侧边栏
 
 ```tsx
-import { Layout, LayoutContent, LayoutSider } from '@/components/UI'
-import { ref } from 'vue'
+import { Layout, LayoutContent, LayoutSider } from "@/components/UI";
+import { ref } from "vue";
 
 export default function LayoutCollapsibleSider() {
-  const collapsed = ref(false)
+  const collapsed = ref(false);
 
   return (
     <Layout>
       <LayoutSider collapsible collapsed={collapsed.value}>
-        <button onClick={() => collapsed.value = !collapsed.value}>
-          {collapsed.value ? '展开' : '收起'}
-        </button>
+        <button onClick={() => (collapsed.value = !collapsed.value)}>{collapsed.value ? "展开" : "收起"}</button>
       </LayoutSider>
       <LayoutContent>内容</LayoutContent>
     </Layout>
-  )
+  );
 }
 ```
 
@@ -100,41 +98,41 @@ export default function LayoutCollapsibleSider() {
 
 ### Layout Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| fixed | 是否固定 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型      | 默认值  |
+| --------- | ---------- | --------- | ------- |
+| fixed     | 是否固定   | `boolean` | `false` |
+| className | 自定义类名 | `string`  | -       |
 
 ### LayoutHeader Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| fixed | 是否固定 | `boolean` | `false` |
-| height | 高度 | `number` | `64` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型      | 默认值  |
+| --------- | ---------- | --------- | ------- |
+| fixed     | 是否固定   | `boolean` | `false` |
+| height    | 高度       | `number`  | `64`    |
+| className | 自定义类名 | `string`  | -       |
 
 ### LayoutContent Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ### LayoutSider Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| placement | 位置 | `string` | `left` / `right` | `left` |
-| width | 宽度 | `number` | `200` |
-| collapsible | 是否可折叠 | `boolean` | `false` |
-| collapsed | 是否折叠 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数        | 说明       | 类型      | 默认值           |
+| ----------- | ---------- | --------- | ---------------- | ------ |
+| placement   | 位置       | `string`  | `left` / `right` | `left` |
+| width       | 宽度       | `number`  | `200`            |
+| collapsible | 是否可折叠 | `boolean` | `false`          |
+| collapsed   | 是否折叠   | `boolean` | `false`          |
+| className   | 自定义类名 | `string`  | -                |
 
 ### LayoutFooter Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| fixed | 是否固定 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型      | 默认值  |
+| --------- | ---------- | --------- | ------- |
+| fixed     | 是否固定   | `boolean` | `false` |
+| className | 自定义类名 | `string`  | -       |
 
 ## 样式定制
 

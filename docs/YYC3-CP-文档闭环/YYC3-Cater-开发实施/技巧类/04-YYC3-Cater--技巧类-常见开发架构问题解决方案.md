@@ -10,15 +10,17 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 常见开发架构问题解决方案
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ## 文档信息
+
 - 文档类型：技巧类
 - 所属阶段：YYC3-Cater--开发实施
 - 遵循规范：五高五标五化要求
@@ -58,24 +60,24 @@
  * 架构问题严重级别
  */
 export enum ProblemSeverity {
-  CRITICAL = 'CRITICAL',    // 严重：系统无法正常运行
-  HIGH = 'HIGH',           // 高：严重影响用户体验
-  MEDIUM = 'MEDIUM',       // 中：影响部分功能
-  LOW = 'LOW'             // 低：轻微影响
+  CRITICAL = "CRITICAL", // 严重：系统无法正常运行
+  HIGH = "HIGH", // 高：严重影响用户体验
+  MEDIUM = "MEDIUM", // 中：影响部分功能
+  LOW = "LOW", // 低：轻微影响
 }
 
 /**
  * 架构问题类型
  */
 export enum ProblemType {
-  PERFORMANCE = 'PERFORMANCE',       // 性能问题
-  CONSISTENCY = 'CONSISTENCY',       // 一致性问题
-  DEPENDENCY = 'DEPENDENCY',         // 依赖问题
-  SCALABILITY = 'SCALABILITY',       // 扩展性问题
-  SECURITY = 'SECURITY',             // 安全问题
-  MONITORING = 'MONITORING',         // 监控问题
-  DEPLOYMENT = 'DEPLOYMENT',         // 部署问题
-  MAINTENANCE = 'MAINTENANCE'        // 维护问题
+  PERFORMANCE = "PERFORMANCE", // 性能问题
+  CONSISTENCY = "CONSISTENCY", // 一致性问题
+  DEPENDENCY = "DEPENDENCY", // 依赖问题
+  SCALABILITY = "SCALABILITY", // 扩展性问题
+  SECURITY = "SECURITY", // 安全问题
+  MONITORING = "MONITORING", // 监控问题
+  DEPLOYMENT = "DEPLOYMENT", // 部署问题
+  MAINTENANCE = "MAINTENANCE", // 维护问题
 }
 
 /**
@@ -104,7 +106,7 @@ export interface Solution {
   implementation: string;
   pros: string[];
   cons: string[];
-  complexity: 'LOW' | 'MEDIUM' | 'HIGH';
+  complexity: "LOW" | "MEDIUM" | "HIGH";
   estimatedTime: string;
   codeExample?: string;
 }
@@ -121,7 +123,7 @@ export interface Solution {
  * @version 1.0.0
  */
 
-import { ProblemSeverity, ProblemType, ArchitectureProblem } from './problem-types';
+import { ProblemSeverity, ProblemType, ArchitectureProblem } from "./problem-types";
 
 /**
  * 问题识别器
@@ -202,34 +204,34 @@ export class ProblemIdentifier {
  * 数据库性能问题
  */
 export const databasePerformanceProblem: ArchitectureProblem = {
-  id: 'DB-PERF-001',
+  id: "DB-PERF-001",
   type: ProblemType.PERFORMANCE,
   severity: ProblemSeverity.HIGH,
-  title: '数据库查询性能瓶颈',
-  description: '数据库查询响应时间过长，影响系统整体性能',
+  title: "数据库查询性能瓶颈",
+  description: "数据库查询响应时间过长，影响系统整体性能",
   symptoms: [
-    'API响应时间超过1秒',
-    '数据库CPU使用率持续高于80%',
-    '慢查询日志中存在大量执行时间超过500ms的查询',
-    '并发请求时数据库连接池耗尽'
+    "API响应时间超过1秒",
+    "数据库CPU使用率持续高于80%",
+    "慢查询日志中存在大量执行时间超过500ms的查询",
+    "并发请求时数据库连接池耗尽",
   ],
   rootCauses: [
-    '缺少必要的索引',
-    '查询语句未优化，存在N+1查询问题',
-    '数据表设计不合理，存在大量冗余数据',
-    '数据库连接池配置不当',
-    '未使用查询缓存'
+    "缺少必要的索引",
+    "查询语句未优化，存在N+1查询问题",
+    "数据表设计不合理，存在大量冗余数据",
+    "数据库连接池配置不当",
+    "未使用查询缓存",
   ],
   solutions: [
     {
-      id: 'SOL-DB-001',
-      name: '添加优化索引',
-      description: '为频繁查询的字段添加合适的索引',
-      implementation: '使用EXPLAIN分析查询计划，识别缺失的索引',
-      pros: ['查询性能提升显著', '实施成本低'],
-      cons: ['增加写入开销', '占用额外存储空间'],
-      complexity: 'LOW',
-      estimatedTime: '1-2天',
+      id: "SOL-DB-001",
+      name: "添加优化索引",
+      description: "为频繁查询的字段添加合适的索引",
+      implementation: "使用EXPLAIN分析查询计划，识别缺失的索引",
+      pros: ["查询性能提升显著", "实施成本低"],
+      cons: ["增加写入开销", "占用额外存储空间"],
+      complexity: "LOW",
+      estimatedTime: "1-2天",
       codeExample: `
 -- 分析查询计划
 EXPLAIN ANALYZE SELECT * FROM orders WHERE user_id = 123;
@@ -240,17 +242,17 @@ CREATE INDEX idx_orders_created_at ON orders(created_at DESC);
 
 -- 复合索引
 CREATE INDEX idx_orders_user_status ON orders(user_id, status);
-      `
+      `,
     },
     {
-      id: 'SOL-DB-002',
-      name: '优化查询语句',
-      description: '重写低效查询，避免N+1问题',
-      implementation: '使用JOIN替代多次查询，使用批量查询',
-      pros: ['减少数据库往返次数', '降低网络开销'],
-      cons: ['需要修改业务逻辑'],
-      complexity: 'MEDIUM',
-      estimatedTime: '3-5天',
+      id: "SOL-DB-002",
+      name: "优化查询语句",
+      description: "重写低效查询，避免N+1问题",
+      implementation: "使用JOIN替代多次查询，使用批量查询",
+      pros: ["减少数据库往返次数", "降低网络开销"],
+      cons: ["需要修改业务逻辑"],
+      complexity: "MEDIUM",
+      estimatedTime: "3-5天",
       codeExample: `
 -- ❌ N+1查询问题
 const orders = await Order.findAll({ where: { userId } });
@@ -267,17 +269,17 @@ const orders = await Order.findAll({
     as: 'items'
   }]
 });
-      `
+      `,
     },
     {
-      id: 'SOL-DB-003',
-      name: '实现查询缓存',
-      description: '对热点数据使用缓存减少数据库压力',
-      implementation: '使用Redis缓存频繁访问的数据',
-      pros: ['大幅提升读取性能', '降低数据库负载'],
-      cons: ['需要处理缓存一致性问题', '增加系统复杂度'],
-      complexity: 'MEDIUM',
-      estimatedTime: '5-7天',
+      id: "SOL-DB-003",
+      name: "实现查询缓存",
+      description: "对热点数据使用缓存减少数据库压力",
+      implementation: "使用Redis缓存频繁访问的数据",
+      pros: ["大幅提升读取性能", "降低数据库负载"],
+      cons: ["需要处理缓存一致性问题", "增加系统复杂度"],
+      complexity: "MEDIUM",
+      estimatedTime: "5-7天",
       codeExample: `
 import Redis from 'ioredis';
 
@@ -300,17 +302,17 @@ async function getUserWithCache(userId: string) {
   
   return user;
 }
-      `
+      `,
     },
     {
-      id: 'SOL-DB-004',
-      name: '数据库读写分离',
-      description: '将读操作分散到多个从库，提升并发能力',
-      implementation: '配置主从复制，应用层实现读写分离',
-      pros: ['提升读并发能力', '不影响写性能'],
-      cons: ['存在数据延迟', '增加运维复杂度'],
-      complexity: 'HIGH',
-      estimatedTime: '10-15天',
+      id: "SOL-DB-004",
+      name: "数据库读写分离",
+      description: "将读操作分散到多个从库，提升并发能力",
+      implementation: "配置主从复制，应用层实现读写分离",
+      pros: ["提升读并发能力", "不影响写性能"],
+      cons: ["存在数据延迟", "增加运维复杂度"],
+      complexity: "HIGH",
+      estimatedTime: "10-15天",
       codeExample: `
 import { Sequelize } from 'sequelize';
 
@@ -355,21 +357,17 @@ async function updateUser(userId: string, data: any) {
     replacements: [data, userId]
   });
 }
-      `
-    }
+      `,
+    },
   ],
   prevention: [
-    '建立数据库性能监控体系',
-    '定期审查慢查询日志',
-    '制定数据库设计规范',
-    '实施数据库容量规划',
-    '定期进行性能测试'
+    "建立数据库性能监控体系",
+    "定期审查慢查询日志",
+    "制定数据库设计规范",
+    "实施数据库容量规划",
+    "定期进行性能测试",
   ],
-  references: [
-    'PostgreSQL性能优化指南',
-    'MySQL索引优化最佳实践',
-    '数据库架构设计模式'
-  ]
+  references: ["PostgreSQL性能优化指南", "MySQL索引优化最佳实践", "数据库架构设计模式"],
 };
 ```
 
@@ -382,34 +380,28 @@ async function updateUser(userId: string, data: any) {
  * 应用层性能问题
  */
 export const applicationPerformanceProblem: ArchitectureProblem = {
-  id: 'APP-PERF-001',
+  id: "APP-PERF-001",
   type: ProblemType.PERFORMANCE,
   severity: ProblemSeverity.HIGH,
-  title: '应用层性能瓶颈',
-  description: '应用代码执行效率低，导致响应时间过长',
+  title: "应用层性能瓶颈",
+  description: "应用代码执行效率低，导致响应时间过长",
   symptoms: [
-    'CPU密集型操作阻塞主线程',
-    '内存泄漏导致内存使用持续增长',
-    '同步IO操作导致请求阻塞',
-    '频繁的垃圾回收影响性能'
+    "CPU密集型操作阻塞主线程",
+    "内存泄漏导致内存使用持续增长",
+    "同步IO操作导致请求阻塞",
+    "频繁的垃圾回收影响性能",
   ],
-  rootCauses: [
-    '未使用异步编程模式',
-    '存在大量同步阻塞操作',
-    '内存未正确释放',
-    '算法复杂度过高',
-    '未使用连接池'
-  ],
+  rootCauses: ["未使用异步编程模式", "存在大量同步阻塞操作", "内存未正确释放", "算法复杂度过高", "未使用连接池"],
   solutions: [
     {
-      id: 'SOL-APP-001',
-      name: '使用异步编程',
-      description: '将同步操作改为异步，避免阻塞主线程',
-      implementation: '使用async/await、Promise等异步模式',
-      pros: ['提升并发处理能力', '改善用户体验'],
-      cons: ['代码复杂度增加', '需要处理异步错误'],
-      complexity: 'MEDIUM',
-      estimatedTime: '3-5天',
+      id: "SOL-APP-001",
+      name: "使用异步编程",
+      description: "将同步操作改为异步，避免阻塞主线程",
+      implementation: "使用async/await、Promise等异步模式",
+      pros: ["提升并发处理能力", "改善用户体验"],
+      cons: ["代码复杂度增加", "需要处理异步错误"],
+      complexity: "MEDIUM",
+      estimatedTime: "3-5天",
       codeExample: `
 // ❌ 同步阻塞操作
 function getUserData(userId: string) {
@@ -426,17 +418,17 @@ async function getUserData(userId: string) {
   ]);
   return { user, orders };
 }
-      `
+      `,
     },
     {
-      id: 'SOL-APP-002',
-      name: '优化算法复杂度',
-      description: '优化算法实现，降低时间复杂度',
-      implementation: '使用更高效的算法和数据结构',
-      pros: ['显著提升性能', '降低资源消耗'],
-      cons: ['需要深入理解算法', '可能增加代码复杂度'],
-      complexity: 'HIGH',
-      estimatedTime: '5-10天',
+      id: "SOL-APP-002",
+      name: "优化算法复杂度",
+      description: "优化算法实现，降低时间复杂度",
+      implementation: "使用更高效的算法和数据结构",
+      pros: ["显著提升性能", "降低资源消耗"],
+      cons: ["需要深入理解算法", "可能增加代码复杂度"],
+      complexity: "HIGH",
+      estimatedTime: "5-10天",
       codeExample: `
 // ❌ O(n²) 复杂度
 function findDuplicates(arr: number[]): number[] {
@@ -466,17 +458,17 @@ function findDuplicates(arr: number[]): number[] {
   
   return Array.from(duplicates);
 }
-      `
+      `,
     },
     {
-      id: 'SOL-APP-003',
-      name: '实现连接池',
-      description: '对数据库、HTTP等外部连接使用连接池',
-      implementation: '配置连接池参数，复用连接',
-      pros: ['减少连接建立开销', '提升并发能力'],
-      cons: ['需要合理配置池大小'],
-      complexity: 'LOW',
-      estimatedTime: '1-2天',
+      id: "SOL-APP-003",
+      name: "实现连接池",
+      description: "对数据库、HTTP等外部连接使用连接池",
+      implementation: "配置连接池参数，复用连接",
+      pros: ["减少连接建立开销", "提升并发能力"],
+      cons: ["需要合理配置池大小"],
+      complexity: "LOW",
+      estimatedTime: "1-2天",
       codeExample: `
 import { Pool } from 'pg';
 
@@ -507,21 +499,11 @@ async function query(sql: string, params?: any[]) {
 async function getUser(userId: string) {
   return query('SELECT * FROM users WHERE id = $1', [userId]);
 }
-      `
-    }
+      `,
+    },
   ],
-  prevention: [
-    '建立性能监控体系',
-    '定期进行性能测试',
-    '制定代码审查标准',
-    '使用性能分析工具',
-    '建立性能基准'
-  ],
-  references: [
-    'Node.js性能优化指南',
-    '算法复杂度分析',
-    '应用性能监控最佳实践'
-  ]
+  prevention: ["建立性能监控体系", "定期进行性能测试", "制定代码审查标准", "使用性能分析工具", "建立性能基准"],
+  references: ["Node.js性能优化指南", "算法复杂度分析", "应用性能监控最佳实践"],
 };
 ```
 
@@ -538,33 +520,28 @@ async function getUser(userId: string) {
  * 分布式事务一致性问题
  */
 export const distributedTransactionProblem: ArchitectureProblem = {
-  id: 'DTX-001',
+  id: "DTX-001",
   type: ProblemType.CONSISTENCY,
   severity: ProblemSeverity.HIGH,
-  title: '分布式事务一致性问题',
-  description: '跨多个服务的数据操作无法保证一致性',
+  title: "分布式事务一致性问题",
+  description: "跨多个服务的数据操作无法保证一致性",
   symptoms: [
-    '订单创建成功但库存未扣减',
-    '支付成功但订单状态未更新',
-    '数据在不同服务间不一致',
-    '出现脏读、不可重复读等问题'
+    "订单创建成功但库存未扣减",
+    "支付成功但订单状态未更新",
+    "数据在不同服务间不一致",
+    "出现脏读、不可重复读等问题",
   ],
-  rootCauses: [
-    '未实现分布式事务',
-    '缺少补偿机制',
-    '未使用消息队列保证最终一致性',
-    '缺少幂等性设计'
-  ],
+  rootCauses: ["未实现分布式事务", "缺少补偿机制", "未使用消息队列保证最终一致性", "缺少幂等性设计"],
   solutions: [
     {
-      id: 'SOL-DTX-001',
-      name: '实现Saga模式',
-      description: '使用Saga模式实现分布式事务的最终一致性',
-      implementation: '将长事务拆分为多个本地事务，每个本地事务都有对应的补偿操作',
-      pros: ['适用于长事务', '系统可用性高'],
-      cons: ['实现复杂', '需要处理补偿逻辑'],
-      complexity: 'HIGH',
-      estimatedTime: '10-15天',
+      id: "SOL-DTX-001",
+      name: "实现Saga模式",
+      description: "使用Saga模式实现分布式事务的最终一致性",
+      implementation: "将长事务拆分为多个本地事务，每个本地事务都有对应的补偿操作",
+      pros: ["适用于长事务", "系统可用性高"],
+      cons: ["实现复杂", "需要处理补偿逻辑"],
+      complexity: "HIGH",
+      estimatedTime: "10-15天",
       codeExample: `
 /**
  * Saga事务管理器
@@ -646,17 +623,17 @@ async function createOrderSaga(orderData: any) {
 
   return saga.execute();
 }
-      `
+      `,
     },
     {
-      id: 'SOL-DTX-002',
-      name: '使用消息队列实现最终一致性',
-      description: '通过消息队列保证消息可靠投递，实现最终一致性',
-      implementation: '使用可靠消息模式，确保消息至少投递一次',
-      pros: ['解耦服务', '系统可用性高'],
-      cons: ['存在最终一致性延迟', '需要处理重复消息'],
-      complexity: 'MEDIUM',
-      estimatedTime: '7-10天',
+      id: "SOL-DTX-002",
+      name: "使用消息队列实现最终一致性",
+      description: "通过消息队列保证消息可靠投递，实现最终一致性",
+      implementation: "使用可靠消息模式，确保消息至少投递一次",
+      pros: ["解耦服务", "系统可用性高"],
+      cons: ["存在最终一致性延迟", "需要处理重复消息"],
+      complexity: "MEDIUM",
+      estimatedTime: "7-10天",
       codeExample: `
 import { Queue, Worker } from 'bullmq';
 import Redis from 'ioredis';
@@ -725,17 +702,17 @@ async function handlePaymentSuccess(event: any) {
     { where: { id: event.orderId } }
   );
 }
-      `
+      `,
     },
     {
-      id: 'SOL-DTX-003',
-      name: '实现幂等性设计',
-      description: '确保重复请求不会产生副作用',
-      implementation: '使用唯一ID、版本号等机制实现幂等性',
-      pros: ['防止重复操作', '提升系统健壮性'],
-      cons: ['需要额外的存储和检查'],
-      complexity: 'LOW',
-      estimatedTime: '2-3天',
+      id: "SOL-DTX-003",
+      name: "实现幂等性设计",
+      description: "确保重复请求不会产生副作用",
+      implementation: "使用唯一ID、版本号等机制实现幂等性",
+      pros: ["防止重复操作", "提升系统健壮性"],
+      cons: ["需要额外的存储和检查"],
+      complexity: "LOW",
+      estimatedTime: "2-3天",
       codeExample: `
 /**
  * 幂等性装饰器
@@ -798,21 +775,11 @@ class OrderService {
     return Order.create({ id: orderId, ...data });
   }
 }
-      `
-    }
+      `,
+    },
   ],
-  prevention: [
-    '设计时考虑分布式事务',
-    '使用幂等性设计',
-    '实现补偿机制',
-    '建立监控告警',
-    '制定数据修复流程'
-  ],
-  references: [
-    '分布式事务模式',
-    'Saga模式实践指南',
-    '最终一致性设计模式'
-  ]
+  prevention: ["设计时考虑分布式事务", "使用幂等性设计", "实现补偿机制", "建立监控告警", "制定数据修复流程"],
+  references: ["分布式事务模式", "Saga模式实践指南", "最终一致性设计模式"],
 };
 ```
 
@@ -829,33 +796,23 @@ class OrderService {
  * 循环依赖问题
  */
 export const circularDependencyProblem: ArchitectureProblem = {
-  id: 'CIRC-DEP-001',
+  id: "CIRC-DEP-001",
   type: ProblemType.DEPENDENCY,
   severity: ProblemSeverity.HIGH,
-  title: '服务循环依赖问题',
-  description: '服务之间存在循环依赖，导致启动失败或运行时错误',
-  symptoms: [
-    '服务启动时出现依赖注入错误',
-    '模块加载顺序问题',
-    '无法进行单元测试',
-    '代码难以维护和重构'
-  ],
-  rootCauses: [
-    '模块职责划分不清',
-    '缺少分层架构设计',
-    '直接依赖而非接口依赖',
-    '缺少依赖倒置原则'
-  ],
+  title: "服务循环依赖问题",
+  description: "服务之间存在循环依赖，导致启动失败或运行时错误",
+  symptoms: ["服务启动时出现依赖注入错误", "模块加载顺序问题", "无法进行单元测试", "代码难以维护和重构"],
+  rootCauses: ["模块职责划分不清", "缺少分层架构设计", "直接依赖而非接口依赖", "缺少依赖倒置原则"],
   solutions: [
     {
-      id: 'SOL-CIRC-001',
-      name: '引入依赖倒置原则',
-      description: '依赖抽象而非具体实现，使用接口隔离',
-      implementation: '定义接口，通过依赖注入解耦',
-      pros: ['降低耦合度', '提升可测试性'],
-      cons: ['增加接口定义工作', '代码量增加'],
-      complexity: 'MEDIUM',
-      estimatedTime: '5-7天',
+      id: "SOL-CIRC-001",
+      name: "引入依赖倒置原则",
+      description: "依赖抽象而非具体实现，使用接口隔离",
+      implementation: "定义接口，通过依赖注入解耦",
+      pros: ["降低耦合度", "提升可测试性"],
+      cons: ["增加接口定义工作", "代码量增加"],
+      complexity: "MEDIUM",
+      estimatedTime: "5-7天",
       codeExample: `
 // ❌ 循环依赖问题
 class OrderService {
@@ -930,17 +887,17 @@ container.register('paymentService', () =>
 );
 
 const orderService = container.resolve<OrderService>('orderService');
-      `
+      `,
     },
     {
-      id: 'SOL-CIRC-002',
-      name: '引入事件驱动架构',
-      description: '使用事件总线解耦服务依赖',
-      implementation: '服务通过事件通信，而非直接调用',
-      pros: ['完全解耦', '易于扩展'],
-      cons: ['异步处理增加复杂度', '调试困难'],
-      complexity: 'HIGH',
-      estimatedTime: '10-15天',
+      id: "SOL-CIRC-002",
+      name: "引入事件驱动架构",
+      description: "使用事件总线解耦服务依赖",
+      implementation: "服务通过事件通信，而非直接调用",
+      pros: ["完全解耦", "易于扩展"],
+      cons: ["异步处理增加复杂度", "调试困难"],
+      complexity: "HIGH",
+      estimatedTime: "10-15天",
       codeExample: `
 import { EventEmitter } from 'events';
 
@@ -1020,21 +977,11 @@ class InventoryService {
     // 扣减库存逻辑
   }
 }
-      `
-    }
+      `,
+    },
   ],
-  prevention: [
-    '遵循依赖倒置原则',
-    '使用分层架构',
-    '引入事件驱动架构',
-    '定期进行依赖分析',
-    '使用依赖分析工具'
-  ],
-  references: [
-    'SOLID原则实践指南',
-    '依赖注入模式',
-    '事件驱动架构设计'
-  ]
+  prevention: ["遵循依赖倒置原则", "使用分层架构", "引入事件驱动架构", "定期进行依赖分析", "使用依赖分析工具"],
+  references: ["SOLID原则实践指南", "依赖注入模式", "事件驱动架构设计"],
 };
 ```
 
@@ -1051,34 +998,23 @@ class InventoryService {
  * 水平扩展问题
  */
 export const scalabilityProblem: ArchitectureProblem = {
-  id: 'SCAL-001',
+  id: "SCAL-001",
   type: ProblemType.SCALABILITY,
   severity: ProblemSeverity.HIGH,
-  title: '系统水平扩展受限',
-  description: '系统无法通过增加实例来提升处理能力',
-  symptoms: [
-    '增加服务器实例后性能未提升',
-    '单点瓶颈明显',
-    '资源利用率不均衡',
-    '无法应对流量突发'
-  ],
-  rootCauses: [
-    '存在有状态服务',
-    '未实现服务无状态化',
-    '缺少负载均衡',
-    '数据库成为瓶颈',
-    '缓存未分布式化'
-  ],
+  title: "系统水平扩展受限",
+  description: "系统无法通过增加实例来提升处理能力",
+  symptoms: ["增加服务器实例后性能未提升", "单点瓶颈明显", "资源利用率不均衡", "无法应对流量突发"],
+  rootCauses: ["存在有状态服务", "未实现服务无状态化", "缺少负载均衡", "数据库成为瓶颈", "缓存未分布式化"],
   solutions: [
     {
-      id: 'SOL-SCAL-001',
-      name: '实现服务无状态化',
-      description: '将状态从服务中分离，使服务可以水平扩展',
-      implementation: '使用Redis等外部存储管理会话状态',
-      pros: ['易于水平扩展', '提升可用性'],
-      cons: ['增加外部依赖', '网络延迟'],
-      complexity: 'MEDIUM',
-      estimatedTime: '5-7天',
+      id: "SOL-SCAL-001",
+      name: "实现服务无状态化",
+      description: "将状态从服务中分离，使服务可以水平扩展",
+      implementation: "使用Redis等外部存储管理会话状态",
+      pros: ["易于水平扩展", "提升可用性"],
+      cons: ["增加外部依赖", "网络延迟"],
+      complexity: "MEDIUM",
+      estimatedTime: "5-7天",
       codeExample: `
 import Redis from 'ioredis';
 import { v4 as uuidv4 } from 'uuid';
@@ -1147,17 +1083,17 @@ const sessionId = await sessionManager.createSession('user123', {
 
 // 获取会话
 const session = await sessionManager.getSession(sessionId);
-      `
+      `,
     },
     {
-      id: 'SOL-SCAL-002',
-      name: '实现分布式缓存',
-      description: '使用Redis集群等分布式缓存方案',
-      implementation: '配置Redis集群，实现数据分片',
-      pros: ['提升缓存容量', '提升可用性'],
-      cons: ['配置复杂', '数据一致性挑战'],
-      complexity: 'HIGH',
-      estimatedTime: '10-15天',
+      id: "SOL-SCAL-002",
+      name: "实现分布式缓存",
+      description: "使用Redis集群等分布式缓存方案",
+      implementation: "配置Redis集群，实现数据分片",
+      pros: ["提升缓存容量", "提升可用性"],
+      cons: ["配置复杂", "数据一致性挑战"],
+      complexity: "HIGH",
+      estimatedTime: "10-15天",
       codeExample: `
 import Redis from 'ioredis';
 
@@ -1235,17 +1171,17 @@ await redisCluster.set('user:123', JSON.stringify({ name: '张三' }));
 
 // 获取缓存
 const user = await redisCluster.get('user:123');
-      `
+      `,
     },
     {
-      id: 'SOL-SCAL-003',
-      name: '实现数据库分片',
-      description: '将数据分散到多个数据库实例',
-      implementation: '根据分片键将数据路由到不同的数据库',
-      pros: ['提升数据库容量', '提升并发能力'],
-      cons: ['跨分片查询复杂', '数据迁移困难'],
-      complexity: 'HIGH',
-      estimatedTime: '15-20天',
+      id: "SOL-SCAL-003",
+      name: "实现数据库分片",
+      description: "将数据分散到多个数据库实例",
+      implementation: "根据分片键将数据路由到不同的数据库",
+      pros: ["提升数据库容量", "提升并发能力"],
+      cons: ["跨分片查询复杂", "数据迁移困难"],
+      complexity: "HIGH",
+      estimatedTime: "15-20天",
       codeExample: `
 import { Sequelize } from 'sequelize';
 
@@ -1325,21 +1261,11 @@ async function getUser(userId: string) {
     replacements: [userId]
   });
 }
-      `
-    }
+      `,
+    },
   ],
-  prevention: [
-    '设计时考虑扩展性',
-    '使用无状态架构',
-    '实现水平扩展能力',
-    '定期进行容量规划',
-    '建立自动扩缩容机制'
-  ],
-  references: [
-    '系统扩展性设计指南',
-    '分布式系统设计模式',
-    '微服务架构实践'
-  ]
+  prevention: ["设计时考虑扩展性", "使用无状态架构", "实现水平扩展能力", "定期进行容量规划", "建立自动扩缩容机制"],
+  references: ["系统扩展性设计指南", "分布式系统设计模式", "微服务架构实践"],
 };
 ```
 
@@ -1356,35 +1282,23 @@ async function getUser(userId: string) {
  * API安全问题
  */
 export const apiSecurityProblem: ArchitectureProblem = {
-  id: 'SEC-001',
+  id: "SEC-001",
   type: ProblemType.SECURITY,
   severity: ProblemSeverity.CRITICAL,
-  title: 'API安全漏洞',
-  description: 'API接口存在安全漏洞，可能导致数据泄露或系统被攻击',
-  symptoms: [
-    '存在SQL注入漏洞',
-    '存在XSS跨站脚本攻击',
-    '未实现认证授权',
-    '敏感数据未加密传输',
-    '存在CSRF跨站请求伪造'
-  ],
-  rootCauses: [
-    '未进行输入验证',
-    '未使用参数化查询',
-    '缺少认证授权机制',
-    '未使用HTTPS',
-    '缺少安全头配置'
-  ],
+  title: "API安全漏洞",
+  description: "API接口存在安全漏洞，可能导致数据泄露或系统被攻击",
+  symptoms: ["存在SQL注入漏洞", "存在XSS跨站脚本攻击", "未实现认证授权", "敏感数据未加密传输", "存在CSRF跨站请求伪造"],
+  rootCauses: ["未进行输入验证", "未使用参数化查询", "缺少认证授权机制", "未使用HTTPS", "缺少安全头配置"],
   solutions: [
     {
-      id: 'SOL-SEC-001',
-      name: '实现输入验证和清理',
-      description: '对所有用户输入进行严格验证和清理',
-      implementation: '使用验证库（如Zod、Joi）进行输入验证',
-      pros: ['防止注入攻击', '提升数据质量'],
-      cons: ['需要定义验证规则', '增加代码复杂度'],
-      complexity: 'LOW',
-      estimatedTime: '2-3天',
+      id: "SOL-SEC-001",
+      name: "实现输入验证和清理",
+      description: "对所有用户输入进行严格验证和清理",
+      implementation: "使用验证库（如Zod、Joi）进行输入验证",
+      pros: ["防止注入攻击", "提升数据质量"],
+      cons: ["需要定义验证规则", "增加代码复杂度"],
+      complexity: "LOW",
+      estimatedTime: "2-3天",
       codeExample: `
 import { z } from 'zod';
 
@@ -1433,17 +1347,17 @@ try {
     console.error('验证失败:', error.errors);
   }
 }
-      `
+      `,
     },
     {
-      id: 'SOL-SEC-002',
-      name: '实现JWT认证',
-      description: '使用JWT进行无状态认证',
-      implementation: '生成和验证JWT令牌',
-      pros: ['无状态认证', '易于水平扩展'],
-      cons: ['令牌无法撤销', '需要处理令牌过期'],
-      complexity: 'MEDIUM',
-      estimatedTime: '3-5天',
+      id: "SOL-SEC-002",
+      name: "实现JWT认证",
+      description: "使用JWT进行无状态认证",
+      implementation: "生成和验证JWT令牌",
+      pros: ["无状态认证", "易于水平扩展"],
+      cons: ["令牌无法撤销", "需要处理令牌过期"],
+      complexity: "MEDIUM",
+      estimatedTime: "3-5天",
       codeExample: `
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -1536,17 +1450,17 @@ app.get('/api/users/profile', authMiddleware, async (req, res) => {
   const user = await User.findByPk(req.user.userId);
   res.json(user);
 });
-      `
+      `,
     },
     {
-      id: 'SOL-SEC-003',
-      name: '配置安全头',
-      description: '配置HTTP安全头防止攻击',
-      implementation: '使用helmet等中间件配置安全头',
-      pros: ['简单有效', '提升安全性'],
-      cons: ['可能影响某些功能'],
-      complexity: 'LOW',
-      estimatedTime: '1天',
+      id: "SOL-SEC-003",
+      name: "配置安全头",
+      description: "配置HTTP安全头防止攻击",
+      implementation: "使用helmet等中间件配置安全头",
+      pros: ["简单有效", "提升安全性"],
+      cons: ["可能影响某些功能"],
+      complexity: "LOW",
+      estimatedTime: "1天",
       codeExample: `
 import helmet from 'helmet';
 import express from 'express';
@@ -1592,21 +1506,11 @@ app.use((req, res, next) => {
   
   next();
 });
-      `
-    }
+      `,
+    },
   ],
-  prevention: [
-    '进行安全审计',
-    '使用安全扫描工具',
-    '定期更新依赖',
-    '实施安全编码规范',
-    '建立安全监控告警'
-  ],
-  references: [
-    'OWASP Top 10',
-    'API安全最佳实践',
-    'Web安全防护指南'
-  ]
+  prevention: ["进行安全审计", "使用安全扫描工具", "定期更新依赖", "实施安全编码规范", "建立安全监控告警"],
+  references: ["OWASP Top 10", "API安全最佳实践", "Web安全防护指南"],
 };
 ```
 
@@ -1623,35 +1527,23 @@ app.use((req, res, next) => {
  * 监控告警问题
  */
 export const monitoringProblem: ArchitectureProblem = {
-  id: 'MON-001',
+  id: "MON-001",
   type: ProblemType.MONITORING,
   severity: ProblemSeverity.HIGH,
-  title: '监控告警体系不完善',
-  description: '缺少完善的监控告警机制，无法及时发现和处理问题',
-  symptoms: [
-    '问题发生后才发现',
-    '无法定位问题根因',
-    '缺少性能指标监控',
-    '告警误报或漏报',
-    '缺少日志分析能力'
-  ],
-  rootCauses: [
-    '未建立监控体系',
-    '缺少关键指标监控',
-    '告警规则不合理',
-    '日志未结构化',
-    '缺少链路追踪'
-  ],
+  title: "监控告警体系不完善",
+  description: "缺少完善的监控告警机制，无法及时发现和处理问题",
+  symptoms: ["问题发生后才发现", "无法定位问题根因", "缺少性能指标监控", "告警误报或漏报", "缺少日志分析能力"],
+  rootCauses: ["未建立监控体系", "缺少关键指标监控", "告警规则不合理", "日志未结构化", "缺少链路追踪"],
   solutions: [
     {
-      id: 'SOL-MON-001',
-      name: '建立指标监控体系',
-      description: '监控关键业务指标和技术指标',
-      implementation: '使用Prometheus + Grafana搭建监控体系',
-      pros: ['实时监控', '可视化展示'],
-      cons: ['需要配置和维护'],
-      complexity: 'MEDIUM',
-      estimatedTime: '5-7天',
+      id: "SOL-MON-001",
+      name: "建立指标监控体系",
+      description: "监控关键业务指标和技术指标",
+      implementation: "使用Prometheus + Grafana搭建监控体系",
+      pros: ["实时监控", "可视化展示"],
+      cons: ["需要配置和维护"],
+      complexity: "MEDIUM",
+      estimatedTime: "5-7天",
       codeExample: `
 import { Counter, Histogram, Registry, Gauge } from 'prom-client';
 
@@ -1736,17 +1628,17 @@ app.get('/metrics', metricsEndpoint);
 app.get('/api/users', (req, res) => {
   res.json({ users: [] });
 });
-      `
+      `,
     },
     {
-      id: 'SOL-MON-002',
-      name: '实现链路追踪',
-      description: '追踪请求在系统中的完整调用链',
-      implementation: '使用Jaeger或Zipkin实现分布式追踪',
-      pros: ['快速定位问题', '理解系统依赖'],
-      cons: ['增加系统开销', '需要改造代码'],
-      complexity: 'HIGH',
-      estimatedTime: '10-15天',
+      id: "SOL-MON-002",
+      name: "实现链路追踪",
+      description: "追踪请求在系统中的完整调用链",
+      implementation: "使用Jaeger或Zipkin实现分布式追踪",
+      pros: ["快速定位问题", "理解系统依赖"],
+      cons: ["增加系统开销", "需要改造代码"],
+      complexity: "HIGH",
+      estimatedTime: "10-15天",
       codeExample: `
 import { initTracer, Tags, FORMAT_HTTP_HEADERS } from 'jaeger-client';
 
@@ -1837,17 +1729,17 @@ app.get('/api/orders/:id', async (req, res) => {
   
   res.json({ order, user });
 });
-      `
+      `,
     },
     {
-      id: 'SOL-MON-003',
-      name: '实现结构化日志',
-      description: '使用结构化日志格式，便于查询和分析',
-      implementation: '使用Winston或Pino记录结构化日志',
-      pros: ['易于查询分析', '支持日志聚合'],
-      cons: ['日志体积增大'],
-      complexity: 'LOW',
-      estimatedTime: '2-3天',
+      id: "SOL-MON-003",
+      name: "实现结构化日志",
+      description: "使用结构化日志格式，便于查询和分析",
+      implementation: "使用Winston或Pino记录结构化日志",
+      pros: ["易于查询分析", "支持日志聚合"],
+      cons: ["日志体积增大"],
+      complexity: "LOW",
+      estimatedTime: "2-3天",
       codeExample: `
 import pino from 'pino';
 
@@ -1947,21 +1839,11 @@ app.get('/api/orders', async (req, res) => {
     res.status(500).json({ error: '查询失败' });
   }
 });
-      `
-    }
+      `,
+    },
   ],
-  prevention: [
-    '建立监控体系',
-    '定义关键指标',
-    '配置合理告警',
-    '定期审查告警规则',
-    '建立故障处理流程'
-  ],
-  references: [
-    'Prometheus监控指南',
-    '分布式追踪实践',
-    '日志管理最佳实践'
-  ]
+  prevention: ["建立监控体系", "定义关键指标", "配置合理告警", "定期审查告警规则", "建立故障处理流程"],
+  references: ["Prometheus监控指南", "分布式追踪实践", "日志管理最佳实践"],
 };
 ```
 
@@ -1978,35 +1860,23 @@ app.get('/api/orders', async (req, res) => {
  * 部署运维问题
  */
 export const deploymentProblem: ArchitectureProblem = {
-  id: 'DEPLOY-001',
+  id: "DEPLOY-001",
   type: ProblemType.DEPLOYMENT,
   severity: ProblemSeverity.HIGH,
-  title: '部署流程复杂且易出错',
-  description: '手动部署流程复杂，容易出错且效率低',
-  symptoms: [
-    '部署需要手动执行多个步骤',
-    '部署失败率高',
-    '回滚困难',
-    '环境配置不一致',
-    '部署时间长'
-  ],
-  rootCauses: [
-    '未实现自动化部署',
-    '缺少容器化',
-    '未使用CI/CD',
-    '环境配置未标准化',
-    '缺少版本管理'
-  ],
+  title: "部署流程复杂且易出错",
+  description: "手动部署流程复杂，容易出错且效率低",
+  symptoms: ["部署需要手动执行多个步骤", "部署失败率高", "回滚困难", "环境配置不一致", "部署时间长"],
+  rootCauses: ["未实现自动化部署", "缺少容器化", "未使用CI/CD", "环境配置未标准化", "缺少版本管理"],
   solutions: [
     {
-      id: 'SOL-DEPLOY-001',
-      name: '实现容器化部署',
-      description: '使用Docker容器化应用，统一运行环境',
-      implementation: '编写Dockerfile，构建Docker镜像',
-      pros: ['环境一致', '易于部署'],
-      cons: ['需要学习Docker', '镜像体积大'],
-      complexity: 'MEDIUM',
-      estimatedTime: '3-5天',
+      id: "SOL-DEPLOY-001",
+      name: "实现容器化部署",
+      description: "使用Docker容器化应用，统一运行环境",
+      implementation: "编写Dockerfile，构建Docker镜像",
+      pros: ["环境一致", "易于部署"],
+      cons: ["需要学习Docker", "镜像体积大"],
+      complexity: "MEDIUM",
+      estimatedTime: "3-5天",
       codeExample: `
 # Dockerfile
 FROM node:18-alpine AS builder
@@ -2058,17 +1928,17 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
 
 # 启动应用
 CMD ["node", "dist/main.js"]
-      `
+      `,
     },
     {
-      id: 'SOL-DEPLOY-002',
-      name: '实现CI/CD流水线',
-      description: '使用GitHub Actions或GitLab CI实现自动化部署',
-      implementation: '配置CI/CD流水线，自动构建、测试、部署',
-      pros: ['自动化部署', '减少人为错误'],
-      cons: ['需要配置和维护', '学习成本'],
-      complexity: 'HIGH',
-      estimatedTime: '7-10天',
+      id: "SOL-DEPLOY-002",
+      name: "实现CI/CD流水线",
+      description: "使用GitHub Actions或GitLab CI实现自动化部署",
+      implementation: "配置CI/CD流水线，自动构建、测试、部署",
+      pros: ["自动化部署", "减少人为错误"],
+      cons: ["需要配置和维护", "学习成本"],
+      complexity: "HIGH",
+      estimatedTime: "7-10天",
       codeExample: `
 # .github/workflows/deploy.yml
 name: Deploy to Production
@@ -2145,17 +2015,17 @@ jobs:
           images: |
             yyc3/catering-platform:\${{ github.sha }}
           kubeconfig: \${{ secrets.KUBE_CONFIG }}
-      `
+      `,
     },
     {
-      id: 'SOL-DEPLOY-003',
-      name: '实现配置管理',
-      description: '使用ConfigMap和Secret管理配置',
-      implementation: '将配置从代码中分离，使用环境变量',
-      pros: ['配置集中管理', '提升安全性'],
-      cons: ['需要管理配置版本'],
-      complexity: 'LOW',
-      estimatedTime: '2-3天',
+      id: "SOL-DEPLOY-003",
+      name: "实现配置管理",
+      description: "使用ConfigMap和Secret管理配置",
+      implementation: "将配置从代码中分离，使用环境变量",
+      pros: ["配置集中管理", "提升安全性"],
+      cons: ["需要管理配置版本"],
+      complexity: "LOW",
+      estimatedTime: "2-3天",
       codeExample: `
 # k8s/configmap.yaml
 apiVersion: v1
@@ -2233,21 +2103,11 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
-      `
-    }
+      `,
+    },
   ],
-  prevention: [
-    '实现自动化部署',
-    '使用容器化技术',
-    '建立CI/CD流水线',
-    '标准化环境配置',
-    '建立回滚机制'
-  ],
-  references: [
-    'Docker最佳实践',
-    'Kubernetes部署指南',
-    'CI/CD流水线设计'
-  ]
+  prevention: ["实现自动化部署", "使用容器化技术", "建立CI/CD流水线", "标准化环境配置", "建立回滚机制"],
+  references: ["Docker最佳实践", "Kubernetes部署指南", "CI/CD流水线设计"],
 };
 ```
 
@@ -2266,45 +2126,45 @@ export const architectureBestPractices = {
    * SOLID原则
    */
   solid: {
-    singleResponsibility: '单一职责原则：一个类只负责一项职责',
-    openClosed: '开闭原则：对扩展开放，对修改关闭',
-    liskovSubstitution: '里氏替换原则：子类可以替换父类',
-    interfaceSegregation: '接口隔离原则：使用多个小接口而非大接口',
-    dependencyInversion: '依赖倒置原则：依赖抽象而非具体实现'
+    singleResponsibility: "单一职责原则：一个类只负责一项职责",
+    openClosed: "开闭原则：对扩展开放，对修改关闭",
+    liskovSubstitution: "里氏替换原则：子类可以替换父类",
+    interfaceSegregation: "接口隔离原则：使用多个小接口而非大接口",
+    dependencyInversion: "依赖倒置原则：依赖抽象而非具体实现",
   },
 
   /**
    * 微服务设计原则
    */
   microservices: {
-    singleResponsibility: '每个服务专注于单一业务领域',
-    autonomous: '服务独立部署和扩展',
-    decentralized: '去中心化的数据管理',
-    faultTolerance: '设计容错和降级机制',
-    observability: '完善的监控和追踪'
+    singleResponsibility: "每个服务专注于单一业务领域",
+    autonomous: "服务独立部署和扩展",
+    decentralized: "去中心化的数据管理",
+    faultTolerance: "设计容错和降级机制",
+    observability: "完善的监控和追踪",
   },
 
   /**
    * 性能优化原则
    */
   performance: {
-    measureFirst: '先测量再优化',
-    cacheEverything: '尽可能使用缓存',
-    asyncEverywhere: '使用异步非阻塞IO',
-    optimizeDatabase: '优化数据库查询和索引',
-    useCDN: '使用CDN加速静态资源'
+    measureFirst: "先测量再优化",
+    cacheEverything: "尽可能使用缓存",
+    asyncEverywhere: "使用异步非阻塞IO",
+    optimizeDatabase: "优化数据库查询和索引",
+    useCDN: "使用CDN加速静态资源",
   },
 
   /**
    * 安全设计原则
    */
   security: {
-    leastPrivilege: '最小权限原则',
-    defenseInDepth: '纵深防御',
-    failSecurely: '安全失败',
-    inputValidation: '输入验证和清理',
-    encryption: '敏感数据加密'
-  }
+    leastPrivilege: "最小权限原则",
+    defenseInDepth: "纵深防御",
+    failSecurely: "安全失败",
+    inputValidation: "输入验证和清理",
+    encryption: "敏感数据加密",
+  },
 };
 ```
 
@@ -2318,46 +2178,28 @@ export const codeQualityChecklist = {
   /**
    * 代码规范
    */
-  codeStyle: [
-    '遵循团队代码规范',
-    '使用有意义的命名',
-    '添加必要的注释',
-    '保持函数简短',
-    '避免重复代码'
-  ],
+  codeStyle: ["遵循团队代码规范", "使用有意义的命名", "添加必要的注释", "保持函数简短", "避免重复代码"],
 
   /**
    * 测试覆盖
    */
-  testing: [
-    '单元测试覆盖率 > 80%',
-    '关键路径有集成测试',
-    'API有端到端测试',
-    '定期运行测试',
-    '使用测试驱动开发'
-  ],
+  testing: ["单元测试覆盖率 > 80%", "关键路径有集成测试", "API有端到端测试", "定期运行测试", "使用测试驱动开发"],
 
   /**
    * 代码审查
    */
   codeReview: [
-    '所有代码必须经过审查',
-    '至少一人批准才能合并',
-    '关注代码质量而非格式',
-    '提供建设性反馈',
-    '及时处理审查意见'
+    "所有代码必须经过审查",
+    "至少一人批准才能合并",
+    "关注代码质量而非格式",
+    "提供建设性反馈",
+    "及时处理审查意见",
   ],
 
   /**
    * 文档完善
    */
-  documentation: [
-    'API文档完整',
-    '架构文档清晰',
-    '部署文档可操作',
-    '故障排除指南实用',
-    '定期更新文档'
-  ]
+  documentation: ["API文档完整", "架构文档清晰", "部署文档可操作", "故障排除指南实用", "定期更新文档"],
 };
 ```
 
@@ -2377,23 +2219,13 @@ export const recommendedTools = {
    */
   performance: {
     profiling: [
-      'Chrome DevTools - 前端性能分析',
-      'Node.js Profiler - 后端性能分析',
-      'pprof - Go语言性能分析',
-      'JProfiler - Java性能分析'
+      "Chrome DevTools - 前端性能分析",
+      "Node.js Profiler - 后端性能分析",
+      "pprof - Go语言性能分析",
+      "JProfiler - Java性能分析",
     ],
-    monitoring: [
-      'Prometheus - 指标监控',
-      'Grafana - 可视化面板',
-      'Jaeger - 分布式追踪',
-      'ELK Stack - 日志分析'
-    ],
-    loadTesting: [
-      'JMeter - 压力测试',
-      'k6 - 现代化负载测试',
-      'Locust - Python负载测试',
-      'Artillery - Node.js负载测试'
-    ]
+    monitoring: ["Prometheus - 指标监控", "Grafana - 可视化面板", "Jaeger - 分布式追踪", "ELK Stack - 日志分析"],
+    loadTesting: ["JMeter - 压力测试", "k6 - 现代化负载测试", "Locust - Python负载测试", "Artillery - Node.js负载测试"],
   },
 
   /**
@@ -2401,62 +2233,31 @@ export const recommendedTools = {
    */
   codeQuality: {
     linting: [
-      'ESLint - JavaScript/TypeScript代码检查',
-      'Prettier - 代码格式化',
-      'SonarQube - 代码质量分析',
-      'TSLint - TypeScript代码检查'
+      "ESLint - JavaScript/TypeScript代码检查",
+      "Prettier - 代码格式化",
+      "SonarQube - 代码质量分析",
+      "TSLint - TypeScript代码检查",
     ],
-    testing: [
-      'Jest - JavaScript测试框架',
-      'Vitest - 快速的单元测试',
-      'Cypress - 端到端测试',
-      'Supertest - HTTP测试'
-    ],
-    coverage: [
-      'Istanbul - 代码覆盖率',
-      'Codecov - 覆盖率报告',
-      'Coveralls - 覆盖率跟踪'
-    ]
+    testing: ["Jest - JavaScript测试框架", "Vitest - 快速的单元测试", "Cypress - 端到端测试", "Supertest - HTTP测试"],
+    coverage: ["Istanbul - 代码覆盖率", "Codecov - 覆盖率报告", "Coveralls - 覆盖率跟踪"],
   },
 
   /**
    * 安全工具
    */
   security: {
-    scanning: [
-      'Snyk - 依赖漏洞扫描',
-      'OWASP ZAP - Web应用安全扫描',
-      'Nessus - 漏洞扫描',
-      'Burp Suite - Web安全测试'
-    ],
-    sast: [
-      'SonarQube - 静态代码分析',
-      'Semgrep - 语义代码分析',
-      'CodeQL - 代码查询'
-    ]
+    scanning: ["Snyk - 依赖漏洞扫描", "OWASP ZAP - Web应用安全扫描", "Nessus - 漏洞扫描", "Burp Suite - Web安全测试"],
+    sast: ["SonarQube - 静态代码分析", "Semgrep - 语义代码分析", "CodeQL - 代码查询"],
   },
 
   /**
    * 部署工具
    */
   deployment: {
-    containerization: [
-      'Docker - 容器化',
-      'Kubernetes - 容器编排',
-      'Docker Compose - 本地开发'
-    ],
-    cicd: [
-      'GitHub Actions - CI/CD',
-      'GitLab CI - CI/CD',
-      'Jenkins - 持续集成',
-      'ArgoCD - GitOps'
-    ],
-    infrastructure: [
-      'Terraform - 基础设施即代码',
-      'Ansible - 配置管理',
-      'Helm - Kubernetes包管理'
-    ]
-  }
+    containerization: ["Docker - 容器化", "Kubernetes - 容器编排", "Docker Compose - 本地开发"],
+    cicd: ["GitHub Actions - CI/CD", "GitLab CI - CI/CD", "Jenkins - 持续集成", "ArgoCD - GitOps"],
+    infrastructure: ["Terraform - 基础设施即代码", "Ansible - 配置管理", "Helm - Kubernetes包管理"],
+  },
 };
 ```
 
@@ -2472,23 +2273,18 @@ export const learningResources = {
    */
   architecture: {
     books: [
-      '《软件架构模式》- Mark Richards',
-      '《微服务设计》- Sam Newman',
-      '《企业应用架构模式》- Martin Fowler',
-      '《分布式系统原理与范型》- Andrew Tanenbaum'
+      "《软件架构模式》- Mark Richards",
+      "《微服务设计》- Sam Newman",
+      "《企业应用架构模式》- Martin Fowler",
+      "《分布式系统原理与范型》- Andrew Tanenbaum",
     ],
-    courses: [
-      'Coursera - 软件架构',
-      'Udemy - 微服务架构',
-      'Pluralsight - 系统设计',
-      '极客时间 - 软件工程之美'
-    ],
+    courses: ["Coursera - 软件架构", "Udemy - 微服务架构", "Pluralsight - 系统设计", "极客时间 - 软件工程之美"],
     websites: [
-      'https://martinfowler.com/ - Martin Fowler博客',
-      'https://highscalability.com/ - 高扩展性案例',
-      'https://www.infoq.com/architecture/ - InfoQ架构',
-      'https://aws.amazon.com/architecture/ - AWS架构中心'
-    ]
+      "https://martinfowler.com/ - Martin Fowler博客",
+      "https://highscalability.com/ - 高扩展性案例",
+      "https://www.infoq.com/architecture/ - InfoQ架构",
+      "https://aws.amazon.com/architecture/ - AWS架构中心",
+    ],
   },
 
   /**
@@ -2496,16 +2292,16 @@ export const learningResources = {
    */
   performance: {
     books: [
-      '《高性能MySQL》- Baron Schwartz',
-      '《深入理解计算机系统》- Randal Bryant',
-      '《高性能网站建设指南》- Steve Souders',
-      '《Java性能权威指南》- Scott Oaks'
+      "《高性能MySQL》- Baron Schwartz",
+      "《深入理解计算机系统》- Randal Bryant",
+      "《高性能网站建设指南》- Steve Souders",
+      "《Java性能权威指南》- Scott Oaks",
     ],
     websites: [
-      'https://web.dev/performance/ - Web性能',
-      'https://developer.mozilla.org/Performance - MDN性能',
-      'https://www.phpbench.com/ - 性能基准测试'
-    ]
+      "https://web.dev/performance/ - Web性能",
+      "https://developer.mozilla.org/Performance - MDN性能",
+      "https://www.phpbench.com/ - 性能基准测试",
+    ],
   },
 
   /**
@@ -2513,17 +2309,13 @@ export const learningResources = {
    */
   security: {
     books: [
-      '《Web安全深度剖析》- 陈佳',
-      '《白帽子讲Web安全》- 吴翰清',
-      '《代码审计》- 徐焱',
-      '《黑客攻防技术宝典》- Dafydd Stuttard'
+      "《Web安全深度剖析》- 陈佳",
+      "《白帽子讲Web安全》- 吴翰清",
+      "《代码审计》- 徐焱",
+      "《黑客攻防技术宝典》- Dafydd Stuttard",
     ],
-    websites: [
-      'https://owasp.org/ - OWASP',
-      'https://cwe.mitre.org/ - CWE',
-      'https://portswigger.net/ - Web安全学院'
-    ]
-  }
+    websites: ["https://owasp.org/ - OWASP", "https://cwe.mitre.org/ - CWE", "https://portswigger.net/ - Web安全学院"],
+  },
 };
 ```
 
@@ -2531,13 +2323,10 @@ export const learningResources = {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -2558,8 +2347,6 @@ export const learningResources = {
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -2588,8 +2375,6 @@ export const learningResources = {
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -2627,7 +2412,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -2643,8 +2428,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -2657,7 +2440,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -2672,9 +2455,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -2682,9 +2465,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -2692,20 +2478,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -2714,6 +2498,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -2729,17 +2514,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -2747,6 +2533,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -2757,6 +2544,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -2765,8 +2553,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -2774,21 +2560,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2797,10 +2585,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2826,16 +2611,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2844,26 +2629,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -2879,7 +2659,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -2911,14 +2691,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -2929,17 +2707,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -2949,17 +2730,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -2969,21 +2753,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

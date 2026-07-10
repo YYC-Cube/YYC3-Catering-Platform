@@ -4,7 +4,18 @@
  * @author YYC³
  * @version 1.0.0
  */
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, CreatedAt, UpdatedAt, DeletedAt } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  ForeignKey,
+  CreatedAt,
+  UpdatedAt,
+  DeletedAt,
+} from 'sequelize-typescript';
 import { Order, PaymentStatus } from './Order.model';
 
 // 支付方式枚举
@@ -15,14 +26,14 @@ export enum PaymentMethod {
   ALIPAY = 'alipay',
   WECHAT_PAY = 'wechat_pay',
   CASH = 'cash',
-  WALLET = 'wallet'
+  WALLET = 'wallet',
 }
 
 @Table({
   tableName: 'order_payments',
   timestamps: true,
   underscored: true,
-  paranoid: true
+  paranoid: true,
 })
 export class OrderPayment extends Model<OrderPayment> {
   @PrimaryKey
@@ -34,56 +45,56 @@ export class OrderPayment extends Model<OrderPayment> {
   @Column({
     type: DataType.BIGINT,
     allowNull: false,
-    unique: true
+    unique: true,
   })
   order_id: number;
 
   @Column({
     type: DataType.ENUM(...Object.values(PaymentMethod)),
-    allowNull: false
+    allowNull: false,
   })
   payment_method: PaymentMethod;
 
   @Column({
     type: DataType.ENUM(...Object.values(PaymentStatus)),
-    defaultValue: PaymentStatus.UNPAID
+    defaultValue: PaymentStatus.UNPAID,
   })
   status: PaymentStatus;
 
   @Column({
     type: DataType.DECIMAL(10, 2),
     allowNull: false,
-    defaultValue: 0
+    defaultValue: 0,
   })
   amount: number;
 
   @Column({
     type: DataType.STRING(255),
-    allowNull: true
+    allowNull: true,
   })
   transaction_id: string;
 
   @Column({
     type: DataType.STRING(1000),
-    allowNull: true
+    allowNull: true,
   })
   payment_details: string;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true
+    allowNull: true,
   })
   paid_at: Date;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true
+    allowNull: true,
   })
   refunded_at: Date;
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: true
+    allowNull: true,
   })
   refund_reason: string;
 

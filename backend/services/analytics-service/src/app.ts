@@ -25,10 +25,12 @@ const app = express();
 
 // 配置中间件
 app.use(helmet());
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || '*',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || '*',
+    credentials: true,
+  }),
+);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(compression());
@@ -94,24 +96,24 @@ app.use('*', (req, res) => {
 async function startApp(port: number): Promise<void> {
   try {
     logger.info('启动数据分析服务...');
-    
+
     // 初始化数据库连接
     const sequelize = new Sequelize(dbConfig);
     sequelize.addModels([AnalyticsData, UserAnalytics, OrderAnalytics]);
-    
+
     // 测试数据库连接
     await sequelize.authenticate();
     logger.info('数据库连接成功');
-    
+
     // 同步数据库模型
     await sequelize.sync({ alter: true });
     logger.info('数据库模型同步成功');
-    
+
     // 启动服务器
     app.listen(port, () => {
       logger.info(`数据分析服务已启动，监听端口 ${port}`);
     });
-    
+
     // 处理进程信号
     process.on('SIGTERM', async () => {
       logger.info('接收到SIGTERM信号，正在关闭服务...');
@@ -119,7 +121,7 @@ async function startApp(port: number): Promise<void> {
       logger.info('数据库连接已关闭');
       process.exit(0);
     });
-    
+
     process.on('SIGINT', async () => {
       logger.info('接收到SIGINT信号，正在关闭服务...');
       await sequelize.close();

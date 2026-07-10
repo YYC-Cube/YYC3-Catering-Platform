@@ -84,6 +84,7 @@ bun run start
 ### 菜品管理
 
 #### 创建菜品
+
 ```http
 POST /api/v1/menu/items
 Content-Type: application/json
@@ -101,16 +102,19 @@ Content-Type: application/json
 ```
 
 #### 获取菜品列表
+
 ```http
 GET /api/v1/menu/items?page=1&limit=20&category=main_course&status=available
 ```
 
 #### 获取菜品详情
+
 ```http
 GET /api/v1/menu/items/{id}
 ```
 
 #### 更新菜品
+
 ```http
 PUT /api/v1/menu/items/{id}
 Content-Type: application/json
@@ -122,6 +126,7 @@ Content-Type: application/json
 ```
 
 #### 删除菜品
+
 ```http
 DELETE /api/v1/menu/items/{id}
 ```
@@ -129,21 +134,25 @@ DELETE /api/v1/menu/items/{id}
 ### 搜索和推荐
 
 #### 搜索菜品
+
 ```http
 GET /api/v1/menu/search?keyword=宫保鸡丁&category=main_course
 ```
 
 #### 获取推荐菜品
+
 ```http
 GET /api/v1/menu/recommended?limit=10
 ```
 
 #### 获取热门菜品
+
 ```http
 GET /api/v1/menu/popular?limit=10
 ```
 
 #### 获取新品菜品
+
 ```http
 GET /api/v1/menu/new?limit=10
 ```
@@ -151,11 +160,13 @@ GET /api/v1/menu/new?limit=10
 ### 统计分析
 
 #### 获取分类统计
+
 ```http
 GET /api/v1/menu/stats/categories
 ```
 
 #### 获取销量统计
+
 ```http
 GET /api/v1/menu/stats/sales?startDate=2025-01-01&endDate=2025-01-31
 ```
@@ -163,6 +174,7 @@ GET /api/v1/menu/stats/sales?startDate=2025-01-01&endDate=2025-01-31
 ### 批量操作
 
 #### 批量更新菜品状态
+
 ```http
 PATCH /api/v1/menu/items/batch/status
 Content-Type: application/json
@@ -176,11 +188,13 @@ Content-Type: application/json
 ## 🏥 健康检查
 
 ### 服务健康状态
+
 ```http
 GET /health
 ```
 
 响应示例：
+
 ```json
 {
   "status": "healthy",
@@ -205,15 +219,15 @@ GET /health
 
 ## 🔒 错误代码
 
-| 错误代码 | HTTP状态码 | 描述 |
-|---------|-----------|------|
-| `NOT_FOUND` | 404 | 请求的资源不存在 |
-| `VALIDATION_ERROR` | 400 | 请求参数验证失败 |
-| `UNAUTHORIZED` | 401 | 未授权访问 |
-| `FORBIDDEN` | 403 | 权限不足 |
-| `RATE_LIMIT_EXCEEDED` | 429 | 请求频率超限 |
-| `INTERNAL_SERVER_ERROR` | 500 | 服务器内部错误 |
-| `SERVICE_UNAVAILABLE` | 503 | 服务暂时不可用 |
+| 错误代码                | HTTP状态码 | 描述             |
+| ----------------------- | ---------- | ---------------- |
+| `NOT_FOUND`             | 404        | 请求的资源不存在 |
+| `VALIDATION_ERROR`      | 400        | 请求参数验证失败 |
+| `UNAUTHORIZED`          | 401        | 未授权访问       |
+| `FORBIDDEN`             | 403        | 权限不足         |
+| `RATE_LIMIT_EXCEEDED`   | 429        | 请求频率超限     |
+| `INTERNAL_SERVER_ERROR` | 500        | 服务器内部错误   |
+| `SERVICE_UNAVAILABLE`   | 503        | 服务暂时不可用   |
 
 ## 📝 开发指南
 
@@ -249,10 +263,12 @@ src/
 import { dbManager } from './config/database';
 
 // 查询
-const result = await dbManager.query('SELECT * FROM menu_items WHERE id = $1', [id]);
+const result = await dbManager.query('SELECT * FROM menu_items WHERE id = $1', [
+  id,
+]);
 
 // 事务
-await dbManager.transaction(async (client) => {
+await dbManager.transaction(async client => {
   await client.query('INSERT INTO orders ...');
   await client.query('UPDATE inventory ...');
 });
@@ -282,7 +298,7 @@ services:
   api:
     build: .
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - DATABASE_URL=postgresql://user:pass@postgres:5432/yyc3
       - REDIS_HOST=redis

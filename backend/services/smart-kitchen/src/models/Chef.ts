@@ -15,7 +15,7 @@ export enum ChefSpecialization {
   GRILL = 'grill',
   SOUP = 'soup',
   SALAD = 'salad',
-  ALL = 'all'
+  ALL = 'all',
 }
 
 export class Chef {

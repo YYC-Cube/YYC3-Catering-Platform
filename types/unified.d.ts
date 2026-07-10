@@ -9,7 +9,7 @@
 // 全局命名空间
 declare namespace YYC3CateringPlatform {
   // ========================== 基础响应类型 ==========================
-  
+
   /**
    * 基础响应接口
    */
@@ -54,7 +54,7 @@ declare namespace YYC3CateringPlatform {
   }
 
   // ========================== 验证相关类型 ==========================
-  
+
   /**
    * 验证错误接口
    */
@@ -122,7 +122,7 @@ declare namespace YYC3CateringPlatform {
   }
 
   // ========================== API版本控制 ==========================
-  
+
   /**
    * API版本信息
    */
@@ -159,7 +159,7 @@ declare namespace YYC3CateringPlatform {
   }
 
   // ========================== 行动相关类型 ==========================
-  
+
   /**
    * 行动类型枚举
    */
@@ -169,7 +169,7 @@ declare namespace YYC3CateringPlatform {
     DATA_COLLECTION = 'data_collection',
     OPTIMIZATION = 'optimization',
     MONITORING = 'monitoring',
-    COMMUNICATION = 'communication'
+    COMMUNICATION = 'communication',
   }
 
   /**
@@ -180,7 +180,7 @@ declare namespace YYC3CateringPlatform {
     IN_PROGRESS = 'in_progress',
     COMPLETED = 'completed',
     FAILED = 'failed',
-    CANCELLED = 'cancelled'
+    CANCELLED = 'cancelled',
   }
 
   /**
@@ -280,7 +280,7 @@ declare namespace YYC3CateringPlatform {
   }
 
   // ========================== 目标相关类型 ==========================
-  
+
   /**
    * 目标类型枚举
    */
@@ -288,7 +288,7 @@ declare namespace YYC3CateringPlatform {
     PRIMARY = 'primary',
     SECONDARY = 'secondary',
     TERTIARY = 'tertiary',
-    URGENT = 'urgent'
+    URGENT = 'urgent',
   }
 
   /**
@@ -300,7 +300,7 @@ declare namespace YYC3CateringPlatform {
     COMPLETED = 'completed',
     FAILED = 'failed',
     CANCELLED = 'cancelled',
-    PAUSED = 'paused'
+    PAUSED = 'paused',
   }
 
   /**
@@ -381,7 +381,7 @@ declare namespace YYC3CateringPlatform {
   }
 
   // ========================== 通用工具类型 ==========================
-  
+
   /**
    * 排序参数
    */
@@ -426,6 +426,4 @@ declare namespace YYC3CateringPlatform {
 
 // 导出类型以便在TypeScript中直接使用
 export as namespace YYC3CateringPlatform;
-export {
-  YYC3CateringPlatform
-};
+export { YYC3CateringPlatform };

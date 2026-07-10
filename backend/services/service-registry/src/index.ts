@@ -20,11 +20,7 @@ export {
 } from './consul-client';
 
 // 导出服务注册管理器
-export {
-  ServiceRegistryManager,
-  ServiceRegistryManagerFactory,
-  ServiceConfig,
-} from './service-registry-manager';
+export { ServiceRegistryManager, ServiceRegistryManagerFactory, ServiceConfig } from './service-registry-manager';
 
 // 导出服务发现客户端
 export {
@@ -45,21 +41,14 @@ export const initServiceRegistry = async (config: ServiceConfig): Promise<boolea
 /**
  * 快速初始化服务发现
  */
-export const initServiceDiscovery = (
-  serviceName: string,
-  strategy?: LoadBalancingStrategy
-): ServiceDiscoveryClient => {
+export const initServiceDiscovery = (serviceName: string, strategy?: LoadBalancingStrategy): ServiceDiscoveryClient => {
   return ServiceDiscoveryClientFactory.getOrCreate(serviceName, { strategy });
 };
 
 /**
  * 快速调用服务
  */
-export const callService = async <T = any>(
-  serviceName: string,
-  path: string,
-  options?: RequestInit
-): Promise<T> => {
+export const callService = async <T = any>(serviceName: string, path: string, options?: RequestInit): Promise<T> => {
   const client = ServiceDiscoveryClientFactory.getOrCreate(serviceName);
   return await client.callService<T>(path, options);
 };

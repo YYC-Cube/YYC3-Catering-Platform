@@ -10,22 +10,22 @@ export interface FaultRecord {
    * 故障ID
    */
   id: string;
-  
+
   /**
    * 服务ID
    */
   serviceId: string;
-  
+
   /**
    * 故障类型
    */
   faultType: 'critical' | 'warning' | 'info';
-  
+
   /**
    * 故障状态
    */
   status: 'unhealthy' | 'degraded';
-  
+
   /**
    * 故障详情
    */
@@ -34,27 +34,27 @@ export interface FaultRecord {
     errorRate: number;
     [key: string]: unknown;
   };
-  
+
   /**
    * 故障检测时间
    */
   detectedAt: Date;
-  
+
   /**
    * 恢复尝试次数
    */
   recoveryAttempts: number;
-  
+
   /**
    * 是否恢复成功
    */
   recovered: boolean;
-  
+
   /**
    * 恢复操作
    */
   recoveryAction: string;
-  
+
   /**
    * 故障解决时间
    */

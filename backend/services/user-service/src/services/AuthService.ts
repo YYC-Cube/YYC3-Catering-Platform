@@ -122,7 +122,7 @@ class AuthService {
       },
       {
         where: { id: user.id },
-      }
+      },
     );
 
     return {

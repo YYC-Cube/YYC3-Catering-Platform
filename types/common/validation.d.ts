@@ -83,5 +83,11 @@ export interface PatternValidation extends ValidationConfig {
  * 字段验证配置
  */
 export interface FieldValidation {
-  [key: string]: ValidationConfig | LengthValidation | NumberValidation | DateValidation | PatternValidation | ValidationConfig[];
+  [key: string]:
+    | ValidationConfig
+    | LengthValidation
+    | NumberValidation
+    | DateValidation
+    | PatternValidation
+    | ValidationConfig[];
 }

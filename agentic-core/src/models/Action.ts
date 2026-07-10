@@ -12,7 +12,7 @@ export enum ActionType {
   DATA_COLLECTION = 'data_collection',
   OPTIMIZATION = 'optimization',
   MONITORING = 'monitoring',
-  COMMUNICATION = 'communication'
+  COMMUNICATION = 'communication',
 }
 
 /**
@@ -23,7 +23,7 @@ export enum ActionStatus {
   IN_PROGRESS = 'in_progress',
   COMPLETED = 'completed',
   FAILED = 'failed',
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }
 
 /**

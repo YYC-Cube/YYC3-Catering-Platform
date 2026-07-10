@@ -26,7 +26,7 @@ import type {
   TaskQueryParams,
   InventoryQueryParams,
   TaskStatus,
-  EmployeeStatus
+  EmployeeStatus,
 } from '@/types/kitchen';
 
 export function useKitchen() {
@@ -42,7 +42,7 @@ export function useKitchen() {
     normalEquipment: 0,
     maintenanceEquipment: 0,
     lowStockItems: 0,
-    expiredItems: 0
+    expiredItems: 0,
   });
   const analytics = ref<KitchenAnalytics | null>(null);
   const equipment = ref<KitchenEquipment[]>([]);
@@ -584,11 +584,7 @@ export function useKitchen() {
   };
 
   const refreshData = async () => {
-    await Promise.all([
-      loadStats(),
-      loadTasks(),
-      loadEmployees()
-    ]);
+    await Promise.all([loadStats(), loadTasks(), loadEmployees()]);
   };
 
   const startAutoRefresh = (interval: number = 30000) => {
@@ -668,6 +664,6 @@ export function useKitchen() {
     deleteDisplay,
     refreshData,
     startAutoRefresh,
-    stopAutoRefresh
+    stopAutoRefresh,
   };
 }

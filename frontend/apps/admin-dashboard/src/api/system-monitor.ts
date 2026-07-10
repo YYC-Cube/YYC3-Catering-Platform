@@ -3,151 +3,151 @@
  */
 
 export interface SystemMetric {
-  id: string
-  name: string
-  value: number
-  unit: string
+  id: string;
+  name: string;
+  value: number;
+  unit: string;
   threshold: {
-    warning: number
-    critical: number
-  }
-  status: 'normal' | 'warning' | 'critical'
-  timestamp: string
-  category: 'cpu' | 'memory' | 'disk' | 'network' | 'database' | 'application'
-  trend: 'up' | 'down' | 'stable'
+    warning: number;
+    critical: number;
+  };
+  status: 'normal' | 'warning' | 'critical';
+  timestamp: string;
+  category: 'cpu' | 'memory' | 'disk' | 'network' | 'database' | 'application';
+  trend: 'up' | 'down' | 'stable';
   history: Array<{
-    timestamp: string
-    value: number
-  }>
+    timestamp: string;
+    value: number;
+  }>;
 }
 
 export interface SystemAlert {
-  id: string
-  title: string
-  description: string
-  severity: 'low' | 'medium' | 'high' | 'critical'
-  status: 'active' | 'acknowledged' | 'resolved'
-  category: 'system' | 'performance' | 'security' | 'application'
-  source: string
-  timestamp: string
-  acknowledgedAt?: string
-  resolvedAt?: string
-  acknowledgedBy?: string
-  resolvedBy?: string
-  metadata?: Record<string, any>
+  id: string;
+  title: string;
+  description: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  status: 'active' | 'acknowledged' | 'resolved';
+  category: 'system' | 'performance' | 'security' | 'application';
+  source: string;
+  timestamp: string;
+  acknowledgedAt?: string;
+  resolvedAt?: string;
+  acknowledgedBy?: string;
+  resolvedBy?: string;
+  metadata?: Record<string, any>;
 }
 
 export interface SystemLog {
-  id: string
-  level: 'debug' | 'info' | 'warn' | 'error' | 'fatal'
-  message: string
-  category: string
-  source: string
-  timestamp: string
-  metadata?: Record<string, any>
-  userId?: string
-  sessionId?: string
-  requestId?: string
-  ip?: string
-  userAgent?: string
+  id: string;
+  level: 'debug' | 'info' | 'warn' | 'error' | 'fatal';
+  message: string;
+  category: string;
+  source: string;
+  timestamp: string;
+  metadata?: Record<string, any>;
+  userId?: string;
+  sessionId?: string;
+  requestId?: string;
+  ip?: string;
+  userAgent?: string;
 }
 
 export interface SystemHealth {
-  status: 'healthy' | 'degraded' | 'unhealthy'
-  score: number
+  status: 'healthy' | 'degraded' | 'unhealthy';
+  score: number;
   checks: Array<{
-    name: string
-    status: 'pass' | 'warn' | 'fail'
-    message?: string
-    duration: number
-    timestamp: string
-  }>
-  uptime: number
-  version: string
-  environment: string
-  timestamp: string
+    name: string;
+    status: 'pass' | 'warn' | 'fail';
+    message?: string;
+    duration: number;
+    timestamp: string;
+  }>;
+  uptime: number;
+  version: string;
+  environment: string;
+  timestamp: string;
 }
 
 export interface PerformanceReport {
-  id: string
-  title: string
+  id: string;
+  title: string;
   period: {
-    start: string
-    end: string
-  }
+    start: string;
+    end: string;
+  };
   metrics: {
     responseTime: {
-      avg: number
-      min: number
-      max: number
-      p50: number
-      p95: number
-      p99: number
-    }
+      avg: number;
+      min: number;
+      max: number;
+      p50: number;
+      p95: number;
+      p99: number;
+    };
     throughput: {
-      requests: number
-      errors: number
-      errorRate: number
-    }
+      requests: number;
+      errors: number;
+      errorRate: number;
+    };
     resources: {
-      cpu: number
-      memory: number
-      disk: number
-      network: number
-    }
-  }
+      cpu: number;
+      memory: number;
+      disk: number;
+      network: number;
+    };
+  };
   endpoints: Array<{
-    path: string
-    method: string
-    requests: number
-    avgResponseTime: number
-    errorRate: number
-  }>
+    path: string;
+    method: string;
+    requests: number;
+    avgResponseTime: number;
+    errorRate: number;
+  }>;
   errors: Array<{
-    type: string
-    count: number
-    message: string
-  }>
-  generatedAt: string
+    type: string;
+    count: number;
+    message: string;
+  }>;
+  generatedAt: string;
 }
 
 export interface SystemStatus {
   overview: {
-    status: 'operational' | 'degraded' | 'down'
-    uptime: number
-    responseTime: number
-    activeUsers: number
-    totalRequests: number
-    errorRate: number
-  }
+    status: 'operational' | 'degraded' | 'down';
+    uptime: number;
+    responseTime: number;
+    activeUsers: number;
+    totalRequests: number;
+    errorRate: number;
+  };
   services: Array<{
-    name: string
-    status: 'running' | 'stopped' | 'error'
-    cpu: number
-    memory: number
-    uptime: number
-    lastCheck: string
-  }>
+    name: string;
+    status: 'running' | 'stopped' | 'error';
+    cpu: number;
+    memory: number;
+    uptime: number;
+    lastCheck: string;
+  }>;
   databases: Array<{
-    name: string
-    status: 'connected' | 'disconnected' | 'error'
-    connections: number
-    maxConnections: number
-    responseTime: number
-  }>
+    name: string;
+    status: 'connected' | 'disconnected' | 'error';
+    connections: number;
+    maxConnections: number;
+    responseTime: number;
+  }>;
   external: Array<{
-    name: string
-    status: 'available' | 'unavailable' | 'degraded'
-    responseTime: number
-    lastCheck: string
-  }>
+    name: string;
+    status: 'available' | 'unavailable' | 'degraded';
+    responseTime: number;
+    lastCheck: string;
+  }>;
 }
 
 export enum AlertSeverity {
   LOW = 'low',
   MEDIUM = 'medium',
   HIGH = 'high',
-  CRITICAL = 'critical'
+  CRITICAL = 'critical',
 }
 
 export enum MetricCategory {
@@ -156,7 +156,7 @@ export enum MetricCategory {
   DISK = 'disk',
   NETWORK = 'network',
   DATABASE = 'database',
-  APPLICATION = 'application'
+  APPLICATION = 'application',
 }
 
 export enum LogLevel {
@@ -164,58 +164,55 @@ export enum LogLevel {
   INFO = 'info',
   WARN = 'warn',
   ERROR = 'error',
-  FATAL = 'fatal'
+  FATAL = 'fatal',
 }
 
 /**
  * 系统监控API类
  */
 export class SystemMonitorAPI {
-  private baseURL: string
-  private wsConnection: WebSocket | null = null
+  private baseURL: string;
+  private wsConnection: WebSocket | null = null;
 
   constructor(baseURL: string = '/api/v1/system') {
-    this.baseURL = baseURL
+    this.baseURL = baseURL;
   }
 
   /**
    * 获取系统指标
    */
   async getSystemMetrics(params?: {
-    categories?: MetricCategory[]
-    timeRange?: string
-    limit?: number
+    categories?: MetricCategory[];
+    timeRange?: string;
+    limit?: number;
   }): Promise<{ success: boolean; data: SystemMetric[] }> {
     try {
-      const queryParams = new URLSearchParams()
+      const queryParams = new URLSearchParams();
       if (params?.categories) {
-        queryParams.append('categories', params.categories.join(','))
+        queryParams.append('categories', params.categories.join(','));
       }
       if (params?.timeRange) {
-        queryParams.append('timeRange', params.timeRange)
+        queryParams.append('timeRange', params.timeRange);
       }
       if (params?.limit) {
-        queryParams.append('limit', params.limit.toString())
+        queryParams.append('limit', params.limit.toString());
       }
 
-      const response = await fetch(
-        `${this.baseURL}/metrics?${queryParams.toString()}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      const response = await fetch(`${this.baseURL}/metrics?${queryParams.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Get system metrics failed:', error)
-      throw error
+      console.error('Get system metrics failed:', error);
+      throw error;
     }
   }
 
@@ -223,52 +220,49 @@ export class SystemMonitorAPI {
    * 获取系统告警
    */
   async getSystemAlerts(params?: {
-    page?: number
-    limit?: number
-    severity?: AlertSeverity[]
-    status?: string[]
-    category?: string[]
-    search?: string
+    page?: number;
+    limit?: number;
+    severity?: AlertSeverity[];
+    status?: string[];
+    category?: string[];
+    search?: string;
   }): Promise<{ success: boolean; data: { items: SystemAlert[]; pagination: any } }> {
     try {
-      const queryParams = new URLSearchParams()
+      const queryParams = new URLSearchParams();
       if (params?.page) {
-        queryParams.append('page', params.page.toString())
+        queryParams.append('page', params.page.toString());
       }
       if (params?.limit) {
-        queryParams.append('limit', params.limit.toString())
+        queryParams.append('limit', params.limit.toString());
       }
       if (params?.severity) {
-        queryParams.append('severity', params.severity.join(','))
+        queryParams.append('severity', params.severity.join(','));
       }
       if (params?.status) {
-        queryParams.append('status', params.status.join(','))
+        queryParams.append('status', params.status.join(','));
       }
       if (params?.category) {
-        queryParams.append('category', params.category.join(','))
+        queryParams.append('category', params.category.join(','));
       }
       if (params?.search) {
-        queryParams.append('search', params.search)
+        queryParams.append('search', params.search);
       }
 
-      const response = await fetch(
-        `${this.baseURL}/alerts?${queryParams.toString()}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      const response = await fetch(`${this.baseURL}/alerts?${queryParams.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Get system alerts failed:', error)
-      throw error
+      console.error('Get system alerts failed:', error);
+      throw error;
     }
   }
 
@@ -276,60 +270,57 @@ export class SystemMonitorAPI {
    * 获取系统日志
    */
   async getSystemLogs(params?: {
-    page?: number
-    limit?: number
-    level?: LogLevel[]
-    category?: string[]
-    source?: string[]
-    search?: string
-    startTime?: string
-    endTime?: string
+    page?: number;
+    limit?: number;
+    level?: LogLevel[];
+    category?: string[];
+    source?: string[];
+    search?: string;
+    startTime?: string;
+    endTime?: string;
   }): Promise<{ success: boolean; data: { items: SystemLog[]; pagination: any } }> {
     try {
-      const queryParams = new URLSearchParams()
+      const queryParams = new URLSearchParams();
       if (params?.page) {
-        queryParams.append('page', params.page.toString())
+        queryParams.append('page', params.page.toString());
       }
       if (params?.limit) {
-        queryParams.append('limit', params.limit.toString())
+        queryParams.append('limit', params.limit.toString());
       }
       if (params?.level) {
-        queryParams.append('level', params.level.join(','))
+        queryParams.append('level', params.level.join(','));
       }
       if (params?.category) {
-        queryParams.append('category', params.category.join(','))
+        queryParams.append('category', params.category.join(','));
       }
       if (params?.source) {
-        queryParams.append('source', params.source.join(','))
+        queryParams.append('source', params.source.join(','));
       }
       if (params?.search) {
-        queryParams.append('search', params.search)
+        queryParams.append('search', params.search);
       }
       if (params?.startTime) {
-        queryParams.append('startTime', params.startTime)
+        queryParams.append('startTime', params.startTime);
       }
       if (params?.endTime) {
-        queryParams.append('endTime', params.endTime)
+        queryParams.append('endTime', params.endTime);
       }
 
-      const response = await fetch(
-        `${this.baseURL}/logs?${queryParams.toString()}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      const response = await fetch(`${this.baseURL}/logs?${queryParams.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Get system logs failed:', error)
-      throw error
+      console.error('Get system logs failed:', error);
+      throw error;
     }
   }
 
@@ -343,16 +334,16 @@ export class SystemMonitorAPI {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Get system health failed:', error)
-      throw error
+      console.error('Get system health failed:', error);
+      throw error;
     }
   }
 
@@ -360,44 +351,41 @@ export class SystemMonitorAPI {
    * 获取性能报告
    */
   async getPerformanceReport(params?: {
-    period?: string
-    startTime?: string
-    endTime?: string
-    format?: 'json' | 'csv' | 'pdf'
+    period?: string;
+    startTime?: string;
+    endTime?: string;
+    format?: 'json' | 'csv' | 'pdf';
   }): Promise<{ success: boolean; data: PerformanceReport }> {
     try {
-      const queryParams = new URLSearchParams()
+      const queryParams = new URLSearchParams();
       if (params?.period) {
-        queryParams.append('period', params.period)
+        queryParams.append('period', params.period);
       }
       if (params?.startTime) {
-        queryParams.append('startTime', params.startTime)
+        queryParams.append('startTime', params.startTime);
       }
       if (params?.endTime) {
-        queryParams.append('endTime', params.endTime)
+        queryParams.append('endTime', params.endTime);
       }
       if (params?.format) {
-        queryParams.append('format', params.format)
+        queryParams.append('format', params.format);
       }
 
-      const response = await fetch(
-        `${this.baseURL}/performance/report?${queryParams.toString()}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      const response = await fetch(`${this.baseURL}/performance/report?${queryParams.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Get performance report failed:', error)
-      throw error
+      console.error('Get performance report failed:', error);
+      throw error;
     }
   }
 
@@ -411,16 +399,16 @@ export class SystemMonitorAPI {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Get system status failed:', error)
-      throw error
+      console.error('Get system status failed:', error);
+      throw error;
     }
   }
 
@@ -435,16 +423,16 @@ export class SystemMonitorAPI {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ note }),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Acknowledge alert failed:', error)
-      throw error
+      console.error('Acknowledge alert failed:', error);
+      throw error;
     }
   }
 
@@ -459,16 +447,16 @@ export class SystemMonitorAPI {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ note }),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Resolve alert failed:', error)
-      throw error
+      console.error('Resolve alert failed:', error);
+      throw error;
     }
   }
 
@@ -476,14 +464,14 @@ export class SystemMonitorAPI {
    * 创建告警规则
    */
   async createAlertRule(rule: {
-    name: string
-    description: string
-    metric: string
-    condition: string
-    threshold: number
-    severity: AlertSeverity
-    enabled: boolean
-    notifications?: string[]
+    name: string;
+    description: string;
+    metric: string;
+    condition: string;
+    threshold: number;
+    severity: AlertSeverity;
+    enabled: boolean;
+    notifications?: string[];
   }): Promise<{ success: boolean; data: any }> {
     try {
       const response = await fetch(`${this.baseURL}/alerts/rules`, {
@@ -492,16 +480,16 @@ export class SystemMonitorAPI {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(rule),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (error) {
-      console.error('Create alert rule failed:', error)
-      throw error
+      console.error('Create alert rule failed:', error);
+      throw error;
     }
   }
 
@@ -509,35 +497,32 @@ export class SystemMonitorAPI {
    * 导出日志
    */
   async exportLogs(params: {
-    startTime: string
-    endTime: string
-    level?: LogLevel[]
-    format: 'json' | 'csv' | 'txt'
+    startTime: string;
+    endTime: string;
+    level?: LogLevel[];
+    format: 'json' | 'csv' | 'txt';
   }): Promise<Blob> {
     try {
-      const queryParams = new URLSearchParams()
-      queryParams.append('startTime', params.startTime)
-      queryParams.append('endTime', params.endTime)
-      queryParams.append('format', params.format)
+      const queryParams = new URLSearchParams();
+      queryParams.append('startTime', params.startTime);
+      queryParams.append('endTime', params.endTime);
+      queryParams.append('format', params.format);
       if (params.level) {
-        queryParams.append('level', params.level.join(','))
+        queryParams.append('level', params.level.join(','));
       }
 
-      const response = await fetch(
-        `${this.baseURL}/logs/export?${queryParams.toString()}`,
-        {
-          method: 'GET',
-        }
-      )
+      const response = await fetch(`${this.baseURL}/logs/export?${queryParams.toString()}`, {
+        method: 'GET',
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.blob()
+      return await response.blob();
     } catch (error) {
-      console.error('Export logs failed:', error)
-      throw error
+      console.error('Export logs failed:', error);
+      throw error;
     }
   }
 
@@ -546,13 +531,13 @@ export class SystemMonitorAPI {
    */
   connectWebSocket(): WebSocket {
     if (this.wsConnection) {
-      this.wsConnection.close()
+      this.wsConnection.close();
     }
 
-    const wsURL = this.baseURL.replace('http', 'ws') + '/ws'
-    this.wsConnection = new WebSocket(wsURL)
+    const wsURL = this.baseURL.replace('http', 'ws') + '/ws';
+    this.wsConnection = new WebSocket(wsURL);
 
-    return this.wsConnection
+    return this.wsConnection;
   }
 
   /**
@@ -560,8 +545,8 @@ export class SystemMonitorAPI {
    */
   disconnectWebSocket(): void {
     if (this.wsConnection) {
-      this.wsConnection.close()
-      this.wsConnection = null
+      this.wsConnection.close();
+      this.wsConnection = null;
     }
   }
 
@@ -569,11 +554,11 @@ export class SystemMonitorAPI {
    * 获取WebSocket连接
    */
   getWebSocket(): WebSocket | null {
-    return this.wsConnection
+    return this.wsConnection;
   }
 }
 
 // 创建API实例
-export const systemMonitorAPI = new SystemMonitorAPI()
+export const systemMonitorAPI = new SystemMonitorAPI();
 
 // 类型和枚举已在定义时导出

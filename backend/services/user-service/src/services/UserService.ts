@@ -55,9 +55,7 @@ class UserService {
       {
         name: 'admin',
         description: '系统管理员',
-        permissions: [
-          { resource: '*', actions: ['*'] },
-        ],
+        permissions: [{ resource: '*', actions: ['*'] }],
         status: 'active',
       },
       {
@@ -127,7 +125,8 @@ class UserService {
     }
 
     // 获取或创建默认角色
-    const roleName = params.type === UserType.ADMIN ? 'admin' : params.type === UserType.MERCHANT ? 'merchant' : 'customer';
+    const roleName =
+      params.type === UserType.ADMIN ? 'admin' : params.type === UserType.MERCHANT ? 'merchant' : 'customer';
     const role = await Role.findOne({
       where: { name: roleName },
     });
@@ -175,7 +174,10 @@ class UserService {
    * @param password 密码
    * @returns 登录结果
    */
-  async login(phone: string, password: string): Promise<{
+  async login(
+    phone: string,
+    password: string,
+  ): Promise<{
     user: User;
     token: string;
     refreshToken: string;
@@ -208,7 +210,7 @@ class UserService {
         },
         {
           where: { id: user.id },
-        }
+        },
       );
 
       if (user.password_error_count >= 4) {
@@ -262,13 +264,15 @@ class UserService {
    * @param params 查询参数
    * @returns 用户列表
    */
-  async getUsers(params: {
-    page?: number;
-    limit?: number;
-    keyword?: string;
-    type?: UserType;
-    status?: UserStatus;
-  } = {}): Promise<{
+  async getUsers(
+    params: {
+      page?: number;
+      limit?: number;
+      keyword?: string;
+      type?: UserType;
+      status?: UserStatus;
+    } = {},
+  ): Promise<{
     users: User[];
     total: number;
     page: number;
@@ -354,10 +358,7 @@ class UserService {
   async resetPassword(id: string, newPassword: string): Promise<boolean> {
     const hashedPassword = await authService.hashPassword(newPassword);
 
-    const result = await User.update(
-      { password: hashedPassword },
-      { where: { id } }
-    );
+    const result = await User.update({ password: hashedPassword }, { where: { id } });
 
     logger.info(`用户 ${id} 密码重置成功`);
     return result[0] > 0;
@@ -371,7 +372,10 @@ class UserService {
   async getUserAddresses(userId: string): Promise<UserAddress[]> {
     return await UserAddress.findAll({
       where: { user_id: userId },
-      order: [['is_default', 'DESC'], ['created_at', 'DESC']],
+      order: [
+        ['is_default', 'DESC'],
+        ['created_at', 'DESC'],
+      ],
     });
   }
 
@@ -383,16 +387,10 @@ class UserService {
    */
   async setDefaultAddress(userId: string, addressId: string): Promise<boolean> {
     // 先将所有地址设为非默认
-    await UserAddress.update(
-      { is_default: false },
-      { where: { user_id: userId } }
-    );
+    await UserAddress.update({ is_default: false }, { where: { user_id: userId } });
 
     // 再将指定地址设为默认
-    const result = await UserAddress.update(
-      { is_default: true },
-      { where: { id: addressId, user_id: userId } }
-    );
+    const result = await UserAddress.update({ is_default: true }, { where: { id: addressId, user_id: userId } });
 
     return result[0] > 0;
   }

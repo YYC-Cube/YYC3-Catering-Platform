@@ -29,13 +29,13 @@ export class MenuItemController {
       res.status(201).json({
         success: true,
         message: '菜品创建成功',
-        data: menuItem
+        data: menuItem,
       });
     } catch (error: any) {
       logger.error('创建菜品失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '创建菜品失败'
+        message: error.message || '创建菜品失败',
       });
     }
   }
@@ -56,7 +56,7 @@ export class MenuItemController {
         maxPrice: maxPrice ? Number(maxPrice) : undefined,
         keyword: keyword as string,
         page: Number(page),
-        limit: Number(limit)
+        limit: Number(limit),
       });
 
       res.status(200).json({
@@ -66,14 +66,14 @@ export class MenuItemController {
           menuItems: result.menuItems,
           total: result.total,
           page: Number(page),
-          limit: Number(limit)
-        }
+          limit: Number(limit),
+        },
       });
     } catch (error: any) {
       logger.error('获取菜品列表失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取菜品列表失败'
+        message: error.message || '获取菜品列表失败',
       });
     }
   }
@@ -91,7 +91,7 @@ export class MenuItemController {
       if (!menuItem) {
         res.status(404).json({
           success: false,
-          message: '菜品不存在'
+          message: '菜品不存在',
         });
         return;
       }
@@ -99,13 +99,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '获取菜品详情成功',
-        data: menuItem
+        data: menuItem,
       });
     } catch (error: any) {
       logger.error('获取菜品详情失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取菜品详情失败'
+        message: error.message || '获取菜品详情失败',
       });
     }
   }
@@ -123,7 +123,7 @@ export class MenuItemController {
       if (!menuItem) {
         res.status(404).json({
           success: false,
-          message: '菜品不存在'
+          message: '菜品不存在',
         });
         return;
       }
@@ -131,13 +131,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '菜品更新成功',
-        data: menuItem
+        data: menuItem,
       });
     } catch (error: any) {
       logger.error('更新菜品失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '更新菜品失败'
+        message: error.message || '更新菜品失败',
       });
     }
   }
@@ -155,20 +155,20 @@ export class MenuItemController {
       if (!success) {
         res.status(404).json({
           success: false,
-          message: '菜品不存在'
+          message: '菜品不存在',
         });
         return;
       }
 
       res.status(200).json({
         success: true,
-        message: '菜品删除成功'
+        message: '菜品删除成功',
       });
     } catch (error: any) {
       logger.error('删除菜品失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '删除菜品失败'
+        message: error.message || '删除菜品失败',
       });
     }
   }
@@ -187,7 +187,7 @@ export class MenuItemController {
       if (!menuItem) {
         res.status(404).json({
           success: false,
-          message: '菜品不存在'
+          message: '菜品不存在',
         });
         return;
       }
@@ -195,13 +195,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '菜品状态更新成功',
-        data: menuItem
+        data: menuItem,
       });
     } catch (error: any) {
       logger.error('更新菜品状态失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '更新菜品状态失败'
+        message: error.message || '更新菜品状态失败',
       });
     }
   }
@@ -220,7 +220,7 @@ export class MenuItemController {
       if (!menuItem) {
         res.status(404).json({
           success: false,
-          message: '菜品不存在'
+          message: '菜品不存在',
         });
         return;
       }
@@ -228,13 +228,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '菜品库存更新成功',
-        data: menuItem
+        data: menuItem,
       });
     } catch (error: any) {
       logger.error('更新菜品库存失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '更新菜品库存失败'
+        message: error.message || '更新菜品库存失败',
       });
     }
   }
@@ -253,7 +253,7 @@ export class MenuItemController {
       if (!menuItem) {
         res.status(404).json({
           success: false,
-          message: '菜品不存在'
+          message: '菜品不存在',
         });
         return;
       }
@@ -261,13 +261,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '菜品销量更新成功',
-        data: menuItem
+        data: menuItem,
       });
     } catch (error: any) {
       logger.error('增加菜品销量失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '增加菜品销量失败'
+        message: error.message || '增加菜品销量失败',
       });
     }
   }
@@ -286,19 +286,19 @@ export class MenuItemController {
       const { menuItemId } = req.params;
       const dynamicPrice = await menuItemService.createDynamicPrice({
         menuItemId: Number(menuItemId),
-        ...req.body
+        ...req.body,
       });
 
       res.status(201).json({
         success: true,
         message: '动态价格规则创建成功',
-        data: dynamicPrice
+        data: dynamicPrice,
       });
     } catch (error: any) {
       logger.error('创建动态价格规则失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '创建动态价格规则失败'
+        message: error.message || '创建动态价格规则失败',
       });
     }
   }
@@ -316,13 +316,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '获取动态价格规则列表成功',
-        data: dynamicPrices
+        data: dynamicPrices,
       });
     } catch (error: any) {
       logger.error('获取动态价格规则列表失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取动态价格规则列表失败'
+        message: error.message || '获取动态价格规则列表失败',
       });
     }
   }
@@ -340,13 +340,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '获取当前动态价格成功',
-        data: currentPrice
+        data: currentPrice,
       });
     } catch (error: any) {
       logger.error('获取当前动态价格失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取当前动态价格失败'
+        message: error.message || '获取当前动态价格失败',
       });
     }
   }
@@ -364,7 +364,7 @@ export class MenuItemController {
       if (!dynamicPrice) {
         res.status(404).json({
           success: false,
-          message: '动态价格规则不存在'
+          message: '动态价格规则不存在',
         });
         return;
       }
@@ -372,13 +372,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '动态价格规则更新成功',
-        data: dynamicPrice
+        data: dynamicPrice,
       });
     } catch (error: any) {
       logger.error('更新动态价格规则失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '更新动态价格规则失败'
+        message: error.message || '更新动态价格规则失败',
       });
     }
   }
@@ -396,20 +396,20 @@ export class MenuItemController {
       if (!success) {
         res.status(404).json({
           success: false,
-          message: '动态价格规则不存在'
+          message: '动态价格规则不存在',
         });
         return;
       }
 
       res.status(200).json({
         success: true,
-        message: '动态价格规则删除成功'
+        message: '动态价格规则删除成功',
       });
     } catch (error: any) {
       logger.error('删除动态价格规则失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '删除动态价格规则失败'
+        message: error.message || '删除动态价格规则失败',
       });
     }
   }
@@ -432,13 +432,13 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         message: '获取个性化推荐成功',
-        data: recommendations
+        data: recommendations,
       });
     } catch (error: any) {
       logger.error('获取个性化推荐失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取个性化推荐失败'
+        message: error.message || '获取个性化推荐失败',
       });
     }
   }
@@ -452,18 +452,22 @@ export class MenuItemController {
     try {
       const { userId } = req.params;
       const { limit = 10, context } = req.query;
-      const recommendations = await menuItemService.generateSmartRecommendations(Number(userId), Number(limit), context as string);
+      const recommendations = await menuItemService.generateSmartRecommendations(
+        Number(userId),
+        Number(limit),
+        context as string,
+      );
 
       res.status(200).json({
         success: true,
         message: '生成智能推荐成功',
-        data: recommendations
+        data: recommendations,
       });
     } catch (error: any) {
       logger.error('生成智能推荐失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '生成智能推荐失败'
+        message: error.message || '生成智能推荐失败',
       });
     }
   }
@@ -477,31 +481,31 @@ export class MenuItemController {
     try {
       const { recommendationId } = req.params;
       const { action } = req.body;
-      
+
       // 根据action值构建更新参数
       let updateParams: any = {
         is_used: true,
-        used_at: new Date()
+        used_at: new Date(),
       };
-      
+
       if (action === 'click') {
         updateParams.click_count = 1;
       } else if (action === 'order') {
         updateParams.order_count = 1;
       }
-      
+
       const result = await menuItemService.updateRecommendationUsage(Number(recommendationId), updateParams);
 
       res.status(200).json({
         success: true,
         message: '推荐使用情况追踪成功',
-        data: result
+        data: result,
       });
     } catch (error: any) {
       logger.error('追踪推荐使用情况失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '追踪推荐使用情况失败'
+        message: error.message || '追踪推荐使用情况失败',
       });
     }
   }

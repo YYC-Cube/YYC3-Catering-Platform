@@ -4,7 +4,7 @@
 
 ### 模块定位与架构
 
-```yaml
+````yaml
 模块定位:
   ✅ 系统顶层应用: 全局可访问的智能助手
   ✅ 多模态交互: 文本+语音+图像+情感识别
@@ -81,7 +81,7 @@
 ```vue
 <template>
   <!-- 主浮动窗口 -->
-  <div 
+  <div
     class="ai-assistant-floating"
     :class="{
       'minimized': isMinimized,
@@ -97,8 +97,8 @@
       <div class="header-left">
         <i class="assistant-avatar" :class="getAvatarClass"></i>
         <span class="assistant-name">{{ assistantName }}</span>
-        <el-tag 
-          size="small" 
+        <el-tag
+          size="small"
           :type="currentMode === 'customer' ? 'success' : 'warning'"
         >
           {{ currentMode === 'customer' ? '客服模式' : '运维模式' }}
@@ -125,8 +125,8 @@
       <!-- 对话区域 -->
       <div class="chat-container">
         <div class="message-list" ref="messageList">
-          <div 
-            v-for="(message, index) in messages" 
+          <div
+            v-for="(message, index) in messages"
             :key="index"
             class="message-item"
             :class="{
@@ -141,7 +141,7 @@
             <div class="message-content">
               <div class="message-text" v-html="formatMessage(message.content)"></div>
               <div class="message-actions" v-if="message.actions">
-                <el-button 
+                <el-button
                   v-for="action in message.actions"
                   :key="action.label"
                   size="mini"
@@ -162,8 +162,8 @@
         <!-- 多模态输入 -->
         <div class="input-toolbar">
           <el-tooltip content="语音输入">
-            <i 
-              class="el-icon-microphone" 
+            <i
+              class="el-icon-microphone"
               :class="{ 'recording': isRecording }"
               @click="toggleVoiceInput"
             ></i>
@@ -175,7 +175,7 @@
             <i class="el-icon-upload" @click="triggerFileUpload"></i>
           </el-tooltip>
           <el-tooltip content="情感分析">
-            <i 
+            <i
               class="el-icon-star-off"
               :class="{ 'active': sentimentAnalysisEnabled }"
               @click="toggleSentimentAnalysis"
@@ -194,8 +194,8 @@
             @keydown.enter.exact.prevent="sendMessage"
             resize="none"
           ></el-input>
-          <el-button 
-            type="primary" 
+          <el-button
+            type="primary"
             :loading="isLoading"
             @click="sendMessage"
             class="send-button"
@@ -206,8 +206,8 @@
 
         <!-- 快捷操作 -->
         <div class="quick-actions" v-if="showQuickActions">
-          <div class="quick-action-item" 
-               v-for="action in quickActions" 
+          <div class="quick-action-item"
+               v-for="action in quickActions"
                :key="action.label"
                @click="handleQuickAction(action)">
             <i :class="action.icon"></i>
@@ -230,7 +230,7 @@
       direction="rtl"
       size="300px"
     >
-      <assistant-settings 
+      <assistant-settings
         :current-mode="currentMode"
         @mode-change="handleModeChange"
         @settings-update="handleSettingsUpdate"
@@ -266,9 +266,9 @@ const dragState = ref({
 })
 
 // 组合式API
-const { 
-  messages, 
-  sendMessage: sendAIMessage, 
+const {
+  messages,
+  sendMessage: sendAIMessage,
   quickActions,
   showQuickActions
 } = useAIAssistant()
@@ -279,8 +279,8 @@ const assistantName = computed(() => {
 })
 
 const getAvatarClass = computed(() => {
-  return currentMode.value === 'customer' 
-    ? 'el-icon-user-solid' 
+  return currentMode.value === 'customer'
+    ? 'el-icon-user-solid'
     : 'el-icon-monitor'
 })
 
@@ -297,20 +297,20 @@ const startDrag = (event: MouseEvent) => {
   dragState.value.startY = event.clientY
   dragState.value.startLeft = parseInt(windowStyle.value.left)
   dragState.value.startTop = parseInt(windowStyle.value.top)
-  
+
   document.addEventListener('mousemove', onDrag)
   document.addEventListener('mouseup', stopDrag)
 }
 
 const onDrag = (event: MouseEvent) => {
   if (!isDragging.value) return
-  
+
   const deltaX = event.clientX - dragState.value.startX
   const deltaY = event.clientY - dragState.value.startY
-  
+
   dragState.value.startLeft += deltaX
   dragState.value.startTop += deltaY
-  
+
   dragState.value.startX = event.clientX
   dragState.value.startY = event.clientY
 }
@@ -331,7 +331,7 @@ const toggleMode = () => {
 
 const sendMessage = async () => {
   if (!inputText.value.trim()) return
-  
+
   isLoading.value = true
   try {
     await sendAIMessage(inputText.value, currentMode.value)
@@ -364,9 +364,9 @@ const scrollToBottom = () => {
 const getMessageAvatar = (role: string) => {
   switch (role) {
     case 'user': return 'el-icon-user'
-    case 'assistant': 
-      return currentMode.value === 'customer' 
-        ? 'el-icon-user-solid' 
+    case 'assistant':
+      return currentMode.value === 'customer'
+        ? 'el-icon-user-solid'
         : 'el-icon-monitor'
     case 'system': return 'el-icon-info'
     default: return 'el-icon-question'
@@ -677,7 +677,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/ai_customer_db
     username: ai_customer_user
     password: ai_customer_pass
-  
+
   redis:
     host: localhost
     port: 6379
@@ -690,11 +690,11 @@ ai:
     model: gpt-4
     max-tokens: 2000
     temperature: 0.7
-  
+
   sentiment:
     enabled: true
     model-path: classpath:models/sentiment-model.bin
-  
+
   learning:
     enabled: true
     knowledge-base-path: /data/ai-knowledge
@@ -715,25 +715,25 @@ eureka:
 @Service
 @Slf4j
 public class AICustomerService {
-    
+
     @Autowired
     private DialogueManager dialogueManager;
-    
+
     @Autowired
     private IntentRecognizer intentRecognizer;
-    
+
     @Autowired
     private SentimentAnalyzer sentimentAnalyzer;
-    
+
     @Autowired
     private KnowledgeRetriever knowledgeRetriever;
-    
+
     @Autowired
     private SelfLearningEngine learningEngine;
-    
+
     @Autowired
     private PredictionEngine predictionEngine;
-    
+
     /**
      * 处理用户消息
      */
@@ -741,38 +741,38 @@ public class AICustomerService {
         try {
             // 1. 情感分析
             SentimentAnalysis sentiment = sentimentAnalyzer.analyze(request.getMessage());
-            
+
             // 2. 意图识别
             IntentResult intent = intentRecognizer.recognize(request.getMessage(), request.getContext());
-            
+
             // 3. 知识检索
             List<KnowledgeItem> knowledge = knowledgeRetriever.retrieve(intent, request.getMode());
-            
+
             // 4. 对话管理
             DialogueResponse dialogueResponse = dialogueManager.process(
                 request, intent, sentiment, knowledge);
-            
+
             // 5. 预测分析
             PredictionResult prediction = predictionEngine.predictNextActions(request, intent);
-            
+
             // 6. 学习更新
             learningEngine.learnFromInteraction(request, dialogueResponse);
-            
+
             return buildAssistantResponse(dialogueResponse, prediction, sentiment);
-            
+
         } catch (Exception e) {
             log.error("处理AI客服消息失败", e);
             return buildErrorResponse(e);
         }
     }
-    
+
     /**
      * 获取快捷操作
      */
     public List<QuickAction> getQuickActions(String mode, UserContext context) {
         return predictionEngine.predictQuickActions(mode, context);
     }
-    
+
     /**
      * 切换客服模式
      */
@@ -780,7 +780,7 @@ public class AICustomerService {
         // 更新用户模式偏好
         learningEngine.updateUserPreference(userId, "mode", mode);
     }
-    
+
     /**
      * 获取学习报告
      */
@@ -794,41 +794,41 @@ public class AICustomerService {
  */
 @Service
 public class DialogueManager {
-    
+
     @Autowired
     private LLMIntegrationService llmService;
-    
+
     @Autowired
     private DialogueHistoryService historyService;
-    
+
     @Autowired
     private ActionExecutor actionExecutor;
-    
-    public DialogueResponse process(UserMessageRequest request, 
-                                   IntentResult intent, 
+
+    public DialogueResponse process(UserMessageRequest request,
+                                   IntentResult intent,
                                    SentimentAnalysis sentiment,
                                    List<KnowledgeItem> knowledge) {
-        
+
         // 构建对话上下文
         DialogueContext context = buildContext(request, intent, sentiment, knowledge);
-        
+
         // 调用大语言模型
         LLMResponse llmResponse = llmService.generateResponse(context);
-        
+
         // 执行相关动作
         List<ActionResult> actionResults = executeActions(llmResponse.getActions());
-        
+
         // 保存对话历史
         historyService.saveInteraction(request, llmResponse, actionResults);
-        
+
         return buildDialogueResponse(llmResponse, actionResults);
     }
-    
-    private DialogueContext buildContext(UserMessageRequest request, 
+
+    private DialogueContext buildContext(UserMessageRequest request,
                                        IntentResult intent,
                                        SentimentAnalysis sentiment,
                                        List<KnowledgeItem> knowledge) {
-        
+
         DialogueContext context = new DialogueContext();
         context.setUserMessage(request.getMessage());
         context.setUserContext(request.getContext());
@@ -838,10 +838,10 @@ public class DialogueManager {
         context.setKnowledge(knowledge);
         context.setDialogueHistory(historyService.getRecentHistory(request.getUserId()));
         context.setSystemTime(LocalDateTime.now());
-        
+
         return context;
     }
-    
+
     private List<ActionResult> executeActions(List<Action> actions) {
         return actions.stream()
             .map(actionExecutor::execute)
@@ -854,32 +854,32 @@ public class DialogueManager {
  */
 @Service
 public class SentimentAnalyzer {
-    
+
     @Autowired
     private SentimentModel sentimentModel;
-    
+
     @Autowired
     private EmotionDetector emotionDetector;
-    
+
     public SentimentAnalysis analyze(String message) {
         SentimentAnalysis analysis = new SentimentAnalysis();
-        
+
         // 文本情感分析
         TextSentiment textSentiment = sentimentModel.analyzeText(message);
         analysis.setTextSentiment(textSentiment);
-        
+
         // 情感强度计算
         analysis.setIntensity(calculateIntensity(textSentiment));
-        
+
         // 情感标签
         analysis.setEmotionTags(extractEmotionTags(message));
-        
+
         // 响应建议
         analysis.setResponseSuggestions(generateResponseSuggestions(textSentiment));
-        
+
         return analysis;
     }
-    
+
     public SentimentAnalysis analyzeWithVoice(String audioData) {
         // 语音情感分析
         VoiceEmotion voiceEmotion = emotionDetector.detectFromAudio(audioData);
@@ -893,31 +893,31 @@ public class SentimentAnalyzer {
  */
 @Service
 public class SelfLearningEngine {
-    
+
     @Autowired
     private KnowledgeBaseService knowledgeBase;
-    
+
     @Autowired
     private BehaviorAnalyzer behaviorAnalyzer;
-    
+
     @Autowired
     private ModelUpdater modelUpdater;
-    
-    public void learnFromInteraction(UserMessageRequest request, 
+
+    public void learnFromInteraction(UserMessageRequest request,
                                    DialogueResponse response) {
         // 1. 更新用户行为模型
         behaviorAnalyzer.recordInteraction(request, response);
-        
+
         // 2. 知识库更新
         updateKnowledgeBase(request, response);
-        
+
         // 3. 模型参数调整
         modelUpdater.updateBasedOnFeedback(request, response);
-        
+
         // 4. 模式识别
         detectPatterns(request, response);
     }
-    
+
     public LearningReport generateReport(String mode) {
         LearningReport report = new LearningReport();
         report.setMode(mode);
@@ -925,18 +925,18 @@ public class SelfLearningEngine {
         report.setKnowledgeGrowth(getKnowledgeGrowth(mode));
         report.setPerformanceMetrics(getPerformanceMetrics(mode));
         report.setImprovementSuggestions(getImprovementSuggestions(mode));
-        
+
         return report;
     }
-    
-    private void updateKnowledgeBase(UserMessageRequest request, 
+
+    private void updateKnowledgeBase(UserMessageRequest request,
                                    DialogueResponse response) {
         // 提取新知识
         List<NewKnowledge> newKnowledge = extractNewKnowledge(request, response);
-        
+
         // 验证知识质量
         List<NewKnowledge> validatedKnowledge = validateKnowledge(newKnowledge);
-        
+
         // 更新知识库
         knowledgeBase.addKnowledge(validatedKnowledge);
     }
@@ -947,54 +947,54 @@ public class SelfLearningEngine {
  */
 @Service
 public class PredictionEngine {
-    
+
     @Autowired
     private UserBehaviorRepository behaviorRepository;
-    
+
     @Autowired
     private PatternRecognizer patternRecognizer;
-    
+
     @Autowired
     private RecommendationEngine recommendationEngine;
-    
-    public PredictionResult predictNextActions(UserMessageRequest request, 
+
+    public PredictionResult predictNextActions(UserMessageRequest request,
                                              IntentResult intent) {
-        
+
         PredictionResult prediction = new PredictionResult();
-        
+
         // 用户行为预测
         List<PredictedAction> predictedActions = predictUserActions(request, intent);
         prediction.setPredictedActions(predictedActions);
-        
+
         // 问题预测
         List<PredictedQuestion> predictedQuestions = predictUserQuestions(request);
         prediction.setPredictedQuestions(predictedQuestions);
-        
+
         // 需求预测
         List<PredictedNeed> predictedNeeds = predictUserNeeds(request);
         prediction.setPredictedNeeds(predictedNeeds);
-        
+
         return prediction;
     }
-    
+
     public List<QuickAction> predictQuickActions(String mode, UserContext context) {
         List<QuickAction> quickActions = new ArrayList<>();
-        
+
         // 基于模式的快捷操作
         quickActions.addAll(getModeSpecificActions(mode));
-        
+
         // 基于用户行为的快捷操作
         quickActions.addAll(getBehaviorBasedActions(context));
-        
+
         // 基于情境的快捷操作
         quickActions.addAll(getContextBasedActions(context));
-        
+
         return quickActions.stream()
             .distinct()
             .limit(6) // 限制数量
             .collect(Collectors.toList());
     }
-    
+
     private List<QuickAction> getModeSpecificActions(String mode) {
         if ("customer".equals(mode)) {
             return Arrays.asList(
@@ -1124,54 +1124,54 @@ CREATE TABLE ai_predictions (
 @Validated
 @Api(tags = "AI智能客服")
 public class AICustomerController {
-    
+
     @Autowired
     private AICustomerService aiCustomerService;
-    
+
     @PostMapping("/chat")
     @ApiOperation("发送消息给AI助手")
     public ApiResponse<AssistantResponse> chat(
             @RequestBody @Valid UserMessageRequest request) {
-        
+
         AssistantResponse response = aiCustomerService.processMessage(request);
         return ApiResponse.success(response);
     }
-    
+
     @GetMapping("/quick-actions")
     @ApiOperation("获取快捷操作")
     public ApiResponse<List<QuickAction>> getQuickActions(
             @RequestParam String mode,
             @RequestParam(required = false) String context) {
-        
+
         UserContext userContext = parseContext(context);
         List<QuickAction> actions = aiCustomerService.getQuickActions(mode, userContext);
         return ApiResponse.success(actions);
     }
-    
+
     @PostMapping("/switch-mode")
     @ApiOperation("切换客服模式")
     public ApiResponse<Boolean> switchMode(
             @RequestParam String userId,
             @RequestParam String mode) {
-        
+
         aiCustomerService.switchMode(userId, mode);
         return ApiResponse.success(true);
     }
-    
+
     @GetMapping("/learning-report")
     @ApiOperation("获取学习报告")
     public ApiResponse<LearningReport> getLearningReport(
             @RequestParam String mode) {
-        
+
         LearningReport report = aiCustomerService.getLearningReport(mode);
         return ApiResponse.success(report);
     }
-    
+
     @PostMapping("/feedback")
     @ApiOperation("提交反馈")
     public ApiResponse<Boolean> submitFeedback(
             @RequestBody @Valid FeedbackRequest request) {
-        
+
         aiCustomerService.processFeedback(request);
         return ApiResponse.success(true);
     }
@@ -1184,21 +1184,21 @@ public class UserMessageRequest {
     @ApiModelProperty(value = "用户ID", required = true)
     @NotBlank
     private String userId;
-    
+
     @ApiModelProperty(value = "消息内容", required = true)
     @NotBlank
     private String message;
-    
+
     @ApiModelProperty(value = "客服模式", required = true)
     @Pattern(regexp = "customer|operations")
     private String mode;
-    
+
     @ApiModelProperty("上下文信息")
     private Map<String, Object> context;
-    
+
     @ApiModelProperty("语音数据")
     private String audioData;
-    
+
     @ApiModelProperty("图像数据")
     private String imageData;
 }
@@ -1208,22 +1208,22 @@ public class UserMessageRequest {
 public class AssistantResponse {
     @ApiModelProperty("回复内容")
     private String response;
-    
+
     @ApiModelProperty("情感分析结果")
     private SentimentAnalysis sentiment;
-    
+
     @ApiModelProperty("意图识别结果")
     private IntentResult intent;
-    
+
     @ApiModelProperty("执行的动作")
     private List<ActionResult> actions;
-    
+
     @ApiModelProperty("预测结果")
     private PredictionResult predictions;
-    
+
     @ApiModelProperty("快捷操作")
     private List<QuickAction> quickActions;
-    
+
     @ApiModelProperty("响应时间")
     private Long responseTime;
 }
@@ -1233,16 +1233,16 @@ public class AssistantResponse {
 public class QuickAction {
     @ApiModelProperty("操作标签")
     private String label;
-    
+
     @ApiModelProperty("图标")
     private String icon;
-    
+
     @ApiModelProperty("提示文本")
     private String prompt;
-    
+
     @ApiModelProperty("动作类型")
     private String actionType;
-    
+
     @ApiModelProperty("目标URL")
     private String targetUrl;
 }
@@ -1252,16 +1252,16 @@ public class QuickAction {
 public class LearningReport {
     @ApiModelProperty("报告模式")
     private String mode;
-    
+
     @ApiModelProperty("学习统计")
     private LearningStats learningStats;
-    
+
     @ApiModelProperty("知识增长")
     private KnowledgeGrowth knowledgeGrowth;
-    
+
     @ApiModelProperty("性能指标")
     private PerformanceMetrics performanceMetrics;
-    
+
     @ApiModelProperty("改进建议")
     private List<ImprovementSuggestion> improvementSuggestions;
 }
@@ -1276,59 +1276,59 @@ public class LearningReport {
 ```java
 @Service
 public class AIPermissionService {
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private RoleService roleService;
-    
+
     /**
      * 检查AI助手权限
      */
     public boolean checkAIAccessPermission(String userId, String mode) {
         User user = userService.getUserById(userId);
-        
+
         if ("operations".equals(mode)) {
             // 运维模式需要特殊权限
             return hasOperationsPermission(user);
         }
-        
+
         // 客服模式对所有用户开放
         return true;
     }
-    
+
     /**
      * 检查功能访问权限
      */
     public boolean checkFeaturePermission(String userId, String feature) {
         User user = userService.getUserById(userId);
         Set<String> userPermissions = roleService.getUserPermissions(user.getId());
-        
+
         // AI助手功能权限映射
         Map<String, String> featurePermissionMap = getFeaturePermissionMap();
         String requiredPermission = featurePermissionMap.get(feature);
-        
+
         return requiredPermission == null || userPermissions.contains(requiredPermission);
     }
-    
+
     /**
      * 获取用户可用的AI功能
      */
     public List<AIFeature> getAvailableFeatures(String userId) {
         User user = userService.getUserById(userId);
         Set<String> userPermissions = roleService.getUserPermissions(user.getId());
-        
+
         return getAllAIFeatures().stream()
             .filter(feature -> hasPermissionForFeature(feature, userPermissions))
             .collect(Collectors.toList());
     }
-    
+
     private boolean hasOperationsPermission(User user) {
         return user.getRoles().stream()
             .anyMatch(role -> role.getCode().startsWith("OPS_"));
     }
-    
+
     private Map<String, String> getFeaturePermissionMap() {
         Map<String, String> map = new HashMap<>();
         map.put("system_monitoring", "OPS_MONITORING");
@@ -1480,52 +1480,52 @@ spec:
 ```java
 @Component
 public class AIMetrics {
-    
+
     private final MeterRegistry meterRegistry;
-    
+
     // 对话相关指标
     private final Counter totalConversations;
     private final Counter failedConversations;
     private final Timer responseTimeTimer;
     private final Gauge sentimentScoreGauge;
-    
+
     // 学习相关指标
     private final Counter learningUpdates;
     private final Gauge knowledgeBaseSize;
     private final Gauge modelAccuracy;
-    
+
     public AIMetrics(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
-        
+
         this.totalConversations = Counter.builder("ai.conversations.total")
             .description("总对话数量")
             .register(meterRegistry);
-            
+
         this.failedConversations = Counter.builder("ai.conversations.failed")
             .description("失败对话数量")
             .register(meterRegistry);
-            
+
         this.responseTimeTimer = Timer.builder("ai.response.time")
             .description("响应时间分布")
             .register(meterRegistry);
-            
+
         this.sentimentScoreGauge = Gauge.builder("ai.sentiment.score")
             .description("情感分析得分")
             .register(meterRegistry);
-            
+
         this.learningUpdates = Counter.builder("ai.learning.updates")
             .description("学习更新次数")
             .register(meterRegistry);
-            
+
         this.knowledgeBaseSize = Gauge.builder("ai.knowledge.size")
             .description("知识库大小")
             .register(meterRegistry);
-            
+
         this.modelAccuracy = Gauge.builder("ai.model.accuracy")
             .description("模型准确率")
             .register(meterRegistry);
     }
-    
+
     public void recordConversation(boolean success, long responseTime, double sentimentScore) {
         totalConversations.increment();
         if (!success) {
@@ -1534,7 +1534,7 @@ public class AIMetrics {
         responseTimeTimer.record(responseTime, TimeUnit.MILLISECONDS);
         sentimentScoreGauge.set(sentimentScore);
     }
-    
+
     public void recordLearningUpdate(int newKnowledgeItems) {
         learningUpdates.increment();
         knowledgeBaseSize.set(knowledgeBaseSize.value() + newKnowledgeItems);
@@ -1685,3 +1685,4 @@ success_metrics = {
 **立即集成这个强大的AI智能客服系统，提升您的餐饮智能化水平！** 🚀
 
 
+````

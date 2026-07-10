@@ -13,7 +13,7 @@ export enum DatabaseType {
   POSTGRESQL = 'postgresql',
   MYSQL = 'mysql',
   MONGODB = 'mongodb',
-  SQLITE = 'sqlite'
+  SQLITE = 'sqlite',
 }
 
 /**

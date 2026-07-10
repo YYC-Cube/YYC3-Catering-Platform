@@ -2,22 +2,22 @@
 
 ## 文档信息
 
-| 项目 | 内容 |
-|------|------|
+| 项目     | 内容                                     |
+| -------- | ---------------------------------------- |
 | 文档编号 | 200-YYC3-AICP-技术文档-Dashboard功能说明 |
-| 文档标题 | Dashboard功能技术文档 |
-| 文档版本 | 1.0.0 |
-| 创建日期 | 2025-01-19 |
-| 最后更新 | 2025-01-19 |
-| 文档状态 | 正式发布 |
-| 作者 | YYC³开发团队 |
-| 审核人 | 技术负责人 |
-| 批准人 | 项目经理 |
+| 文档标题 | Dashboard功能技术文档                    |
+| 文档版本 | 1.0.0                                    |
+| 创建日期 | 2025-01-19                               |
+| 最后更新 | 2025-01-19                               |
+| 文档状态 | 正式发布                                 |
+| 作者     | YYC³开发团队                             |
+| 审核人   | 技术负责人                               |
+| 批准人   | 项目经理                                 |
 
 ## 文档变更记录
 
-| 版本 | 日期 | 变更内容 | 变更人 | 审核人 |
-|------|------|----------|----------|--------|
+| 版本  | 日期       | 变更内容     | 变更人       | 审核人     |
+| ----- | ---------- | ------------ | ------------ | ---------- |
 | 1.0.0 | 2025-01-19 | 初始版本创建 | YYC³开发团队 | 技术负责人 |
 
 ## 目录
@@ -100,6 +100,7 @@ Dashboard
 **文件路径**: `frontend/apps/admin-dashboard/src/views/Dashboard.vue`
 
 **主要功能**:
+
 - 数据加载和刷新
 - 日期范围选择
 - 数据展示和交互
@@ -107,46 +108,52 @@ Dashboard
 - 数据导出
 
 **关键代码片段**:
+
 ```typescript
 const loadCoreMetrics = async () => {
   try {
-    metricsLoading.value = true
+    metricsLoading.value = true;
     await Promise.all([
       dashboardStore.loadDashboardData({
         startDate: dateRange.value[0],
-        endDate: dateRange.value[1]
+        endDate: dateRange.value[1],
       }),
-      kitchenStore.loadKitchenStats()
-    ])
+      kitchenStore.loadKitchenStats(),
+    ]);
   } finally {
-    metricsLoading.value = false
+    metricsLoading.value = false;
   }
-}
+};
 ```
 
 #### 3.1.2 数据展示组件
 
 **核心指标卡片**: `MetricCard.vue`
+
 - 显示营收、订单量、客户数等核心指标
 - 支持环比变化显示
 - 响应式布局
 
 **营收趋势图**: `RevenueChart.vue`
+
 - 基于ECharts的折线图
 - 支持多时间维度切换
 - 交互式数据提示
 
 **订单分布图**: `OrderStatusChart.vue`
+
 - 基于ECharts的饼图
 - 显示各状态订单占比
 - 支持点击筛选
 
 **热门菜品排行**: `TopDishesChart.vue`
+
 - 基于ECharts的柱状图
 - 显示菜品销售排行
 - 支持销量和营收切换
 
 **客流分析图**: `CustomerFlowChart.vue`
+
 - 基于ECharts的面积图
 - 显示时段客流分布
 - 支持日期范围筛选
@@ -158,22 +165,24 @@ const loadCoreMetrics = async () => {
 **文件路径**: `frontend/apps/admin-dashboard/src/stores/dashboard.ts`
 
 **状态定义**:
+
 ```typescript
 interface DashboardState {
-  coreMetrics: CoreMetrics
-  revenueData: RevenueData[]
-  orderDistribution: OrderDistribution[]
-  topDishes: TopDish[]
-  customerFlow: CustomerFlowData[]
-  recentOrders: Order[]
-  tableStatus: TableStatus[]
-  loading: boolean
-  dateRange: DateRange
-  timeRange: TimeRange
+  coreMetrics: CoreMetrics;
+  revenueData: RevenueData[];
+  orderDistribution: OrderDistribution[];
+  topDishes: TopDish[];
+  customerFlow: CustomerFlowData[];
+  recentOrders: Order[];
+  tableStatus: TableStatus[];
+  loading: boolean;
+  dateRange: DateRange;
+  timeRange: TimeRange;
 }
 ```
 
 **主要方法**:
+
 - `loadDashboardData`: 加载Dashboard数据
 - `exportReport`: 导出报表
 - `updateDateRange`: 更新日期范围
@@ -184,15 +193,17 @@ interface DashboardState {
 **文件路径**: `frontend/apps/admin-dashboard/src/stores/kitchen.ts`
 
 **状态定义**:
+
 ```typescript
 interface KitchenState {
-  kitchenStats: KitchenStats
-  kitchenItems: KitchenStatus[]
-  loading: boolean
+  kitchenStats: KitchenStats;
+  kitchenItems: KitchenStatus[];
+  loading: boolean;
 }
 ```
 
 **主要方法**:
+
 - `loadKitchenStats`: 加载厨房统计数据
 - `loadKitchenStatus`: 加载厨房状态
 - `updateItemStatus`: 更新厨房项目状态
@@ -205,6 +216,7 @@ interface KitchenState {
 **文件路径**: `frontend/apps/admin-dashboard/src/api/dashboard.ts`
 
 **主要接口**:
+
 - `getCoreMetrics`: 获取核心指标
 - `getRevenueData`: 获取营收数据
 - `getOrderDistribution`: 获取订单分布
@@ -217,6 +229,7 @@ interface KitchenState {
 **文件路径**: `frontend/apps/admin-dashboard/src/api/kitchen.ts`
 
 **主要接口**:
+
 - `getKitchenStats`: 获取厨房统计
 - `getKitchenStatus`: 获取厨房状态
 - `updateKitchenItemStatus`: 更新厨房项目状态
@@ -230,23 +243,25 @@ interface KitchenState {
 **接口地址**: `GET /api/v1/dashboard/metrics`
 
 **请求参数**:
+
 ```typescript
 interface DashboardFilters {
-  startDate?: string
-  endDate?: string
-  period?: 'today' | 'week' | 'month' | 'year'
+  startDate?: string;
+  endDate?: string;
+  period?: "today" | "week" | "month" | "year";
 }
 ```
 
 **响应数据**:
+
 ```typescript
 interface CoreMetrics {
-  totalRevenue: number
-  totalOrders: number
-  averageOrderValue: number
-  customerCount: number
-  orderChange: number
-  revenueChange: number
+  totalRevenue: number;
+  totalOrders: number;
+  averageOrderValue: number;
+  customerCount: number;
+  orderChange: number;
+  revenueChange: number;
 }
 ```
 
@@ -257,12 +272,13 @@ interface CoreMetrics {
 **请求参数**: 同上
 
 **响应数据**:
+
 ```typescript
 interface RevenueData {
-  date: string
-  amount: number
-  orders: number
-  customers: number
+  date: string;
+  amount: number;
+  orders: number;
+  customers: number;
 }
 ```
 
@@ -271,10 +287,11 @@ interface RevenueData {
 **接口地址**: `POST /api/v1/dashboard/export`
 
 **请求参数**:
+
 ```typescript
 interface ExportRequest {
-  format: 'excel' | 'pdf' | 'csv'
-  filters?: DashboardFilters
+  format: "excel" | "pdf" | "csv";
+  filters?: DashboardFilters;
 }
 ```
 
@@ -287,12 +304,13 @@ interface ExportRequest {
 **接口地址**: `GET /api/v1/kitchen/stats`
 
 **响应数据**:
+
 ```typescript
 interface KitchenStats {
-  inProgress: number
-  pending: number
-  completed: number
-  avgPrepTime: number
+  inProgress: number;
+  pending: number;
+  completed: number;
+  avgPrepTime: number;
 }
 ```
 
@@ -301,18 +319,19 @@ interface KitchenStats {
 **接口地址**: `GET /api/v1/kitchen/status`
 
 **响应数据**:
+
 ```typescript
 interface KitchenStatus {
-  id: string
-  orderId: string
-  dishName: string
-  quantity: number
-  status: 'pending' | 'in_progress' | 'completed' | 'cancelled'
-  priority: 'low' | 'medium' | 'high'
-  estimatedTime: number
-  actualTime?: number
-  createdAt: string
-  updatedAt: string
+  id: string;
+  orderId: string;
+  dishName: string;
+  quantity: number;
+  status: "pending" | "in_progress" | "completed" | "cancelled";
+  priority: "low" | "medium" | "high";
+  estimatedTime: number;
+  actualTime?: number;
+  createdAt: string;
+  updatedAt: string;
 }
 ```
 
@@ -322,12 +341,12 @@ interface KitchenStatus {
 
 ```typescript
 interface CoreMetrics {
-  totalRevenue: number        // 总营收
-  totalOrders: number         // 总订单数
-  averageOrderValue: number  // 平均订单金额
-  customerCount: number      // 客户数
-  orderChange: number        // 订单变化率（%）
-  revenueChange: number      // 营收变化率（%）
+  totalRevenue: number; // 总营收
+  totalOrders: number; // 总订单数
+  averageOrderValue: number; // 平均订单金额
+  customerCount: number; // 客户数
+  orderChange: number; // 订单变化率（%）
+  revenueChange: number; // 营收变化率（%）
 }
 ```
 
@@ -335,9 +354,9 @@ interface CoreMetrics {
 
 ```typescript
 interface OrderDistribution {
-  status: string      // 订单状态
-  count: number       // 订单数量
-  percentage: number  // 占比（%）
+  status: string; // 订单状态
+  count: number; // 订单数量
+  percentage: number; // 占比（%）
 }
 ```
 
@@ -345,11 +364,11 @@ interface OrderDistribution {
 
 ```typescript
 interface TopDish {
-  id: string         // 菜品ID
-  name: string       // 菜品名称
-  sales: number      // 销量
-  revenue: number   // 营收
-  percentage: number // 占比（%）
+  id: string; // 菜品ID
+  name: string; // 菜品名称
+  sales: number; // 销量
+  revenue: number; // 营收
+  percentage: number; // 占比（%）
 }
 ```
 
@@ -357,8 +376,8 @@ interface TopDish {
 
 ```typescript
 interface CustomerFlowData {
-  hour: number   // 小时（0-23）
-  count: number // 客流量
+  hour: number; // 小时（0-23）
+  count: number; // 客流量
 }
 ```
 
@@ -371,6 +390,7 @@ interface CustomerFlowData {
 **文件路径**: `frontend/apps/admin-dashboard/src/views/__tests__/Dashboard.test.ts`
 
 **测试用例**:
+
 - 基础渲染测试
 - 数据加载测试
 - 用户信息测试
@@ -381,6 +401,7 @@ interface CustomerFlowData {
 **文件路径**: `frontend/apps/admin-dashboard/src/api/__tests__/dashboard.test.ts`
 
 **测试用例**:
+
 - 核心指标获取测试
 - 营收数据获取测试
 - 订单分布获取测试
@@ -394,6 +415,7 @@ interface CustomerFlowData {
 **文件路径**: `frontend/apps/admin-dashboard/src/api/__tests__/kitchen.test.ts`
 
 **测试用例**:
+
 - 厨房统计获取测试
 - 厨房状态获取测试
 - 厨房项目状态更新测试
@@ -405,12 +427,14 @@ interface CustomerFlowData {
 当前测试覆盖率目标：80%
 
 已覆盖模块：
+
 - Dashboard视图组件
 - Dashboard API服务
 - Kitchen API服务
 - 数据格式化工具
 
 待完善模块：
+
 - 图表组件测试
 - 状态管理测试
 - 集成测试
@@ -464,6 +488,7 @@ NODE_ENV=production
 **问题描述**: Dashboard数据不实时更新
 
 **解决方案**:
+
 1. 检查WebSocket连接状态
 2. 确认后端服务正常运行
 3. 检查网络连接
@@ -474,6 +499,7 @@ NODE_ENV=production
 **问题描述**: 图表无法正常显示或数据错误
 
 **解决方案**:
+
 1. 检查ECharts版本兼容性
 2. 确认数据格式正确
 3. 检查浏览器控制台错误
@@ -484,6 +510,7 @@ NODE_ENV=production
 **问题描述**: 数据导出失败或文件损坏
 
 **解决方案**:
+
 1. 检查后端导出服务状态
 2. 确认文件格式支持
 3. 检查浏览器下载设置
@@ -524,14 +551,15 @@ NODE_ENV=production
 ### B. 技术支持
 
 如有技术问题，请联系：
+
 - 技术支持邮箱：support@yyc3.com
 - 技术支持热线：400-XXX-XXXX
 - 在线文档：https://docs.yyc3.com
 
 ### C. 版本历史
 
-| 版本 | 发布日期 | 主要变更 |
-|------|----------|----------|
+| 版本  | 发布日期   | 主要变更                            |
+| ----- | ---------- | ----------------------------------- |
 | 1.0.0 | 2025-01-19 | 初始版本发布，实现基础Dashboard功能 |
 
 ---

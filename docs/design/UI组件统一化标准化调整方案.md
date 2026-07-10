@@ -64,24 +64,24 @@
 
 ```scss
 // 主色板
---color-primary: #4F46E5;          // 靛蓝 - 主操作色、强调
---color-secondary: #8B5CF6;        // 紫罗兰 - 辅助强调、特殊功能
---color-success: #10B981;          // 翡翠绿 - 正向数据、成功状态
---color-danger: #EF4444;           // 警告红 - 负向数据、告警
---color-warning: #F59E0B;          // 琥珀黄 - 预警、待处理
---color-info: #6366F1;             // 信息蓝 - 提示信息
+--color-primary: #4f46e5; // 靛蓝 - 主操作色、强调
+--color-secondary: #8b5cf6; // 紫罗兰 - 辅助强调、特殊功能
+--color-success: #10b981; // 翡翠绿 - 正向数据、成功状态
+--color-danger: #ef4444; // 警告红 - 负向数据、告警
+--color-warning: #f59e0b; // 琥珀黄 - 预警、待处理
+--color-info: #6366f1; // 信息蓝 - 提示信息
 
 // 中性色
---color-neutral-50: #F9FAFB;       // 极浅灰
---color-neutral-100: #F3F4F6;      // 浅灰
---color-neutral-200: #E5E7EB;      // 中浅灰
---color-neutral-300: #D1D5DB;      // 中灰
---color-neutral-400: #9CA3AF;      // 中深灰
---color-neutral-500: #6B7280;      // 深灰
---color-neutral-600: #4B5563;      // 极深灰
---color-neutral-700: #374151;      // 超深灰
---color-neutral-800: #1F2937;      // 暗黑灰
---color-neutral-900: #111827;      // 黑色
+--color-neutral-50: #f9fafb; // 极浅灰
+--color-neutral-100: #f3f4f6; // 浅灰
+--color-neutral-200: #e5e7eb; // 中浅灰
+--color-neutral-300: #d1d5db; // 中灰
+--color-neutral-400: #9ca3af; // 中深灰
+--color-neutral-500: #6b7280; // 深灰
+--color-neutral-600: #4b5563; // 极深灰
+--color-neutral-700: #374151; // 超深灰
+--color-neutral-800: #1f2937; // 暗黑灰
+--color-neutral-900: #111827; // 黑色
 ```
 
 ### 3.2 UI组件标准化
@@ -101,9 +101,9 @@
 
 ```typescript
 interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-  size?: 'small' | 'medium' | 'large';
-  type?: 'button' | 'submit' | 'reset';
+  variant?: "primary" | "secondary" | "success" | "danger" | "warning" | "info";
+  size?: "small" | "medium" | "large";
+  type?: "button" | "submit" | "reset";
   disabled?: boolean;
   loading?: boolean;
   block?: boolean;
@@ -127,15 +127,15 @@ interface ButtonProps {
 
 根据UI提示词文档要求，需要补充实现以下核心UI组件：
 
-| 组件名称 | 实现要求 | 优先级 |
-|---------|---------|--------|
-| 卡片组件 | 支持多种变体、阴影效果、响应式布局 | 高 |
-| 输入框组件 | 支持多种类型、状态、验证提示 | 高 |
-| 表格组件 | 支持排序、筛选、分页、响应式 | 高 |
-| 表单组件 | 支持表单验证、布局、提交处理 | 中 |
-| 弹窗组件 | 支持模态框、对话框、提示框 | 中 |
-| 导航组件 | 支持顶部导航、面包屑、标签页 | 中 |
-| 数据可视化组件 | 支持图表、统计卡片、进度条 | 低 |
+| 组件名称       | 实现要求                           | 优先级 |
+| -------------- | ---------------------------------- | ------ |
+| 卡片组件       | 支持多种变体、阴影效果、响应式布局 | 高     |
+| 输入框组件     | 支持多种类型、状态、验证提示       | 高     |
+| 表格组件       | 支持排序、筛选、分页、响应式       | 高     |
+| 表单组件       | 支持表单验证、布局、提交处理       | 中     |
+| 弹窗组件       | 支持模态框、对话框、提示框         | 中     |
+| 导航组件       | 支持顶部导航、面包屑、标签页       | 中     |
+| 数据可视化组件 | 支持图表、统计卡片、进度条         | 低     |
 
 **组件实现规范**：
 
@@ -186,11 +186,11 @@ interface ButtonProps {
 **统一响应式断点**：
 
 ```scss
-$breakpoint-sm: 640px;    // Mobile landscape
-$breakpoint-md: 768px;    // Tablet
-$breakpoint-lg: 1024px;   // Desktop small
-$breakpoint-xl: 1280px;   // Desktop medium
-$breakpoint-2xl: 1536px;  // Desktop large
+$breakpoint-sm: 640px; // Mobile landscape
+$breakpoint-md: 768px; // Tablet
+$breakpoint-lg: 1024px; // Desktop small
+$breakpoint-xl: 1280px; // Desktop medium
+$breakpoint-2xl: 1536px; // Desktop large
 ```
 
 ### 3.4 交互反馈统一化
@@ -208,9 +208,9 @@ $breakpoint-2xl: 1536px;  // Desktop large
 **统一动画规范**：
 
 ```scss
-$transition-fast: 150ms ease-in-out;   // 快速动画
-$transition-base: 200ms ease-in-out;   // 基础动画
-$transition-slow: 300ms ease-in-out;   // 慢速动画
+$transition-fast: 150ms ease-in-out; // 快速动画
+$transition-base: 200ms ease-in-out; // 基础动画
+$transition-slow: 300ms ease-in-out; // 慢速动画
 ```
 
 #### 3.4.2 统一状态反馈

@@ -12,12 +12,12 @@ import './styles/global.scss';
 export default {
   // 版本信息
   version: '1.0.0',
-  
+
   // 初始化函数
   install(app) {
     // 可以在这里注册全局组件或指令
     console.log('YYC³ UI System installed successfully');
-  }
+  },
 };
 
 // 导出UI系统的核心功能

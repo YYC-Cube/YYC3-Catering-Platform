@@ -22,27 +22,27 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use(
-  (config) => {
+  config => {
     const token = localStorage.getItem('auth_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
+  error => {
     return Promise.reject(error);
-  }
+  },
 );
 
 apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (error.response?.status === 401) {
       localStorage.removeItem('auth_token');
       window.location.href = '/login';
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export interface DashboardFilters {
@@ -132,12 +132,16 @@ export const dashboardApi = {
 
   async exportReport(format: 'excel' | 'pdf' | 'csv', filters?: DashboardFilters): Promise<Blob> {
     try {
-      const response = await apiClient.post('/dashboard/export', {
-        format,
-        filters
-      }, {
-        responseType: 'blob'
-      });
+      const response = await apiClient.post(
+        '/dashboard/export',
+        {
+          format,
+          filters,
+        },
+        {
+          responseType: 'blob',
+        },
+      );
       return response.data;
     } catch (error: any) {
       console.error('Failed to export report:', error);

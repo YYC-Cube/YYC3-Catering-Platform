@@ -7,7 +7,17 @@
  * @created 2025-01-30
  */
 
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, CreatedAt, UpdatedAt, Index } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  CreatedAt,
+  UpdatedAt,
+  Index,
+} from 'sequelize-typescript';
 
 /**
  * 用户分析数据模型接口

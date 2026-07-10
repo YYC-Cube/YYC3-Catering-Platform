@@ -59,7 +59,7 @@ export class OrderController {
         restaurantId,
         status as string,
         Number(limit),
-        Number(offset)
+        Number(offset),
       );
 
       const response: ApiResponse = {
@@ -68,7 +68,7 @@ export class OrderController {
         data: orderQueue,
         timestamp: Date.now(),
         requestId: req.id || Math.random().toString(36).substr(2, 9),
-        success: true
+        success: true,
       };
 
       res.json(response);
@@ -79,7 +79,7 @@ export class OrderController {
         message: 'Internal server error',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -92,7 +92,7 @@ export class OrderController {
       const { restaurantId } = req.params as { restaurantId: string };
       const orderData = {
         restaurantId,
-        ...req.body
+        ...req.body,
       };
 
       const order = await this.orderService.createOrder(orderData);
@@ -103,7 +103,7 @@ export class OrderController {
         data: order,
         timestamp: Date.now(),
         requestId: req.id || Math.random().toString(36).substr(2, 9),
-        success: true
+        success: true,
       };
 
       res.status(201).json(response);
@@ -114,7 +114,7 @@ export class OrderController {
         message: 'Internal server error',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -127,11 +127,7 @@ export class OrderController {
       const { restaurantId, orderId } = req.params as { restaurantId: string; orderId: string };
       const { status, notes } = req.body;
 
-      const updatedOrder = await this.orderService.updateOrderStatus(
-        orderId,
-        status,
-        notes
-      );
+      const updatedOrder = await this.orderService.updateOrderStatus(orderId, status, notes);
 
       const response: ApiResponse = {
         code: 200,
@@ -139,7 +135,7 @@ export class OrderController {
         data: updatedOrder,
         timestamp: Date.now(),
         requestId: req.id || Math.random().toString(36).substr(2, 9),
-        success: true
+        success: true,
       };
 
       res.json(response);
@@ -150,7 +146,7 @@ export class OrderController {
         message: 'Internal server error',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -163,10 +159,7 @@ export class OrderController {
       const { restaurantId } = req.params as { restaurantId: string };
       const { orders } = req.body;
 
-      const assignmentResult = await this.orderService.intelligentOrderAssignment(
-        restaurantId,
-        orders
-      );
+      const assignmentResult = await this.orderService.intelligentOrderAssignment(restaurantId, orders);
 
       const response: ApiResponse = {
         code: 200,
@@ -174,7 +167,7 @@ export class OrderController {
         data: assignmentResult,
         timestamp: Date.now(),
         requestId: req.id || Math.random().toString(36).substr(2, 9),
-        success: true
+        success: true,
       };
 
       res.json(response);
@@ -185,7 +178,7 @@ export class OrderController {
         message: 'Internal server error',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -198,9 +191,7 @@ export class OrderController {
       const { restaurantId } = req.params as { restaurantId: string };
       const { orderId } = req.body as { orderId: string };
 
-      const cookingTimeEstimate = await this.orderService.estimateCookingTime(
-        orderId
-      );
+      const cookingTimeEstimate = await this.orderService.estimateCookingTime(orderId);
 
       const response: ApiResponse = {
         code: 200,
@@ -208,7 +199,7 @@ export class OrderController {
         data: cookingTimeEstimate,
         timestamp: Date.now(),
         requestId: req.id || Math.random().toString(36).substr(2, 9),
-        success: true
+        success: true,
       };
 
       res.json(response);
@@ -219,7 +210,7 @@ export class OrderController {
         message: 'Internal server error',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -239,7 +230,7 @@ export class OrderController {
           message: 'Order not found',
           timestamp: Date.now(),
           requestId: req.id || Math.random().toString(36).substr(2, 9),
-          success: false
+          success: false,
         });
       }
 
@@ -249,7 +240,7 @@ export class OrderController {
         data: order,
         timestamp: Date.now(),
         requestId: req.id || Math.random().toString(36).substr(2, 9),
-        success: true
+        success: true,
       };
 
       res.json(response);
@@ -260,7 +251,7 @@ export class OrderController {
         message: 'Internal server error',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -273,10 +264,7 @@ export class OrderController {
       const { restaurantId, orderId } = req.params as { restaurantId: string; orderId: string };
       const { reason } = req.body as { reason?: string };
 
-      const cancelledOrder = await this.orderService.cancelOrder(
-        orderId,
-        reason
-      );
+      const cancelledOrder = await this.orderService.cancelOrder(orderId, reason);
 
       const response: ApiResponse = {
         code: 200,
@@ -284,7 +272,7 @@ export class OrderController {
         data: cancelledOrder,
         timestamp: Date.now(),
         requestId: req.id || Math.random().toString(36).substr(2, 9),
-        success: true
+        success: true,
       };
 
       res.json(response);
@@ -295,7 +283,7 @@ export class OrderController {
         message: 'Internal server error',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }

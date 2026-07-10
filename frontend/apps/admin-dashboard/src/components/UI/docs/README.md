@@ -16,12 +16,14 @@ YYC³ UI 组件库是基于 Vue 3 + TypeScript + Tailwind CSS 构建的现代化
 ### 📦 组件分类
 
 #### 基础组件
+
 - [Input](./components/Input.md) - 输入框
 - [Card](./components/Card.md) - 卡片
 - [Badge](./components/Badge.md) - 徽章
 - [Alert](./components/Alert.md) - 警告提示
 
 #### 表单组件
+
 - [Form](./components/Form.md) - 表单
 - [Select](./components/Select.md) - 选择器
 - [Checkbox](./components/Checkbox.md) - 复选框
@@ -29,29 +31,34 @@ YYC³ UI 组件库是基于 Vue 3 + TypeScript + Tailwind CSS 构建的现代化
 - [Switch](./components/Switch.md) - 开关
 
 #### 导航组件
+
 - [Dropdown](./components/Dropdown.md) - 下拉菜单
 - [Breadcrumb](./components/Breadcrumb.md) - 面包屑
 - [Pagination](./components/Pagination.md) - 分页
 
 #### 数据展示组件
+
 - [Table](./components/Table.md) - 表格
 - [List](./components/List.md) - 列表
 - [Tree](./components/Tree.md) - 树形控件
 - [Timeline](./components/Timeline.md) - 时间轴
 
 #### 反馈组件
+
 - [Modal](./components/Modal.md) - 模态框
 - [Drawer](./components/Drawer.md) - 抽屉
 - [Dialog](./components/Dialog.md) - 对话框
 - [Tooltip](./components/Tooltip.md) - 提示框
 
 #### 布局组件
+
 - [Layout](./components/Layout.md) - 布局
 - [Grid](./components/Grid.md) - 网格
 - [Space](./components/Space.md) - 间距
 - [Flex](./components/Flex.md) - 弹性布局
 
 #### 其他组件
+
 - [Avatar](./components/Avatar.md) - 头像
 - [Divider](./components/Divider.md) - 分割线
 - [Skeleton](./components/Skeleton.md) - 骨架屏
@@ -68,7 +75,7 @@ pnpm install
 #### 使用
 
 ```tsx
-import { Button, Input, Card } from '@/components/UI'
+import { Button, Input, Card } from "@/components/UI";
 
 export default function App() {
   return (
@@ -76,7 +83,7 @@ export default function App() {
       <Input placeholder="请输入内容" />
       <Button type="primary">提交</Button>
     </Card>
-  )
+  );
 }
 ```
 
@@ -89,33 +96,33 @@ export default function App() {
 export const theme = {
   colors: {
     primary: {
-      50: '#eff6ff',
-      100: '#dbeafe',
-      200: '#bfdbfe',
-      300: '#93c5fd',
-      400: '#60a5fa',
-      500: '#3b82f6',
-      600: '#2563eb',
-      700: '#1d4ed8',
-      800: '#1e40af',
-      900: '#1e3a8a',
+      50: "#eff6ff",
+      100: "#dbeafe",
+      200: "#bfdbfe",
+      300: "#93c5fd",
+      400: "#60a5fa",
+      500: "#3b82f6",
+      600: "#2563eb",
+      700: "#1d4ed8",
+      800: "#1e40af",
+      900: "#1e3a8a",
     },
     // ... 其他颜色
   },
-}
+};
 ```
 
 #### 使用主题
 
 ```tsx
-import { ThemeProvider } from '@/components/UI/ThemeProvider'
+import { ThemeProvider } from "@/components/UI/ThemeProvider";
 
 export default function App() {
   return (
     <ThemeProvider>
       <YourApp />
     </ThemeProvider>
-  )
+  );
 }
 ```
 

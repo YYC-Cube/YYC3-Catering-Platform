@@ -10,15 +10,17 @@
 **@tags**：架构设计,API,YYC³,接口设计
 
 ---
+
 # API接口实现文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--开发实施
 - 遵循规范：五高五标五化要求
@@ -59,57 +61,57 @@
  */
 export enum APIDesignPrinciple {
   // RESTful原则
-  RESOURCE_ORIENTED = 'RESOURCE_ORIENTED',           // 面向资源
-  STATELESS = 'STATELESS',                           // 无状态
-  UNIFORM_INTERFACE = 'UNIFORM_INTERFACE',           // 统一接口
-  CACHEABLE = 'CACHEABLE',                           // 可缓存
-  LAYERED_SYSTEM = 'LAYERED_SYSTEM',                 // 分层系统
-  
+  RESOURCE_ORIENTED = "RESOURCE_ORIENTED", // 面向资源
+  STATELESS = "STATELESS", // 无状态
+  UNIFORM_INTERFACE = "UNIFORM_INTERFACE", // 统一接口
+  CACHEABLE = "CACHEABLE", // 可缓存
+  LAYERED_SYSTEM = "LAYERED_SYSTEM", // 分层系统
+
   // 通用原则
-  CONSISTENT_NAMING = 'CONSISTENT_NAMING',           // 命名一致
-  VERSIONING = 'VERSIONING',                         // 版本控制
-  PAGINATION = 'PAGINATION',                         // 分页支持
-  FILTERING = 'FILTERING',                           // 过滤支持
-  SORTING = 'SORTING',                               // 排序支持
-  
+  CONSISTENT_NAMING = "CONSISTENT_NAMING", // 命名一致
+  VERSIONING = "VERSIONING", // 版本控制
+  PAGINATION = "PAGINATION", // 分页支持
+  FILTERING = "FILTERING", // 过滤支持
+  SORTING = "SORTING", // 排序支持
+
   // 安全原则
-  AUTHENTICATION = 'AUTHENTICATION',                   // 认证
-  AUTHORIZATION = 'AUTHORIZATION',                   // 授权
-  RATE_LIMITING = 'RATE_LIMITING',                   // 限流
-  INPUT_VALIDATION = 'INPUT_VALIDATION'              // 输入验证
+  AUTHENTICATION = "AUTHENTICATION", // 认证
+  AUTHORIZATION = "AUTHORIZATION", // 授权
+  RATE_LIMITING = "RATE_LIMITING", // 限流
+  INPUT_VALIDATION = "INPUT_VALIDATION", // 输入验证
 }
 
 /**
  * API设计原则描述
  */
 export const apiDesignPrinciples: Record<APIDesignPrinciple, string> = {
-  [APIDesignPrinciple.RESOURCE_ORIENTED]: 'API应该围绕资源设计，使用名词而非动词',
-  [APIDesignPrinciple.STATELESS]: '每个请求应该包含所有必要信息，服务器不保存客户端状态',
-  [APIDesignPrinciple.UNIFORM_INTERFACE]: '使用统一的接口设计，提高可预测性',
-  [APIDesignPrinciple.CACHEABLE]: '响应应该明确标识是否可缓存',
-  [APIDesignPrinciple.LAYERED_SYSTEM]: '系统应该分层，客户端不需要知道是否连接到终端服务器',
-  [APIDesignPrinciple.CONSISTENT_NAMING]: '使用一致的命名约定，包括资源名称、字段名称等',
-  [APIDesignPrinciple.VERSIONING]: 'API应该支持版本控制，避免破坏性变更',
-  [APIDesignPrinciple.PAGINATION]: '列表接口应该支持分页，避免返回过多数据',
-  [APIDesignPrinciple.FILTERING]: '列表接口应该支持过滤，提高数据检索效率',
-  [APIDesignPrinciple.SORTING]: '列表接口应该支持排序，提供灵活的数据展示',
-  [APIDesignPrinciple.AUTHENTICATION]: 'API应该实现认证机制，验证客户端身份',
-  [APIDesignPrinciple.AUTHORIZATION]: 'API应该实现授权机制，控制资源访问权限',
-  [APIDesignPrinciple.RATE_LIMITING]: 'API应该实现限流机制，防止滥用',
-  [APIDesignPrinciple.INPUT_VALIDATION]: 'API应该验证所有输入，防止无效或恶意数据'
+  [APIDesignPrinciple.RESOURCE_ORIENTED]: "API应该围绕资源设计，使用名词而非动词",
+  [APIDesignPrinciple.STATELESS]: "每个请求应该包含所有必要信息，服务器不保存客户端状态",
+  [APIDesignPrinciple.UNIFORM_INTERFACE]: "使用统一的接口设计，提高可预测性",
+  [APIDesignPrinciple.CACHEABLE]: "响应应该明确标识是否可缓存",
+  [APIDesignPrinciple.LAYERED_SYSTEM]: "系统应该分层，客户端不需要知道是否连接到终端服务器",
+  [APIDesignPrinciple.CONSISTENT_NAMING]: "使用一致的命名约定，包括资源名称、字段名称等",
+  [APIDesignPrinciple.VERSIONING]: "API应该支持版本控制，避免破坏性变更",
+  [APIDesignPrinciple.PAGINATION]: "列表接口应该支持分页，避免返回过多数据",
+  [APIDesignPrinciple.FILTERING]: "列表接口应该支持过滤，提高数据检索效率",
+  [APIDesignPrinciple.SORTING]: "列表接口应该支持排序，提供灵活的数据展示",
+  [APIDesignPrinciple.AUTHENTICATION]: "API应该实现认证机制，验证客户端身份",
+  [APIDesignPrinciple.AUTHORIZATION]: "API应该实现授权机制，控制资源访问权限",
+  [APIDesignPrinciple.RATE_LIMITING]: "API应该实现限流机制，防止滥用",
+  [APIDesignPrinciple.INPUT_VALIDATION]: "API应该验证所有输入，防止无效或恶意数据",
 };
 
 /**
  * HTTP方法映射
  */
 export const httpMethodMapping = {
-  GET: '获取资源',
-  POST: '创建资源',
-  PUT: '更新整个资源',
-  PATCH: '部分更新资源',
-  DELETE: '删除资源',
-  HEAD: '获取资源头信息',
-  OPTIONS: '获取支持的HTTP方法'
+  GET: "获取资源",
+  POST: "创建资源",
+  PUT: "更新整个资源",
+  PATCH: "部分更新资源",
+  DELETE: "删除资源",
+  HEAD: "获取资源头信息",
+  OPTIONS: "获取支持的HTTP方法",
 };
 
 /**
@@ -117,30 +119,30 @@ export const httpMethodMapping = {
  */
 export const httpStatusCodes = {
   // 2xx 成功
-  200: 'OK - 请求成功',
-  201: 'Created - 资源创建成功',
-  202: 'Accepted - 请求已接受，正在处理',
-  204: 'No Content - 请求成功，无返回内容',
-  
+  200: "OK - 请求成功",
+  201: "Created - 资源创建成功",
+  202: "Accepted - 请求已接受，正在处理",
+  204: "No Content - 请求成功，无返回内容",
+
   // 3xx 重定向
-  301: 'Moved Permanently - 资源已永久移动',
-  302: 'Found - 资源临时移动',
-  304: 'Not Modified - 资源未修改',
-  
+  301: "Moved Permanently - 资源已永久移动",
+  302: "Found - 资源临时移动",
+  304: "Not Modified - 资源未修改",
+
   // 4xx 客户端错误
-  400: 'Bad Request - 请求格式错误',
-  401: 'Unauthorized - 未授权',
-  403: 'Forbidden - 禁止访问',
-  404: 'Not Found - 资源不存在',
-  409: 'Conflict - 资源冲突',
-  422: 'Unprocessable Entity - 请求格式正确但语义错误',
-  429: 'Too Many Requests - 请求过于频繁',
-  
+  400: "Bad Request - 请求格式错误",
+  401: "Unauthorized - 未授权",
+  403: "Forbidden - 禁止访问",
+  404: "Not Found - 资源不存在",
+  409: "Conflict - 资源冲突",
+  422: "Unprocessable Entity - 请求格式正确但语义错误",
+  429: "Too Many Requests - 请求过于频繁",
+
   // 5xx 服务器错误
-  500: 'Internal Server Error - 服务器内部错误',
-  502: 'Bad Gateway - 网关错误',
-  503: 'Service Unavailable - 服务不可用',
-  504: 'Gateway Timeout - 网关超时'
+  500: "Internal Server Error - 服务器内部错误",
+  502: "Bad Gateway - 网关错误",
+  503: "Service Unavailable - 服务不可用",
+  504: "Gateway Timeout - 网关超时",
 };
 ```
 
@@ -151,18 +153,18 @@ export const httpStatusCodes = {
  * API版本控制策略
  */
 export enum APIVersionStrategy {
-  URL_PATH = 'URL_PATH',           // URL路径版本控制
-  HEADER = 'HEADER',                // 请求头版本控制
-  QUERY_PARAM = 'QUERY_PARAM',      // 查询参数版本控制
-  CONTENT_NEGOTIATION = 'CONTENT_NEGOTIATION' // 内容协商
+  URL_PATH = "URL_PATH", // URL路径版本控制
+  HEADER = "HEADER", // 请求头版本控制
+  QUERY_PARAM = "QUERY_PARAM", // 查询参数版本控制
+  CONTENT_NEGOTIATION = "CONTENT_NEGOTIATION", // 内容协商
 }
 
 /**
  * API版本管理器
  */
 export class APIVersionManager {
-  private currentVersion: string = 'v1';
-  private supportedVersions: string[] = ['v1', 'v2'];
+  private currentVersion: string = "v1";
+  private supportedVersions: string[] = ["v1", "v2"];
 
   /**
    * 设置当前版本
@@ -212,15 +214,15 @@ export class APIVersionManager {
    */
   parseVersion(version: string): string {
     // 移除v前缀
-    return version.replace(/^v/i, '');
+    return version.replace(/^v/i, "");
   }
 
   /**
    * 比较版本
    */
   compareVersions(v1: string, v2: string): number {
-    const v1Parts = this.parseVersion(v1).split('.').map(Number);
-    const v2Parts = this.parseVersion(v2).split('.').map(Number);
+    const v1Parts = this.parseVersion(v1).split(".").map(Number);
+    const v2Parts = this.parseVersion(v2).split(".").map(Number);
 
     for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i++) {
       const v1Part = v1Parts[i] || 0;
@@ -264,7 +266,7 @@ export interface Resource {
  * 端点定义
  */
 export interface Endpoint {
-  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   path: string;
   description: string;
   authentication: boolean;
@@ -279,7 +281,7 @@ export interface Endpoint {
 export interface Parameter {
   name: string;
   type: string;
-  location: 'path' | 'query' | 'body' | 'header';
+  location: "path" | "query" | "body" | "header";
   required: boolean;
   description: string;
 }
@@ -306,167 +308,167 @@ export class RESTfulResourceGenerator {
 
     return [
       {
-        method: 'GET',
+        method: "GET",
         path: `/${plural}`,
         description: `获取${resourceName}列表`,
         authentication: true,
-        authorization: ['read'],
+        authorization: ["read"],
         parameters: [
           {
-            name: 'page',
-            type: 'number',
-            location: 'query',
+            name: "page",
+            type: "number",
+            location: "query",
             required: false,
-            description: '页码'
+            description: "页码",
           },
           {
-            name: 'limit',
-            type: 'number',
-            location: 'query',
+            name: "limit",
+            type: "number",
+            location: "query",
             required: false,
-            description: '每页数量'
-          }
+            description: "每页数量",
+          },
         ],
         responses: [
           {
             statusCode: 200,
-            description: '成功',
+            description: "成功",
             schema: {
               data: [],
               total: 0,
               page: 1,
-              limit: 10
-            }
-          }
-        ]
+              limit: 10,
+            },
+          },
+        ],
       },
       {
-        method: 'GET',
+        method: "GET",
         path: `/${plural}/:id`,
         description: `获取${resourceName}详情`,
         authentication: true,
-        authorization: ['read'],
+        authorization: ["read"],
         parameters: [
           {
-            name: 'id',
-            type: 'string',
-            location: 'path',
+            name: "id",
+            type: "string",
+            location: "path",
             required: true,
-            description: '资源ID'
-          }
+            description: "资源ID",
+          },
         ],
         responses: [
           {
             statusCode: 200,
-            description: '成功',
-            schema: {}
+            description: "成功",
+            schema: {},
           },
           {
             statusCode: 404,
-            description: '资源不存在',
+            description: "资源不存在",
             schema: {
-              error: 'Resource not found'
-            }
-          }
-        ]
+              error: "Resource not found",
+            },
+          },
+        ],
       },
       {
-        method: 'POST',
+        method: "POST",
         path: `/${plural}`,
         description: `创建${resourceName}`,
         authentication: true,
-        authorization: ['create'],
+        authorization: ["create"],
         parameters: [
           {
-            name: 'body',
-            type: 'object',
-            location: 'body',
+            name: "body",
+            type: "object",
+            location: "body",
             required: true,
-            description: '资源数据'
-          }
+            description: "资源数据",
+          },
         ],
         responses: [
           {
             statusCode: 201,
-            description: '创建成功',
-            schema: {}
+            description: "创建成功",
+            schema: {},
           },
           {
             statusCode: 400,
-            description: '请求格式错误',
+            description: "请求格式错误",
             schema: {
-              error: 'Invalid request'
-            }
-          }
-        ]
+              error: "Invalid request",
+            },
+          },
+        ],
       },
       {
-        method: 'PUT',
+        method: "PUT",
         path: `/${plural}/:id`,
         description: `更新${resourceName}`,
         authentication: true,
-        authorization: ['update'],
+        authorization: ["update"],
         parameters: [
           {
-            name: 'id',
-            type: 'string',
-            location: 'path',
+            name: "id",
+            type: "string",
+            location: "path",
             required: true,
-            description: '资源ID'
+            description: "资源ID",
           },
           {
-            name: 'body',
-            type: 'object',
-            location: 'body',
+            name: "body",
+            type: "object",
+            location: "body",
             required: true,
-            description: '资源数据'
-          }
+            description: "资源数据",
+          },
         ],
         responses: [
           {
             statusCode: 200,
-            description: '更新成功',
-            schema: {}
+            description: "更新成功",
+            schema: {},
           },
           {
             statusCode: 404,
-            description: '资源不存在',
+            description: "资源不存在",
             schema: {
-              error: 'Resource not found'
-            }
-          }
-        ]
+              error: "Resource not found",
+            },
+          },
+        ],
       },
       {
-        method: 'DELETE',
+        method: "DELETE",
         path: `/${plural}/:id`,
         description: `删除${resourceName}`,
         authentication: true,
-        authorization: ['delete'],
+        authorization: ["delete"],
         parameters: [
           {
-            name: 'id',
-            type: 'string',
-            location: 'path',
+            name: "id",
+            type: "string",
+            location: "path",
             required: true,
-            description: '资源ID'
-          }
+            description: "资源ID",
+          },
         ],
         responses: [
           {
             statusCode: 204,
-            description: '删除成功',
-            schema: null
+            description: "删除成功",
+            schema: null,
           },
           {
             statusCode: 404,
-            description: '资源不存在',
+            description: "资源不存在",
             schema: {
-              error: 'Resource not found'
-            }
-          }
-        ]
-      }
+              error: "Resource not found",
+            },
+          },
+        ],
+      },
     ];
   }
 
@@ -475,13 +477,13 @@ export class RESTfulResourceGenerator {
    */
   private toSingular(word: string): string {
     // 简单实现，实际应该使用更复杂的规则
-    if (word.endsWith('ies')) {
-      return word.slice(0, -3) + 'y';
+    if (word.endsWith("ies")) {
+      return word.slice(0, -3) + "y";
     }
-    if (word.endsWith('es')) {
+    if (word.endsWith("es")) {
       return word.slice(0, -2);
     }
-    if (word.endsWith('s')) {
+    if (word.endsWith("s")) {
       return word.slice(0, -1);
     }
     return word;
@@ -492,13 +494,13 @@ export class RESTfulResourceGenerator {
    */
   private toPlural(word: string): string {
     // 简单实现，实际应该使用更复杂的规则
-    if (word.endsWith('y')) {
-      return word.slice(0, -1) + 'ies';
+    if (word.endsWith("y")) {
+      return word.slice(0, -1) + "ies";
     }
-    if (word.endsWith('s') || word.endsWith('x') || word.endsWith('z') || word.endsWith('ch') || word.endsWith('sh')) {
-      return word + 'es';
+    if (word.endsWith("s") || word.endsWith("x") || word.endsWith("z") || word.endsWith("ch") || word.endsWith("sh")) {
+      return word + "es";
     }
-    return word + 's';
+    return word + "s";
   }
 }
 ```
@@ -518,7 +520,7 @@ export abstract class RESTfulController<T> {
       const { page = 1, limit = 10 } = req.query;
       const result = await this.service.findAll({
         page: Number(page),
-        limit: Number(limit)
+        limit: Number(limit),
       });
 
       res.json({
@@ -526,7 +528,7 @@ export abstract class RESTfulController<T> {
         data: result.data,
         total: result.total,
         page: Number(page),
-        limit: Number(limit)
+        limit: Number(limit),
       });
     } catch (error) {
       this.handleError(error, res);
@@ -544,14 +546,14 @@ export abstract class RESTfulController<T> {
       if (!result) {
         res.status(404).json({
           success: false,
-          error: 'Resource not found'
+          error: "Resource not found",
         });
         return;
       }
 
       res.json({
         success: true,
-        data: result
+        data: result,
       });
     } catch (error) {
       this.handleError(error, res);
@@ -567,7 +569,7 @@ export abstract class RESTfulController<T> {
 
       res.status(201).json({
         success: true,
-        data: result
+        data: result,
       });
     } catch (error) {
       this.handleError(error, res);
@@ -585,14 +587,14 @@ export abstract class RESTfulController<T> {
       if (!result) {
         res.status(404).json({
           success: false,
-          error: 'Resource not found'
+          error: "Resource not found",
         });
         return;
       }
 
       res.json({
         success: true,
-        data: result
+        data: result,
       });
     } catch (error) {
       this.handleError(error, res);
@@ -617,17 +619,17 @@ export abstract class RESTfulController<T> {
    * 错误处理
    */
   private handleError(error: any, res: any): void {
-    console.error('API Error:', error);
+    console.error("API Error:", error);
 
     if (error.statusCode) {
       res.status(error.statusCode).json({
         success: false,
-        error: error.message
+        error: error.message,
       });
     } else {
       res.status(500).json({
         success: false,
-        error: 'Internal server error'
+        error: "Internal server error",
       });
     }
   }
@@ -654,97 +656,105 @@ export abstract class RESTfulController<T> {
  * @version 1.0.0
  */
 
-import { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLBoolean } from 'graphql';
+import {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLBoolean,
+} from "graphql";
 
 /**
  * GraphQL类型定义
  */
 export const userType = new GraphQLObjectType({
-  name: 'User',
-  description: '用户类型',
+  name: "User",
+  description: "用户类型",
   fields: () => ({
-    id: { type: GraphQLNonNull(GraphQLString), description: '用户ID' },
-    name: { type: GraphQLNonNull(GraphQLString), description: '用户名' },
-    email: { type: GraphQLNonNull(GraphQLString), description: '邮箱' },
-    createdAt: { type: GraphQLString, description: '创建时间' },
-    updatedAt: { type: GraphQLString, description: '更新时间' }
-  })
+    id: { type: GraphQLNonNull(GraphQLString), description: "用户ID" },
+    name: { type: GraphQLNonNull(GraphQLString), description: "用户名" },
+    email: { type: GraphQLNonNull(GraphQLString), description: "邮箱" },
+    createdAt: { type: GraphQLString, description: "创建时间" },
+    updatedAt: { type: GraphQLString, description: "更新时间" },
+  }),
 });
 
 /**
  * 查询类型
  */
 export const queryType = new GraphQLObjectType({
-  name: 'Query',
-  description: '根查询类型',
+  name: "Query",
+  description: "根查询类型",
   fields: () => ({
     user: {
       type: userType,
-      description: '获取用户信息',
+      description: "获取用户信息",
       args: {
-        id: { type: GraphQLNonNull(GraphQLString), description: '用户ID' }
+        id: { type: GraphQLNonNull(GraphQLString), description: "用户ID" },
       },
       resolve: async (_: any, { id }: any, context: any) => {
         return context.userLoader.load(id);
-      }
+      },
     },
     users: {
       type: GraphQLList(userType),
-      description: '获取用户列表',
+      description: "获取用户列表",
       args: {
-        page: { type: GraphQLInt, description: '页码' },
-        limit: { type: GraphQLInt, description: '每页数量' }
+        page: { type: GraphQLInt, description: "页码" },
+        limit: { type: GraphQLInt, description: "每页数量" },
       },
       resolve: async (_: any, { page = 1, limit = 10 }: any, context: any) => {
         return context.userService.findAll({ page, limit });
-      }
-    }
-  })
+      },
+    },
+  }),
 });
 
 /**
  * 变更类型
  */
 export const mutationType = new GraphQLObjectType({
-  name: 'Mutation',
-  description: '根变更类型',
+  name: "Mutation",
+  description: "根变更类型",
   fields: () => ({
     createUser: {
       type: userType,
-      description: '创建用户',
+      description: "创建用户",
       args: {
-        name: { type: GraphQLNonNull(GraphQLString), description: '用户名' },
-        email: { type: GraphQLNonNull(GraphQLString), description: '邮箱' },
-        password: { type: GraphQLNonNull(GraphQLString), description: '密码' }
+        name: { type: GraphQLNonNull(GraphQLString), description: "用户名" },
+        email: { type: GraphQLNonNull(GraphQLString), description: "邮箱" },
+        password: { type: GraphQLNonNull(GraphQLString), description: "密码" },
       },
       resolve: async (_: any, args: any, context: any) => {
         return context.userService.create(args);
-      }
+      },
     },
     updateUser: {
       type: userType,
-      description: '更新用户',
+      description: "更新用户",
       args: {
-        id: { type: GraphQLNonNull(GraphQLString), description: '用户ID' },
-        name: { type: GraphQLString, description: '用户名' },
-        email: { type: GraphQLString, description: '邮箱' }
+        id: { type: GraphQLNonNull(GraphQLString), description: "用户ID" },
+        name: { type: GraphQLString, description: "用户名" },
+        email: { type: GraphQLString, description: "邮箱" },
       },
       resolve: async (_: any, { id, ...data }: any, context: any) => {
         return context.userService.update(id, data);
-      }
+      },
     },
     deleteUser: {
       type: GraphQLBoolean,
-      description: '删除用户',
+      description: "删除用户",
       args: {
-        id: { type: GraphQLNonNull(GraphQLString), description: '用户ID' }
+        id: { type: GraphQLNonNull(GraphQLString), description: "用户ID" },
       },
       resolve: async (_: any, { id }: any, context: any) => {
         await context.userService.delete(id);
         return true;
-      }
-    }
-  })
+      },
+    },
+  }),
 });
 
 /**
@@ -752,7 +762,7 @@ export const mutationType = new GraphQLObjectType({
  */
 export const schema = new GraphQLSchema({
   query: queryType,
-  mutation: mutationType
+  mutation: mutationType,
 });
 ```
 
@@ -783,7 +793,7 @@ export class GraphQLResolver {
       },
       loadMany: async (ids: string[]) => {
         return this.userService.findByIds(ids);
-      }
+      },
     };
   }
 
@@ -791,16 +801,16 @@ export class GraphQLResolver {
    * 执行查询
    */
   async executeQuery(query: string, variables?: any): Promise<any> {
-    const { graphql } = await import('graphql');
-    
+    const { graphql } = await import("graphql");
+
     return graphql({
       schema,
       source: query,
       variableValues: variables,
       contextValue: {
         userService: this.userService,
-        userLoader: this.userLoader
-      }
+        userLoader: this.userLoader,
+      },
     });
   }
 
@@ -856,7 +866,7 @@ export interface ServiceConfig {
     path: string;
     interval: number;
   };
-  loadBalance?: 'round-robin' | 'least-connections' | 'ip-hash';
+  loadBalance?: "round-robin" | "least-connections" | "ip-hash";
 }
 
 /**
@@ -873,7 +883,7 @@ export class APIGateway {
    */
   registerRoute(config: RouteConfig): void {
     const key = `${config.method}:${config.path}`;
-    
+
     if (!this.routes.has(key)) {
       this.routes.set(key, []);
     }
@@ -896,7 +906,7 @@ export class APIGateway {
     const routes = this.routes.get(key);
 
     if (!routes || routes.length === 0) {
-      res.status(404).json({ error: 'Route not found' });
+      res.status(404).json({ error: "Route not found" });
       return;
     }
 
@@ -904,7 +914,7 @@ export class APIGateway {
 
     // 限流检查
     if (route.rateLimit && !this.checkRateLimit(req, route.rateLimit)) {
-      res.status(429).json({ error: 'Too many requests' });
+      res.status(429).json({ error: "Too many requests" });
       return;
     }
 
@@ -938,7 +948,7 @@ export class APIGateway {
     if (!limiter) {
       this.rateLimiters.set(key, {
         count: 1,
-        resetTime: Date.now() + config.windowMs
+        resetTime: Date.now() + config.windowMs,
       });
       return true;
     }
@@ -961,7 +971,7 @@ export class APIGateway {
    * 获取客户端标识
    */
   private getClientKey(req: any): string {
-    return req.ip || req.headers['x-forwarded-for'] || 'unknown';
+    return req.ip || req.headers["x-forwarded-for"] || "unknown";
   }
 
   /**
@@ -990,7 +1000,7 @@ export class APIGateway {
     const key = this.getCacheKey(req);
     this.caches.set(key, {
       data,
-      expiry: Date.now() + ttl
+      expiry: Date.now() + ttl,
     });
   }
 
@@ -1008,7 +1018,7 @@ export class APIGateway {
     // 实现请求转发逻辑
     return {
       statusCode: 200,
-      data: {}
+      data: {},
     };
   }
 }
@@ -1067,7 +1077,7 @@ export class LoadBalancer {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash;
     }
     return Math.abs(hash);
@@ -1106,7 +1116,7 @@ export class LoadBalancer {
  * @version 1.0.0
  */
 
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 /**
  * JWT配置
@@ -1131,7 +1141,7 @@ export class JWTAuthenticator {
     return jwt.sign(payload, this.config.secret, {
       expiresIn: this.config.expiresIn,
       issuer: this.config.issuer,
-      audience: this.config.audience
+      audience: this.config.audience,
     });
   }
 
@@ -1142,10 +1152,10 @@ export class JWTAuthenticator {
     try {
       return jwt.verify(token, this.config.secret, {
         issuer: this.config.issuer,
-        audience: this.config.audience
+        audience: this.config.audience,
       });
     } catch (error) {
-      throw new Error('Invalid token');
+      throw new Error("Invalid token");
     }
   }
 
@@ -1174,19 +1184,19 @@ export class JWTAuthenticator {
  * 角色定义
  */
 export enum Role {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-  GUEST = 'GUEST'
+  ADMIN = "ADMIN",
+  USER = "USER",
+  GUEST = "GUEST",
 }
 
 /**
  * 权限定义
  */
 export enum Permission {
-  READ = 'read',
-  WRITE = 'write',
-  DELETE = 'delete',
-  ADMIN = 'admin'
+  READ = "read",
+  WRITE = "write",
+  DELETE = "delete",
+  ADMIN = "admin",
 }
 
 /**
@@ -1195,7 +1205,7 @@ export enum Permission {
 export const rolePermissions: Record<Role, Permission[]> = {
   [Role.ADMIN]: [Permission.READ, Permission.WRITE, Permission.DELETE, Permission.ADMIN],
   [Role.USER]: [Permission.READ, Permission.WRITE],
-  [Role.GUEST]: [Permission.READ]
+  [Role.GUEST]: [Permission.READ],
 };
 
 /**
@@ -1263,7 +1273,7 @@ export class RBACAuthorizer {
  * @version 1.0.0
  */
 
-import { z } from 'zod';
+import { z } from "zod";
 
 /**
  * 验证规则
@@ -1286,7 +1296,10 @@ export class Validator {
   /**
    * 验证数据
    */
-  validate(data: any, rules: ValidationRule[]): {
+  validate(
+    data: any,
+    rules: ValidationRule[]
+  ): {
     valid: boolean;
     errors: Record<string, string>;
   } {
@@ -1296,13 +1309,13 @@ export class Validator {
       const value = data[rule.field];
 
       // 检查必填
-      if (rule.required && (value === undefined || value === null || value === '')) {
+      if (rule.required && (value === undefined || value === null || value === "")) {
         errors[rule.field] = `${rule.field} is required`;
         continue;
       }
 
       // 如果值为空且非必填，跳过其他验证
-      if (!rule.required && (value === undefined || value === null || value === '')) {
+      if (!rule.required && (value === undefined || value === null || value === "")) {
         continue;
       }
 
@@ -1332,7 +1345,7 @@ export class Validator {
 
       // 枚举验证
       if (rule.enum && !rule.enum.includes(value)) {
-        errors[rule.field] = `${rule.field} must be one of ${rule.enum.join(', ')}`;
+        errors[rule.field] = `${rule.field} must be one of ${rule.enum.join(", ")}`;
         continue;
       }
 
@@ -1340,7 +1353,7 @@ export class Validator {
       if (rule.custom) {
         const result = rule.custom(value);
         if (result !== true) {
-          errors[rule.field] = typeof result === 'string' ? result : `${rule.field} is invalid`;
+          errors[rule.field] = typeof result === "string" ? result : `${rule.field} is invalid`;
           continue;
         }
       }
@@ -1348,7 +1361,7 @@ export class Validator {
 
     return {
       valid: Object.keys(errors).length === 0,
-      errors
+      errors,
     };
   }
 
@@ -1357,19 +1370,19 @@ export class Validator {
    */
   private checkType(value: any, type: string): boolean {
     switch (type) {
-      case 'string':
-        return typeof value === 'string';
-      case 'number':
-        return typeof value === 'number' && !isNaN(value);
-      case 'boolean':
-        return typeof value === 'boolean';
-      case 'array':
+      case "string":
+        return typeof value === "string";
+      case "number":
+        return typeof value === "number" && !isNaN(value);
+      case "boolean":
+        return typeof value === "boolean";
+      case "array":
         return Array.isArray(value);
-      case 'object':
-        return typeof value === 'object' && value !== null && !Array.isArray(value);
-      case 'email':
+      case "object":
+        return typeof value === "object" && value !== null && !Array.isArray(value);
+      case "email":
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      case 'url':
+      case "url":
         try {
           new URL(value);
           return true;
@@ -1396,7 +1409,10 @@ export class ZodValidator {
   /**
    * 验证数据
    */
-  static validate<T>(schema: z.ZodSchema<T>, data: any): {
+  static validate<T>(
+    schema: z.ZodSchema<T>,
+    data: any
+  ): {
     success: boolean;
     data?: T;
     errors?: z.ZodError;
@@ -1406,13 +1422,13 @@ export class ZodValidator {
     if (result.success) {
       return {
         success: true,
-        data: result.data
+        data: result.data,
       };
     }
 
     return {
       success: false,
-      errors: result.error
+      errors: result.error,
     };
   }
 }
@@ -1444,7 +1460,7 @@ export class APIError extends Error {
     public details?: any
   ) {
     super(message);
-    this.name = 'APIError';
+    this.name = "APIError";
   }
 }
 
@@ -1452,44 +1468,44 @@ export class APIError extends Error {
  * 错误类型
  */
 export class BadRequestError extends APIError {
-  constructor(message: string = 'Bad Request', details?: any) {
-    super(400, 'BAD_REQUEST', message, details);
+  constructor(message: string = "Bad Request", details?: any) {
+    super(400, "BAD_REQUEST", message, details);
   }
 }
 
 export class UnauthorizedError extends APIError {
-  constructor(message: string = 'Unauthorized', details?: any) {
-    super(401, 'UNAUTHORIZED', message, details);
+  constructor(message: string = "Unauthorized", details?: any) {
+    super(401, "UNAUTHORIZED", message, details);
   }
 }
 
 export class ForbiddenError extends APIError {
-  constructor(message: string = 'Forbidden', details?: any) {
-    super(403, 'FORBIDDEN', message, details);
+  constructor(message: string = "Forbidden", details?: any) {
+    super(403, "FORBIDDEN", message, details);
   }
 }
 
 export class NotFoundError extends APIError {
-  constructor(message: string = 'Not Found', details?: any) {
-    super(404, 'NOT_FOUND', message, details);
+  constructor(message: string = "Not Found", details?: any) {
+    super(404, "NOT_FOUND", message, details);
   }
 }
 
 export class ConflictError extends APIError {
-  constructor(message: string = 'Conflict', details?: any) {
-    super(409, 'CONFLICT', message, details);
+  constructor(message: string = "Conflict", details?: any) {
+    super(409, "CONFLICT", message, details);
   }
 }
 
 export class ValidationError extends APIError {
-  constructor(message: string = 'Validation Error', details?: any) {
-    super(422, 'VALIDATION_ERROR', message, details);
+  constructor(message: string = "Validation Error", details?: any) {
+    super(422, "VALIDATION_ERROR", message, details);
   }
 }
 
 export class InternalServerError extends APIError {
-  constructor(message: string = 'Internal Server Error', details?: any) {
-    super(500, 'INTERNAL_SERVER_ERROR', message, details);
+  constructor(message: string = "Internal Server Error", details?: any) {
+    super(500, "INTERNAL_SERVER_ERROR", message, details);
   }
 }
 ```
@@ -1505,7 +1521,7 @@ export class ErrorHandler {
    * 处理错误
    */
   static handle(error: Error, req: any, res: any): void {
-    console.error('Error:', error);
+    console.error("Error:", error);
 
     if (error instanceof APIError) {
       res.status(error.statusCode).json({
@@ -1513,9 +1529,9 @@ export class ErrorHandler {
         error: {
           code: error.code,
           message: error.message,
-          details: error.details
+          details: error.details,
         },
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
       return;
     }
@@ -1524,11 +1540,11 @@ export class ErrorHandler {
     res.status(500).json({
       success: false,
       error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'An unexpected error occurred',
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        code: "INTERNAL_SERVER_ERROR",
+        message: "An unexpected error occurred",
+        details: process.env.NODE_ENV === "development" ? error.message : undefined,
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 
@@ -1567,29 +1583,29 @@ export class ErrorHandler {
  */
 export class OpenAPIDocumentGenerator {
   private doc: any = {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'YYC3 Catering Platform API',
-      version: '1.0.0',
-      description: '餐饮平台API文档'
+      title: "YYC3 Catering Platform API",
+      version: "1.0.0",
+      description: "餐饮平台API文档",
     },
     servers: [
       {
-        url: 'http://localhost:3200',
-        description: 'Development server'
-      }
+        url: "http://localhost:3200",
+        description: "Development server",
+      },
     ],
     paths: {},
     components: {
       schemas: {},
       securitySchemes: {
         bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT'
-        }
-      }
-    }
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
   };
 
   /**
@@ -1607,7 +1623,7 @@ export class OpenAPIDocumentGenerator {
       security: config.security ? [{ bearerAuth: [] }] : [],
       parameters: config.parameters || [],
       requestBody: config.requestBody,
-      responses: config.responses
+      responses: config.responses,
     };
   }
 
@@ -1637,7 +1653,7 @@ export class OpenAPIDocumentGenerator {
    */
   exportYAML(): string {
     // 实现YAML导出
-    return '';
+    return "";
   }
 }
 ```
@@ -1661,14 +1677,14 @@ export class OpenAPIDocumentGenerator {
  * 缓存策略
  */
 export enum CacheStrategy {
-  NO_CACHE = 'NO_CACHE',
-  NO_STORE = 'NO_STORE',
-  PRIVATE = 'PRIVATE',
-  PUBLIC = 'PUBLIC',
-  MUST_REVALIDATE = 'MUST_REVALIDATE',
-  PROXY_REVALIDATE = 'PROXY_REVALIDATE',
-  MAX_AGE = 'MAX_AGE',
-  S_MAXAGE = 'S_MAXAGE'
+  NO_CACHE = "NO_CACHE",
+  NO_STORE = "NO_STORE",
+  PRIVATE = "PRIVATE",
+  PUBLIC = "PUBLIC",
+  MUST_REVALIDATE = "MUST_REVALIDATE",
+  PROXY_REVALIDATE = "PROXY_REVALIDATE",
+  MAX_AGE = "MAX_AGE",
+  S_MAXAGE = "S_MAXAGE",
 }
 
 /**
@@ -1683,7 +1699,7 @@ export class CacheManager {
   set(key: string, data: any, ttl: number): void {
     this.cache.set(key, {
       data,
-      expiry: Date.now() + ttl * 1000
+      expiry: Date.now() + ttl * 1000,
     });
   }
 
@@ -1739,13 +1755,13 @@ export class CompressionMiddleware {
    * 压缩响应
    */
   static compress(req: any, res: any, next: any): void {
-    const acceptEncoding = req.headers['accept-encoding'] || '';
+    const acceptEncoding = req.headers["accept-encoding"] || "";
 
-    if (acceptEncoding.includes('gzip')) {
-      res.setHeader('Content-Encoding', 'gzip');
+    if (acceptEncoding.includes("gzip")) {
+      res.setHeader("Content-Encoding", "gzip");
       // 实现gzip压缩
-    } else if (acceptEncoding.includes('deflate')) {
-      res.setHeader('Content-Encoding', 'deflate');
+    } else if (acceptEncoding.includes("deflate")) {
+      res.setHeader("Content-Encoding", "deflate");
       // 实现deflate压缩
     }
 
@@ -1769,7 +1785,7 @@ export class CompressionMiddleware {
  * @version 1.0.0
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 
 /**
  * API测试基类
@@ -1793,7 +1809,7 @@ export abstract class APITestBase {
   async get(path: string, token?: string): Promise<any> {
     const headers: any = {};
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers["Authorization"] = `Bearer ${token}`;
     }
 
     // 实现GET请求
@@ -1804,9 +1820,9 @@ export abstract class APITestBase {
    * 发送POST请求
    */
   async post(path: string, data: any, token?: string): Promise<any> {
-    const headers: any = { 'Content-Type': 'application/json' };
+    const headers: any = { "Content-Type": "application/json" };
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers["Authorization"] = `Bearer ${token}`;
     }
 
     // 实现POST请求
@@ -1817,9 +1833,9 @@ export abstract class APITestBase {
    * 发送PUT请求
    */
   async put(path: string, data: any, token?: string): Promise<any> {
-    const headers: any = { 'Content-Type': 'application/json' };
+    const headers: any = { "Content-Type": "application/json" };
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers["Authorization"] = `Bearer ${token}`;
     }
 
     // 实现PUT请求
@@ -1832,7 +1848,7 @@ export abstract class APITestBase {
   async delete(path: string, token?: string): Promise<any> {
     const headers: any = {};
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers["Authorization"] = `Bearer ${token}`;
     }
 
     // 实现DELETE请求
@@ -1843,7 +1859,7 @@ export abstract class APITestBase {
 /**
  * 用户API测试
  */
-describe('User API', () => {
+describe("User API", () => {
   let test: APITestBase;
   let authToken: string;
 
@@ -1856,49 +1872,49 @@ describe('User API', () => {
     await test.teardown();
   });
 
-  it('should create a user', async () => {
+  it("should create a user", async () => {
     const userData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'password123'
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
     };
 
-    const response = await test.post('/api/users', userData);
-    
+    const response = await test.post("/api/users", userData);
+
     expect(response.statusCode).toBe(201);
-    expect(response.data).toHaveProperty('id');
+    expect(response.data).toHaveProperty("id");
     expect(response.data.name).toBe(userData.name);
   });
 
-  it('should get user list', async () => {
-    const response = await test.get('/api/users', authToken);
-    
+  it("should get user list", async () => {
+    const response = await test.get("/api/users", authToken);
+
     expect(response.statusCode).toBe(200);
-    expect(response.data).toHaveProperty('data');
+    expect(response.data).toHaveProperty("data");
     expect(Array.isArray(response.data.data)).toBe(true);
   });
 
-  it('should get user by id', async () => {
-    const response = await test.get('/api/users/1', authToken);
-    
+  it("should get user by id", async () => {
+    const response = await test.get("/api/users/1", authToken);
+
     expect(response.statusCode).toBe(200);
-    expect(response.data).toHaveProperty('id');
+    expect(response.data).toHaveProperty("id");
   });
 
-  it('should update user', async () => {
+  it("should update user", async () => {
     const updateData = {
-      name: 'Updated Name'
+      name: "Updated Name",
     };
 
-    const response = await test.put('/api/users/1', updateData, authToken);
-    
+    const response = await test.put("/api/users/1", updateData, authToken);
+
     expect(response.statusCode).toBe(200);
     expect(response.data.name).toBe(updateData.name);
   });
 
-  it('should delete user', async () => {
-    const response = await test.delete('/api/users/1', authToken);
-    
+  it("should delete user", async () => {
+    const response = await test.delete("/api/users/1", authToken);
+
     expect(response.statusCode).toBe(204);
   });
 });
@@ -1932,7 +1948,7 @@ export class APIIntegrationTest {
     // 2. 登录获取token
     const loginResponse = await this.login(userResponse.data);
     expect(loginResponse.statusCode).toBe(200);
-    expect(loginResponse.data).toHaveProperty('token');
+    expect(loginResponse.data).toHaveProperty("token");
 
     const token = loginResponse.data.token;
 
@@ -1976,13 +1992,10 @@ export class APIIntegrationTest {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -2005,8 +2018,6 @@ export class APIIntegrationTest {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -2040,8 +2051,6 @@ export class APIIntegrationTest {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -2064,46 +2073,46 @@ export class APIIntegrationTest {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -2116,6 +2125,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -2125,6 +2135,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -2134,6 +2145,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -2150,16 +2162,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2169,13 +2182,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2184,6 +2195,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2202,6 +2214,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2217,6 +2230,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2236,28 +2250,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2266,44 +2279,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2317,13 +2328,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2332,18 +2343,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2353,37 +2367,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2392,28 +2409,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2422,21 +2437,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2445,10 +2462,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2474,16 +2488,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2492,26 +2506,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -2520,21 +2529,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2543,10 +2554,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2572,16 +2580,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2590,25 +2598,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

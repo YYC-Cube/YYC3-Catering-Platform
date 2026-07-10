@@ -65,7 +65,7 @@ const updateRuleSchema = z.object({
  * @access 公开
  * @returns {Promise<Response>} 分类结果
  */
-app.post('/classify', zValidator('json', classifyDocumentSchema), async (c) => {
+app.post('/classify', zValidator('json', classifyDocumentSchema), async c => {
   try {
     const { documentId, method = 'hybrid' } = c.req.valid('json');
 
@@ -78,10 +78,13 @@ app.post('/classify', zValidator('json', classifyDocumentSchema), async (c) => {
     });
   } catch (error) {
     logger.error('Error classifying document:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '分类文档失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '分类文档失败',
+      },
+      500,
+    );
   }
 });
 
@@ -91,7 +94,7 @@ app.post('/classify', zValidator('json', classifyDocumentSchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 分类结果列表
  */
-app.post('/batch', zValidator('json', batchClassifySchema), async (c) => {
+app.post('/batch', zValidator('json', batchClassifySchema), async c => {
   try {
     const { documentIds, method = 'hybrid' } = c.req.valid('json');
 
@@ -105,10 +108,13 @@ app.post('/batch', zValidator('json', batchClassifySchema), async (c) => {
     });
   } catch (error) {
     logger.error('Error batch classifying documents:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '批量分类文档失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '批量分类文档失败',
+      },
+      500,
+    );
   }
 });
 
@@ -118,7 +124,7 @@ app.post('/batch', zValidator('json', batchClassifySchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 分类建议
  */
-app.get('/suggestions/:documentId', async (c) => {
+app.get('/suggestions/:documentId', async c => {
   try {
     const documentId = c.req.param('documentId');
 
@@ -132,10 +138,13 @@ app.get('/suggestions/:documentId', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting classification suggestions:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取分类建议失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取分类建议失败',
+      },
+      500,
+    );
   }
 });
 
@@ -145,7 +154,7 @@ app.get('/suggestions/:documentId', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 分类统计
  */
-app.get('/stats', async (c) => {
+app.get('/stats', async c => {
   try {
     // 获取分类统计
     const stats = await documentClassificationService.getClassificationStats();
@@ -156,10 +165,13 @@ app.get('/stats', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting classification stats:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取分类统计失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取分类统计失败',
+      },
+      500,
+    );
   }
 });
 
@@ -171,7 +183,7 @@ app.get('/stats', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 分类规则列表
  */
-app.get('/rules', async (c) => {
+app.get('/rules', async c => {
   try {
     // 获取所有规则
     const rules = documentClassificationService.getAllRules();
@@ -183,10 +195,13 @@ app.get('/rules', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting rules:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取分类规则失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取分类规则失败',
+      },
+      500,
+    );
   }
 });
 
@@ -196,7 +211,7 @@ app.get('/rules', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 分类规则
  */
-app.get('/rules/:ruleId', async (c) => {
+app.get('/rules/:ruleId', async c => {
   try {
     const ruleId = c.req.param('ruleId');
 
@@ -204,10 +219,13 @@ app.get('/rules/:ruleId', async (c) => {
     const rule = documentClassificationService.getRule(ruleId);
 
     if (!rule) {
-      return c.json({
-        success: false,
-        error: '规则不存在',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '规则不存在',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -216,10 +234,13 @@ app.get('/rules/:ruleId', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting rule:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取分类规则失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取分类规则失败',
+      },
+      500,
+    );
   }
 });
 
@@ -229,7 +250,7 @@ app.get('/rules/:ruleId', async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 创建的规则
  */
-app.post('/rules', zValidator('json', addRuleSchema), async (c) => {
+app.post('/rules', zValidator('json', addRuleSchema), async c => {
   try {
     const body = c.req.valid('json');
 
@@ -245,16 +266,22 @@ app.post('/rules', zValidator('json', addRuleSchema), async (c) => {
     // 获取创建的规则
     const rule = documentClassificationService.getRule(ruleId);
 
-    return c.json({
-      success: true,
-      data: rule,
-    }, 201);
+    return c.json(
+      {
+        success: true,
+        data: rule,
+      },
+      201,
+    );
   } catch (error) {
     logger.error('Error adding rule:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '添加分类规则失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '添加分类规则失败',
+      },
+      500,
+    );
   }
 });
 
@@ -264,7 +291,7 @@ app.post('/rules', zValidator('json', addRuleSchema), async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 更新的规则
  */
-app.put('/rules/:ruleId', zValidator('json', updateRuleSchema), async (c) => {
+app.put('/rules/:ruleId', zValidator('json', updateRuleSchema), async c => {
   try {
     const ruleId = c.req.param('ruleId');
     const updates = c.req.valid('json');
@@ -276,10 +303,13 @@ app.put('/rules/:ruleId', zValidator('json', updateRuleSchema), async (c) => {
     const rule = documentClassificationService.getRule(ruleId);
 
     if (!rule) {
-      return c.json({
-        success: false,
-        error: '规则不存在',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '规则不存在',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -288,10 +318,13 @@ app.put('/rules/:ruleId', zValidator('json', updateRuleSchema), async (c) => {
     });
   } catch (error) {
     logger.error('Error updating rule:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '更新分类规则失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '更新分类规则失败',
+      },
+      500,
+    );
   }
 });
 
@@ -301,7 +334,7 @@ app.put('/rules/:ruleId', zValidator('json', updateRuleSchema), async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 删除结果
  */
-app.delete('/rules/:ruleId', async (c) => {
+app.delete('/rules/:ruleId', async c => {
   try {
     const ruleId = c.req.param('ruleId');
 
@@ -314,10 +347,13 @@ app.delete('/rules/:ruleId', async (c) => {
     });
   } catch (error) {
     logger.error('Error deleting rule:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '删除分类规则失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '删除分类规则失败',
+      },
+      500,
+    );
   }
 });
 
@@ -327,7 +363,7 @@ app.delete('/rules/:ruleId', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 健康状态
  */
-app.get('/health', async (c) => {
+app.get('/health', async c => {
   return c.json({
     status: 'healthy',
     service: 'Document Classification Service',

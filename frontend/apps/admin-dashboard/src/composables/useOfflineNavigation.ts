@@ -12,20 +12,20 @@
 export enum OfflineStatus {
   ONLINE = 'online',
   OFFLINE = 'offline',
-  RECONNECTING = 'reconnecting'
+  RECONNECTING = 'reconnecting',
 }
 
 /**
  * 离线配置
  */
 export interface OfflineConfig {
-  enableCache: boolean
-  cacheKey: string
-  cacheExpiry: number
-  showOfflineAlert: boolean
-  autoRetry: boolean
-  retryInterval: number
-  maxRetries: number
+  enableCache: boolean;
+  cacheKey: string;
+  cacheExpiry: number;
+  showOfflineAlert: boolean;
+  autoRetry: boolean;
+  retryInterval: number;
+  maxRetries: number;
 }
 
 /**
@@ -38,22 +38,22 @@ const defaultConfig: OfflineConfig = {
   showOfflineAlert: true,
   autoRetry: true,
   retryInterval: 5000,
-  maxRetries: 10
-}
+  maxRetries: 10,
+};
 
 /**
  * 离线管理器
  */
 export class OfflineManager {
-  private config: OfflineConfig
-  private status: OfflineStatus = OfflineStatus.ONLINE
-  private retryCount: number = 0
-  private retryTimer: number | null = null
-  private listeners: Array<(status: OfflineStatus) => void> = []
+  private config: OfflineConfig;
+  private status: OfflineStatus = OfflineStatus.ONLINE;
+  private retryCount: number = 0;
+  private retryTimer: number | null = null;
+  private listeners: Array<(status: OfflineStatus) => void> = [];
 
   constructor(config: Partial<OfflineConfig> = {}) {
-    this.config = { ...defaultConfig, ...config }
-    this.initialize()
+    this.config = { ...defaultConfig, ...config };
+    this.initialize();
   }
 
   /**
@@ -61,9 +61,9 @@ export class OfflineManager {
    */
   private initialize() {
     if (typeof window !== 'undefined') {
-      window.addEventListener('online', this.handleOnline)
-      window.addEventListener('offline', this.handleOffline)
-      this.updateStatus(navigator.onLine ? OfflineStatus.ONLINE : OfflineStatus.OFFLINE)
+      window.addEventListener('online', this.handleOnline);
+      window.addEventListener('offline', this.handleOffline);
+      this.updateStatus(navigator.onLine ? OfflineStatus.ONLINE : OfflineStatus.OFFLINE);
     }
   }
 
@@ -71,30 +71,30 @@ export class OfflineManager {
    * 处理在线事件
    */
   private handleOnline = () => {
-    console.log('Network is online')
-    this.updateStatus(OfflineStatus.ONLINE)
-    this.stopRetry()
-  }
+    console.log('Network is online');
+    this.updateStatus(OfflineStatus.ONLINE);
+    this.stopRetry();
+  };
 
   /**
    * 处理离线事件
    */
   private handleOffline = () => {
-    console.log('Network is offline')
-    this.updateStatus(OfflineStatus.OFFLINE)
-    
+    console.log('Network is offline');
+    this.updateStatus(OfflineStatus.OFFLINE);
+
     if (this.config.autoRetry) {
-      this.startRetry()
+      this.startRetry();
     }
-  }
+  };
 
   /**
    * 更新状态
    */
   private updateStatus(newStatus: OfflineStatus) {
     if (this.status !== newStatus) {
-      this.status = newStatus
-      this.notifyListeners(newStatus)
+      this.status = newStatus;
+      this.notifyListeners(newStatus);
     }
   }
 
@@ -102,26 +102,26 @@ export class OfflineManager {
    * 通知监听器
    */
   private notifyListeners(status: OfflineStatus) {
-    this.listeners.forEach(listener => listener(status))
+    this.listeners.forEach(listener => listener(status));
   }
 
   /**
    * 开始重试
    */
   private startRetry() {
-    if (this.retryTimer) return
+    if (this.retryTimer) return;
 
     this.retryTimer = window.setInterval(() => {
-      this.retryCount++
-      
+      this.retryCount++;
+
       if (this.retryCount > this.config.maxRetries) {
-        this.stopRetry()
-        return
+        this.stopRetry();
+        return;
       }
 
-      this.updateStatus(OfflineStatus.RECONNECTING)
-      this.checkConnection()
-    }, this.config.retryInterval)
+      this.updateStatus(OfflineStatus.RECONNECTING);
+      this.checkConnection();
+    }, this.config.retryInterval);
   }
 
   /**
@@ -129,10 +129,10 @@ export class OfflineManager {
    */
   private stopRetry() {
     if (this.retryTimer) {
-      clearInterval(this.retryTimer)
-      this.retryTimer = null
+      clearInterval(this.retryTimer);
+      this.retryTimer = null;
     }
-    this.retryCount = 0
+    this.retryCount = 0;
   }
 
   /**
@@ -142,14 +142,14 @@ export class OfflineManager {
     try {
       const response = await fetch(window.location.href, {
         method: 'HEAD',
-        cache: 'no-store'
-      })
-      
+        cache: 'no-store',
+      });
+
       if (response.ok) {
-        this.handleOnline()
+        this.handleOnline();
       }
     } catch (error) {
-      console.log('Connection check failed:', error)
+      console.log('Connection check failed:', error);
     }
   }
 
@@ -157,44 +157,44 @@ export class OfflineManager {
    * 获取当前状态
    */
   getStatus(): OfflineStatus {
-    return this.status
+    return this.status;
   }
 
   /**
    * 是否在线
    */
   isOnline(): boolean {
-    return this.status === OfflineStatus.ONLINE
+    return this.status === OfflineStatus.ONLINE;
   }
 
   /**
    * 是否离线
    */
   isOffline(): boolean {
-    return this.status === OfflineStatus.OFFLINE
+    return this.status === OfflineStatus.OFFLINE;
   }
 
   /**
    * 是否正在重连
    */
   isReconnecting(): boolean {
-    return this.status === OfflineStatus.RECONNECTING
+    return this.status === OfflineStatus.RECONNECTING;
   }
 
   /**
    * 添加状态监听器
    */
   addListener(listener: (status: OfflineStatus) => void) {
-    this.listeners.push(listener)
+    this.listeners.push(listener);
   }
 
   /**
    * 移除状态监听器
    */
   removeListener(listener: (status: OfflineStatus) => void) {
-    const index = this.listeners.indexOf(listener)
+    const index = this.listeners.indexOf(listener);
     if (index > -1) {
-      this.listeners.splice(index, 1)
+      this.listeners.splice(index, 1);
     }
   }
 
@@ -202,17 +202,17 @@ export class OfflineManager {
    * 缓存数据
    */
   cacheData(key: string, data: any): void {
-    if (!this.config.enableCache) return
+    if (!this.config.enableCache) return;
 
     try {
-      const cache = this.getCache()
+      const cache = this.getCache();
       cache[key] = {
         data,
-        timestamp: Date.now()
-      }
-      localStorage.setItem(this.config.cacheKey, JSON.stringify(cache))
+        timestamp: Date.now(),
+      };
+      localStorage.setItem(this.config.cacheKey, JSON.stringify(cache));
     } catch (error) {
-      console.error('Failed to cache data:', error)
+      console.error('Failed to cache data:', error);
     }
   }
 
@@ -220,25 +220,25 @@ export class OfflineManager {
    * 获取缓存数据
    */
   getCachedData(key: string): any | null {
-    if (!this.config.enableCache) return null
+    if (!this.config.enableCache) return null;
 
     try {
-      const cache = this.getCache()
-      const item = cache[key]
-      
-      if (!item) return null
+      const cache = this.getCache();
+      const item = cache[key];
 
-      const age = Date.now() - item.timestamp
+      if (!item) return null;
+
+      const age = Date.now() - item.timestamp;
       if (age > this.config.cacheExpiry) {
-        delete cache[key]
-        localStorage.setItem(this.config.cacheKey, JSON.stringify(cache))
-        return null
+        delete cache[key];
+        localStorage.setItem(this.config.cacheKey, JSON.stringify(cache));
+        return null;
       }
 
-      return item.data
+      return item.data;
     } catch (error) {
-      console.error('Failed to get cached data:', error)
-      return null
+      console.error('Failed to get cached data:', error);
+      return null;
     }
   }
 
@@ -247,9 +247,9 @@ export class OfflineManager {
    */
   clearCache(): void {
     try {
-      localStorage.removeItem(this.config.cacheKey)
+      localStorage.removeItem(this.config.cacheKey);
     } catch (error) {
-      console.error('Failed to clear cache:', error)
+      console.error('Failed to clear cache:', error);
     }
   }
 
@@ -258,11 +258,11 @@ export class OfflineManager {
    */
   private getCache(): Record<string, any> {
     try {
-      const cached = localStorage.getItem(this.config.cacheKey)
-      return cached ? JSON.parse(cached) : {}
+      const cached = localStorage.getItem(this.config.cacheKey);
+      return cached ? JSON.parse(cached) : {};
     } catch (error) {
-      console.error('Failed to get cache:', error)
-      return {}
+      console.error('Failed to get cache:', error);
+      return {};
     }
   }
 
@@ -270,12 +270,12 @@ export class OfflineManager {
    * 清理
    */
   destroy() {
-    this.stopRetry()
-    this.listeners = []
-    
+    this.stopRetry();
+    this.listeners = [];
+
     if (typeof window !== 'undefined') {
-      window.removeEventListener('online', this.handleOnline)
-      window.removeEventListener('offline', this.handleOffline)
+      window.removeEventListener('online', this.handleOnline);
+      window.removeEventListener('offline', this.handleOffline);
     }
   }
 }
@@ -283,58 +283,58 @@ export class OfflineManager {
 /**
  * 创建全局离线管理器实例
  */
-export const offlineManager = new OfflineManager()
+export const offlineManager = new OfflineManager();
 
 /**
  * 离线导航Composable
  */
 export function useOfflineNavigation() {
-  const status = ref<OfflineStatus>(OfflineStatus.ONLINE)
-  const isOnline = ref(true)
-  const isOffline = ref(false)
-  const isReconnecting = ref(false)
+  const status = ref<OfflineStatus>(OfflineStatus.ONLINE);
+  const isOnline = ref(true);
+  const isOffline = ref(false);
+  const isReconnecting = ref(false);
 
   /**
    * 初始化离线导航
    */
   function initialize() {
-    status.value = offlineManager.getStatus()
-    updateFlags()
+    status.value = offlineManager.getStatus();
+    updateFlags();
 
-    offlineManager.addListener((newStatus) => {
-      status.value = newStatus
-      updateFlags()
-    })
+    offlineManager.addListener(newStatus => {
+      status.value = newStatus;
+      updateFlags();
+    });
   }
 
   /**
    * 更新标志
    */
   function updateFlags() {
-    isOnline.value = offlineManager.isOnline()
-    isOffline.value = offlineManager.isOffline()
-    isReconnecting.value = offlineManager.isReconnecting()
+    isOnline.value = offlineManager.isOnline();
+    isOffline.value = offlineManager.isOffline();
+    isReconnecting.value = offlineManager.isReconnecting();
   }
 
   /**
    * 缓存数据
    */
   function cacheData(key: string, data: any): void {
-    offlineManager.cacheData(key, data)
+    offlineManager.cacheData(key, data);
   }
 
   /**
    * 获取缓存数据
    */
   function getCachedData(key: string): any | null {
-    return offlineManager.getCachedData(key)
+    return offlineManager.getCachedData(key);
   }
 
   /**
    * 清除缓存
    */
   function clearCache(): void {
-    offlineManager.clearCache()
+    offlineManager.clearCache();
   }
 
   /**
@@ -343,13 +343,13 @@ export function useOfflineNavigation() {
   function getStatusText(): string {
     switch (status.value) {
       case OfflineStatus.ONLINE:
-        return '网络连接正常'
+        return '网络连接正常';
       case OfflineStatus.OFFLINE:
-        return '网络连接已断开'
+        return '网络连接已断开';
       case OfflineStatus.RECONNECTING:
-        return '正在重新连接...'
+        return '正在重新连接...';
       default:
-        return '未知状态'
+        return '未知状态';
     }
   }
 
@@ -359,13 +359,13 @@ export function useOfflineNavigation() {
   function getStatusIcon(): string {
     switch (status.value) {
       case OfflineStatus.ONLINE:
-        return 'Connection'
+        return 'Connection';
       case OfflineStatus.OFFLINE:
-        return 'CircleClose'
+        return 'CircleClose';
       case OfflineStatus.RECONNECTING:
-        return 'Loading'
+        return 'Loading';
       default:
-        return 'Warning'
+        return 'Warning';
     }
   }
 
@@ -379,6 +379,6 @@ export function useOfflineNavigation() {
     getCachedData,
     clearCache,
     getStatusText,
-    getStatusIcon
-  }
+    getStatusIcon,
+  };
 }

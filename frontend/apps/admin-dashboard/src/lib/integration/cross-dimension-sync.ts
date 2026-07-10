@@ -326,7 +326,7 @@ export class RealtimeSyncManager {
       eventBus.emit('sync:connected', { entity: config.entity });
     };
 
-    ws.onmessage = (event) => {
+    ws.onmessage = event => {
       try {
         const message = JSON.parse(event.data);
         this.handleWebSocketMessage(config.entity, message);
@@ -335,7 +335,7 @@ export class RealtimeSyncManager {
       }
     };
 
-    ws.onerror = (error) => {
+    ws.onerror = error => {
       console.error(`WebSocket错误 [${config.entity}]:`, error);
       eventBus.emit('sync:error', { entity: config.entity, error });
     };
@@ -431,11 +431,11 @@ export class CrossDimensionDataManager {
 
     realtimeSyncManager.register(config);
 
-    eventBus.on(`data:${config.entity}:updated`, (data) => {
+    eventBus.on(`data:${config.entity}:updated`, data => {
       this.handleDataUpdate(config.entity, data);
     });
 
-    eventBus.on(`data:${config.entity}:deleted`, (data) => {
+    eventBus.on(`data:${config.entity}:deleted`, data => {
       this.handleDataDelete(config.entity, data);
     });
   }
@@ -686,10 +686,7 @@ export const crossDimensionDataManager = new CrossDimensionDataManager();
 /**
  * React Hook - 使用数据事件
  */
-export function useDataEvent<T = any>(
-  entity: string,
-  eventType: DataOperationType
-) {
+export function useDataEvent<T = any>(entity: string, eventType: DataOperationType) {
   const [data, setData] = useState<T | null>(null);
 
   useEffect(() => {

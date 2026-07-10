@@ -2,13 +2,13 @@
 
 ## 文档信息
 
-| 项目 | 内容 |
-|------|------|
+| 项目     | 内容                           |
+| -------- | ------------------------------ |
 | 文档名称 | UI设计与业务功能融合可视化展示 |
-| 版本号 | v1.0.0 |
-| 创建日期 | 2026-01-21 |
-| 作者 | YYC³团队 |
-| 文档状态 | 正式发布 |
+| 版本号   | v1.0.0                         |
+| 创建日期 | 2026-01-21                     |
+| 作者     | YYC³团队                       |
+| 文档状态 | 正式发布                       |
 
 ---
 
@@ -69,29 +69,29 @@ YYC³平台的UI设计遵循以下核心理念：
 
 #### 2.2.1 模块信息
 
-| 属性 | 值 |
-|------|-----|
-| 模块名称 | 订单管理 |
-| 主题色 | Ocean Blue (#3498DB) |
+| 属性     | 值                             |
+| -------- | ------------------------------ |
+| 模块名称 | 订单管理                       |
+| 主题色   | Ocean Blue (#3498DB)           |
 | 核心功能 | 订单创建、查询、更新、批量操作 |
-| 页面数量 | 5个 |
+| 页面数量 | 5个                            |
 
 #### 2.2.2 使用的UI组件
 
-| 组件名称 | 使用场景 | 主题应用 |
-|----------|---------|---------|
-| **YUButton** | 订单操作按钮（确认、取消、退款等） | primary: #3498DB |
-| **YUTable** | 订单列表展示 | 主题色应用到边框和选中状态 |
-| **YUCard** | 订单详情卡片 | theme="order" |
-| **YUTag** | 订单状态标签 | 根据状态显示不同颜色 |
-| **YUProgressBar** | 订单制作进度 | theme="order" |
-| **YUInput** | 订单搜索和筛选 | 主题色应用到聚焦状态 |
-| **YUSelect** | 订单类型选择 | 主题色应用到选中项 |
-| **YUModal** | 订单详情弹窗 | 主题色应用到标题栏 |
-| **YUBreadcrumb** | 订单导航 | 主题色应用到当前项 |
-| **YUAvatar** | 客户头像 | 主题色应用到边框 |
-| **YUDropdown** | 订单操作菜单 | 主题色应用到菜单项 |
-| **YUPagination** | 订单分页 | 主题色应用到当前页 |
+| 组件名称          | 使用场景                           | 主题应用                   |
+| ----------------- | ---------------------------------- | -------------------------- |
+| **YUButton**      | 订单操作按钮（确认、取消、退款等） | primary: #3498DB           |
+| **YUTable**       | 订单列表展示                       | 主题色应用到边框和选中状态 |
+| **YUCard**        | 订单详情卡片                       | theme="order"              |
+| **YUTag**         | 订单状态标签                       | 根据状态显示不同颜色       |
+| **YUProgressBar** | 订单制作进度                       | theme="order"              |
+| **YUInput**       | 订单搜索和筛选                     | 主题色应用到聚焦状态       |
+| **YUSelect**      | 订单类型选择                       | 主题色应用到选中项         |
+| **YUModal**       | 订单详情弹窗                       | 主题色应用到标题栏         |
+| **YUBreadcrumb**  | 订单导航                           | 主题色应用到当前项         |
+| **YUAvatar**      | 客户头像                           | 主题色应用到边框           |
+| **YUDropdown**    | 订单操作菜单                       | 主题色应用到菜单项         |
+| **YUPagination**  | 订单分页                           | 主题色应用到当前页         |
 
 #### 2.2.3 页面布局示例
 
@@ -147,29 +147,29 @@ YYC³平台的UI设计遵循以下核心理念：
 
 #### 2.3.1 模块信息
 
-| 属性 | 值 |
-|------|-----|
-| 模块名称 | 菜单管理 |
-| 主题色 | Wisteria (#8E44AD) |
+| 属性     | 值                           |
+| -------- | ---------------------------- |
+| 模块名称 | 菜单管理                     |
+| 主题色   | Wisteria (#8E44AD)           |
 | 核心功能 | 菜品管理、分类管理、推荐管理 |
-| 页面数量 | 4个 |
+| 页面数量 | 4个                          |
 
 #### 2.3.2 使用的UI组件
 
-| 组件名称 | 使用场景 | 主题应用 |
-|----------|---------|---------|
-| **YUButton** | 菜品操作按钮（添加、编辑、删除） | primary: #8E44AD |
-| **YUTable** | 菜品列表展示 | 主题色应用到边框和选中状态 |
-| **YUCard** | 菜品详情卡片 | theme="menu" |
-| **YUTag** | 菜品标签（招牌、辣、素食等） | 根据标签显示不同颜色 |
-| **YUInput** | 菜品信息输入 | 主题色应用到聚焦状态 |
-| **YUSelect** | 菜品分类选择 | 主题色应用到选中项 |
-| **YUModal** | 菜品编辑弹窗 | 主题色应用到标题栏 |
-| **YUAvatar** | 菜品图片展示 | 圆角展示 |
-| **YUUpload** | 菜品图片上传 | 主题色应用到上传按钮 |
-| **YUSwitch** | 菜品上下架开关 | 主题色应用到开启状态 |
-| **YURadio** | 菜品属性选择 | 主题色应用到选中项 |
-| **YUTextarea** | 菜品描述输入 | 主题色应用到聚焦状态 |
+| 组件名称       | 使用场景                         | 主题应用                   |
+| -------------- | -------------------------------- | -------------------------- |
+| **YUButton**   | 菜品操作按钮（添加、编辑、删除） | primary: #8E44AD           |
+| **YUTable**    | 菜品列表展示                     | 主题色应用到边框和选中状态 |
+| **YUCard**     | 菜品详情卡片                     | theme="menu"               |
+| **YUTag**      | 菜品标签（招牌、辣、素食等）     | 根据标签显示不同颜色       |
+| **YUInput**    | 菜品信息输入                     | 主题色应用到聚焦状态       |
+| **YUSelect**   | 菜品分类选择                     | 主题色应用到选中项         |
+| **YUModal**    | 菜品编辑弹窗                     | 主题色应用到标题栏         |
+| **YUAvatar**   | 菜品图片展示                     | 圆角展示                   |
+| **YUUpload**   | 菜品图片上传                     | 主题色应用到上传按钮       |
+| **YUSwitch**   | 菜品上下架开关                   | 主题色应用到开启状态       |
+| **YURadio**    | 菜品属性选择                     | 主题色应用到选中项         |
+| **YUTextarea** | 菜品描述输入                     | 主题色应用到聚焦状态       |
 
 #### 2.3.3 页面布局示例
 
@@ -222,28 +222,28 @@ YYC³平台的UI设计遵循以下核心理念：
 
 #### 2.4.1 模块信息
 
-| 属性 | 值 |
-|------|-----|
-| 模块名称 | 财务管理 |
-| 主题色 | Nephritis (#27AE60) |
+| 属性     | 值                           |
+| -------- | ---------------------------- |
+| 模块名称 | 财务管理                     |
+| 主题色   | Nephritis (#27AE60)          |
 | 核心功能 | 财务概览、收支明细、报表分析 |
-| 页面数量 | 3个 |
+| 页面数量 | 3个                          |
 
 #### 2.4.2 使用的UI组件
 
-| 组件名称 | 使用场景 | 主题应用 |
-|----------|---------|---------|
-| **YUDataCard** | 财务数据卡片（收入、支出、利润） | theme="finance" |
-| **YUTable** | 收支明细列表 | 主题色应用到边框和选中状态 |
-| **YUCard** | 财务报表卡片 | theme="finance" |
-| **YUTag** | 收支类型标签 | 根据类型显示不同颜色 |
-| **YUProgressBar** | 财务目标进度 | theme="finance" |
-| **YUInput** | 财务数据输入 | 主题色应用到聚焦状态 |
-| **YUSelect** | 时间范围选择 | 主题色应用到选中项 |
-| **YUModal** | 财务详情弹窗 | 主题色应用到标题栏 |
-| **YUDatePicker** | 日期范围选择 | 主题色应用到选中日期 |
-| **YUChart** | 财务数据图表 | 主题色应用到图表元素 |
-| **YUButton** | 财务操作按钮 | primary: #27AE60 |
+| 组件名称          | 使用场景                         | 主题应用                   |
+| ----------------- | -------------------------------- | -------------------------- |
+| **YUDataCard**    | 财务数据卡片（收入、支出、利润） | theme="finance"            |
+| **YUTable**       | 收支明细列表                     | 主题色应用到边框和选中状态 |
+| **YUCard**        | 财务报表卡片                     | theme="finance"            |
+| **YUTag**         | 收支类型标签                     | 根据类型显示不同颜色       |
+| **YUProgressBar** | 财务目标进度                     | theme="finance"            |
+| **YUInput**       | 财务数据输入                     | 主题色应用到聚焦状态       |
+| **YUSelect**      | 时间范围选择                     | 主题色应用到选中项         |
+| **YUModal**       | 财务详情弹窗                     | 主题色应用到标题栏         |
+| **YUDatePicker**  | 日期范围选择                     | 主题色应用到选中日期       |
+| **YUChart**       | 财务数据图表                     | 主题色应用到图表元素       |
+| **YUButton**      | 财务操作按钮                     | primary: #27AE60           |
 
 #### 2.4.3 页面布局示例
 
@@ -292,27 +292,27 @@ YYC³平台的UI设计遵循以下核心理念：
 
 #### 2.5.1 模块信息
 
-| 属性 | 值 |
-|------|-----|
-| 模块名称 | 数据分析 |
-| 主题色 | Midnight Blue (#2C3E50) |
+| 属性     | 值                           |
+| -------- | ---------------------------- |
+| 模块名称 | 数据分析                     |
+| 主题色   | Midnight Blue (#2C3E50)      |
 | 核心功能 | 销售分析、客户分析、菜品分析 |
-| 页面数量 | 4个 |
+| 页面数量 | 4个                          |
 
 #### 2.5.2 使用的UI组件
 
-| 组件名称 | 使用场景 | 主题应用 |
-|----------|---------|---------|
-| **YUDataCard** | 数据指标卡片 | theme="analytics" |
-| **YUCard** | 分析报表卡片 | theme="analytics" |
-| **YUChart** | 数据可视化图表 | 主题色应用到图表元素 |
-| **YUProgressBar** | 目标完成进度 | theme="analytics" |
-| **YUInput** | 分析参数输入 | 主题色应用到聚焦状态 |
-| **YUSelect** | 分析维度选择 | 主题色应用到选中项 |
-| **YUDatePicker** | 时间范围选择 | 主题色应用到选中日期 |
-| **YUTag** | 分析结果标签 | 根据结果显示不同颜色 |
-| **YUButton** | 分析操作按钮 | primary: #2C3E50 |
-| **YUTable** | 数据明细表格 | 主题色应用到边框和选中状态 |
+| 组件名称          | 使用场景       | 主题应用                   |
+| ----------------- | -------------- | -------------------------- |
+| **YUDataCard**    | 数据指标卡片   | theme="analytics"          |
+| **YUCard**        | 分析报表卡片   | theme="analytics"          |
+| **YUChart**       | 数据可视化图表 | 主题色应用到图表元素       |
+| **YUProgressBar** | 目标完成进度   | theme="analytics"          |
+| **YUInput**       | 分析参数输入   | 主题色应用到聚焦状态       |
+| **YUSelect**      | 分析维度选择   | 主题色应用到选中项         |
+| **YUDatePicker**  | 时间范围选择   | 主题色应用到选中日期       |
+| **YUTag**         | 分析结果标签   | 根据结果显示不同颜色       |
+| **YUButton**      | 分析操作按钮   | primary: #2C3E50           |
+| **YUTable**       | 数据明细表格   | 主题色应用到边框和选中状态 |
 
 #### 2.5.3 页面布局示例
 
@@ -360,43 +360,43 @@ YYC³平台的UI设计遵循以下核心理念：
 
 ### 3.1 主题色映射表
 
-| 业务模块 | 主题名称 | 主色 | 辅助色 | 应用场景 |
-|---------|---------|------|--------|---------|
-| 订单管理 | Ocean Blue | #3498DB | #2980B9 | 按钮、标签、进度条、边框 |
-| 菜单管理 | Wisteria | #8E44AD | #7D3C98 | 按钮、标签、卡片背景 |
-| 财务管理 | Nephritis | #27AE60 | #229954 | 按钮、标签、图表 |
-| 数据分析 | Midnight | #2C3E50 | #1A252F | 按钮、标签、图表 |
-| 用户管理 | Carrot | #E67E22 | #D35400 | 按钮、标签、头像边框 |
-| 员工管理 | Turquoise | #16A085 | #138A75 | 按钮、标签、状态标识 |
-| 客户管理 | Alizarin | #E74C3C | #CB4335 | 按钮、标签、警告提示 |
-| 营销管理 | Pomegranate | #C0392B | #A93226 | 按钮、标签、活动标识 |
-| 系统设置 | Concrete | #7F8C8D | #6C7A7B | 按钮、标签、设置项 |
+| 业务模块 | 主题名称    | 主色    | 辅助色  | 应用场景                 |
+| -------- | ----------- | ------- | ------- | ------------------------ |
+| 订单管理 | Ocean Blue  | #3498DB | #2980B9 | 按钮、标签、进度条、边框 |
+| 菜单管理 | Wisteria    | #8E44AD | #7D3C98 | 按钮、标签、卡片背景     |
+| 财务管理 | Nephritis   | #27AE60 | #229954 | 按钮、标签、图表         |
+| 数据分析 | Midnight    | #2C3E50 | #1A252F | 按钮、标签、图表         |
+| 用户管理 | Carrot      | #E67E22 | #D35400 | 按钮、标签、头像边框     |
+| 员工管理 | Turquoise   | #16A085 | #138A75 | 按钮、标签、状态标识     |
+| 客户管理 | Alizarin    | #E74C3C | #CB4335 | 按钮、标签、警告提示     |
+| 营销管理 | Pomegranate | #C0392B | #A93226 | 按钮、标签、活动标识     |
+| 系统设置 | Concrete    | #7F8C8D | #6C7A7B | 按钮、标签、设置项       |
 
 ### 3.2 主题应用示例
 
 ```css
 /* 订单管理主题 */
 .order-theme {
-  --primary-color: #3498DB;
-  --secondary-color: #2980B9;
-  --background-color: #EBF5FB;
-  --text-color: #2C3E50;
+  --primary-color: #3498db;
+  --secondary-color: #2980b9;
+  --background-color: #ebf5fb;
+  --text-color: #2c3e50;
 }
 
 /* 菜单管理主题 */
 .menu-theme {
-  --primary-color: #8E44AD;
-  --secondary-color: #7D3C98;
-  --background-color: #F4ECF7;
-  --text-color: #2C3E50;
+  --primary-color: #8e44ad;
+  --secondary-color: #7d3c98;
+  --background-color: #f4ecf7;
+  --text-color: #2c3e50;
 }
 
 /* 财务管理主题 */
 .finance-theme {
-  --primary-color: #27AE60;
+  --primary-color: #27ae60;
   --secondary-color: #229954;
-  --background-color: #E9F7EF;
-  --text-color: #2C3E50;
+  --background-color: #e9f7ef;
+  --text-color: #2c3e50;
 }
 ```
 
@@ -412,16 +412,16 @@ YYC³平台的UI设计遵循以下核心理念：
 // 统一的按钮交互反馈
 interface ButtonInteraction {
   hover: {
-    transform: 'translateY(-2px)';
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)';
+    transform: "translateY(-2px)";
+    boxShadow: "0 4px 12px rgba(0,0,0,0.15)";
   };
   active: {
-    transform: 'translateY(0)';
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)';
+    transform: "translateY(0)";
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)";
   };
   loading: {
     opacity: 0.7;
-    cursor: 'not-allowed';
+    cursor: "not-allowed";
   };
 }
 ```
@@ -432,16 +432,16 @@ interface ButtonInteraction {
 // 统一的表单验证反馈
 interface FormInteraction {
   focus: {
-    borderColor: 'var(--primary-color)';
-    boxShadow: '0 0 0 3px rgba(var(--primary-color), 0.1)';
+    borderColor: "var(--primary-color)";
+    boxShadow: "0 0 0 3px rgba(var(--primary-color), 0.1)";
   };
   error: {
-    borderColor: '#E74C3C';
-    animation: 'shake 0.3s ease-in-out';
+    borderColor: "#E74C3C";
+    animation: "shake 0.3s ease-in-out";
   };
   success: {
-    borderColor: '#27AE60';
-    icon: '✓';
+    borderColor: "#27AE60";
+    icon: "✓";
   };
 }
 ```
@@ -452,12 +452,12 @@ interface FormInteraction {
 // 统一的列表交互反馈
 interface ListInteraction {
   hover: {
-    backgroundColor: 'rgba(var(--primary-color), 0.05)';
-    cursor: 'pointer';
+    backgroundColor: "rgba(var(--primary-color), 0.05)";
+    cursor: "pointer";
   };
   selected: {
-    backgroundColor: 'rgba(var(--primary-color), 0.1)';
-    borderLeft: '3px solid var(--primary-color)';
+    backgroundColor: "rgba(var(--primary-color), 0.1)";
+    borderLeft: "3px solid var(--primary-color)";
   };
   loading: {
     skeleton: true;
@@ -536,14 +536,14 @@ interface ListInteraction {
 
 ### 5.1 断点系统
 
-| 断点名称 | 屏幕宽度 | 设备类型 | 布局调整 |
-|---------|---------|---------|---------|
-| xs | 0px - 640px | 手机 | 单列布局 |
-| sm | 640px - 768px | 大屏手机 | 单列布局 |
-| md | 768px - 1024px | 平板 | 两列布局 |
-| lg | 1024px - 1280px | 小屏笔记本 | 三列布局 |
-| xl | 1280px - 1536px | 大屏笔记本 | 四列布局 |
-| 2xl | 1536px+ | 桌面显示器 | 四列布局 |
+| 断点名称 | 屏幕宽度        | 设备类型   | 布局调整 |
+| -------- | --------------- | ---------- | -------- |
+| xs       | 0px - 640px     | 手机       | 单列布局 |
+| sm       | 640px - 768px   | 大屏手机   | 单列布局 |
+| md       | 768px - 1024px  | 平板       | 两列布局 |
+| lg       | 1024px - 1280px | 小屏笔记本 | 三列布局 |
+| xl       | 1280px - 1536px | 大屏笔记本 | 四列布局 |
+| 2xl      | 1536px+         | 桌面显示器 | 四列布局 |
 
 ### 5.2 响应式示例
 
@@ -582,6 +582,7 @@ interface ListInteraction {
 **场景描述**: 餐厅服务员接到新订单，需要快速处理订单
 
 **用户操作流程**:
+
 1. 接收订单通知（WebSocket推送）
 2. 查看订单详情
 3. 确认订单并分配给厨房
@@ -589,6 +590,7 @@ interface ListInteraction {
 5. 完成订单并通知客户
 
 **UI组件应用**:
+
 - **YUTag**: 显示订单状态（待确认、制作中、已完成）
 - **YUProgressBar**: 显示订单制作进度
 - **YUModal**: 展示订单详情
@@ -597,6 +599,7 @@ interface ListInteraction {
 - **YUTable**: 订单列表展示
 
 **视觉效果**:
+
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │  🆕 新订单通知                                             │
@@ -622,6 +625,7 @@ interface ListInteraction {
 **场景描述**: 厨师开发新菜品，需要上架到菜单
 
 **用户操作流程**:
+
 1. 点击"添加菜品"按钮
 2. 填写菜品基本信息
 3. 上传菜品图片
@@ -630,6 +634,7 @@ interface ListInteraction {
 6. 预览并发布
 
 **UI组件应用**:
+
 - **YUModal**: 菜品编辑弹窗
 - **YUInput**: 菜品名称、价格、成本输入
 - **YUSelect**: 菜品分类选择
@@ -639,6 +644,7 @@ interface ListInteraction {
 - **YUButton**: 保存、发布操作
 
 **视觉效果**:
+
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │  添加菜品                                    [保存] [发布]  │
@@ -682,6 +688,7 @@ interface ListInteraction {
 **场景描述**: 财务人员查看本月财务报表
 
 **用户操作流程**:
+
 1. 进入财务管理模块
 2. 查看财务概览数据
 3. 选择时间范围
@@ -689,6 +696,7 @@ interface ListInteraction {
 5. 导出财务报表
 
 **UI组件应用**:
+
 - **YUDataCard**: 财务数据卡片（收入、支出、利润）
 - **YUChart**: 收支趋势图表
 - **YUTable**: 收支明细列表
@@ -697,6 +705,7 @@ interface ListInteraction {
 - **YUTag**: 收支类型标签
 
 **视觉效果**:
+
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │  财务管理                                    📊 导出报表      │

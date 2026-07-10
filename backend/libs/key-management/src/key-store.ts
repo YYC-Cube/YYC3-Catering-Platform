@@ -62,10 +62,7 @@ export class RedisKeyStore implements KeyStore {
     await this.redisClient.sadd(this.getRedisKeyListKey(), keyId);
     // 如果是活跃密钥，更新活跃密钥索引
     if (newKey.active) {
-      await this.redisClient.set(
-        this.getRedisActiveKeyKey(newKey.purpose, newKey.type),
-        keyId
-      );
+      await this.redisClient.set(this.getRedisActiveKeyKey(newKey.purpose, newKey.type), keyId);
     }
 
     return newKey;
@@ -124,14 +121,8 @@ export class RedisKeyStore implements KeyStore {
     }
 
     // 创建历史版本
-    await this.redisClient.sadd(
-      `${this.getRedisKey(keyId)}:history`,
-      existingKey.version.toString()
-    );
-    await this.redisClient.set(
-      `${this.getRedisKey(keyId)}:${existingKey.version}`,
-      JSON.stringify(existingKey)
-    );
+    await this.redisClient.sadd(`${this.getRedisKey(keyId)}:history`, existingKey.version.toString());
+    await this.redisClient.set(`${this.getRedisKey(keyId)}:${existingKey.version}`, JSON.stringify(existingKey));
 
     // 更新密钥
     const updatedKey: Key = {
@@ -145,10 +136,7 @@ export class RedisKeyStore implements KeyStore {
 
     // 如果密钥被激活，更新活跃密钥索引
     if (updatedKey.active) {
-      await this.redisClient.set(
-        this.getRedisActiveKeyKey(updatedKey.purpose, updatedKey.type),
-        keyId
-      );
+      await this.redisClient.set(this.getRedisActiveKeyKey(updatedKey.purpose, updatedKey.type), keyId);
     }
 
     return updatedKey;
@@ -165,9 +153,7 @@ export class RedisKeyStore implements KeyStore {
     // 从密钥列表中移除
     await this.redisClient.srem(this.getRedisKeyListKey(), keyId);
     // 如果是活跃密钥，更新活跃密钥索引
-    const activeKeyId = await this.redisClient.get(
-      this.getRedisActiveKeyKey(key.purpose, key.type)
-    );
+    const activeKeyId = await this.redisClient.get(this.getRedisActiveKeyKey(key.purpose, key.type));
     if (activeKeyId === keyId) {
       await this.redisClient.del(this.getRedisActiveKeyKey(key.purpose, key.type));
     }
@@ -175,11 +161,7 @@ export class RedisKeyStore implements KeyStore {
     return true;
   }
 
-  async listKeys(options?: {
-    purpose?: KeyPurpose;
-    type?: KeyType;
-    active?: boolean;
-  }): Promise<Key[]> {
+  async listKeys(options?: { purpose?: KeyPurpose; type?: KeyType; active?: boolean }): Promise<Key[]> {
     const keyIds = await this.redisClient.smembers(this.getRedisKeyListKey());
     const keys: Key[] = [];
 
@@ -239,10 +221,7 @@ export class RedisKeyStore implements KeyStore {
       await this.redisClient.sadd(this.getRedisKeyListKey(), key.id);
 
       if (restoredKey.active) {
-        await this.redisClient.set(
-          this.getRedisActiveKeyKey(restoredKey.purpose, restoredKey.type),
-          key.id
-        );
+        await this.redisClient.set(this.getRedisActiveKeyKey(restoredKey.purpose, restoredKey.type), key.id);
       }
     }
   }
@@ -273,7 +252,7 @@ export class LocalFileKeyStore implements KeyStore {
     this.filePath = config.filePath;
     this.keys = new Map();
     this.activeKeys = new Map();
-    
+
     // 初始化时加载密钥
     this.loadKeys();
   }
@@ -319,10 +298,7 @@ export class LocalFileKeyStore implements KeyStore {
     this.keys.set(keyId, newKey);
     // 如果是活跃密钥，更新活跃密钥索引
     if (newKey.active) {
-      this.activeKeys.set(
-        this.getActiveKeyMapKey(newKey.purpose, newKey.type),
-        keyId
-      );
+      this.activeKeys.set(this.getActiveKeyMapKey(newKey.purpose, newKey.type), keyId);
     }
 
     await this.saveKeys();
@@ -366,10 +342,7 @@ export class LocalFileKeyStore implements KeyStore {
 
     // 如果密钥被激活，更新活跃密钥索引
     if (updatedKey.active) {
-      this.activeKeys.set(
-        this.getActiveKeyMapKey(updatedKey.purpose, updatedKey.type),
-        keyId
-      );
+      this.activeKeys.set(this.getActiveKeyMapKey(updatedKey.purpose, updatedKey.type), keyId);
     }
 
     await this.saveKeys();
@@ -391,11 +364,7 @@ export class LocalFileKeyStore implements KeyStore {
     return true;
   }
 
-  async listKeys(options?: {
-    purpose?: KeyPurpose;
-    type?: KeyType;
-    active?: boolean;
-  }): Promise<Key[]> {
+  async listKeys(options?: { purpose?: KeyPurpose; type?: KeyType; active?: boolean }): Promise<Key[]> {
     const keys = Array.from(this.keys.values());
     return keys.filter(key => {
       if (options) {

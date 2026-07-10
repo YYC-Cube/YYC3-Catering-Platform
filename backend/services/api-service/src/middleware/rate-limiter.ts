@@ -91,7 +91,7 @@ export class RateLimitMiddleware {
       windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '60000'), // 1分钟
       maxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'), // 100次请求
       skipSuccessfulRequests: false,
-      skipFailedRequests: false
+      skipFailedRequests: false,
     };
   }
 
@@ -117,7 +117,7 @@ export class RateLimitMiddleware {
             remaining: 0,
             resetTime: record.resetTime,
             error: '请求过于频繁，请稍后再试',
-            code: 'TOO_MANY_REQUESTS'
+            code: 'TOO_MANY_REQUESTS',
           };
         }
 
@@ -125,9 +125,8 @@ export class RateLimitMiddleware {
           success: true,
           limit: finalConfig.maxRequests,
           remaining,
-          resetTime: record.resetTime
+          resetTime: record.resetTime,
         };
-
       } catch (error) {
         console.error('限流中间件错误:', error);
         // 出错时允许请求通过
@@ -135,7 +134,7 @@ export class RateLimitMiddleware {
           success: true,
           limit: finalConfig.maxRequests,
           remaining: finalConfig.maxRequests,
-          resetTime: Date.now() + finalConfig.windowMs
+          resetTime: Date.now() + finalConfig.windowMs,
         };
       }
     };
@@ -148,7 +147,7 @@ export class RateLimitMiddleware {
     return this.create({
       windowMs: windowMs || this.defaultConfig.windowMs,
       maxRequests: maxRequests || this.defaultConfig.maxRequests,
-      keyGenerator: (request: Request) => `ip:${this.getClientIp(request)}`
+      keyGenerator: (request: Request) => `ip:${this.getClientIp(request)}`,
     });
   }
 
@@ -162,7 +161,7 @@ export class RateLimitMiddleware {
       keyGenerator: (request: Request) => {
         const user = this.getUserFromRequest(request);
         return user ? `user:${user.id}` : `ip:${this.getClientIp(request)}`;
-      }
+      },
     });
   }
 
@@ -183,7 +182,7 @@ export class RateLimitMiddleware {
         } else {
           return `strict:ip:${this.getClientIp(request)}:${method}:${path}`;
         }
-      }
+      },
     });
   }
 
@@ -199,7 +198,7 @@ export class RateLimitMiddleware {
         const url = new URL(request.url);
         const email = url.searchParams.get('email') || 'unknown';
         return `login:${ip}:${email}`;
-      }
+      },
     });
   }
 
@@ -213,7 +212,7 @@ export class RateLimitMiddleware {
       keyGenerator: (request: Request) => {
         const ip = this.getClientIp(request);
         return `register:${ip}`;
-      }
+      },
     });
   }
 
@@ -248,14 +247,14 @@ export class RateLimitMiddleware {
         limit: result.limit,
         remaining: result.remaining,
         resetTime: new Date(result.resetTime).toISOString(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       headers.set('Content-Type', 'application/json');
 
       return new Response(JSON.stringify(errorResponse), {
         status: 429,
-        headers
+        headers,
       });
     }
 
@@ -324,7 +323,7 @@ export class RateLimitMiddleware {
   public getStats(): { size: number; memoryUsage: number } {
     return {
       size: this.memoryStore.size(),
-      memoryUsage: process.memoryUsage().heapUsed
+      memoryUsage: process.memoryUsage().heapUsed,
     };
   }
 }
@@ -334,13 +333,19 @@ export const rateLimiter = new RateLimitMiddleware();
 
 // 导出便捷方法
 export const createRateLimit = (config?: Partial<RateLimitConfig>) => rateLimiter.create(config);
-export const rateLimitByIp = (windowMs?: number, maxRequests?: number) => rateLimiter.byIp(windowMs, maxRequests);
-export const rateLimitByUser = (windowMs?: number, maxRequests?: number) => rateLimiter.byUser(windowMs, maxRequests);
-export const strictRateLimit = (windowMs?: number, maxRequests?: number) => rateLimiter.strict(windowMs, maxRequests);
+export const rateLimitByIp = (windowMs?: number, maxRequests?: number) =>
+  rateLimiter.byIp(windowMs, maxRequests);
+export const rateLimitByUser = (windowMs?: number, maxRequests?: number) =>
+  rateLimiter.byUser(windowMs, maxRequests);
+export const strictRateLimit = (windowMs?: number, maxRequests?: number) =>
+  rateLimiter.strict(windowMs, maxRequests);
 export const loginRateLimit = () => rateLimiter.login();
 export const registerRateLimit = () => rateLimiter.register();
 
 // 定期清理任务
-setInterval(() => {
-  rateLimiter.cleanup();
-}, 5 * 60 * 1000); // 每5分钟清理一次
+setInterval(
+  () => {
+    rateLimiter.cleanup();
+  },
+  5 * 60 * 1000
+); // 每5分钟清理一次

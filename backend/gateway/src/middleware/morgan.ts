@@ -18,7 +18,7 @@ const morganLogger = {
   write: (message: string): void => {
     // 移除换行符并记录日志
     logger.http(message.trim());
-  }
+  },
 };
 
 /**
@@ -29,6 +29,6 @@ export const morganMiddleware = morgan(
   ':method :url :status :res[content-length] - :response-time ms',
   {
     // 使用自定义日志写入器
-    stream: morganLogger
-  }
+    stream: morganLogger,
+  },
 );

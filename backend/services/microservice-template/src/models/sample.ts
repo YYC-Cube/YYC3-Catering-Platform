@@ -35,7 +35,10 @@ export interface SampleAttributes {
 /**
  * 示例模型创建属性接口（不包含自动生成的属性）
  */
-export interface SampleCreationAttributes extends Optional<SampleAttributes, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'> {}
+export interface SampleCreationAttributes extends Optional<
+  SampleAttributes,
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+> {}
 
 /**
  * 示例模型类
@@ -121,7 +124,7 @@ Sample.init(
         fields: ['created_at'],
       },
     ],
-  },
+  }
 );
 
 export default Sample;

@@ -26,7 +26,7 @@ const searchService = new SearchService();
 const qualityMonitorService = new QualityMonitorService();
 
 // 初始化服务
-documentService.initialize().catch((error) => {
+documentService.initialize().catch(error => {
   logger.error('Failed to initialize document service', { error });
 });
 
@@ -59,7 +59,7 @@ const updateDocumentSchema = z.object({
  * @access 私有
  * @returns {Promise<Response>} 文档创建结果
  */
-app.post('/', zValidator('json', createDocumentSchema), async (c) => {
+app.post('/', zValidator('json', createDocumentSchema), async c => {
   try {
     const data = c.req.valid('json');
     const document = await documentService.createDocument(data);
@@ -78,7 +78,7 @@ app.post('/', zValidator('json', createDocumentSchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 文档列表
  */
-app.get('/', async (c) => {
+app.get('/', async c => {
   try {
     const category = c.req.query('category');
     const status = c.req.query('status');
@@ -118,7 +118,7 @@ app.get('/', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 文档详情
  */
-app.get('/:id', async (c) => {
+app.get('/:id', async c => {
   try {
     const id = c.req.param('id');
     const document = await documentService.getDocument(id);
@@ -141,7 +141,7 @@ app.get('/:id', async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 更新结果
  */
-app.put('/:id', zValidator('json', updateDocumentSchema), async (c) => {
+app.put('/:id', zValidator('json', updateDocumentSchema), async c => {
   try {
     const id = c.req.param('id');
     const data = c.req.valid('json');
@@ -165,7 +165,7 @@ app.put('/:id', zValidator('json', updateDocumentSchema), async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 删除结果
  */
-app.delete('/:id', async (c) => {
+app.delete('/:id', async c => {
   try {
     const id = c.req.param('id');
     const success = await documentService.deleteDocument(id);
@@ -188,7 +188,7 @@ app.delete('/:id', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 搜索结果
  */
-app.get('/search', async (c) => {
+app.get('/search', async c => {
   try {
     const query = c.req.query('q');
     const type = c.req.query('type') || 'keyword';
@@ -228,7 +228,7 @@ app.get('/search', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 统计数据
  */
-app.get('/statistics', async (c) => {
+app.get('/statistics', async c => {
   try {
     const statistics = await documentService.getStatistics();
 
@@ -246,7 +246,7 @@ app.get('/statistics', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 质量报告
  */
-app.get('/:id/quality', async (c) => {
+app.get('/:id/quality', async c => {
   try {
     const id = c.req.param('id');
     const document = await documentService.getDocument(id);
@@ -271,7 +271,7 @@ app.get('/:id/quality', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 版本历史
  */
-app.get('/:id/versions', async (c) => {
+app.get('/:id/versions', async c => {
   try {
     const id = c.req.param('id');
     const document = await documentService.getDocument(id);
@@ -294,7 +294,7 @@ app.get('/:id/versions', async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 恢复结果
  */
-app.post('/:id/versions/:version/restore', async (c) => {
+app.post('/:id/versions/:version/restore', async c => {
   try {
     const id = c.req.param('id');
     const version = c.req.param('version');
@@ -324,7 +324,7 @@ app.post('/:id/versions/:version/restore', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 相关文档
  */
-app.get('/:id/related', async (c) => {
+app.get('/:id/related', async c => {
   try {
     const id = c.req.param('id');
     const limit = parseInt(c.req.query('limit') || '10');

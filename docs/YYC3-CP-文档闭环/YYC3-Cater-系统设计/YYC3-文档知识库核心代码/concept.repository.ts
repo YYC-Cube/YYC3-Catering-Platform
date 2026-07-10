@@ -20,7 +20,9 @@ export class ConceptRepository {
   private conceptsFile: string;
   private concepts: Map<string, Concept>;
 
-  constructor(dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据') {
+  constructor(
+    dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据',
+  ) {
     this.logger = new Logger('ConceptRepository');
     this.dataDir = dataDir;
     this.conceptsFile = path.join(dataDir, 'concepts.json');
@@ -77,7 +79,7 @@ export class ConceptRepository {
       this.logger.info('Saving concepts', { count: concepts.length });
 
       // 添加到内存
-      concepts.forEach((concept) => {
+      concepts.forEach(concept => {
         this.concepts.set(concept.id, concept);
       });
 
@@ -189,10 +191,7 @@ export class ConceptRepository {
         }
 
         // 关键词匹配
-        if (
-          concept.name.toLowerCase().includes(queryLower) ||
-          concept.description.toLowerCase().includes(queryLower)
-        ) {
+        if (concept.name.toLowerCase().includes(queryLower) || concept.description.toLowerCase().includes(queryLower)) {
           results.push(concept);
         }
       }
@@ -303,19 +302,16 @@ export class ConceptRepository {
 
       // 分类分布
       const categoryDistribution: Record<string, number> = {};
-      concepts.forEach((concept) => {
+      concepts.forEach(concept => {
         categoryDistribution[concept.category] = (categoryDistribution[concept.category] || 0) + 1;
       });
 
       // 平均频率
-      const avgFrequency = concepts.length > 0
-        ? concepts.reduce((sum, concept) => sum + concept.frequency, 0) / concepts.length
-        : 0;
+      const avgFrequency =
+        concepts.length > 0 ? concepts.reduce((sum, concept) => sum + concept.frequency, 0) / concepts.length : 0;
 
       // 热门概念
-      const topConcepts = concepts
-        .sort((a, b) => b.frequency - a.frequency)
-        .slice(0, 10);
+      const topConcepts = concepts.sort((a, b) => b.frequency - a.frequency).slice(0, 10);
 
       return {
         totalConcepts,
@@ -347,7 +343,7 @@ export class ConceptRepository {
 
       // 加载到内存
       this.concepts.clear();
-      concepts.forEach((concept) => {
+      concepts.forEach(concept => {
         this.concepts.set(concept.id, concept);
       });
 

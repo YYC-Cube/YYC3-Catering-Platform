@@ -10,28 +10,29 @@
 **@tags**：架构设计,YYC³,系统架构
 
 ---
+
 # 🔖 YYC³ 灰度发布架构设计文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 灰度发布架构设计文档 |
-| **文档类型** | 架构类文档 |
-| **所属阶段** | 部署发布 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 灰度发布架构设计文档  |
+| **文档类型** | 架构类文档                 |
+| **所属阶段** | 部署发布                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -75,6 +76,7 @@
 - **最少知识原则**：模块间最小化依赖，降低耦合度
 
 同时遵循YYC³「五高五标五化」核心理念：
+
 - **五高**：高可用、高性能、高安全、高扩展、高可维护
 - **五标**：标准化、规范化、自动化、智能化、可视化
 - **五化**：流程化、文档化、工具化、数字化、生态化
@@ -84,24 +86,28 @@
 技术栈选择基于以下考虑：
 
 **前端技术栈**
+
 - React 18+：采用现代化前端框架，组件化开发
 - TypeScript 5.0+：类型安全，提高代码质量
 - Next.js 14+：SSR/SSG支持，优化SEO和性能
 - Tailwind CSS：原子化CSS，快速构建UI
 
 **后端技术栈**
+
 - Node.js 18+：高性能JavaScript运行时
 - Express/Fastify：轻量级Web框架
 - PostgreSQL 15+：关系型数据库，ACID保证
 - Redis 7+：缓存和会话存储
 
 **基础设施**
+
 - Docker：容器化部署，环境一致性
 - Kubernetes：容器编排，自动化运维
 - Nginx：反向代理和负载均衡
 - Prometheus + Grafana：监控和告警
 
 **开发工具**
+
 - Git：版本控制
 - ESLint + Prettier：代码规范
 - Jest + Vitest：单元测试
@@ -114,27 +120,32 @@
 YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以下层次：
 
 **表现层（Presentation Layer）**
+
 - Web前端：React + Next.js构建的单页应用
 - 移动端：响应式设计，支持多设备访问
 - 管理后台：独立的管理界面
 
 **应用层（Application Layer）**
+
 - API网关：统一入口，路由分发
 - 业务服务：订单、用户、商品等核心业务逻辑
 - 认证授权：JWT认证，RBAC权限控制
 
 **领域层（Domain Layer）**
+
 - 领域模型：核心业务实体和规则
 - 领域服务：复杂业务逻辑封装
 - 仓储接口：数据访问抽象
 
 **基础设施层（Infrastructure Layer）**
+
 - 数据库：PostgreSQL主从架构
 - 缓存：Redis集群
 - 消息队列：RabbitMQ/Kafka
 - 文件存储：OSS/MinIO
 
 **跨层关注点**
+
 - 日志监控：ELK Stack
 - 配置管理：Apollo/Nacos
 - 服务发现：Consul/Eureka
@@ -145,36 +156,43 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 系统按照业务领域划分为以下核心模块：
 
 **用户模块（User Module）**
+
 - 用户注册、登录、认证
 - 用户信息管理
 - 权限和角色管理
 
 **商品模块（Product Module）**
+
 - 商品信息管理
 - 商品分类和标签
 - 库存管理
 
 **订单模块（Order Module）**
+
 - 订单创建和支付
 - 订单状态流转
 - 订单查询和统计
 
 **支付模块（Payment Module）**
+
 - 支付接口集成
 - 支付状态同步
 - 退款处理
 
 **营销模块（Marketing Module）**
+
 - 优惠券管理
 - 促销活动
 - 会员积分
 
 **报表模块（Report Module）**
+
 - 销售报表
 - 数据分析
 - 可视化展示
 
 **系统模块（System Module）**
+
 - 配置管理
 - 日志管理
 - 监控告警
@@ -254,30 +272,18 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 // types/canary-release.ts
 export interface CanaryReleaseBenefits {
   riskMitigation: {
-    description: '降低发布风险';
-    benefits: [
-      '新版本问题只影响小部分用户',
-      '可以快速回滚',
-      '逐步验证稳定性'
-    ];
+    description: "降低发布风险";
+    benefits: ["新版本问题只影响小部分用户", "可以快速回滚", "逐步验证稳定性"];
   };
 
   userExperience: {
-    description: '提升用户体验';
-    benefits: [
-      '大部分用户不受影响',
-      '新功能逐步推广',
-      '减少服务中断'
-    ];
+    description: "提升用户体验";
+    benefits: ["大部分用户不受影响", "新功能逐步推广", "减少服务中断"];
   };
 
   businessContinuity: {
-    description: '保障业务连续性';
-    benefits: [
-      '保持系统稳定性',
-      '减少故障影响范围',
-      '快速响应问题'
-    ];
+    description: "保障业务连续性";
+    benefits: ["保持系统稳定性", "减少故障影响范围", "快速响应问题"];
   };
 }
 ```
@@ -291,20 +297,20 @@ export interface CanaryReleaseBenefits {
 ```typescript
 // strategies/traffic-allocation.ts
 export enum TrafficAllocationStrategy {
-  PERCENTAGE = 'percentage',           // 按百分比分配
-  USER_SEGMENT = 'user_segment',       // 按用户群体分配
-  GEOGRAPHIC = 'geographic',            // 按地理位置分配
-  FEATURE_FLAG = 'feature_flag',       // 按功能开关分配
-  CUSTOM = 'custom',                   // 自定义规则
+  PERCENTAGE = "percentage", // 按百分比分配
+  USER_SEGMENT = "user_segment", // 按用户群体分配
+  GEOGRAPHIC = "geographic", // 按地理位置分配
+  FEATURE_FLAG = "feature_flag", // 按功能开关分配
+  CUSTOM = "custom", // 自定义规则
 }
 
 export interface TrafficAllocationConfig {
   strategy: TrafficAllocationStrategy;
-  canaryPercentage: number;            // 灰度流量百分比
-  targetUsers?: string[];              // 目标用户ID列表
-  targetRegions?: string[];            // 目标地区列表
-  featureFlags?: string[];             // 功能开关列表
-  customRules?: Record<string, any>;   // 自定义规则
+  canaryPercentage: number; // 灰度流量百分比
+  targetUsers?: string[]; // 目标用户ID列表
+  targetRegions?: string[]; // 目标地区列表
+  featureFlags?: string[]; // 功能开关列表
+  customRules?: Record<string, any>; // 自定义规则
 }
 
 // 流量分配实现
@@ -336,7 +342,7 @@ export class TrafficAllocator {
   // 按百分比路由
   private routeByPercentage(request: CanaryRequest): boolean {
     const hash = this.hashRequest(request);
-    return (hash % 100) < this.config.canaryPercentage;
+    return hash % 100 < this.config.canaryPercentage;
   }
 
   // 按用户群体路由
@@ -351,9 +357,7 @@ export class TrafficAllocator {
 
   // 按功能开关路由
   private routeByFeatureFlag(request: CanaryRequest): boolean {
-    return request.featureFlags?.some(flag =>
-      this.config.featureFlags?.includes(flag)
-    ) || false;
+    return request.featureFlags?.some(flag => this.config.featureFlags?.includes(flag)) || false;
   }
 
   // 自定义路由规则
@@ -368,7 +372,7 @@ export class TrafficAllocator {
     let hash = 0;
     for (let i = 0; i < data.length; i++) {
       const char = data.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash;
     }
     return Math.abs(hash);
@@ -389,32 +393,32 @@ interface CanaryRequest {
 ```typescript
 // stages/canary-stages.ts
 export enum CanaryStage {
-  PREPARATION = 'preparation',       // 准备阶段
-  INITIAL = 'initial',               // 初始阶段 (1%)
-  SMALL_SCALE = 'small_scale',        // 小规模阶段 (10%)
-  MEDIUM_SCALE = 'medium_scale',      // 中规模阶段 (50%)
-  LARGE_SCALE = 'large_scale',        // 大规模阶段 (90%)
-  FULL_RELEASE = 'full_release',     // 全量发布 (100%)
+  PREPARATION = "preparation", // 准备阶段
+  INITIAL = "initial", // 初始阶段 (1%)
+  SMALL_SCALE = "small_scale", // 小规模阶段 (10%)
+  MEDIUM_SCALE = "medium_scale", // 中规模阶段 (50%)
+  LARGE_SCALE = "large_scale", // 大规模阶段 (90%)
+  FULL_RELEASE = "full_release", // 全量发布 (100%)
 }
 
 export interface CanaryStageConfig {
   stage: CanaryStage;
   percentage: number;
-  duration: number;                   // 持续时间（分钟）
+  duration: number; // 持续时间（分钟）
   successCriteria: SuccessCriteria;
   rollbackConditions: RollbackConditions;
 }
 
 export interface SuccessCriteria {
-  errorRateThreshold: number;         // 错误率阈值
-  latencyThreshold: number;           // 延迟阈值（毫秒）
-  businessMetrics?: Record<string, number>;  // 业务指标
+  errorRateThreshold: number; // 错误率阈值
+  latencyThreshold: number; // 延迟阈值（毫秒）
+  businessMetrics?: Record<string, number>; // 业务指标
 }
 
 export interface RollbackConditions {
-  errorRateThreshold: number;         // 错误率阈值
-  latencyThreshold: number;           // 延迟阈值（毫秒）
-  criticalErrors?: string[];          // 关键错误列表
+  errorRateThreshold: number; // 错误率阈值
+  latencyThreshold: number; // 延迟阈值（毫秒）
+  criticalErrors?: string[]; // 关键错误列表
 }
 
 // 灰度阶段配置
@@ -600,16 +604,16 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: www.yyc3-cater.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: yyc3-cater-stable
-            port:
-              number: 80
+    - host: www.yyc3-cater.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: yyc3-cater-stable
+                port:
+                  number: 80
 ---
 apiVersion: v1
 kind: Service
@@ -621,8 +625,8 @@ spec:
     app: yyc3-cater
     version: stable
   ports:
-  - port: 80
-    targetPort: 3200
+    - port: 80
+      targetPort: 3200
 ---
 apiVersion: v1
 kind: Service
@@ -634,8 +638,8 @@ spec:
     app: yyc3-cater
     version: canary
   ports:
-  - port: 80
-    targetPort: 3200
+    - port: 80
+      targetPort: 3200
 ```
 
 ### 3.3 Istio 流量路由
@@ -649,27 +653,27 @@ metadata:
   namespace: production
 spec:
   hosts:
-  - www.yyc3-cater.com
+    - www.yyc3-cater.com
   gateways:
-  - yyc3-cater-gateway
+    - yyc3-cater-gateway
   http:
-  - match:
-    - headers:
-        x-canary:
-          exact: "true"
-    route:
-    - destination:
-        host: yyc3-cater
-        subset: canary
-  - route:
-    - destination:
-        host: yyc3-cater
-        subset: stable
-      weight: 90
-    - destination:
-        host: yyc3-cater
-        subset: canary
-      weight: 10
+    - match:
+        - headers:
+            x-canary:
+              exact: "true"
+      route:
+        - destination:
+            host: yyc3-cater
+            subset: canary
+    - route:
+        - destination:
+            host: yyc3-cater
+            subset: stable
+          weight: 90
+        - destination:
+            host: yyc3-cater
+            subset: canary
+          weight: 10
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
@@ -679,12 +683,12 @@ metadata:
 spec:
   host: yyc3-cater
   subsets:
-  - name: stable
-    labels:
-      version: stable
-  - name: canary
-    labels:
-      version: canary
+    - name: stable
+      labels:
+        version: stable
+    - name: canary
+      labels:
+        version: canary
 ```
 
 ---
@@ -700,7 +704,7 @@ export class CanaryReleaseWorkflow {
   private metrics: CanaryMetrics;
 
   async startRelease(config: CanaryReleaseConfig): Promise<void> {
-    console.log('开始灰度发布流程...');
+    console.log("开始灰度发布流程...");
 
     // 1. 准备阶段
     await this.prepareRelease(config);
@@ -720,12 +724,12 @@ export class CanaryReleaseWorkflow {
     // 6. 全量发布 (100%)
     await this.fullRelease();
 
-    console.log('灰度发布完成');
+    console.log("灰度发布完成");
   }
 
   // 准备阶段
   private async prepareRelease(config: CanaryReleaseConfig): Promise<void> {
-    console.log('准备阶段...');
+    console.log("准备阶段...");
 
     // 1. 部署灰度版本
     await this.deployCanaryVersion(config);
@@ -741,7 +745,7 @@ export class CanaryReleaseWorkflow {
 
   // 初始阶段 (1%)
   private async initialStage(): Promise<void> {
-    console.log('初始阶段 (1%)...');
+    console.log("初始阶段 (1%)...");
 
     // 1. 更新流量比例
     await this.updateTrafficPercentage(1);
@@ -754,7 +758,7 @@ export class CanaryReleaseWorkflow {
 
     if (!success) {
       await this.rollback();
-      throw new Error('初始阶段失败，已回滚');
+      throw new Error("初始阶段失败，已回滚");
     }
 
     this.currentStage = CanaryStage.INITIAL;
@@ -762,7 +766,7 @@ export class CanaryReleaseWorkflow {
 
   // 小规模阶段 (10%)
   private async smallScaleStage(): Promise<void> {
-    console.log('小规模阶段 (10%)...');
+    console.log("小规模阶段 (10%)...");
 
     // 1. 更新流量比例
     await this.updateTrafficPercentage(10);
@@ -775,7 +779,7 @@ export class CanaryReleaseWorkflow {
 
     if (!success) {
       await this.rollback();
-      throw new Error('小规模阶段失败，已回滚');
+      throw new Error("小规模阶段失败，已回滚");
     }
 
     this.currentStage = CanaryStage.SMALL_SCALE;
@@ -783,7 +787,7 @@ export class CanaryReleaseWorkflow {
 
   // 中规模阶段 (50%)
   private async mediumScaleStage(): Promise<void> {
-    console.log('中规模阶段 (50%)...');
+    console.log("中规模阶段 (50%)...");
 
     // 1. 更新流量比例
     await this.updateTrafficPercentage(50);
@@ -796,7 +800,7 @@ export class CanaryReleaseWorkflow {
 
     if (!success) {
       await this.rollback();
-      throw new Error('中规模阶段失败，已回滚');
+      throw new Error("中规模阶段失败，已回滚");
     }
 
     this.currentStage = CanaryStage.MEDIUM_SCALE;
@@ -804,7 +808,7 @@ export class CanaryReleaseWorkflow {
 
   // 大规模阶段 (90%)
   private async largeScaleStage(): Promise<void> {
-    console.log('大规模阶段 (90%)...');
+    console.log("大规模阶段 (90%)...");
 
     // 1. 更新流量比例
     await this.updateTrafficPercentage(90);
@@ -817,7 +821,7 @@ export class CanaryReleaseWorkflow {
 
     if (!success) {
       await this.rollback();
-      throw new Error('大规模阶段失败，已回滚');
+      throw new Error("大规模阶段失败，已回滚");
     }
 
     this.currentStage = CanaryStage.LARGE_SCALE;
@@ -825,7 +829,7 @@ export class CanaryReleaseWorkflow {
 
   // 全量发布 (100%)
   private async fullRelease(): Promise<void> {
-    console.log('全量发布 (100%)...');
+    console.log("全量发布 (100%)...");
 
     // 1. 更新流量比例
     await this.updateTrafficPercentage(100);
@@ -838,19 +842,19 @@ export class CanaryReleaseWorkflow {
 
   // 部署灰度版本
   private async deployCanaryVersion(config: CanaryReleaseConfig): Promise<void> {
-    console.log('部署灰度版本...');
+    console.log("部署灰度版本...");
     // 实现部署逻辑
   }
 
   // 配置流量路由
   private async configureTrafficRouting(config: CanaryReleaseConfig): Promise<void> {
-    console.log('配置流量路由...');
+    console.log("配置流量路由...");
     // 实现路由配置逻辑
   }
 
   // 初始化监控
   private async initializeMonitoring(): Promise<void> {
-    console.log('初始化监控...');
+    console.log("初始化监控...");
     // 实现监控初始化逻辑
   }
 
@@ -868,7 +872,7 @@ export class CanaryReleaseWorkflow {
 
   // 检查指标
   private async checkMetrics(stage: CanaryStage): Promise<boolean> {
-    console.log('检查指标...');
+    console.log("检查指标...");
     const config = canaryStageConfigs[stage];
 
     // 检查错误率
@@ -888,7 +892,7 @@ export class CanaryReleaseWorkflow {
 
   // 回滚
   private async rollback(): Promise<void> {
-    console.log('开始回滚...');
+    console.log("开始回滚...");
 
     // 1. 恢复流量到稳定版本
     await this.updateTrafficPercentage(0);
@@ -896,18 +900,18 @@ export class CanaryReleaseWorkflow {
     // 2. 清理灰度版本
     await this.cleanupCanaryVersion();
 
-    console.log('回滚完成');
+    console.log("回滚完成");
   }
 
   // 清理稳定版本
   private async cleanupStableVersion(): Promise<void> {
-    console.log('清理稳定版本...');
+    console.log("清理稳定版本...");
     // 实现清理逻辑
   }
 
   // 清理灰度版本
   private async cleanupCanaryVersion(): Promise<void> {
-    console.log('清理灰度版本...');
+    console.log("清理灰度版本...");
     // 实现清理逻辑
   }
 }
@@ -1003,43 +1007,43 @@ echo "灰度发布完成"
 
 ```typescript
 // monitoring/canary-monitor.ts
-import { promClient } from './prometheus';
+import { promClient } from "./prometheus";
 
 const canaryMetrics = {
   // 灰度流量比例
   canaryTrafficPercentage: new promClient.Gauge({
-    name: 'yyc3_canary_traffic_percentage',
-    help: 'Canary traffic percentage',
-    labelNames: ['version'],
+    name: "yyc3_canary_traffic_percentage",
+    help: "Canary traffic percentage",
+    labelNames: ["version"],
   }),
 
   // 灰度错误率
   canaryErrorRate: new promClient.Gauge({
-    name: 'yyc3_canary_error_rate',
-    help: 'Canary error rate',
-    labelNames: ['version', 'endpoint'],
+    name: "yyc3_canary_error_rate",
+    help: "Canary error rate",
+    labelNames: ["version", "endpoint"],
   }),
 
   // 灰度延迟
   canaryLatency: new promClient.Histogram({
-    name: 'yyc3_canary_latency',
-    help: 'Canary latency',
-    labelNames: ['version', 'endpoint'],
+    name: "yyc3_canary_latency",
+    help: "Canary latency",
+    labelNames: ["version", "endpoint"],
     buckets: [10, 50, 100, 200, 500, 1000, 2000, 5000],
   }),
 
   // 灰度吞吐量
   canaryThroughput: new promClient.Counter({
-    name: 'yyc3_canary_throughput_total',
-    help: 'Canary throughput',
-    labelNames: ['version', 'endpoint', 'status'],
+    name: "yyc3_canary_throughput_total",
+    help: "Canary throughput",
+    labelNames: ["version", "endpoint", "status"],
   }),
 
   // 灰度业务指标
   canaryBusinessMetrics: new promClient.Gauge({
-    name: 'yyc3_canary_business_metric',
-    help: 'Canary business metrics',
-    labelNames: ['version', 'metric_name'],
+    name: "yyc3_canary_business_metric",
+    help: "Canary business metrics",
+    labelNames: ["version", "metric_name"],
   }),
 };
 
@@ -1059,10 +1063,7 @@ export class CanaryMonitor {
       status: status.toString(),
     });
 
-    canaryMetrics.canaryLatency.observe(
-      { version: this.version, endpoint },
-      latency
-    );
+    canaryMetrics.canaryLatency.observe({ version: this.version, endpoint }, latency);
 
     if (status >= 400) {
       canaryMetrics.canaryErrorRate.inc({
@@ -1074,37 +1075,25 @@ export class CanaryMonitor {
 
   // 记录业务指标
   recordBusinessMetric(metricName: string, value: number): void {
-    canaryMetrics.canaryBusinessMetrics.set(
-      { version: this.version, metric_name: metricName },
-      value
-    );
+    canaryMetrics.canaryBusinessMetrics.set({ version: this.version, metric_name: metricName }, value);
   }
 
   // 更新流量比例
   updateTrafficPercentage(percentage: number): void {
-    canaryMetrics.canaryTrafficPercentage.set(
-      { version: this.version },
-      percentage
-    );
+    canaryMetrics.canaryTrafficPercentage.set({ version: this.version }, percentage);
   }
 
   // 获取错误率
   getErrorRate(endpoint: string): number {
-    const errorCount = canaryMetrics.canaryErrorRate.hashMap.get(
-      `${this.version}_${endpoint}`
-    )?.value || 0;
-    const totalCount = canaryMetrics.canaryThroughput.hashMap.get(
-      `${this.version}_${endpoint}`
-    )?.value || 0;
+    const errorCount = canaryMetrics.canaryErrorRate.hashMap.get(`${this.version}_${endpoint}`)?.value || 0;
+    const totalCount = canaryMetrics.canaryThroughput.hashMap.get(`${this.version}_${endpoint}`)?.value || 0;
 
     return totalCount > 0 ? (errorCount / totalCount) * 100 : 0;
   }
 
   // 获取平均延迟
   getAverageLatency(endpoint: string): number {
-    const histogram = canaryMetrics.canaryLatency.hashMap.get(
-      `${this.version}_${endpoint}`
-    );
+    const histogram = canaryMetrics.canaryLatency.hashMap.get(`${this.version}_${endpoint}`);
     return histogram?.mean || 0;
   }
 }
@@ -1125,7 +1114,7 @@ export class AutoRollback {
 
   // 检查是否需要回滚
   async checkRollbackConditions(): Promise<boolean> {
-    const endpoints = ['/api/orders', '/api/products', '/api/users'];
+    const endpoints = ["/api/orders", "/api/products", "/api/users"];
 
     for (const endpoint of endpoints) {
       // 检查错误率
@@ -1148,7 +1137,7 @@ export class AutoRollback {
 
   // 执行回滚
   async executeRollback(): Promise<void> {
-    console.log('开始自动回滚...');
+    console.log("开始自动回滚...");
 
     // 1. 恢复流量到稳定版本
     await this.restoreStableTraffic();
@@ -1159,24 +1148,24 @@ export class AutoRollback {
     // 3. 发送告警通知
     await this.sendAlertNotification();
 
-    console.log('自动回滚完成');
+    console.log("自动回滚完成");
   }
 
   // 恢复稳定版本流量
   private async restoreStableTraffic(): Promise<void> {
-    console.log('恢复稳定版本流量...');
+    console.log("恢复稳定版本流量...");
     // 实现流量恢复逻辑
   }
 
   // 清理灰度版本
   private async cleanupCanaryVersion(): Promise<void> {
-    console.log('清理灰度版本...');
+    console.log("清理灰度版本...");
     // 实现清理逻辑
   }
 
   // 发送告警通知
   private async sendAlertNotification(): Promise<void> {
-    console.log('发送告警通知...');
+    console.log("发送告警通知...");
     // 实现告警通知逻辑
   }
 }
@@ -1293,8 +1282,8 @@ export interface RollbackConfig {
 
 // 默认配置
 export const defaultCanaryConfig: CanaryReleaseConfig = {
-  version: 'v2.0.0',
-  image: 'ghcr.io/yyc3-cater/web:v2.0.0',
+  version: "v2.0.0",
+  image: "ghcr.io/yyc3-cater/web:v2.0.0",
   strategy: {
     strategy: TrafficAllocationStrategy.PERCENTAGE,
     canaryPercentage: 10,
@@ -1307,10 +1296,10 @@ export const defaultCanaryConfig: CanaryReleaseConfig = {
   ],
   monitoring: {
     enabled: true,
-    metrics: ['errorRate', 'latency', 'throughput'],
+    metrics: ["errorRate", "latency", "throughput"],
     alerts: {
       enabled: true,
-      channels: ['slack', 'email'],
+      channels: ["slack", "email"],
     },
   },
   rollback: {
@@ -1337,10 +1326,10 @@ export interface RiskAssessment {
 }
 
 export enum RiskLevel {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-  CRITICAL = 'critical',
+  LOW = "low",
+  MEDIUM = "medium",
+  HIGH = "high",
+  CRITICAL = "critical",
 }
 
 export interface RiskFactor {
@@ -1377,24 +1366,24 @@ export class RiskAssessor {
 
     // 代码变更风险
     factors.push({
-      name: '代码变更',
-      description: '新版本包含大量代码变更',
+      name: "代码变更",
+      description: "新版本包含大量代码变更",
       impact: RiskLevel.HIGH,
       likelihood: 0.7,
     });
 
     // 数据库变更风险
     factors.push({
-      name: '数据库变更',
-      description: '新版本包含数据库架构变更',
+      name: "数据库变更",
+      description: "新版本包含数据库架构变更",
       impact: RiskLevel.HIGH,
       likelihood: 0.5,
     });
 
     // 第三方依赖风险
     factors.push({
-      name: '第三方依赖',
-      description: '新版本更新了第三方依赖',
+      name: "第三方依赖",
+      description: "新版本更新了第三方依赖",
       impact: RiskLevel.MEDIUM,
       likelihood: 0.3,
     });
@@ -1425,8 +1414,8 @@ export class RiskAssessor {
   private generateMitigationStrategies(factors: RiskFactor[]): MitigationStrategy[] {
     return factors.map(factor => ({
       riskFactor: factor.name,
-      strategy: '逐步灰度发布',
-      implementation: '从小流量开始，逐步扩大发布范围',
+      strategy: "逐步灰度发布",
+      implementation: "从小流量开始，逐步扩大发布范围",
     }));
   }
 }
@@ -1449,11 +1438,11 @@ export class RiskController {
   async executeRiskControl(config: CanaryReleaseConfig): Promise<void> {
     // 1. 评估风险
     const assessment = this.riskAssessor.assessRisk(config);
-    console.log('风险评估:', assessment);
+    console.log("风险评估:", assessment);
 
     // 2. 根据风险等级调整策略
     if (assessment.riskLevel === RiskLevel.HIGH || assessment.riskLevel === RiskLevel.CRITICAL) {
-      console.log('高风险发布，调整策略...');
+      console.log("高风险发布，调整策略...");
       await this.adjustForHighRisk(config);
     }
 
@@ -1498,14 +1487,14 @@ export class RiskController {
 
 ```typescript
 // examples/canary-release-example.ts
-import { CanaryReleaseWorkflow } from '../workflow/canary-release-workflow';
-import { CanaryMonitor } from '../monitoring/canary-monitor';
-import { AutoRollback } from '../rollback/auto-rollback';
-import { RiskController } from '../risk/risk-control';
-import { defaultCanaryConfig } from '../config/canary-release';
+import { CanaryReleaseWorkflow } from "../workflow/canary-release-workflow";
+import { CanaryMonitor } from "../monitoring/canary-monitor";
+import { AutoRollback } from "../rollback/auto-rollback";
+import { RiskController } from "../risk/risk-control";
+import { defaultCanaryConfig } from "../config/canary-release";
 
 async function main() {
-  console.log('开始灰度发布示例...');
+  console.log("开始灰度发布示例...");
 
   // 1. 创建监控器
   const monitor = new CanaryMonitor(defaultCanaryConfig.version);
@@ -1517,10 +1506,7 @@ async function main() {
   });
 
   // 3. 创建风险控制器
-  const riskController = new RiskController(
-    new RiskAssessor(),
-    rollback
-  );
+  const riskController = new RiskController(new RiskAssessor(), rollback);
 
   // 4. 执行风险控制
   await riskController.executeRiskControl(defaultCanaryConfig);
@@ -1529,7 +1515,7 @@ async function main() {
   const workflow = new CanaryReleaseWorkflow();
   await workflow.startRelease(defaultCanaryConfig);
 
-  console.log('灰度发布示例完成');
+  console.log("灰度发布示例完成");
 }
 
 main().catch(console.error);
@@ -1541,11 +1527,13 @@ main().catch(console.error);
 ## 灰度发布案例：订单系统升级
 
 ### 背景
+
 - 版本：v1.0.0 → v2.0.0
 - 变更内容：订单处理逻辑优化、数据库架构变更
 - 风险等级：高
 
 ### 发布策略
+
 1. **准备阶段**（0%）
    - 部署v2.0.0灰度版本
    - 配置流量路由规则
@@ -1581,6 +1569,7 @@ main().catch(console.error);
    - 发布完成
 
 ### 结果
+
 - 发布时长：约6小时
 - 错误率：始终低于0.2%
 - 延迟：始终低于400ms
@@ -1599,50 +1588,50 @@ main().catch(console.error);
 export const canaryBestPractices = {
   // 1. 从小流量开始
   startSmall: {
-    description: '从1%流量开始，逐步扩大',
-    reason: '降低风险，快速发现问题',
+    description: "从1%流量开始，逐步扩大",
+    reason: "降低风险，快速发现问题",
   },
 
   // 2. 充分观察
   observeAdequately: {
-    description: '每个阶段至少观察30分钟',
-    reason: '确保有足够数据评估稳定性',
+    description: "每个阶段至少观察30分钟",
+    reason: "确保有足够数据评估稳定性",
   },
 
   // 3. 设置明确阈值
   setClearThresholds: {
-    description: '定义明确的成功和失败阈值',
-    reason: '避免主观判断，确保一致性',
+    description: "定义明确的成功和失败阈值",
+    reason: "避免主观判断，确保一致性",
   },
 
   // 4. 自动化监控
   automateMonitoring: {
-    description: '实现自动化监控和告警',
-    reason: '及时发现问题，减少人工干预',
+    description: "实现自动化监控和告警",
+    reason: "及时发现问题，减少人工干预",
   },
 
   // 5. 准备回滚计划
   prepareRollback: {
-    description: '提前准备回滚方案',
-    reason: '快速响应问题，减少影响',
+    description: "提前准备回滚方案",
+    reason: "快速响应问题，减少影响",
   },
 
   // 6. 记录详细日志
   logDetailed: {
-    description: '记录详细的发布日志',
-    reason: '便于问题排查和经验总结',
+    description: "记录详细的发布日志",
+    reason: "便于问题排查和经验总结",
   },
 
   // 7. 评估风险
   assessRisk: {
-    description: '发布前评估风险等级',
-    reason: '根据风险调整发布策略',
+    description: "发布前评估风险等级",
+    reason: "根据风险调整发布策略",
   },
 
   // 8. 逐步验证
   validateGradually: {
-    description: '逐步验证功能和性能',
-    reason: '确保每个阶段都符合预期',
+    description: "逐步验证功能和性能",
+    reason: "确保每个阶段都符合预期",
   },
 };
 ```
@@ -1654,37 +1643,37 @@ export const canaryBestPractices = {
 export const commonMistakes = {
   // 1. 流量过大
   trafficTooLarge: {
-    mistake: '一开始就使用大流量',
-    consequence: '风险过高，影响范围大',
-    solution: '从小流量开始，逐步扩大',
+    mistake: "一开始就使用大流量",
+    consequence: "风险过高，影响范围大",
+    solution: "从小流量开始，逐步扩大",
   },
 
   // 2. 观察时间不足
   insufficientObservation: {
-    mistake: '观察时间太短',
-    consequence: '无法充分评估稳定性',
-    solution: '每个阶段至少观察30分钟',
+    mistake: "观察时间太短",
+    consequence: "无法充分评估稳定性",
+    solution: "每个阶段至少观察30分钟",
   },
 
   // 3. 缺少监控
   lackOfMonitoring: {
-    mistake: '没有完善的监控',
-    consequence: '无法及时发现问题',
-    solution: '建立完善的监控体系',
+    mistake: "没有完善的监控",
+    consequence: "无法及时发现问题",
+    solution: "建立完善的监控体系",
   },
 
   // 4. 没有回滚计划
   noRollbackPlan: {
-    mistake: '没有准备回滚方案',
-    consequence: '问题发生时无法快速响应',
-    solution: '提前准备回滚方案',
+    mistake: "没有准备回滚方案",
+    consequence: "问题发生时无法快速响应",
+    solution: "提前准备回滚方案",
   },
 
   // 5. 忽视风险评估
   ignoreRiskAssessment: {
-    mistake: '不进行风险评估',
-    consequence: '无法根据风险调整策略',
-    solution: '发布前进行风险评估',
+    mistake: "不进行风险评估",
+    consequence: "无法根据风险调整策略",
+    solution: "发布前进行风险评估",
   },
 };
 ```
@@ -1703,22 +1692,22 @@ export class CanaryTroubleshooter {
 
     // 1. 检查错误率
     if (metrics.errorRate > 0.5) {
-      issues.push('错误率过高');
+      issues.push("错误率过高");
     }
 
     // 2. 检查延迟
     if (metrics.latency > 1000) {
-      issues.push('延迟过高');
+      issues.push("延迟过高");
     }
 
     // 3. 检查吞吐量
     if (metrics.throughput < 100) {
-      issues.push('吞吐量过低');
+      issues.push("吞吐量过低");
     }
 
     // 4. 检查业务指标
     if (metrics.businessMetrics.orderSuccessRate < 0.99) {
-      issues.push('订单成功率过低');
+      issues.push("订单成功率过低");
     }
 
     return {
@@ -1729,28 +1718,28 @@ export class CanaryTroubleshooter {
   }
 
   private calculateSeverity(issues: string[]): string {
-    if (issues.length === 0) return 'none';
-    if (issues.length <= 2) return 'low';
-    if (issues.length <= 4) return 'medium';
-    return 'high';
+    if (issues.length === 0) return "none";
+    if (issues.length <= 2) return "low";
+    if (issues.length <= 4) return "medium";
+    return "high";
   }
 
   private generateRecommendations(issues: string[]): string[] {
     const recommendations: string[] = [];
 
-    if (issues.includes('错误率过高')) {
-      recommendations.push('检查应用日志，定位错误原因');
-      recommendations.push('考虑回滚到稳定版本');
+    if (issues.includes("错误率过高")) {
+      recommendations.push("检查应用日志，定位错误原因");
+      recommendations.push("考虑回滚到稳定版本");
     }
 
-    if (issues.includes('延迟过高')) {
-      recommendations.push('检查数据库查询性能');
-      recommendations.push('检查网络连接');
+    if (issues.includes("延迟过高")) {
+      recommendations.push("检查数据库查询性能");
+      recommendations.push("检查网络连接");
     }
 
-    if (issues.includes('吞吐量过低')) {
-      recommendations.push('检查系统资源使用情况');
-      recommendations.push('考虑增加副本数');
+    if (issues.includes("吞吐量过低")) {
+      recommendations.push("检查系统资源使用情况");
+      recommendations.push("考虑增加副本数");
     }
 
     return recommendations;
@@ -1799,13 +1788,10 @@ echo "应急回滚完成"
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1828,8 +1814,6 @@ echo "应急回滚完成"
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1863,8 +1847,6 @@ echo "应急回滚完成"
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1887,46 +1869,46 @@ echo "应急回滚完成"
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1939,6 +1921,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1948,6 +1931,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1957,6 +1941,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1973,16 +1958,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1992,13 +1978,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2007,6 +1991,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2025,6 +2010,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2040,6 +2026,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2059,28 +2046,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2089,44 +2075,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2140,13 +2124,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2155,18 +2139,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2176,37 +2163,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2215,28 +2205,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2245,21 +2233,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2268,10 +2258,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2297,16 +2284,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2315,25 +2302,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

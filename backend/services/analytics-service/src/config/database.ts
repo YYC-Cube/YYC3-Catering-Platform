@@ -18,7 +18,7 @@ const sequelize = new Sequelize({
   username: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'password',
   dialect: (process.env.DB_DIALECT as any) || 'postgres',
-  logging: process.env.DB_LOGGING === 'true' ? (msg) => logger.debug(msg) : false,
+  logging: process.env.DB_LOGGING === 'true' ? msg => logger.debug(msg) : false,
   models: [__dirname + '/../models/**/*.ts'],
   pool: {
     max: 10,

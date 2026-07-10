@@ -312,7 +312,7 @@ export function useTouchGesture(
     onSwipeDown?: () => void;
     onTap?: () => void;
     onLongPress?: () => void;
-  }
+  },
 ) {
   const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
   const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -497,7 +497,8 @@ export class PlatformAdapter {
 
   copyToClipboard(text: string): Promise<boolean> {
     if (navigator.clipboard) {
-      return navigator.clipboard.writeText(text)
+      return navigator.clipboard
+        .writeText(text)
         .then(() => true)
         .catch(() => false);
     }
@@ -557,7 +558,7 @@ export function usePlatformAdapter(): PlatformAdapter {
  */
 export function createResponsiveStyles<T extends Record<string, any>>(
   baseStyles: T,
-  responsiveStyles: Partial<Record<Breakpoint, Partial<T>>>
+  responsiveStyles: Partial<Record<Breakpoint, Partial<T>>>,
 ): (breakpoint: Breakpoint) => T {
   return (breakpoint: Breakpoint): T => {
     const breakpoints: Breakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];

@@ -67,7 +67,7 @@ export class CommunicationService {
     this.logger = new Logger('CommunicationService', {
       level: LogLevel.INFO,
       enableConsole: true,
-      enableFile: false
+      enableFile: false,
     });
     this.config = {
       timeout: 5000,
@@ -75,21 +75,21 @@ export class CommunicationService {
       retryDelay: 1000,
       circuitBreakerThreshold: 5,
       circuitBreakerTimeout: 30000,
-      ...config
+      ...config,
     };
 
     this.serviceConfigs = new Map();
     this.circuitBreakerStates = new Map();
     this.failureCounts = new Map();
     this.enableEventBus = config.enableEventBus || false;
-    
+
     // 初始化事件总线
     if (this.enableEventBus) {
       this.eventBus = getEventBus({
-        logLevel: this.config.logLevel || LogLevel.INFO
+        logLevel: this.config.logLevel || LogLevel.INFO,
       });
     }
-    
+
     this.logger.info('CommunicationService initialized successfully', this.config);
 
     // 创建axios实例
@@ -97,32 +97,32 @@ export class CommunicationService {
       timeout: this.config.timeout,
       headers: {
         'Content-Type': 'application/json',
-        'X-Service-Name': process.env['SERVICE_NAME'] || 'unknown'
-      }
+        'X-Service-Name': process.env['SERVICE_NAME'] || 'unknown',
+      },
     });
 
     // 添加请求拦截器
     this.axiosInstance.interceptors.request.use(
-      (config) => {
+      config => {
         this.logger.debug(`发送请求: ${config.method?.toUpperCase()} ${config.url}`);
         return config;
       },
-      (error) => {
+      error => {
         this.logger.error(`请求错误: ${error.message}`);
         return Promise.reject(error);
-      }
+      },
     );
 
     // 添加响应拦截器
     this.axiosInstance.interceptors.response.use(
-      (response) => {
+      response => {
         this.logger.debug(`收到响应: ${response.status} ${response.config.url}`);
         return response;
       },
-      (error) => {
+      error => {
         this.logger.error(`响应错误: ${error.message} ${error.config?.url}`);
         return Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -178,7 +178,7 @@ export class CommunicationService {
    */
   private async sendRequest<T = any>(config: ServiceRequestConfig): Promise<ServiceResponse<T>> {
     const { serviceName, endpoint, requiresAuth = true, ...axiosConfig } = config;
-    
+
     // 检查服务配置是否存在
     const baseUrl = this.serviceConfigs.get(serviceName);
     if (!baseUrl) {
@@ -189,7 +189,7 @@ export class CommunicationService {
 
     // 构建完整URL
     const url = `${baseUrl}${endpoint}`;
-    
+
     // 检查断路器状态
     const circuitKey = `${serviceName}${endpoint}`;
     if (this.isCircuitOpen(circuitKey)) {
@@ -202,51 +202,59 @@ export class CommunicationService {
     if (requiresAuth) {
       axiosConfig.headers = {
         ...axiosConfig.headers,
-        'Authorization': this.generateServiceAuthToken()
+        Authorization: this.generateServiceAuthToken(),
       };
     }
 
     let lastError: Error = new Error('请求失败');
-    
+
     // 实现重试机制
     for (let i = 0; i < this.config.retryCount; i++) {
       try {
         const response = await this.axiosInstance.request<T>({
           ...axiosConfig,
           url,
-          data: axiosConfig.data
+          data: axiosConfig.data,
         });
 
         // 重置失败计数和断路器状态
         this.resetFailureCount(circuitKey);
-        
+
         this.logger.info(`Request successful`, { method: axiosConfig.method, url, status: response.status });
-        
+
         // 发布请求成功事件
         if (this.enableEventBus && this.eventBus) {
-          this.eventBus.publish('communication.request.success', {
-            method: axiosConfig.method,
-            url,
-            status: response.status,
-            serviceName: config.serviceName,
-            endpoint: config.endpoint,
-            requestId: this.generateRequestId()
-          }, process.env['SERVICE_NAME'] || 'unknown');
+          this.eventBus.publish(
+            'communication.request.success',
+            {
+              method: axiosConfig.method,
+              url,
+              status: response.status,
+              serviceName: config.serviceName,
+              endpoint: config.endpoint,
+              requestId: this.generateRequestId(),
+            },
+            process.env['SERVICE_NAME'] || 'unknown',
+          );
         }
-        
+
         return {
           data: response.data,
           status: response.status,
           statusText: response.statusText,
-          headers: response.headers
+          headers: response.headers,
         };
       } catch (error: any) {
         lastError = error;
-        this.logger.warn(`请求失败 (尝试 ${i + 1}/${this.config.retryCount}): ${error.message}`, { method: axiosConfig.method, url, attempt: i + 1 });
-        
+        this.logger.warn(`请求失败 (尝试 ${i + 1}/${this.config.retryCount}): ${error.message}`, {
+          method: axiosConfig.method,
+          url,
+          attempt: i + 1,
+        });
+
         // 更新失败计数和断路器状态
         this.incrementFailureCount(circuitKey);
-        
+
         // 如果不是最后一次尝试，等待后重试
         if (i < this.config.retryCount - 1) {
           const delay = this.config.retryDelay * Math.pow(2, i);
@@ -256,21 +264,29 @@ export class CommunicationService {
       }
     }
 
-    this.logger.error(`Request failed after ${this.config.retryCount} retries`, { method: axiosConfig.method, url, error: lastError.message });
-    
+    this.logger.error(`Request failed after ${this.config.retryCount} retries`, {
+      method: axiosConfig.method,
+      url,
+      error: lastError.message,
+    });
+
     // 发布请求失败事件
     if (this.enableEventBus && this.eventBus) {
-      this.eventBus.publish('communication.request.failed', {
-        method: axiosConfig.method,
-        url,
-        error: lastError.message,
-        serviceName: config.serviceName,
-        endpoint: config.endpoint,
-        retryCount: this.config.retryCount,
-        requestId: this.generateRequestId()
-      }, process.env['SERVICE_NAME'] || 'unknown');
+      this.eventBus.publish(
+        'communication.request.failed',
+        {
+          method: axiosConfig.method,
+          url,
+          error: lastError.message,
+          serviceName: config.serviceName,
+          endpoint: config.endpoint,
+          retryCount: this.config.retryCount,
+          requestId: this.generateRequestId(),
+        },
+        process.env['SERVICE_NAME'] || 'unknown',
+      );
     }
-    
+
     throw lastError;
   }
 
@@ -313,13 +329,16 @@ export class CommunicationService {
   private incrementFailureCount(key: string): void {
     const count = (this.failureCounts.get(key) || 0) + 1;
     this.failureCounts.set(key, count);
-    
+
     this.logger.debug(`Circuit breaker failures for ${key}: ${count}/${this.config.circuitBreakerThreshold}`);
-    
+
     // 如果失败次数超过阈值，打开断路器
     if (count >= this.config.circuitBreakerThreshold) {
       this.circuitBreakerStates.set(key, { isOpen: true, lastFailure: Date.now() });
-      this.logger.warn(`Circuit breaker opened for ${key}`, { failures: count, threshold: this.config.circuitBreakerThreshold });
+      this.logger.warn(`Circuit breaker opened for ${key}`, {
+        failures: count,
+        threshold: this.config.circuitBreakerThreshold,
+      });
     }
   }
 

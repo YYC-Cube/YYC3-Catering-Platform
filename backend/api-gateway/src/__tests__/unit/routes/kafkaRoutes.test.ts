@@ -98,9 +98,7 @@ describe('Kafka Routes Unit Tests', () => {
     });
 
     it('应该处理获取主题列表失败', async () => {
-      vi.mocked(kafkaService.listTopics).mockRejectedValue(
-        new Error('Failed to list topics')
-      );
+      vi.mocked(kafkaService.listTopics).mockRejectedValue(new Error('Failed to list topics'));
 
       const response = await request(app).get('/api/kafka/topics');
 
@@ -136,9 +134,7 @@ describe('Kafka Routes Unit Tests', () => {
     it('应该处理获取主题元数据失败', async () => {
       const topicName = 'non-existent-topic';
 
-      vi.mocked(kafkaService.getTopicMetadata).mockRejectedValue(
-        new Error('Topic not found')
-      );
+      vi.mocked(kafkaService.getTopicMetadata).mockRejectedValue(new Error('Topic not found'));
 
       const response = await request(app).get(`/api/kafka/topics/${topicName}/metadata`);
 
@@ -160,9 +156,7 @@ describe('Kafka Routes Unit Tests', () => {
 
       vi.mocked(kafkaService.createTopic).mockResolvedValue(undefined);
 
-      const response = await request(app)
-        .post('/api/kafka/topics')
-        .send(topicData);
+      const response = await request(app).post('/api/kafka/topics').send(topicData);
 
       expect(response.status).toBe(201);
       expect(response.body).toEqual({
@@ -173,7 +167,7 @@ describe('Kafka Routes Unit Tests', () => {
       expect(kafkaService.createTopic).toHaveBeenCalledWith(
         topicData.topic,
         topicData.partitions,
-        topicData.replicationFactor
+        topicData.replicationFactor,
       );
     });
 
@@ -182,9 +176,7 @@ describe('Kafka Routes Unit Tests', () => {
         // 缺少topic
       };
 
-      const response = await request(app)
-        .post('/api/kafka/topics')
-        .send(invalidData);
+      const response = await request(app).post('/api/kafka/topics').send(invalidData);
 
       expect(response.status).toBe(400);
       expect(response.body).toEqual({
@@ -200,13 +192,9 @@ describe('Kafka Routes Unit Tests', () => {
         replicationFactor: 2,
       };
 
-      vi.mocked(kafkaService.createTopic).mockRejectedValue(
-        new Error('Failed to create topic')
-      );
+      vi.mocked(kafkaService.createTopic).mockRejectedValue(new Error('Failed to create topic'));
 
-      const response = await request(app)
-        .post('/api/kafka/topics')
-        .send(topicData);
+      const response = await request(app).post('/api/kafka/topics').send(topicData);
 
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
@@ -236,9 +224,7 @@ describe('Kafka Routes Unit Tests', () => {
     it('应该处理主题删除失败', async () => {
       const topicName = 'non-existent-topic';
 
-      vi.mocked(kafkaService.deleteTopic).mockRejectedValue(
-        new Error('Failed to delete topic')
-      );
+      vi.mocked(kafkaService.deleteTopic).mockRejectedValue(new Error('Failed to delete topic'));
 
       const response = await request(app).delete(`/api/kafka/topics/${topicName}`);
 
@@ -263,9 +249,7 @@ describe('Kafka Routes Unit Tests', () => {
         offset: 100,
       });
 
-      const response = await request(app)
-        .post('/api/kafka/messages/send')
-        .send(messageData);
+      const response = await request(app).post('/api/kafka/messages/send').send(messageData);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -282,9 +266,7 @@ describe('Kafka Routes Unit Tests', () => {
         // 缺少message
       };
 
-      const response = await request(app)
-        .post('/api/kafka/messages/send')
-        .send(invalidData);
+      const response = await request(app).post('/api/kafka/messages/send').send(invalidData);
 
       expect(response.status).toBe(400);
       expect(response.body).toEqual({
@@ -301,9 +283,7 @@ describe('Kafka Routes Unit Tests', () => {
 
       vi.mocked(kafkaService.sendMessage).mockResolvedValue(false);
 
-      const response = await request(app)
-        .post('/api/kafka/messages/send')
-        .send(messageData);
+      const response = await request(app).post('/api/kafka/messages/send').send(messageData);
 
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
@@ -324,9 +304,7 @@ describe('Kafka Routes Unit Tests', () => {
 
       vi.mocked(kafkaService.sendBatchMessages).mockResolvedValue(true);
 
-      const response = await request(app)
-        .post('/api/kafka/messages/batch')
-        .send(batchData);
+      const response = await request(app).post('/api/kafka/messages/batch').send(batchData);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -342,9 +320,7 @@ describe('Kafka Routes Unit Tests', () => {
         // 缺少messages数组
       };
 
-      const response = await request(app)
-        .post('/api/kafka/messages/batch')
-        .send(invalidData);
+      const response = await request(app).post('/api/kafka/messages/batch').send(invalidData);
 
       expect(response.status).toBe(400);
       expect(response.body).toEqual({
@@ -363,9 +339,7 @@ describe('Kafka Routes Unit Tests', () => {
 
       vi.mocked(kafkaService.subscribe).mockResolvedValue('consumer-123');
 
-      const response = await request(app)
-        .post('/api/kafka/subscribe')
-        .send(subscribeData);
+      const response = await request(app).post('/api/kafka/subscribe').send(subscribeData);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -373,10 +347,7 @@ describe('Kafka Routes Unit Tests', () => {
         message: '订阅成功',
         data: { consumerId: 'consumer-123', topics: ['test-topic'], groupId: 'test-group' },
       });
-      expect(kafkaService.subscribe).toHaveBeenCalledWith(
-        subscribeData,
-        expect.any(Function)
-      );
+      expect(kafkaService.subscribe).toHaveBeenCalledWith(subscribeData, expect.any(Function));
     });
 
     it('应该验证订阅参数', async () => {
@@ -384,9 +355,7 @@ describe('Kafka Routes Unit Tests', () => {
         // 缺少topics和groupId
       };
 
-      const response = await request(app)
-        .post('/api/kafka/subscribe')
-        .send(invalidData);
+      const response = await request(app).post('/api/kafka/subscribe').send(invalidData);
 
       expect(response.status).toBe(400);
       expect(response.body).toEqual({
@@ -402,8 +371,7 @@ describe('Kafka Routes Unit Tests', () => {
 
       vi.mocked(kafkaService.unsubscribe).mockResolvedValue(undefined);
 
-      const response = await request(app)
-        .delete(`/api/kafka/subscribe/${consumerId}`);
+      const response = await request(app).delete(`/api/kafka/subscribe/${consumerId}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -419,8 +387,7 @@ describe('Kafka Routes Unit Tests', () => {
 
       vi.mocked(kafkaService.unsubscribe).mockRejectedValue(new Error('Consumer not found'));
 
-      const response = await request(app)
-        .delete(`/api/kafka/subscribe/${consumerId}`);
+      const response = await request(app).delete(`/api/kafka/subscribe/${consumerId}`);
 
       expect(response.status).toBe(500);
       expect(response.body).toEqual({

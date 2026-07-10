@@ -12,88 +12,75 @@
 ### 基础用法
 
 ```tsx
-import { Checkbox } from '@/components/UI'
-import { ref } from 'vue'
+import { Checkbox } from "@/components/UI";
+import { ref } from "vue";
 
 export default function CheckboxBasic() {
-  const checked = ref(false)
+  const checked = ref(false);
 
-  return (
-    <Checkbox v-model={checked.value}>
-      同意协议
-    </Checkbox>
-  )
+  return <Checkbox v-model={checked.value}>同意协议</Checkbox>;
 }
 ```
 
 ### 禁用状态
 
 ```tsx
-import { Checkbox } from '@/components/UI'
+import { Checkbox } from "@/components/UI";
 
 export default function CheckboxDisabled() {
   return (
     <div class="space-y-2">
       <Checkbox disabled>禁用</Checkbox>
-      <Checkbox disabled checked>禁用选中</Checkbox>
+      <Checkbox disabled checked>
+        禁用选中
+      </Checkbox>
     </div>
-  )
+  );
 }
 ```
 
 ### 复选框组
 
 ```tsx
-import { Checkbox, CheckboxGroup } from '@/components/UI'
-import { ref } from 'vue'
+import { Checkbox, CheckboxGroup } from "@/components/UI";
+import { ref } from "vue";
 
 export default function CheckboxGroup() {
-  const value = ref(['option1', 'option2'])
+  const value = ref(["option1", "option2"]);
 
   const options = [
-    { label: '选项一', value: 'option1' },
-    { label: '选项二', value: 'option2' },
-    { label: '选项三', value: 'option3' },
-  ]
+    { label: "选项一", value: "option1" },
+    { label: "选项二", value: "option2" },
+    { label: "选项三", value: "option3" },
+  ];
 
-  return (
-    <CheckboxGroup v-model={value.value} options={options} />
-  )
+  return <CheckboxGroup v-model={value.value} options={options} />;
 }
 ```
 
 ### 垂直排列
 
 ```tsx
-import { Checkbox, CheckboxGroup } from '@/components/UI'
+import { Checkbox, CheckboxGroup } from "@/components/UI";
 
 export default function CheckboxVertical() {
   const options = [
-    { label: '选项一', value: 'option1' },
-    { label: '选项二', value: 'option2' },
-    { label: '选项三', value: 'option3' },
-  ]
+    { label: "选项一", value: "option1" },
+    { label: "选项二", value: "option2" },
+    { label: "选项三", value: "option3" },
+  ];
 
-  return (
-    <CheckboxGroup
-      direction="vertical"
-      options={options}
-    />
-  )
+  return <CheckboxGroup direction="vertical" options={options} />;
 }
 ```
 
 ### 半选状态
 
 ```tsx
-import { Checkbox } from '@/components/UI'
+import { Checkbox } from "@/components/UI";
 
 export default function CheckboxIndeterminate() {
-  return (
-    <Checkbox indeterminate>
-      半选状态
-    </Checkbox>
-  )
+  return <Checkbox indeterminate>半选状态</Checkbox>;
 }
 ```
 
@@ -101,36 +88,36 @@ export default function CheckboxIndeterminate() {
 
 ### Checkbox Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| modelValue | 绑定值 | `boolean` | `false` |
-| label | 文本 | `string` | - |
-| disabled | 是否禁用 | `boolean` | `false` |
-| readonly | 是否只读 | `boolean` | `false` |
-| indeterminate | 是否半选 | `boolean` | `false` |
-| size | 尺寸 | `string` | `sm` / `md` / `lg` | `md` |
-| error | 是否错误 | `boolean` | `false` |
-| onChange | 变化回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数          | 说明       | 类型       | 默认值             |
+| ------------- | ---------- | ---------- | ------------------ | ---- |
+| modelValue    | 绑定值     | `boolean`  | `false`            |
+| label         | 文本       | `string`   | -                  |
+| disabled      | 是否禁用   | `boolean`  | `false`            |
+| readonly      | 是否只读   | `boolean`  | `false`            |
+| indeterminate | 是否半选   | `boolean`  | `false`            |
+| size          | 尺寸       | `string`   | `sm` / `md` / `lg` | `md` |
+| error         | 是否错误   | `boolean`  | `false`            |
+| onChange      | 变化回调   | `Function` | -                  |
+| className     | 自定义类名 | `string`   | -                  |
 
 ### CheckboxGroup Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| modelValue | 绑定值 | `string[]` | - |
-| options | 选项数据 | `Option[]` | - |
-| disabled | 是否禁用 | `boolean` | `false` |
-| direction | 排列方向 | `string` | `horizontal` / `vertical` | `horizontal` |
-| onChange | 变化回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数       | 说明       | 类型       | 默认值                    |
+| ---------- | ---------- | ---------- | ------------------------- | ------------ |
+| modelValue | 绑定值     | `string[]` | -                         |
+| options    | 选项数据   | `Option[]` | -                         |
+| disabled   | 是否禁用   | `boolean`  | `false`                   |
+| direction  | 排列方向   | `string`   | `horizontal` / `vertical` | `horizontal` |
+| onChange   | 变化回调   | `Function` | -                         |
+| className  | 自定义类名 | `string`   | -                         |
 
 ### Option 类型定义
 
 ```typescript
 interface Option {
-  label: string
-  value: string | number
-  disabled?: boolean
+  label: string;
+  value: string | number;
+  disabled?: boolean;
 }
 ```
 
@@ -168,16 +155,16 @@ interface Option {
 
 ```tsx
 const allChecked = computed(() => {
-  return value.value.length === options.length
-})
+  return value.value.length === options.length;
+});
 
 const indeterminate = computed(() => {
-  return value.value.length > 0 && value.value.length < options.length
-})
+  return value.value.length > 0 && value.value.length < options.length;
+});
 
 const handleCheckAll = (checked: boolean) => {
-  value.value = checked ? options.map(o => o.value) : []
-}
+  value.value = checked ? options.map(o => o.value) : [];
+};
 ```
 
 ### 2. 限制选择数量
@@ -185,11 +172,11 @@ const handleCheckAll = (checked: boolean) => {
 ```tsx
 const handleChange = (checked: boolean, value: string) => {
   if (checked && selectedValues.value.length >= maxCount) {
-    message.warning(`最多选择${maxCount}项`)
-    return
+    message.warning(`最多选择${maxCount}项`);
+    return;
   }
   // 处理选择逻辑
-}
+};
 ```
 
 ### 3. 联动选择
@@ -197,11 +184,11 @@ const handleChange = (checked: boolean, value: string) => {
 ```tsx
 const handleParentChange = (checked: boolean) => {
   if (checked) {
-    value.value = [...parentValue, ...childrenValues]
+    value.value = [...parentValue, ...childrenValues];
   } else {
-    value.value = value.value.filter(v => !childrenValues.includes(v))
+    value.value = value.value.filter(v => !childrenValues.includes(v));
   }
-}
+};
 ```
 
 ## 常见问题

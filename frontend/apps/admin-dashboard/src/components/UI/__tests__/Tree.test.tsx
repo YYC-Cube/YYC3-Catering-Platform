@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { Tree } from '@/components/UI/Tree'
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+import { Tree } from '@/components/UI/Tree';
 
 describe('Tree组件', () => {
   const treeData = [
@@ -21,7 +21,7 @@ describe('Tree组件', () => {
       children: [
         { id: '1-1', title: '子节点一' },
         { id: '1-2', title: '子节点二' },
-      ]
+      ],
     },
     {
       id: '2',
@@ -29,82 +29,82 @@ describe('Tree组件', () => {
       children: [
         { id: '2-1', title: '子节点三' },
         { id: '2-2', title: '子节点四' },
-      ]
+      ],
     },
     {
       id: '3',
       title: '节点三',
     },
-  ]
+  ];
 
   it('应该正确渲染默认树', () => {
     const wrapper = mount(Tree, {
       props: {
-        treeData: treeData
-      }
-    })
+        treeData: treeData,
+      },
+    });
 
-    expect(wrapper.text()).toContain('节点一')
-    expect(wrapper.text()).toContain('节点二')
-    expect(wrapper.text()).toContain('节点三')
-  })
+    expect(wrapper.text()).toContain('节点一');
+    expect(wrapper.text()).toContain('节点二');
+    expect(wrapper.text()).toContain('节点三');
+  });
 
   it('应该正确渲染展开状态', () => {
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
-        expandedKeys: ['1', '2']
-      }
-    })
+        expandedKeys: ['1', '2'],
+      },
+    });
 
-    expect(wrapper.text()).toContain('子节点一')
-    expect(wrapper.text()).toContain('子节点二')
-  })
+    expect(wrapper.text()).toContain('子节点一');
+    expect(wrapper.text()).toContain('子节点二');
+  });
 
   it('应该正确渲染选中状态', () => {
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
-        selectedKeys: ['1']
-      }
-    })
+        selectedKeys: ['1'],
+      },
+    });
 
-    expect(wrapper.html()).toContain('bg-primary-50')
-  })
+    expect(wrapper.html()).toContain('bg-primary-50');
+  });
 
   it('应该正确渲染勾选状态', () => {
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
         checkable: true,
-        checkedKeys: ['1']
-      }
-    })
+        checkedKeys: ['1'],
+      },
+    });
 
-    expect(wrapper.findAll('button').length).toBeGreaterThan(0)
-  })
+    expect(wrapper.findAll('button').length).toBeGreaterThan(0);
+  });
 
   it('应该正确渲染禁用状态', () => {
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
-        disabled: true
-      }
-    })
+        disabled: true,
+      },
+    });
 
-    expect(wrapper.classes()).toContain('w-full')
-  })
+    expect(wrapper.classes()).toContain('w-full');
+  });
 
   it('应该正确渲染可拖拽', () => {
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
-        draggable: true
-      }
-    })
+        draggable: true,
+      },
+    });
 
-    expect(wrapper.classes()).toContain('w-full')
-  })
+    expect(wrapper.classes()).toContain('w-full');
+  });
 
   it('应该正确渲染显示图标', () => {
     const wrapper = mount(Tree, {
@@ -113,78 +113,78 @@ describe('Tree组件', () => {
           {
             id: '1',
             title: '节点一',
-            icon: () => '📁'
-          }
+            icon: () => '📁',
+          },
         ],
-        showIcon: true
-      }
-    })
+        showIcon: true,
+      },
+    });
 
-    expect(wrapper.text()).toContain('📁')
-  })
+    expect(wrapper.text()).toContain('📁');
+  });
 
   it('应该正确渲染显示连线', () => {
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
-        showLine: true
-      }
-    })
+        showLine: true,
+      },
+    });
 
-    expect(wrapper.classes()).toContain('tree-show-line')
-  })
+    expect(wrapper.classes()).toContain('tree-show-line');
+  });
 
   it('应该正确触发select事件', async () => {
-    const onSelect = vi.fn()
+    const onSelect = vi.fn();
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
-        onSelect
-      }
-    })
+        onSelect,
+      },
+    });
 
-    const node = wrapper.find('.tree-node > div')
-    await node.trigger('click')
-    expect(onSelect).toHaveBeenCalled()
-  })
+    const node = wrapper.find('.tree-node > div');
+    await node.trigger('click');
+    expect(onSelect).toHaveBeenCalled();
+  });
 
   it('应该正确触发check事件', async () => {
-    const onCheck = vi.fn()
+    const onCheck = vi.fn();
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
         checkable: true,
-        onCheck
-      }
-    })
+        onCheck,
+      },
+    });
 
-    const checkButton = wrapper.findAll('button')[1]
-    await checkButton.trigger('click')
-    expect(onCheck).toHaveBeenCalled()
-  })
+    const checkButton = wrapper.findAll('button')[1];
+    await checkButton.trigger('click');
+    expect(onCheck).toHaveBeenCalled();
+  });
 
   it('应该正确触发expand事件', async () => {
-    const onExpand = vi.fn()
+    const onExpand = vi.fn();
     const wrapper = mount(Tree, {
       props: {
         treeData: treeData,
-        onExpand
-      }
-    })
+        onExpand,
+      },
+    });
 
-    const expandButton = wrapper.find('button')
-    await expandButton.trigger('click')
-    expect(onExpand).toHaveBeenCalled()
-  })
+    const expandButton = wrapper.find('button');
+    await expandButton.trigger('click');
+    expect(onExpand).toHaveBeenCalled();
+  });
 
   it('应该正确应用自定义类名', () => {
     const wrapper = mount(Tree, {
       props: {
         className: 'custom-tree',
-        treeData: treeData
-      }
-    })
+        treeData: treeData,
+      },
+    });
 
-    expect(wrapper.classes()).toContain('custom-tree')
-  })
-})
+    expect(wrapper.classes()).toContain('custom-tree');
+  });
+});

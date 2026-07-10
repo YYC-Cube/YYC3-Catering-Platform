@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { Circle } from 'lucide-vue-next'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { Circle } from 'lucide-vue-next';
 
 export const Radio = defineComponent({
   name: 'Radio',
@@ -40,46 +40,43 @@ export const Radio = defineComponent({
   emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
     const isChecked = computed(() => {
-      return props.modelValue === props.value
-    })
+      return props.modelValue === props.value;
+    });
 
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'w-4 h-4'
+          return 'w-4 h-4';
         case 'lg':
-          return 'w-6 h-6'
+          return 'w-6 h-6';
         default:
-          return 'w-5 h-5'
+          return 'w-5 h-5';
       }
-    })
+    });
 
     const innerSize = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'w-2 h-2'
+          return 'w-2 h-2';
         case 'lg':
-          return 'w-3 h-3'
+          return 'w-3 h-3';
         default:
-          return 'w-2.5 h-2.5'
+          return 'w-2.5 h-2.5';
       }
-    })
+    });
 
     const handleChange = (event: Event) => {
       if (props.disabled) {
-        return
+        return;
       }
 
-      emit('update:modelValue', props.value)
-      emit('change', props.value)
-    }
+      emit('update:modelValue', props.value);
+      emit('change', props.value);
+    };
 
     return () => (
       <label
-        class={cn(
-          'inline-flex items-center gap-2 cursor-pointer',
-          props.disabled && 'opacity-50 cursor-not-allowed'
-        )}
+        class={cn('inline-flex items-center gap-2 cursor-pointer', props.disabled && 'opacity-50 cursor-not-allowed')}
       >
         <div class="relative">
           <input
@@ -92,7 +89,7 @@ export const Radio = defineComponent({
               isChecked.value && 'border-primary-600',
               !isChecked.value && 'hover:border-primary-400',
               props.disabled && 'opacity-50 cursor-not-allowed',
-              'focus:ring-primary-500/50'
+              'focus:ring-primary-500/50',
             )}
             onChange={handleChange}
           />
@@ -102,15 +99,11 @@ export const Radio = defineComponent({
             </div>
           )}
         </div>
-        {props.label && (
-          <span class={cn('text-sm', props.disabled && 'text-neutral-400')}>
-            {props.label}
-          </span>
-        )}
+        {props.label && <span class={cn('text-sm', props.disabled && 'text-neutral-400')}>{props.label}</span>}
       </label>
-    )
+    );
   },
-})
+});
 
 export const RadioGroup = defineComponent({
   name: 'RadioGroup',
@@ -141,17 +134,12 @@ export const RadioGroup = defineComponent({
   emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
     const handleChange = (value: string | number | boolean) => {
-      emit('update:modelValue', value)
-      emit('change', value)
-    }
+      emit('update:modelValue', value);
+      emit('change', value);
+    };
 
     return () => (
-      <div
-        class={cn(
-          'flex gap-4',
-          props.direction === 'vertical' ? 'flex-col' : 'flex-row flex-wrap'
-        )}
-      >
+      <div class={cn('flex gap-4', props.direction === 'vertical' ? 'flex-col' : 'flex-row flex-wrap')}>
         {props.options.map(option => (
           <Radio
             key={String(option.value)}
@@ -164,6 +152,6 @@ export const RadioGroup = defineComponent({
           />
         ))}
       </div>
-    )
+    );
   },
-})
+});

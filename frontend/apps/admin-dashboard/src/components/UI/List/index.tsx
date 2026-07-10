@@ -8,23 +8,23 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { ChevronRight, MoreVertical } from 'lucide-vue-next'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { ChevronRight, MoreVertical } from 'lucide-vue-next';
 
 export interface ListItem {
-  id: string | number
-  title: string
-  description?: string
-  avatar?: string
-  icon?: any
-  extra?: any
-  disabled?: boolean
+  id: string | number;
+  title: string;
+  description?: string;
+  avatar?: string;
+  icon?: any;
+  extra?: any;
+  disabled?: boolean;
   actions?: Array<{
-    label: string
-    icon?: any
-    onClick: () => void
-  }>
+    label: string;
+    icon?: any;
+    onClick: () => void;
+  }>;
 }
 
 export const List = defineComponent({
@@ -61,63 +61,64 @@ export const List = defineComponent({
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'text-sm'
+          return 'text-sm';
         case 'lg':
-          return 'text-lg'
+          return 'text-lg';
         default:
-          return 'text-base'
+          return 'text-base';
       }
-    })
+    });
 
     const paddingClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'px-3 py-2'
+          return 'px-3 py-2';
         case 'lg':
-          return 'px-6 py-4'
+          return 'px-6 py-4';
         default:
-          return 'px-4 py-3'
+          return 'px-4 py-3';
       }
-    })
+    });
 
     const avatarSize = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'w-8 h-8'
+          return 'w-8 h-8';
         case 'lg':
-          return 'w-12 h-12'
+          return 'w-12 h-12';
         default:
-          return 'w-10 h-10'
+          return 'w-10 h-10';
       }
-    })
+    });
 
     const handleClick = (item: ListItem, index: number) => {
       if (item.disabled) {
-        return
+        return;
       }
-      emit('item-click', item, index)
-      emit('click', item, index)
-    }
+      emit('item-click', item, index);
+      emit('click', item, index);
+    };
 
     return () => (
-      <div
-        class={cn(
-          'w-full',
-          props.bordered && 'border border-neutral-200 rounded-lg',
-          sizeClasses.value
-        )}
-      >
+      <div class={cn('w-full', props.bordered && 'border border-neutral-200 rounded-lg', sizeClasses.value)}>
         {props.loading ? (
           <div class="flex items-center justify-center py-8">
-            <svg class="animate-spin h-6 w-6 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg
+              class="animate-spin h-6 w-6 text-primary-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
             </svg>
           </div>
         ) : props.items.length === 0 ? (
-          <div class="flex items-center justify-center py-8 text-neutral-500">
-            {props.emptyText}
-          </div>
+          <div class="flex items-center justify-center py-8 text-neutral-500">{props.emptyText}</div>
         ) : (
           <div class="divide-y divide-neutral-100">
             {props.items.map((item, index) => (
@@ -130,7 +131,7 @@ export const List = defineComponent({
                   paddingClasses.value,
                   !props.split && index === props.items.length - 1 && 'border-b-0',
                   props.split && 'border-b border-neutral-100',
-                  index === props.items.length - 1 && 'border-b-0'
+                  index === props.items.length - 1 && 'border-b-0',
                 )}
                 onClick={() => handleClick(item, index)}
               >
@@ -140,21 +141,20 @@ export const List = defineComponent({
                   </div>
                 )}
                 {item.icon && (
-                  <div class={cn('flex items-center justify-center rounded-lg bg-primary-100 text-primary-600 flex-shrink-0', avatarSize.value)}>
+                  <div
+                    class={cn(
+                      'flex items-center justify-center rounded-lg bg-primary-100 text-primary-600 flex-shrink-0',
+                      avatarSize.value,
+                    )}
+                  >
                     <item.icon size={props.size === 'sm' ? 16 : props.size === 'lg' ? 24 : 20} />
                   </div>
                 )}
                 <div class="flex-1 min-w-0">
                   <div class="font-medium text-neutral-900 truncate">{item.title}</div>
-                  {item.description && (
-                    <div class="text-sm text-neutral-600 truncate mt-0.5">{item.description}</div>
-                  )}
+                  {item.description && <div class="text-sm text-neutral-600 truncate mt-0.5">{item.description}</div>}
                 </div>
-                {item.extra && (
-                  <div class="flex-shrink-0">
-                    {item.extra}
-                  </div>
-                )}
+                {item.extra && <div class="flex-shrink-0">{item.extra}</div>}
                 {item.actions && item.actions.length > 0 && (
                   <div class="flex-shrink-0">
                     <button
@@ -166,17 +166,15 @@ export const List = defineComponent({
                     </button>
                   </div>
                 )}
-                {!item.disabled && (
-                  <ChevronRight size={16} class="text-neutral-400 flex-shrink-0" />
-                )}
+                {!item.disabled && <ChevronRight size={16} class="text-neutral-400 flex-shrink-0" />}
               </div>
             ))}
           </div>
         )}
       </div>
-    )
+    );
   },
-})
+});
 
 export const ListItem = defineComponent({
   name: 'ListItem',
@@ -206,11 +204,13 @@ export const ListItem = defineComponent({
       default: false,
     },
     actions: {
-      type: Array as PropType<Array<{
-        label: string
-        icon?: any
-        onClick: () => void
-      }>>,
+      type: Array as PropType<
+        Array<{
+          label: string;
+          icon?: any;
+          onClick: () => void;
+        }>
+      >,
       default: () => [],
     },
   },
@@ -219,41 +219,41 @@ export const ListItem = defineComponent({
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'text-sm'
+          return 'text-sm';
         case 'lg':
-          return 'text-lg'
+          return 'text-lg';
         default:
-          return 'text-base'
+          return 'text-base';
       }
-    })
+    });
 
     const paddingClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'px-3 py-2'
+          return 'px-3 py-2';
         case 'lg':
-          return 'px-6 py-4'
+          return 'px-6 py-4';
         default:
-          return 'px-4 py-3'
+          return 'px-4 py-3';
       }
-    })
+    });
 
     const avatarSize = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'w-8 h-8'
+          return 'w-8 h-8';
         case 'lg':
-          return 'w-12 h-12'
+          return 'w-12 h-12';
         default:
-          return 'w-10 h-10'
+          return 'w-10 h-10';
       }
-    })
+    });
 
     const handleClick = () => {
       if (!props.disabled) {
-        emit('click')
+        emit('click');
       }
-    }
+    };
 
     return () => (
       <div
@@ -262,7 +262,7 @@ export const ListItem = defineComponent({
           !props.disabled && 'hover:bg-neutral-50 cursor-pointer',
           props.disabled && 'opacity-50 cursor-not-allowed',
           paddingClasses.value,
-          attrs.class as string
+          attrs.class as string,
         )}
         onClick={handleClick}
       >
@@ -272,21 +272,20 @@ export const ListItem = defineComponent({
           </div>
         )}
         {props.icon && (
-          <div class={cn('flex items-center justify-center rounded-lg bg-primary-100 text-primary-600 flex-shrink-0', avatarSize.value)}>
+          <div
+            class={cn(
+              'flex items-center justify-center rounded-lg bg-primary-100 text-primary-600 flex-shrink-0',
+              avatarSize.value,
+            )}
+          >
             <props.icon size={props.size === 'sm' ? 16 : props.size === 'lg' ? 24 : 20} />
           </div>
         )}
         <div class="flex-1 min-w-0">
           <div class="font-medium text-neutral-900 truncate">{props.title}</div>
-          {props.description && (
-            <div class="text-sm text-neutral-600 truncate mt-0.5">{props.description}</div>
-          )}
+          {props.description && <div class="text-sm text-neutral-600 truncate mt-0.5">{props.description}</div>}
         </div>
-        {props.extra && (
-          <div class="flex-shrink-0">
-            {props.extra}
-          </div>
-        )}
+        {props.extra && <div class="flex-shrink-0">{props.extra}</div>}
         {props.actions && props.actions.length > 0 && (
           <div class="flex-shrink-0">
             <button
@@ -298,10 +297,8 @@ export const ListItem = defineComponent({
             </button>
           </div>
         )}
-        {!props.disabled && (
-          <ChevronRight size={16} class="text-neutral-400 flex-shrink-0" />
-        )}
+        {!props.disabled && <ChevronRight size={16} class="text-neutral-400 flex-shrink-0" />}
       </div>
-    )
+    );
   },
-})
+});

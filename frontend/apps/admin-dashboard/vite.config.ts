@@ -4,18 +4,18 @@
  * @see AGENTS.md / docs/deployment.md (GitHub Pages 部署说明)
  */
 
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
-import { defineConfig, loadEnv } from 'vite'
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
+import { defineConfig, loadEnv } from 'vite';
 
 // GitHub Pages 部署:
 // - 使用自定义域名 cater.yyc3.vip → 从根路径提供, base = '/'
 // - 未使用自定义域名 (https://yyccube.github.io/YYC3-Catering-Platform/) → base = '/YYC3-Catering-Platform/'
 // 通过 VITE_BASE_PATH 环境变量覆盖,默认 '/'
 const resolveBasePath = (mode: string): string => {
-  const env = loadEnv(mode, process.cwd(), 'VITE_')
-  return env.VITE_BASE_PATH || '/'
-}
+  const env = loadEnv(mode, process.cwd(), 'VITE_');
+  return env.VITE_BASE_PATH || '/';
+};
 
 export default defineConfig(({ mode }) => ({
   base: resolveBasePath(mode),
@@ -26,9 +26,9 @@ export default defineConfig(({ mode }) => ({
         compilerOptions: {
           // 开启组件名保持
           // isCustomElement: (tag) => tag.startsWith('el-') // 注释掉这行，Element Plus组件不是自定义元素
-        }
-      }
-    })
+        },
+      },
+    }),
   ],
 
   resolve: {
@@ -40,17 +40,17 @@ export default defineConfig(({ mode }) => ({
       '@utils': resolve(__dirname, 'src/utils'),
       '@api': resolve(__dirname, 'src/api'),
       '@assets': resolve(__dirname, 'src/assets'),
-      '@types': resolve(__dirname, 'src/types')
-    }
+      '@types': resolve(__dirname, 'src/types'),
+    },
   },
 
   css: {
     preprocessorOptions: {
       scss: {
         // 不使用 additionalData;各组件按需 @use/@import 变量文件
-      }
+      },
     },
-    postcss: './postcss.config.js'
+    postcss: './postcss.config.js',
   },
 
   server: {
@@ -59,21 +59,21 @@ export default defineConfig(({ mode }) => ({
     open: true,
     cors: true,
     hmr: {
-      overlay: false // 禁用错误覆盖层
+      overlay: false, // 禁用错误覆盖层
     },
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
-        ws: true
+        ws: true,
       },
       '/ws': {
         target: 'ws://localhost:3000',
         changeOrigin: true,
-        ws: true
-      }
-    }
+        ws: true,
+      },
+    },
   },
 
   build: {
@@ -85,12 +85,12 @@ export default defineConfig(({ mode }) => ({
     terserOptions: {
       compress: {
         drop_console: process.env.NODE_ENV === 'production',
-        drop_debugger: true
-      }
+        drop_debugger: true,
+      },
     },
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html')
+        main: resolve(__dirname, 'index.html'),
       },
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',
@@ -99,12 +99,12 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           'element-plus': ['element-plus'],
           'vue-vendor': ['vue', 'vue-router', 'pinia'],
-          'echarts': ['echarts', 'vue-echarts'],
-          'utils': ['axios', 'dayjs', 'lodash-es']
-        }
-      }
+          echarts: ['echarts', 'vue-echarts'],
+          utils: ['axios', 'dayjs', 'lodash-es'],
+        },
+      },
     },
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
   },
 
   optimizeDeps: {
@@ -118,15 +118,15 @@ export default defineConfig(({ mode }) => ({
       'vue-echarts',
       'axios',
       'dayjs',
-      'lodash-es'
+      'lodash-es',
     ],
-    exclude: ['@iconify/json']
+    exclude: ['@iconify/json'],
   },
 
   define: {
     __VUE_OPTIONS_API__: true,
     __VUE_PROD_DEVTOOLS__: false,
-    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
   },
 
   // NOTE: 此前的 experimental.renderBuiltUrl 将 JS 资源硬编码到 https://cdn.yyc3.com/
@@ -140,8 +140,8 @@ export default defineConfig(({ mode }) => ({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-        secure: false
-      }
-    }
-  }
-}))
+        secure: false,
+      },
+    },
+  },
+}));

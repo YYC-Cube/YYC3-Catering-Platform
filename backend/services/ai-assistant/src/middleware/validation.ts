@@ -45,7 +45,7 @@ export class ValidationMiddleware {
         if (!contentType) {
           return {
             success: false,
-            errors: ['缺少Content-Type头']
+            errors: ['缺少Content-Type头'],
           };
         }
 
@@ -64,7 +64,7 @@ export class ValidationMiddleware {
         if (body === undefined || body === null) {
           return {
             success: false,
-            errors: ['请求体解析失败']
+            errors: ['请求体解析失败'],
           };
         }
 
@@ -72,26 +72,23 @@ export class ValidationMiddleware {
         const result = schema.safeParse(body);
 
         if (!result.success) {
-          const errors = result.error.errors.map((err: any) =>
-            `${err.path.join('.')}: ${err.message}`
-          );
+          const errors = result.error.errors.map((err: any) => `${err.path.join('.')}: ${err.message}`);
 
           return {
             success: false,
-            errors
+            errors,
           };
         }
 
         return {
           success: true,
-          data: result.data
+          data: result.data,
         };
-
       } catch (error) {
         console.error('请求体验证错误:', error);
         return {
           success: false,
-          errors: ['请求体验证过程中发生错误']
+          errors: ['请求体验证过程中发生错误'],
         };
       }
     };
@@ -108,26 +105,23 @@ export class ValidationMiddleware {
         const result = schema.safeParse(query);
 
         if (!result.success) {
-          const errors = result.error.errors.map((err: any) =>
-            `query.${err.path.join('.')}: ${err.message}`
-          );
+          const errors = result.error.errors.map((err: any) => `query.${err.path.join('.')}: ${err.message}`);
 
           return {
             success: false,
-            errors
+            errors,
           };
         }
 
         return {
           success: true,
-          data: result.data
+          data: result.data,
         };
-
       } catch (error) {
         console.error('查询参数验证错误:', error);
         return {
           success: false,
-          errors: ['查询参数验证过程中发生错误']
+          errors: ['查询参数验证过程中发生错误'],
         };
       }
     };
@@ -144,33 +138,30 @@ export class ValidationMiddleware {
         if (!params) {
           return {
             success: false,
-            errors: ['缺少路径参数']
+            errors: ['缺少路径参数'],
           };
         }
 
         const result = schema.safeParse(params);
 
         if (!result.success) {
-          const errors = result.error.errors.map((err: any) =>
-            `params.${err.path.join('.')}: ${err.message}`
-          );
+          const errors = result.error.errors.map((err: any) => `params.${err.path.join('.')}: ${err.message}`);
 
           return {
             success: false,
-            errors
+            errors,
           };
         }
 
         return {
           success: true,
-          data: result.data
+          data: result.data,
         };
-
       } catch (error) {
         console.error('路径参数验证错误:', error);
         return {
           success: false,
-          errors: ['路径参数验证过程中发生错误']
+          errors: ['路径参数验证过程中发生错误'],
         };
       }
     };
@@ -191,26 +182,23 @@ export class ValidationMiddleware {
         const result = schema.safeParse(headers);
 
         if (!result.success) {
-          const errors = result.error.errors.map((err: any) =>
-            `headers.${err.path.join('.')}: ${err.message}`
-          );
+          const errors = result.error.errors.map((err: any) => `headers.${err.path.join('.')}: ${err.message}`);
 
           return {
             success: false,
-            errors
+            errors,
           };
         }
 
         return {
           success: true,
-          data: result.data
+          data: result.data,
         };
-
       } catch (error) {
         console.error('请求头验证错误:', error);
         return {
           success: false,
-          errors: ['请求头验证过程中发生错误']
+          errors: ['请求头验证过程中发生错误'],
         };
       }
     };
@@ -268,20 +256,19 @@ export class ValidationMiddleware {
         if (allErrors.length > 0) {
           return {
             success: false,
-            errors: allErrors
+            errors: allErrors,
           };
         }
 
         return {
           success: true,
-          data: validatedData
+          data: validatedData,
         };
-
       } catch (error) {
         console.error('综合验证错误:', error);
         return {
           success: false,
-          errors: ['请求验证过程中发生错误']
+          errors: ['请求验证过程中发生错误'],
         };
       }
     };
@@ -294,14 +281,14 @@ export class ValidationMiddleware {
     return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
       try {
         const validationResult = await this.validate(schema)(req);
-        
+
         if (!validationResult.success) {
           res.status(400).json({
             success: false,
             error: '请求验证失败',
             code: 'VALIDATION_ERROR',
             errors: validationResult.errors,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
           });
           return;
         }
@@ -314,7 +301,7 @@ export class ValidationMiddleware {
           success: false,
           error: '请求验证失败',
           code: 'VALIDATION_ERROR',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         });
         return;
       }
@@ -329,7 +316,7 @@ export class ValidationMiddleware {
       if (typeof data !== 'object' || data === null) {
         return {
           success: true,
-          data: this.sanitizeString(data)
+          data: this.sanitizeString(data),
         };
       }
 
@@ -337,7 +324,7 @@ export class ValidationMiddleware {
         const sanitizedArray = data.map(item => this.sanitize(item).data);
         return {
           success: true,
-          data: sanitizedArray
+          data: sanitizedArray,
         };
       }
 
@@ -354,14 +341,13 @@ export class ValidationMiddleware {
 
       return {
         success: true,
-        data: sanitizedObject
+        data: sanitizedObject,
       };
-
     } catch (error) {
       console.error('数据清理错误:', error);
       return {
         success: false,
-        error: '数据清理过程中发生错误'
+        error: '数据清理过程中发生错误',
       };
     }
   }
@@ -374,29 +360,34 @@ export class ValidationMiddleware {
       return str;
     }
 
-    return str
-      .trim()
-      // 移除潜在的恶意字符
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
-      .replace(/javascript:/gi, '')
-      .replace(/on\w+\s*=/gi, '')
-      // 防止SQL注入（虽然参数化查询是更好的解决方案）
-      .replace(/['"\\]/g, char => '\\' + char);
+    return (
+      str
+        .trim()
+        // 移除潜在的恶意字符
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+        .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+        .replace(/javascript:/gi, '')
+        .replace(/on\w+\s*=/gi, '')
+        // 防止SQL注入（虽然参数化查询是更好的解决方案）
+        .replace(/['"\\]/g, char => '\\' + char)
+    );
   }
 
   /**
    * 文件上传验证
    */
-  public validateFile(file: any, options: {
-    maxSize?: number;
-    allowedTypes?: string[];
-    allowedExtensions?: string[];
-  } = {}) {
+  public validateFile(
+    file: any,
+    options: {
+      maxSize?: number;
+      allowedTypes?: string[];
+      allowedExtensions?: string[];
+    } = {},
+  ) {
     const {
       maxSize = 10 * 1024 * 1024, // 10MB
       allowedTypes = [],
-      allowedExtensions = []
+      allowedExtensions = [],
     } = options;
 
     const errors: string[] = [];
@@ -422,7 +413,7 @@ export class ValidationMiddleware {
     return {
       success: errors.length === 0,
       errors,
-      file
+      file,
     };
   }
 
@@ -479,7 +470,7 @@ export class ValidationMiddleware {
     return {
       isValid: score >= 4,
       score,
-      feedback
+      feedback,
     };
   }
 }

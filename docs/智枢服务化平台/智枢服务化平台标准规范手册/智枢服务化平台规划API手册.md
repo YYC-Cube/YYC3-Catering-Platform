@@ -1,13 +1,13 @@
-/**
+/\*\*
 
-* @file 智枢服务化平台 API 完整手册
-* @description 智枢服务化平台的API接口开发与调用规范
-* @module api-manual
-* @author YYC
-* @version 1.0.0
-* @created 2024-10-15
-* @updated 2024-10-15
- */
+- @file 智枢服务化平台 API 完整手册
+- @description 智枢服务化平台的API接口开发与调用规范
+- @module api-manual
+- @author YYC
+- @version 1.0.0
+- @created 2024-10-15
+- @updated 2024-10-15
+  \*/
 
 # 智枢服务化平台 API 完整手册 v1.0
 
@@ -27,17 +27,17 @@
 
 ### 1.1 基本信息
 
-* **基础 URL：** `https://api.zhishu-platform.com/api/v1`
-* **请求格式：** JSON
-* **响应格式：** JSON
-* **字符编码：** UTF-8
-* **API 版本：** v1
-* **最大请求大小：** 10MB
-* **默认超时时间：** 30秒
+- **基础 URL：** `https://api.zhishu-platform.com/api/v1`
+- **请求格式：** JSON
+- **响应格式：** JSON
+- **字符编码：** UTF-8
+- **API 版本：** v1
+- **最大请求大小：** 10MB
+- **默认超时时间：** 30秒
 
 ### 1.2 统一响应格式
 
-```json
+````json
 {
   "success": true,
   "code": "200",
@@ -898,8 +898,9 @@ Authorization: Bearer access_token_...
 
 ---
 
-**手册版本：** v1.0  
-**最后更新：** 2024-10-15  
+**手册版本：** v1.0
+**最后更新：** 2024-10-15
 **维护单位：** 智枢服务化平台技术团队
 **联系邮箱：** tech@zhishu-platform.com
 
+````

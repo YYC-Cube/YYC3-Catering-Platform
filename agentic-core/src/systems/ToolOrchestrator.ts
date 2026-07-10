@@ -80,7 +80,7 @@ export class ToolOrchestrator extends EventEmitter {
       version: tool.version || '1.0.0',
       metadata: tool.metadata || {},
       createdAt: tool.createdAt || Date.now(),
-      updatedAt: Date.now()
+      updatedAt: Date.now(),
     };
 
     if (this.tools.has(normalizedTool.name)) {
@@ -159,13 +159,15 @@ export class ToolOrchestrator extends EventEmitter {
    */
   public searchTools(query: string): ToolDefinition[] {
     const lowerQuery = query.toLowerCase();
-    return Array.from(this.tools.values())
-      .filter(tool => 
+    return Array.from(this.tools.values()).filter(
+      tool =>
         tool.name.toLowerCase().includes(lowerQuery) ||
         tool.description.toLowerCase().includes(lowerQuery) ||
-        (tool.metadata && tool.metadata["tags"] && Array.isArray(tool.metadata["tags"]) && 
-         tool.metadata["tags"].some((tag: string) => tag.toLowerCase().includes(lowerQuery)))
-      );
+        (tool.metadata &&
+          tool.metadata['tags'] &&
+          Array.isArray(tool.metadata['tags']) &&
+          tool.metadata['tags'].some((tag: string) => tag.toLowerCase().includes(lowerQuery))),
+    );
   }
 
   /**
@@ -181,7 +183,7 @@ export class ToolOrchestrator extends EventEmitter {
     const updatedTool: ToolDefinition = {
       ...tool,
       ...updates,
-      updatedAt: Date.now()
+      updatedAt: Date.now(),
     };
 
     this.tools.set(name, updatedTool);
@@ -203,7 +205,7 @@ export class ToolOrchestrator extends EventEmitter {
           platform: process.platform,
           version: process.version,
           memory: process.memoryUsage(),
-          uptime: process.uptime()
+          uptime: process.uptime(),
         };
       },
       category: 'system',
@@ -213,8 +215,8 @@ export class ToolOrchestrator extends EventEmitter {
       license: 'MIT',
       metadata: {
         tags: ['system', 'info', 'platform'],
-        compatibility: ['all']
-      }
+        compatibility: ['all'],
+      },
     });
 
     // 时间工具
@@ -226,7 +228,7 @@ export class ToolOrchestrator extends EventEmitter {
         return {
           timestamp: Date.now(),
           date: new Date().toISOString(),
-          localDate: new Date().toLocaleString()
+          localDate: new Date().toLocaleString(),
         };
       },
       category: 'system',
@@ -236,8 +238,8 @@ export class ToolOrchestrator extends EventEmitter {
       license: 'MIT',
       metadata: {
         tags: ['time', 'date', 'datetime'],
-        compatibility: ['all']
-      }
+        compatibility: ['all'],
+      },
     });
 
     // 餐饮平台相关工具可以在这里注册
@@ -247,11 +249,7 @@ export class ToolOrchestrator extends EventEmitter {
   /**
    * 执行工具
    */
-  public async executeTool(
-    toolName: string,
-    parameters: Record<string, any>,
-    context: any
-  ): Promise<any> {
+  public async executeTool(toolName: string, parameters: Record<string, any>, context: any): Promise<any> {
     const tool = this.tools.get(toolName);
     if (!tool) {
       throw new Error(`Tool ${toolName} not found`);
@@ -274,7 +272,7 @@ export class ToolOrchestrator extends EventEmitter {
         success: true,
         data: result,
         executionTime: Date.now() - startTime,
-        toolName
+        toolName,
       };
 
       this.executionHistory.push(executionResult);
@@ -287,7 +285,7 @@ export class ToolOrchestrator extends EventEmitter {
         data: null,
         error: error instanceof Error ? error.message : String(error),
         executionTime: Date.now() - startTime,
-        toolName
+        toolName,
       };
 
       this.executionHistory.push(executionResult);
@@ -313,8 +311,7 @@ export class ToolOrchestrator extends EventEmitter {
    * 获取可用工具列表
    */
   public getAvailableTools(): ToolDefinition[] {
-    return Array.from(this.tools.values())
-      .filter(tool => tool.enabled);
+    return Array.from(this.tools.values()).filter(tool => tool.enabled);
   }
 
   /**

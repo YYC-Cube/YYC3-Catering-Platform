@@ -11,14 +11,14 @@ TypeScript 编译器提供了强大的静态类型检查功能，帮助在编译
 ```json
 {
   "compilerOptions": {
-    "strict": true,                    // 启用所有严格类型检查
-    "noImplicitAny": true,            // 禁止隐式 any
-    "strictNullChecks": true,          // 严格 null 检查
-    "noUncheckedIndexedAccess": true,    // 索引访问严格检查
-    "exactOptionalPropertyTypes": true,  // 精确可选属性类型
-    "noImplicitReturns": true,         // 禁止隐式返回
-    "noImplicitThis": true,           // 禁止隐式 this
-    "noImplicitOverride": true,        // 禁止隐式覆盖
+    "strict": true, // 启用所有严格类型检查
+    "noImplicitAny": true, // 禁止隐式 any
+    "strictNullChecks": true, // 严格 null 检查
+    "noUncheckedIndexedAccess": true, // 索引访问严格检查
+    "exactOptionalPropertyTypes": true, // 精确可选属性类型
+    "noImplicitReturns": true, // 禁止隐式返回
+    "noImplicitThis": true, // 禁止隐式 this
+    "noImplicitOverride": true // 禁止隐式覆盖
   }
 }
 ```
@@ -63,6 +63,7 @@ pnpm tsc --noEmit --watch
 ### 1. TS2379: 精确可选属性类型错误
 
 **错误信息**:
+
 ```
 Type 'number | undefined' is not assignable to type 'number' with 'exactOptionalPropertyTypes: true'.
 ```
@@ -78,7 +79,7 @@ interface Config {
 }
 
 const config: Config = {
-  value: undefined,  // 错误
+  value: undefined, // 错误
 };
 
 // ✅ 正确 - 不包含该属性
@@ -98,6 +99,7 @@ const config: Config = {
 ### 2. TS2532: 可能为 undefined 的对象
 
 **错误信息**:
+
 ```
 Object is possibly 'undefined'.
 ```
@@ -107,7 +109,7 @@ Object is possibly 'undefined'.
 ```typescript
 // ❌ 错误
 const arr = [1, 2, 3];
-const value = arr[arr.length - 1];  // 可能为 undefined
+const value = arr[arr.length - 1]; // 可能为 undefined
 
 // ✅ 正确 - 使用类型守卫
 const value = arr[arr.length - 1];
@@ -125,6 +127,7 @@ const value = arr.at(-1);
 ### 3. TS18048: 属性可能为 undefined
 
 **错误信息**:
+
 ```
 'property' is possibly 'undefined'.
 ```
@@ -137,7 +140,7 @@ interface User {
   id?: number;
 }
 const user: User = {};
-console.log(user.id);  // 可能为 undefined
+console.log(user.id); // 可能为 undefined
 
 // ✅ 正确 - 使用可选链
 console.log(user.id?.toString());
@@ -154,6 +157,7 @@ console.log(user.id ?? 0);
 ### 4. TS4111: 索引签名属性访问
 
 **错误信息**:
+
 ```
 Property 'name' comes from an index signature, so it must be accessed with ['name'].
 ```
@@ -168,15 +172,16 @@ interface Data {
   [key: string]: unknown;
 }
 const data: Data = {};
-console.log(data.name);  // 错误
+console.log(data.name); // 错误
 
 // ✅ 正确
-console.log(data['name']);
+console.log(data["name"]);
 ```
 
 ### 5. TS2308: 重复导出错误
 
 **错误信息**:
+
 ```
 Module has already exported a member named 'TypeName'.
 ```
@@ -185,20 +190,21 @@ Module has already exported a member named 'TypeName'.
 
 ```typescript
 // ❌ 错误
-export * from './a';  // 导出 TypeA
-export * from './b';  // 也导出 TypeA
+export * from "./a"; // 导出 TypeA
+export * from "./b"; // 也导出 TypeA
 
 // ✅ 正确 - 显式重新导出
-export * from './a';
-export { TypeA as TypeA_FromB } from './b';
+export * from "./a";
+export { TypeA as TypeA_FromB } from "./b";
 
 // ✅ 正确 - 从一个地方导出
-export { TypeA, TypeB, TypeC } from './unified-types';
+export { TypeA, TypeB, TypeC } from "./unified-types";
 ```
 
 ### 6. TS2322: 类型不兼容
 
 **错误信息**:
+
 ```
 Type 'X' is not assignable to type 'Y'.
 ```
@@ -213,8 +219,8 @@ interface User {
 interface APIUser {
   id: string;
 }
-const apiUser: APIUser = { id: '123' };
-const user: User = apiUser;  // 错误
+const apiUser: APIUser = { id: "123" };
+const user: User = apiUser; // 错误
 
 // ✅ 正确 - 使用类型转换
 const user: User = {
@@ -234,24 +240,24 @@ const user = mapAPIUserToUser(apiUser);
 
 ```typescript
 // ✅ 推荐使用 - 导入特定类型
-import type { BaseUser, AuthUser, UserRole } from '@yyc3/types/entities/user';
-import type { ICacheClient, CacheStrategy } from '@yyc3/types/services/cache';
-import type { ApiResponse, PaginatedResponse } from '@yyc3/types/services/api';
-import type { AppError, ErrorCode } from '@yyc3/types/common/error';
-import type { TypeConverter } from '@yyc3/types/utils/type-converter';
+import type { BaseUser, AuthUser, UserRole } from "@yyc3/types/entities/user";
+import type { ICacheClient, CacheStrategy } from "@yyc3/types/services/cache";
+import type { ApiResponse, PaginatedResponse } from "@yyc3/types/services/api";
+import type { AppError, ErrorCode } from "@yyc3/types/common/error";
+import type { TypeConverter } from "@yyc3/types/utils/type-converter";
 
 // ✅ 统一导入（导入所有类型）
-import * as Types from '@yyc3/types';
+import * as Types from "@yyc3/types";
 
 // ✅ 别名导入
-import { BaseUser as User } from '@yyc3/types/entities/user';
+import { BaseUser as User } from "@yyc3/types/entities/user";
 ```
 
 ### 类型转换
 
 ```typescript
 // 前端转后端
-import { TypeConverter } from '@yyc3/types/utils/type-converter';
+import { TypeConverter } from "@yyc3/types/utils/type-converter";
 
 const authUser = TypeConverter.frontendUserToAuthUser(frontendUser);
 
@@ -262,10 +268,7 @@ const frontendUser = TypeConverter.authUserToFrontendUser(authUser);
 const convertedUsers = TypeConverter.convertUsers(authUsers);
 
 // 转换分页数据
-const convertedData = TypeConverter.convertPaginationData(
-  apiData,
-  (item) => TypeConverter.authUserToFrontendUser(item)
-);
+const convertedData = TypeConverter.convertPaginationData(apiData, item => TypeConverter.authUserToFrontendUser(item));
 ```
 
 ## VSCode 集成

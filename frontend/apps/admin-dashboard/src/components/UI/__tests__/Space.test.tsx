@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { Space } from '@/components/UI/Space'
+import { describe, it, expect } from 'vitest';
+import { mount } from '@vue/test-utils';
+import { Space } from '@/components/UI/Space';
 
 describe('Space组件', () => {
   it('应该正确渲染默认间距', () => {
@@ -23,19 +23,19 @@ describe('Space组件', () => {
             <Button>按钮2</Button>
             <Button>按钮3</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.text()).toContain('按钮1')
-    expect(wrapper.text()).toContain('按钮2')
-    expect(wrapper.text()).toContain('按钮3')
-  })
+    expect(wrapper.text()).toContain('按钮1');
+    expect(wrapper.text()).toContain('按钮2');
+    expect(wrapper.text()).toContain('按钮3');
+  });
 
   it('应该正确渲染水平方向', () => {
     const wrapper = mount(Space, {
       props: {
-        direction: 'horizontal'
+        direction: 'horizontal',
       },
       slots: {
         default: (
@@ -43,17 +43,17 @@ describe('Space组件', () => {
             <Button>水平1</Button>
             <Button>水平2</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('horizontal')
-  })
+    expect(wrapper.classes()).toContain('horizontal');
+  });
 
   it('应该正确渲染垂直方向', () => {
     const wrapper = mount(Space, {
       props: {
-        direction: 'vertical'
+        direction: 'vertical',
       },
       slots: {
         default: (
@@ -61,17 +61,17 @@ describe('Space组件', () => {
             <Button>垂直1</Button>
             <Button>垂直2</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('vertical')
-  })
+    expect(wrapper.classes()).toContain('vertical');
+  });
 
   it('应该正确渲染小间距', () => {
     const wrapper = mount(Space, {
       props: {
-        size: 'sm'
+        size: 'sm',
       },
       slots: {
         default: (
@@ -79,17 +79,17 @@ describe('Space组件', () => {
             <Button>小间距</Button>
             <Button>小间距</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('sm')
-  })
+    expect(wrapper.classes()).toContain('sm');
+  });
 
   it('应该正确渲染中等间距', () => {
     const wrapper = mount(Space, {
       props: {
-        size: 'md'
+        size: 'md',
       },
       slots: {
         default: (
@@ -97,17 +97,17 @@ describe('Space组件', () => {
             <Button>中等间距</Button>
             <Button>中等间距</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('md')
-  })
+    expect(wrapper.classes()).toContain('md');
+  });
 
   it('应该正确渲染大间距', () => {
     const wrapper = mount(Space, {
       props: {
-        size: 'lg'
+        size: 'lg',
       },
       slots: {
         default: (
@@ -115,17 +115,17 @@ describe('Space组件', () => {
             <Button>大间距</Button>
             <Button>大间距</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('lg')
-  })
+    expect(wrapper.classes()).toContain('lg');
+  });
 
   it('应该正确渲染自定义间距', () => {
     const wrapper = mount(Space, {
       props: {
-        size: 24
+        size: 24,
       },
       slots: {
         default: (
@@ -133,17 +133,17 @@ describe('Space组件', () => {
             <Button>自定义间距</Button>
             <Button>自定义间距</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('size-24')
-  })
+    expect(wrapper.classes()).toContain('size-24');
+  });
 
   it('应该正确渲染对齐方式', () => {
     const wrapper = mount(Space, {
       props: {
-        align: 'center'
+        align: 'center',
       },
       slots: {
         default: (
@@ -151,17 +151,17 @@ describe('Space组件', () => {
             <Button>居中对齐</Button>
             <Button>居中对齐</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('align-center')
-  })
+    expect(wrapper.classes()).toContain('align-center');
+  });
 
   it('应该正确渲染换行', () => {
     const wrapper = mount(Space, {
       props: {
-        wrap: true
+        wrap: true,
       },
       slots: {
         default: (
@@ -170,17 +170,17 @@ describe('Space组件', () => {
             <Button>换行2</Button>
             <Button>换行3</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('wrap')
-  })
+    expect(wrapper.classes()).toContain('wrap');
+  });
 
   it('应该正确渲染填充', () => {
     const wrapper = mount(Space, {
       props: {
-        fill: true
+        fill: true,
       },
       slots: {
         default: (
@@ -188,17 +188,17 @@ describe('Space组件', () => {
             <Button>填充1</Button>
             <Button>填充2</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('fill')
-  })
+    expect(wrapper.classes()).toContain('fill');
+  });
 
   it('应该正确应用自定义类名', () => {
     const wrapper = mount(Space, {
       props: {
-        className: 'custom-space'
+        className: 'custom-space',
       },
       slots: {
         default: (
@@ -206,10 +206,10 @@ describe('Space组件', () => {
             <Button>自定义</Button>
             <Button>自定义</Button>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.classes()).toContain('custom-space')
-  })
-})
+    expect(wrapper.classes()).toContain('custom-space');
+  });
+});

@@ -26,12 +26,12 @@ export interface Metrics {
   minResponseTime: number;
   p95ResponseTime: number;
   p99ResponseTime: number;
-  
+
   // 资源指标
   memoryUsage: NodeJS.MemoryUsage;
   cpuUsage: number;
   uptime: number;
-  
+
   // 告警状态
   activeAlerts: Alert[];
 }
@@ -103,7 +103,7 @@ export class MetricsMiddleware {
       memoryUsage: process.memoryUsage(),
       cpuUsage: 0,
       uptime: process.uptime(),
-      activeAlerts: []
+      activeAlerts: [],
     };
   }
 
@@ -115,7 +115,7 @@ export class MetricsMiddleware {
 
     // 增强响应方法以捕获响应状态
     const originalSend = res.send;
-    res.send = ((send) => {
+    res.send = (send => {
       return function (this: Response, body?: any): Response {
         const responseTime = Date.now() - startTime;
         const statusCode = res.statusCode;
@@ -194,7 +194,7 @@ export class MetricsMiddleware {
   private updateResourceMetrics(): void {
     this.metrics.memoryUsage = process.memoryUsage();
     this.metrics.uptime = process.uptime();
-    
+
     // TODO: 实现CPU使用率监控
     // this.metrics.cpuUsage = ...;
   }
@@ -204,7 +204,7 @@ export class MetricsMiddleware {
    */
   private checkForAlerts(req: Request, statusCode: number, responseTime: number): void {
     const now = Date.now();
-    
+
     // 避免过于频繁的告警检查
     if (now - this.lastAlertCheck < this.alertCheckInterval) {
       return;
@@ -240,7 +240,7 @@ export class MetricsMiddleware {
         'warn',
         errorRateThreshold,
         errorRate,
-        `错误率过高: ${(errorRate * 100).toFixed(2)}%`
+        `错误率过高: ${(errorRate * 100).toFixed(2)}%`,
       );
     }
   }
@@ -257,7 +257,7 @@ export class MetricsMiddleware {
         'warn',
         responseTimeThreshold,
         this.metrics.avgResponseTime,
-        `平均响应时间过高: ${this.metrics.avgResponseTime.toFixed(2)}ms`
+        `平均响应时间过高: ${this.metrics.avgResponseTime.toFixed(2)}ms`,
       );
     }
 
@@ -267,7 +267,7 @@ export class MetricsMiddleware {
         'error',
         responseTimeThreshold * 2,
         this.metrics.p99ResponseTime,
-        `P99响应时间过高: ${this.metrics.p99ResponseTime.toFixed(2)}ms`
+        `P99响应时间过高: ${this.metrics.p99ResponseTime.toFixed(2)}ms`,
       );
     }
   }
@@ -286,7 +286,7 @@ export class MetricsMiddleware {
         'warn',
         memoryThreshold,
         memoryUsagePercent,
-        `内存使用率过高: ${memoryUsagePercent.toFixed(2)}%`
+        `内存使用率过高: ${memoryUsagePercent.toFixed(2)}%`,
       );
     }
   }
@@ -299,11 +299,11 @@ export class MetricsMiddleware {
     level: 'info' | 'warn' | 'error' | 'critical',
     threshold: number,
     currentValue: number,
-    message: string
+    message: string,
   ): void {
     // 检查是否已有相同类型的未解决告警
     const existingAlert = this.alerts.find(
-      alert => alert.metric === metric && alert.level === level && !alert.resolved
+      alert => alert.metric === metric && alert.level === level && !alert.resolved,
     );
 
     if (existingAlert) {
@@ -328,7 +328,7 @@ export class MetricsMiddleware {
       acknowledged: false,
       resolved: false,
       rootCause: rootCause.probableCause,
-      suggestedFix: rootCause.suggestedActions.join('; ')
+      suggestedFix: rootCause.suggestedActions.join('; '),
     };
 
     this.alerts.push(alert);
@@ -352,7 +352,7 @@ export class MetricsMiddleware {
       confidence: 0.5,
       relatedMetrics: [metric],
       suggestedActions: ['进一步分析系统日志'],
-      affectedServices: ['gateway']
+      affectedServices: ['gateway'],
     };
 
     // 根据不同指标进行根因分析
@@ -379,15 +379,12 @@ export class MetricsMiddleware {
    */
   private analyzeHighErrorRate(): RootCauseAnalysis {
     // 找出最常见的错误码
-    const mostCommonErrorCode = Object.entries(this.metrics.errorCountByCode)
-      .sort(([, a], [, b]) => b - a)[0]?.[0];
+    const mostCommonErrorCode = Object.entries(this.metrics.errorCountByCode).sort(([, a], [, b]) => b - a)[0]?.[0];
 
     // 找出错误率最高的路径
     const errorRateByPath = Object.entries(this.metrics.requestCountByPath)
       .map(([path, count]) => {
-        const errorCount = this.alerts
-          .filter(a => a.metric.includes(path) && a.level === 'error')
-          .length;
+        const errorCount = this.alerts.filter(a => a.metric.includes(path) && a.level === 'error').length;
         return { path, errorRate: errorCount / count };
       })
       .sort((a, b) => b.errorRate - a.errorRate);
@@ -398,18 +395,16 @@ export class MetricsMiddleware {
       id: `rca_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       timestamp: new Date(),
       issue: '高错误率',
-      probableCause: mostCommonErrorCode 
-        ? `错误码 ${mostCommonErrorCode} 出现频率过高` 
-        : '多个路径同时出现错误',
+      probableCause: mostCommonErrorCode ? `错误码 ${mostCommonErrorCode} 出现频率过高` : '多个路径同时出现错误',
       confidence: 0.75,
       relatedMetrics: ['errorCount', 'errorCountByCode', 'requestCountByPath'],
       suggestedActions: [
         `检查错误码 ${mostCommonErrorCode} 相关的业务逻辑`,
         `分析路径 ${highestErrorPath} 的请求处理逻辑`,
         '查看应用日志以获取更详细的错误信息',
-        '检查依赖服务的可用性'
+        '检查依赖服务的可用性',
       ],
-      affectedServices: ['gateway', highestErrorPath?.split('/')[3] || 'unknown']
+      affectedServices: ['gateway', highestErrorPath?.split('/')[3] || 'unknown'],
     };
   }
 
@@ -431,18 +426,16 @@ export class MetricsMiddleware {
       id: `rca_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       timestamp: new Date(),
       issue: '高响应时间',
-      probableCause: busiestPath 
-        ? `路径 ${busiestPath} 请求量过大导致响应延迟` 
-        : '系统资源不足或依赖服务响应缓慢',
+      probableCause: busiestPath ? `路径 ${busiestPath} 请求量过大导致响应延迟` : '系统资源不足或依赖服务响应缓慢',
       confidence: 0.7,
       relatedMetrics: ['avgResponseTime', 'p95ResponseTime', 'p99ResponseTime', 'requestCountByPath'],
       suggestedActions: [
         `优化路径 ${busiestPath} 的请求处理逻辑`,
         '检查系统CPU和内存使用情况',
         '分析依赖服务的响应时间',
-        '考虑增加系统资源或优化缓存策略'
+        '考虑增加系统资源或优化缓存策略',
       ],
-      affectedServices: ['gateway', busiestPath?.split('/')[3] || 'unknown']
+      affectedServices: ['gateway', busiestPath?.split('/')[3] || 'unknown'],
     };
   }
 
@@ -457,18 +450,16 @@ export class MetricsMiddleware {
       id: `rca_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       timestamp: new Date(),
       issue: '高内存使用率',
-      probableCause: memoryLeakIndicators 
-        ? '可能存在内存泄漏' 
-        : '系统负载过高导致内存使用增加',
+      probableCause: memoryLeakIndicators ? '可能存在内存泄漏' : '系统负载过高导致内存使用增加',
       confidence: 0.6,
       relatedMetrics: ['memoryUsage', 'requestCount', 'responseTime'],
       suggestedActions: [
         '检查是否存在未释放的资源（如数据库连接、文件句柄）',
         '分析内存快照以查找泄漏源',
         '优化数据处理逻辑，避免一次性加载大量数据',
-        '考虑增加系统内存或实施自动扩展'
+        '考虑增加系统内存或实施自动扩展',
       ],
-      affectedServices: ['gateway']
+      affectedServices: ['gateway'],
     };
   }
 

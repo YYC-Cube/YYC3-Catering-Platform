@@ -39,11 +39,11 @@ app.use(
     origin: '*',
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
-  })
+  }),
 );
 
 // 健康检查
-app.get('/health', (c) => {
+app.get('/health', c => {
   return c.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
@@ -67,20 +67,26 @@ app.route('/api/document-recommendation', documentRecommendationApi);
 app.route('/api/document-quality', documentQualityImprovementApi);
 
 // 404处理
-app.notFound((c) => {
-  return c.json({
-    success: false,
-    error: '请求的资源不存在',
-  }, 404);
+app.notFound(c => {
+  return c.json(
+    {
+      success: false,
+      error: '请求的资源不存在',
+    },
+    404,
+  );
 });
 
 // 错误处理
 app.onError((err, c) => {
   log.error('Unhandled error', { error: err.message, stack: err.stack });
-  return c.json({
-    success: false,
-    error: err.message || '服务器内部错误',
-  }, 500);
+  return c.json(
+    {
+      success: false,
+      error: err.message || '服务器内部错误',
+    },
+    500,
+  );
 });
 
 // 启动服务器

@@ -17,7 +17,7 @@
     "mongoose": "^8.9.6",
     "node-cron": "^3.0.2",
     "prom-client": "^15.0.0",
-        "redis": "^5.10.0"
+    "redis": "^5.10.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
@@ -33,7 +33,12 @@
     "tsc-watch": "^6.0.4",
     "typescript": "^5.3.3"
   },
-  "keywords": ["yyc3", "smart-ops", "devops", "monitoring"],
+  "keywords": [
+    "yyc3",
+    "smart-ops",
+    "devops",
+    "monitoring"
+  ],
   "author": "YYC³团队",
   "license": "MIT"
 }

@@ -44,9 +44,7 @@ export class CacheKeyGenerator {
   generate(...parts: string[]): string {
     const key = parts.join(this.config.separator);
     const partsWithPrefix = this.config.prefix ? [this.config.prefix, key] : [key];
-    const partsWithVersion = this.config.version
-      ? [...partsWithPrefix, this.config.version]
-      : partsWithPrefix;
+    const partsWithVersion = this.config.version ? [...partsWithPrefix, this.config.version] : partsWithPrefix;
     return partsWithVersion.join(this.config.separator);
   }
 
@@ -58,9 +56,7 @@ export class CacheKeyGenerator {
    * @returns 缓存键
    */
   user(userId: string, resource: string, identifier?: string): string {
-    return identifier
-      ? this.generate('user', userId, resource, identifier)
-      : this.generate('user', userId, resource);
+    return identifier ? this.generate('user', userId, resource, identifier) : this.generate('user', userId, resource);
   }
 
   /**
@@ -90,9 +86,7 @@ export class CacheKeyGenerator {
    * @returns 缓存键
    */
   category(categoryId: string, field?: string): string {
-    return field
-      ? this.generate('category', categoryId, field)
-      : this.generate('category', categoryId);
+    return field ? this.generate('category', categoryId, field) : this.generate('category', categoryId);
   }
 
   /**
@@ -166,13 +160,9 @@ export function Cacheable(
     ttl?: number;
     keyPrefix?: string;
     condition?: (...args: any[]) => boolean;
-  } = {}
+  } = {},
 ) {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
@@ -223,13 +213,9 @@ export function CacheEvict(
     keyPrefix?: string;
     pattern?: string;
     condition?: (...args: any[]) => boolean;
-  } = {}
+  } = {},
 ) {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
@@ -275,13 +261,9 @@ export function CachePut(
     ttl?: number;
     keyPrefix?: string;
     condition?: (...args: any[]) => boolean;
-  } = {}
+  } = {},
 ) {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
@@ -383,7 +365,7 @@ export class CacheLock {
     name: string,
     ttl: number = 30,
     timeout: number = 5000,
-    retryInterval: number = 100
+    retryInterval: number = 100,
   ): Promise<boolean> {
     const startTime = Date.now();
 
@@ -406,11 +388,7 @@ export class CacheLock {
    * @param ttl 锁过期时间（秒）
    * @returns 操作结果
    */
-  async withLock<T>(
-    name: string,
-    operation: () => Promise<T>,
-    ttl: number = 30
-  ): Promise<T> {
+  async withLock<T>(name: string, operation: () => Promise<T>, ttl: number = 30): Promise<T> {
     const acquired = await this.acquire(name, ttl);
 
     if (!acquired) {
@@ -428,7 +406,7 @@ export class CacheLock {
    * 延迟函数
    */
   private sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
 
@@ -530,14 +508,7 @@ export class CacheTime {
    */
   static toMidnight(): number {
     const now = new Date();
-    const midnight = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 1,
-      0,
-      0,
-      0
-    );
+    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
     return Math.floor((midnight.getTime() - now.getTime()) / 1000);
   }
 
@@ -549,14 +520,7 @@ export class CacheTime {
     const now = new Date();
     const day = now.getDay();
     const daysUntilMonday = day === 0 ? 1 : 8 - day;
-    const nextMonday = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + daysUntilMonday,
-      0,
-      0,
-      0
-    );
+    const nextMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilMonday, 0, 0, 0);
     return Math.floor((nextMonday.getTime() - now.getTime()) / 1000);
   }
 
@@ -566,14 +530,7 @@ export class CacheTime {
    */
   static toNextMonth(): number {
     const now = new Date();
-    const nextMonth = new Date(
-      now.getFullYear(),
-      now.getMonth() + 1,
-      1,
-      0,
-      0,
-      0
-    );
+    const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0);
     return Math.floor((nextMonth.getTime() - now.getTime()) / 1000);
   }
 }

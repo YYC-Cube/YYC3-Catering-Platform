@@ -70,7 +70,7 @@ class DeliveryService {
         params.restaurant_latitude,
         params.restaurant_longitude,
         params.delivery_latitude,
-        params.delivery_longitude
+        params.delivery_longitude,
       );
 
       // 创建配送记录
@@ -109,11 +109,7 @@ class DeliveryService {
     try {
       const delivery = await Delivery.findOne({
         where: { id: delivery_id },
-        include: [
-          { model: DeliveryAssignment },
-          { model: DeliveryStatusHistory },
-          { model: DeliveryRating },
-        ],
+        include: [{ model: DeliveryAssignment }, { model: DeliveryStatusHistory }, { model: DeliveryRating }],
       });
 
       if (!delivery) {
@@ -138,11 +134,7 @@ class DeliveryService {
     try {
       const delivery = await Delivery.findOne({
         where: { order_id },
-        include: [
-          { model: DeliveryAssignment },
-          { model: DeliveryStatusHistory },
-          { model: DeliveryRating },
-        ],
+        include: [{ model: DeliveryAssignment }, { model: DeliveryStatusHistory }, { model: DeliveryRating }],
       });
 
       if (!delivery) {
@@ -324,9 +316,7 @@ class DeliveryService {
   async createDeliveryRating(params: CreateDeliveryRatingParams): Promise<DeliveryRating> {
     try {
       // 计算平均评分
-      const average_rating = (
-        params.speed_rating + params.service_rating + params.rider_attitude_rating
-      ) / 3;
+      const average_rating = (params.speed_rating + params.service_rating + params.rider_attitude_rating) / 3;
 
       // 创建评分记录
       const rating = await DeliveryRating.create({
@@ -352,19 +342,13 @@ class DeliveryService {
    * @param lon2 第二个点的经度
    * @returns 两点之间的距离（公里）
    */
-  private calculateDistance(
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number {
+  private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 6371; // 地球半径（公里）
     const dLat = this.deg2rad(lat2 - lat1);
     const dLon = this.deg2rad(lon2 - lon1);
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
     return Math.round(distance * 100) / 100; // 保留两位小数
@@ -385,7 +369,11 @@ class DeliveryService {
    * @param newStatus 新状态
    * @param oldStatus 旧状态
    */
-  private async handleStatusChange(delivery_id: string, newStatus: DeliveryStatus, oldStatus: DeliveryStatus): Promise<void> {
+  private async handleStatusChange(
+    delivery_id: string,
+    newStatus: DeliveryStatus,
+    oldStatus: DeliveryStatus,
+  ): Promise<void> {
     try {
       // 根据不同的状态执行不同的业务逻辑
       switch (newStatus) {
@@ -397,22 +385,22 @@ class DeliveryService {
             const createdAt = delivery.createdAt;
             const deliveredAt = new Date();
             const actualTime = Math.round((deliveredAt.getTime() - createdAt.getTime()) / (1000 * 60)); // 转换为分钟
-            
+
             delivery.actual_delivery_time = actualTime;
             await delivery.save();
           }
           break;
-        
+
         case DeliveryStatus.CANCELLED:
           // 配送取消，处理相关逻辑
           await this.handleDeliveryCancellation(delivery_id);
           break;
-        
+
         case DeliveryStatus.FAILED:
           // 配送失败，处理相关逻辑
           await this.handleDeliveryFailure(delivery_id);
           break;
-        
+
         default:
           // 其他状态无需特殊处理
           break;
@@ -451,7 +439,11 @@ class DeliveryService {
    * @param newStatus 新状态
    * @param oldStatus 旧状态
    */
-  private async sendStatusNotification(delivery_id: string, newStatus: DeliveryStatus, oldStatus: DeliveryStatus): Promise<void> {
+  private async sendStatusNotification(
+    delivery_id: string,
+    newStatus: DeliveryStatus,
+    oldStatus: DeliveryStatus,
+  ): Promise<void> {
     try {
       // 调用通知服务发送通知
       const notificationServiceUrl = process.env.NOTIFICATION_SERVICE_URL;

@@ -27,7 +27,7 @@ router.get('/', (req: Request, res: Response): void => {
       timestamp: new Date().toISOString(),
       service: 'api-gateway',
       version: config.app.version,
-      environment: config.app.environment
+      environment: config.app.environment,
     });
   } catch (error) {
     logger.error('Health check failed', { error });
@@ -35,7 +35,7 @@ router.get('/', (req: Request, res: Response): void => {
       success: false,
       message: 'Service is unhealthy',
       timestamp: new Date().toISOString(),
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
@@ -61,10 +61,10 @@ router.get('/detailed', async (req: Request, res: Response): Promise<void> => {
       health: {
         database: {
           master: dbHealth.master,
-          replicas: dbHealth.replicas
+          replicas: dbHealth.replicas,
         },
-        redis: dbHealth.redis
-      }
+        redis: dbHealth.redis,
+      },
     });
   } catch (error) {
     logger.error('Detailed health check failed', { error });
@@ -72,7 +72,7 @@ router.get('/detailed', async (req: Request, res: Response): Promise<void> => {
       success: false,
       message: 'Service is unhealthy',
       timestamp: new Date().toISOString(),
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
@@ -91,7 +91,7 @@ router.get('/info', (req: Request, res: Response): void => {
     nodeVersion: process.version,
     platform: process.platform,
     architecture: process.arch,
-    uptime: `${Math.round(process.uptime())}s`
+    uptime: `${Math.round(process.uptime())}s`,
   });
 });
 

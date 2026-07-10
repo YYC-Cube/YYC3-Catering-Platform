@@ -77,10 +77,10 @@ export const HTTPStatus = {
   INSUFFICIENT_STORAGE: 507,
   LOOP_DETECTED: 508,
   NOT_EXTENDED: 510,
-  NETWORK_AUTHENTICATION_REQUIRED: 511
-} as const
+  NETWORK_AUTHENTICATION_REQUIRED: 511,
+} as const;
 
-export type HTTPStatusCode = typeof HTTPStatus[keyof typeof HTTPStatus]
+export type HTTPStatusCode = (typeof HTTPStatus)[keyof typeof HTTPStatus];
 
 /**
  * 状态码分类
@@ -90,8 +90,8 @@ export const HTTPStatusClass = {
   SUCCESS: '2xx',
   REDIRECTION: '3xx',
   CLIENT_ERROR: '4xx',
-  SERVER_ERROR: '5xx'
-} as const
+  SERVER_ERROR: '5xx',
+} as const;
 
 /**
  * 状态码描述
@@ -163,8 +163,8 @@ export const HTTPStatusMessages: Record<HTTPStatusCode, string> = {
   [HTTPStatus.INSUFFICIENT_STORAGE]: 'Insufficient Storage',
   [HTTPStatus.LOOP_DETECTED]: 'Loop Detected',
   [HTTPStatus.NOT_EXTENDED]: 'Not Extended',
-  [HTTPStatus.NETWORK_AUTHENTICATION_REQUIRED]: 'Network Authentication Required'
-}
+  [HTTPStatus.NETWORK_AUTHENTICATION_REQUIRED]: 'Network Authentication Required',
+};
 
 /**
  * 工具函数
@@ -174,50 +174,50 @@ export const HTTPStatusUtils = {
    * 获取状态码分类
    */
   getClass(statusCode: HTTPStatusCode): string {
-    const firstDigit = Math.floor(statusCode / 100)
-    return `${firstDigit}xx`
+    const firstDigit = Math.floor(statusCode / 100);
+    return `${firstDigit}xx`;
   },
 
   /**
    * 是否为成功状态码
    */
   isSuccess(statusCode: HTTPStatusCode): boolean {
-    return statusCode >= 200 && statusCode < 300
+    return statusCode >= 200 && statusCode < 300;
   },
 
   /**
    * 是否为客户端错误
    */
   isClientError(statusCode: HTTPStatusCode): boolean {
-    return statusCode >= 400 && statusCode < 500
+    return statusCode >= 400 && statusCode < 500;
   },
 
   /**
    * 是否为服务器错误
    */
   isServerError(statusCode: HTTPStatusCode): boolean {
-    return statusCode >= 500
+    return statusCode >= 500;
   },
 
   /**
    * 是否为错误状态码
    */
   isError(statusCode: HTTPStatusCode): boolean {
-    return statusCode >= 400
+    return statusCode >= 400;
   },
 
   /**
    * 是否为重定向状态码
    */
   isRedirect(statusCode: HTTPStatusCode): boolean {
-    return statusCode >= 300 && statusCode < 400
+    return statusCode >= 300 && statusCode < 400;
   },
 
   /**
    * 获取状态码描述
    */
   getMessage(statusCode: HTTPStatusCode): string {
-    return HTTPStatusMessages[statusCode] || 'Unknown Status'
+    return HTTPStatusMessages[statusCode] || 'Unknown Status';
   },
 
   /**
@@ -236,6 +236,6 @@ export const HTTPStatusUtils = {
     TOO_MANY_REQUESTS: HTTPStatus.TOO_MANY_REQUESTS,
     INTERNAL_SERVER_ERROR: HTTPStatus.INTERNAL_SERVER_ERROR,
     BAD_GATEWAY: HTTPStatus.BAD_GATEWAY,
-    SERVICE_UNAVAILABLE: HTTPStatus.SERVICE_UNAVAILABLE
-  } as const
-}
+    SERVICE_UNAVAILABLE: HTTPStatus.SERVICE_UNAVAILABLE,
+  } as const,
+};

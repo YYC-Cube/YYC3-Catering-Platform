@@ -4,7 +4,19 @@
  * @author YYC³
  * @version 1.0.0
  */
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, HasMany, CreatedAt, UpdatedAt, DeletedAt } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  ForeignKey,
+  HasMany,
+  CreatedAt,
+  UpdatedAt,
+  DeletedAt,
+} from 'sequelize-typescript';
 import { Order } from './Order.model';
 import { OrderItemOption } from './OrderItemOption.model';
 
@@ -12,7 +24,7 @@ import { OrderItemOption } from './OrderItemOption.model';
   tableName: 'order_items',
   timestamps: true,
   underscored: true,
-  paranoid: true
+  paranoid: true,
 })
 export class OrderItem extends Model<OrderItem> {
   @PrimaryKey
@@ -23,45 +35,45 @@ export class OrderItem extends Model<OrderItem> {
   @ForeignKey(() => Order)
   @Column({
     type: DataType.BIGINT,
-    allowNull: false
+    allowNull: false,
   })
   order_id: number;
 
   @Column({
     type: DataType.BIGINT,
-    allowNull: false
+    allowNull: false,
   })
   menu_item_id: number;
 
   @Column({
     type: DataType.STRING(255),
-    allowNull: false
+    allowNull: false,
   })
   name: string;
 
   @Column({
     type: DataType.STRING(1000),
-    allowNull: true
+    allowNull: true,
   })
   description: string;
 
   @Column({
     type: DataType.DECIMAL(10, 2),
     allowNull: false,
-    defaultValue: 0
+    defaultValue: 0,
   })
   price: number;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
-    defaultValue: 1
+    defaultValue: 1,
   })
   quantity: number;
 
   @Column({
     type: DataType.STRING(255),
-    allowNull: true
+    allowNull: true,
   })
   image_url: string;
 

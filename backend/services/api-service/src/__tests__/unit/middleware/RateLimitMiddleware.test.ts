@@ -9,7 +9,16 @@
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { RateLimitMiddleware, rateLimiter, createRateLimit, rateLimitByIp, rateLimitByUser, strictRateLimit, loginRateLimit, registerRateLimit } from '../../../middleware/rate-limiter';
+import {
+  RateLimitMiddleware,
+  rateLimiter,
+  createRateLimit,
+  rateLimitByIp,
+  rateLimitByUser,
+  strictRateLimit,
+  loginRateLimit,
+  registerRateLimit,
+} from '../../../middleware/rate-limiter';
 
 describe('RateLimitMiddleware', () => {
   let rateLimit: RateLimitMiddleware;
@@ -108,7 +117,7 @@ describe('RateLimitMiddleware', () => {
     it('应该允许在限制内的请求', async () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
-        maxRequests: 10
+        maxRequests: 10,
       });
 
       const request = new Request('http://example.com');
@@ -122,7 +131,7 @@ describe('RateLimitMiddleware', () => {
     it('应该拒绝超过限制的请求', async () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
-        maxRequests: 2
+        maxRequests: 2,
       });
 
       const request = new Request('http://example.com');
@@ -142,7 +151,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
         maxRequests: 5,
-        keyGenerator: customKeyGenerator
+        keyGenerator: customKeyGenerator,
       });
 
       const request = new Request('http://example.com');
@@ -159,7 +168,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
         maxRequests: 5,
-        keyGenerator: errorKeyGenerator
+        keyGenerator: errorKeyGenerator,
       });
 
       const request = new Request('http://example.com');
@@ -172,7 +181,7 @@ describe('RateLimitMiddleware', () => {
     it('应该正确计算剩余请求数', async () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
-        maxRequests: 10
+        maxRequests: 10,
       });
 
       const request = new Request('http://example.com');
@@ -192,11 +201,11 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.byIp(60000, 5);
 
       const request1 = new Request('http://example.com', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       const request2 = new Request('http://example.com', {
-        headers: { 'x-forwarded-for': '192.168.1.2' }
+        headers: { 'x-forwarded-for': '192.168.1.2' },
       });
 
       const result1 = await middleware(request1);
@@ -210,7 +219,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.byIp(60000, 5);
 
       const request = new Request('http://example.com', {
-        headers: { 'x-forwarded-for': '192.168.1.1, 10.0.0.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1, 10.0.0.1' },
       });
 
       await middleware(request);
@@ -225,7 +234,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.byIp(60000, 5);
 
       const request = new Request('http://example.com', {
-        headers: { 'x-real-ip': '192.168.1.1' }
+        headers: { 'x-real-ip': '192.168.1.1' },
       });
 
       await middleware(request);
@@ -240,7 +249,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.byIp(60000, 5);
 
       const request = new Request('http://example.com', {
-        headers: { 'cf-connecting-ip': '192.168.1.1' }
+        headers: { 'cf-connecting-ip': '192.168.1.1' },
       });
 
       await middleware(request);
@@ -281,7 +290,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.byUser(60000, 5);
 
       const requestWithoutUser = new Request('http://example.com', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       const result = await middleware(requestWithoutUser);
@@ -295,7 +304,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.strict(60000, 5);
 
       const requestWithUser = new Request('http://example.com/api/test', {
-        method: 'POST'
+        method: 'POST',
       }) as any;
       requestWithUser.user = { id: 'user123' };
 
@@ -309,7 +318,7 @@ describe('RateLimitMiddleware', () => {
 
       const requestWithoutUser = new Request('http://example.com/api/test', {
         method: 'POST',
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       const result = await middleware(requestWithoutUser);
@@ -328,7 +337,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.login();
 
       const request = new Request('http://example.com/login?email=test@example.com', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       const result = await middleware(request);
@@ -341,7 +350,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.login();
 
       const request = new Request('http://example.com/login?email=test@example.com', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       for (let i = 0; i < 5; i++) {
@@ -358,7 +367,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.login();
 
       const request = new Request('http://example.com/login', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       await middleware(request);
@@ -375,7 +384,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.register();
 
       const request = new Request('http://example.com/register', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       const result = await middleware(request);
@@ -388,7 +397,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.register();
 
       const request = new Request('http://example.com/register', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       for (let i = 0; i < 3; i++) {
@@ -408,7 +417,7 @@ describe('RateLimitMiddleware', () => {
         success: true,
         limit: 10,
         remaining: 5,
-        resetTime: Date.now() + 60000
+        resetTime: Date.now() + 60000,
       };
 
       const headers = rateLimit.createHeaders(result);
@@ -423,7 +432,7 @@ describe('RateLimitMiddleware', () => {
         success: false,
         limit: 10,
         remaining: 0,
-        resetTime: Date.now() + 30000
+        resetTime: Date.now() + 30000,
       };
 
       const headers = rateLimit.createHeaders(result);
@@ -438,7 +447,7 @@ describe('RateLimitMiddleware', () => {
         success: true,
         limit: 10,
         remaining: 5,
-        resetTime: Date.now() + 60000
+        resetTime: Date.now() + 60000,
       };
 
       const response = rateLimit.createResponse(result);
@@ -454,7 +463,7 @@ describe('RateLimitMiddleware', () => {
         remaining: 0,
         resetTime: Date.now() + 30000,
         error: '请求过于频繁',
-        code: 'TOO_MANY_REQUESTS'
+        code: 'TOO_MANY_REQUESTS',
       };
 
       const response = rateLimit.createResponse(result);
@@ -471,11 +480,11 @@ describe('RateLimitMiddleware', () => {
         remaining: 0,
         resetTime: Date.now() + 30000,
         error: '请求过于频繁',
-        code: 'TOO_MANY_REQUESTS'
+        code: 'TOO_MANY_REQUESTS',
       };
 
       const response = rateLimit.createResponse(result);
-      const data = await response.json() as any;
+      const data = (await response.json()) as any;
 
       expect(data.success).toBe(false);
       expect(data.error).toBe('请求过于频繁');
@@ -548,7 +557,7 @@ describe('RateLimitMiddleware', () => {
     it('应该处理空请求', async () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
-        maxRequests: 10
+        maxRequests: 10,
       });
 
       const request = new Request('http://example.com');
@@ -561,7 +570,7 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.byIp(60000, 5);
 
       const request = new Request('http://example.com', {
-        headers: { 'x-forwarded-for': 'invalid-ip' }
+        headers: { 'x-forwarded-for': 'invalid-ip' },
       });
 
       const result = await middleware(request);
@@ -572,7 +581,7 @@ describe('RateLimitMiddleware', () => {
     it('应该处理maxRequests为0的情况', async () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
-        maxRequests: 0
+        maxRequests: 0,
       });
 
       const request = new Request('http://example.com');
@@ -584,7 +593,7 @@ describe('RateLimitMiddleware', () => {
     it('应该处理windowMs为0的情况', async () => {
       const middleware = rateLimit.create({
         windowMs: 0,
-        maxRequests: 10
+        maxRequests: 10,
       });
 
       const request = new Request('http://example.com');
@@ -596,7 +605,7 @@ describe('RateLimitMiddleware', () => {
     it('应该处理负数的配置', async () => {
       const middleware = rateLimit.create({
         windowMs: -1,
-        maxRequests: -1
+        maxRequests: -1,
       });
 
       const request = new Request('http://example.com');
@@ -610,12 +619,14 @@ describe('RateLimitMiddleware', () => {
     it('应该正确处理并发请求', async () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
-        maxRequests: 10
+        maxRequests: 10,
       });
 
       const request = new Request('http://example.com');
 
-      const promises = Array(5).fill(null).map(() => middleware(request));
+      const promises = Array(5)
+        .fill(null)
+        .map(() => middleware(request));
       const results = await Promise.all(promises);
 
       results.forEach(result => {
@@ -626,12 +637,14 @@ describe('RateLimitMiddleware', () => {
     it('应该在并发请求超过限制时拒绝', async () => {
       const middleware = rateLimit.create({
         windowMs: 60000,
-        maxRequests: 5
+        maxRequests: 5,
       });
 
       const request = new Request('http://example.com');
 
-      const promises = Array(10).fill(null).map(() => middleware(request));
+      const promises = Array(10)
+        .fill(null)
+        .map(() => middleware(request));
       const results = await Promise.all(promises);
 
       const successCount = results.filter(r => r.success).length;
@@ -646,7 +659,7 @@ describe('RateLimitMiddleware', () => {
     it('应该在时间窗口过期后重置计数器', async () => {
       const middleware = rateLimit.create({
         windowMs: 100,
-        maxRequests: 2
+        maxRequests: 2,
       });
 
       const request = new Request('http://example.com');
@@ -669,11 +682,11 @@ describe('RateLimitMiddleware', () => {
       const middleware = rateLimit.byIp(60000, 2);
 
       const request1 = new Request('http://example.com', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       const request2 = new Request('http://example.com', {
-        headers: { 'x-forwarded-for': '192.168.1.2' }
+        headers: { 'x-forwarded-for': '192.168.1.2' },
       });
 
       await middleware(request1);

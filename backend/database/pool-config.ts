@@ -85,7 +85,7 @@ export class DatabasePool {
    */
   private setupEventListeners(): void {
     // 连接错误
-    this.pool.on('error', (err) => {
+    this.pool.on('error', err => {
       logger.error('Unexpected error on idle client', err);
       this.isHealthy = false;
     });

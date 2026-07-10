@@ -8,20 +8,20 @@
  * @license MIT
  */
 
-import { defineComponent, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { Circle, CheckCircle, XCircle, AlertCircle, Clock } from 'lucide-vue-next'
+import { defineComponent, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { Circle, CheckCircle, XCircle, AlertCircle, Clock } from 'lucide-vue-next';
 
 export interface TimelineItem {
-  id: string | number
-  title: string
-  description?: string
-  time?: string
-  icon?: any
-  color?: 'default' | 'primary' | 'success' | 'warning' | 'danger'
-  status?: 'default' | 'success' | 'error' | 'warning' | 'processing'
-  extra?: any
-  dot?: any
+  id: string | number;
+  title: string;
+  description?: string;
+  time?: string;
+  icon?: any;
+  color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
+  status?: 'default' | 'success' | 'error' | 'warning' | 'processing';
+  extra?: any;
+  dot?: any;
 }
 
 export const Timeline = defineComponent({
@@ -59,110 +59,104 @@ export const Timeline = defineComponent({
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'text-sm'
+          return 'text-sm';
         case 'lg':
-          return 'text-lg'
+          return 'text-lg';
         default:
-          return 'text-base'
+          return 'text-base';
       }
-    })
+    });
 
     const dotSize = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'w-3 h-3'
+          return 'w-3 h-3';
         case 'lg':
-          return 'w-5 h-5'
+          return 'w-5 h-5';
         default:
-          return 'w-4 h-4'
+          return 'w-4 h-4';
       }
-    })
+    });
 
     const iconSize = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 12
+          return 12;
         case 'lg':
-          return 20
+          return 20;
         default:
-          return 16
+          return 16;
       }
-    })
+    });
 
     const getIconByStatus = (status?: string) => {
       switch (status) {
         case 'success':
-          return CheckCircle
+          return CheckCircle;
         case 'error':
-          return XCircle
+          return XCircle;
         case 'warning':
-          return AlertCircle
+          return AlertCircle;
         case 'processing':
-          return Clock
+          return Clock;
         default:
-          return Circle
+          return Circle;
       }
-    }
+    };
 
     const getColorByColor = (color?: string) => {
       switch (color) {
         case 'primary':
-          return 'bg-primary-600 border-primary-600'
+          return 'bg-primary-600 border-primary-600';
         case 'success':
-          return 'bg-success-600 border-success-600'
+          return 'bg-success-600 border-success-600';
         case 'warning':
-          return 'bg-warning-600 border-warning-600'
+          return 'bg-warning-600 border-warning-600';
         case 'danger':
-          return 'bg-danger-600 border-danger-600'
+          return 'bg-danger-600 border-danger-600';
         default:
-          return 'bg-neutral-300 border-neutral-300'
+          return 'bg-neutral-300 border-neutral-300';
       }
-    }
+    };
 
     const getColorByStatus = (status?: string) => {
       switch (status) {
         case 'success':
-          return 'bg-success-600 border-success-600'
+          return 'bg-success-600 border-success-600';
         case 'error':
-          return 'bg-danger-600 border-danger-600'
+          return 'bg-danger-600 border-danger-600';
         case 'warning':
-          return 'bg-warning-600 border-warning-600'
+          return 'bg-warning-600 border-warning-600';
         case 'processing':
-          return 'bg-primary-600 border-primary-600'
+          return 'bg-primary-600 border-primary-600';
         default:
-          return 'bg-neutral-300 border-neutral-300'
+          return 'bg-neutral-300 border-neutral-300';
       }
-    }
+    };
 
     const handleClick = (item: TimelineItem, index: number) => {
-      emit('click', item, index)
-    }
+      emit('click', item, index);
+    };
 
     const displayItems = computed(() => {
-      let items = [...props.items]
+      let items = [...props.items];
       if (props.pending && props.pendingDot) {
         items.push({
           id: 'pending',
           title: '进行中',
           status: 'processing',
           dot: props.pendingDot,
-        })
+        });
       }
-      return props.reverse ? items.reverse() : items
-    })
+      return props.reverse ? items.reverse() : items;
+    });
 
     return () => (
-      <div
-        class={cn(
-          'relative',
-          sizeClasses.value,
-          props.mode === 'vertical' && 'space-y-6'
-        )}
-      >
+      <div class={cn('relative', sizeClasses.value, props.mode === 'vertical' && 'space-y-6')}>
         {displayItems.value.map((item, index) => {
-          const IconComponent = item.icon || getIconByStatus(item.status)
-          const dotColor = item.color ? getColorByColor(item.color) : getColorByStatus(item.status)
-          const isLast = index === displayItems.value.length - 1
+          const IconComponent = item.icon || getIconByStatus(item.status);
+          const dotColor = item.color ? getColorByColor(item.color) : getColorByStatus(item.status);
+          const isLast = index === displayItems.value.length - 1;
 
           return (
             <div
@@ -172,21 +166,19 @@ export const Timeline = defineComponent({
                 props.mode === 'vertical' && 'flex-row',
                 props.mode === 'left' && 'flex-row',
                 props.mode === 'right' && 'flex-row-reverse',
-                props.mode === 'alternate' && index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                props.mode === 'alternate' && index % 2 === 0 ? 'flex-row' : 'flex-row-reverse',
               )}
               onClick={() => handleClick(item, index)}
             >
               <div class="flex-shrink-0 flex flex-col items-center">
                 {item.dot ? (
-                  <div class={cn('flex items-center justify-center', dotSize.value)}>
-                    {item.dot}
-                  </div>
+                  <div class={cn('flex items-center justify-center', dotSize.value)}>{item.dot}</div>
                 ) : (
                   <div
                     class={cn(
                       'rounded-full border-2 bg-white flex items-center justify-center',
                       dotSize.value,
-                      dotColor
+                      dotColor,
                     )}
                   >
                     {typeof IconComponent === 'function' ? (
@@ -201,7 +193,7 @@ export const Timeline = defineComponent({
                     class={cn(
                       'w-0.5 bg-neutral-200',
                       props.mode === 'vertical' && 'flex-1',
-                      props.mode !== 'vertical' && 'h-full absolute left-1/2 -translate-x-1/2 top-8'
+                      props.mode !== 'vertical' && 'h-full absolute left-1/2 -translate-x-1/2 top-8',
                     )}
                   />
                 )}
@@ -212,29 +204,21 @@ export const Timeline = defineComponent({
                   props.mode === 'vertical' && 'pt-1',
                   props.mode === 'left' && 'text-left',
                   props.mode === 'right' && 'text-right',
-                  props.mode === 'alternate' && index % 2 === 0 ? 'text-left' : 'text-right'
+                  props.mode === 'alternate' && index % 2 === 0 ? 'text-left' : 'text-right',
                 )}
               >
                 <div class="font-medium text-neutral-900">{item.title}</div>
-                {item.description && (
-                  <div class="text-sm text-neutral-600 mt-1">{item.description}</div>
-                )}
-                {item.time && (
-                  <div class="text-xs text-neutral-500 mt-1">{item.time}</div>
-                )}
-                {item.extra && (
-                  <div class="mt-2">
-                    {item.extra}
-                  </div>
-                )}
+                {item.description && <div class="text-sm text-neutral-600 mt-1">{item.description}</div>}
+                {item.time && <div class="text-xs text-neutral-500 mt-1">{item.time}</div>}
+                {item.extra && <div class="mt-2">{item.extra}</div>}
               </div>
             </div>
-          )
+          );
         })}
       </div>
-    )
+    );
   },
-})
+});
 
 export const TimelineItem = defineComponent({
   name: 'TimelineItem',
@@ -275,19 +259,14 @@ export const TimelineItem = defineComponent({
   emits: ['click'],
   setup(props, { emit, attrs }) {
     const handleClick = () => {
-      emit('click')
-    }
+      emit('click');
+    };
 
     return () => (
-      <div
-        class={cn('relative flex gap-4 flex-row', attrs.class as string)}
-        onClick={handleClick}
-      >
+      <div class={cn('relative flex gap-4 flex-row', attrs.class as string)} onClick={handleClick}>
         <div class="flex-shrink-0 flex flex-col items-center">
           {props.dot ? (
-            <div class="flex items-center justify-center w-4 h-4">
-              {props.dot}
-            </div>
+            <div class="flex items-center justify-center w-4 h-4">{props.dot}</div>
           ) : (
             <div
               class={cn(
@@ -301,7 +280,7 @@ export const TimelineItem = defineComponent({
                 props.status === 'error' && 'bg-danger-600 border-danger-600',
                 props.status === 'warning' && 'bg-warning-600 border-warning-600',
                 props.status === 'processing' && 'bg-primary-600 border-primary-600',
-                props.status === 'default' && 'bg-neutral-300 border-neutral-300'
+                props.status === 'default' && 'bg-neutral-300 border-neutral-300',
               )}
             >
               {props.icon && <props.icon size={16} class="text-white" />}
@@ -310,19 +289,11 @@ export const TimelineItem = defineComponent({
         </div>
         <div class="flex-1 pb-2 pt-1">
           <div class="font-medium text-neutral-900">{props.title}</div>
-          {props.description && (
-            <div class="text-sm text-neutral-600 mt-1">{props.description}</div>
-          )}
-          {props.time && (
-            <div class="text-xs text-neutral-500 mt-1">{props.time}</div>
-          )}
-          {props.extra && (
-            <div class="mt-2">
-              {props.extra}
-            </div>
-          )}
+          {props.description && <div class="text-sm text-neutral-600 mt-1">{props.description}</div>}
+          {props.time && <div class="text-xs text-neutral-500 mt-1">{props.time}</div>}
+          {props.extra && <div class="mt-2">{props.extra}</div>}
         </div>
       </div>
-    )
+    );
   },
-})
+});

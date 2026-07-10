@@ -8,29 +8,22 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cva, type VariantProps } from 'class-variance-authority'
-import { cn } from '@/utils/cn'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/utils/cn';
 
 const badgeVariants = cva(
   'inline-flex items-center justify-center rounded-md border px-2.5 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 transition-[color,box-shadow] overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2',
   {
     variants: {
       variant: {
-        default:
-          'border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
-        secondary:
-          'border-transparent bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500',
-        success:
-          'border-transparent bg-success-600 text-white hover:bg-success-700 focus:ring-success-500',
-        warning:
-          'border-transparent bg-warning-600 text-white hover:bg-warning-700 focus:ring-warning-500',
-        danger:
-          'border-transparent bg-danger-600 text-white hover:bg-danger-700 focus:ring-danger-500',
-        outline:
-          'border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
-        ghost:
-          'bg-transparent text-neutral-700 hover:bg-neutral-100 focus:ring-neutral-500',
+        default: 'border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
+        secondary: 'border-transparent bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500',
+        success: 'border-transparent bg-success-600 text-white hover:bg-success-700 focus:ring-success-500',
+        warning: 'border-transparent bg-warning-600 text-white hover:bg-warning-700 focus:ring-warning-500',
+        danger: 'border-transparent bg-danger-600 text-white hover:bg-danger-700 focus:ring-danger-500',
+        outline: 'border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
+        ghost: 'bg-transparent text-neutral-700 hover:bg-neutral-100 focus:ring-neutral-500',
       },
       size: {
         sm: 'px-2 py-0.5 text-xs',
@@ -50,10 +43,10 @@ const badgeVariants = cva(
       size: 'md',
       rounded: 'md',
     },
-  }
-)
+  },
+);
 
-type BadgeVariants = VariantProps<typeof badgeVariants>
+type BadgeVariants = VariantProps<typeof badgeVariants>;
 
 export const Badge = defineComponent({
   name: 'Badge',
@@ -62,21 +55,21 @@ export const Badge = defineComponent({
       type: String as PropType<BadgeVariants['variant']>,
       default: 'default',
       validator: (value: string) => {
-        return ['default', 'secondary', 'success', 'warning', 'danger', 'outline', 'ghost'].includes(value)
+        return ['default', 'secondary', 'success', 'warning', 'danger', 'outline', 'ghost'].includes(value);
       },
     },
     size: {
       type: String as PropType<BadgeVariants['size']>,
       default: 'md',
       validator: (value: string) => {
-        return ['sm', 'md', 'lg'].includes(value)
+        return ['sm', 'md', 'lg'].includes(value);
       },
     },
     rounded: {
       type: String as PropType<BadgeVariants['rounded']>,
       default: 'md',
       validator: (value: string) => {
-        return ['none', 'sm', 'md', 'lg', 'full'].includes(value)
+        return ['none', 'sm', 'md', 'lg', 'full'].includes(value);
       },
     },
     dot: {
@@ -99,22 +92,22 @@ export const Badge = defineComponent({
   setup(props, { attrs, slots }) {
     const displayCount = computed(() => {
       if (props.count === undefined) {
-        return undefined
+        return undefined;
       }
       if (props.count === 0 && !props.showZero) {
-        return undefined
+        return undefined;
       }
-      return props.count > props.maxCount ? `${props.maxCount}+` : props.count
-    })
+      return props.count > props.maxCount ? `${props.maxCount}+` : props.count;
+    });
 
     return () => {
-      const { variant, size, rounded, dot, count, maxCount, showZero } = props
-      const classes = cn(badgeVariants({ variant, size, rounded }))
+      const { variant, size, rounded, dot, count, maxCount, showZero } = props;
+      const classes = cn(badgeVariants({ variant, size, rounded }));
 
       if (count !== undefined) {
-        const countValue = displayCount.value
+        const countValue = displayCount.value;
         if (countValue === undefined) {
-          return slots.default?.()
+          return slots.default?.();
         }
 
         return (
@@ -122,15 +115,11 @@ export const Badge = defineComponent({
             {slots.default?.()}
             {countValue !== undefined && (
               <span class={cn('absolute -top-2 -right-2', classes)}>
-                {dot ? (
-                  <span class="w-2 h-2 rounded-full bg-current" />
-                ) : (
-                  countValue
-                )}
+                {dot ? <span class="w-2 h-2 rounded-full bg-current" /> : countValue}
               </span>
             )}
           </span>
-        )
+        );
       }
 
       return (
@@ -138,7 +127,7 @@ export const Badge = defineComponent({
           {dot && <span class="w-2 h-2 rounded-full bg-current mr-1" />}
           {slots.default?.()}
         </span>
-      )
-    }
+      );
+    };
   },
-})
+});

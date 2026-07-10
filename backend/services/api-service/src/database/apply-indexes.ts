@@ -29,22 +29,22 @@ const pool = new Pool(dbConfig);
  */
 async function applyIndexes() {
   console.log('=== YYC³ 数据库索引优化 ===\n');
-  
+
   try {
     // 读取索引优化脚本
     const scriptPath = path.join(__dirname, 'optimize-indexes.sql');
     const sql = fs.readFileSync(scriptPath, 'utf8');
-    
+
     console.log('正在连接到数据库...');
     const client = await pool.connect();
-    
+
     try {
       console.log('开始执行索引优化脚本...');
       const startTime = Date.now();
-      
+
       // 执行SQL脚本
       await client.query(sql);
-      
+
       const endTime = Date.now();
       console.log(`索引优化完成！耗时: ${(endTime - startTime) / 1000}秒`);
       console.log('\n✅ 已创建以下类型索引:');
@@ -54,7 +54,6 @@ async function applyIndexes() {
       console.log('   - 订单评价和日志索引');
       console.log('   - 配送分配查询索引');
       console.log('   - 菜品选项相关索引');
-      
     } finally {
       client.release();
     }

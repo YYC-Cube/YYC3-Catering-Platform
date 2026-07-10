@@ -145,13 +145,7 @@ class DocumentRecommendationService {
    * @returns 推荐结果列表
    */
   async getRecommendations(request: RecommendationRequest): Promise<RecommendationResult[]> {
-    const {
-      userId,
-      documentId,
-      strategy = RecommendationStrategy.HYBRID,
-      limit = 10,
-      filters,
-    } = request;
+    const { userId, documentId, strategy = RecommendationStrategy.HYBRID, limit = 10, filters } = request;
 
     try {
       let recommendations: RecommendationResult[] = [];
@@ -162,11 +156,7 @@ class DocumentRecommendationService {
           recommendations = await this.getContentBasedRecommendations(userId!, limit, filters);
           break;
         case RecommendationStrategy.COLLABORATIVE_FILTERING:
-          recommendations = await this.getCollaborativeFilteringRecommendations(
-            userId!,
-            limit,
-            filters
-          );
+          recommendations = await this.getCollaborativeFilteringRecommendations(userId!, limit, filters);
           break;
         case RecommendationStrategy.HYBRID:
           recommendations = await this.getHybridRecommendations(userId!, limit, filters);
@@ -252,7 +242,7 @@ class DocumentRecommendationService {
   private async getContentBasedRecommendations(
     userId: string,
     limit: number,
-    filters?: RecommendationRequest['filters']
+    filters?: RecommendationRequest['filters'],
   ): Promise<RecommendationResult[]> {
     // 获取用户偏好
     const preference = await this.getUserPreference(userId);
@@ -266,7 +256,7 @@ class DocumentRecommendationService {
     for (const doc of allDocuments) {
       // 跳过用户已查看的文档
       const userActions = this.userActions.get(userId) || [];
-      const viewedDocIds = userActions.map((a) => a.documentId);
+      const viewedDocIds = userActions.map(a => a.documentId);
       if (viewedDocIds.includes(doc.id)) {
         continue;
       }
@@ -283,7 +273,7 @@ class DocumentRecommendationService {
 
       // 标签匹配
       if (doc.tags) {
-        const matchedTags = doc.tags.filter((tag) => preference.preferredTags.includes(tag));
+        const matchedTags = doc.tags.filter(tag => preference.preferredTags.includes(tag));
         if (matchedTags.length > 0) {
           score += (matchedTags.length / doc.tags.length) * 0.3;
           reasons.push(`包含您感兴趣的标签: ${matchedTags.join(', ')}`);
@@ -292,7 +282,7 @@ class DocumentRecommendationService {
 
       // 关键词匹配
       const keywords = this.extractKeywords(doc.content);
-      const matchedKeywords = keywords.filter((kw) => preference.preferredKeywords.includes(kw));
+      const matchedKeywords = keywords.filter(kw => preference.preferredKeywords.includes(kw));
       if (matchedKeywords.length > 0) {
         score += (matchedKeywords.length / keywords.length) * 0.3;
         reasons.push(`包含相关关键词: ${matchedKeywords.slice(0, 3).join(', ')}`);
@@ -327,7 +317,7 @@ class DocumentRecommendationService {
   private async getCollaborativeFilteringRecommendations(
     userId: string,
     limit: number,
-    filters?: RecommendationRequest['filters']
+    filters?: RecommendationRequest['filters'],
   ): Promise<RecommendationResult[]> {
     // 获取用户行为
     const userActions = this.userActions.get(userId) || [];
@@ -337,7 +327,7 @@ class DocumentRecommendationService {
     }
 
     // 获取用户查看的文档ID
-    const viewedDocIds = userActions.map((a) => a.documentId);
+    const viewedDocIds = userActions.map(a => a.documentId);
 
     // 找到相似用户
     const similarUsers = await this.findSimilarUsers(userId);
@@ -373,7 +363,7 @@ class DocumentRecommendationService {
     const allDocuments = await documentRepository.findAll();
 
     for (const [documentId, data] of recommendedDocs.entries()) {
-      const doc = allDocuments.find((d) => d.id === documentId);
+      const doc = allDocuments.find(d => d.id === documentId);
       if (doc) {
         recommendations.push({
           documentId,
@@ -403,17 +393,13 @@ class DocumentRecommendationService {
   private async getHybridRecommendations(
     userId: string,
     limit: number,
-    filters?: RecommendationRequest['filters']
+    filters?: RecommendationRequest['filters'],
   ): Promise<RecommendationResult[]> {
     // 获取基于内容的推荐
     const contentBasedRecs = await this.getContentBasedRecommendations(userId, limit * 2, filters);
 
     // 获取协同过滤推荐
-    const collaborativeRecs = await this.getCollaborativeFilteringRecommendations(
-      userId,
-      limit * 2,
-      filters
-    );
+    const collaborativeRecs = await this.getCollaborativeFilteringRecommendations(userId, limit * 2, filters);
 
     // 合并推荐结果
     const combinedRecs = new Map<string, RecommendationResult>();
@@ -453,7 +439,7 @@ class DocumentRecommendationService {
     recommendations.sort((a, b) => b.score - a.score);
 
     // 更新推荐策略
-    recommendations.forEach((rec) => {
+    recommendations.forEach(rec => {
       rec.strategy = RecommendationStrategy.HYBRID;
     });
 
@@ -468,7 +454,7 @@ class DocumentRecommendationService {
    */
   private async getPopularRecommendations(
     limit: number,
-    filters?: RecommendationRequest['filters']
+    filters?: RecommendationRequest['filters'],
   ): Promise<RecommendationResult[]> {
     // 统计每个文档的访问次数
     const docStats = new Map<string, { views: number; downloads: number; likes: number }>();
@@ -498,7 +484,7 @@ class DocumentRecommendationService {
     const allDocuments = await documentRepository.findAll();
 
     for (const [documentId, stats] of docStats.entries()) {
-      const doc = allDocuments.find((d) => d.id === documentId);
+      const doc = allDocuments.find(d => d.id === documentId);
       if (doc) {
         // 计算热度分数
         const score = stats.views * 1 + stats.downloads * 3 + stats.likes * 5;
@@ -529,7 +515,7 @@ class DocumentRecommendationService {
    */
   private async getLatestRecommendations(
     limit: number,
-    filters?: RecommendationRequest['filters']
+    filters?: RecommendationRequest['filters'],
   ): Promise<RecommendationResult[]> {
     // 获取所有文档
     const allDocuments = await documentRepository.findAll();
@@ -542,7 +528,7 @@ class DocumentRecommendationService {
     });
 
     // 转换为推荐结果
-    const recommendations: RecommendationResult[] = sortedDocs.map((doc) => ({
+    const recommendations: RecommendationResult[] = sortedDocs.map(doc => ({
       documentId: doc.id,
       title: doc.title,
       score: 1, // 最新文档分数相同
@@ -565,14 +551,14 @@ class DocumentRecommendationService {
   private async getSimilarRecommendations(
     documentId: string,
     limit: number,
-    filters?: RecommendationRequest['filters']
+    filters?: RecommendationRequest['filters'],
   ): Promise<RecommendationResult[]> {
     // 使用相似度服务查找相似文档
     const similarDocs = await documentSimilarityService.findSimilarDocuments(
       documentId,
       0.3,
       limit,
-      SimilarityMethod.COSINE
+      SimilarityMethod.COSINE,
     );
 
     // 转换为推荐结果
@@ -580,7 +566,7 @@ class DocumentRecommendationService {
     const recommendations: RecommendationResult[] = [];
 
     for (const similarDoc of similarDocs) {
-      const doc = allDocuments.find((d) => d.id === similarDoc.documentId2);
+      const doc = allDocuments.find(d => d.id === similarDoc.documentId2);
       if (doc) {
         recommendations.push({
           documentId: doc.id,
@@ -603,11 +589,9 @@ class DocumentRecommendationService {
    * @param userId 用户ID
    * @returns 相似用户列表
    */
-  private async findSimilarUsers(
-    userId: string
-  ): Promise<Array<{ userId: string; similarity: number }>> {
+  private async findSimilarUsers(userId: string): Promise<Array<{ userId: string; similarity: number }>> {
     const targetActions = this.userActions.get(userId) || [];
-    const targetDocIds = new Set(targetActions.map((a) => a.documentId));
+    const targetDocIds = new Set(targetActions.map(a => a.documentId));
 
     const similarUsers: Array<{ userId: string; similarity: number }> = [];
 
@@ -616,10 +600,10 @@ class DocumentRecommendationService {
         continue;
       }
 
-      const otherDocIds = new Set(otherActions.map((a) => a.documentId));
+      const otherDocIds = new Set(otherActions.map(a => a.documentId));
 
       // 计算Jaccard相似度
-      const intersection = new Set([...targetDocIds].filter((id) => otherDocIds.has(id)));
+      const intersection = new Set([...targetDocIds].filter(id => otherDocIds.has(id)));
       const union = new Set([...targetDocIds, ...otherDocIds]);
 
       const similarity = union.size > 0 ? intersection.size / union.size : 0;
@@ -694,17 +678,17 @@ class DocumentRecommendationService {
     const preferredCategories = Array.from(categoryCount.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
-      .map((entry) => entry[0]);
+      .map(entry => entry[0]);
 
     const preferredTags = Array.from(tagCount.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, 10)
-      .map((entry) => entry[0]);
+      .map(entry => entry[0]);
 
     const preferredKeywords = Array.from(keywordCount.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, 20)
-      .map((entry) => entry[0]);
+      .map(entry => entry[0]);
 
     // 计算活跃度
     const activityLevel = actions.length > 20 ? 'high' : actions.length > 5 ? 'medium' : 'low';
@@ -756,7 +740,7 @@ class DocumentRecommendationService {
     return text
       .toLowerCase()
       .split(/[\s,，。！？、\n]+/)
-      .filter((word) => word.length > 1);
+      .filter(word => word.length > 1);
   }
 
   /**
@@ -767,34 +751,32 @@ class DocumentRecommendationService {
    */
   private async applyFilters(
     recommendations: RecommendationResult[],
-    filters: RecommendationRequest['filters']
+    filters: RecommendationRequest['filters'],
   ): Promise<RecommendationResult[]> {
     let filtered = recommendations;
 
     // 分类过滤
     if (filters?.category) {
-      filtered = filtered.filter((rec) => rec.category === filters.category);
+      filtered = filtered.filter(rec => rec.category === filters.category);
     }
 
     // 标签过滤
     if (filters?.tags && filters.tags.length > 0) {
-      filtered = filtered.filter((rec) => {
+      filtered = filtered.filter(rec => {
         if (!rec.tags) return false;
-        return filters.tags!.some((tag) => rec.tags!.includes(tag));
+        return filters.tags!.some(tag => rec.tags!.includes(tag));
       });
     }
 
     // 日期范围过滤
     if (filters?.dateRange) {
       const allDocuments = await documentRepository.findAll();
-      filtered = filtered.filter((rec) => {
-        const doc = allDocuments.find((d) => d.id === rec.documentId);
+      filtered = filtered.filter(rec => {
+        const doc = allDocuments.find(d => d.id === rec.documentId);
         if (!doc || !doc.createdAt) return false;
 
         const docDate = new Date(doc.createdAt);
-        return (
-          docDate >= filters.dateRange!.start && docDate <= filters.dateRange!.end
-        );
+        return docDate >= filters.dateRange!.start && docDate <= filters.dateRange!.end;
       });
     }
 

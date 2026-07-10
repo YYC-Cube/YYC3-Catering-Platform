@@ -98,7 +98,7 @@ export interface IKeyManager {
     options?: {
       expiresAt?: Date | string;
       metadata?: Record<string, unknown>;
-    }
+    },
   ): Promise<KeyInfo>;
 
   /**
@@ -111,7 +111,7 @@ export interface IKeyManager {
     options?: {
       expiresAt?: Date | string;
       metadata?: Record<string, unknown>;
-    }
+    },
   ): Promise<void>;
 
   /**

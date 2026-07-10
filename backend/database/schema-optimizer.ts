@@ -104,11 +104,11 @@ export class SchemaOptimizer {
       'ALTER TABLE order_items ADD CONSTRAINT fk_order_items_menu FOREIGN KEY (menu_item_id) REFERENCES menu_items(id) ON DELETE RESTRICT',
 
       // 检查约束
-      'ALTER TABLE users ADD CONSTRAINT chk_users_email CHECK (email ~* \'^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$\')',
-      'ALTER TABLE users ADD CONSTRAINT chk_users_phone CHECK (phone_number ~* \'^\\+?[1-9]\\d{1,14}$\')',
+      "ALTER TABLE users ADD CONSTRAINT chk_users_email CHECK (email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')",
+      "ALTER TABLE users ADD CONSTRAINT chk_users_phone CHECK (phone_number ~* '^\\+?[1-9]\\d{1,14}$')",
       'ALTER TABLE menu_items ADD CONSTRAINT chk_menu_items_price CHECK (price >= 0)',
       'ALTER TABLE orders ADD CONSTRAINT chk_orders_total CHECK (total_amount >= 0)',
-      'ALTER TABLE orders ADD CONSTRAINT chk_orders_status CHECK (status IN (\'pending\', \'confirmed\', \'preparing\', \'ready\', \'delivering\', \'completed\', \'cancelled\'))',
+      "ALTER TABLE orders ADD CONSTRAINT chk_orders_status CHECK (status IN ('pending', 'confirmed', 'preparing', 'ready', 'delivering', 'completed', 'cancelled'))",
     ];
 
     for (const constraintSql of constraints) {
@@ -116,7 +116,8 @@ export class SchemaOptimizer {
         await this.pool.query(constraintSql);
         logger.debug(`Constraint created successfully`);
       } catch (error) {
-        if (error.code !== '42P07') { // 忽略已存在的约束
+        if (error.code !== '42P07') {
+          // 忽略已存在的约束
           logger.warn(`Failed to create constraint: ${constraintSql}`, error);
         }
       }

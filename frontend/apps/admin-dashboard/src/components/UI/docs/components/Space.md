@@ -12,8 +12,8 @@
 ### 基础用法
 
 ```tsx
-import { Space } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Space } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function SpaceBasic() {
   return (
@@ -22,15 +22,15 @@ export default function SpaceBasic() {
       <Button>按钮2</Button>
       <Button>按钮3</Button>
     </Space>
-  )
+  );
 }
 ```
 
 ### 方向
 
 ```tsx
-import { Space } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Space } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function SpaceDirection() {
   return (
@@ -46,15 +46,15 @@ export default function SpaceDirection() {
         <Button>垂直3</Button>
       </Space>
     </div>
-  )
+  );
 }
 ```
 
 ### 尺寸
 
 ```tsx
-import { Space } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Space } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function SpaceSize() {
   return (
@@ -72,15 +72,15 @@ export default function SpaceSize() {
         <Button>大间距</Button>
       </Space>
     </div>
-  )
+  );
 }
 ```
 
 ### 自定义间距
 
 ```tsx
-import { Space } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Space } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function SpaceCustomSize() {
   return (
@@ -88,15 +88,15 @@ export default function SpaceCustomSize() {
       <Button>自定义间距</Button>
       <Button>自定义间距</Button>
     </Space>
-  )
+  );
 }
 ```
 
 ### 对齐
 
 ```tsx
-import { Space } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Space } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function SpaceAlign() {
   return (
@@ -114,15 +114,15 @@ export default function SpaceAlign() {
         <Button>结束对齐</Button>
       </Space>
     </div>
-  )
+  );
 }
 ```
 
 ### 换行
 
 ```tsx
-import { Space } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Space } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function SpaceWrap() {
   return (
@@ -133,15 +133,15 @@ export default function SpaceWrap() {
       <Button>按钮4</Button>
       <Button>按钮5</Button>
     </Space>
-  )
+  );
 }
 ```
 
 ### 填充
 
 ```tsx
-import { Space } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Space } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function SpaceFill() {
   return (
@@ -150,7 +150,7 @@ export default function SpaceFill() {
       <Button>按钮2</Button>
       <Button>按钮3</Button>
     </Space>
-  )
+  );
 }
 ```
 
@@ -158,14 +158,14 @@ export default function SpaceFill() {
 
 ### Space Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| direction | 方向 | `string` | `horizontal` / `vertical` | `horizontal` |
-| size | 间距大小 | `string \| number` | `sm` / `md` / `lg` | `md` |
-| align | 对齐方式 | `string` | `start` / `center` / `end` | `start` |
-| wrap | 是否换行 | `boolean` | `false` |
-| fill | 是否填充 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型               | 默认值                     |
+| --------- | ---------- | ------------------ | -------------------------- | ------------ |
+| direction | 方向       | `string`           | `horizontal` / `vertical`  | `horizontal` |
+| size      | 间距大小   | `string \| number` | `sm` / `md` / `lg`         | `md`         |
+| align     | 对齐方式   | `string`           | `start` / `center` / `end` | `start`      |
+| wrap      | 是否换行   | `boolean`          | `false`                    |
+| fill      | 是否填充   | `boolean`          | `false`                    |
+| className | 自定义类名 | `string`           | -                          |
 
 ## 样式定制
 
@@ -211,7 +211,9 @@ export default function SpaceFill() {
 <Space>
   <Button onClick={handleReset}>重置</Button>
   <Button onClick={handleCancel}>取消</Button>
-  <Button type="primary" onClick={handleSubmit}>提交</Button>
+  <Button type="primary" onClick={handleSubmit}>
+    提交
+  </Button>
 </Space>
 ```
 
@@ -221,7 +223,9 @@ export default function SpaceFill() {
 <Space>
   <Button onClick={handleEdit}>编辑</Button>
   <Button onClick={handleCopy}>复制</Button>
-  <Button type="danger" onClick={handleDelete}>删除</Button>
+  <Button type="danger" onClick={handleDelete}>
+    删除
+  </Button>
 </Space>
 ```
 

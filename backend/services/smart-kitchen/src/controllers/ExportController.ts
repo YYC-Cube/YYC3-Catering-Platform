@@ -32,7 +32,7 @@ export class ExportController {
 
   constructor(
     private orderService: OrderService,
-    private dishRepository: DishRepository
+    private dishRepository: DishRepository,
   ) {
     this.router = Router();
   }
@@ -40,7 +40,7 @@ export class ExportController {
   async exportDashboardData(req: Request, res: Response) {
     try {
       const { format, filters }: ExportRequest = req.body;
-      
+
       // SECURITY FIX: Validate format parameter
       const allowedFormats = ['excel', 'pdf', 'csv'];
       if (!format || !allowedFormats.includes(format)) {
@@ -48,62 +48,61 @@ export class ExportController {
           success: false,
           data: null,
           message: 'Invalid export format. Allowed formats: excel, pdf, csv',
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
       }
-      
+
       // 获取订单数据
       const orderQueue = await this.orderService.getOrderQueue('', 'all', 10000, 0);
-      
+
       // 获取菜品数据
       const dishes = await this.dishRepository.findAll();
-      
+
       // 根据格式处理导出数据
       let exportData: any;
       let contentType: string;
       let filename: string;
-      
+
       // SECURITY FIX: Generate safe filename with timestamp
       const timestamp = Date.now();
-      
+
       switch (format) {
         case 'excel':
           exportData = this.generateExcelData(orderQueue.orders, dishes);
           contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
           filename = `dashboard-export-${timestamp}.xlsx`;
           break;
-          
+
         case 'pdf':
           exportData = this.generatePdfData(orderQueue.orders, dishes);
           contentType = 'application/pdf';
           filename = `dashboard-export-${timestamp}.pdf`;
           break;
-          
+
         case 'csv':
           exportData = this.generateCsvData(orderQueue.orders, dishes);
           contentType = 'text/csv';
           filename = `dashboard-export-${timestamp}.csv`;
           break;
-          
+
         default:
           throw new Error('不支持的导出格式');
       }
-      
+
       // SECURITY FIX: Properly escape filename in Content-Disposition header
       const escapedFilename = filename.replace(/["\\]/g, '\\$&');
       res.setHeader('Content-Type', contentType);
       res.setHeader('Content-Disposition', `attachment; filename="${escapedFilename}"`);
-      
+
       // 返回导出数据
       res.send(exportData);
-      
     } catch (error) {
       console.error('Export dashboard data error:', error);
       res.status(500).json({
         success: false,
         data: null,
         message: 'Failed to export dashboard data',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }
@@ -120,8 +119,8 @@ export class ExportController {
             创建时间: order.createdAt,
             更新时间: order.updatedAt,
             菜品数量: order.dishes?.length || 0,
-            优先级: order.priority || 'medium'
-          }))
+            优先级: order.priority || 'medium',
+          })),
         },
         {
           name: '菜品数据',
@@ -130,12 +129,12 @@ export class ExportController {
             名称: dish.name,
             类别: dish.category,
             价格: dish.price,
-            描述: dish.description
-          }))
-        }
-      ]
+            描述: dish.description,
+          })),
+        },
+      ],
     };
-    
+
     return JSON.stringify(workbook);
   }
 
@@ -151,19 +150,19 @@ export class ExportController {
             总订单数: orders.length,
             进行中订单: orders.filter(o => o.status === 'in_progress').length,
             待处理订单: orders.filter(o => o.status === 'pending').length,
-            已完成订单: orders.filter(o => o.status === 'completed').length
-          }
+            已完成订单: orders.filter(o => o.status === 'completed').length,
+          },
         },
         {
           title: '菜品统计',
           content: {
             总菜品数: dishes.length,
-            平均价格: dishes.reduce((sum, d) => sum + d.price, 0) / dishes.length
-          }
-        }
-      ]
+            平均价格: dishes.reduce((sum, d) => sum + d.price, 0) / dishes.length,
+          },
+        },
+      ],
     };
-    
+
     return JSON.stringify(pdfContent);
   }
 
@@ -176,15 +175,12 @@ export class ExportController {
       order.createdAt,
       order.updatedAt,
       order.dishes?.length || 0,
-      order.priority || 'medium'
+      order.priority || 'medium',
     ]);
-    
+
     // 转换为CSV字符串
-    const csvContent = [
-      csvHeaders.join(','),
-      ...csvRows.map(row => row.join(','))
-    ].join('\n');
-    
+    const csvContent = [csvHeaders.join(','), ...csvRows.map(row => row.join(','))].join('\n');
+
     return csvContent;
   }
 }

@@ -32,9 +32,9 @@
     "winston-daily-rotate-file": "^5.0.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.3",
-          "amqplib": "^0.10.4",
-          "redis": "^5.10.0",
-          "reflect-metadata": "^0.2.2"
+    "amqplib": "^0.10.4",
+    "redis": "^5.10.0",
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",

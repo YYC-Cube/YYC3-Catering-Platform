@@ -7,9 +7,9 @@
  * @version 1.0.0
  */
 
-import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs'
-import { join, dirname } from 'path'
-import { execSync } from 'child_process'
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
+import { execSync } from 'child_process';
 
 // 配置
 const CONFIG = {
@@ -17,15 +17,15 @@ const CONFIG = {
   outputDir: join(process.cwd(), 'docs', 'api', 'generated'),
   formats: ['html', 'markdown', 'pdf'] as const,
   serverPort: 3001,
-  serverHost: 'localhost'
-}
+  serverHost: 'localhost',
+};
 
 /**
  * 确保输出目录存在
  */
 function ensureOutputDir(): void {
   if (!existsSync(CONFIG.outputDir)) {
-    mkdirSync(CONFIG.outputDir, { recursive: true })
+    mkdirSync(CONFIG.outputDir, { recursive: true });
   }
 }
 
@@ -33,7 +33,7 @@ function ensureOutputDir(): void {
  * 生成HTML格式文档
  */
 function generateHtmlDocs(): void {
-  console.log('生成HTML格式文档...')
+  console.log('生成HTML格式文档...');
 
   try {
     // 创建简单的HTML文档查看器
@@ -221,19 +221,19 @@ function generateHtmlDocs(): void {
             });
     </script>
 </body>
-</html>`
+</html>`;
 
-    const htmlFilePath = join(CONFIG.outputDir, 'index.html')
-    writeFileSync(htmlFilePath, htmlContent)
+    const htmlFilePath = join(CONFIG.outputDir, 'index.html');
+    writeFileSync(htmlFilePath, htmlContent);
 
     // 复制OpenAPI文件
-    const yamlFilePath = join(CONFIG.outputDir, 'openapi.yaml')
-    const yamlContent = readFileSync(CONFIG.openApiPath, 'utf8')
-    writeFileSync(yamlFilePath, yamlContent)
+    const yamlFilePath = join(CONFIG.outputDir, 'openapi.yaml');
+    const yamlContent = readFileSync(CONFIG.openApiPath, 'utf8');
+    writeFileSync(yamlFilePath, yamlContent);
 
-    console.log('✓ HTML文档生成完成:', htmlFilePath)
+    console.log('✓ HTML文档生成完成:', htmlFilePath);
   } catch (error) {
-    console.error('生成HTML文档失败:', error)
+    console.error('生成HTML文档失败:', error);
   }
 }
 
@@ -241,7 +241,7 @@ function generateHtmlDocs(): void {
  * 生成Markdown格式文档
  */
 function generateMarkdownDocs(): void {
-  console.log('生成Markdown格式文档...')
+  console.log('生成Markdown格式文档...');
 
   try {
     const markdownContent = `
@@ -580,14 +580,14 @@ POST /payment/configs
 ---
 
 © 2024 YYC³餐饮行业智能化平台. All rights reserved.
-`
+`;
 
-    const markdownFilePath = join(CONFIG.outputDir, 'README.md')
-    writeFileSync(markdownFilePath, markdownContent)
+    const markdownFilePath = join(CONFIG.outputDir, 'README.md');
+    writeFileSync(markdownFilePath, markdownContent);
 
-    console.log('✓ Markdown文档生成完成:', markdownFilePath)
+    console.log('✓ Markdown文档生成完成:', markdownFilePath);
   } catch (error) {
-    console.error('生成Markdown文档失败:', error)
+    console.error('生成Markdown文档失败:', error);
   }
 }
 
@@ -595,8 +595,8 @@ POST /payment/configs
  * 启动本地文档服务器
  */
 function startDocServer(): void {
-  console.log(`启动文档服务器...`)
-  console.log(`访问地址: http://${CONFIG.serverHost}:${CONFIG.serverPort}`)
+  console.log(`启动文档服务器...`);
+  console.log(`访问地址: http://${CONFIG.serverHost}:${CONFIG.serverPort}`);
 
   try {
     const serverScript = `
@@ -631,15 +631,15 @@ const server = serve({
 console.log(\`📖 YYC³ API文档服务器已启动\`);
 console.log(\`🌐 访问地址: http://${CONFIG.serverHost}:${CONFIG.serverPort}\`);
 console.log(\`⏹️  按 Ctrl+C 停止服务器\`);
-`
+`;
 
-    const serverFilePath = join(CONFIG.outputDir, 'server.ts')
-    writeFileSync(serverFilePath, serverScript)
+    const serverFilePath = join(CONFIG.outputDir, 'server.ts');
+    writeFileSync(serverFilePath, serverScript);
 
     // 启动服务器
-    execSync(`bun run ${serverFilePath}`, { stdio: 'inherit' })
+    execSync(`bun run ${serverFilePath}`, { stdio: 'inherit' });
   } catch (error) {
-    console.error('启动文档服务器失败:', error)
+    console.error('启动文档服务器失败:', error);
   }
 }
 
@@ -647,18 +647,18 @@ console.log(\`⏹️  按 Ctrl+C 停止服务器\`);
  * 检查依赖
  */
 function checkDependencies(): void {
-  console.log('检查依赖...')
+  console.log('检查依赖...');
 
   try {
     // 检查OpenAPI文件是否存在
     if (!existsSync(CONFIG.openApiPath)) {
-      throw new Error(`OpenAPI文件不存在: ${CONFIG.openApiPath}`)
+      throw new Error(`OpenAPI文件不存在: ${CONFIG.openApiPath}`);
     }
 
-    console.log('✓ 依赖检查通过')
+    console.log('✓ 依赖检查通过');
   } catch (error) {
-    console.error('❌ 依赖检查失败:', error)
-    process.exit(1)
+    console.error('❌ 依赖检查失败:', error);
+    process.exit(1);
   }
 }
 
@@ -689,88 +689,88 @@ YYC³餐饮行业智能化平台 - API文档生成工具
   bun run docs/api/generate-docs.ts generate --open
   bun run docs/api/generate-docs.ts html
   bun run docs/api/generate-docs.ts server --port 8080
-`)
+`);
 }
 
 /**
  * 主函数
  */
 async function main(): Promise<void> {
-  const command = process.argv[2]
-  const openBrowser = process.argv.includes('--open')
+  const command = process.argv[2];
+  const openBrowser = process.argv.includes('--open');
 
   // 解析端口号
-  const portIndex = process.argv.indexOf('--port')
+  const portIndex = process.argv.indexOf('--port');
   if (portIndex !== -1) {
-    const port = parseInt(process.argv[portIndex + 1])
+    const port = parseInt(process.argv[portIndex + 1]);
     if (!isNaN(port)) {
-      CONFIG.serverPort = port
+      CONFIG.serverPort = port;
     }
   }
 
   // 解析主机名
-  const hostIndex = process.argv.indexOf('--host')
+  const hostIndex = process.argv.indexOf('--host');
   if (hostIndex !== -1) {
-    const host = process.argv[hostIndex + 1]
+    const host = process.argv[hostIndex + 1];
     if (host) {
-      CONFIG.serverHost = host
+      CONFIG.serverHost = host;
     }
   }
 
   switch (command) {
     case 'generate':
-      checkDependencies()
-      ensureOutputDir()
-      generateHtmlDocs()
-      generateMarkdownDocs()
-      console.log('✅ 所有文档生成完成!')
-      console.log(`📁 文档输出目录: ${CONFIG.outputDir}`)
+      checkDependencies();
+      ensureOutputDir();
+      generateHtmlDocs();
+      generateMarkdownDocs();
+      console.log('✅ 所有文档生成完成!');
+      console.log(`📁 文档输出目录: ${CONFIG.outputDir}`);
 
       if (openBrowser) {
-        execSync(`open http://${CONFIG.serverHost}:${CONFIG.serverPort}`)
+        execSync(`open http://${CONFIG.serverHost}:${CONFIG.serverPort}`);
       }
-      break
+      break;
 
     case 'html':
-      checkDependencies()
-      ensureOutputDir()
-      generateHtmlDocs()
-      console.log('✅ HTML文档生成完成!')
+      checkDependencies();
+      ensureOutputDir();
+      generateHtmlDocs();
+      console.log('✅ HTML文档生成完成!');
 
       if (openBrowser) {
-        execSync(`open http://${CONFIG.serverHost}:${CONFIG.serverPort}`)
+        execSync(`open http://${CONFIG.serverHost}:${CONFIG.serverPort}`);
       }
-      break
+      break;
 
     case 'markdown':
-      checkDependencies()
-      ensureOutputDir()
-      generateMarkdownDocs()
-      console.log('✅ Markdown文档生成完成!')
-      break
+      checkDependencies();
+      ensureOutputDir();
+      generateMarkdownDocs();
+      console.log('✅ Markdown文档生成完成!');
+      break;
 
     case 'server':
-      checkDependencies()
-      ensureOutputDir()
-      generateHtmlDocs() // 确保HTML文档存在
-      startDocServer()
-      break
+      checkDependencies();
+      ensureOutputDir();
+      generateHtmlDocs(); // 确保HTML文档存在
+      startDocServer();
+      break;
 
     case 'help':
     case '--help':
     case '-h':
-      showHelp()
-      break
+      showHelp();
+      break;
 
     default:
-      console.error('❌ 未知命令:', command)
-      showHelp()
-      process.exit(1)
+      console.error('❌ 未知命令:', command);
+      showHelp();
+      process.exit(1);
   }
 }
 
 // 运行主函数
 main().catch(error => {
-  console.error('❌ 文档生成失败:', error)
-  process.exit(1)
-})
+  console.error('❌ 文档生成失败:', error);
+  process.exit(1);
+});

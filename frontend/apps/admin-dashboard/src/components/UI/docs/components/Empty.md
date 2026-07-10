@@ -11,86 +11,65 @@
 ### 基础用法
 
 ```tsx
-import { Empty } from '@/components/UI'
+import { Empty } from "@/components/UI";
 
 export default function EmptyBasic() {
-  return (
-    <Empty />
-  )
+  return <Empty />;
 }
 ```
 
 ### 自定义描述
 
 ```tsx
-import { Empty } from '@/components/UI'
+import { Empty } from "@/components/UI";
 
 export default function EmptyDescription() {
-  return (
-    <Empty description="暂无数据" />
-  )
+  return <Empty description="暂无数据" />;
 }
 ```
 
 ### 自定义图片
 
 ```tsx
-import { Empty } from '@/components/UI'
+import { Empty } from "@/components/UI";
 
 export default function EmptyImage() {
-  return (
-    <Empty
-      image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      description="暂无数据"
-    />
-  )
+  return <Empty image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg" description="暂无数据" />;
 }
 ```
 
 ### 自定义内容
 
 ```tsx
-import { Empty } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Empty } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function EmptyContent() {
   return (
-    <Empty
-      description="暂无数据"
-    >
+    <Empty description="暂无数据">
       <Button type="primary">创建</Button>
     </Empty>
-  )
+  );
 }
 ```
 
 ### 无图片
 
 ```tsx
-import { Empty } from '@/components/UI'
+import { Empty } from "@/components/UI";
 
 export default function EmptyNoImage() {
-  return (
-    <Empty
-      image={Empty.PRESENTED_IMAGE_SIMPLE}
-      description="暂无数据"
-    />
-  )
+  return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />;
 }
 ```
 
 ### 简单模式
 
 ```tsx
-import { Empty } from '@/components/UI'
+import { Empty } from "@/components/UI";
 
 export default function EmptySimple() {
-  return (
-    <Empty
-      image={Empty.PRESENTED_IMAGE_SIMPLE}
-      description="暂无数据"
-    />
-  )
+  return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />;
 }
 ```
 
@@ -98,18 +77,18 @@ export default function EmptySimple() {
 
 ### Empty Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| image | 图片地址 | `string` | - |
-| description | 描述文本 | `string` | - |
-| className | 自定义类名 | `string` | - |
+| 参数        | 说明       | 类型     | 默认值 |
+| ----------- | ---------- | -------- | ------ |
+| image       | 图片地址   | `string` | -      |
+| description | 描述文本   | `string` | -      |
+| className   | 自定义类名 | `string` | -      |
 
 ### Empty 静态属性
 
-| 属性 | 说明 | 类型 |
-|------|------|------|
-| PRESENTED_IMAGE_SIMPLE | 简单模式图片 | `string` |
-| PRESENTED_IMAGE_DEFAULT | 默认图片 | `string` |
+| 属性                    | 说明         | 类型     |
+| ----------------------- | ------------ | -------- |
+| PRESENTED_IMAGE_SIMPLE  | 简单模式图片 | `string` |
+| PRESENTED_IMAGE_DEFAULT | 默认图片     | `string` |
 
 ## 样式定制
 
@@ -144,64 +123,59 @@ export default function EmptySimple() {
 ### 1. 列表空状态
 
 ```tsx
-{data.length === 0 ? (
-  <Empty description="暂无数据" />
-) : (
-  <List data={data} renderItem={renderItem} />
-)}
+{
+  data.length === 0 ? <Empty description="暂无数据" /> : <List data={data} renderItem={renderItem} />;
+}
 ```
 
 ### 2. 表格空状态
 
 ```tsx
-{data.length === 0 ? (
-  <Empty description="暂无数据" />
-) : (
-  <Table columns={columns} data={data} />
-)}
+{
+  data.length === 0 ? <Empty description="暂无数据" /> : <Table columns={columns} data={data} />;
+}
 ```
 
 ### 3. 搜索空状态
 
 ```tsx
-{searchResults.length === 0 ? (
-  <Empty
-    description="未找到相关结果"
-  >
-    <Button onClick={handleReset}>重置</Button>
-  </Empty>
-) : (
-  <List data={searchResults} renderItem={renderItem} />
-)}
+{
+  searchResults.length === 0 ? (
+    <Empty description="未找到相关结果">
+      <Button onClick={handleReset}>重置</Button>
+    </Empty>
+  ) : (
+    <List data={searchResults} renderItem={renderItem} />
+  );
+}
 ```
 
 ### 4. 权限空状态
 
 ```tsx
-{hasPermission ? (
-  <List data={data} renderItem={renderItem} />
-) : (
-  <Empty
-    description="您没有权限查看此内容"
-  >
-    <Button onClick={handleApplyPermission}>申请权限</Button>
-  </Empty>
-)}
+{
+  hasPermission ? (
+    <List data={data} renderItem={renderItem} />
+  ) : (
+    <Empty description="您没有权限查看此内容">
+      <Button onClick={handleApplyPermission}>申请权限</Button>
+    </Empty>
+  );
+}
 ```
 
 ### 5. 错误空状态
 
 ```tsx
-{error ? (
-  <Empty
-    image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-    description="加载失败"
-  >
-    <Button onClick={handleRetry}>重试</Button>
-  </Empty>
-) : (
-  <List data={data} renderItem={renderItem} />
-)}
+{
+  error ? (
+    <Empty image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg" description="加载失败">
+      <Button onClick={handleRetry}>重试</Button>
+    </Empty>
+  ) : (
+    <List data={data} renderItem={renderItem} />
+  );
+}
 ```
 
 ## 常见问题

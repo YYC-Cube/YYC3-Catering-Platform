@@ -25,26 +25,26 @@ const swaggerDefinition = {
     version: config.swagger.version,
     contact: {
       name: 'YYC³ Team',
-      email: 'support@yyc3.com'
+      email: 'support@yyc3.com',
     },
     license: {
       name: 'MIT',
-      url: 'https://opensource.org/licenses/MIT'
-    }
+      url: 'https://opensource.org/licenses/MIT',
+    },
   },
   servers: [
     {
       url: `http://${config.app.host}:${config.app.port}`,
-      description: config.app.environment === 'development' ? 'Development Server' : 'Production Server'
-    }
+      description: config.app.environment === 'development' ? 'Development Server' : 'Production Server',
+    },
   ],
   components: {
     securitySchemes: {
       BearerAuth: {
         type: 'http',
         scheme: 'bearer',
-        bearerFormat: 'JWT'
-      }
+        bearerFormat: 'JWT',
+      },
     },
     schemas: {
       Error: {
@@ -52,44 +52,44 @@ const swaggerDefinition = {
         properties: {
           success: {
             type: 'boolean',
-            example: false
+            example: false,
           },
           message: {
             type: 'string',
-            example: 'Error message'
+            example: 'Error message',
           },
           code: {
             type: 'string',
-            example: 'ERROR_CODE'
+            example: 'ERROR_CODE',
           },
           timestamp: {
             type: 'string',
             format: 'date-time',
-            example: '2023-01-01T12:00:00Z'
-          }
-        }
+            example: '2023-01-01T12:00:00Z',
+          },
+        },
       },
       SuccessResponse: {
         type: 'object',
         properties: {
           success: {
             type: 'boolean',
-            example: true
+            example: true,
           },
           message: {
             type: 'string',
-            example: 'Success message'
+            example: 'Success message',
           },
           data: {
-            type: 'object'
+            type: 'object',
           },
           timestamp: {
             type: 'string',
             format: 'date-time',
-            example: '2023-01-01T12:00:00Z'
-          }
-        }
-      }
+            example: '2023-01-01T12:00:00Z',
+          },
+        },
+      },
     },
     responses: {
       Unauthorized: {
@@ -97,98 +97,98 @@ const swaggerDefinition = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/Error'
+              $ref: '#/components/schemas/Error',
             },
             example: {
               success: false,
               message: 'Unauthorized',
               code: 'UNAUTHORIZED',
-              timestamp: '2023-01-01T12:00:00Z'
-            }
-          }
-        }
+              timestamp: '2023-01-01T12:00:00Z',
+            },
+          },
+        },
       },
       Forbidden: {
         description: 'Forbidden',
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/Error'
+              $ref: '#/components/schemas/Error',
             },
             example: {
               success: false,
               message: 'Forbidden',
               code: 'FORBIDDEN',
-              timestamp: '2023-01-01T12:00:00Z'
-            }
-          }
-        }
+              timestamp: '2023-01-01T12:00:00Z',
+            },
+          },
+        },
       },
       NotFound: {
         description: 'Not Found',
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/Error'
+              $ref: '#/components/schemas/Error',
             },
             example: {
               success: false,
               message: 'Resource not found',
               code: 'NOT_FOUND',
-              timestamp: '2023-01-01T12:00:00Z'
-            }
-          }
-        }
+              timestamp: '2023-01-01T12:00:00Z',
+            },
+          },
+        },
       },
       InternalServerError: {
         description: 'Internal Server Error',
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/Error'
+              $ref: '#/components/schemas/Error',
             },
             example: {
               success: false,
               message: 'Internal server error',
               code: 'INTERNAL_SERVER_ERROR',
-              timestamp: '2023-01-01T12:00:00Z'
-            }
-          }
-        }
-      }
-    }
+              timestamp: '2023-01-01T12:00:00Z',
+            },
+          },
+        },
+      },
+    },
   },
   security: [
     {
-      BearerAuth: []
-    }
+      BearerAuth: [],
+    },
   ],
   tags: [
     {
       name: 'Health Check',
-      description: 'API health check endpoints'
+      description: 'API health check endpoints',
     },
     {
       name: 'AI Assistant',
-      description: 'AI assistant service endpoints'
+      description: 'AI assistant service endpoints',
     },
     {
       name: 'Smart Kitchen',
-      description: 'Smart kitchen service endpoints'
+      description: 'Smart kitchen service endpoints',
     },
     {
       name: 'Chain Operation',
-      description: 'Chain operation service endpoints'
+      description: 'Chain operation service endpoints',
     },
     {
       name: 'Food Safety',
-      description: 'Food safety service endpoints'
+      description: 'Food safety service endpoints',
     },
     {
       name: 'O2O System',
-      description: 'O2O system service endpoints'
-    }
-  ]
+      description: 'O2O system service endpoints',
+    },
+  ],
 };
 
 /**
@@ -197,7 +197,7 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   // 扫描所有API文件
-  apis: ['src/**/*.ts']
+  apis: ['src/**/*.ts'],
 };
 
 /**
@@ -209,21 +209,25 @@ export const setupSwagger = (app: express.Application): void => {
     const specs = swaggerJsdoc(options);
 
     // 配置Swagger UI
-    app.use(config.swagger.path, swaggerUi.serve, swaggerUi.setup(specs, {
-      swaggerOptions: {
-        persistAuthorization: true,
-        filter: true,
-        docExpansion: 'none',
-        displayRequestDuration: true,
-        showExtensions: true,
-        showCommonExtensions: true
-      },
-      customCss: '.swagger-ui .topbar { background-color: #007bff; }'
-    }));
+    app.use(
+      config.swagger.path,
+      swaggerUi.serve,
+      swaggerUi.setup(specs, {
+        swaggerOptions: {
+          persistAuthorization: true,
+          filter: true,
+          docExpansion: 'none',
+          displayRequestDuration: true,
+          showExtensions: true,
+          showCommonExtensions: true,
+        },
+        customCss: '.swagger-ui .topbar { background-color: #007bff; }',
+      }),
+    );
 
     logger.info('Swagger documentation configured', {
       path: config.swagger.path,
-      environment: config.app.environment
+      environment: config.app.environment,
     });
   } catch (error) {
     logger.error('Failed to configure Swagger documentation', { error });

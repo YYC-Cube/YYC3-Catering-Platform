@@ -59,7 +59,11 @@ export class AutonomousAIEngine extends EventEmitter {
   /**
    * 初始化自主AI引擎
    */
-  public async initialize(config: AgentConfig, toolOrchestrator: ToolOrchestrator, contextManager: ContextManager): Promise<void> {
+  public async initialize(
+    config: AgentConfig,
+    toolOrchestrator: ToolOrchestrator,
+    contextManager: ContextManager,
+  ): Promise<void> {
     this.config = config;
     this.toolOrchestrator = toolOrchestrator;
     this.contextManager = contextManager;
@@ -133,7 +137,7 @@ export class AutonomousAIEngine extends EventEmitter {
       isTimeCritical,
       environment,
       availableResources,
-      context
+      context,
     };
   }
 
@@ -172,28 +176,28 @@ export class AutonomousAIEngine extends EventEmitter {
    */
   private generateStartActions(goal: any, tools: any[]): any[] {
     const actions: any[] = [];
-    
+
     // 根据目标类型生成具体行动
     switch (goal.type) {
       case 'order_processing':
         actions.push({
           action: 'process_order',
           parameters: { orderId: goal.data.orderId },
-          description: '处理订单'
+          description: '处理订单',
         });
         break;
       case 'inventory_management':
         actions.push({
           action: 'check_inventory',
           parameters: { itemId: goal.data.itemId },
-          description: '检查库存'
+          description: '检查库存',
         });
         break;
       case 'customer_service':
         actions.push({
           action: 'respond_to_customer',
           parameters: { customerId: goal.data.customerId, query: goal.data.query },
-          description: '响应客户查询'
+          description: '响应客户查询',
         });
         break;
       default:
@@ -201,7 +205,7 @@ export class AutonomousAIEngine extends EventEmitter {
         actions.push({
           action: 'analyze_goal',
           parameters: { goalId: goal.id },
-          description: '分析目标'
+          description: '分析目标',
         });
     }
 
@@ -213,7 +217,7 @@ export class AutonomousAIEngine extends EventEmitter {
    */
   private generateContinueActions(goal: any, tools: any[]): any[] {
     const actions: any[] = [];
-    
+
     // 根据目标进度生成继续行动
     const progress = goal.progress || { completed: 0, total: 1 };
     const completionPercentage = (progress.completed / progress.total) * 100;
@@ -222,19 +226,19 @@ export class AutonomousAIEngine extends EventEmitter {
       actions.push({
         action: 'accelerate_progress',
         parameters: { goalId: goal.id },
-        description: '加速目标进度'
+        description: '加速目标进度',
       });
     } else if (completionPercentage < 70) {
       actions.push({
         action: 'monitor_progress',
         parameters: { goalId: goal.id },
-        description: '监控目标进度'
+        description: '监控目标进度',
       });
     } else {
       actions.push({
         action: 'finalize_goal',
         parameters: { goalId: goal.id },
-        description: '完成目标'
+        description: '完成目标',
       });
     }
 
@@ -249,13 +253,13 @@ export class AutonomousAIEngine extends EventEmitter {
       {
         action: 'generate_report',
         parameters: { goalId: goal.id, type: goal.status },
-        description: '生成目标报告'
+        description: '生成目标报告',
       },
       {
         action: 'update_learning',
         parameters: { goalId: goal.id, outcome: goal.status },
-        description: '更新学习数据'
-      }
+        description: '更新学习数据',
+      },
     ];
   }
 
@@ -265,31 +269,33 @@ export class AutonomousAIEngine extends EventEmitter {
   private evaluateActions(actions: any[], context: any): any[] {
     this.logger.debug('Evaluating actions', { count: actions.length });
 
-    return actions.map(action => {
-      // 检查工具是否存在
-      const tool = this.toolOrchestrator.getToolDefinition(action.action);
-      if (!tool) {
+    return actions
+      .map(action => {
+        // 检查工具是否存在
+        const tool = this.toolOrchestrator.getToolDefinition(action.action);
+        if (!tool) {
+          return {
+            ...action,
+            confidence: 0,
+            reasoning: `Tool ${action.action} not found`,
+          };
+        }
+
+        // 评估行动的可行性和效果
+        const feasibility = this.evaluateFeasibility(action, context);
+        const expectedImpact = this.evaluateImpact(action, context);
+        const risk = this.evaluateRisk(action, context);
+
+        // 计算综合置信度
+        const confidence = feasibility * 0.4 + expectedImpact * 0.4 + (1 - risk) * 0.2;
+
         return {
           ...action,
-          confidence: 0,
-          reasoning: `Tool ${action.action} not found`
+          confidence,
+          reasoning: `Feasibility: ${feasibility.toFixed(2)}, Impact: ${expectedImpact.toFixed(2)}, Risk: ${risk.toFixed(2)}`,
         };
-      }
-
-      // 评估行动的可行性和效果
-      const feasibility = this.evaluateFeasibility(action, context);
-      const expectedImpact = this.evaluateImpact(action, context);
-      const risk = this.evaluateRisk(action, context);
-
-      // 计算综合置信度
-      const confidence = (feasibility * 0.4 + expectedImpact * 0.4 + (1 - risk) * 0.2);
-
-      return {
-        ...action,
-        confidence,
-        reasoning: `Feasibility: ${feasibility.toFixed(2)}, Impact: ${expectedImpact.toFixed(2)}, Risk: ${risk.toFixed(2)}`
-      };
-    }).filter(action => action.confidence > 0);
+      })
+      .filter(action => action.confidence > 0);
   }
 
   /**
@@ -318,17 +324,14 @@ export class AutonomousAIEngine extends EventEmitter {
    */
   private evaluateImpact(action: any, context: any): number {
     // 根据历史数据评估行动影响
-    const similarExperiences = this.learningHistory.filter(
-      data => data.experience.includes(action.action)
-    );
+    const similarExperiences = this.learningHistory.filter(data => data.experience.includes(action.action));
 
     if (similarExperiences.length === 0) {
       return 0.5; // 没有历史数据，默认中等影响
     }
 
-    const successRate = similarExperiences.filter(
-      data => data.outcome === 'success'
-    ).length / similarExperiences.length;
+    const successRate =
+      similarExperiences.filter(data => data.outcome === 'success').length / similarExperiences.length;
 
     return successRate;
   }
@@ -361,10 +364,10 @@ export class AutonomousAIEngine extends EventEmitter {
   private getRequiredResources(action: any): string[] {
     // 根据行动类型返回所需资源
     const resourceMap: Record<string, string[]> = {
-      'process_order': ['order_service', 'inventory_service'],
-      'check_inventory': ['inventory_service'],
-      'respond_to_customer': ['customer_service', 'knowledge_base'],
-      'generate_report': ['reporting_service', 'database']
+      process_order: ['order_service', 'inventory_service'],
+      check_inventory: ['inventory_service'],
+      respond_to_customer: ['customer_service', 'knowledge_base'],
+      generate_report: ['reporting_service', 'database'],
     };
 
     return resourceMap[action.action] || [];
@@ -386,7 +389,7 @@ export class AutonomousAIEngine extends EventEmitter {
       action: bestAction.action,
       parameters: bestAction.parameters || {},
       confidence: bestAction.confidence,
-      reasoning: bestAction.reasoning
+      reasoning: bestAction.reasoning,
     };
   }
 
@@ -401,7 +404,7 @@ export class AutonomousAIEngine extends EventEmitter {
       goalId: goal.id,
       decision,
       timestamp: new Date(),
-      context: context.id
+      context: context.id,
     });
   }
 
@@ -431,18 +434,18 @@ export class AutonomousAIEngine extends EventEmitter {
   private analyzeLearningData(): void {
     // 这里可以实现更复杂的学习算法
     // 例如：强化学习、模式识别、预测分析等
-    
+
     this.logger.debug('Analyzing learning data', { count: this.learningHistory.length });
 
     // 简单的学习分析示例：统计成功率
     const totalExperiences = this.learningHistory.length;
-    const successfulExperiences = this.learningHistory.filter(
-      data => data.outcome === 'success'
-    ).length;
+    const successfulExperiences = this.learningHistory.filter(data => data.outcome === 'success').length;
 
     const successRate = totalExperiences > 0 ? successfulExperiences / totalExperiences : 0;
-    
-    this.logger.info(`Learning analysis: Success rate = ${(successRate * 100).toFixed(2)}% from ${totalExperiences} experiences`);
+
+    this.logger.info(
+      `Learning analysis: Success rate = ${(successRate * 100).toFixed(2)}% from ${totalExperiences} experiences`,
+    );
   }
 
   /**
@@ -452,14 +455,14 @@ export class AutonomousAIEngine extends EventEmitter {
     const toolStatus = this.toolOrchestrator.getAvailableTools().length;
     const contextStatus = this.contextManager.getContext() ? 1 : 0;
     const learningStatus = this.learningHistory.length;
-    
+
     return {
       isRunning: this.isRunning,
       toolCount: toolStatus,
       contextCount: contextStatus,
       learningExperiences: learningStatus,
       decisionCounter: this.decisionCounter,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
   }
 
@@ -472,21 +475,21 @@ export class AutonomousAIEngine extends EventEmitter {
     // 简单的自我修复逻辑
     // 可以根据具体问题类型执行不同的修复策略
     const repairActions: Record<string, () => Promise<boolean>> = {
-      'tool_unavailable': async () => {
+      tool_unavailable: async () => {
         // 尝试重新加载工具
         const tools = this.toolOrchestrator.getAvailableTools();
         return tools.length > 0;
       },
-      'context_corrupted': async () => {
+      context_corrupted: async () => {
         // 尝试重置上下文
         this.contextManager.resetContext();
         return true;
       },
-      'decision_failed': async () => {
+      decision_failed: async () => {
         // 尝试重新初始化决策模块
         this.decisionCounter = 0;
         return true;
-      }
+      },
     };
 
     const repairAction = repairActions[issue];

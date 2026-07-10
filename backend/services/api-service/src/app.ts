@@ -24,7 +24,7 @@ import {
   rateLimitByIp,
   createRequestIdMiddleware,
   createLoggingMiddleware,
-  createResponseTimeMiddleware
+  createResponseTimeMiddleware,
 } from './middleware';
 
 /**
@@ -47,7 +47,10 @@ export class ApiService {
       this.dbConnected = true;
       console.log('✅ 数据库连接已建立');
     } catch (error) {
-      console.warn('⚠️ 数据库连接失败，服务将以无数据库模式运行:', (error instanceof Error ? error.message : "未知错误"));
+      console.warn(
+        '⚠️ 数据库连接失败，服务将以无数据库模式运行:',
+        error instanceof Error ? error.message : '未知错误'
+      );
       // 不抛出错误，允许服务继续启动
       this.dbConnected = false;
     }
@@ -104,7 +107,7 @@ export class ApiService {
    */
   private handleError(error: Error, request: Request): Response {
     console.error('❌ API错误:', {
-      error: (error instanceof Error ? error.message : "未知错误"),
+      error: error instanceof Error ? error.message : '未知错误',
       stack: error.stack,
       url: request.url,
       method: request.method,
@@ -112,7 +115,7 @@ export class ApiService {
 
     const errorResponse = {
       success: false,
-      error: (error instanceof Error ? error.message : "未知错误"),
+      error: error instanceof Error ? error.message : '未知错误',
       code: 'INTERNAL_SERVER_ERROR',
       timestamp: new Date().toISOString(),
     };
@@ -165,7 +168,7 @@ export class ApiService {
         health.services.database = {
           status: 'unhealthy',
           responseTime: '0ms',
-          error: (error instanceof Error ? error.message : "未知错误"),
+          error: error instanceof Error ? error.message : '未知错误',
         } as any;
       }
     }
@@ -319,7 +322,10 @@ export class ApiService {
         const orderNumber = numberMatch[1];
         switch (method) {
           case 'GET':
-            return { handler: orderRoutes['GET /api/v1/orders/number/:orderNumber'], params: { orderNumber } };
+            return {
+              handler: orderRoutes['GET /api/v1/orders/number/:orderNumber'],
+              params: { orderNumber },
+            };
         }
       }
 
@@ -359,7 +365,10 @@ export class ApiService {
         const id = deliveryMatch[1];
         switch (method) {
           case 'POST':
-            return { handler: orderRoutes['POST /api/v1/orders/:id/assign-delivery'], params: { id } };
+            return {
+              handler: orderRoutes['POST /api/v1/orders/:id/assign-delivery'],
+              params: { id },
+            };
         }
       }
 
@@ -427,22 +436,26 @@ export class ApiService {
             if (path === '/health' || path === '/api/v1/health') {
               try {
                 const health = await self.healthCheck();
-                return self.addCORSHeaders(new Response(JSON.stringify(health), {
-                  status: 200,
-                  headers: { 'Content-Type': 'application/json' },
-                }));
+                return self.addCORSHeaders(
+                  new Response(JSON.stringify(health), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' },
+                  })
+                );
               } catch (error) {
                 console.error('健康检查错误:', error);
                 const errorResponse = {
                   success: false,
-                  error: error instanceof Error ? error.message : "健康检查失败",
+                  error: error instanceof Error ? error.message : '健康检查失败',
                   code: 'HEALTH_CHECK_ERROR',
-                  timestamp: new Date().toISOString()
+                  timestamp: new Date().toISOString(),
                 };
-                return self.addCORSHeaders(new Response(JSON.stringify(errorResponse), {
-                  status: 500,
-                  headers: { 'Content-Type': 'application/json' }
-                }));
+                return self.addCORSHeaders(
+                  new Response(JSON.stringify(errorResponse), {
+                    status: 500,
+                    headers: { 'Content-Type': 'application/json' },
+                  })
+                );
               }
             }
 
@@ -465,22 +478,26 @@ export class ApiService {
                   },
                 };
 
-                return self.addCORSHeaders(new Response(JSON.stringify(info, null, 2), {
-                  status: 200,
-                  headers: { 'Content-Type': 'application/json' },
-                }));
+                return self.addCORSHeaders(
+                  new Response(JSON.stringify(info, null, 2), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' },
+                  })
+                );
               } catch (error) {
                 console.error('API信息错误:', error);
                 const errorResponse = {
                   success: false,
-                  error: error instanceof Error ? error.message : "获取API信息失败",
+                  error: error instanceof Error ? error.message : '获取API信息失败',
                   code: 'API_INFO_ERROR',
-                  timestamp: new Date().toISOString()
+                  timestamp: new Date().toISOString(),
                 };
-                return self.addCORSHeaders(new Response(JSON.stringify(errorResponse), {
-                  status: 500,
-                  headers: { 'Content-Type': 'application/json' }
-                }));
+                return self.addCORSHeaders(
+                  new Response(JSON.stringify(errorResponse), {
+                    status: 500,
+                    headers: { 'Content-Type': 'application/json' },
+                  })
+                );
               }
             }
 
@@ -488,22 +505,26 @@ export class ApiService {
             if (path === '/api/v1/docs') {
               try {
                 const html = self.generateDocsHTML();
-                return self.addCORSHeaders(new Response(html, {
-                  status: 200,
-                  headers: { 'Content-Type': 'text/html' },
-                }));
+                return self.addCORSHeaders(
+                  new Response(html, {
+                    status: 200,
+                    headers: { 'Content-Type': 'text/html' },
+                  })
+                );
               } catch (error) {
                 console.error('文档页面错误:', error);
                 const errorResponse = {
                   success: false,
-                  error: error instanceof Error ? error.message : "生成文档页面失败",
+                  error: error instanceof Error ? error.message : '生成文档页面失败',
                   code: 'DOCS_ERROR',
-                  timestamp: new Date().toISOString()
+                  timestamp: new Date().toISOString(),
                 };
-                return self.addCORSHeaders(new Response(JSON.stringify(errorResponse), {
-                  status: 500,
-                  headers: { 'Content-Type': 'application/json' }
-                }));
+                return self.addCORSHeaders(
+                  new Response(JSON.stringify(errorResponse), {
+                    status: 500,
+                    headers: { 'Content-Type': 'application/json' },
+                  })
+                );
               }
             }
 
@@ -515,22 +536,26 @@ export class ApiService {
                 const openapiPath = path.join(process.cwd(), 'src', 'config', 'openapi.yaml');
                 const openapiSpec = fs.readFileSync(openapiPath, 'utf8');
 
-                return self.addCORSHeaders(new Response(openapiSpec, {
-                  status: 200,
-                  headers: { 'Content-Type': 'application/x-yaml' },
-                }));
+                return self.addCORSHeaders(
+                  new Response(openapiSpec, {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/x-yaml' },
+                  })
+                );
               } catch (error) {
                 console.error('OpenAPI规范错误:', error);
                 const errorResponse = {
                   success: false,
-                  error: error instanceof Error ? error.message : "读取OpenAPI规范失败",
+                  error: error instanceof Error ? error.message : '读取OpenAPI规范失败',
                   code: 'OPENAPI_ERROR',
-                  timestamp: new Date().toISOString()
+                  timestamp: new Date().toISOString(),
                 };
-                return self.addCORSHeaders(new Response(JSON.stringify(errorResponse), {
-                  status: 500,
-                  headers: { 'Content-Type': 'application/json' }
-                }));
+                return self.addCORSHeaders(
+                  new Response(JSON.stringify(errorResponse), {
+                    status: 500,
+                    headers: { 'Content-Type': 'application/json' },
+                  })
+                );
               }
             }
 
@@ -560,11 +585,12 @@ export class ApiService {
               timestamp: new Date().toISOString(),
             };
 
-            return self.addCORSHeaders(new Response(JSON.stringify(notFoundResponse), {
-              status: 404,
-              headers: { 'Content-Type': 'application/json' },
-            }));
-
+            return self.addCORSHeaders(
+              new Response(JSON.stringify(notFoundResponse), {
+                status: 404,
+                headers: { 'Content-Type': 'application/json' },
+              })
+            );
           } catch (error) {
             // 错误处理
             return self.addCORSHeaders(self.handleError(error, request));
@@ -589,7 +615,6 @@ export class ApiService {
 
       // 优雅关闭处理
       this.setupGracefulShutdown();
-
     } catch (error) {
       console.error('❌ 启动API服务失败:', error);
       throw error;

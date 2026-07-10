@@ -676,11 +676,7 @@ describe('订单模型测试', () => {
     });
 
     it('应该接受所有订单类型', () => {
-      const orderTypes = [
-        OrderType.DINE_IN,
-        OrderType.TAKEAWAY,
-        OrderType.DELIVERY,
-      ];
+      const orderTypes = [OrderType.DINE_IN, OrderType.TAKEAWAY, OrderType.DELIVERY];
 
       orderTypes.forEach(orderType => {
         const order = {

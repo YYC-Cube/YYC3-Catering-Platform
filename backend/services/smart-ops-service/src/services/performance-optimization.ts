@@ -34,13 +34,13 @@ export class PerformanceOptimizationService {
   public async collectPerformanceData(serviceId: string): Promise<PerformanceData> {
     try {
       console.log(`[PerformanceOptimizationService] 收集性能数据: ${serviceId}`);
-      
+
       // 模拟性能数据收集
       const performanceData = await this.simulatePerformanceData(serviceId);
-      
+
       // 保存性能指标
       await this.savePerformanceMetric(serviceId, performanceData);
-      
+
       return performanceData;
     } catch (error) {
       console.error(`[PerformanceOptimizationService] 收集性能数据失败: ${serviceId}`, error);
@@ -54,25 +54,28 @@ export class PerformanceOptimizationService {
    * @param timeRange 时间范围（毫秒）
    * @returns 性能分析结果
    */
-  public async analyzePerformanceData(serviceId: string, timeRange: number = 3600000): Promise<OptimizationSuggestion[]> {
+  public async analyzePerformanceData(
+    serviceId: string,
+    timeRange: number = 3600000,
+  ): Promise<OptimizationSuggestion[]> {
     try {
       console.log(`[PerformanceOptimizationService] 分析性能数据: ${serviceId}, 时间范围: ${timeRange}ms`);
-      
+
       // 获取指定时间范围内的性能指标
       const metrics = this.getPerformanceMetrics(serviceId, timeRange);
-      
+
       // 分析性能趋势
       const performanceTrends = this.analyzePerformanceTrends(metrics);
-      
+
       // 识别性能瓶颈
       const bottlenecks = this.identifyPerformanceBottlenecks(performanceTrends);
-      
+
       // 生成优化建议
       const suggestions = this.generateOptimizationSuggestions(serviceId, bottlenecks);
-      
+
       // 保存优化建议
       await this.saveOptimizationSuggestions(serviceId, suggestions);
-      
+
       return suggestions;
     } catch (error) {
       console.error(`[PerformanceOptimizationService] 分析性能数据失败: ${serviceId}`, error);
@@ -96,7 +99,7 @@ export class PerformanceOptimizationService {
       networkLatency: Math.floor(Math.random() * 100) + 10, // 10-110ms
       requestCount: Math.floor(Math.random() * 1000) + 100, // 100-1100 requests
       errorCount: Math.floor(Math.random() * 20), // 0-20 errors
-      responseTime: Math.floor(Math.random() * 500) + 50 // 50-550ms
+      responseTime: Math.floor(Math.random() * 500) + 50, // 50-550ms
     };
   }
 
@@ -108,19 +111,19 @@ export class PerformanceOptimizationService {
   private async savePerformanceMetric(serviceId: string, performanceData: PerformanceData): Promise<void> {
     const metric: PerformanceMetric = {
       id: `metric-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      ...performanceData
+      ...performanceData,
     };
-    
+
     // 获取服务的性能指标列表
     const metrics = this.performanceMetrics.get(serviceId) || [];
     metrics.push(metric);
-    
+
     // 只保留最近的性能指标
     const maxMetrics = config.performanceOptimization.maxMetricsPerService;
     if (metrics.length > maxMetrics) {
       metrics.splice(0, metrics.length - maxMetrics);
     }
-    
+
     this.performanceMetrics.set(serviceId, metrics);
   }
 
@@ -133,7 +136,7 @@ export class PerformanceOptimizationService {
   private getPerformanceMetrics(serviceId: string, timeRange: number): PerformanceMetric[] {
     const metrics = this.performanceMetrics.get(serviceId) || [];
     const cutoffTime = new Date(Date.now() - timeRange);
-    
+
     return metrics.filter(metric => metric.timestamp >= cutoffTime);
   }
 
@@ -146,19 +149,19 @@ export class PerformanceOptimizationService {
     if (metrics.length === 0) {
       return {};
     }
-    
+
     // 计算平均值
     const avgCpuUsage = metrics.reduce((sum, metric) => sum + metric.cpuUsage, 0) / metrics.length;
     const avgMemoryUsage = metrics.reduce((sum, metric) => sum + metric.memoryUsage, 0) / metrics.length;
     const avgResponseTime = metrics.reduce((sum, metric) => sum + metric.responseTime, 0) / metrics.length;
     const avgErrorCount = metrics.reduce((sum, metric) => sum + metric.errorCount, 0) / metrics.length;
-    
+
     // 分析趋势
     const cpuTrend = this.calculateTrend(metrics.map(m => m.cpuUsage));
     const memoryTrend = this.calculateTrend(metrics.map(m => m.memoryUsage));
     const responseTimeTrend = this.calculateTrend(metrics.map(m => m.responseTime));
     const errorTrend = this.calculateTrend(metrics.map(m => m.errorCount));
-    
+
     return {
       avgCpuUsage,
       avgMemoryUsage,
@@ -168,7 +171,7 @@ export class PerformanceOptimizationService {
       memoryTrend,
       responseTimeTrend,
       errorTrend,
-      metricsCount: metrics.length
+      metricsCount: metrics.length,
     };
   }
 
@@ -181,16 +184,16 @@ export class PerformanceOptimizationService {
     if (values.length < 2) {
       return 'stable';
     }
-    
+
     // 计算斜率
     const n = values.length;
-    const sumX = n * (n + 1) / 2;
+    const sumX = (n * (n + 1)) / 2;
     const sumY = values.reduce((sum, val) => sum + val, 0);
     const sumXY = values.reduce((sum, val, i) => sum + (i + 1) * val, 0);
-    const sumX2 = n * (n + 1) * (2 * n + 1) / 6;
-    
+    const sumX2 = (n * (n + 1) * (2 * n + 1)) / 6;
+
     const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
-    
+
     // 根据斜率判断趋势
     if (slope > 0.5) {
       return 'positive'; // 上升趋势
@@ -208,40 +211,40 @@ export class PerformanceOptimizationService {
    */
   private identifyPerformanceBottlenecks(performanceTrends: any): string[] {
     const bottlenecks: string[] = [];
-    
+
     // 检查CPU使用率
     if (performanceTrends.avgCpuUsage > 80) {
       bottlenecks.push('high_cpu_usage');
     }
-    
+
     // 检查内存使用率
     if (performanceTrends.avgMemoryUsage > 85) {
       bottlenecks.push('high_memory_usage');
     }
-    
+
     // 检查响应时间
     if (performanceTrends.avgResponseTime > 500) {
       bottlenecks.push('high_response_time');
     }
-    
+
     // 检查错误率
     if (performanceTrends.avgErrorCount > 10) {
       bottlenecks.push('high_error_rate');
     }
-    
+
     // 检查趋势
     if (performanceTrends.cpuTrend === 'positive' && performanceTrends.avgCpuUsage > 70) {
       bottlenecks.push('increasing_cpu_trend');
     }
-    
+
     if (performanceTrends.memoryTrend === 'positive' && performanceTrends.avgMemoryUsage > 75) {
       bottlenecks.push('increasing_memory_trend');
     }
-    
+
     if (performanceTrends.responseTimeTrend === 'positive' && performanceTrends.avgResponseTime > 400) {
       bottlenecks.push('increasing_response_time_trend');
     }
-    
+
     return bottlenecks;
   }
 
@@ -253,7 +256,7 @@ export class PerformanceOptimizationService {
    */
   private generateOptimizationSuggestions(serviceId: string, bottlenecks: string[]): OptimizationSuggestion[] {
     const suggestions: OptimizationSuggestion[] = [];
-    
+
     // 为每个瓶颈生成优化建议
     for (const bottleneck of bottlenecks) {
       const suggestion = this.createOptimizationSuggestion(serviceId, bottleneck);
@@ -261,7 +264,7 @@ export class PerformanceOptimizationService {
         suggestions.push(suggestion);
       }
     }
-    
+
     return suggestions;
   }
 
@@ -273,95 +276,60 @@ export class PerformanceOptimizationService {
    */
   private createOptimizationSuggestion(serviceId: string, bottleneck: string): OptimizationSuggestion | null {
     const suggestionTemplates: Record<string, any> = {
-      'high_cpu_usage': {
+      high_cpu_usage: {
         title: '高CPU使用率',
         description: '服务CPU使用率过高，建议优化代码或增加CPU资源。',
         severity: 'high',
-        actions: [
-          '优化数据库查询',
-          '实现代码缓存',
-          '增加服务实例',
-          '升级CPU配置'
-        ]
+        actions: ['优化数据库查询', '实现代码缓存', '增加服务实例', '升级CPU配置'],
       },
-      'high_memory_usage': {
+      high_memory_usage: {
         title: '高内存使用率',
         description: '服务内存使用率过高，建议优化内存管理或增加内存资源。',
         severity: 'high',
-        actions: [
-          '检查内存泄漏',
-          '优化数据结构',
-          '增加内存配置',
-          '实现数据分页'
-        ]
+        actions: ['检查内存泄漏', '优化数据结构', '增加内存配置', '实现数据分页'],
       },
-      'high_response_time': {
+      high_response_time: {
         title: '高响应时间',
         description: '服务响应时间过长，建议优化请求处理流程。',
         severity: 'medium',
-        actions: [
-          '优化API调用',
-          '实现缓存机制',
-          '增加服务实例',
-          '优化前端资源'
-        ]
+        actions: ['优化API调用', '实现缓存机制', '增加服务实例', '优化前端资源'],
       },
-      'high_error_rate': {
+      high_error_rate: {
         title: '高错误率',
         description: '服务错误率过高，建议检查代码逻辑和外部依赖。',
         severity: 'high',
-        actions: [
-          '检查错误日志',
-          '修复代码bug',
-          '增加重试机制',
-          '优化错误处理'
-        ]
+        actions: ['检查错误日志', '修复代码bug', '增加重试机制', '优化错误处理'],
       },
-      'increasing_cpu_trend': {
+      increasing_cpu_trend: {
         title: 'CPU使用率持续上升',
         description: 'CPU使用率呈上升趋势，建议提前扩容或优化。',
         severity: 'medium',
-        actions: [
-          '监控CPU使用趋势',
-          '计划扩容',
-          '优化代码性能',
-          '实施负载均衡'
-        ]
+        actions: ['监控CPU使用趋势', '计划扩容', '优化代码性能', '实施负载均衡'],
       },
-      'increasing_memory_trend': {
+      increasing_memory_trend: {
         title: '内存使用率持续上升',
         description: '内存使用率呈上升趋势，可能存在内存泄漏。',
         severity: 'high',
-        actions: [
-          '检查内存泄漏',
-          '优化内存管理',
-          '增加内存配置',
-          '重启服务'
-        ]
+        actions: ['检查内存泄漏', '优化内存管理', '增加内存配置', '重启服务'],
       },
-      'increasing_response_time_trend': {
+      increasing_response_time_trend: {
         title: '响应时间持续上升',
         description: '响应时间呈上升趋势，建议优化服务性能。',
         severity: 'medium',
-        actions: [
-          '优化请求处理',
-          '增加缓存层',
-          '扩容服务实例',
-          '优化数据库'
-        ]
-      }
+        actions: ['优化请求处理', '增加缓存层', '扩容服务实例', '优化数据库'],
+      },
     };
-    
+
     const template = suggestionTemplates[bottleneck];
     if (!template) {
       return null;
     }
-    
+
     return {
       id: `suggestion-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       serviceId,
       timestamp: new Date(),
-      ...template
+      ...template,
     };
   }
 
@@ -373,13 +341,13 @@ export class PerformanceOptimizationService {
   private async saveOptimizationSuggestions(serviceId: string, suggestions: OptimizationSuggestion[]): Promise<void> {
     const history = this.optimizationHistory.get(serviceId) || [];
     history.push(...suggestions);
-    
+
     // 只保留最近的优化建议
     const maxHistory = config.performanceOptimization.maxOptimizationHistory;
     if (history.length > maxHistory) {
       history.splice(0, history.length - maxHistory);
     }
-    
+
     this.optimizationHistory.set(serviceId, history);
   }
 
@@ -392,7 +360,7 @@ export class PerformanceOptimizationService {
   public getOptimizationSuggestions(serviceId: string, timeRange: number = 86400000): OptimizationSuggestion[] {
     const history = this.optimizationHistory.get(serviceId) || [];
     const cutoffTime = new Date(Date.now() - timeRange);
-    
+
     return history.filter(suggestion => suggestion.timestamp >= cutoffTime);
   }
 
@@ -404,10 +372,10 @@ export class PerformanceOptimizationService {
   public async applyOptimizationSuggestion(suggestionId: string): Promise<boolean> {
     try {
       console.log(`[PerformanceOptimizationService] 应用优化建议: ${suggestionId}`);
-      
+
       // 模拟应用优化建议
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       console.log(`[PerformanceOptimizationService] 优化建议应用成功: ${suggestionId}`);
       return true;
     } catch (error) {
@@ -430,7 +398,7 @@ export class PerformanceOptimizationService {
       try {
         // 分析所有服务的性能数据
         const serviceIds = ['api-gateway', 'menu-service', 'order-service', 'payment-service', 'user-service'];
-        
+
         for (const serviceId of serviceIds) {
           await this.collectPerformanceData(serviceId);
           await this.analyzePerformanceData(serviceId);

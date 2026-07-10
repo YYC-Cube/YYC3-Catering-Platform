@@ -63,7 +63,7 @@ export class ActionPlanner extends EventEmitter {
     maxSteps: 10,
     timeLimit: 600000, // 10分钟
     includeAlternatives: true,
-    considerDependencies: true
+    considerDependencies: true,
   };
   private config: any;
 
@@ -88,7 +88,7 @@ export class ActionPlanner extends EventEmitter {
         requiredResources: ['staff', 'survey_tools'],
         riskLevel: 'low',
         prerequisites: [],
-        successMetrics: ['feedback_count', 'response_rate']
+        successMetrics: ['feedback_count', 'response_rate'],
       },
       {
         type: ActionType.DATA_COLLECTION,
@@ -98,8 +98,8 @@ export class ActionPlanner extends EventEmitter {
         requiredResources: ['data_analyst', 'analytics_tools'],
         riskLevel: 'low',
         prerequisites: ['sales_data_available'],
-        successMetrics: ['insights_generated', 'patterns_identified']
-      }
+        successMetrics: ['insights_generated', 'patterns_identified'],
+      },
     ]);
 
     // 分析类行动模板
@@ -112,7 +112,7 @@ export class ActionPlanner extends EventEmitter {
         requiredResources: ['market_researcher', 'analytics_tools'],
         riskLevel: 'medium',
         prerequisites: ['market_data_available'],
-        successMetrics: ['market_insights', 'trend_identified']
+        successMetrics: ['market_insights', 'trend_identified'],
       },
       {
         type: ActionType.ANALYSIS,
@@ -122,8 +122,8 @@ export class ActionPlanner extends EventEmitter {
         requiredResources: ['performance_analyst', 'monitoring_tools'],
         riskLevel: 'low',
         prerequisites: ['performance_metrics_available'],
-        successMetrics: ['bottlenecks_identified', 'optimization_opportunities']
-      }
+        successMetrics: ['bottlenecks_identified', 'optimization_opportunities'],
+      },
     ]);
 
     // 执行类行动模板
@@ -136,7 +136,7 @@ export class ActionPlanner extends EventEmitter {
         requiredResources: ['marketing_team', 'budget'],
         riskLevel: 'high',
         prerequisites: ['marketing_plan', 'budget_approved'],
-        successMetrics: ['campaign_reach', 'conversion_rate']
+        successMetrics: ['campaign_reach', 'conversion_rate'],
       },
       {
         type: ActionType.EXECUTION,
@@ -146,8 +146,8 @@ export class ActionPlanner extends EventEmitter {
         requiredResources: ['dev_team', 'deployment_env'],
         riskLevel: 'medium',
         prerequisites: ['system_tested', 'deployment_plan'],
-        successMetrics: ['deployment_success', 'system_stable']
-      }
+        successMetrics: ['deployment_success', 'system_stable'],
+      },
     ]);
 
     // 优化类行动模板
@@ -160,7 +160,7 @@ export class ActionPlanner extends EventEmitter {
         requiredResources: ['process_expert', 'stakeholders'],
         riskLevel: 'medium',
         prerequisites: ['current_process_documented'],
-        successMetrics: ['efficiency_improvement', 'time_reduction']
+        successMetrics: ['efficiency_improvement', 'time_reduction'],
       },
       {
         type: ActionType.OPTIMIZATION,
@@ -170,8 +170,8 @@ export class ActionPlanner extends EventEmitter {
         requiredResources: ['finance_analyst', 'department_heads'],
         riskLevel: 'medium',
         prerequisites: ['cost_data_available'],
-        successMetrics: ['cost_reduction', 'roi_improvement']
-      }
+        successMetrics: ['cost_reduction', 'roi_improvement'],
+      },
     ]);
   }
 
@@ -181,7 +181,7 @@ export class ActionPlanner extends EventEmitter {
   async generateRecommendations(
     goals: Goal[],
     context: Record<string, any>,
-    options?: PlanningOptions
+    options?: PlanningOptions,
   ): Promise<ActionPlan[]> {
     const planningContext: PlanningContext = {
       goals: this.prioritizeGoals(goals),
@@ -191,9 +191,9 @@ export class ActionPlanner extends EventEmitter {
       },
       preferences: {
         riskLevel: 'medium',
-        optimizationTarget: 'quality'
+        optimizationTarget: 'quality',
       },
-      ...options
+      ...options,
     };
 
     const result = await this.createActionPlans(planningContext);
@@ -231,14 +231,14 @@ export class ActionPlanner extends EventEmitter {
         alternativePlans: alternativePlans.length > 0 ? alternativePlans : [],
         estimatedSuccessProbability: successProbability,
         planningTime,
-        recommendations
+        recommendations,
       };
 
       // 记录规划历史
       this.planningHistory.push({
         context,
         result,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       // 发送事件
@@ -249,11 +249,10 @@ export class ActionPlanner extends EventEmitter {
         primaryPlanSteps: primaryPlan.steps.length,
         alternativePlansCount: alternativePlans.length,
         successProbability,
-        planningTime
+        planningTime,
       });
 
       return result;
-
     } catch (error) {
       this.logger.error('Failed to create action plans:', error);
       throw error;
@@ -271,7 +270,7 @@ export class ActionPlanner extends EventEmitter {
       estimatedDuration: 0,
       resources: [],
       riskLevel: 'medium',
-      successProbability: 0.5
+      successProbability: 0.5,
     };
 
     // 为每个目标生成行动步骤
@@ -312,7 +311,7 @@ export class ActionPlanner extends EventEmitter {
         dependencies: this.calculateDependencies(template, steps),
         status: ActionStatus.PENDING,
         estimatedDuration: template.estimatedDuration,
-        requiredResources: template.requiredResources
+        requiredResources: template.requiredResources,
       };
 
       steps.push(step);
@@ -330,19 +329,19 @@ export class ActionPlanner extends EventEmitter {
     // 基于目标类型选择模板
     switch (goalType) {
       case GoalType.PRIMARY:
-        templates.push(...( this.actionTemplates.get(ActionType.DATA_COLLECTION) || [] ));
-        templates.push(...( this.actionTemplates.get(ActionType.ANALYSIS) || [] ));
-        templates.push(...( this.actionTemplates.get(ActionType.EXECUTION) || [] ));
+        templates.push(...(this.actionTemplates.get(ActionType.DATA_COLLECTION) || []));
+        templates.push(...(this.actionTemplates.get(ActionType.ANALYSIS) || []));
+        templates.push(...(this.actionTemplates.get(ActionType.EXECUTION) || []));
         break;
 
       case GoalType.SECONDARY:
-        templates.push(...( this.actionTemplates.get(ActionType.OPTIMIZATION) || [] ));
-        templates.push(...( this.actionTemplates.get(ActionType.ANALYSIS) || [] ));
+        templates.push(...(this.actionTemplates.get(ActionType.OPTIMIZATION) || []));
+        templates.push(...(this.actionTemplates.get(ActionType.ANALYSIS) || []));
         break;
 
       case GoalType.URGENT:
-        templates.push(...( this.actionTemplates.get(ActionType.EXECUTION) || [] ));
-        templates.push(...( this.actionTemplates.get(ActionType.DATA_COLLECTION) || [] ));
+        templates.push(...(this.actionTemplates.get(ActionType.EXECUTION) || []));
+        templates.push(...(this.actionTemplates.get(ActionType.DATA_COLLECTION) || []));
         break;
     }
 
@@ -350,15 +349,15 @@ export class ActionPlanner extends EventEmitter {
     return templates.filter(template => {
       // 检查资源约束
       if (context.constraints.resources) {
-        const hasRequiredResource = template.requiredResources.some(
-          resource => context.constraints.resources!.includes(resource)
+        const hasRequiredResource = template.requiredResources.some(resource =>
+          context.constraints.resources!.includes(resource),
         );
         if (!hasRequiredResource) return false;
       }
 
       // 检查风险约束
       if (context.preferences?.riskLevel) {
-        const riskLevelOrder = { 'low': 1, 'medium': 2, 'high': 3 };
+        const riskLevelOrder = { low: 1, medium: 2, high: 3 };
         const maxAllowedRisk = riskLevelOrder[context.preferences.riskLevel];
         const templateRisk = riskLevelOrder[template.riskLevel];
         if (templateRisk > maxAllowedRisk) return false;
@@ -383,16 +382,18 @@ export class ActionPlanner extends EventEmitter {
       [ActionType.EXECUTION]: ['automation_platform', 'project_management', 'deployment_system'],
       [ActionType.OPTIMIZATION]: ['optimization_engine', 'ai_advisor', 'performance_monitor'],
       [ActionType.MONITORING]: ['monitoring_system', 'alert_service', 'performance_tracker'],
-      [ActionType.COMMUNICATION]: ['email_service', 'notification_system', 'message_broker']
+      [ActionType.COMMUNICATION]: ['email_service', 'notification_system', 'message_broker'],
     };
 
     const availableTools = toolMap[actionType] || [];
 
     // 根据环境选择最合适的工具
-    if (context.environment && context.environment["available_tools"] && Array.isArray(context.environment["available_tools"])) {
-      const matchingTools = availableTools.filter(tool =>
-        context.environment["available_tools"].includes(tool)
-      );
+    if (
+      context.environment &&
+      context.environment['available_tools'] &&
+      Array.isArray(context.environment['available_tools'])
+    ) {
+      const matchingTools = availableTools.filter(tool => context.environment['available_tools'].includes(tool));
       if (matchingTools.length > 0) {
         return matchingTools[0];
       }
@@ -404,11 +405,7 @@ export class ActionPlanner extends EventEmitter {
   /**
    * 生成步骤参数
    */
-  private generateStepParameters(
-    template: ActionTemplate,
-    goal: Goal,
-    context: PlanningContext
-  ): Record<string, any> {
+  private generateStepParameters(template: ActionTemplate, goal: Goal, context: PlanningContext): Record<string, any> {
     return {
       goal_id: goal.id,
       goal_name: goal.name,
@@ -416,7 +413,7 @@ export class ActionPlanner extends EventEmitter {
       priority: goal.priority,
       context_data: context.environment,
       template_config: template,
-      estimated_cost: template.cost || 0
+      estimated_cost: template.cost || 0,
     };
   }
 
@@ -428,9 +425,12 @@ export class ActionPlanner extends EventEmitter {
 
     // 基于先决条件计算依赖
     for (const prerequisite of template.prerequisites) {
-      const dependentStep = existingSteps.find(step =>
-        (step.description && step.description.includes(prerequisite)) ||
-        (step.parameters && step.parameters["template_config"] && step.parameters["template_config"].name === prerequisite)
+      const dependentStep = existingSteps.find(
+        step =>
+          (step.description && step.description.includes(prerequisite)) ||
+          (step.parameters &&
+            step.parameters['template_config'] &&
+            step.parameters['template_config'].name === prerequisite),
       );
 
       if (dependentStep) {
@@ -444,10 +444,7 @@ export class ActionPlanner extends EventEmitter {
   /**
    * 优化行动序列
    */
-  private async optimizeActionSequence(
-    steps: ActionStep[],
-    context: PlanningContext
-  ): Promise<ActionStep[]> {
+  private async optimizeActionSequence(steps: ActionStep[], context: PlanningContext): Promise<ActionStep[]> {
     // 基于依赖关系排序
     const sortedSteps = this.topologicalSort(steps);
 
@@ -501,10 +498,7 @@ export class ActionPlanner extends EventEmitter {
   /**
    * 应用优化策略
    */
-  private async applyOptimizationStrategies(
-    steps: ActionStep[],
-    context: PlanningContext
-  ): Promise<ActionStep[]> {
+  private async applyOptimizationStrategies(steps: ActionStep[], context: PlanningContext): Promise<ActionStep[]> {
     let optimizedSteps = [...steps];
 
     // 根据优化目标应用不同策略
@@ -528,13 +522,9 @@ export class ActionPlanner extends EventEmitter {
    */
   private optimizeForSpeed(steps: ActionStep[], context: PlanningContext): ActionStep[] {
     // 并行化可以同时执行的任务
-    const parallelizableSteps = steps.filter(step =>
-      this.canRunInParallel(step, context)
-    );
+    const parallelizableSteps = steps.filter(step => this.canRunInParallel(step, context));
 
-    const sequentialSteps = steps.filter(step =>
-      !this.canRunInParallel(step, context)
-    );
+    const sequentialSteps = steps.filter(step => !this.canRunInParallel(step, context));
 
     // 先执行有依赖的顺序步骤，然后执行可并行的步骤
     return [...sequentialSteps, ...parallelizableSteps];
@@ -552,8 +542,8 @@ export class ActionPlanner extends EventEmitter {
           parameters: {
             ...step.parameters,
             quality_checks: true,
-            validation_level: 'strict'
-          }
+            validation_level: 'strict',
+          },
         };
       }
       return step;
@@ -576,10 +566,7 @@ export class ActionPlanner extends EventEmitter {
   /**
    * 创建备选方案
    */
-  private async createAlternativePlans(
-    context: PlanningContext,
-    primaryPlan: ActionPlan
-  ): Promise<ActionPlan[]> {
+  private async createAlternativePlans(context: PlanningContext, primaryPlan: ActionPlan): Promise<ActionPlan[]> {
     const alternatives: ActionPlan[] = [];
 
     // 生成不同风险级别的备选方案
@@ -595,14 +582,13 @@ export class ActionPlanner extends EventEmitter {
           ...context,
           preferences: {
             ...context.preferences,
-            riskLevel
-          }
+            riskLevel,
+          },
         };
 
         const altPlan = await this.createPrimaryPlan(altContext);
         altPlan.id = `${primaryPlan.id}_alt_${riskLevel}`;
         alternatives.push(altPlan);
-
       } catch (error) {
         this.logger.warn(`Failed to create alternative plan for risk level ${riskLevel}:`, error);
       }
@@ -619,9 +605,9 @@ export class ActionPlanner extends EventEmitter {
 
     // 基于风险级别调整
     const riskAdjustments = {
-      'low': 0.2,
-      'medium': 0,
-      'high': -0.3
+      low: 0.2,
+      medium: 0,
+      high: -0.3,
     };
     probability += riskAdjustments[plan.riskLevel] || 0;
 
@@ -657,7 +643,7 @@ export class ActionPlanner extends EventEmitter {
     // 基于资源约束的推荐
     if (context.constraints?.resources) {
       const unavailableResources = plan.resources.filter(
-        resource => context.constraints?.resources?.includes(resource) !== true
+        resource => context.constraints?.resources?.includes(resource) !== true,
       );
       if (unavailableResources.length > 0) {
         recommendations.push(`需要获取以下资源: ${unavailableResources.join(', ')}`);
@@ -746,9 +732,7 @@ export class ActionPlanner extends EventEmitter {
 
     if (requiredResources.length === 0) return 1.0;
 
-    const availableCount = requiredResources.filter(resource =>
-      availableResources.includes(resource)
-    ).length;
+    const availableCount = requiredResources.filter(resource => availableResources.includes(resource)).length;
 
     return availableCount / requiredResources.length;
   }
@@ -758,9 +742,7 @@ export class ActionPlanner extends EventEmitter {
     if (!templates) return undefined;
     if (!step.description) return undefined;
     const stepName = step.description.split('(')[0].trim();
-    return templates.find(template =>
-      template.name.includes(stepName)
-    );
+    return templates.find(template => template.name.includes(stepName));
   }
 
   private generateId(): string {

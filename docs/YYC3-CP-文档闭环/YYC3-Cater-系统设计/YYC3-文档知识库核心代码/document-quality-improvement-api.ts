@@ -68,14 +68,11 @@ const generateReportSchema = z.object({
  * @access 私有
  * @returns {Promise<Response>} 质量评估结果
  */
-app.post('/assess', zValidator('json', assessQualitySchema), async (c) => {
+app.post('/assess', zValidator('json', assessQualitySchema), async c => {
   try {
     const { documentId, assessor } = c.req.valid('json');
 
-    const assessment = await documentQualityImprovementService.assessDocumentQuality(
-      documentId,
-      assessor
-    );
+    const assessment = await documentQualityImprovementService.assessDocumentQuality(documentId, assessor);
 
     return c.json({
       success: true,
@@ -88,7 +85,7 @@ app.post('/assess', zValidator('json', assessQualitySchema), async (c) => {
         success: false,
         error: error instanceof Error ? error.message : '评估文档质量失败',
       },
-      400
+      400,
     );
   }
 });
@@ -99,12 +96,11 @@ app.post('/assess', zValidator('json', assessQualitySchema), async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 质量评估结果列表
  */
-app.post('/assess/batch', zValidator('json', batchAssessSchema), async (c) => {
+app.post('/assess/batch', zValidator('json', batchAssessSchema), async c => {
   try {
     const { documentIds, assessor } = c.req.valid('json');
 
-    const assessments =
-      await documentQualityImprovementService.assessBatchDocumentQuality(documentIds, assessor);
+    const assessments = await documentQualityImprovementService.assessBatchDocumentQuality(documentIds, assessor);
 
     return c.json({
       success: true,
@@ -118,7 +114,7 @@ app.post('/assess/batch', zValidator('json', batchAssessSchema), async (c) => {
         success: false,
         error: error instanceof Error ? error.message : '批量评估文档质量失败',
       },
-      400
+      400,
     );
   }
 });
@@ -129,12 +125,11 @@ app.post('/assess/batch', zValidator('json', batchAssessSchema), async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 改进建议列表
  */
-app.get('/suggestions/:documentId', async (c) => {
+app.get('/suggestions/:documentId', async c => {
   try {
     const documentId = c.req.param('documentId');
 
-    const suggestions =
-      await documentQualityImprovementService.getImprovementSuggestions(documentId);
+    const suggestions = await documentQualityImprovementService.getImprovementSuggestions(documentId);
 
     return c.json({
       success: true,
@@ -148,7 +143,7 @@ app.get('/suggestions/:documentId', async (c) => {
         success: false,
         error: error instanceof Error ? error.message : '获取改进建议失败',
       },
-      400
+      400,
     );
   }
 });
@@ -159,12 +154,11 @@ app.get('/suggestions/:documentId', async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 更新后的建议
  */
-app.put('/suggestions/status', zValidator('json', updateSuggestionStatusSchema), async (c) => {
+app.put('/suggestions/status', zValidator('json', updateSuggestionStatusSchema), async c => {
   try {
     const { suggestionId, status } = c.req.valid('json');
 
-    const suggestion =
-      await documentQualityImprovementService.updateSuggestionStatus(suggestionId, status);
+    const suggestion = await documentQualityImprovementService.updateSuggestionStatus(suggestionId, status);
 
     if (!suggestion) {
       return c.json(
@@ -172,7 +166,7 @@ app.put('/suggestions/status', zValidator('json', updateSuggestionStatusSchema),
           success: false,
           error: '未找到指定的改进建议',
         },
-        404
+        404,
       );
     }
 
@@ -187,7 +181,7 @@ app.put('/suggestions/status', zValidator('json', updateSuggestionStatusSchema),
         success: false,
         error: error instanceof Error ? error.message : '更新建议状态失败',
       },
-      400
+      400,
     );
   }
 });
@@ -198,14 +192,11 @@ app.put('/suggestions/status', zValidator('json', updateSuggestionStatusSchema),
  * @access 私有
  * @returns {Promise<Response>} 质量趋势数据
  */
-app.get('/trends', zValidator('query', qualityTrendSchema), async (c) => {
+app.get('/trends', zValidator('query', qualityTrendSchema), async c => {
   try {
     const { startDate, endDate } = c.req.valid('query');
 
-    const trends = await documentQualityImprovementService.getQualityTrends(
-      new Date(startDate),
-      new Date(endDate)
-    );
+    const trends = await documentQualityImprovementService.getQualityTrends(new Date(startDate), new Date(endDate));
 
     return c.json({
       success: true,
@@ -219,7 +210,7 @@ app.get('/trends', zValidator('query', qualityTrendSchema), async (c) => {
         success: false,
         error: error instanceof Error ? error.message : '获取质量趋势失败',
       },
-      400
+      400,
     );
   }
 });
@@ -230,7 +221,7 @@ app.get('/trends', zValidator('query', qualityTrendSchema), async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 质量报告
  */
-app.post('/reports', zValidator('json', generateReportSchema), async (c) => {
+app.post('/reports', zValidator('json', generateReportSchema), async c => {
   try {
     const { type, startDate, endDate } = c.req.valid('json');
 
@@ -250,7 +241,7 @@ app.post('/reports', zValidator('json', generateReportSchema), async (c) => {
         success: false,
         error: error instanceof Error ? error.message : '生成质量报告失败',
       },
-      400
+      400,
     );
   }
 });
@@ -261,7 +252,7 @@ app.post('/reports', zValidator('json', generateReportSchema), async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 质量统计信息
  */
-app.get('/stats', async (c) => {
+app.get('/stats', async c => {
   try {
     const stats = await documentQualityImprovementService.getQualityStats();
 
@@ -276,7 +267,7 @@ app.get('/stats', async (c) => {
         success: false,
         error: error instanceof Error ? error.message : '获取质量统计失败',
       },
-      400
+      400,
     );
   }
 });
@@ -287,7 +278,7 @@ app.get('/stats', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 评估维度列表
  */
-app.get('/dimensions', (c) => {
+app.get('/dimensions', c => {
   const dimensions = [
     {
       name: 'content_completeness',
@@ -351,7 +342,7 @@ app.get('/dimensions', (c) => {
  * @access 公开
  * @returns {Promise<Response>} 质量等级列表
  */
-app.get('/grades', (c) => {
+app.get('/grades', c => {
   const grades = [
     {
       name: 'excellent',

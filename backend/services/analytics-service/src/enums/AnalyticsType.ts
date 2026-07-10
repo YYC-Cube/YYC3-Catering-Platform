@@ -30,5 +30,5 @@ export enum AnalyticsType {
   /** 配送分析 */
   DELIVERY = 'delivery',
   /** 系统分析 */
-  SYSTEM = 'system'
+  SYSTEM = 'system',
 }

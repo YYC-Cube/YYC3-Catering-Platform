@@ -4,13 +4,13 @@
 
 所有计划任务已成功完成！
 
-| 任务 | 状态 | 详情 |
-|-----|------|-----|
-| 1. 修复 Express 错误处理中的 `err: any` | ✅ 完成 | 修复 10 处 |
-| 2. 修复配置对象中的 `any` 类型 | ✅ 完成 | 修复 5 处 |
-| 3. 合并重复的类型定义 | ✅ 完成 | 创建迁移指南 |
-| 4. 配置 ESLint `no-explicit-any` 规则 | ✅ 完成 | 升级为 error |
-| 5. 添加 TypeScript 路径别名 | ✅ 完成 | 添加 `@yyc3/types/*` |
+| 任务                                    | 状态    | 详情                 |
+| --------------------------------------- | ------- | -------------------- |
+| 1. 修复 Express 错误处理中的 `err: any` | ✅ 完成 | 修复 10 处           |
+| 2. 修复配置对象中的 `any` 类型          | ✅ 完成 | 修复 5 处            |
+| 3. 合并重复的类型定义                   | ✅ 完成 | 创建迁移指南         |
+| 4. 配置 ESLint `no-explicit-any` 规则   | ✅ 完成 | 升级为 error         |
+| 5. 添加 TypeScript 路径别名             | ✅ 完成 | 添加 `@yyc3/types/*` |
 
 ---
 
@@ -18,34 +18,36 @@
 
 ### 修复的文件列表
 
-| 文件路径 | 修复内容 |
-|---------|---------|
-| `backend/api-gateway/src/app.ts` | `err: any` → `err: Error \| unknown` |
-| `backend/services/menu-service/src/app.ts` | `err: any` → `err: Error \| unknown` |
-| `backend/services/notification-service/src/app.ts` | `err: any` → `err: Error \| unknown` |
-| `backend/services/analytics-service/src/app.ts` | `err: any` → `err: Error \| unknown` |
-| `backend/services/order-service/src/app.ts` | `err: any` → `err: Error \| unknown` |
-| `backend/services/user-service/src/app.ts` | `err: any` → `err: Error \| unknown` |
-| `backend/services/delivery-service/src/app.ts` | `err: any` → `err: Error \| unknown` |
-| `backend/services/smart-kitchen/src/index.ts` | `err: any` → `err: Error \| unknown` |
+| 文件路径                                               | 修复内容                             |
+| ------------------------------------------------------ | ------------------------------------ |
+| `backend/api-gateway/src/app.ts`                       | `err: any` → `err: Error \| unknown` |
+| `backend/services/menu-service/src/app.ts`             | `err: any` → `err: Error \| unknown` |
+| `backend/services/notification-service/src/app.ts`     | `err: any` → `err: Error \| unknown` |
+| `backend/services/analytics-service/src/app.ts`        | `err: any` → `err: Error \| unknown` |
+| `backend/services/order-service/src/app.ts`            | `err: any` → `err: Error \| unknown` |
+| `backend/services/user-service/src/app.ts`             | `err: any` → `err: Error \| unknown` |
+| `backend/services/delivery-service/src/app.ts`         | `err: any` → `err: Error \| unknown` |
+| `backend/services/smart-kitchen/src/index.ts`          | `err: any` → `err: Error \| unknown` |
 | `backend/api-gateway/src/middleware/authMiddleware.ts` | `err: any` → `err: Error \| unknown` |
-| `backend/gateway/src/middleware/errorHandler.ts` | `err: any` → `err: Error \| unknown` |
+| `backend/gateway/src/middleware/errorHandler.ts`       | `err: any` → `err: Error \| unknown` |
 
 ### 修复模式
 
 **修复前**:
+
 ```typescript
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  logger.error('Error:', err.message);
+  logger.error("Error:", err.message);
   res.status(err.status || 500).json({ message: err.message });
 });
 ```
 
 **修复后**:
+
 ```typescript
 app.use((err: Error | unknown, req: Request, res: Response, next: NextFunction) => {
   const error = err instanceof Error ? err : new Error(String(err));
-  logger.error('Error:', error.message);
+  logger.error("Error:", error.message);
   res.status((error as any).status || 500).json({ message: error.message });
 });
 ```
@@ -56,30 +58,32 @@ app.use((err: Error | unknown, req: Request, res: Response, next: NextFunction) 
 
 ### 修复的文件列表
 
-| 文件路径 | 修复内容 |
-|---------|---------|
-| `backend/gateway/src/middleware/authentication.ts` | `[key: string]: any` → `[key: string]: unknown` |
-| `backend/services/ai-assistant/src/models/AIAssistant.ts` | `[key: string]: any` → `[key: string]: unknown` |
+| 文件路径                                                        | 修复内容                                        |
+| --------------------------------------------------------------- | ----------------------------------------------- |
+| `backend/gateway/src/middleware/authentication.ts`              | `[key: string]: any` → `[key: string]: unknown` |
+| `backend/services/ai-assistant/src/models/AIAssistant.ts`       | `[key: string]: any` → `[key: string]: unknown` |
 | `backend/services/smart-ops-service/src/models/fault-record.ts` | `[key: string]: any` → `[key: string]: unknown` |
-| `backend/services/microservice-template/src/types/response.ts` | `[key: string]: any` → `[key: string]: unknown` |
+| `backend/services/microservice-template/src/types/response.ts`  | `[key: string]: any` → `[key: string]: unknown` |
 
 ### 修复模式
 
 **修复前**:
+
 ```typescript
 interface Metadata {
   language?: string;
   confidence?: number;
-  [key: string]: any;  // ❌ 允许任何类型
+  [key: string]: any; // ❌ 允许任何类型
 }
 ```
 
 **修复后**:
+
 ```typescript
 interface Metadata {
   language?: string;
   confidence?: number;
-  [key: string]: unknown;  // ✅ 未知类型，使用时需要类型守卫
+  [key: string]: unknown; // ✅ 未知类型，使用时需要类型守卫
 }
 ```
 
@@ -94,13 +98,13 @@ interface Metadata {
 
 ### 识别的重复类型
 
-| 类型 | 重复次数 | 统一位置 |
-|-----|---------|---------|
-| User | 13 处 | `types/entities/user.d.ts` |
-| Order | 12 处 | `types/entities/order.d.ts` |
-| Config | 8 处 | `types/config/service.d.ts` |
-| LogLevel | 6 处 | 待创建 `types/common/logger.d.ts` |
-| ApiResponse<T> | 10 处 | `types/services/api.d.ts` |
+| 类型           | 重复次数 | 统一位置                          |
+| -------------- | -------- | --------------------------------- |
+| User           | 13 处    | `types/entities/user.d.ts`        |
+| Order          | 12 处    | `types/entities/order.d.ts`       |
+| Config         | 8 处     | `types/config/service.d.ts`       |
+| LogLevel       | 6 处     | 待创建 `types/common/logger.d.ts` |
+| ApiResponse<T> | 10 处    | `types/services/api.d.ts`         |
 
 ### 迁移策略
 
@@ -185,17 +189,17 @@ interface Metadata {
 
 ```typescript
 // ✅ 推荐使用（导入特定类型）
-import { BaseUser, AuthUser, UserRole } from '@yyc3/types/entities/user';
-import { ICacheClient, CacheStrategy } from '@yyc3/types/services/cache';
-import { ApiResponse, PaginatedResponse } from '@yyc3/types/services/api';
-import { AppError, ErrorCode } from '@yyc3/types/common/error';
-import { TypeConverter } from '@yyc3/types/utils/type-converter';
+import { BaseUser, AuthUser, UserRole } from "@yyc3/types/entities/user";
+import { ICacheClient, CacheStrategy } from "@yyc3/types/services/cache";
+import { ApiResponse, PaginatedResponse } from "@yyc3/types/services/api";
+import { AppError, ErrorCode } from "@yyc3/types/common/error";
+import { TypeConverter } from "@yyc3/types/utils/type-converter";
 
 // ✅ 统一导入（导入所有类型）
-import * as Types from '@yyc3/types';
+import * as Types from "@yyc3/types";
 
 // ✅ 别名导入
-import { BaseUser as User } from '@yyc3/types/entities/user';
+import { BaseUser as User } from "@yyc3/types/entities/user";
 ```
 
 ---
@@ -206,26 +210,15 @@ import { BaseUser as User } from '@yyc3/types/entities/user';
 
 ```typescript
 // backend/services/user-service/src/controllers/user.controller.ts
-import type {
-  BaseUser,
-  AuthUser,
-  LoginCredentials,
-  LoginResponse,
-  UserRole
-} from '@yyc3/types/entities/user';
-import type { ApiResponse, PaginatedResponse } from '@yyc3/types/services/api';
+import type { BaseUser, AuthUser, LoginCredentials, LoginResponse, UserRole } from "@yyc3/types/entities/user";
+import type { ApiResponse, PaginatedResponse } from "@yyc3/types/services/api";
 
 export class UserController {
-  async login(
-    credentials: LoginCredentials
-  ): Promise<ApiResponse<LoginResponse>> {
+  async login(credentials: LoginCredentials): Promise<ApiResponse<LoginResponse>> {
     // ...
   }
 
-  async getUsers(
-    page: number,
-    pageSize: number
-  ): Promise<PaginatedResponse<BaseUser>> {
+  async getUsers(page: number, pageSize: number): Promise<PaginatedResponse<BaseUser>> {
     // ...
   }
 }
@@ -235,10 +228,10 @@ export class UserController {
 
 ```typescript
 // frontend/apps/admin-dashboard/src/stores/auth.ts
-import type { FrontendUser } from '@yyc3/types/entities/user';
-import type { TypeConverter } from '@yyc3/types/utils/type-converter';
+import type { FrontendUser } from "@yyc3/types/entities/user";
+import type { TypeConverter } from "@yyc3/types/utils/type-converter";
 
-export const useAuthStore = defineStore('auth', {
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null as FrontendUser | null,
   }),
@@ -246,8 +239,8 @@ export const useAuthStore = defineStore('auth', {
     setUser(authUser: AuthUser) {
       // 使用类型转换器
       this.user = TypeConverter.authUserToFrontendUser(authUser);
-    }
-  }
+    },
+  },
 });
 ```
 
@@ -255,20 +248,17 @@ export const useAuthStore = defineStore('auth', {
 
 ```typescript
 // backend/gateway/src/middleware/cache.ts
-import type { ICacheClient, CacheOptions } from '@yyc3/types/services/cache';
-import type { ApiResponse } from '@yyc3/types/services/api';
+import type { ICacheClient, CacheOptions } from "@yyc3/types/services/cache";
+import type { ApiResponse } from "@yyc3/types/services/api";
 
 export class CacheMiddleware {
-  private cacheClient: ICacheClient;  // ✅ 使用接口类型
+  private cacheClient: ICacheClient; // ✅ 使用接口类型
 
   constructor(client: ICacheClient) {
     this.cacheClient = client;
   }
 
-  async get<T>(
-    key: string,
-    options?: CacheOptions
-  ): Promise<T | null> {
+  async get<T>(key: string, options?: CacheOptions): Promise<T | null> {
     return this.cacheClient.get<T>(key, options);
   }
 }
@@ -277,7 +267,7 @@ export class CacheMiddleware {
 ### 4. 错误处理模式
 
 ```typescript
-import type { AppError, ErrorCode } from '@yyc3/types/common/error';
+import type { AppError, ErrorCode } from "@yyc3/types/common/error";
 
 export function handleError(err: Error | unknown): AppError {
   if (err instanceof AppError) {
@@ -285,16 +275,10 @@ export function handleError(err: Error | unknown): AppError {
   }
 
   if (err instanceof Error) {
-    return new AppError(
-      ErrorCode.INTERNAL_SERVER_ERROR,
-      err.message
-    );
+    return new AppError(ErrorCode.INTERNAL_SERVER_ERROR, err.message);
   }
 
-  return new AppError(
-    ErrorCode.INTERNAL_SERVER_ERROR,
-    String(err)
-  );
+  return new AppError(ErrorCode.INTERNAL_SERVER_ERROR, String(err));
 }
 ```
 
@@ -393,32 +377,32 @@ echo "✅ 所有检查通过"
 
 ### 修改的文件
 
-| 文件 | 修改类型 | 行数 |
-|-----|---------|-----|
-| `backend/api-gateway/src/app.ts` | 类型修复 | ~5 |
-| `backend/services/menu-service/src/app.ts` | 类型修复 | ~5 |
-| `backend/services/notification-service/src/app.ts` | 类型修复 | ~5 |
-| `backend/services/analytics-service/src/app.ts` | 类型修复 | ~5 |
-| `backend/services/order-service/src/app.ts` | 类型修复 | ~5 |
-| `backend/services/user-service/src/app.ts` | 类型修复 | ~5 |
-| `backend/services/delivery-service/src/app.ts` | 类型修复 | ~5 |
-| `backend/services/smart-kitchen/src/index.ts` | 类型修复 | ~5 |
-| `backend/api-gateway/src/middleware/authMiddleware.ts` | 类型修复 | ~8 |
-| `backend/gateway/src/middleware/errorHandler.ts` | 类型修复 | ~15 |
-| `backend/gateway/src/middleware/authentication.ts` | 类型修复 | ~2 |
-| `backend/services/ai-assistant/src/models/AIAssistant.ts` | 类型修复 | ~1 |
-| `backend/services/smart-ops-service/src/models/fault-record.ts` | 类型修复 | ~1 |
-| `backend/services/microservice-template/src/types/response.ts` | 类型修复 | ~1 |
-| `.eslintrc.js` | 配置更新 | ~10 |
-| `tsconfig.json` | 配置更新 | ~8 |
+| 文件                                                            | 修改类型 | 行数 |
+| --------------------------------------------------------------- | -------- | ---- |
+| `backend/api-gateway/src/app.ts`                                | 类型修复 | ~5   |
+| `backend/services/menu-service/src/app.ts`                      | 类型修复 | ~5   |
+| `backend/services/notification-service/src/app.ts`              | 类型修复 | ~5   |
+| `backend/services/analytics-service/src/app.ts`                 | 类型修复 | ~5   |
+| `backend/services/order-service/src/app.ts`                     | 类型修复 | ~5   |
+| `backend/services/user-service/src/app.ts`                      | 类型修复 | ~5   |
+| `backend/services/delivery-service/src/app.ts`                  | 类型修复 | ~5   |
+| `backend/services/smart-kitchen/src/index.ts`                   | 类型修复 | ~5   |
+| `backend/api-gateway/src/middleware/authMiddleware.ts`          | 类型修复 | ~8   |
+| `backend/gateway/src/middleware/errorHandler.ts`                | 类型修复 | ~15  |
+| `backend/gateway/src/middleware/authentication.ts`              | 类型修复 | ~2   |
+| `backend/services/ai-assistant/src/models/AIAssistant.ts`       | 类型修复 | ~1   |
+| `backend/services/smart-ops-service/src/models/fault-record.ts` | 类型修复 | ~1   |
+| `backend/services/microservice-template/src/types/response.ts`  | 类型修复 | ~1   |
+| `.eslintrc.js`                                                  | 配置更新 | ~10  |
+| `tsconfig.json`                                                 | 配置更新 | ~8   |
 
 ### 新建的文件
 
-| 文件 | 类型 | 行数 |
-|-----|------|-----|
-| `docs/reports/类型合并指南.md` | 文档 | ~300 |
+| 文件                                           | 类型 | 行数 |
+| ---------------------------------------------- | ---- | ---- |
+| `docs/reports/类型合并指南.md`                 | 文档 | ~300 |
 | `docs/reports/类型系统与ESLint配置完成报告.md` | 报告 | ~400 |
-| `types/package.json` | 配置 | ~30 |
+| `types/package.json`                           | 配置 | ~30  |
 
 ---
 

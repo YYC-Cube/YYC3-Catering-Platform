@@ -83,7 +83,7 @@ export class CircuitBreakerMiddleware {
     timeout: number,
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     try {
       // 保存原始的res.send方法，用于捕获响应状态
@@ -125,7 +125,7 @@ export class CircuitBreakerMiddleware {
     timeout: number,
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     try {
       // 保存原始的res.send方法
@@ -164,7 +164,7 @@ export class CircuitBreakerMiddleware {
       error: 'Service temporarily unavailable',
       code: 'SERVICE_UNAVAILABLE',
       message: `Circuit breaker is open for ${serviceUrl}`,
-      retryAfter: this.resetTimeout / 1000
+      retryAfter: this.resetTimeout / 1000,
     });
   }
 
@@ -175,7 +175,7 @@ export class CircuitBreakerMiddleware {
     if (!this.circuitBreakers.has(serviceUrl)) {
       this.circuitBreakers.set(serviceUrl, {
         state: 'closed',
-        failures: 0
+        failures: 0,
       });
     }
     return this.circuitBreakers.get(serviceUrl)!;
@@ -196,7 +196,7 @@ export class CircuitBreakerMiddleware {
   private resetCircuit(serviceUrl: string) {
     this.circuitBreakers.set(serviceUrl, {
       state: 'closed',
-      failures: 0
+      failures: 0,
     });
   }
 
@@ -243,7 +243,7 @@ export class CircuitBreakerMiddleware {
       servicesStatus.push({
         service: serviceUrl,
         circuitState: state,
-        lastChecked: new Date()
+        lastChecked: new Date(),
       });
     }
 

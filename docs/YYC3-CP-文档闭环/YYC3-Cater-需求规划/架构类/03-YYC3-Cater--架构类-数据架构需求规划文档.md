@@ -10,28 +10,29 @@
 **@tags**：架构设计,数据架构,YYC³,数据治理
 
 ---
+
 # 🔖 YYC³ 数据架构需求规划文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 数据架构需求规划文档 |
-| **文档类型** | 架构类文档 |
-| **所属阶段** | 需求规划 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 数据架构需求规划文档  |
+| **文档类型** | 架构类文档                 |
+| **所属阶段** | 需求规划                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -55,6 +56,7 @@
 本文档是YYC³餐饮行业智能化平台文档体系的重要组成部分，旨在提供清晰、完整、准确的信息。
 
 通过本文档，读者可以：
+
 - 了解相关概念和背景
 - 掌握核心内容和要点
 - 获得实用的指导和帮助
@@ -119,12 +121,12 @@ export interface DataArchitecturePrinciples {
 }
 
 export const dataArchitecturePrinciples: DataArchitecturePrinciples = {
-  scalability: '支持水平扩展，应对业务增长',
-  reliability: '确保数据持久性和可用性',
-  security: '保护数据隐私和安全',
-  performance: '提供高性能数据访问',
-  consistency: '保证数据一致性和准确性',
-  maintainability: '简化数据管理和运维'
+  scalability: "支持水平扩展，应对业务增长",
+  reliability: "确保数据持久性和可用性",
+  security: "保护数据隐私和安全",
+  performance: "提供高性能数据访问",
+  consistency: "保证数据一致性和准确性",
+  maintainability: "简化数据管理和运维",
 };
 ```
 
@@ -167,51 +169,25 @@ export interface DataGovernanceLayer {
 
 export const dataArchitectureLayers: DataArchitectureLayers = {
   dataAccessLayer: {
-    description: '提供统一的数据访问接口',
-    components: [
-      'API Gateway',
-      'GraphQL Server',
-      'REST API',
-      'ORM/ODM'
-    ]
+    description: "提供统一的数据访问接口",
+    components: ["API Gateway", "GraphQL Server", "REST API", "ORM/ODM"],
   },
   dataProcessingLayer: {
-    description: '处理和转换数据',
-    components: [
-      'ETL Pipeline',
-      'Stream Processing',
-      'Batch Processing',
-      'Data Transformation'
-    ]
+    description: "处理和转换数据",
+    components: ["ETL Pipeline", "Stream Processing", "Batch Processing", "Data Transformation"],
   },
   dataStorageLayer: {
-    description: '存储和管理数据',
-    components: [
-      '关系型数据库',
-      'NoSQL数据库',
-      '缓存系统',
-      '对象存储',
-      '数据仓库'
-    ]
+    description: "存储和管理数据",
+    components: ["关系型数据库", "NoSQL数据库", "缓存系统", "对象存储", "数据仓库"],
   },
   dataIntegrationLayer: {
-    description: '集成外部数据源',
-    components: [
-      '消息队列',
-      '事件总线',
-      'API集成',
-      '文件传输'
-    ]
+    description: "集成外部数据源",
+    components: ["消息队列", "事件总线", "API集成", "文件传输"],
   },
   dataGovernanceLayer: {
-    description: '管理数据质量和安全',
-    components: [
-      '数据质量监控',
-      '数据血缘追踪',
-      '访问控制',
-      '审计日志'
-    ]
-  }
+    description: "管理数据质量和安全",
+    components: ["数据质量监控", "数据血缘追踪", "访问控制", "审计日志"],
+  },
 };
 ```
 
@@ -236,17 +212,17 @@ export interface User {
 }
 
 export enum UserRole {
-  CUSTOMER = 'customer',
-  MERCHANT = 'merchant',
-  ADMIN = 'admin',
-  STAFF = 'staff'
+  CUSTOMER = "customer",
+  MERCHANT = "merchant",
+  ADMIN = "admin",
+  STAFF = "staff",
 }
 
 export enum UserStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-  SUSPENDED = 'suspended',
-  DELETED = 'deleted'
+  ACTIVE = "active",
+  INACTIVE = "inactive",
+  SUSPENDED = "suspended",
+  DELETED = "deleted",
 }
 
 export interface Merchant {
@@ -266,11 +242,11 @@ export interface Merchant {
 }
 
 export enum MerchantStatus {
-  PENDING = 'pending',
-  APPROVED = 'approved',
-  REJECTED = 'rejected',
-  SUSPENDED = 'suspended',
-  DELETED = 'deleted'
+  PENDING = "pending",
+  APPROVED = "approved",
+  REJECTED = "rejected",
+  SUSPENDED = "suspended",
+  DELETED = "deleted",
 }
 
 export interface Address {
@@ -326,9 +302,9 @@ export interface Dish {
 }
 
 export enum DishStatus {
-  AVAILABLE = 'available',
-  UNAVAILABLE = 'unavailable',
-  DELETED = 'deleted'
+  AVAILABLE = "available",
+  UNAVAILABLE = "unavailable",
+  DELETED = "deleted",
 }
 
 export interface Order {
@@ -360,30 +336,30 @@ export interface OrderItem {
 }
 
 export enum OrderStatus {
-  PENDING = 'pending',
-  CONFIRMED = 'confirmed',
-  PREPARING = 'preparing',
-  READY = 'ready',
-  DELIVERING = 'delivering',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled',
-  REFUNDED = 'refunded'
+  PENDING = "pending",
+  CONFIRMED = "confirmed",
+  PREPARING = "preparing",
+  READY = "ready",
+  DELIVERING = "delivering",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
+  REFUNDED = "refunded",
 }
 
 export enum PaymentStatus {
-  UNPAID = 'unpaid',
-  PAID = 'paid',
-  REFUNDING = 'refunding',
-  REFUNDED = 'refunded',
-  FAILED = 'failed'
+  UNPAID = "unpaid",
+  PAID = "paid",
+  REFUNDING = "refunding",
+  REFUNDED = "refunded",
+  FAILED = "failed",
 }
 
 export enum PaymentMethod {
-  WECHAT = 'wechat',
-  ALIPAY = 'alipay',
-  CREDIT_CARD = 'credit_card',
-  DEBIT_CARD = 'debit_card',
-  CASH = 'cash'
+  WECHAT = "wechat",
+  ALIPAY = "alipay",
+  CREDIT_CARD = "credit_card",
+  DEBIT_CARD = "debit_card",
+  CASH = "cash",
 }
 
 export interface Review {
@@ -558,136 +534,77 @@ export interface StorageConfig {
 
 export const storageTechnologies: StorageTechnology[] = [
   {
-    technology: 'PostgreSQL',
-    version: '15.x',
-    useCase: [
-      '用户数据存储',
-      '订单数据存储',
-      '商家数据存储',
-      '菜品数据存储',
-      '评论数据存储'
-    ],
-    advantages: [
-      'ACID事务支持',
-      '强大的查询能力',
-      '丰富的数据类型',
-      '成熟的生态系统',
-      '优秀的性能'
-    ],
-    disadvantages: [
-      '垂直扩展限制',
-      '复杂查询性能',
-      '大规模数据存储成本'
-    ],
+    technology: "PostgreSQL",
+    version: "15.x",
+    useCase: ["用户数据存储", "订单数据存储", "商家数据存储", "菜品数据存储", "评论数据存储"],
+    advantages: ["ACID事务支持", "强大的查询能力", "丰富的数据类型", "成熟的生态系统", "优秀的性能"],
+    disadvantages: ["垂直扩展限制", "复杂查询性能", "大规模数据存储成本"],
     configuration: {
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432'),
-      database: process.env.DB_NAME || 'yyc3_catering',
-      username: process.env.DB_USER || 'postgres',
+      host: process.env.DB_HOST || "localhost",
+      port: parseInt(process.env.DB_PORT || "5432"),
+      database: process.env.DB_NAME || "yyc3_catering",
+      username: process.env.DB_USER || "postgres",
       password: process.env.DB_PASSWORD,
       options: {
         max: 20,
         idleTimeoutMillis: 30000,
-        connectionTimeoutMillis: 2000
-      }
-    }
+        connectionTimeoutMillis: 2000,
+      },
+    },
   },
   {
-    technology: 'Redis',
-    version: '7.x',
-    useCase: [
-      '会话缓存',
-      '热点数据缓存',
-      '分布式锁',
-      '限流计数',
-      '消息队列'
-    ],
-    advantages: [
-      '极高性能',
-      '丰富的数据结构',
-      '支持持久化',
-      '主从复制',
-      '集群支持'
-    ],
-    disadvantages: [
-      '内存成本高',
-      '数据容量受限',
-      '复杂查询能力弱'
-    ],
+    technology: "Redis",
+    version: "7.x",
+    useCase: ["会话缓存", "热点数据缓存", "分布式锁", "限流计数", "消息队列"],
+    advantages: ["极高性能", "丰富的数据结构", "支持持久化", "主从复制", "集群支持"],
+    disadvantages: ["内存成本高", "数据容量受限", "复杂查询能力弱"],
     configuration: {
-      host: process.env.REDIS_HOST || 'localhost',
-      port: parseInt(process.env.REDIS_PORT || '6379'),
+      host: process.env.REDIS_HOST || "localhost",
+      port: parseInt(process.env.REDIS_PORT || "6379"),
       password: process.env.REDIS_PASSWORD,
       options: {
         maxRetriesPerRequest: 3,
         retryDelayOnFailover: 100,
-        enableReadyCheck: true
-      }
-    }
+        enableReadyCheck: true,
+      },
+    },
   },
   {
-    technology: 'MongoDB',
-    version: '6.x',
-    useCase: [
-      '日志数据存储',
-      '用户行为数据',
-      '分析数据存储',
-      '文档存储'
-    ],
-    advantages: [
-      '灵活的数据模型',
-      '水平扩展能力强',
-      '高性能写入',
-      '丰富的查询语言'
-    ],
-    disadvantages: [
-      '事务支持有限',
-      '数据一致性挑战',
-      '存储成本较高'
-    ],
+    technology: "MongoDB",
+    version: "6.x",
+    useCase: ["日志数据存储", "用户行为数据", "分析数据存储", "文档存储"],
+    advantages: ["灵活的数据模型", "水平扩展能力强", "高性能写入", "丰富的查询语言"],
+    disadvantages: ["事务支持有限", "数据一致性挑战", "存储成本较高"],
     configuration: {
-      host: process.env.MONGO_HOST || 'localhost',
-      port: parseInt(process.env.MONGO_PORT || '27017'),
-      database: process.env.MONGO_NAME || 'yyc3_catering_logs',
+      host: process.env.MONGO_HOST || "localhost",
+      port: parseInt(process.env.MONGO_PORT || "27017"),
+      database: process.env.MONGO_NAME || "yyc3_catering_logs",
       username: process.env.MONGO_USER,
       password: process.env.MONGO_PASSWORD,
       options: {
         maxPoolSize: 10,
         minPoolSize: 2,
-        maxIdleTimeMS: 30000
-      }
-    }
+        maxIdleTimeMS: 30000,
+      },
+    },
   },
   {
-    technology: 'MinIO',
-    version: 'latest',
-    useCase: [
-      '图片存储',
-      '文件存储',
-      '备份存储',
-      '静态资源'
-    ],
-    advantages: [
-      'S3兼容',
-      '自托管',
-      '高性能',
-      '易于部署'
-    ],
-    disadvantages: [
-      '需要运维',
-      '功能不如AWS S3丰富'
-    ],
+    technology: "MinIO",
+    version: "latest",
+    useCase: ["图片存储", "文件存储", "备份存储", "静态资源"],
+    advantages: ["S3兼容", "自托管", "高性能", "易于部署"],
+    disadvantages: ["需要运维", "功能不如AWS S3丰富"],
     configuration: {
-      host: process.env.MINIO_HOST || 'localhost',
-      port: parseInt(process.env.MINIO_PORT || '9000'),
+      host: process.env.MINIO_HOST || "localhost",
+      port: parseInt(process.env.MINIO_PORT || "9000"),
       username: process.env.MINIO_ACCESS_KEY,
       password: process.env.MINIO_SECRET_KEY,
       options: {
-        useSSL: process.env.MINIO_USE_SSL === 'true',
-        region: 'us-east-1'
-      }
-    }
-  }
+        useSSL: process.env.MINIO_USE_SSL === "true",
+        region: "us-east-1",
+      },
+    },
+  },
 ];
 ```
 
@@ -706,35 +623,35 @@ export interface ShardingStrategy {
 export interface ShardingRule {
   table: string;
   shardKey: string;
-  shardAlgorithm: 'hash' | 'range' | 'mod';
+  shardAlgorithm: "hash" | "range" | "mod";
   shardCount: number;
 }
 
 export const shardingStrategy: ShardingStrategy = {
-  strategy: '混合分片策略',
-  description: '根据数据特点采用不同的分片策略',
-  shardKey: 'user_id',
+  strategy: "混合分片策略",
+  description: "根据数据特点采用不同的分片策略",
+  shardKey: "user_id",
   shardCount: 8,
   rules: [
     {
-      table: 'orders',
-      shardKey: 'user_id',
-      shardAlgorithm: 'hash',
-      shardCount: 8
+      table: "orders",
+      shardKey: "user_id",
+      shardAlgorithm: "hash",
+      shardCount: 8,
     },
     {
-      table: 'reviews',
-      shardKey: 'merchant_id',
-      shardAlgorithm: 'hash',
-      shardCount: 4
+      table: "reviews",
+      shardKey: "merchant_id",
+      shardAlgorithm: "hash",
+      shardCount: 4,
     },
     {
-      table: 'dishes',
-      shardKey: 'merchant_id',
-      shardAlgorithm: 'hash',
-      shardCount: 4
-    }
-  ]
+      table: "dishes",
+      shardKey: "merchant_id",
+      shardAlgorithm: "hash",
+      shardCount: 4,
+    },
+  ],
 };
 
 // 分片算法实现
@@ -743,7 +660,7 @@ export class ShardingAlgorithm {
     let hash = 0;
     for (let i = 0; i < key.length; i++) {
       const char = key.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // Convert to 32bit integer
     }
     return Math.abs(hash) % shardCount;
@@ -780,69 +697,29 @@ export interface IntegrationPattern {
 
 export const integrationPatterns: IntegrationPattern[] = [
   {
-    pattern: '事件驱动架构',
-    description: '通过事件实现系统间的异步通信',
-    useCase: [
-      '订单状态变更通知',
-      '用户行为追踪',
-      '实时数据同步',
-      '跨系统协调'
-    ],
-    advantages: [
-      '松耦合',
-      '高可扩展性',
-      '异步处理',
-      '实时性好'
-    ],
-    disadvantages: [
-      '调试复杂',
-      '事件顺序保证',
-      '数据一致性挑战'
-    ],
-    implementation: 'Kafka'
+    pattern: "事件驱动架构",
+    description: "通过事件实现系统间的异步通信",
+    useCase: ["订单状态变更通知", "用户行为追踪", "实时数据同步", "跨系统协调"],
+    advantages: ["松耦合", "高可扩展性", "异步处理", "实时性好"],
+    disadvantages: ["调试复杂", "事件顺序保证", "数据一致性挑战"],
+    implementation: "Kafka",
   },
   {
-    pattern: '批处理集成',
-    description: '定期批量处理数据',
-    useCase: [
-      '数据仓库同步',
-      '报表生成',
-      '数据备份',
-      '批量数据导入'
-    ],
-    advantages: [
-      '处理效率高',
-      '实现简单',
-      '资源利用率高'
-    ],
-    disadvantages: [
-      '实时性差',
-      '数据延迟',
-      '错误恢复复杂'
-    ],
-    implementation: 'ETL Pipeline'
+    pattern: "批处理集成",
+    description: "定期批量处理数据",
+    useCase: ["数据仓库同步", "报表生成", "数据备份", "批量数据导入"],
+    advantages: ["处理效率高", "实现简单", "资源利用率高"],
+    disadvantages: ["实时性差", "数据延迟", "错误恢复复杂"],
+    implementation: "ETL Pipeline",
   },
   {
-    pattern: 'API集成',
-    description: '通过RESTful API进行数据交换',
-    useCase: [
-      '第三方服务集成',
-      '微服务间通信',
-      '外部数据获取',
-      '数据推送'
-    ],
-    advantages: [
-      '标准化',
-      '易于实现',
-      '广泛支持'
-    ],
-    disadvantages: [
-      '同步调用',
-      '性能限制',
-      '版本管理'
-    ],
-    implementation: 'REST API'
-  }
+    pattern: "API集成",
+    description: "通过RESTful API进行数据交换",
+    useCase: ["第三方服务集成", "微服务间通信", "外部数据获取", "数据推送"],
+    advantages: ["标准化", "易于实现", "广泛支持"],
+    disadvantages: ["同步调用", "性能限制", "版本管理"],
+    implementation: "REST API",
+  },
 ];
 ```
 
@@ -889,78 +766,78 @@ export interface ConsumerConfig {
 }
 
 export const eventBusConfig: EventBusConfig = {
-  broker: 'kafka:9092',
+  broker: "kafka:9092",
   topics: [
     {
-      name: 'order-events',
+      name: "order-events",
       partitions: 8,
       replicationFactor: 3,
-      retention: '7d'
+      retention: "7d",
     },
     {
-      name: 'user-events',
+      name: "user-events",
       partitions: 4,
       replicationFactor: 3,
-      retention: '30d'
+      retention: "30d",
     },
     {
-      name: 'merchant-events',
+      name: "merchant-events",
       partitions: 4,
       replicationFactor: 3,
-      retention: '30d'
+      retention: "30d",
     },
     {
-      name: 'review-events',
+      name: "review-events",
       partitions: 4,
       replicationFactor: 3,
-      retention: '30d'
-    }
+      retention: "30d",
+    },
   ],
   producers: [
     {
-      name: 'order-producer',
-      topic: 'order-events',
-      eventType: 'OrderCreated|OrderUpdated|OrderCancelled'
+      name: "order-producer",
+      topic: "order-events",
+      eventType: "OrderCreated|OrderUpdated|OrderCancelled",
     },
     {
-      name: 'user-producer',
-      topic: 'user-events',
-      eventType: 'UserRegistered|UserUpdated|UserDeleted'
+      name: "user-producer",
+      topic: "user-events",
+      eventType: "UserRegistered|UserUpdated|UserDeleted",
     },
     {
-      name: 'merchant-producer',
-      topic: 'merchant-events',
-      eventType: 'MerchantCreated|MerchantUpdated|MerchantDeleted'
+      name: "merchant-producer",
+      topic: "merchant-events",
+      eventType: "MerchantCreated|MerchantUpdated|MerchantDeleted",
     },
     {
-      name: 'review-producer',
-      topic: 'review-events',
-      eventType: 'ReviewCreated|ReviewUpdated|ReviewDeleted'
-    }
+      name: "review-producer",
+      topic: "review-events",
+      eventType: "ReviewCreated|ReviewUpdated|ReviewDeleted",
+    },
   ],
   consumers: [
     {
-      name: 'notification-consumer',
-      topic: 'order-events',
-      groupId: 'notification-group',
-      eventType: 'OrderCreated|OrderUpdated',
-      handler: 'NotificationHandler'
+      name: "notification-consumer",
+      topic: "order-events",
+      groupId: "notification-group",
+      eventType: "OrderCreated|OrderUpdated",
+      handler: "NotificationHandler",
     },
     {
-      name: 'analytics-consumer',
-      topic: 'order-events',
-      groupId: 'analytics-group',
-      eventType: 'OrderCreated|OrderCompleted',
-      handler: 'AnalyticsHandler'
+      name: "analytics-consumer",
+      topic: "order-events",
+      groupId: "analytics-group",
+      eventType: "OrderCreated|OrderCompleted",
+      handler: "AnalyticsHandler",
     },
     {
-      name: 'recommendation-consumer',
-      topic: 'user-events',
-      groupId: 'recommendation-group',
-      eventType: 'UserRegistered|UserUpdated',
-      handler: 'RecommendationHandler'
-    }
-  ]
+      name: "recommendation-consumer",
+      topic: "user-events",
+      groupId: "recommendation-group",
+      eventType: "UserRegistered|UserUpdated",
+      handler: "RecommendationHandler",
+    },
+  ],
 };
 ```
 
@@ -977,63 +854,63 @@ export interface DataQualityRule {
   ruleName: string;
   table: string;
   column: string;
-  ruleType: 'completeness' | 'accuracy' | 'consistency' | 'timeliness' | 'uniqueness';
+  ruleType: "completeness" | "accuracy" | "consistency" | "timeliness" | "uniqueness";
   condition: string;
   threshold: number;
-  severity: 'error' | 'warning' | 'info';
+  severity: "error" | "warning" | "info";
 }
 
 export const dataQualityRules: DataQualityRule[] = [
   {
-    ruleId: 'DQ-001',
-    ruleName: '用户邮箱完整性检查',
-    table: 'users',
-    column: 'email',
-    ruleType: 'completeness',
-    condition: 'email IS NOT NULL AND email != \'\'',
+    ruleId: "DQ-001",
+    ruleName: "用户邮箱完整性检查",
+    table: "users",
+    column: "email",
+    ruleType: "completeness",
+    condition: "email IS NOT NULL AND email != ''",
     threshold: 100,
-    severity: 'error'
+    severity: "error",
   },
   {
-    ruleId: 'DQ-002',
-    ruleName: '用户邮箱格式检查',
-    table: 'users',
-    column: 'email',
-    ruleType: 'accuracy',
-    condition: 'email ~* \'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$\'',
+    ruleId: "DQ-002",
+    ruleName: "用户邮箱格式检查",
+    table: "users",
+    column: "email",
+    ruleType: "accuracy",
+    condition: "email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'",
     threshold: 100,
-    severity: 'error'
+    severity: "error",
   },
   {
-    ruleId: 'DQ-003',
-    ruleName: '订单金额一致性检查',
-    table: 'orders',
-    column: 'actual_amount',
-    ruleType: 'consistency',
-    condition: 'actual_amount = total_amount - discount_amount',
+    ruleId: "DQ-003",
+    ruleName: "订单金额一致性检查",
+    table: "orders",
+    column: "actual_amount",
+    ruleType: "consistency",
+    condition: "actual_amount = total_amount - discount_amount",
     threshold: 100,
-    severity: 'error'
+    severity: "error",
   },
   {
-    ruleId: 'DQ-004',
-    ruleName: '订单评分范围检查',
-    table: 'reviews',
-    column: 'rating',
-    ruleType: 'accuracy',
-    condition: 'rating >= 1 AND rating <= 5',
+    ruleId: "DQ-004",
+    ruleName: "订单评分范围检查",
+    table: "reviews",
+    column: "rating",
+    ruleType: "accuracy",
+    condition: "rating >= 1 AND rating <= 5",
     threshold: 100,
-    severity: 'error'
+    severity: "error",
   },
   {
-    ruleId: 'DQ-005',
-    ruleName: '商家位置坐标检查',
-    table: 'merchants',
-    column: 'latitude',
-    ruleType: 'accuracy',
-    condition: 'latitude >= -90 AND latitude <= 90',
+    ruleId: "DQ-005",
+    ruleName: "商家位置坐标检查",
+    table: "merchants",
+    column: "latitude",
+    ruleType: "accuracy",
+    condition: "latitude >= -90 AND latitude <= 90",
     threshold: 100,
-    severity: 'error'
-  }
+    severity: "error",
+  },
 ];
 
 export interface DataQualityReport {
@@ -1041,7 +918,7 @@ export interface DataQualityReport {
   timestamp: Date;
   rules: DataQualityRuleResult[];
   overallScore: number;
-  status: 'passed' | 'failed' | 'warning';
+  status: "passed" | "failed" | "warning";
 }
 
 export interface DataQualityRuleResult {
@@ -1066,14 +943,14 @@ export class DataQualityMonitor {
     }
 
     const overallScore = (totalPassed / dataQualityRules.length) * 100;
-    const status = overallScore >= 95 ? 'passed' : overallScore >= 80 ? 'warning' : 'failed';
+    const status = overallScore >= 95 ? "passed" : overallScore >= 80 ? "warning" : "failed";
 
     return {
       reportId: `DQR-${Date.now()}`,
       timestamp: new Date(),
       rules: results,
       overallScore,
-      status
+      status,
     };
   }
 
@@ -1092,7 +969,7 @@ export class DataQualityMonitor {
       actualValue,
       threshold: rule.threshold,
       violationCount,
-      violations
+      violations,
     };
   }
 }
@@ -1105,7 +982,7 @@ export class DataQualityMonitor {
 export interface DataLineageNode {
   nodeId: string;
   nodeName: string;
-  nodeType: 'source' | 'transformation' | 'destination';
+  nodeType: "source" | "transformation" | "destination";
   metadata: Record<string, any>;
 }
 
@@ -1125,93 +1002,93 @@ export interface DataLineageGraph {
 export const dataLineageGraph: DataLineageGraph = {
   nodes: [
     {
-      nodeId: 'user-table',
-      nodeName: 'users',
-      nodeType: 'source',
+      nodeId: "user-table",
+      nodeName: "users",
+      nodeType: "source",
       metadata: {
-        database: 'yyc3_catering',
-        schema: 'public',
-        table: 'users'
-      }
+        database: "yyc3_catering",
+        schema: "public",
+        table: "users",
+      },
     },
     {
-      nodeId: 'order-table',
-      nodeName: 'orders',
-      nodeType: 'source',
+      nodeId: "order-table",
+      nodeName: "orders",
+      nodeType: "source",
       metadata: {
-        database: 'yyc3_catering',
-        schema: 'public',
-        table: 'orders'
-      }
+        database: "yyc3_catering",
+        schema: "public",
+        table: "orders",
+      },
     },
     {
-      nodeId: 'merchant-table',
-      nodeName: 'merchants',
-      nodeType: 'source',
+      nodeId: "merchant-table",
+      nodeName: "merchants",
+      nodeType: "source",
       metadata: {
-        database: 'yyc3_catering',
-        schema: 'public',
-        table: 'merchants'
-      }
+        database: "yyc3_catering",
+        schema: "public",
+        table: "merchants",
+      },
     },
     {
-      nodeId: 'analytics-warehouse',
-      nodeName: 'analytics_warehouse',
-      nodeType: 'destination',
+      nodeId: "analytics-warehouse",
+      nodeName: "analytics_warehouse",
+      nodeType: "destination",
       metadata: {
-        database: 'yyc3_analytics',
-        schema: 'public',
-        table: 'fact_orders'
-      }
+        database: "yyc3_analytics",
+        schema: "public",
+        table: "fact_orders",
+      },
     },
     {
-      nodeId: 'etl-transformation',
-      nodeName: 'ETL Transformation',
-      nodeType: 'transformation',
+      nodeId: "etl-transformation",
+      nodeName: "ETL Transformation",
+      nodeType: "transformation",
       metadata: {
-        type: 'ETL',
-        schedule: 'daily'
-      }
-    }
+        type: "ETL",
+        schedule: "daily",
+      },
+    },
   ],
   edges: [
     {
-      edgeId: 'edge-1',
-      sourceNodeId: 'user-table',
-      targetNodeId: 'etl-transformation',
-      transformation: 'join',
+      edgeId: "edge-1",
+      sourceNodeId: "user-table",
+      targetNodeId: "etl-transformation",
+      transformation: "join",
       metadata: {
-        condition: 'user_id'
-      }
+        condition: "user_id",
+      },
     },
     {
-      edgeId: 'edge-2',
-      sourceNodeId: 'order-table',
-      targetNodeId: 'etl-transformation',
-      transformation: 'join',
+      edgeId: "edge-2",
+      sourceNodeId: "order-table",
+      targetNodeId: "etl-transformation",
+      transformation: "join",
       metadata: {
-        condition: 'user_id'
-      }
+        condition: "user_id",
+      },
     },
     {
-      edgeId: 'edge-3',
-      sourceNodeId: 'merchant-table',
-      targetNodeId: 'etl-transformation',
-      transformation: 'join',
+      edgeId: "edge-3",
+      sourceNodeId: "merchant-table",
+      targetNodeId: "etl-transformation",
+      transformation: "join",
       metadata: {
-        condition: 'merchant_id'
-      }
+        condition: "merchant_id",
+      },
     },
     {
-      edgeId: 'edge-4',
-      sourceNodeId: 'etl-transformation',
-      targetNodeId: 'analytics-warehouse',
-      transformation: 'load',
+      edgeId: "edge-4",
+      sourceNodeId: "etl-transformation",
+      targetNodeId: "analytics-warehouse",
+      transformation: "load",
       metadata: {
-        mode: 'append'
-      }
-    }
-  ]
+        mode: "append",
+      },
+    },
+  ],
 };
 ```
 
@@ -1238,102 +1115,74 @@ export interface EncryptionConfig {
 
 export const encryptionStrategy: EncryptionStrategy = {
   dataAtRest: {
-    algorithm: 'AES-256',
+    algorithm: "AES-256",
     keyLength: 256,
-    keyManagement: 'AWS KMS / HashiCorp Vault',
-    rotationPolicy: '90 days'
+    keyManagement: "AWS KMS / HashiCorp Vault",
+    rotationPolicy: "90 days",
   },
   dataInTransit: {
-    algorithm: 'TLS 1.3',
+    algorithm: "TLS 1.3",
     keyLength: 256,
-    keyManagement: 'Automatic',
-    rotationPolicy: 'Per session'
+    keyManagement: "Automatic",
+    rotationPolicy: "Per session",
   },
   dataInUse: {
-    algorithm: 'AES-256',
+    algorithm: "AES-256",
     keyLength: 256,
-    keyManagement: 'Application-level',
-    rotationPolicy: '90 days'
-  }
+    keyManagement: "Application-level",
+    rotationPolicy: "90 days",
+  },
 };
 
 // 加密工具类
 export class EncryptionUtil {
-  private static algorithm = 'aes-256-gcm';
+  private static algorithm = "aes-256-gcm";
   private static keyLength = 32;
   private static ivLength = 16;
   private static saltLength = 64;
   private static tagLength = 16;
 
   static async encrypt(data: string, key: string): Promise<string> {
-    const crypto = require('crypto');
+    const crypto = require("crypto");
     const salt = crypto.randomBytes(this.saltLength);
     const iv = crypto.randomBytes(this.ivLength);
-    
+
     // Derive key from password
-    const derivedKey = crypto.pbkdf2Sync(
-      key,
-      salt,
-      100000,
-      this.keyLength,
-      'sha256'
-    );
-    
-    const cipher = crypto.createCipheriv(
-      this.algorithm,
-      derivedKey,
-      iv
-    );
-    
-    let encrypted = cipher.update(data, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    
+    const derivedKey = crypto.pbkdf2Sync(key, salt, 100000, this.keyLength, "sha256");
+
+    const cipher = crypto.createCipheriv(this.algorithm, derivedKey, iv);
+
+    let encrypted = cipher.update(data, "utf8", "hex");
+    encrypted += cipher.final("hex");
+
     const authTag = cipher.getAuthTag();
-    
+
     // Combine salt, iv, authTag, and encrypted data
-    const combined = Buffer.concat([
-      salt,
-      iv,
-      authTag,
-      Buffer.from(encrypted, 'hex')
-    ]);
-    
-    return combined.toString('base64');
+    const combined = Buffer.concat([salt, iv, authTag, Buffer.from(encrypted, "hex")]);
+
+    return combined.toString("base64");
   }
 
   static async decrypt(encryptedData: string, key: string): Promise<string> {
-    const crypto = require('crypto');
-    const combined = Buffer.from(encryptedData, 'base64');
-    
+    const crypto = require("crypto");
+    const combined = Buffer.from(encryptedData, "base64");
+
     const salt = combined.slice(0, this.saltLength);
     const iv = combined.slice(this.saltLength, this.saltLength + this.ivLength);
-    const authTag = combined.slice(
-      this.saltLength + this.ivLength,
-      this.saltLength + this.ivLength + this.tagLength
-    );
+    const authTag = combined.slice(this.saltLength + this.ivLength, this.saltLength + this.ivLength + this.tagLength);
     const encrypted = combined.slice(this.saltLength + this.ivLength + this.tagLength);
-    
+
     // Derive key from password
-    const derivedKey = crypto.pbkdf2Sync(
-      key,
-      salt,
-      100000,
-      this.keyLength,
-      'sha256'
-    );
-    
-    const decipher = crypto.createDecipheriv(
-      this.algorithm,
-      derivedKey,
-      iv
-    );
-    
+    const derivedKey = crypto.pbkdf2Sync(key, salt, 100000, this.keyLength, "sha256");
+
+    const decipher = crypto.createDecipheriv(this.algorithm, derivedKey, iv);
+
     decipher.setAuthTag(authTag);
-    
+
     let decrypted = decipher.update(encrypted);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
-    
-    return decrypted.toString('utf8');
+
+    return decrypted.toString("utf8");
   }
 }
 ```
@@ -1353,44 +1202,44 @@ export interface AccessControlPolicy {
 
 export const accessControlPolicies: AccessControlPolicy[] = [
   {
-    policyId: 'ACP-001',
-    policyName: '用户数据访问策略',
-    resource: 'users',
-    actions: ['read', 'update'],
-    roles: ['customer', 'admin'],
+    policyId: "ACP-001",
+    policyName: "用户数据访问策略",
+    resource: "users",
+    actions: ["read", "update"],
+    roles: ["customer", "admin"],
     conditions: {
-      'user.id': 'user.id'
-    }
+      "user.id": "user.id",
+    },
   },
   {
-    policyId: 'ACP-002',
-    policyName: '订单数据访问策略',
-    resource: 'orders',
-    actions: ['read', 'create', 'update'],
-    roles: ['customer', 'merchant', 'admin'],
+    policyId: "ACP-002",
+    policyName: "订单数据访问策略",
+    resource: "orders",
+    actions: ["read", "create", "update"],
+    roles: ["customer", "merchant", "admin"],
     conditions: {
-      'customer': 'order.userId = user.id',
-      'merchant': 'order.merchantId = merchant.id'
-    }
+      customer: "order.userId = user.id",
+      merchant: "order.merchantId = merchant.id",
+    },
   },
   {
-    policyId: 'ACP-003',
-    policyName: '商家数据访问策略',
-    resource: 'merchants',
-    actions: ['read', 'update'],
-    roles: ['merchant', 'admin'],
+    policyId: "ACP-003",
+    policyName: "商家数据访问策略",
+    resource: "merchants",
+    actions: ["read", "update"],
+    roles: ["merchant", "admin"],
     conditions: {
-      'merchant': 'merchant.id = user.merchantId'
-    }
+      merchant: "merchant.id = user.merchantId",
+    },
   },
   {
-    policyId: 'ACP-004',
-    policyName: '管理员完全访问策略',
-    resource: '*',
-    actions: ['*'],
-    roles: ['admin'],
-    conditions: {}
-  }
+    policyId: "ACP-004",
+    policyName: "管理员完全访问策略",
+    resource: "*",
+    actions: ["*"],
+    roles: ["admin"],
+    conditions: {},
+  },
 ];
 
 export class AccessControl {
@@ -1402,9 +1251,9 @@ export class AccessControl {
 
   checkAccess(userRole: string, resource: string, action: string, context: Record<string, any>): boolean {
     const applicablePolicies = this.policies.filter(
-      policy => 
-        (policy.resource === resource || policy.resource === '*') &&
-        (policy.actions.includes(action) || policy.actions.includes('*')) &&
+      policy =>
+        (policy.resource === resource || policy.resource === "*") &&
+        (policy.actions.includes(action) || policy.actions.includes("*")) &&
         policy.roles.includes(userRole)
     );
 
@@ -1459,53 +1308,53 @@ export interface ValidationRule {
 
 export const validationRules: ValidationRule[] = [
   {
-    ruleId: 'VR-001',
-    ruleName: '邮箱格式验证',
-    entityType: 'User',
-    field: 'email',
-    validator: 'email',
-    errorMessage: '邮箱格式不正确'
+    ruleId: "VR-001",
+    ruleName: "邮箱格式验证",
+    entityType: "User",
+    field: "email",
+    validator: "email",
+    errorMessage: "邮箱格式不正确",
   },
   {
-    ruleId: 'VR-002',
-    ruleName: '手机号格式验证',
-    entityType: 'User',
-    field: 'phone',
-    validator: 'phone',
-    errorMessage: '手机号格式不正确'
+    ruleId: "VR-002",
+    ruleName: "手机号格式验证",
+    entityType: "User",
+    field: "phone",
+    validator: "phone",
+    errorMessage: "手机号格式不正确",
   },
   {
-    ruleId: 'VR-003',
-    ruleName: '价格范围验证',
-    entityType: 'Dish',
-    field: 'price',
-    validator: 'range',
-    errorMessage: '价格必须在0-10000之间',
+    ruleId: "VR-003",
+    ruleName: "价格范围验证",
+    entityType: "Dish",
+    field: "price",
+    validator: "range",
+    errorMessage: "价格必须在0-10000之间",
     parameters: {
       min: 0,
-      max: 10000
-    }
+      max: 10000,
+    },
   },
   {
-    ruleId: 'VR-004',
-    ruleName: '评分范围验证',
-    entityType: 'Review',
-    field: 'rating',
-    validator: 'range',
-    errorMessage: '评分必须在1-5之间',
+    ruleId: "VR-004",
+    ruleName: "评分范围验证",
+    entityType: "Review",
+    field: "rating",
+    validator: "range",
+    errorMessage: "评分必须在1-5之间",
     parameters: {
       min: 1,
-      max: 5
-    }
+      max: 5,
+    },
   },
   {
-    ruleId: 'VR-005',
-    ruleName: '经纬度范围验证',
-    entityType: 'Merchant',
-    field: 'location',
-    validator: 'coordinate',
-    errorMessage: '经纬度范围不正确'
-  }
+    ruleId: "VR-005",
+    ruleName: "经纬度范围验证",
+    entityType: "Merchant",
+    field: "location",
+    validator: "coordinate",
+    errorMessage: "经纬度范围不正确",
+  },
 ];
 
 export class DataValidator {
@@ -1527,26 +1376,26 @@ export class DataValidator {
         errors.push({
           field: rule.field,
           message: rule.errorMessage,
-          value
+          value,
         });
       }
     }
 
     return {
       isValid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
   private validateField(rule: ValidationRule, value: any): boolean {
     switch (rule.validator) {
-      case 'email':
+      case "email":
         return this.validateEmail(value);
-      case 'phone':
+      case "phone":
         return this.validatePhone(value);
-      case 'range':
+      case "range":
         return this.validateRange(value, rule.parameters);
-      case 'coordinate':
+      case "coordinate":
         return this.validateCoordinate(value);
       default:
         return true;
@@ -1569,15 +1418,10 @@ export class DataValidator {
   }
 
   private validateCoordinate(value: any): boolean {
-    if (typeof value !== 'object' || !value.latitude || !value.longitude) {
+    if (typeof value !== "object" || !value.latitude || !value.longitude) {
       return false;
     }
-    return (
-      value.latitude >= -90 &&
-      value.latitude <= 90 &&
-      value.longitude >= -180 &&
-      value.longitude <= 180
-    );
+    return value.latitude >= -90 && value.latitude <= 90 && value.longitude >= -180 && value.longitude <= 180;
   }
 }
 
@@ -1602,45 +1446,45 @@ export interface CleaningRule {
   ruleName: string;
   entityType: string;
   field: string;
-  operation: 'trim' | 'normalize' | 'standardize' | 'remove-duplicates' | 'fill-default';
+  operation: "trim" | "normalize" | "standardize" | "remove-duplicates" | "fill-default";
   parameters?: Record<string, any>;
 }
 
 export const cleaningRules: CleaningRule[] = [
   {
-    ruleId: 'CR-001',
-    ruleName: '去除字符串首尾空格',
-    entityType: 'User',
-    field: 'name',
-    operation: 'trim'
+    ruleId: "CR-001",
+    ruleName: "去除字符串首尾空格",
+    entityType: "User",
+    field: "name",
+    operation: "trim",
   },
   {
-    ruleId: 'CR-002',
-    ruleName: '标准化手机号格式',
-    entityType: 'User',
-    field: 'phone',
-    operation: 'standardize',
+    ruleId: "CR-002",
+    ruleName: "标准化手机号格式",
+    entityType: "User",
+    field: "phone",
+    operation: "standardize",
     parameters: {
-      format: '86-{phone}'
-    }
+      format: "86-{phone}",
+    },
   },
   {
-    ruleId: 'CR-003',
-    ruleName: '填充默认值',
-    entityType: 'Dish',
-    field: 'originalPrice',
-    operation: 'fill-default',
+    ruleId: "CR-003",
+    ruleName: "填充默认值",
+    entityType: "Dish",
+    field: "originalPrice",
+    operation: "fill-default",
     parameters: {
-      defaultValue: 0
-    }
+      defaultValue: 0,
+    },
   },
   {
-    ruleId: 'CR-004',
-    ruleName: '去除重复数据',
-    entityType: 'Order',
-    field: 'orderNo',
-    operation: 'remove-duplicates'
-  }
+    ruleId: "CR-004",
+    ruleName: "去除重复数据",
+    entityType: "Order",
+    field: "orderNo",
+    operation: "remove-duplicates",
+  },
 ];
 
 export class DataCleaner {
@@ -1663,15 +1507,15 @@ export class DataCleaner {
 
   private cleanField(rule: CleaningRule, value: any): any {
     switch (rule.operation) {
-      case 'trim':
+      case "trim":
         return this.trim(value);
-      case 'normalize':
+      case "normalize":
         return this.normalize(value, rule.parameters);
-      case 'standardize':
+      case "standardize":
         return this.standardize(value, rule.parameters);
-      case 'fill-default':
+      case "fill-default":
         return this.fillDefault(value, rule.parameters);
-      case 'remove-duplicates':
+      case "remove-duplicates":
         return this.removeDuplicates(value);
       default:
         return value;
@@ -1679,22 +1523,22 @@ export class DataCleaner {
   }
 
   private trim(value: string): string {
-    return typeof value === 'string' ? value.trim() : value;
+    return typeof value === "string" ? value.trim() : value;
   }
 
   private normalize(value: string, parameters?: Record<string, any>): string {
-    if (typeof value !== 'string') return value;
+    if (typeof value !== "string") return value;
     return value.toLowerCase();
   }
 
   private standardize(value: string, parameters?: Record<string, any>): string {
-    if (typeof value !== 'string') return value;
+    if (typeof value !== "string") return value;
     const { format } = parameters || {};
-    return format.replace('{phone}', value);
+    return format.replace("{phone}", value);
   }
 
   private fillDefault(value: any, parameters?: Record<string, any>): any {
-    if (value === null || value === undefined || value === '') {
+    if (value === null || value === undefined || value === "") {
       return parameters?.defaultValue;
     }
     return value;
@@ -1730,210 +1574,178 @@ export interface ImplementationTask {
   description: string;
   estimatedHours: number;
   assignedTo: string;
-  status: 'pending' | 'in-progress' | 'completed';
+  status: "pending" | "in-progress" | "completed";
 }
 
 export const implementationPlan: ImplementationPhase[] = [
   {
-    phaseId: 'IP-001',
-    phaseName: '数据库设计与实施',
-    timeline: '2025-02-01 - 2025-02-15',
-    objectives: [
-      '完成数据库表结构设计',
-      '创建数据库和表',
-      '配置数据库连接',
-      '实施索引优化'
-    ],
+    phaseId: "IP-001",
+    phaseName: "数据库设计与实施",
+    timeline: "2025-02-01 - 2025-02-15",
+    objectives: ["完成数据库表结构设计", "创建数据库和表", "配置数据库连接", "实施索引优化"],
     tasks: [
       {
-        taskId: 'IT-001',
-        taskName: '设计数据库表结构',
-        description: '设计所有核心业务表的表结构',
+        taskId: "IT-001",
+        taskName: "设计数据库表结构",
+        description: "设计所有核心业务表的表结构",
         estimatedHours: 40,
-        assignedTo: '数据库架构师',
-        status: 'pending'
+        assignedTo: "数据库架构师",
+        status: "pending",
       },
       {
-        taskId: 'IT-002',
-        taskName: '创建数据库和表',
-        description: '在PostgreSQL中创建数据库和所有表',
+        taskId: "IT-002",
+        taskName: "创建数据库和表",
+        description: "在PostgreSQL中创建数据库和所有表",
         estimatedHours: 16,
-        assignedTo: '数据库管理员',
-        status: 'pending'
+        assignedTo: "数据库管理员",
+        status: "pending",
       },
       {
-        taskId: 'IT-003',
-        taskName: '配置数据库连接',
-        description: '配置应用程序与数据库的连接',
+        taskId: "IT-003",
+        taskName: "配置数据库连接",
+        description: "配置应用程序与数据库的连接",
         estimatedHours: 8,
-        assignedTo: '后端开发工程师',
-        status: 'pending'
+        assignedTo: "后端开发工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-004',
-        taskName: '实施索引优化',
-        description: '为常用查询字段创建索引',
+        taskId: "IT-004",
+        taskName: "实施索引优化",
+        description: "为常用查询字段创建索引",
         estimatedHours: 8,
-        assignedTo: '数据库架构师',
-        status: 'pending'
-      }
+        assignedTo: "数据库架构师",
+        status: "pending",
+      },
     ],
     dependencies: [],
-    risks: [
-      '表结构设计不合理',
-      '性能不达预期'
-    ]
+    risks: ["表结构设计不合理", "性能不达预期"],
   },
   {
-    phaseId: 'IP-002',
-    phaseName: '缓存系统实施',
-    timeline: '2025-02-16 - 2025-02-28',
-    objectives: [
-      '部署Redis集群',
-      '配置缓存策略',
-      '实现缓存管理',
-      '监控缓存性能'
-    ],
+    phaseId: "IP-002",
+    phaseName: "缓存系统实施",
+    timeline: "2025-02-16 - 2025-02-28",
+    objectives: ["部署Redis集群", "配置缓存策略", "实现缓存管理", "监控缓存性能"],
     tasks: [
       {
-        taskId: 'IT-005',
-        taskName: '部署Redis集群',
-        description: '部署Redis主从集群',
+        taskId: "IT-005",
+        taskName: "部署Redis集群",
+        description: "部署Redis主从集群",
         estimatedHours: 16,
-        assignedTo: '运维工程师',
-        status: 'pending'
+        assignedTo: "运维工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-006',
-        taskName: '配置缓存策略',
-        description: '设计并实现缓存策略',
+        taskId: "IT-006",
+        taskName: "配置缓存策略",
+        description: "设计并实现缓存策略",
         estimatedHours: 24,
-        assignedTo: '后端开发工程师',
-        status: 'pending'
+        assignedTo: "后端开发工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-007',
-        taskName: '实现缓存管理',
-        description: '实现缓存的增删改查管理',
+        taskId: "IT-007",
+        taskName: "实现缓存管理",
+        description: "实现缓存的增删改查管理",
         estimatedHours: 16,
-        assignedTo: '后端开发工程师',
-        status: 'pending'
+        assignedTo: "后端开发工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-008',
-        taskName: '监控缓存性能',
-        description: '配置Redis监控和告警',
+        taskId: "IT-008",
+        taskName: "监控缓存性能",
+        description: "配置Redis监控和告警",
         estimatedHours: 8,
-        assignedTo: '运维工程师',
-        status: 'pending'
-      }
+        assignedTo: "运维工程师",
+        status: "pending",
+      },
     ],
-    dependencies: ['IP-001'],
-    risks: [
-      '缓存命中率低',
-      '缓存一致性问题'
-    ]
+    dependencies: ["IP-001"],
+    risks: ["缓存命中率低", "缓存一致性问题"],
   },
   {
-    phaseId: 'IP-003',
-    phaseName: '消息队列实施',
-    timeline: '2025-03-01 - 2025-03-15',
-    objectives: [
-      '部署Kafka集群',
-      '配置Topic和分区',
-      '实现事件生产者',
-      '实现事件消费者'
-    ],
+    phaseId: "IP-003",
+    phaseName: "消息队列实施",
+    timeline: "2025-03-01 - 2025-03-15",
+    objectives: ["部署Kafka集群", "配置Topic和分区", "实现事件生产者", "实现事件消费者"],
     tasks: [
       {
-        taskId: 'IT-009',
-        taskName: '部署Kafka集群',
-        description: '部署Kafka集群和ZooKeeper',
+        taskId: "IT-009",
+        taskName: "部署Kafka集群",
+        description: "部署Kafka集群和ZooKeeper",
         estimatedHours: 24,
-        assignedTo: '运维工程师',
-        status: 'pending'
+        assignedTo: "运维工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-010',
-        taskName: '配置Topic和分区',
-        description: '创建所需的Topic并配置分区',
+        taskId: "IT-010",
+        taskName: "配置Topic和分区",
+        description: "创建所需的Topic并配置分区",
         estimatedHours: 8,
-        assignedTo: '运维工程师',
-        status: 'pending'
+        assignedTo: "运维工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-011',
-        taskName: '实现事件生产者',
-        description: '实现事件生产者服务',
+        taskId: "IT-011",
+        taskName: "实现事件生产者",
+        description: "实现事件生产者服务",
         estimatedHours: 24,
-        assignedTo: '后端开发工程师',
-        status: 'pending'
+        assignedTo: "后端开发工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-012',
-        taskName: '实现事件消费者',
-        description: '实现事件消费者服务',
+        taskId: "IT-012",
+        taskName: "实现事件消费者",
+        description: "实现事件消费者服务",
         estimatedHours: 32,
-        assignedTo: '后端开发工程师',
-        status: 'pending'
-      }
+        assignedTo: "后端开发工程师",
+        status: "pending",
+      },
     ],
-    dependencies: ['IP-001'],
-    risks: [
-      '消息丢失',
-      '消费者处理延迟'
-    ]
+    dependencies: ["IP-001"],
+    risks: ["消息丢失", "消费者处理延迟"],
   },
   {
-    phaseId: 'IP-004',
-    phaseName: '数据治理实施',
-    timeline: '2025-03-16 - 2025-03-31',
-    objectives: [
-      '实施数据质量监控',
-      '实施数据血缘追踪',
-      '实施数据访问控制',
-      '实施数据加密'
-    ],
+    phaseId: "IP-004",
+    phaseName: "数据治理实施",
+    timeline: "2025-03-16 - 2025-03-31",
+    objectives: ["实施数据质量监控", "实施数据血缘追踪", "实施数据访问控制", "实施数据加密"],
     tasks: [
       {
-        taskId: 'IT-013',
-        taskName: '实施数据质量监控',
-        description: '实现数据质量规则和监控',
+        taskId: "IT-013",
+        taskName: "实施数据质量监控",
+        description: "实现数据质量规则和监控",
         estimatedHours: 32,
-        assignedTo: '数据工程师',
-        status: 'pending'
+        assignedTo: "数据工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-014',
-        taskName: '实施数据血缘追踪',
-        description: '实现数据血缘追踪系统',
+        taskId: "IT-014",
+        taskName: "实施数据血缘追踪",
+        description: "实现数据血缘追踪系统",
         estimatedHours: 24,
-        assignedTo: '数据工程师',
-        status: 'pending'
+        assignedTo: "数据工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-015',
-        taskName: '实施数据访问控制',
-        description: '实现基于角色的访问控制',
+        taskId: "IT-015",
+        taskName: "实施数据访问控制",
+        description: "实现基于角色的访问控制",
         estimatedHours: 16,
-        assignedTo: '安全工程师',
-        status: 'pending'
+        assignedTo: "安全工程师",
+        status: "pending",
       },
       {
-        taskId: 'IT-016',
-        taskName: '实施数据加密',
-        description: '实现数据加密和解密',
+        taskId: "IT-016",
+        taskName: "实施数据加密",
+        description: "实现数据加密和解密",
         estimatedHours: 24,
-        assignedTo: '安全工程师',
-        status: 'pending'
-      }
+        assignedTo: "安全工程师",
+        status: "pending",
+      },
     ],
-    dependencies: ['IP-001', 'IP-002', 'IP-003'],
-    risks: [
-      '性能影响',
-      '配置复杂'
-    ]
-  }
+    dependencies: ["IP-001", "IP-002", "IP-003"],
+    risks: ["性能影响", "配置复杂"],
+  },
 ];
 ```
 
@@ -1950,7 +1762,7 @@ export interface DataMonitoringConfig {
 export interface DataMetric {
   metricId: string;
   metricName: string;
-  type: 'counter' | 'gauge' | 'histogram';
+  type: "counter" | "gauge" | "histogram";
   query: string;
   labels: Record<string, string>;
 }
@@ -1961,7 +1773,7 @@ export interface DataAlert {
   condition: string;
   threshold: number;
   duration: string;
-  severity: 'critical' | 'warning' | 'info';
+  severity: "critical" | "warning" | "info";
   notificationChannels: string[];
 }
 
@@ -1974,7 +1786,7 @@ export interface Dashboard {
 export interface DashboardPanel {
   panelId: string;
   panelName: string;
-  type: 'graph' | 'table' | 'stat' | 'gauge';
+  type: "graph" | "table" | "stat" | "gauge";
   query: string;
   visualization: Record<string, any>;
 }
@@ -1982,137 +1794,137 @@ export interface DashboardPanel {
 export const dataMonitoringConfig: DataMonitoringConfig = {
   metrics: [
     {
-      metricId: 'DM-001',
-      metricName: 'database_connections_active',
-      type: 'gauge',
+      metricId: "DM-001",
+      metricName: "database_connections_active",
+      type: "gauge",
       query: 'pg_stat_database{datname="yyc3_catering"}',
       labels: {
-        database: 'yyc3_catering'
-      }
+        database: "yyc3_catering",
+      },
     },
     {
-      metricId: 'DM-002',
-      metricName: 'database_query_duration_seconds',
-      type: 'histogram',
+      metricId: "DM-002",
+      metricName: "database_query_duration_seconds",
+      type: "histogram",
       query: 'pg_stat_statements{datname="yyc3_catering"}',
       labels: {
-        database: 'yyc3_catering'
-      }
+        database: "yyc3_catering",
+      },
     },
     {
-      metricId: 'DM-003',
-      metricName: 'redis_memory_used_bytes',
-      type: 'gauge',
-      query: 'redis_memory_used_bytes',
+      metricId: "DM-003",
+      metricName: "redis_memory_used_bytes",
+      type: "gauge",
+      query: "redis_memory_used_bytes",
       labels: {
-        instance: 'redis:6379'
-      }
+        instance: "redis:6379",
+      },
     },
     {
-      metricId: 'DM-004',
-      metricName: 'kafka_messages_consumed_total',
-      type: 'counter',
-      query: 'kafka_consumergroup_lag',
+      metricId: "DM-004",
+      metricName: "kafka_messages_consumed_total",
+      type: "counter",
+      query: "kafka_consumergroup_lag",
       labels: {
-        topic: 'order-events'
-      }
-    }
+        topic: "order-events",
+      },
+    },
   ],
   alerts: [
     {
-      alertId: 'DA-001',
-      alertName: '数据库连接数过高',
-      condition: 'database_connections_active > 80',
+      alertId: "DA-001",
+      alertName: "数据库连接数过高",
+      condition: "database_connections_active > 80",
       threshold: 80,
-      duration: '5m',
-      severity: 'warning',
-      notificationChannels: ['email', 'slack']
+      duration: "5m",
+      severity: "warning",
+      notificationChannels: ["email", "slack"],
     },
     {
-      alertId: 'DA-002',
-      alertName: '数据库查询慢',
-      condition: 'database_query_duration_seconds > 1',
+      alertId: "DA-002",
+      alertName: "数据库查询慢",
+      condition: "database_query_duration_seconds > 1",
       threshold: 1,
-      duration: '5m',
-      severity: 'warning',
-      notificationChannels: ['email', 'slack']
+      duration: "5m",
+      severity: "warning",
+      notificationChannels: ["email", "slack"],
     },
     {
-      alertId: 'DA-003',
-      alertName: 'Redis内存使用过高',
-      condition: 'redis_memory_used_bytes > 8589934592',
+      alertId: "DA-003",
+      alertName: "Redis内存使用过高",
+      condition: "redis_memory_used_bytes > 8589934592",
       threshold: 8589934592, // 8GB
-      duration: '5m',
-      severity: 'critical',
-      notificationChannels: ['email', 'slack', 'pagerduty']
+      duration: "5m",
+      severity: "critical",
+      notificationChannels: ["email", "slack", "pagerduty"],
     },
     {
-      alertId: 'DA-004',
-      alertName: 'Kafka消费者延迟',
-      condition: 'kafka_consumergroup_lag > 1000',
+      alertId: "DA-004",
+      alertName: "Kafka消费者延迟",
+      condition: "kafka_consumergroup_lag > 1000",
       threshold: 1000,
-      duration: '5m',
-      severity: 'warning',
-      notificationChannels: ['email', 'slack']
-    }
+      duration: "5m",
+      severity: "warning",
+      notificationChannels: ["email", "slack"],
+    },
   ],
   dashboards: [
     {
-      dashboardId: 'DD-001',
-      dashboardName: '数据库监控',
+      dashboardId: "DD-001",
+      dashboardName: "数据库监控",
       panels: [
         {
-          panelId: 'DP-001',
-          panelName: '活跃连接数',
-          type: 'gauge',
-          query: 'database_connections_active',
+          panelId: "DP-001",
+          panelName: "活跃连接数",
+          type: "gauge",
+          query: "database_connections_active",
           visualization: {
             min: 0,
             max: 100,
             thresholds: [
-              { value: 80, color: 'yellow' },
-              { value: 90, color: 'red' }
-            ]
-          }
+              { value: 80, color: "yellow" },
+              { value: 90, color: "red" },
+            ],
+          },
         },
         {
-          panelId: 'DP-002',
-          panelName: '查询延迟',
-          type: 'graph',
-          query: 'database_query_duration_seconds',
+          panelId: "DP-002",
+          panelName: "查询延迟",
+          type: "graph",
+          query: "database_query_duration_seconds",
           visualization: {
             yaxis: {
-              format: 's'
-            }
-          }
-        }
-      ]
+              format: "s",
+            },
+          },
+        },
+      ],
     },
     {
-      dashboardId: 'DD-002',
-      dashboardName: '缓存监控',
+      dashboardId: "DD-002",
+      dashboardName: "缓存监控",
       panels: [
         {
-          panelId: 'DP-003',
-          panelName: '内存使用',
-          type: 'gauge',
-          query: 'redis_memory_used_bytes',
+          panelId: "DP-003",
+          panelName: "内存使用",
+          type: "gauge",
+          query: "redis_memory_used_bytes",
           visualization: {
-            unit: 'bytes'
-          }
+            unit: "bytes",
+          },
         },
         {
-          panelId: 'DP-004',
-          panelName: '命中率',
-          type: 'stat',
-          query: 'redis_keyspace_hits / (redis_keyspace_hits + redis_keyspace_misses)',
+          panelId: "DP-004",
+          panelName: "命中率",
+          type: "stat",
+          query: "redis_keyspace_hits / (redis_keyspace_hits + redis_keyspace_misses)",
           visualization: {
-            unit: 'percent'
-          }
-        }
-      ]
-    }
-  ]
+            unit: "percent",
+          },
+        },
+      ],
+    },
+  ],
 };
 ```
 
@@ -2120,13 +1932,10 @@ export const dataMonitoringConfig: DataMonitoringConfig = {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -2149,8 +1958,6 @@ export const dataMonitoringConfig: DataMonitoringConfig = {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -2184,8 +1991,6 @@ export const dataMonitoringConfig: DataMonitoringConfig = {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -2208,46 +2013,46 @@ export const dataMonitoringConfig: DataMonitoringConfig = {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -2260,6 +2065,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -2269,6 +2075,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -2278,6 +2085,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -2294,16 +2102,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2313,13 +2122,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2328,6 +2135,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2346,6 +2154,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2361,6 +2170,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2380,28 +2190,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2410,44 +2219,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2461,13 +2268,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2476,18 +2283,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2497,37 +2307,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2536,28 +2349,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2566,21 +2377,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2589,10 +2402,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2618,16 +2428,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2636,26 +2446,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -2664,21 +2469,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2687,10 +2494,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2716,16 +2520,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2734,25 +2538,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

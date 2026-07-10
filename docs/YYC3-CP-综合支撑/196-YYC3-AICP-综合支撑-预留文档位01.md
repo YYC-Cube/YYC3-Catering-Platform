@@ -9,11 +9,11 @@
 @tags: [综合支撑],[预留文档位01]
 ---
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
@@ -30,6 +30,7 @@
 YYC³平台提供了完善的技术支持。
 
 ### 支持目标
+
 - **快速响应**: 快速响应用户问题
 - **问题解决**: 及时解决用户问题
 - **用户满意**: 提高用户满意度
@@ -39,6 +40,7 @@ YYC³平台提供了完善的技术支持。
 YYC³平台提供了多种技术支持方式。
 
 ### 支持方式
+
 - **在线支持**: 在线客服支持
 - **电话支持**: 电话技术支持
 - **邮件支持**: 邮件技术支持
@@ -49,19 +51,18 @@ YYC³平台提供了多种技术支持方式。
 YYC³平台提供了完善的培训文档。
 
 ### 培训内容
+
 - **用户培训**: 用户操作培训
 - **管理员培训**: 管理员操作培训
 - **技术培训**: 技术人员培训
-
-
 
 ---
 
 <div align="center">
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 </div>

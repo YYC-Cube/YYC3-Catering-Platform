@@ -38,10 +38,10 @@ async function testNotificationService() {
     console.log('📋 获取用户通知列表...');
     const response = await axios.get(`${API_BASE_URL}/api/notifications/users/${TEST_USER_ID}`, {
       headers: {
-        'Authorization': 'Bearer test-token'
-      }
+        Authorization: 'Bearer test-token',
+      },
     });
-    
+
     if (response.status === 200) {
       console.log('✅ 获取通知列表成功');
       console.log('📦 通知数量:', response.data.data.length);
@@ -62,7 +62,7 @@ async function testApiGateway() {
     // 检查API网关健康状态
     console.log('🔍 检查API网关健康状态...');
     const response = await axios.get(`${API_BASE_URL}/health`);
-    
+
     if (response.status === 200) {
       console.log('✅ API网关健康检查通过');
       return true;
@@ -80,20 +80,20 @@ async function testApiGateway() {
 async function runTests() {
   console.log('🎯 开始测试YYC³通知服务...');
   console.log('======================================');
-  
+
   const results = [];
   results.push(await testHealthCheck());
   results.push(await testApiGateway());
   results.push(await testNotificationService());
-  
+
   console.log('\n======================================');
   console.log('🎯 测试完成!');
-  
+
   const passed = results.filter(r => r).length;
   const total = results.length;
-  
+
   console.log(`📊 测试结果: ${passed}/${total} 通过`);
-  
+
   if (passed === total) {
     console.log('🎉 所有测试通过!');
     process.exit(0);

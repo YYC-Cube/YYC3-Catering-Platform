@@ -44,7 +44,7 @@ app.use(helmet());
 app.use(compression());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan('combined', { stream: { write: (message) => logger.info(message.trim()) } }));
+app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
 
 // API路由配置
 app.use('/api/categories', categoryRoutes);
@@ -59,7 +59,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({
     success: true,
     message: 'Menu Service is healthy',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -67,7 +67,7 @@ app.get('/health', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    message: 'API endpoint not found'
+    message: 'API endpoint not found',
   });
 });
 
@@ -77,7 +77,7 @@ app.use((err: Error | unknown, req: express.Request, res: express.Response, next
   logger.error('Global error handler:', error);
   res.status((error as any).status || 500).json({
     success: false,
-    message: error.message || 'Internal Server Error'
+    message: error.message || 'Internal Server Error',
   });
 });
 

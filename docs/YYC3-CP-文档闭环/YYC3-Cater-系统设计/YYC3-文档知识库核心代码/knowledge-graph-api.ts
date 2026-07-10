@@ -25,7 +25,7 @@ const logger = new Logger('KnowledgeGraphAPI');
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/build', async (c) => {
+app.post('/build', async c => {
   try {
     logger.info('Build knowledge graph requested');
 
@@ -42,10 +42,13 @@ app.post('/build', async (c) => {
     });
   } catch (error) {
     logger.error('Build knowledge graph failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '构建知识图谱失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '构建知识图谱失败',
+      },
+      500,
+    );
   }
 });
 
@@ -55,7 +58,7 @@ app.post('/build', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 知识图谱
  */
-app.get('/', async (c) => {
+app.get('/', async c => {
   try {
     const version = c.req.query('version');
     const includeEdges = c.req.query('includeEdges') !== 'false';
@@ -65,10 +68,13 @@ app.get('/', async (c) => {
     const graph = await knowledgeGraphService.getGraph(version);
 
     if (!graph) {
-      return c.json({
-        success: false,
-        error: '知识图谱不存在',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '知识图谱不存在',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -77,10 +83,13 @@ app.get('/', async (c) => {
     });
   } catch (error) {
     logger.error('Get knowledge graph failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取知识图谱失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取知识图谱失败',
+      },
+      500,
+    );
   }
 });
 
@@ -90,7 +99,7 @@ app.get('/', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 节点信息
  */
-app.get('/nodes/:nodeId', async (c) => {
+app.get('/nodes/:nodeId', async c => {
   try {
     const nodeId = c.req.param('nodeId');
     const version = c.req.query('version');
@@ -100,10 +109,13 @@ app.get('/nodes/:nodeId', async (c) => {
     const node = await knowledgeGraphService.getNode(nodeId, version);
 
     if (!node) {
-      return c.json({
-        success: false,
-        error: '节点不存在',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '节点不存在',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -112,10 +124,13 @@ app.get('/nodes/:nodeId', async (c) => {
     });
   } catch (error) {
     logger.error('Get graph node failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取节点失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取节点失败',
+      },
+      500,
+    );
   }
 });
 
@@ -125,7 +140,7 @@ app.get('/nodes/:nodeId', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 邻居节点列表
  */
-app.get('/nodes/:nodeId/neighbors', async (c) => {
+app.get('/nodes/:nodeId/neighbors', async c => {
   try {
     const nodeId = c.req.param('nodeId');
     const depth = parseInt(c.req.query('depth') || '1');
@@ -145,10 +160,13 @@ app.get('/nodes/:nodeId/neighbors', async (c) => {
     });
   } catch (error) {
     logger.error('Get node neighbors failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取邻居节点失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取邻居节点失败',
+      },
+      500,
+    );
   }
 });
 
@@ -158,17 +176,20 @@ app.get('/nodes/:nodeId/neighbors', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 路径结果
  */
-app.get('/paths', async (c) => {
+app.get('/paths', async c => {
   try {
     const from = c.req.query('from');
     const to = c.req.query('to');
     const version = c.req.query('version');
 
     if (!from || !to) {
-      return c.json({
-        success: false,
-        error: '必须指定起始节点和目标节点',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '必须指定起始节点和目标节点',
+        },
+        400,
+      );
     }
 
     logger.info('Find path requested', { from, to, version });
@@ -185,10 +206,13 @@ app.get('/paths', async (c) => {
     });
   } catch (error) {
     logger.error('Find path failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '查找路径失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '查找路径失败',
+      },
+      500,
+    );
   }
 });
 
@@ -198,17 +222,20 @@ app.get('/paths', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 概念列表
  */
-app.get('/concepts/search', async (c) => {
+app.get('/concepts/search', async c => {
   try {
     const query = c.req.query('q');
     const category = c.req.query('category');
     const limit = parseInt(c.req.query('limit') || '20');
 
     if (!query) {
-      return c.json({
-        success: false,
-        error: '必须指定搜索查询',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '必须指定搜索查询',
+        },
+        400,
+      );
     }
 
     logger.info('Search concepts requested', { query, category, limit });
@@ -225,10 +252,13 @@ app.get('/concepts/search', async (c) => {
     });
   } catch (error) {
     logger.error('Search concepts failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '搜索概念失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '搜索概念失败',
+      },
+      500,
+    );
   }
 });
 
@@ -238,7 +268,7 @@ app.get('/concepts/search', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 概念详情
  */
-app.get('/concepts/:conceptId', async (c) => {
+app.get('/concepts/:conceptId', async c => {
   try {
     const conceptId = c.req.param('conceptId');
 
@@ -247,10 +277,13 @@ app.get('/concepts/:conceptId', async (c) => {
     const concept = await knowledgeGraphService.getConcept(conceptId);
 
     if (!concept) {
-      return c.json({
-        success: false,
-        error: '概念不存在',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '概念不存在',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -259,10 +292,13 @@ app.get('/concepts/:conceptId', async (c) => {
     });
   } catch (error) {
     logger.error('Get concept details failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取概念详情失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取概念详情失败',
+      },
+      500,
+    );
   }
 });
 
@@ -272,7 +308,7 @@ app.get('/concepts/:conceptId', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 相关概念列表
  */
-app.get('/concepts/:conceptId/related', async (c) => {
+app.get('/concepts/:conceptId/related', async c => {
   try {
     const conceptId = c.req.param('conceptId');
     const limit = parseInt(c.req.query('limit') || '10');
@@ -290,10 +326,13 @@ app.get('/concepts/:conceptId/related', async (c) => {
     });
   } catch (error) {
     logger.error('Get related concepts failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取相关概念失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取相关概念失败',
+      },
+      500,
+    );
   }
 });
 
@@ -303,7 +342,7 @@ app.get('/concepts/:conceptId/related', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 统计信息
  */
-app.get('/statistics', async (c) => {
+app.get('/statistics', async c => {
   try {
     const version = c.req.query('version');
 
@@ -317,10 +356,13 @@ app.get('/statistics', async (c) => {
     });
   } catch (error) {
     logger.error('Get graph statistics failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取统计信息失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取统计信息失败',
+      },
+      500,
+    );
   }
 });
 
@@ -330,7 +372,7 @@ app.get('/statistics', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 版本列表
  */
-app.get('/versions', async (c) => {
+app.get('/versions', async c => {
   try {
     logger.info('Get graph versions requested');
 
@@ -345,10 +387,13 @@ app.get('/versions', async (c) => {
     });
   } catch (error) {
     logger.error('Get graph versions failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取版本列表失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取版本列表失败',
+      },
+      500,
+    );
   }
 });
 
@@ -358,7 +403,7 @@ app.get('/versions', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.delete('/', async (c) => {
+app.delete('/', async c => {
   try {
     const version = c.req.query('version');
 
@@ -370,10 +415,13 @@ app.delete('/', async (c) => {
       if (currentGraph) {
         await knowledgeGraphService.deleteGraph(currentGraph.id);
       } else {
-        return c.json({
-          success: false,
-          error: '没有可删除的图谱',
-        }, 404);
+        return c.json(
+          {
+            success: false,
+            error: '没有可删除的图谱',
+          },
+          404,
+        );
       }
     } else {
       await knowledgeGraphService.deleteGraph(version);
@@ -385,10 +433,13 @@ app.delete('/', async (c) => {
     });
   } catch (error) {
     logger.error('Delete knowledge graph failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '删除知识图谱失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '删除知识图谱失败',
+      },
+      500,
+    );
   }
 });
 
@@ -398,7 +449,7 @@ app.delete('/', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 导出文件
  */
-app.get('/export', async (c) => {
+app.get('/export', async c => {
   try {
     const format = c.req.query('format') || 'json';
     const version = c.req.query('version');
@@ -423,10 +474,13 @@ app.get('/export', async (c) => {
     }
   } catch (error) {
     logger.error('Export knowledge graph failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '导出知识图谱失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '导出知识图谱失败',
+      },
+      500,
+    );
   }
 });
 
@@ -436,7 +490,7 @@ app.get('/export', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 可视化数据
  */
-app.get('/visualize', async (c) => {
+app.get('/visualize', async c => {
   try {
     const version = c.req.query('version');
     const layoutParam = c.req.query('layout') || 'force';
@@ -444,8 +498,8 @@ app.get('/visualize', async (c) => {
 
     // 验证layout参数
     const validLayouts = ['force', 'circular', 'hierarchical'];
-    const layout = validLayouts.includes(layoutParam) 
-      ? layoutParam as 'force' | 'circular' | 'hierarchical'
+    const layout = validLayouts.includes(layoutParam)
+      ? (layoutParam as 'force' | 'circular' | 'hierarchical')
       : 'force';
 
     logger.info('Get visualization data requested', { version, layout, maxNodes });
@@ -462,10 +516,13 @@ app.get('/visualize', async (c) => {
     });
   } catch (error) {
     logger.error('Get visualization data failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取可视化数据失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取可视化数据失败',
+      },
+      500,
+    );
   }
 });
 

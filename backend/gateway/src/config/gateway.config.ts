@@ -15,7 +15,7 @@ export const gatewayConfig: GatewayConfig = {
   server: {
     host: process.env.GATEWAY_HOST || '0.0.0.0',
     port: parseInt(process.env.GATEWAY_PORT || '8080'),
-    env: process.env.NODE_ENV || 'development'
+    env: process.env.NODE_ENV || 'development',
   },
 
   // 服务注册配置
@@ -27,8 +27,8 @@ export const gatewayConfig: GatewayConfig = {
       port: parseInt(process.env.CONSUL_PORT || '8500'),
       serviceName: 'yyc3-gateway',
       healthCheckInterval: 10000,
-      healthCheckTimeout: 5000
-    }
+      healthCheckTimeout: 5000,
+    },
   },
 
   // 认证配置
@@ -38,15 +38,15 @@ export const gatewayConfig: GatewayConfig = {
       secret: process.env.JWT_SECRET || 'yyc3-jwt-secret-key',
       algorithms: ['HS256'],
       issuer: 'yyc3-catering-platform',
-      audience: 'yyc3-users'
+      audience: 'yyc3-users',
     },
     excludePaths: [
       '/api/v1/auth/login',
       '/api/v1/auth/register',
       '/api/v1/health',
       '/api/v1/docs',
-      '/api/v1/menus/public'
-    ]
+      '/api/v1/menus/public',
+    ],
   },
 
   // 限流配置
@@ -56,21 +56,18 @@ export const gatewayConfig: GatewayConfig = {
     maxRequests: 100,
     skipSuccessfulRequests: false,
     skipFailedRequests: false,
-    keyGenerator: (req) => {
+    keyGenerator: req => {
       // 根据用户ID或IP进行限流
       return req.user?.id || req.ip;
     },
     // 限流策略：固定窗口
     strategy: 'fixed',
     // IP白名单
-    whitelist: [
-      '127.0.0.1',
-      '::1'
-    ],
+    whitelist: ['127.0.0.1', '::1'],
     // 限流响应配置
     response: {
       statusCode: 429,
-      message: '请求过于频繁，请稍后重试'
+      message: '请求过于频繁，请稍后重试',
     },
     // 路由级别的限流配置
     routeSpecific: {
@@ -78,8 +75,8 @@ export const gatewayConfig: GatewayConfig = {
       '/api/v1/users': { maxRequests: 50, windowMs: 60000 },
       '/api/v1/orders': { maxRequests: 200, windowMs: 60000 },
       '/api/v1/ai': { maxRequests: 30, windowMs: 60000 },
-      '/api/v1/menus': { maxRequests: 150, windowMs: 60000 }
-    }
+      '/api/v1/menus': { maxRequests: 150, windowMs: 60000 },
+    },
   },
 
   // 数据传输加密配置
@@ -90,7 +87,7 @@ export const gatewayConfig: GatewayConfig = {
     autoRotate: true,
     rotationInterval: 30 * 24 * 60 * 60 * 1000, // 30天
     backupStrategy: 'keep_last_7_days',
-    excludedPaths: ['/health', '/metrics', '/docs']
+    excludedPaths: ['/health', '/metrics', '/docs'],
   },
 
   // 日志配置
@@ -101,13 +98,13 @@ export const gatewayConfig: GatewayConfig = {
     requestLogging: {
       enabled: true,
       includeHeaders: ['user-agent', 'authorization'],
-      includeBody: false
+      includeBody: false,
     },
     responseLogging: {
       enabled: true,
       includeHeaders: ['content-type'],
-      includeBody: false
-    }
+      includeBody: false,
+    },
   },
 
   // CORS配置
@@ -116,7 +113,7 @@ export const gatewayConfig: GatewayConfig = {
     origins: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-request-id'],
-    credentials: true
+    credentials: true,
   },
 
   // 路由配置
@@ -130,8 +127,8 @@ export const gatewayConfig: GatewayConfig = {
       circuitBreaker: {
         enabled: true,
         threshold: 5,
-        timeout: 60000
-      }
+        timeout: 60000,
+      },
     },
     {
       path: '/api/v1/users',
@@ -142,8 +139,8 @@ export const gatewayConfig: GatewayConfig = {
       authentication: true,
       rateLimit: {
         maxRequests: 50,
-        windowMs: 60000
-      }
+        windowMs: 60000,
+      },
     },
     {
       path: '/api/v1/menus',
@@ -153,8 +150,8 @@ export const gatewayConfig: GatewayConfig = {
       retries: 3,
       cache: {
         enabled: true,
-        ttl: 300000 // 5分钟
-      }
+        ttl: 300000, // 5分钟
+      },
     },
     {
       path: '/api/v1/orders',
@@ -165,8 +162,8 @@ export const gatewayConfig: GatewayConfig = {
       authentication: true,
       rateLimit: {
         maxRequests: 200,
-        windowMs: 60000
-      }
+        windowMs: 60000,
+      },
     },
     {
       path: '/api/v1/ai',
@@ -177,9 +174,9 @@ export const gatewayConfig: GatewayConfig = {
       authentication: true,
       rateLimit: {
         maxRequests: 30,
-        windowMs: 60000
-      }
-    }
+        windowMs: 60000,
+      },
+    },
   ],
 
   // 缓存配置
@@ -192,8 +189,8 @@ export const gatewayConfig: GatewayConfig = {
       password: process.env.REDIS_PASSWORD,
       db: parseInt(process.env.REDIS_DB || '1'),
       keyPrefix: 'yyc3-gateway:',
-      ttl: 300000 // 默认5分钟
-    }
+      ttl: 300000, // 默认5分钟
+    },
   },
 
   // 监控配置
@@ -204,17 +201,17 @@ export const gatewayConfig: GatewayConfig = {
       path: '/metrics',
       labels: {
         service: 'yyc3-gateway',
-        version: process.env.APP_VERSION || '1.0.0'
+        version: process.env.APP_VERSION || '1.0.0',
       },
       collectionInterval: 60000, // 1分钟收集一次指标
-      retentionDays: 7 // 指标数据保留7天
+      retentionDays: 7, // 指标数据保留7天
     },
     healthCheck: {
       enabled: true,
       path: '/health',
       interval: 30000, // 30秒检查一次健康状态
       timeout: 5000, // 健康检查超时时间5秒
-      retryCount: 3 // 健康检查失败重试次数
+      retryCount: 3, // 健康检查失败重试次数
     },
     alerts: {
       enabled: true,
@@ -232,9 +229,9 @@ export const gatewayConfig: GatewayConfig = {
           actions: [
             {
               type: 'log',
-              target: 'error'
-            }
-          ]
+              target: 'error',
+            },
+          ],
         },
         {
           id: 'high-response-time',
@@ -249,9 +246,9 @@ export const gatewayConfig: GatewayConfig = {
           actions: [
             {
               type: 'log',
-              target: 'warning'
-            }
-          ]
+              target: 'warning',
+            },
+          ],
         },
         {
           id: 'high-memory-usage',
@@ -266,21 +263,21 @@ export const gatewayConfig: GatewayConfig = {
           actions: [
             {
               type: 'log',
-              target: 'warning'
-            }
-          ]
-        }
+              target: 'warning',
+            },
+          ],
+        },
       ],
       notifications: {},
-      muteIntervals: []
+      muteIntervals: [],
     },
     rootCauseAnalysis: {
       enabled: true,
       correlationInterval: 300000, // 5分钟内的相关事件
       maxCandidates: 10, // 最多10个根因候选
       autoRemediation: false, // 关闭自动修复
-      remediationRules: []
-    }
+      remediationRules: [],
+    },
   },
 
   // 安全配置
@@ -292,15 +289,15 @@ export const gatewayConfig: GatewayConfig = {
           defaultSrc: ["'self'"],
           styleSrc: ["'self'", "'unsafe-inline'"],
           scriptSrc: ["'self'"],
-          imgSrc: ["'self'", "data:", "https:"]
-        }
-      }
+          imgSrc: ["'self'", 'data:', 'https:'],
+        },
+      },
     },
     compression: {
       enabled: true,
       threshold: 1024,
-      level: 6
-    }
+      level: 6,
+    },
   },
 
   // 错误处理配置
@@ -312,7 +309,7 @@ export const gatewayConfig: GatewayConfig = {
       success: false,
       error: 'Internal Server Error',
       code: 'INTERNAL_ERROR',
-      timestamp: true
-    }
-  }
+      timestamp: true,
+    },
+  },
 };

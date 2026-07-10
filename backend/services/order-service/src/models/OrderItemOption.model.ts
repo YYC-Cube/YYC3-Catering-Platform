@@ -4,14 +4,25 @@
  * @author YYC³
  * @version 1.0.0
  */
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, CreatedAt, UpdatedAt, DeletedAt } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  ForeignKey,
+  CreatedAt,
+  UpdatedAt,
+  DeletedAt,
+} from 'sequelize-typescript';
 import { OrderItem } from './OrderItem.model';
 
 @Table({
   tableName: 'order_item_options',
   timestamps: true,
   underscored: true,
-  paranoid: true
+  paranoid: true,
 })
 export class OrderItemOption extends Model<OrderItemOption> {
   @PrimaryKey
@@ -22,33 +33,33 @@ export class OrderItemOption extends Model<OrderItemOption> {
   @ForeignKey(() => OrderItem)
   @Column({
     type: DataType.BIGINT,
-    allowNull: false
+    allowNull: false,
   })
   order_item_id: number;
 
   @Column({
     type: DataType.BIGINT,
-    allowNull: false
+    allowNull: false,
   })
   option_id: number;
 
   @Column({
     type: DataType.STRING(255),
-    allowNull: false
+    allowNull: false,
   })
   name: string;
 
   @Column({
     type: DataType.DECIMAL(10, 2),
     allowNull: false,
-    defaultValue: 0
+    defaultValue: 0,
   })
   price: number;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
-    defaultValue: 1
+    defaultValue: 1,
   })
   quantity: number;
 

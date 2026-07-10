@@ -2,44 +2,44 @@
  * YYC³餐饮行业智能化平台 - 管理后台路由配置
  */
 
-import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
 // 路由懒加载
-const Dashboard = () => import('@/views/Dashboard.vue')
-const Login = () => import('@/views/Login.vue')
-const MenuManagement = () => import('@/views/MenuManagement.vue')
-const OrderManagement = () => import('@/views/OrderManagement.vue')
-const KitchenManagement = () => import('@/views/KitchenManagement.vue')
-const KitchenDisplay = () => import('@/views/KitchenDisplay.vue')
-const FoodSafety = () => import('@/views/FoodSafety.vue')
-const DataAnalytics = () => import('@/views/DataAnalytics.vue')
-const CustomerManagement = () => import('@/views/CustomerManagement.vue')
-const PaymentManagement = () => import('@/views/PaymentManagement.vue')
-const ChainManagement = () => import('@/views/ChainManagement.vue')
-const SystemMonitoring = () => import('@/views/SystemMonitoring.vue')
-const SystemManagement = () => import('@/views/SystemManagement.vue')
-const InventoryManagement = () => import('@/views/InventoryManagement.vue')
-const MemberManagement = () => import('@/views/MemberManagement.vue')
-const MarketingManagement = () => import('@/views/MarketingManagement.vue')
-const SubscriptionManagement = () => import('@/views/SubscriptionManagement.vue')
-const UsageBilling = () => import('@/views/UsageBilling.vue')
-const AIAssistantManagement = () => import('@/views/AIAssistantManagement.vue')
-const AIDashboard = () => import('@/views/AIDashboard.vue')
-const DecisionManagement = () => import('@/views/DecisionManagement.vue')
-const KnowledgeGraphManagement = () => import('@/views/KnowledgeGraphManagement.vue')
-const LearningEvolutionManagement = () => import('@/views/LearningEvolutionManagement.vue')
-const MultiAgentCollaboration = () => import('@/views/MultiAgentCollaboration.vue')
-const RobotAgentManagement = () => import('@/views/RobotAgentManagement.vue')
-const UIComponentsTest = () => import('@/views/UIComponentsTest.vue')
-const NotFound = () => import('@/views/NotFound.vue')
+const Dashboard = () => import('@/views/Dashboard.vue');
+const Login = () => import('@/views/Login.vue');
+const MenuManagement = () => import('@/views/MenuManagement.vue');
+const OrderManagement = () => import('@/views/OrderManagement.vue');
+const KitchenManagement = () => import('@/views/KitchenManagement.vue');
+const KitchenDisplay = () => import('@/views/KitchenDisplay.vue');
+const FoodSafety = () => import('@/views/FoodSafety.vue');
+const DataAnalytics = () => import('@/views/DataAnalytics.vue');
+const CustomerManagement = () => import('@/views/CustomerManagement.vue');
+const PaymentManagement = () => import('@/views/PaymentManagement.vue');
+const ChainManagement = () => import('@/views/ChainManagement.vue');
+const SystemMonitoring = () => import('@/views/SystemMonitoring.vue');
+const SystemManagement = () => import('@/views/SystemManagement.vue');
+const InventoryManagement = () => import('@/views/InventoryManagement.vue');
+const MemberManagement = () => import('@/views/MemberManagement.vue');
+const MarketingManagement = () => import('@/views/MarketingManagement.vue');
+const SubscriptionManagement = () => import('@/views/SubscriptionManagement.vue');
+const UsageBilling = () => import('@/views/UsageBilling.vue');
+const AIAssistantManagement = () => import('@/views/AIAssistantManagement.vue');
+const AIDashboard = () => import('@/views/AIDashboard.vue');
+const DecisionManagement = () => import('@/views/DecisionManagement.vue');
+const KnowledgeGraphManagement = () => import('@/views/KnowledgeGraphManagement.vue');
+const LearningEvolutionManagement = () => import('@/views/LearningEvolutionManagement.vue');
+const MultiAgentCollaboration = () => import('@/views/MultiAgentCollaboration.vue');
+const RobotAgentManagement = () => import('@/views/RobotAgentManagement.vue');
+const UIComponentsTest = () => import('@/views/UIComponentsTest.vue');
+const NotFound = () => import('@/views/NotFound.vue');
 
 // 路由配置
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/dashboard'
+    redirect: '/dashboard',
   },
   {
     path: '/login',
@@ -48,8 +48,8 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '登录',
       requiresAuth: false,
-      keepAlive: false
-    }
+      keepAlive: false,
+    },
   },
   {
     path: '/dashboard',
@@ -59,8 +59,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '工作台',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'House'
-    }
+      icon: 'House',
+    },
   },
   // 订单管理路由
   {
@@ -72,8 +72,8 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
       keepAlive: true,
       icon: 'List',
-      permissions: ['order:read']
-    }
+      permissions: ['order:read'],
+    },
   },
   {
     path: '/orders/list',
@@ -83,8 +83,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '订单列表',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'List'
-    }
+      icon: 'List',
+    },
   },
   {
     path: '/orders/analysis',
@@ -94,8 +94,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '订单分析',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'TrendCharts'
-    }
+      icon: 'TrendCharts',
+    },
   },
   // 菜单管理路由
   {
@@ -107,8 +107,8 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
       keepAlive: true,
       icon: 'Food',
-      permissions: ['menu:read']
-    }
+      permissions: ['menu:read'],
+    },
   },
   {
     path: '/menu/items',
@@ -118,8 +118,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '菜品管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Food'
-    }
+      icon: 'Food',
+    },
   },
   {
     path: '/menu/categories',
@@ -129,8 +129,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '分类管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Collection'
-    }
+      icon: 'Collection',
+    },
   },
   {
     path: '/menu/recommendations',
@@ -140,8 +140,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '推荐管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Star'
-    }
+      icon: 'Star',
+    },
   },
   // 厨房管理路由
   {
@@ -153,8 +153,8 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
       keepAlive: true,
       icon: 'Kitchen',
-      permissions: ['kitchen:read']
-    }
+      permissions: ['kitchen:read'],
+    },
   },
   {
     path: '/kitchen/display',
@@ -165,8 +165,8 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
       keepAlive: true,
       icon: 'Monitor',
-      permissions: ['kitchen:display']
-    }
+      permissions: ['kitchen:display'],
+    },
   },
   {
     path: '/kitchen/efficiency',
@@ -176,8 +176,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '效率分析',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'TrendCharts'
-    }
+      icon: 'TrendCharts',
+    },
   },
   // 数据分析路由
   {
@@ -189,8 +189,8 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
       keepAlive: true,
       icon: 'TrendCharts',
-      permissions: ['analytics:read']
-    }
+      permissions: ['analytics:read'],
+    },
   },
   // 客户管理路由
   {
@@ -201,8 +201,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '客户列表',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'User'
-    }
+      icon: 'User',
+    },
   },
   {
     path: '/customers/analysis',
@@ -212,8 +212,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '客户分析',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'DataAnalysis'
-    }
+      icon: 'DataAnalysis',
+    },
   },
   // 连锁管理路由
   {
@@ -225,8 +225,8 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
       keepAlive: true,
       icon: 'Shop',
-      permissions: ['chain:read']
-    }
+      permissions: ['chain:read'],
+    },
   },
   {
     path: '/chain/stores',
@@ -236,8 +236,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '门店管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Shop'
-    }
+      icon: 'Shop',
+    },
   },
   {
     path: '/chain/employees',
@@ -247,8 +247,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '员工管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'User'
-    }
+      icon: 'User',
+    },
   },
   {
     path: '/chain/inventory',
@@ -258,8 +258,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '库存管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Box'
-    }
+      icon: 'Box',
+    },
   },
   {
     path: '/chain/stats',
@@ -269,8 +269,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '数据统计',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'TrendCharts'
-    }
+      icon: 'TrendCharts',
+    },
   },
   {
     path: '/chain/operations',
@@ -280,8 +280,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '运营管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Operation'
-    }
+      icon: 'Operation',
+    },
   },
   {
     path: '/chain/performance',
@@ -291,8 +291,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '绩效分析',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'TrendCharts'
-    }
+      icon: 'TrendCharts',
+    },
   },
   // 食品安全管理路由
   {
@@ -304,8 +304,8 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
       keepAlive: true,
       icon: 'Shield',
-      permissions: ['safety:read']
-    }
+      permissions: ['safety:read'],
+    },
   },
   {
     path: '/safety/traceability',
@@ -315,8 +315,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '食品溯源',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Shield'
-    }
+      icon: 'Shield',
+    },
   },
   {
     path: '/safety/checks',
@@ -326,8 +326,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '安全检查',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Check'
-    }
+      icon: 'Check',
+    },
   },
   // 报表管理路由
   {
@@ -338,8 +338,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '销售报表',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Document'
-    }
+      icon: 'Document',
+    },
   },
   {
     path: '/reports/finance',
@@ -349,8 +349,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '财务报表',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Coin'
-    }
+      icon: 'Coin',
+    },
   },
   {
     path: '/reports/operations',
@@ -360,8 +360,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '运营报表',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'DataBoard'
-    }
+      icon: 'DataBoard',
+    },
   },
   // 支付管理路由
   {
@@ -372,8 +372,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '支付配置',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Setting'
-    }
+      icon: 'Setting',
+    },
   },
   {
     path: '/payment/transactions',
@@ -383,8 +383,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '交易记录',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'List'
-    }
+      icon: 'List',
+    },
   },
   {
     path: '/payment/refunds',
@@ -394,8 +394,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '退款管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'RefreshLeft'
-    }
+      icon: 'RefreshLeft',
+    },
   },
   // 系统管理路由
   {
@@ -407,8 +407,8 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
       keepAlive: true,
       icon: 'Tools',
-      permissions: ['system:read']
-    }
+      permissions: ['system:read'],
+    },
   },
   {
     path: '/system/users',
@@ -418,8 +418,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '用户管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'User'
-    }
+      icon: 'User',
+    },
   },
   {
     path: '/system/roles',
@@ -429,8 +429,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '角色管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'UserFilled'
-    }
+      icon: 'UserFilled',
+    },
   },
   {
     path: '/system/settings',
@@ -440,8 +440,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '系统设置',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Tools'
-    }
+      icon: 'Tools',
+    },
   },
   // AI功能路由
   {
@@ -452,8 +452,8 @@ const routes: Array<RouteRecordRaw> = [
       title: 'AI工作台',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'MagicStick'
-    }
+      icon: 'MagicStick',
+    },
   },
   {
     path: '/ai/assistant',
@@ -463,8 +463,8 @@ const routes: Array<RouteRecordRaw> = [
       title: 'AI助手',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'ChatDotRound'
-    }
+      icon: 'ChatDotRound',
+    },
   },
   {
     path: '/ai/decision',
@@ -474,8 +474,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '决策管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Promotion'
-    }
+      icon: 'Promotion',
+    },
   },
   {
     path: '/ai/knowledge',
@@ -485,8 +485,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '知识图谱',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Connection'
-    }
+      icon: 'Connection',
+    },
   },
   {
     path: '/ai/learning',
@@ -496,8 +496,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '学习进化',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'TrendCharts'
-    }
+      icon: 'TrendCharts',
+    },
   },
   {
     path: '/ai/collaboration',
@@ -507,8 +507,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '多智能体协作',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'ConnectionBoard'
-    }
+      icon: 'ConnectionBoard',
+    },
   },
   {
     path: '/ai/robot',
@@ -518,8 +518,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '机器人代理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Robot'
-    }
+      icon: 'Robot',
+    },
   },
   // 其他功能路由
   {
@@ -530,8 +530,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '库存管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Box'
-    }
+      icon: 'Box',
+    },
   },
   {
     path: '/members',
@@ -541,8 +541,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '会员管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Avatar'
-    }
+      icon: 'Avatar',
+    },
   },
   {
     path: '/marketing',
@@ -552,8 +552,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '营销管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Bullhorn'
-    }
+      icon: 'Bullhorn',
+    },
   },
   {
     path: '/subscription',
@@ -563,8 +563,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '订阅管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'CreditCard'
-    }
+      icon: 'CreditCard',
+    },
   },
   {
     path: '/billing',
@@ -574,8 +574,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '使用计费',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Wallet'
-    }
+      icon: 'Wallet',
+    },
   },
   {
     path: '/ui-components-test',
@@ -585,8 +585,8 @@ const routes: Array<RouteRecordRaw> = [
       title: 'UI组件测试',
       requiresAuth: true,
       keepAlive: false,
-      icon: 'View'
-    }
+      icon: 'View',
+    },
   },
   {
     path: '/404',
@@ -595,14 +595,14 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '页面不存在',
       requiresAuth: false,
-      keepAlive: false
-    }
+      keepAlive: false,
+    },
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/404'
-  }
-]
+    redirect: '/404',
+  },
+];
 
 // 创建路由实例
 const router = createRouter({
@@ -610,37 +610,37 @@ const router = createRouter({
   routes,
   scrollBehavior(_to, _from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
-      return { top: 0 }
+      return { top: 0 };
     }
-  }
-})
+  },
+});
 
 // 全局前置守卫
 router.beforeEach(async (to, _from, next) => {
   // 设置页面标题
   if (to.meta?.title) {
-    document.title = `${to.meta.title} - YYC³管理后台`
+    document.title = `${to.meta.title} - YYC³管理后台`;
   }
 
   // 临时禁用认证检查，方便开发调试
   if (to.path === '/login' && false) {
-    next()
+    next();
   } else {
-    next()
+    next();
   }
-})
+});
 
 // 全局后置钩子
 router.afterEach((to, from) => {
   // 路由切换完成后的处理
-  console.log(`Route changed: ${from.path} -> ${to.path}`)
-})
+  console.log(`Route changed: ${from.path} -> ${to.path}`);
+});
 
 // 路由错误处理
-router.onError((error) => {
-  console.error('Router error:', error)
-})
+router.onError(error => {
+  console.error('Router error:', error);
+});
 
-export default router
+export default router;

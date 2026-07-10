@@ -9,11 +9,11 @@
 @tags: [API文档],[预留文档位03]
 ---
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
@@ -30,6 +30,7 @@
 YYC³平台提供了完善的API接口。
 
 ### API目标
+
 - **易用性**: API易于使用
 - **稳定性**: API稳定可靠
 - **性能**: API性能优秀
@@ -40,6 +41,7 @@ YYC³平台提供了完善的API接口。
 YYC³平台遵循RESTful API设计规范。
 
 ### 设计规范
+
 - **资源命名**: 使用名词复数
 - **HTTP方法**: 使用标准HTTP方法
 - **状态码**: 使用标准HTTP状态码
@@ -50,28 +52,29 @@ YYC³平台遵循RESTful API设计规范。
 YYC³平台提供了以下API接口：
 
 ### 用户接口
+
 - POST /api/users/register: 用户注册
 - POST /api/users/login: 用户登录
 - GET /api/users/profile: 获取用户信息
 
 ### 订单接口
+
 - POST /api/orders: 创建订单
 - GET /api/orders/:id: 获取订单详情
 - PUT /api/orders/:id: 更新订单
 
 ### 商品接口
+
 - GET /api/products: 获取商品列表
 - GET /api/products/:id: 获取商品详情
-
-
 
 ---
 
 <div align="center">
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 </div>

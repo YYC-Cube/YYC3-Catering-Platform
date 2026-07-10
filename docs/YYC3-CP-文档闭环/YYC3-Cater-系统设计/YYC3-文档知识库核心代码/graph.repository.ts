@@ -19,7 +19,9 @@ export class GraphRepository {
   private dataDir: string;
   private graphFile: string;
 
-  constructor(dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据') {
+  constructor(
+    dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据',
+  ) {
     this.logger = new Logger('GraphRepository');
     this.dataDir = dataDir;
     this.graphFile = path.join(dataDir, 'knowledge-graph.json');

@@ -12,22 +12,20 @@
 ### 基础用法
 
 ```tsx
-import { Switch } from '@/components/UI'
-import { ref } from 'vue'
+import { Switch } from "@/components/UI";
+import { ref } from "vue";
 
 export default function SwitchBasic() {
-  const checked = ref(false)
+  const checked = ref(false);
 
-  return (
-    <Switch v-model={checked.value} />
-  )
+  return <Switch v-model={checked.value} />;
 }
 ```
 
 ### 禁用状态
 
 ```tsx
-import { Switch } from '@/components/UI'
+import { Switch } from "@/components/UI";
 
 export default function SwitchDisabled() {
   return (
@@ -35,44 +33,38 @@ export default function SwitchDisabled() {
       <Switch disabled />
       <Switch disabled checked />
     </div>
-  )
+  );
 }
 ```
 
 ### 加载状态
 
 ```tsx
-import { Switch } from '@/components/UI'
-import { ref } from 'vue'
+import { Switch } from "@/components/UI";
+import { ref } from "vue";
 
 export default function SwitchLoading() {
-  const loading = ref(false)
-  const checked = ref(false)
+  const loading = ref(false);
+  const checked = ref(false);
 
   const handleChange = async (value: boolean) => {
-    loading.value = true
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    loading.value = false
-  }
+    loading.value = true;
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    loading.value = false;
+  };
 
-  return (
-    <Switch
-      v-model={checked.value}
-      loading={loading.value}
-      onChange={handleChange}
-    />
-  )
+  return <Switch v-model={checked.value} loading={loading.value} onChange={handleChange} />;
 }
 ```
 
 ### 自定义颜色
 
 ```tsx
-import { Switch } from '@/components/UI'
-import { ref } from 'vue'
+import { Switch } from "@/components/UI";
+import { ref } from "vue";
 
 export default function SwitchColor() {
-  const checked = ref(false)
+  const checked = ref(false);
 
   return (
     <div class="space-y-2">
@@ -81,26 +73,20 @@ export default function SwitchColor() {
       <Switch v-model={checked.value} color="warning" />
       <Switch v-model={checked.value} color="danger" />
     </div>
-  )
+  );
 }
 ```
 
 ### 文字描述
 
 ```tsx
-import { Switch } from '@/components/UI'
-import { ref } from 'vue'
+import { Switch } from "@/components/UI";
+import { ref } from "vue";
 
 export default function SwitchText() {
-  const checked = ref(false)
+  const checked = ref(false);
 
-  return (
-    <Switch
-      v-model={checked.value}
-      checkedText="开"
-      uncheckedText="关"
-    />
-  )
+  return <Switch v-model={checked.value} checkedText="开" uncheckedText="关" />;
 }
 ```
 
@@ -108,17 +94,17 @@ export default function SwitchText() {
 
 ### Switch Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-|------|------|------|--------|--------|
-| modelValue | 绑定值 | `boolean` | - | `false` |
-| disabled | 是否禁用 | `boolean` | - | `false` |
-| loading | 是否加载中 | `boolean` | - | `false` |
-| size | 尺寸 | `string` | `sm` / `md` / `lg` | `md` |
-| color | 颜色 | `string` | `primary` / `success` / `warning` / `danger` | `primary` |
-| checkedText | 选中时的文字 | `string` | - | - |
-| uncheckedText | 未选中时的文字 | `string` | - | - |
-| onChange | 变化回调 | `Function` | - | - |
-| className | 自定义类名 | `string` | - | - |
+| 参数          | 说明           | 类型       | 可选值                                       | 默认值    |
+| ------------- | -------------- | ---------- | -------------------------------------------- | --------- |
+| modelValue    | 绑定值         | `boolean`  | -                                            | `false`   |
+| disabled      | 是否禁用       | `boolean`  | -                                            | `false`   |
+| loading       | 是否加载中     | `boolean`  | -                                            | `false`   |
+| size          | 尺寸           | `string`   | `sm` / `md` / `lg`                           | `md`      |
+| color         | 颜色           | `string`   | `primary` / `success` / `warning` / `danger` | `primary` |
+| checkedText   | 选中时的文字   | `string`   | -                                            | -         |
+| uncheckedText | 未选中时的文字 | `string`   | -                                            | -         |
+| onChange      | 变化回调       | `Function` | -                                            | -         |
+| className     | 自定义类名     | `string`   | -                                            | -         |
 
 ## 样式定制
 
@@ -159,16 +145,16 @@ export default function SwitchText() {
 
 ```tsx
 const handleChange = async (checked: boolean) => {
-  loading.value = true
+  loading.value = true;
   try {
-    await api.updateStatus(checked)
-    message.success('更新成功')
+    await api.updateStatus(checked);
+    message.success("更新成功");
   } catch (error) {
-    message.error('更新失败')
+    message.error("更新失败");
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 ```
 
 ### 2. 确认操作
@@ -176,11 +162,11 @@ const handleChange = async (checked: boolean) => {
 ```tsx
 const handleChange = async (checked: boolean) => {
   if (checked) {
-    const confirmed = await confirm('确定要开启吗？')
-    if (!confirmed) return false
+    const confirmed = await confirm("确定要开启吗？");
+    if (!confirmed) return false;
   }
-  return true
-}
+  return true;
+};
 ```
 
 ### 3. 权限控制

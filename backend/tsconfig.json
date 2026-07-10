@@ -16,13 +16,6 @@
     "sourceMap": true,
     "typeRoots": ["./node_modules/@types", "../types"]
   },
-  "include": [
-    "**/*.ts",
-    "**/*.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/node_modules/**"
-  ]
+  "include": ["**/*.ts", "**/*.d.ts"],
+  "exclude": ["node_modules", "dist", "**/node_modules/**"]
 }

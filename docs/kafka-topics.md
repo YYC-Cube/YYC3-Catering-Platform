@@ -7,6 +7,7 @@
 ## 🎯 主题命名规范
 
 主题命名遵循以下格式：
+
 ```
 {service}.{entity}.{action}
 ```
@@ -20,6 +21,7 @@
 ### 1. 用户服务主题
 
 #### `user.user.created`
+
 - **描述**: 新用户创建事件
 - **分区数**: 3
 - **副本因子**: 2
@@ -27,6 +29,7 @@
 - **用途**: 通知其他服务有新用户注册
 
 #### `user.user.updated`
+
 - **描述**: 用户信息更新事件
 - **分区数**: 3
 - **副本因子**: 2
@@ -34,6 +37,7 @@
 - **用途**: 同步用户信息变更
 
 #### `user.user.deleted`
+
 - **描述**: 用户删除事件
 - **分区数**: 3
 - **副本因子**: 2
@@ -43,6 +47,7 @@
 ### 2. 订单服务主题
 
 #### `order.order.created`
+
 - **描述**: 新订单创建事件
 - **分区数**: 5
 - **副本因子**: 2
@@ -50,6 +55,7 @@
 - **用途**: 触发订单处理流程
 
 #### `order.order.updated`
+
 - **描述**: 订单状态更新事件
 - **分区数**: 5
 - **副本因子**: 2
@@ -57,6 +63,7 @@
 - **用途**: 同步订单状态变更
 
 #### `order.order.status`
+
 - **描述**: 订单状态变更通知
 - **分区数**: 5
 - **副本因子**: 2
@@ -64,6 +71,7 @@
 - **用途**: 实时订单状态推送
 
 #### `order.order.events`
+
 - **描述**: 订单事件流（所有订单相关事件）
 - **分区数**: 5
 - **副本因子**: 2
@@ -73,6 +81,7 @@
 ### 3. 餐厅服务主题
 
 #### `restaurant.restaurant.created`
+
 - **描述**: 新餐厅注册事件
 - **分区数**: 3
 - **副本因子**: 2
@@ -80,6 +89,7 @@
 - **用途**: 通知新餐厅加入
 
 #### `restaurant.restaurant.updated`
+
 - **描述**: 餐厅信息更新事件
 - **分区数**: 3
 - **副本因子**: 2
@@ -87,6 +97,7 @@
 - **用途**: 同步餐厅信息变更
 
 #### `restaurant.menu.updated`
+
 - **描述**: 菜单更新事件
 - **分区数**: 3
 - **副本因子**: 2
@@ -96,6 +107,7 @@
 ### 4. 支付服务主题
 
 #### `payment.payment.created`
+
 - **描述**: 支付创建事件
 - **分区数**: 5
 - **副本因子**: 2
@@ -103,6 +115,7 @@
 - **用途**: 触发支付处理
 
 #### `payment.payment.status`
+
 - **描述**: 支付状态变更事件
 - **分区数**: 5
 - **副本因子**: 2
@@ -110,6 +123,7 @@
 - **用途**: 通知支付结果
 
 #### `payment.payment.events`
+
 - **描述**: 支付事件流
 - **分区数**: 5
 - **副本因子**: 2
@@ -119,6 +133,7 @@
 ### 5. 配送服务主题
 
 #### `delivery.delivery.created`
+
 - **描述**: 配送任务创建事件
 - **分区数**: 5
 - **副本因子**: 2
@@ -126,6 +141,7 @@
 - **用途**: 分配送送任务
 
 #### `delivery.delivery.updated`
+
 - **描述**: 配送状态更新事件
 - **分区数**: 5
 - **副本因子**: 2
@@ -133,6 +149,7 @@
 - **用途**: 同步配送状态
 
 #### `delivery.delivery.status`
+
 - **描述**: 配送状态通知
 - **分区数**: 5
 - **副本因子**: 2
@@ -142,6 +159,7 @@
 ### 6. 通知服务主题
 
 #### `notification.notification.events`
+
 - **描述**: 通知事件流
 - **分区数**: 3
 - **副本因子**: 2
@@ -149,6 +167,7 @@
 - **用途**: 统一通知处理
 
 #### `notification.email.events`
+
 - **描述**: 邮件通知事件
 - **分区数**: 3
 - **副本因子**: 2
@@ -156,6 +175,7 @@
 - **用途**: 邮件发送记录
 
 #### `notification.sms.events`
+
 - **描述**: 短信通知事件
 - **分区数**: 3
 - **副本因子**: 2
@@ -165,6 +185,7 @@
 ### 7. 分析服务主题
 
 #### `analytics.user.events`
+
 - **描述**: 用户行为事件
 - **分区数**: 10
 - **副本因子**: 2
@@ -172,6 +193,7 @@
 - **用途**: 用户行为分析
 
 #### `analytics.order.events`
+
 - **描述**: 订单分析事件
 - **分区数**: 10
 - **副本因子**: 2
@@ -179,6 +201,7 @@
 - **用途**: 订单数据分析
 
 #### `analytics.restaurant.events`
+
 - **描述**: 餐厅分析事件
 - **分区数**: 10
 - **副本因子**: 2
@@ -396,10 +419,10 @@ curl http://localhost:3200/api/kafka/topics/user.user.created
         "menuItemId": "item-1",
         "name": "宫保鸡丁",
         "quantity": 2,
-        "price": 38.00
+        "price": 38.0
       }
     ],
-    "totalAmount": 76.00,
+    "totalAmount": 76.0,
     "deliveryAddress": "北京市朝阳区xxx"
   },
   "metadata": {
@@ -414,14 +437,14 @@ curl http://localhost:3200/api/kafka/topics/user.user.created
 
 ### 推荐消费者组配置
 
-| 服务 | 消费者组ID | 订阅主题 | 说明 |
-|------|-----------|---------|------|
-| 用户服务 | user-service-group | user.user.* | 用户相关事件 |
-| 订单服务 | order-service-group | user.user.*, restaurant.restaurant.* | 用户和餐厅事件 |
-| 支付服务 | payment-service-group | order.order.created | 订单创建事件 |
-| 配送服务 | delivery-service-group | order.order.status, payment.payment.status | 订单和支付状态 |
-| 通知服务 | notification-service-group | *.status, *.created | 所有状态和创建事件 |
-| 分析服务 | analytics-service-group | *.events | 所有事件流 |
+| 服务     | 消费者组ID                 | 订阅主题                                   | 说明               |
+| -------- | -------------------------- | ------------------------------------------ | ------------------ |
+| 用户服务 | user-service-group         | user.user.\*                               | 用户相关事件       |
+| 订单服务 | order-service-group        | user.user._, restaurant.restaurant._       | 用户和餐厅事件     |
+| 支付服务 | payment-service-group      | order.order.created                        | 订单创建事件       |
+| 配送服务 | delivery-service-group     | order.order.status, payment.payment.status | 订单和支付状态     |
+| 通知服务 | notification-service-group | _.status, _.created                        | 所有状态和创建事件 |
+| 分析服务 | analytics-service-group    | \*.events                                  | 所有事件流         |
 
 ### 消费者配置示例
 
@@ -478,13 +501,13 @@ curl http://localhost:3200/api/kafka/topics/user.user.created
 
 ## 🔄 版本历史
 
-| 版本 | 日期 | 说明 |
-|------|------|------|
+| 版本  | 日期       | 说明                   |
+| ----- | ---------- | ---------------------- |
 | 1.0.0 | 2025-01-30 | 初始版本，定义23个主题 |
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

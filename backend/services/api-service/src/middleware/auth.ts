@@ -68,7 +68,7 @@ export class AuthenticationMiddleware {
     return jwt.sign(payload, this.jwtSecret, {
       expiresIn: this.jwtExpiresIn,
       issuer: 'yyc3-catering-platform',
-      audience: 'yyc3-api'
+      audience: 'yyc3-api',
     });
   }
 
@@ -81,7 +81,7 @@ export class AuthenticationMiddleware {
         return {
           success: false,
           error: '缺少身份验证令牌',
-          code: 'MISSING_TOKEN'
+          code: 'MISSING_TOKEN',
         };
       }
 
@@ -92,7 +92,7 @@ export class AuthenticationMiddleware {
         return {
           success: false,
           error: '无效的身份验证令牌格式',
-          code: 'INVALID_TOKEN_FORMAT'
+          code: 'INVALID_TOKEN_FORMAT',
         };
       }
 
@@ -101,37 +101,40 @@ export class AuthenticationMiddleware {
       try {
         decodedPayload = jwt.verify(cleanToken, this.jwtSecret, {
           issuer: 'yyc3-catering-platform',
-          audience: 'yyc3-api'
+          audience: 'yyc3-api',
         }) as JWTPayload;
       } catch (jwtError: any) {
         if (jwtError.name === 'TokenExpiredError') {
           return {
             success: false,
             error: '身份验证令牌已过期',
-            code: 'TOKEN_EXPIRED'
+            code: 'TOKEN_EXPIRED',
           };
         } else if (jwtError.name === 'JsonWebTokenError') {
           return {
             success: false,
             error: '无效的身份验证签名',
-            code: 'INVALID_SIGNATURE'
+            code: 'INVALID_SIGNATURE',
           };
         }
         throw jwtError;
       }
 
       // 从数据库验证用户
-      const userResult = await dbManager.query(`
+      const userResult = await dbManager.query(
+        `
         SELECT id, email, role, status
         FROM users
         WHERE id = $1 AND status = 'active'
-      `, [decodedPayload.userId]);
+      `,
+        [decodedPayload.userId]
+      );
 
       if (userResult.rows.length === 0) {
         return {
           success: false,
           error: '用户不存在或已被禁用',
-          code: 'USER_INACTIVE'
+          code: 'USER_INACTIVE',
         };
       }
 
@@ -143,16 +146,15 @@ export class AuthenticationMiddleware {
           id: user.id,
           email: user.email,
           role: user.role,
-          restaurantId: decodedPayload.restaurantId
-        }
+          restaurantId: decodedPayload.restaurantId,
+        },
       };
-
     } catch (error) {
       console.error('JWT验证错误:', error);
       return {
         success: false,
         error: '身份验证令牌验证失败',
-        code: 'VERIFICATION_ERROR'
+        code: 'VERIFICATION_ERROR',
       };
     }
   }
@@ -161,7 +163,9 @@ export class AuthenticationMiddleware {
    * 身份验证中间件
    */
   public authenticate() {
-    return async (request: Request): Promise<{ success: boolean; user?: any; error?: string; code?: string }> => {
+    return async (
+      request: Request
+    ): Promise<{ success: boolean; user?: any; error?: string; code?: string }> => {
       try {
         const authorization = request.headers.get('authorization');
 
@@ -169,7 +173,7 @@ export class AuthenticationMiddleware {
           return {
             success: false,
             error: '缺少Authorization头',
-            code: 'MISSING_AUTH_HEADER'
+            code: 'MISSING_AUTH_HEADER',
           };
         }
 
@@ -181,15 +185,14 @@ export class AuthenticationMiddleware {
 
         return {
           success: true,
-          user: result.user
+          user: result.user,
         };
-
       } catch (error) {
         console.error('身份验证中间件错误:', error);
         return {
           success: false,
           error: '身份验证过程中发生错误',
-          code: 'AUTH_ERROR'
+          code: 'AUTH_ERROR',
         };
       }
     };
@@ -199,13 +202,16 @@ export class AuthenticationMiddleware {
    * 角色授权中间件
    */
   public authorize(allowedRoles: string[]) {
-    return async (request: Request, user?: any): Promise<{ success: boolean; error?: string; code?: string }> => {
+    return async (
+      request: Request,
+      user?: any
+    ): Promise<{ success: boolean; error?: string; code?: string }> => {
       try {
         if (!user) {
           return {
             success: false,
             error: '用户身份信息缺失',
-            code: 'MISSING_USER_INFO'
+            code: 'MISSING_USER_INFO',
           };
         }
 
@@ -213,18 +219,17 @@ export class AuthenticationMiddleware {
           return {
             success: false,
             error: '权限不足',
-            code: 'INSUFFICIENT_PERMISSIONS'
+            code: 'INSUFFICIENT_PERMISSIONS',
           };
         }
 
         return { success: true };
-
       } catch (error) {
         console.error('授权中间件错误:', error);
         return {
           success: false,
           error: '授权过程中发生错误',
-          code: 'AUTHORIZATION_ERROR'
+          code: 'AUTHORIZATION_ERROR',
         };
       }
     };
@@ -234,13 +239,16 @@ export class AuthenticationMiddleware {
    * 餐厅权限验证
    */
   public authorizeRestaurantAccess() {
-    return async (request: Request, user?: any): Promise<{ success: boolean; error?: string; code?: string }> => {
+    return async (
+      request: Request,
+      user?: any
+    ): Promise<{ success: boolean; error?: string; code?: string }> => {
       try {
         if (!user) {
           return {
             success: false,
             error: '用户身份信息缺失',
-            code: 'MISSING_USER_INFO'
+            code: 'MISSING_USER_INFO',
           };
         }
 
@@ -255,7 +263,7 @@ export class AuthenticationMiddleware {
             return {
               success: false,
               error: '餐厅管理员缺少餐厅关联',
-              code: 'MISSING_RESTAURANT_ID'
+              code: 'MISSING_RESTAURANT_ID',
             };
           }
           return { success: true };
@@ -264,15 +272,14 @@ export class AuthenticationMiddleware {
         return {
           success: false,
           error: '权限不足',
-          code: 'INSUFFICIENT_PERMISSIONS'
+          code: 'INSUFFICIENT_PERMISSIONS',
         };
-
       } catch (error) {
         console.error('餐厅权限验证错误:', error);
         return {
           success: false,
           error: '餐厅权限验证过程中发生错误',
-          code: 'RESTAURANT_AUTH_ERROR'
+          code: 'RESTAURANT_AUTH_ERROR',
         };
       }
     };
@@ -295,13 +302,12 @@ export class AuthenticationMiddleware {
         if (result.success) {
           return {
             success: true,
-            user: result.user
+            user: result.user,
           };
         }
 
         // 可选验证失败时不返回错误
         return { success: true };
-
       } catch (error) {
         console.error('可选身份验证错误:', error);
         return { success: true };
@@ -312,18 +318,23 @@ export class AuthenticationMiddleware {
   /**
    * 创建认证中间件响应
    */
-  public createAuthResponse(result: { success: boolean; user?: any; error?: string; code?: string }): Response {
+  public createAuthResponse(result: {
+    success: boolean;
+    user?: any;
+    error?: string;
+    code?: string;
+  }): Response {
     if (!result.success) {
       const errorResponse = {
         success: false,
         error: result.error || '身份验证失败',
         code: result.code || 'AUTH_FAILED',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       return new Response(JSON.stringify(errorResponse), {
         status: 401,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -333,18 +344,22 @@ export class AuthenticationMiddleware {
   /**
    * 创建授权中间件响应
    */
-  public createAuthzResponse(result: { success: boolean; error?: string; code?: string }): Response {
+  public createAuthzResponse(result: {
+    success: boolean;
+    error?: string;
+    code?: string;
+  }): Response {
     if (!result.success) {
       const errorResponse = {
         success: false,
         error: result.error || '权限不足',
         code: result.code || 'AUTHORIZATION_FAILED',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       return new Response(JSON.stringify(errorResponse), {
         status: 403,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -356,7 +371,8 @@ export class AuthenticationMiddleware {
 export const authMiddleware = new AuthenticationMiddleware();
 
 // 导出便捷方法
-export const generateToken = (payload: Omit<JWTPayload, 'iat' | 'exp'>) => authMiddleware.generateToken(payload);
+export const generateToken = (payload: Omit<JWTPayload, 'iat' | 'exp'>) =>
+  authMiddleware.generateToken(payload);
 export const verifyToken = (token: string) => authMiddleware.verifyToken(token);
 export const authenticate = () => authMiddleware.authenticate();
 export const authorize = (roles: string[]) => authMiddleware.authorize(roles);

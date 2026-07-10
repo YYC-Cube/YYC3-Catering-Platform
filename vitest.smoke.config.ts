@@ -4,10 +4,7 @@ import * as path from 'path';
 export default defineConfig({
   test: {
     environment: 'node',
-    include: [
-      'tests/smoke/**/*.test.ts',
-      'tests/example.test.ts',
-    ],
+    include: ['tests/smoke/**/*.test.ts', 'tests/example.test.ts'],
     exclude: [
       '**/node_modules/**',
       '**/dist/**',

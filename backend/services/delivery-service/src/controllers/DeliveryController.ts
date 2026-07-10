@@ -11,7 +11,13 @@
  */
 
 import { Request, Response } from 'express';
-import { deliveryService, CreateDeliveryParams, UpdateDeliveryStatusParams, AssignDeliveryParams, CreateDeliveryRatingParams } from '../services/DeliveryService';
+import {
+  deliveryService,
+  CreateDeliveryParams,
+  UpdateDeliveryStatusParams,
+  AssignDeliveryParams,
+  CreateDeliveryRatingParams,
+} from '../services/DeliveryService';
 import logger from '../config/logger';
 
 class DeliveryController {
@@ -24,7 +30,7 @@ class DeliveryController {
     try {
       const params: CreateDeliveryParams = req.body;
       const delivery = await deliveryService.createDelivery(params);
-      
+
       res.status(201).json({
         success: true,
         message: '配送创建成功',
@@ -49,7 +55,7 @@ class DeliveryController {
     try {
       const { delivery_id } = req.params;
       const delivery = await deliveryService.getDeliveryById(delivery_id);
-      
+
       if (!delivery) {
         res.status(404).json({
           success: false,
@@ -57,7 +63,7 @@ class DeliveryController {
         });
         return;
       }
-      
+
       res.status(200).json({
         success: true,
         message: '获取配送详情成功',
@@ -82,7 +88,7 @@ class DeliveryController {
     try {
       const { order_id } = req.params;
       const delivery = await deliveryService.getDeliveryByOrderId(order_id);
-      
+
       if (!delivery) {
         res.status(404).json({
           success: false,
@@ -90,7 +96,7 @@ class DeliveryController {
         });
         return;
       }
-      
+
       res.status(200).json({
         success: true,
         message: '获取订单配送信息成功',
@@ -115,7 +121,7 @@ class DeliveryController {
     try {
       const { delivery_id } = req.params;
       const { status, reason, operator_id, operator_type } = req.body;
-      
+
       const params: UpdateDeliveryStatusParams = {
         delivery_id,
         status,
@@ -123,9 +129,9 @@ class DeliveryController {
         operator_id,
         operator_type,
       };
-      
+
       const delivery = await deliveryService.updateDeliveryStatus(params);
-      
+
       res.status(200).json({
         success: true,
         message: '配送状态更新成功',
@@ -150,14 +156,14 @@ class DeliveryController {
     try {
       const { delivery_id } = req.params;
       const { rider_id } = req.body;
-      
+
       const params: AssignDeliveryParams = {
         delivery_id,
         rider_id,
       };
-      
+
       const assignment = await deliveryService.assignDelivery(params);
-      
+
       res.status(201).json({
         success: true,
         message: '配送任务分配成功',
@@ -182,14 +188,17 @@ class DeliveryController {
     try {
       const { assignment_id } = req.params;
       const assignment = await deliveryService.acceptDelivery(assignment_id);
-      
+
       res.status(200).json({
         success: true,
         message: '骑手接受配送任务成功',
         data: assignment,
       });
     } catch (error) {
-      logger.error('骑手接受配送任务失败', { error: (error as Error).message, assignment_id: req.params.assignment_id });
+      logger.error('骑手接受配送任务失败', {
+        error: (error as Error).message,
+        assignment_id: req.params.assignment_id,
+      });
       res.status(400).json({
         success: false,
         message: '骑手接受配送任务失败',
@@ -207,16 +216,19 @@ class DeliveryController {
     try {
       const { assignment_id } = req.params;
       const { reason } = req.body;
-      
+
       const assignment = await deliveryService.rejectDelivery(assignment_id, reason);
-      
+
       res.status(200).json({
         success: true,
         message: '骑手拒绝配送任务成功',
         data: assignment,
       });
     } catch (error) {
-      logger.error('骑手拒绝配送任务失败', { error: (error as Error).message, assignment_id: req.params.assignment_id });
+      logger.error('骑手拒绝配送任务失败', {
+        error: (error as Error).message,
+        assignment_id: req.params.assignment_id,
+      });
       res.status(400).json({
         success: false,
         message: '骑手拒绝配送任务失败',
@@ -234,7 +246,7 @@ class DeliveryController {
     try {
       const params: CreateDeliveryRatingParams = req.body;
       const rating = await deliveryService.createDeliveryRating(params);
-      
+
       res.status(201).json({
         success: true,
         message: '创建配送评分成功',

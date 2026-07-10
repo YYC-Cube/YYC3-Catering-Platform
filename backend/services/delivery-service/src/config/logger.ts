@@ -32,7 +32,7 @@ const logFormat = winston.format.combine(
       logMessage += ` ${JSON.stringify(metadata)}`;
     }
     return logMessage;
-  })
+  }),
 );
 
 // 创建日志传输
@@ -40,10 +40,7 @@ const transports = [
   // 控制台输出
   new winston.transports.Console({
     level: LOG_LEVEL,
-    format: winston.format.combine(
-      winston.format.colorize(),
-      logFormat
-    )
+    format: winston.format.combine(winston.format.colorize(), logFormat),
   }),
   // 文件输出
   new winston.transports.File({
@@ -52,7 +49,7 @@ const transports = [
     format: logFormat,
     maxsize: parseInt(LOG_MAX_SIZE),
     maxFiles: parseInt(LOG_MAX_FILES),
-    tailable: true
+    tailable: true,
   }),
   // 错误日志文件
   new winston.transports.File({
@@ -61,8 +58,8 @@ const transports = [
     format: logFormat,
     maxsize: parseInt(LOG_MAX_SIZE),
     maxFiles: parseInt(LOG_MAX_FILES),
-    tailable: true
-  })
+    tailable: true,
+  }),
 ];
 
 // 创建日志记录器
@@ -73,15 +70,15 @@ const logger = winston.createLogger({
   exceptionHandlers: [
     new winston.transports.File({
       filename: path.join(__dirname, '../../logs/delivery-service-exceptions.log'),
-      format: logFormat
-    })
+      format: logFormat,
+    }),
   ],
   rejectionHandlers: [
     new winston.transports.File({
       filename: path.join(__dirname, '../../logs/delivery-service-rejections.log'),
-      format: logFormat
-    })
-  ]
+      format: logFormat,
+    }),
+  ],
 });
 
 // 导出日志记录器

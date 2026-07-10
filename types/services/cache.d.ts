@@ -15,7 +15,7 @@ export enum CacheStrategy {
   TTL = 'ttl',
   NO_CACHE = 'no_cache',
   WRITE_THROUGH = 'write_through',
-  WRITE_BEHIND = 'write_behind'
+  WRITE_BEHIND = 'write_behind',
 }
 
 /**

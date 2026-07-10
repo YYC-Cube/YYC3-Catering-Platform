@@ -2,13 +2,13 @@
 
 ## 文档信息
 
-| 项目 | 内容 |
-|------|------|
+| 项目     | 内容                                                 |
+| -------- | ---------------------------------------------------- |
 | 文档名称 | YYC³餐饮行业智能化平台UI设计系统完整度分析与对接方案 |
-| 文档版本 | v1.0.0 |
-| 创建日期 | 2026-01-20 |
-| 最后更新 | 2026-01-20 |
-| 文档状态 | 正式版 |
+| 文档版本 | v1.0.0                                               |
+| 创建日期 | 2026-01-20                                           |
+| 最后更新 | 2026-01-20                                           |
+| 文档状态 | 正式版                                               |
 
 ---
 
@@ -53,16 +53,16 @@
 
 ### 2.1 核心技术栈
 
-| 技术 | 版本 | 用途 | 评估 |
-|------|------|------|------|
-| React | 18.3.1 | 前端框架 | ✅ 与主项目一致 |
-| TypeScript | 5.3+ | 类型系统 | ✅ 与主项目一致 |
-| Vite | 6.3.5 | 构建工具 | ⚠️ 版本较新 |
-| Tailwind CSS | 4.1.12 | 样式框架 | ✅ 与主项目一致 |
-| Radix UI | 最新 | 无障碍组件 | ✅ 优秀选择 |
-| Lucide React | 0.487.0 | 图标库 | ✅ 轻量级 |
-| Recharts | 2.15.2 | 图表库 | ✅ 功能完善 |
-| Motion | 12.23.24 | 动画库 | ✅ 性能优秀 |
+| 技术         | 版本     | 用途       | 评估            |
+| ------------ | -------- | ---------- | --------------- |
+| React        | 18.3.1   | 前端框架   | ✅ 与主项目一致 |
+| TypeScript   | 5.3+     | 类型系统   | ✅ 与主项目一致 |
+| Vite         | 6.3.5    | 构建工具   | ⚠️ 版本较新     |
+| Tailwind CSS | 4.1.12   | 样式框架   | ✅ 与主项目一致 |
+| Radix UI     | 最新     | 无障碍组件 | ✅ 优秀选择     |
+| Lucide React | 0.487.0  | 图标库     | ✅ 轻量级       |
+| Recharts     | 2.15.2   | 图表库     | ✅ 功能完善     |
+| Motion       | 12.23.24 | 动画库     | ✅ 性能优秀     |
 
 ### 2.2 技术栈兼容性
 
@@ -80,13 +80,13 @@
 
 ### 3.1 模块清单
 
-| 模块 | 完整度 | 说明 |
-|------|---------|------|
-| AI Widget | 95% | 自治AI引擎，支持多模型、自主学习、工具调用 |
-| Closed Loop | 90% | 闭环优化引擎，支持目标管理、价值验证 |
-| Components | 100% | 30+个UI组件，覆盖所有常见场景 |
-| Industries | 70% | 行业适配器框架，支持业务管理行业 |
-| 多端演示 | 100% | 管理后台、厨房端、客户端完整演示 |
+| 模块        | 完整度 | 说明                                       |
+| ----------- | ------ | ------------------------------------------ |
+| AI Widget   | 95%    | 自治AI引擎，支持多模型、自主学习、工具调用 |
+| Closed Loop | 90%    | 闭环优化引擎，支持目标管理、价值验证       |
+| Components  | 100%   | 30+个UI组件，覆盖所有常见场景              |
+| Industries  | 70%    | 行业适配器框架，支持业务管理行业           |
+| 多端演示    | 100%   | 管理后台、厨房端、客户端完整演示           |
 
 ### 3.2 AI Widget完整度
 
@@ -122,6 +122,7 @@
 **完整度评分**：95/100
 
 **缺失功能**：
+
 - ⚠️ Anthropic、Azure、Custom模型适配器未实现
 - ⚠️ 部分高级学习算法待完善
 
@@ -151,6 +152,7 @@
 **完整度评分**：90/100
 
 **缺失功能**：
+
 - ⚠️ 部分验证算法待完善
 - ⚠️ 实时监控功能待增强
 
@@ -187,6 +189,7 @@
 **完整度评分**：100/100
 
 **组件质量**：
+
 - ✅ 完整的TypeScript类型定义
 - ✅ 完整的Props接口
 - ✅ 可访问性支持（ARIA）
@@ -210,16 +213,19 @@ src/app/components/
 ### 4.2 组件设计模式
 
 **1. 原子组件**（Radix UI）：
+
 - 无状态、纯展示
 - 高度可复用
 - 完整的可访问性支持
 
 **2. 业务组件**（YU前缀）：
+
 - 基于Radix UI封装
 - 添加业务逻辑
 - 统一的设计风格
 
 **3. 页面组件**：
+
 - 组合多个业务组件
 - 实现完整的页面功能
 - 包含状态管理
@@ -227,6 +233,7 @@ src/app/components/
 ### 4.3 组件特性
 
 **设计系统**：
+
 - ✅ 统一的颜色系统（CSS变量）
 - ✅ 统一的间距系统（Tailwind）
 - ✅ 统一的圆角系统
@@ -234,11 +241,13 @@ src/app/components/
 - ✅ 统一的动画系统（Motion）
 
 **主题系统**：
+
 - ✅ 亮色/暗色主题支持
 - ✅ CSS变量驱动的主题切换
 - ✅ 持久化主题偏好
 
 **响应式设计**：
+
 - ✅ 移动端优先
 - ✅ 断点系统（sm, md, lg, xl）
 - ✅ 自适应布局
@@ -332,16 +341,17 @@ ClosedLoopEngine
 
 ### 6.1 端点清单
 
-| 端点 | 完整度 | 页面组件 | 说明 |
-|------|---------|---------|------|
-| 管理后台 | 100% | DashboardPage | 完整的管理后台演示 |
-| 厨房端 | 100% | KitchenDisplayPage | 完整的厨房显示演示 |
-| 客户端 | 100% | CustomerMenuPage | 完整的客户菜单演示 |
-| 导航系统 | 100% | NavigationDemo系列 | 完整的导航系统演示 |
+| 端点     | 完整度 | 页面组件           | 说明               |
+| -------- | ------ | ------------------ | ------------------ |
+| 管理后台 | 100%   | DashboardPage      | 完整的管理后台演示 |
+| 厨房端   | 100%   | KitchenDisplayPage | 完整的厨房显示演示 |
+| 客户端   | 100%   | CustomerMenuPage   | 完整的客户菜单演示 |
+| 导航系统 | 100%   | NavigationDemo系列 | 完整的导航系统演示 |
 
 ### 6.2 管理后台（DashboardPage）
 
 **核心功能**：
+
 - ✅ 实时数据仪表板
 - ✅ 销售数据可视化
 - ✅ 订单管理
@@ -349,6 +359,7 @@ ClosedLoopEngine
 - ✅ 响应式布局
 
 **技术实现**：
+
 - 使用Recharts展示销售趋势
 - 实时订单更新（模拟）
 - 数据卡片组件
@@ -357,6 +368,7 @@ ClosedLoopEngine
 ### 6.3 厨房端（KitchenDisplayPage）
 
 **核心功能**：
+
 - ✅ 订单显示
 - ✅ 菜品状态跟踪
 - ✅ 计时器
@@ -364,6 +376,7 @@ ClosedLoopEngine
 - ✅ 实时更新
 
 **技术实现**：
+
 - 实时订单更新（模拟）
 - 菜品状态管理
 - 倒计时组件
@@ -372,6 +385,7 @@ ClosedLoopEngine
 ### 6.4 客户端（CustomerMenuPage）
 
 **核心功能**：
+
 - ✅ 菜单展示
 - ✅ 菜品分类
 - ✅ 购物车
@@ -379,6 +393,7 @@ ClosedLoopEngine
 - ✅ 响应式设计
 
 **技术实现**：
+
 - 菜单数据结构
 - 购物车状态管理
 - 订单提交流程
@@ -391,16 +406,19 @@ ClosedLoopEngine
 ### 7.1 对接策略
 
 **方案A：完全迁移**（推荐）
+
 - 将UI组件库迁移到主项目
 - 替换Element Plus为Radix UI
 - 统一技术栈和设计系统
 
 **方案B：渐进式集成**
+
 - 保留Element Plus
 - 逐步引入Radix UI组件
 - 双组件库共存
 
 **方案C：独立部署**
+
 - UI系统独立部署
 - 通过iframe集成
 - 保持技术栈独立
@@ -408,6 +426,7 @@ ClosedLoopEngine
 ### 7.2 推荐方案：方案A（完全迁移）
 
 **理由**：
+
 1. ✅ 技术栈统一：React、TypeScript、Tailwind CSS完全一致
 2. ✅ 设计系统统一：统一的设计语言和组件规范
 3. ✅ 可访问性提升：Radix UI提供更好的无障碍支持
@@ -417,6 +436,7 @@ ClosedLoopEngine
 ### 7.3 迁移步骤
 
 **阶段1：准备工作**（1-2周）
+
 1. 升级Vite版本到6.3.5
 2. 安装Radix UI相关依赖
 3. 安装Motion动画库
@@ -424,13 +444,15 @@ ClosedLoopEngine
 5. 设置主题系统
 
 **阶段2：组件迁移**（2-3周）
+
 1. 迁移基础组件（button, input, select等）
 2. 迁移布局组件（sidebar, navigation等）
-3. 迁移业务组件（YU*系列）
+3. 迁移业务组件（YU\*系列）
 4. 迁移页面组件（Dashboard, Kitchen等）
 5. 更新所有引用
 
 **阶段3：系统集成**（2-3周）
+
 1. 集成AI Widget系统
 2. 集成Closed Loop系统
 3. 集成多端页面
@@ -438,6 +460,7 @@ ClosedLoopEngine
 5. 测试所有功能
 
 **阶段4：优化和测试**（1-2周）
+
 1. 性能优化
 2. 可访问性测试
 3. 响应式测试
@@ -461,22 +484,19 @@ pnpm install motion recharts lucide-react clsx tailwind-merge
 ```javascript
 // tailwind.config.js
 module.exports = {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    '../../ui/src/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}", "../../ui/src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
         // UI设计系统的颜色变量
-        primary: 'var(--primary)',
-        secondary: 'var(--secondary)',
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
         // ...
       },
     },
   },
   plugins: [],
-}
+};
 ```
 
 **步骤3：迁移组件**
@@ -486,10 +506,10 @@ module.exports = {
 // 从Element Plus迁移到Radix UI
 
 // 旧代码（Element Plus）
-import { ElButton } from 'element-plus'
+import { ElButton } from "element-plus";
 
 // 新代码（Radix UI）
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button";
 ```
 
 #### 7.4.2 AI Widget对接
@@ -505,24 +525,24 @@ cp -r ui/src/app/ai-widget frontend/apps/admin-dashboard/src/lib/ai-widget
 ```typescript
 // src/lib/ai-widget/config.ts
 export const aiConfig = {
-  apiType: 'internal',
-  modelName: 'yyc3-restaurant-assistant',
+  apiType: "internal",
+  modelName: "yyc3-restaurant-assistant",
   enableLearning: true,
   enableMemory: true,
   enableToolUse: true,
   enableContextAwareness: true,
   businessContext: {
-    industry: 'restaurant',
-    userRole: 'manager',
+    industry: "restaurant",
+    userRole: "manager",
     availableFeatures: [
-      'order_management',
-      'menu_management',
-      'finance_management',
-      'customer_management',
-      'data_analytics',
+      "order_management",
+      "menu_management",
+      "finance_management",
+      "customer_management",
+      "data_analytics",
     ],
   },
-}
+};
 ```
 
 **步骤3：集成YUBot组件**
@@ -553,20 +573,20 @@ cp -r ui/src/app/closed-loop frontend/apps/admin-dashboard/src/lib/closed-loop
 
 ```typescript
 // src/lib/closed-loop/index.ts
-import { ClosedLoopEngine } from './ClosedLoopEngine'
+import { ClosedLoopEngine } from "./ClosedLoopEngine";
 
-export const closedLoopEngine = new ClosedLoopEngine()
+export const closedLoopEngine = new ClosedLoopEngine();
 
 export async function runOptimizationCycle() {
   const context = {
-    projectId: 'yyc3-catering-platform',
-    projectPhase: 'production',
+    projectId: "yyc3-catering-platform",
+    projectPhase: "production",
     teamSize: 10,
     budget: 1000000,
-  }
+  };
 
-  const cycle = await closedLoopEngine.executeOptimizationCycle(context)
-  return cycle
+  const cycle = await closedLoopEngine.executeOptimizationCycle(context);
+  return cycle;
 }
 ```
 
@@ -574,22 +594,22 @@ export async function runOptimizationCycle() {
 
 ```typescript
 // src/views/ClosedLoopManagement.vue
-import { ref, onMounted } from 'vue'
-import { runOptimizationCycle } from '@/lib/closed-loop'
+import { ref, onMounted } from "vue";
+import { runOptimizationCycle } from "@/lib/closed-loop";
 
 export default {
   setup() {
-    const cycles = ref([])
-    const currentCycle = ref(null)
+    const cycles = ref([]);
+    const currentCycle = ref(null);
 
     onMounted(async () => {
-      const cycle = await runOptimizationCycle()
-      currentCycle.value = cycle
-    })
+      const cycle = await runOptimizationCycle();
+      currentCycle.value = cycle;
+    });
 
-    return { cycles, currentCycle }
-  }
-}
+    return { cycles, currentCycle };
+  },
+};
 ```
 
 #### 7.4.4 多端页面对接
@@ -606,32 +626,32 @@ cp ui/src/app/components/CustomerMenuPage.tsx frontend/apps/admin-dashboard/src/
 
 ```typescript
 // src/router/index.ts
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('@/components/DashboardPage'),
+    path: "/dashboard",
+    name: "Dashboard",
+    component: () => import("@/components/DashboardPage"),
   },
   {
-    path: '/kitchen',
-    name: 'Kitchen',
-    component: () => import('@/components/KitchenDisplayPage'),
+    path: "/kitchen",
+    name: "Kitchen",
+    component: () => import("@/components/KitchenDisplayPage"),
   },
   {
-    path: '/customer',
-    name: 'Customer',
-    component: () => import('@/components/CustomerMenuPage'),
+    path: "/customer",
+    name: "Customer",
+    component: () => import("@/components/CustomerMenuPage"),
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-})
+});
 
-export default router
+export default router;
 ```
 
 ### 7.5 数据对接
@@ -640,23 +660,23 @@ export default router
 
 ```typescript
 // src/lib/api/client.ts
-import { httpClient } from '@/api/httpClient'
+import { httpClient } from "@/api/httpClient";
 
 // 将UI组件的模拟数据替换为真实API调用
 export const getDashboardData = async () => {
-  const response = await httpClient.get('/api/dashboard')
-  return response.data
-}
+  const response = await httpClient.get("/api/dashboard");
+  return response.data;
+};
 
 export const getKitchenOrders = async () => {
-  const response = await httpClient.get('/api/kitchen/orders')
-  return response.data
-}
+  const response = await httpClient.get("/api/kitchen/orders");
+  return response.data;
+};
 
 export const getCustomerMenu = async () => {
-  const response = await httpClient.get('/api/menu')
-  return response.data
-}
+  const response = await httpClient.get("/api/menu");
+  return response.data;
+};
 ```
 
 ---
@@ -665,13 +685,13 @@ export const getCustomerMenu = async () => {
 
 ### 8.1 项目计划
 
-| 阶段 | 任务 | 工期 | 负责人 |
-|------|------|------|--------|
-| 阶段1：准备工作 | 升级依赖、配置环境 | 1-2周 | 前端团队 |
-| 阶段2：组件迁移 | 迁移所有UI组件 | 2-3周 | 前端团队 |
-| 阶段3：系统集成 | 集成AI和Closed Loop | 2-3周 | 全栈团队 |
-| 阶段4：优化测试 | 性能优化、测试 | 1-2周 | QA团队 |
-| **总计** | | **6-10周** | |
+| 阶段            | 任务                | 工期       | 负责人   |
+| --------------- | ------------------- | ---------- | -------- |
+| 阶段1：准备工作 | 升级依赖、配置环境  | 1-2周      | 前端团队 |
+| 阶段2：组件迁移 | 迁移所有UI组件      | 2-3周      | 前端团队 |
+| 阶段3：系统集成 | 集成AI和Closed Loop | 2-3周      | 全栈团队 |
+| 阶段4：优化测试 | 性能优化、测试      | 1-2周      | QA团队   |
+| **总计**        |                     | **6-10周** |          |
 
 ### 8.2 里程碑
 
@@ -683,11 +703,13 @@ export const getCustomerMenu = async () => {
 ### 8.3 资源需求
 
 **人力**：
+
 - 前端开发：3-4人
 - 全栈开发：1-2人
 - QA测试：1-2人
 
 **时间**：
+
 - 总工期：6-10周
 - 每周投入：40-60人天
 
@@ -697,28 +719,28 @@ export const getCustomerMenu = async () => {
 
 ### 9.1 技术风险
 
-| 风险 | 影响 | 概率 | 缓解措施 |
-|------|------|------|---------|
-| Vite版本升级导致兼容性问题 | 高 | 中 | 充分测试，准备回滚方案 |
-| Radix UI学习曲线 | 中 | 高 | 提供培训文档，代码示例 |
-| 组件迁移工作量超预期 | 高 | 中 | 分阶段迁移，及时调整计划 |
-| 性能问题 | 中 | 低 | 性能监控，优化关键路径 |
+| 风险                       | 影响 | 概率 | 缓解措施                 |
+| -------------------------- | ---- | ---- | ------------------------ |
+| Vite版本升级导致兼容性问题 | 高   | 中   | 充分测试，准备回滚方案   |
+| Radix UI学习曲线           | 中   | 高   | 提供培训文档，代码示例   |
+| 组件迁移工作量超预期       | 高   | 中   | 分阶段迁移，及时调整计划 |
+| 性能问题                   | 中   | 低   | 性能监控，优化关键路径   |
 
 ### 9.2 业务风险
 
-| 风险 | 影响 | 概率 | 缓解措施 |
-|------|------|------|---------|
-| 用户体验变化 | 高 | 中 | 用户培训，渐进式迁移 |
-| 功能缺失 | 中 | 低 | 功能对比，补充缺失功能 |
-| 设计不一致 | 中 | 中 | 设计规范文档，设计评审 |
+| 风险         | 影响 | 概率 | 缓解措施               |
+| ------------ | ---- | ---- | ---------------------- |
+| 用户体验变化 | 高   | 中   | 用户培训，渐进式迁移   |
+| 功能缺失     | 中   | 低   | 功能对比，补充缺失功能 |
+| 设计不一致   | 中   | 中   | 设计规范文档，设计评审 |
 
 ### 9.3 项目风险
 
-| 风险 | 影响 | 概率 | 缓解措施 |
-|------|------|------|---------|
-| 工期延误 | 高 | 中 | 缓冲时间，敏捷迭代 |
-| 资源不足 | 中 | 中 | 提前规划，资源调配 |
-| 需求变更 | 中 | 高 | 需求冻结，变更管理 |
+| 风险     | 影响 | 概率 | 缓解措施           |
+| -------- | ---- | ---- | ------------------ |
+| 工期延误 | 高   | 中   | 缓冲时间，敏捷迭代 |
+| 资源不足 | 中   | 中   | 提前规划，资源调配 |
+| 需求变更 | 中   | 高   | 需求冻结，变更管理 |
 
 ---
 
@@ -728,20 +750,21 @@ export const getCustomerMenu = async () => {
 
 **总体评分**：95/100
 
-| 维度 | 评分 | 说明 |
-|------|------|------|
-| 组件库 | 100/100 | 30+个组件，覆盖所有场景 |
-| AI系统 | 95/100 | 完整的AI引擎，部分适配器待实现 |
-| 闭环系统 | 90/100 | 完整的闭环引擎，部分算法待完善 |
-| 多端支持 | 100/100 | 管理后台、厨房端、客户端完整演示 |
-| 设计系统 | 100/100 | 统一的设计语言和主题系统 |
-| 文档完整性 | 80/100 | 有README，但缺少详细文档 |
+| 维度       | 评分    | 说明                             |
+| ---------- | ------- | -------------------------------- |
+| 组件库     | 100/100 | 30+个组件，覆盖所有场景          |
+| AI系统     | 95/100  | 完整的AI引擎，部分适配器待实现   |
+| 闭环系统   | 90/100  | 完整的闭环引擎，部分算法待完善   |
+| 多端支持   | 100/100 | 管理后台、厨房端、客户端完整演示 |
+| 设计系统   | 100/100 | 统一的设计语言和主题系统         |
+| 文档完整性 | 80/100  | 有README，但缺少详细文档         |
 
 ### 10.2 对接建议
 
 **推荐方案**：方案A（完全迁移）
 
 **理由**：
+
 1. ✅ 技术栈统一，降低维护成本
 2. ✅ 设计系统统一，提升用户体验
 3. ✅ 可访问性提升，符合WCAG标准
@@ -766,26 +789,29 @@ export const getCustomerMenu = async () => {
 
 ### A. 技术栈对比
 
-| 技术 | UI设计系统 | 主项目 | 兼容性 |
-|------|-----------|--------|--------|
-| React | 18.3.1 | 18.0.0+ | ✅ 完全兼容 |
-| TypeScript | 5.3+ | 5.0.0+ | ✅ 完全兼容 |
-| Tailwind CSS | 4.1.12 | 3.3.0+ | ⚠️ 需要升级 |
-| Vite | 6.3.5 | 5.4.0+ | ⚠️ 需要升级 |
-| 组件库 | Radix UI | Element Plus | ❌ 需要替换 |
-| 图标库 | Lucide React | Element Plus Icons | ❌ 需要替换 |
-| 图表库 | Recharts | ECharts | ❌ 需要替换 |
-| 动画库 | Motion | - | ✅ 新增 |
+| 技术         | UI设计系统   | 主项目             | 兼容性      |
+| ------------ | ------------ | ------------------ | ----------- |
+| React        | 18.3.1       | 18.0.0+            | ✅ 完全兼容 |
+| TypeScript   | 5.3+         | 5.0.0+             | ✅ 完全兼容 |
+| Tailwind CSS | 4.1.12       | 3.3.0+             | ⚠️ 需要升级 |
+| Vite         | 6.3.5        | 5.4.0+             | ⚠️ 需要升级 |
+| 组件库       | Radix UI     | Element Plus       | ❌ 需要替换 |
+| 图标库       | Lucide React | Element Plus Icons | ❌ 需要替换 |
+| 图表库       | Recharts     | ECharts            | ❌ 需要替换 |
+| 动画库       | Motion       | -                  | ✅ 新增     |
 
 ### B. 组件清单
 
 **Radix UI基础组件**（30+个）：
+
 - accordion, alert-dialog, alert, aspect-ratio, avatar, badge, breadcrumb, button, calendar, card, carousel, chart, checkbox, collapsible, command, context-menu, dialog, drawer, dropdown-menu, form, hover-card, input-otp, input, label, menubar, navigation-menu, pagination, popover, progress, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner, switch, table, tabs, textarea, toggle-group, toggle, tooltip
 
 **业务组件**（15+个）：
+
 - YUAvatar, YUBot, YUBreadcrumb, YUButton, YUCard, YUDataCard, YUEmpty, YUInput, YULoading, YUModal, YUNavigation, YUProgressBar, YUSelect, YUSidebar, YUTable, YUTag, YUToast
 
 **页面组件**（10+个）：
+
 - DashboardPage, KitchenDisplayPage, CustomerMenuPage, ComponentShowcase, EnhancedComponentShowcase, ClosedLoopDashboard, MultiIndustryDemo, WelcomePage, AdminNavigationDemo, StaffNavigationDemo, CustomerNavigationDemo, NavigationSystemGuide
 
 ### C. 相关文档

@@ -32,9 +32,9 @@ app.post(
       documentId1: z.string().min(1, '文档1 ID不能为空'),
       documentId2: z.string().min(1, '文档2 ID不能为空'),
       method: z.nativeEnum(SimilarityMethod).optional().default(SimilarityMethod.COSINE),
-    })
+    }),
   ),
-  async (c) => {
+  async c => {
     try {
       const { documentId1, documentId2, method } = c.req.valid('json');
 
@@ -51,11 +51,7 @@ app.post(
       }
 
       // 计算相似度
-      const result = await documentSimilarityService.calculateSimilarity(
-        documentId1,
-        documentId2,
-        method
-      );
+      const result = await documentSimilarityService.calculateSimilarity(documentId1, documentId2, method);
 
       logger.info(`Calculated similarity between ${documentId1} and ${documentId2}`);
 
@@ -70,10 +66,10 @@ app.post(
           success: false,
           error: error instanceof Error ? error.message : '计算相似度失败',
         },
-        500
+        500,
       );
     }
-  }
+  },
 );
 
 /**
@@ -90,9 +86,9 @@ app.post(
       targetDocumentId: z.string().min(1, '目标文档ID不能为空'),
       documentIds: z.array(z.string()).min(1, '文档ID列表不能为空').max(100, '最多支持100个文档'),
       method: z.nativeEnum(SimilarityMethod).optional().default(SimilarityMethod.COSINE),
-    })
+    }),
   ),
-  async (c) => {
+  async c => {
     try {
       const { targetDocumentId, documentIds, method } = c.req.valid('json');
 
@@ -103,11 +99,7 @@ app.post(
       }
 
       // 批量计算相似度
-      const result = await documentSimilarityService.calculateBatchSimilarity(
-        targetDocumentId,
-        documentIds,
-        method
-      );
+      const result = await documentSimilarityService.calculateBatchSimilarity(targetDocumentId, documentIds, method);
 
       logger.info(`Batch similarity analysis completed for ${targetDocumentId}`);
 
@@ -122,10 +114,10 @@ app.post(
           success: false,
           error: error instanceof Error ? error.message : '批量计算相似度失败',
         },
-        500
+        500,
       );
     }
-  }
+  },
 );
 
 /**
@@ -139,12 +131,20 @@ app.get(
   zValidator(
     'query',
     z.object({
-      threshold: z.string().optional().default('0.5').transform((val) => parseFloat(val)),
-      limit: z.string().optional().default('10').transform((val) => parseInt(val)),
+      threshold: z
+        .string()
+        .optional()
+        .default('0.5')
+        .transform(val => parseFloat(val)),
+      limit: z
+        .string()
+        .optional()
+        .default('10')
+        .transform(val => parseInt(val)),
       method: z.nativeEnum(SimilarityMethod).optional().default(SimilarityMethod.COSINE),
-    })
+    }),
   ),
-  async (c) => {
+  async c => {
     try {
       const documentId = c.req.param('documentId');
       const { threshold, limit, method } = c.req.valid('query');
@@ -160,7 +160,7 @@ app.get(
         documentId,
         threshold,
         limit,
-        method
+        method,
       );
 
       logger.info(`Found ${similarDocuments.length} similar documents for ${documentId}`);
@@ -176,10 +176,10 @@ app.get(
           success: false,
           error: error instanceof Error ? error.message : '查找相似文档失败',
         },
-        500
+        500,
       );
     }
-  }
+  },
 );
 
 /**
@@ -195,9 +195,9 @@ app.post(
     z.object({
       documentIds: z.array(z.string()).min(2, '至少需要2个文档').max(50, '最多支持50个文档'),
       method: z.nativeEnum(SimilarityMethod).optional().default(SimilarityMethod.COSINE),
-    })
+    }),
   ),
-  async (c) => {
+  async c => {
     try {
       const { documentIds, method } = c.req.valid('json');
 
@@ -225,10 +225,10 @@ app.post(
           success: false,
           error: error instanceof Error ? error.message : '生成相似度统计失败',
         },
-        500
+        500,
       );
     }
-  }
+  },
 );
 
 /**
@@ -237,10 +237,10 @@ app.post(
  * @access 公开
  * @returns {Promise<Response>} 支持的计算方法列表
  */
-app.get('/methods', (c) => {
-  const methods = Object.values(SimilarityMethod).map((method) => ({
+app.get('/methods', c => {
+  const methods = Object.values(SimilarityMethod).map(method => ({
     value: method,
-    label: method.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()),
+    label: method.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase()),
     description: getMethodDescription(method),
   }));
 
@@ -256,7 +256,7 @@ app.get('/methods', (c) => {
  * @access 公开
  * @returns {Promise<Response>} 相似度阈值配置
  */
-app.get('/thresholds', (c) => {
+app.get('/thresholds', c => {
   const thresholds = {
     very_high: { min: 0.8, max: 1.0, label: '极高相似度', color: '#ef4444' },
     high: { min: 0.6, max: 0.8, label: '高相似度', color: '#f97316' },

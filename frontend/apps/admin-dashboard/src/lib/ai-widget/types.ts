@@ -20,25 +20,25 @@ export interface AutonomousAIConfig {
   baseURL?: string;
   maxTokens?: number;
   temperature?: number;
-  
+
   // 自治能力配置
   enableLearning: boolean;
   enableMemory: boolean;
   enableToolUse: boolean;
   enableContextAwareness: boolean;
-  
+
   // UI配置
   position: Position;
   theme: Theme;
   language: string;
   defaultOpen?: boolean;
   draggable?: boolean;
-  
+
   // 业务集成
   businessContext?: BusinessContext;
   customTools?: AITool[];
   dataSources?: DataSource[];
-  
+
   // 学习配置
   learningConfig?: LearningConfig;
   memoryConfig?: MemoryConfig;

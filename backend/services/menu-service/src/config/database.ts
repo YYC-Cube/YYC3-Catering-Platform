@@ -12,7 +12,22 @@
 
 import { Sequelize } from 'sequelize-typescript';
 import logger from './logger';
-import { Category, DataCollection, DataProcessing, DishEntity, DynamicPrice, EntityRelationship, KnowledgeGraphQuery, MenuItem, MenuItemImage, MenuItemOption, MenuItemTag, Recommendation, RelationshipType, Tag } from '../models';
+import {
+  Category,
+  DataCollection,
+  DataProcessing,
+  DishEntity,
+  DynamicPrice,
+  EntityRelationship,
+  KnowledgeGraphQuery,
+  MenuItem,
+  MenuItemImage,
+  MenuItemOption,
+  MenuItemTag,
+  Recommendation,
+  RelationshipType,
+  Tag,
+} from '../models';
 
 // 数据库连接配置
 const sequelize = new Sequelize({
@@ -23,12 +38,12 @@ const sequelize = new Sequelize({
   port: Number(process.env.DB_PORT) || 3306,
   dialect: 'mysql',
   dialectModule: require('mysql2'),
-  logging: (msg) => logger.debug(msg),
+  logging: msg => logger.debug(msg),
   pool: {
     max: 10,
     min: 0,
     acquire: 30000,
-    idle: 10000
+    idle: 10000,
   },
   timezone: '+08:00',
   define: {
@@ -38,9 +53,24 @@ const sequelize = new Sequelize({
     deletedAt: 'deleted_at',
     paranoid: true,
     underscored: true,
-    freezeTableName: true
+    freezeTableName: true,
   },
-  models: [Category, DataCollection, DataProcessing, DishEntity, DynamicPrice, EntityRelationship, KnowledgeGraphQuery, MenuItem, MenuItemImage, MenuItemOption, MenuItemTag, Recommendation, RelationshipType, Tag]
+  models: [
+    Category,
+    DataCollection,
+    DataProcessing,
+    DishEntity,
+    DynamicPrice,
+    EntityRelationship,
+    KnowledgeGraphQuery,
+    MenuItem,
+    MenuItemImage,
+    MenuItemOption,
+    MenuItemTag,
+    Recommendation,
+    RelationshipType,
+    Tag,
+  ],
 });
 
 /**
@@ -73,10 +103,6 @@ async function syncDatabase(force: boolean = false): Promise<void> {
   }
 }
 
-export {
-  sequelize,
-  testDatabaseConnection,
-  syncDatabase
-};
+export { sequelize, testDatabaseConnection, syncDatabase };
 
 export default sequelize;

@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ 编码规范手册
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 编码规范手册 |
-| **文档类型** | 技巧类文档 |
-| **所属阶段** | 开发实施 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 编码规范手册          |
+| **文档类型** | 技巧类文档                 |
+| **所属阶段** | 开发实施                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -59,6 +60,7 @@
 ### 1.2 适用范围
 
 本规范适用于 YYC³ 餐饮管理平台的所有代码，包括但不限于：
+
 - TypeScript/JavaScript 代码
 - Python 代码
 - SQL 代码
@@ -98,12 +100,12 @@
 
 ```typescript
 // ✅ 正确
-const userName = 'John';
+const userName = "John";
 const userAge = 25;
 const isLoggedIn = true;
 
 // ❌ 错误
-const user_name = 'John';
+const user_name = "John";
 const UserAge = 25;
 const isloggedin = true;
 ```
@@ -115,12 +117,12 @@ const isloggedin = true;
 ```typescript
 // ✅ 正确
 const MAX_RETRY_COUNT = 3;
-const API_BASE_URL = 'https://api.example.com';
+const API_BASE_URL = "https://api.example.com";
 const DEFAULT_PAGE_SIZE = 20;
 
 // ❌ 错误
 const maxRetryCount = 3;
-const apiBaseUrl = 'https://api.example.com';
+const apiBaseUrl = "https://api.example.com";
 ```
 
 #### 2.2.3 函数命名
@@ -214,13 +216,13 @@ interface IorderService {
 
 ```typescript
 // ✅ 正确
-type UserRole = 'admin' | 'user' | 'guest';
-type OrderStatus = 'pending' | 'processing' | 'completed';
-type ProductCategory = 'food' | 'beverage' | 'dessert';
+type UserRole = "admin" | "user" | "guest";
+type OrderStatus = "pending" | "processing" | "completed";
+type ProductCategory = "food" | "beverage" | "dessert";
 
 // ❌ 错误
-type userRole = 'admin' | 'user' | 'guest';
-type IOrderStatus = 'pending' | 'processing' | 'completed';
+type userRole = "admin" | "user" | "guest";
+type IOrderStatus = "pending" | "processing" | "completed";
 ```
 
 #### 2.2.7 枚举命名
@@ -230,29 +232,29 @@ type IOrderStatus = 'pending' | 'processing' | 'completed';
 ```typescript
 // ✅ 正确
 enum OrderStatus {
-  PENDING = 'pending',
-  PROCESSING = 'processing',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled'
+  PENDING = "pending",
+  PROCESSING = "processing",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
 }
 
 enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-  GUEST = 'guest'
+  ADMIN = "admin",
+  USER = "user",
+  GUEST = "guest",
 }
 
 // ❌ 错误
 enum orderStatus {
-  pending = 'pending',
-  processing = 'processing',
-  completed = 'completed'
+  pending = "pending",
+  processing = "processing",
+  completed = "completed",
 }
 
 enum UserRole {
-  Admin = 'admin',
-  User = 'user',
-  Guest = 'guest'
+  Admin = "admin",
+  User = "user",
+  Guest = "guest",
 }
 ```
 
@@ -411,10 +413,10 @@ function calculateTotal(price: number, quantity: number): number {
 
 // ❌ 错误
 function calculateTotal(price: number, quantity: number): number {
-    const subtotal = price * quantity;
-    const tax = subtotal * 0.1;
-    const total = subtotal + tax;
-    return total;
+  const subtotal = price * quantity;
+  const tax = subtotal * 0.1;
+  const total = subtotal + tax;
+  return total;
 }
 ```
 
@@ -424,12 +426,10 @@ function calculateTotal(price: number, quantity: number): number {
 
 ```typescript
 // ✅ 正确
-const result = await fetch(
-  'https://api.example.com/users?page=1&limit=20&sort=name'
-);
+const result = await fetch("https://api.example.com/users?page=1&limit=20&sort=name");
 
 // ❌ 错误
-const result = await fetch('https://api.example.com/users?page=1&limit=20&sort=name');
+const result = await fetch("https://api.example.com/users?page=1&limit=20&sort=name");
 ```
 
 ### 3.3 空行
@@ -440,21 +440,21 @@ const result = await fetch('https://api.example.com/users?page=1&limit=20&sort=n
 // ✅ 正确
 function getUserInfo(userId: string): Promise<User> {
   const user = await userRepository.findById(userId);
-  
+
   if (!user) {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
-  
+
   return user;
 }
 
 function updateUser(userId: string, data: UpdateUserDto): Promise<User> {
   const user = await userRepository.findById(userId);
-  
+
   if (!user) {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
-  
+
   const updatedUser = await userRepository.update(userId, data);
   return updatedUser;
 }
@@ -463,14 +463,14 @@ function updateUser(userId: string, data: UpdateUserDto): Promise<User> {
 function getUserInfo(userId: string): Promise<User> {
   const user = await userRepository.findById(userId);
   if (!user) {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
   return user;
 }
 function updateUser(userId: string, data: UpdateUserDto): Promise<User> {
   const user = await userRepository.findById(userId);
   if (!user) {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
   const updatedUser = await userRepository.update(userId, data);
   return updatedUser;
@@ -483,14 +483,14 @@ function updateUser(userId: string, data: UpdateUserDto): Promise<User> {
 
 ```typescript
 // ✅ 正确
-const userName = 'John';
+const userName = "John";
 const userAge = 25;
 console.log(userName, userAge);
 
 // ❌ 错误
-const userName = 'John'
-const userAge = 25
-console.log(userName, userAge)
+const userName = "John";
+const userAge = 25;
+console.log(userName, userAge);
 ```
 
 ### 3.5 引号
@@ -499,12 +499,12 @@ console.log(userName, userAge)
 
 ```typescript
 // ✅ 正确
-const message = 'Hello, World!';
+const message = "Hello, World!";
 const greeting = "It's a beautiful day!";
 
 // ❌ 错误
 const message = "Hello, World!";
-const greeting = 'It\'s a beautiful day!';
+const greeting = "It's a beautiful day!";
 ```
 
 ---
@@ -533,7 +533,7 @@ const greeting = 'It\'s a beautiful day!';
 
 使用 JSDoc 格式注释函数：
 
-```typescript
+````typescript
 /**
  * 获取用户信息
  * @description 根据用户ID获取用户详细信息
@@ -548,14 +548,14 @@ const greeting = 'It\'s a beautiful day!';
  */
 async function getUserInfo(userId: string): Promise<User> {
   const user = await userRepository.findById(userId);
-  
+
   if (!user) {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
-  
+
   return user;
 }
-```
+````
 
 ### 4.3 类注释
 
@@ -652,39 +652,39 @@ function calculateOrderTotal(items: OrderItem[], taxRate: number, shipping: numb
 // ✅ 正确
 function validateUser(user: User): ValidationResult {
   if (!user.name) {
-    return { valid: false, error: 'Name is required' };
+    return { valid: false, error: "Name is required" };
   }
-  
+
   if (!user.email) {
-    return { valid: false, error: 'Email is required' };
+    return { valid: false, error: "Email is required" };
   }
-  
+
   if (!isValidEmail(user.email)) {
-    return { valid: false, error: 'Invalid email format' };
+    return { valid: false, error: "Invalid email format" };
   }
-  
+
   return { valid: true };
 }
 
 // ❌ 错误
 function validateUser(user: User): ValidationResult {
   if (!user.name) {
-    return { valid: false, error: 'Name is required' };
+    return { valid: false, error: "Name is required" };
   }
   if (!user.email) {
-    return { valid: false, error: 'Email is required' };
+    return { valid: false, error: "Email is required" };
   }
   if (!isValidEmail(user.email)) {
-    return { valid: false, error: 'Invalid email format' };
+    return { valid: false, error: "Invalid email format" };
   }
   if (!user.phone) {
-    return { valid: false, error: 'Phone is required' };
+    return { valid: false, error: "Phone is required" };
   }
   if (!isValidPhone(user.phone)) {
-    return { valid: false, error: 'Invalid phone format' };
+    return { valid: false, error: "Invalid phone format" };
   }
   if (!user.address) {
-    return { valid: false, error: 'Address is required' };
+    return { valid: false, error: "Address is required" };
   }
   // ... 更多验证逻辑
   return { valid: true };
@@ -703,7 +703,7 @@ const TAX_RATE = 0.1;
 
 async function fetchData(url: string): Promise<Data> {
   let retryCount = 0;
-  
+
   while (retryCount < MAX_RETRY_COUNT) {
     try {
       const response = await fetch(url);
@@ -712,14 +712,14 @@ async function fetchData(url: string): Promise<Data> {
       retryCount++;
     }
   }
-  
-  throw new Error('Failed to fetch data');
+
+  throw new Error("Failed to fetch data");
 }
 
 // ❌ 错误
 async function fetchData(url: string): Promise<Data> {
   let retryCount = 0;
-  
+
   while (retryCount < 3) {
     try {
       const response = await fetch(url);
@@ -728,8 +728,8 @@ async function fetchData(url: string): Promise<Data> {
       retryCount++;
     }
   }
-  
-  throw new Error('Failed to fetch data');
+
+  throw new Error("Failed to fetch data");
 }
 ```
 
@@ -741,17 +741,17 @@ async function fetchData(url: string): Promise<Data> {
 // ✅ 正确
 function processOrder(order: Order): ProcessResult {
   if (!order) {
-    return { success: false, error: 'Order is required' };
+    return { success: false, error: "Order is required" };
   }
-  
-  if (order.status !== 'pending') {
-    return { success: false, error: 'Order is not pending' };
+
+  if (order.status !== "pending") {
+    return { success: false, error: "Order is not pending" };
   }
-  
+
   if (!order.items || order.items.length === 0) {
-    return { success: false, error: 'Order has no items' };
+    return { success: false, error: "Order has no items" };
   }
-  
+
   // 处理订单
   return { success: true };
 }
@@ -759,18 +759,18 @@ function processOrder(order: Order): ProcessResult {
 // ❌ 错误
 function processOrder(order: Order): ProcessResult {
   if (order) {
-    if (order.status === 'pending') {
+    if (order.status === "pending") {
       if (order.items && order.items.length > 0) {
         // 处理订单
         return { success: true };
       } else {
-        return { success: false, error: 'Order has no items' };
+        return { success: false, error: "Order has no items" };
       }
     } else {
-      return { success: false, error: 'Order is not pending' };
+      return { success: false, error: "Order is not pending" };
     }
   } else {
-    return { success: false, error: 'Order is required' };
+    return { success: false, error: "Order is required" };
   }
 }
 ```
@@ -788,14 +788,14 @@ function processOrder(order: Order): ProcessResult {
 async function getUserInfo(userId: string): Promise<User> {
   try {
     const user = await userRepository.findById(userId);
-    
+
     if (!user) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
-    
+
     return user;
   } catch (error) {
-    logger.error('Failed to get user info', { userId, error });
+    logger.error("Failed to get user info", { userId, error });
     throw error;
   }
 }
@@ -814,34 +814,37 @@ async function getUserInfo(userId: string): Promise<User> {
 ```typescript
 // ✅ 正确
 class ValidationError extends Error {
-  constructor(message: string, public field?: string) {
+  constructor(
+    message: string,
+    public field?: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
 class NotFoundError extends Error {
   constructor(resource: string, id: string) {
     super(`${resource} with id ${id} not found`);
-    this.name = 'NotFoundError';
+    this.name = "NotFoundError";
   }
 }
 
 class UnauthorizedError extends Error {
-  constructor(message: string = 'Unauthorized') {
+  constructor(message: string = "Unauthorized") {
     super(message);
-    this.name = 'UnauthorizedError';
+    this.name = "UnauthorizedError";
   }
 }
 
 // 使用
 function validateUser(user: User): void {
   if (!user.name) {
-    throw new ValidationError('Name is required', 'name');
+    throw new ValidationError("Name is required", "name");
   }
-  
+
   if (!user.email) {
-    throw new ValidationError('Email is required', 'email');
+    throw new ValidationError("Email is required", "email");
   }
 }
 ```
@@ -855,19 +858,19 @@ function validateUser(user: User): void {
 async function processOrder(orderId: string): Promise<Order> {
   try {
     const order = await orderRepository.findById(orderId);
-    
+
     if (!order) {
-      throw new NotFoundError('Order', orderId);
+      throw new NotFoundError("Order", orderId);
     }
-    
+
     const processedOrder = await orderService.process(order);
     return processedOrder;
   } catch (error) {
-    logger.error('Failed to process order', {
+    logger.error("Failed to process order", {
       orderId,
       error: error.message,
       stack: error.stack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
     throw error;
   }
@@ -898,19 +901,19 @@ async function processOrder(orderId: string): Promise<Order> {
 // ✅ 正确
 class UserService {
   private cache: Map<string, User> = new Map();
-  
+
   async getUserInfo(userId: string): Promise<User> {
     // 检查缓存
     if (this.cache.has(userId)) {
       return this.cache.get(userId)!;
     }
-    
+
     // 从数据库获取
     const user = await userRepository.findById(userId);
-    
+
     // 存入缓存
     this.cache.set(userId, user);
-    
+
     return user;
   }
 }
@@ -934,13 +937,13 @@ async function fetchUserData(userId: string): Promise<UserData> {
   const [user, orders, preferences] = await Promise.all([
     userRepository.findById(userId),
     orderRepository.findByUserId(userId),
-    preferenceRepository.findByUserId(userId)
+    preferenceRepository.findByUserId(userId),
   ]);
-  
+
   return {
     user,
     orders,
-    preferences
+    preferences,
   };
 }
 
@@ -949,11 +952,11 @@ async function fetchUserData(userId: string): Promise<UserData> {
   const user = await userRepository.findById(userId);
   const orders = await orderRepository.findByUserId(userId);
   const preferences = await preferenceRepository.findByUserId(userId);
-  
+
   return {
     user,
     orders,
-    preferences
+    preferences,
   };
 }
 ```
@@ -966,13 +969,13 @@ async function fetchUserData(userId: string): Promise<UserData> {
 // ✅ 正确
 class DataProcessor {
   private timer?: NodeJS.Timeout;
-  
+
   startProcessing(): void {
     this.timer = setInterval(() => {
       this.process();
     }, 1000);
   }
-  
+
   stopProcessing(): void {
     if (this.timer) {
       clearInterval(this.timer);
@@ -1008,13 +1011,13 @@ function validateEmail(email: string): boolean {
 
 function createUser(userData: CreateUserDto): User {
   if (!userData.email || !validateEmail(userData.email)) {
-    throw new ValidationError('Invalid email', 'email');
+    throw new ValidationError("Invalid email", "email");
   }
-  
+
   if (!userData.password || userData.password.length < 8) {
-    throw new ValidationError('Password must be at least 8 characters', 'password');
+    throw new ValidationError("Password must be at least 8 characters", "password");
   }
-  
+
   // 创建用户
   return userRepository.create(userData);
 }
@@ -1031,7 +1034,7 @@ function createUser(userData: CreateUserDto): User {
 
 ```typescript
 // ✅ 正确
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 async function hashPassword(password: string): Promise<string> {
   const salt = await bcrypt.genSalt(10);
@@ -1056,7 +1059,7 @@ function hashPassword(password: string): string {
 ```typescript
 // ✅ 正确
 async function getUserByEmail(email: string): Promise<User | null> {
-  const query = 'SELECT * FROM users WHERE email = ?';
+  const query = "SELECT * FROM users WHERE email = ?";
   const [users] = await database.execute(query, [email]);
   return users[0] || null;
 }
@@ -1079,44 +1082,43 @@ async function getUserByEmail(email: string): Promise<User | null> {
 
 ```typescript
 // ✅ 正确
-describe('UserService', () => {
-  describe('createUser', () => {
-    it('should create a new user', async () => {
+describe("UserService", () => {
+  describe("createUser", () => {
+    it("should create a new user", async () => {
       const userData = {
-        name: 'John Doe',
-        email: 'john@example.com',
-        password: 'password123'
+        name: "John Doe",
+        email: "john@example.com",
+        password: "password123",
       };
-      
+
       const user = await userService.createUser(userData);
-      
+
       expect(user).toBeDefined();
       expect(user.name).toBe(userData.name);
       expect(user.email).toBe(userData.email);
     });
-    
-    it('should throw error if email already exists', async () => {
+
+    it("should throw error if email already exists", async () => {
       const userData = {
-        name: 'John Doe',
-        email: 'existing@example.com',
-        password: 'password123'
+        name: "John Doe",
+        email: "existing@example.com",
+        password: "password123",
       };
-      
-      await expect(userService.createUser(userData))
-        .rejects.toThrow('Email already exists');
+
+      await expect(userService.createUser(userData)).rejects.toThrow("Email already exists");
     });
   });
 });
 
 // ❌ 错误
-describe('UserService', () => {
-  it('should work', async () => {
+describe("UserService", () => {
+  it("should work", async () => {
     const user = await userService.createUser({
-      name: 'John Doe',
-      email: 'john@example.com',
-      password: 'password123'
+      name: "John Doe",
+      email: "john@example.com",
+      password: "password123",
     });
-    
+
     expect(user).toBeDefined();
   });
 });
@@ -1195,13 +1197,10 @@ hotfix/critical-bug
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1222,8 +1221,6 @@ hotfix/critical-bug
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -1252,8 +1249,6 @@ hotfix/critical-bug
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -1291,7 +1286,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -1307,8 +1302,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -1321,7 +1314,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1336,9 +1329,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1346,9 +1339,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1356,20 +1352,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1378,6 +1372,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1393,17 +1388,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1411,6 +1407,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1421,6 +1418,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1429,8 +1427,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1438,21 +1434,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1461,10 +1459,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1490,16 +1485,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1508,26 +1503,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1543,7 +1533,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1575,14 +1565,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1593,17 +1581,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1613,17 +1604,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1633,21 +1627,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

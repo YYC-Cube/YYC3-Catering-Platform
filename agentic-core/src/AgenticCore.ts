@@ -51,12 +51,6 @@ export interface ContextData {
   constraints: Record<string, any>;
 }
 
-
-
-
-
-
-
 export interface ExecutionResult {
   success: boolean;
   actionId: string;
@@ -202,52 +196,54 @@ export class AgenticCore extends EventEmitter {
   /**
    * 添加新目标
    */
-  public async addGoal(goalData: Omit<Goal, 'id' | 'status' | 'progress' | 'createdAt' | 'updatedAt'>): Promise<string> {
-      const goalId = this.generateId();
-      const now = new Date();
-      const newGoal: Goal = {
-        id: goalId,
-        name: goalData.name,
-        description: goalData.description,
-        type: goalData.type,
-        priority: goalData.priority,
-        status: GoalStatus.PENDING,
-        progress: {
-          progress: 0,
-          completedSteps: 0,
-          totalSteps: 0,
-          lastUpdated: now
-        },
-        successCriteria: goalData.successCriteria,
-        metrics: goalData.metrics,
-        context: goalData.context,
-        subGoals: goalData.subGoals,
-        dependencies: goalData.dependencies,
-        createdAt: now,
-        updatedAt: now
-      };
+  public async addGoal(
+    goalData: Omit<Goal, 'id' | 'status' | 'progress' | 'createdAt' | 'updatedAt'>,
+  ): Promise<string> {
+    const goalId = this.generateId();
+    const now = new Date();
+    const newGoal: Goal = {
+      id: goalId,
+      name: goalData.name,
+      description: goalData.description,
+      type: goalData.type,
+      priority: goalData.priority,
+      status: GoalStatus.PENDING,
+      progress: {
+        progress: 0,
+        completedSteps: 0,
+        totalSteps: 0,
+        lastUpdated: now,
+      },
+      successCriteria: goalData.successCriteria,
+      metrics: goalData.metrics,
+      context: goalData.context,
+      subGoals: goalData.subGoals,
+      dependencies: goalData.dependencies,
+      createdAt: now,
+      updatedAt: now,
+    };
 
-      // 添加可选属性
-      if (goalData.deadline) {
-        newGoal.deadline = goalData.deadline;
-      }
-
-      if (goalData.evaluation) {
-        newGoal.evaluation = goalData.evaluation;
-      };
-
-      this.activeGoals.set(goalId, newGoal);
-      await this.goalManager.createGoal(newGoal);
-
-      this.emit('goalAdded', { goalId, goal: newGoal, timestamp: Date.now() });
-
-      // 如果系统正在运行，立即为新目标生成计划
-      if (this.isRunning) {
-        await this.planActionsForGoal(goalId);
-      }
-
-      return goalId;
+    // 添加可选属性
+    if (goalData.deadline) {
+      newGoal.deadline = goalData.deadline;
     }
+
+    if (goalData.evaluation) {
+      newGoal.evaluation = goalData.evaluation;
+    }
+
+    this.activeGoals.set(goalId, newGoal);
+    await this.goalManager.createGoal(newGoal);
+
+    this.emit('goalAdded', { goalId, goal: newGoal, timestamp: Date.now() });
+
+    // 如果系统正在运行，立即为新目标生成计划
+    if (this.isRunning) {
+      await this.planActionsForGoal(goalId);
+    }
+
+    return goalId;
+  }
 
   /**
    * 执行特定行动
@@ -255,7 +251,7 @@ export class AgenticCore extends EventEmitter {
   public async executeAction(
     actionType: string,
     parameters: Record<string, any>,
-    context?: ContextData
+    context?: ContextData,
   ): Promise<ExecutionResult> {
     const actionId = this.generateId();
     const startTime = Date.now();
@@ -275,9 +271,9 @@ export class AgenticCore extends EventEmitter {
         result,
         metrics: {
           executionTime: Date.now() - startTime,
-          memoryUsage: process.memoryUsage().heapUsed
+          memoryUsage: process.memoryUsage().heapUsed,
         },
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       // 记录执行历史
@@ -290,7 +286,6 @@ export class AgenticCore extends EventEmitter {
 
       this.emit('actionExecuted', executionResult);
       return executionResult;
-
     } catch (error) {
       const executionResult: ExecutionResult = {
         success: false,
@@ -298,9 +293,9 @@ export class AgenticCore extends EventEmitter {
         error: error instanceof Error ? error.message : String(error),
         metrics: {
           executionTime: Date.now() - startTime,
-          memoryUsage: process.memoryUsage().heapUsed
+          memoryUsage: process.memoryUsage().heapUsed,
         },
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       this.executionHistory.push(executionResult);
@@ -321,7 +316,7 @@ export class AgenticCore extends EventEmitter {
     // 分析当前情况，生成推荐
     const recommendations = await this.actionPlanner.generateRecommendations(
       Array.from(this.activeGoals.values()),
-      currentContext
+      currentContext,
     );
 
     return recommendations;
@@ -342,7 +337,7 @@ export class AgenticCore extends EventEmitter {
       activeGoals: this.activeGoals.size,
       activePlans: this.activePlans.size,
       executionHistory: this.executionHistory.length,
-      lastUpdate: Date.now()
+      lastUpdate: Date.now(),
     };
   }
 
@@ -427,7 +422,6 @@ export class AgenticCore extends EventEmitter {
       }
 
       this.emit('updateCycleCompleted', { timestamp: Date.now() });
-
     } catch (error) {
       console.error('Error in update cycle:', error);
       this.emit('updateCycleError', { error: error instanceof Error ? error.message : String(error) });
@@ -438,42 +432,37 @@ export class AgenticCore extends EventEmitter {
    * 为指定目标规划行动
    */
   public async planActionsForGoal(goalId: string): Promise<void> {
-     const goal = this.activeGoals.get(goalId);
-     if (!goal) return;
+    const goal = this.activeGoals.get(goalId);
+    if (!goal) return;
 
-     const context: ContextData = this.currentContext || { 
-       timestamp: Date.now(), 
-       environment: {}, 
-       goals: [], 
-       constraints: {} 
-     };
-     const planningContext: PlanningContext = {
-       goals: Array.from(this.activeGoals.values()),
-       environment: context.environment,
-       constraints: context.constraints,
-       preferences: {}
-     };
-     // 使用generateRecommendations方法替代不存在的createPlan方法
-     const plans = await this.actionPlanner.generateRecommendations(
-       [goal], 
-       context, 
-       { considerDependencies: true }
-     );
-     if (plans && plans.length > 0) {
-       const plan = plans[0];
-       if (plan) {
-         this.activePlans.set(plan.id, plan);
-         await this.executePendingActions(plan.id);
-       }
-     }
-   }
+    const context: ContextData = this.currentContext || {
+      timestamp: Date.now(),
+      environment: {},
+      goals: [],
+      constraints: {},
+    };
+    const planningContext: PlanningContext = {
+      goals: Array.from(this.activeGoals.values()),
+      environment: context.environment,
+      constraints: context.constraints,
+      preferences: {},
+    };
+    // 使用generateRecommendations方法替代不存在的createPlan方法
+    const plans = await this.actionPlanner.generateRecommendations([goal], context, { considerDependencies: true });
+    if (plans && plans.length > 0) {
+      const plan = plans[0];
+      if (plan) {
+        this.activePlans.set(plan.id, plan);
+        await this.executePendingActions(plan.id);
+      }
+    }
+  }
 
   /**
    * 私有方法：生成自主计划
    */
   private async generateAutonomousPlans(): Promise<void> {
-    const pendingGoals = Array.from(this.activeGoals.values())
-      .filter(goal => goal.status === GoalStatus.PENDING);
+    const pendingGoals = Array.from(this.activeGoals.values()).filter(goal => goal.status === GoalStatus.PENDING);
 
     for (const goal of pendingGoals) {
       if (!this.activePlans.has(goal.id)) {
@@ -486,8 +475,8 @@ export class AgenticCore extends EventEmitter {
    * 私有方法：执行待处理行动
    */
   private async executePendingActions(planId?: string): Promise<void> {
-    const plansToExecute = planId 
-      ? [this.activePlans.get(planId)].filter((p): p is ActionPlan => p !== undefined) 
+    const plansToExecute = planId
+      ? [this.activePlans.get(planId)].filter((p): p is ActionPlan => p !== undefined)
       : Array.from(this.activePlans.values());
 
     for (const plan of plansToExecute) {
@@ -505,17 +494,12 @@ export class AgenticCore extends EventEmitter {
   private async executeStep(step: ActionStep, plan: ActionPlan): Promise<void> {
     try {
       step.status = ActionStatus.IN_PROGRESS;
-      const result = await this.toolOrchestrator.executeTool(
-        step.tool,
-        step.parameters,
-        this.currentContext
-      );
+      const result = await this.toolOrchestrator.executeTool(step.tool, step.parameters, this.currentContext);
 
       step.result = result;
       step.status = ActionStatus.COMPLETED;
 
       this.emit('stepCompleted', { stepId: step.id, planId: plan.id, result });
-
     } catch (error) {
       step.error = error instanceof Error ? error.message : String(error);
       step.status = ActionStatus.FAILED;
@@ -539,22 +523,22 @@ export class AgenticCore extends EventEmitter {
    */
   private setupEventHandlers(): void {
     // 子系统事件监听
-    this.goalManager.on('goalCompleted', (goal) => {
+    this.goalManager.on('goalCompleted', goal => {
       this.activeGoals.delete(goal.id);
       this.activePlans.delete(goal.id);
       this.emit('goalCompleted', goal);
     });
 
-    this.actionPlanner.on('planUpdated', (plan) => {
+    this.actionPlanner.on('planUpdated', plan => {
       this.activePlans.set(plan.id, plan);
       this.emit('planUpdated', plan);
     });
 
-    this.reflectionEngine.on('newInsight', (insight) => {
+    this.reflectionEngine.on('newInsight', insight => {
       this.emit('newInsight', insight);
     });
 
-    this.communicationHub.on('messageReceived', (message) => {
+    this.communicationHub.on('messageReceived', message => {
       this.emit('messageReceived', message);
     });
   }

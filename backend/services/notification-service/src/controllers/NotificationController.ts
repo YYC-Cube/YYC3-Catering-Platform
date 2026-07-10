@@ -41,7 +41,7 @@ export class NotificationController {
         Number(page),
         Number(limit),
         type as NotificationType,
-        isRead !== undefined ? Boolean(isRead) : undefined
+        isRead !== undefined ? Boolean(isRead) : undefined,
       );
 
       res.status(200).json({
@@ -214,10 +214,7 @@ export class NotificationController {
       const { userId } = req.params;
       const preferenceData = req.body;
 
-      const updatedPreference = await this.notificationService.updateUserNotificationPreference(
-        userId,
-        preferenceData
-      );
+      const updatedPreference = await this.notificationService.updateUserNotificationPreference(userId, preferenceData);
 
       res.status(200).json({
         success: true,

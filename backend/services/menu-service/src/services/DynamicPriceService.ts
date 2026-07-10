@@ -21,7 +21,7 @@ class AIPricePredictionModel {
       model_id: `ai_model_${menuItemId}_${Date.now()}`,
       accuracy: 0.89 + Math.random() * 0.08, // 模拟89-97%的准确率
       trained_at: new Date(),
-      menu_item_id: menuItemId
+      menu_item_id: menuItemId,
     };
   }
 
@@ -34,7 +34,7 @@ class AIPricePredictionModel {
 
     // 基础价格
     let basePrice = menuItem.price;
-    
+
     // 根据上下文因素进行预测调整
     let predictionAdjustment = 0;
 
@@ -49,7 +49,7 @@ class AIPricePredictionModel {
 
     // 星期因素影响（周末加价）
     if (context.day_of_week && (context.day_of_week === 0 || context.day_of_week === 6)) {
-      predictionAdjustment += basePrice * 0.10; // 周末加价10%
+      predictionAdjustment += basePrice * 0.1; // 周末加价10%
     }
 
     // 需求因素影响
@@ -80,11 +80,13 @@ class AIPricePredictionModel {
       predicted_price: Math.round(predictedPrice * 100) / 100, // 保留两位小数
       confidence: Math.round(confidence * 100) / 100,
       factors: {
-        time_impact: context.current_time ? Math.round((basePrice * 0.15 / predictedPrice) * 100) / 100 : 0,
-        day_impact: context.day_of_week ? Math.round((basePrice * 0.10 / predictedPrice) * 100) / 100 : 0,
-        demand_impact: context.current_demand ? Math.round((basePrice * 0.2 * (Math.min(context.current_demand / 100, 1)) / predictedPrice) * 100) / 100 : 0,
-        user_impact: context.user_segment ? Math.round((basePrice * -0.05 / predictedPrice) * 100) / 100 : 0
-      }
+        time_impact: context.current_time ? Math.round(((basePrice * 0.15) / predictedPrice) * 100) / 100 : 0,
+        day_impact: context.day_of_week ? Math.round(((basePrice * 0.1) / predictedPrice) * 100) / 100 : 0,
+        demand_impact: context.current_demand
+          ? Math.round(((basePrice * 0.2 * Math.min(context.current_demand / 100, 1)) / predictedPrice) * 100) / 100
+          : 0,
+        user_impact: context.user_segment ? Math.round(((basePrice * -0.05) / predictedPrice) * 100) / 100 : 0,
+      },
     };
   }
 }
@@ -163,11 +165,7 @@ class DynamicPriceService {
   }
 
   // 获取所有动态价格规则
-  async getAllDynamicPrices(filters?: {
-    menu_item_id?: number;
-    price_type?: string;
-    is_active?: boolean;
-  }) {
+  async getAllDynamicPrices(filters?: { menu_item_id?: number; price_type?: string; is_active?: boolean }) {
     const whereClause: any = {};
     if (filters?.menu_item_id) {
       whereClause.menu_item_id = filters.menu_item_id;
@@ -187,14 +185,17 @@ class DynamicPriceService {
   }
 
   // 计算动态价格
-  async calculateDynamicPrice(menuItemId: number, context?: {
-    user_id?: string;
-    user_segment?: string;
-    current_time?: string;
-    day_of_week?: number;
-    current_demand?: number;
-    order_quantity?: number;
-  }) {
+  async calculateDynamicPrice(
+    menuItemId: number,
+    context?: {
+      user_id?: string;
+      user_segment?: string;
+      current_time?: string;
+      day_of_week?: number;
+      current_demand?: number;
+      order_quantity?: number;
+    },
+  ) {
     // 获取菜单项
     const menuItem = await MenuItem.findByPk(menuItemId);
     if (!menuItem) {
@@ -208,10 +209,7 @@ class DynamicPriceService {
         menu_item_id: menuItemId,
         is_active: true,
         effective_from: { [Op.lte]: now },
-        [Op.or]: [
-          { effective_to: null },
-          { effective_to: { [Op.gte]: now } },
-        ],
+        [Op.or]: [{ effective_to: null }, { effective_to: { [Op.gte]: now } }],
       },
     });
 
@@ -226,7 +224,7 @@ class DynamicPriceService {
 
     // 根据上下文匹配最佳规则
     const bestRule = this.findBestMatchingRule(activeRules, context);
-    
+
     // 使用最佳规则计算价格
     let finalPrice = menuItem.price;
     let predictionResult = null;
@@ -235,15 +233,18 @@ class DynamicPriceService {
       if (bestRule.price_type === 'ai_predicted') {
         // 使用AI预测价格
         predictionResult = await aiPriceModel.predict(menuItemId, context, bestRule.rule_config);
-        
+
         // 检查置信度阈值
-        if (bestRule.rule_config.confidence_threshold && predictionResult.confidence < bestRule.rule_config.confidence_threshold) {
+        if (
+          bestRule.rule_config.confidence_threshold &&
+          predictionResult.confidence < bestRule.rule_config.confidence_threshold
+        ) {
           // 置信度不足，使用原始价格
           finalPrice = menuItem.price;
         } else {
           // 应用AI预测价格
           finalPrice = predictionResult.predicted_price;
-          
+
           // 应用基础价格调整
           if (bestRule.rule_config.base_price_adjustment) {
             finalPrice += bestRule.rule_config.base_price_adjustment;
@@ -259,12 +260,14 @@ class DynamicPriceService {
       menu_item_id: menuItemId,
       original_price: menuItem.price,
       dynamic_price: finalPrice,
-      applied_rule: bestRule ? {
-        id: bestRule.id,
-        rule_name: bestRule.rule_name,
-        price_type: bestRule.price_type,
-        rule_config: bestRule.rule_config,
-      } : null,
+      applied_rule: bestRule
+        ? {
+            id: bestRule.id,
+            rule_name: bestRule.rule_name,
+            price_type: bestRule.price_type,
+            rule_config: bestRule.rule_config,
+          }
+        : null,
       ai_prediction: predictionResult,
     };
   }
@@ -293,17 +296,17 @@ class DynamicPriceService {
 
     // 规则优先级：ai_predicted > special_event > promotion > demand_based > user_segment > time_based
     const priorityMap: Record<string, number> = {
-      'ai_predicted': 6,
-      'special_event': 5,
-      'promotion': 4,
-      'demand_based': 3,
-      'user_segment': 2,
-      'time_based': 1,
+      ai_predicted: 6,
+      special_event: 5,
+      promotion: 4,
+      demand_based: 3,
+      user_segment: 2,
+      time_based: 1,
     };
 
     for (const rule of rules) {
       const priority = priorityMap[rule.price_type];
-      
+
       // 检查规则是否匹配当前上下文
       if (this.isRuleMatchingContext(rule, context) && priority > highestPriority) {
         bestRule = rule;
@@ -317,53 +320,53 @@ class DynamicPriceService {
   // 检查规则是否匹配上下文
   private isRuleMatchingContext(rule: DynamicPrice, context?: any) {
     const config = rule.rule_config;
-    
+
     // 时间规则检查
     if (rule.price_type === 'time_based') {
       if (config.start_time && config.end_time && context?.current_time) {
         const currentTime = new Date(`2000-01-01T${context.current_time}`);
         const startTime = new Date(`2000-01-01T${config.start_time}`);
         const endTime = new Date(`2000-01-01T${config.end_time}`);
-        
+
         if (currentTime < startTime || currentTime > endTime) {
           return false;
         }
       }
-      
+
       if (config.day_of_week && context?.day_of_week) {
         if (!config.day_of_week.includes(context.day_of_week)) {
           return false;
         }
       }
     }
-    
+
     // 用户分段规则检查
     if (rule.price_type === 'user_segment' && config.user_segment && context?.user_segment) {
       if (!config.user_segment.includes(context.user_segment)) {
         return false;
       }
     }
-    
+
     // 需求规则检查
     if (rule.price_type === 'demand_based' && config.demand_threshold !== undefined && context?.current_demand) {
       if (context.current_demand < config.demand_threshold) {
         return false;
       }
     }
-    
+
     // 订单数量规则检查
     if (config.minimum_order !== undefined && context?.order_quantity) {
       if (context.order_quantity < config.minimum_order) {
         return false;
       }
     }
-    
+
     if (config.maximum_order !== undefined && context?.order_quantity) {
       if (context.order_quantity > config.maximum_order) {
         return false;
       }
     }
-    
+
     return true;
   }
 
@@ -411,7 +414,7 @@ class DynamicPriceService {
   }
 
   // 批量训练AI模型
-  async batchTrainAIModels(trainingJobs: Array<{ menu_item_id: number, historical_data: any[] }>) {
+  async batchTrainAIModels(trainingJobs: Array<{ menu_item_id: number; historical_data: any[] }>) {
     const results = [];
     for (const job of trainingJobs) {
       try {

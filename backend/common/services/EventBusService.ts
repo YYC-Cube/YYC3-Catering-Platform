@@ -66,13 +66,13 @@ export class EventBusService {
     this.logger = new Logger('EventBusService', {
       level: config.logLevel || LogLevel.INFO,
       enableConsole: true,
-      enableFile: false
+      enableFile: false,
     });
-    
+
     this.config = {
       logLevel: LogLevel.INFO,
       maxListeners: 100,
-      ...config
+      ...config,
     };
 
     this.eventEmitter = new EventEmitter();
@@ -101,13 +101,13 @@ export class EventBusService {
       data,
       source: source || process.env['SERVICE_NAME'] || 'unknown',
       timestamp: Date.now(),
-      id: this.generateEventId()
+      id: this.generateEventId(),
     };
 
     this.logger.info(`Publishing event: ${eventName}`, {
       eventId: event.id,
       source: event.source,
-      dataLength: JSON.stringify(data).length
+      dataLength: JSON.stringify(data).length,
     });
 
     // 异步发布事件
@@ -118,7 +118,7 @@ export class EventBusService {
       } catch (error: any) {
         this.logger.error(`Error publishing event: ${eventName}`, {
           eventId: event.id,
-          error: error.message
+          error: error.message,
         });
       }
     });
@@ -130,11 +130,7 @@ export class EventBusService {
    * @param handler 事件处理函数
    * @param options 订阅选项
    */
-  subscribe(
-    eventName: string,
-    handler: (event: Event) => void,
-    options: SubscriptionOptions
-  ): () => void {
+  subscribe(eventName: string, handler: (event: Event) => void, options: SubscriptionOptions): () => void {
     const { subscriberName, once = false, errorHandler } = options;
 
     // 记录订阅信息
@@ -145,7 +141,7 @@ export class EventBusService {
 
     this.logger.info(`Subscribed to event: ${eventName}`, {
       subscriber: subscriberName,
-      once
+      once,
     });
 
     // 包装处理函数以添加错误处理
@@ -157,9 +153,9 @@ export class EventBusService {
           eventId: event.id,
           subscriber: subscriberName,
           error: error.message,
-          stack: error.stack
+          stack: error.stack,
         });
-        
+
         // 调用自定义错误处理函数
         if (errorHandler) {
           try {
@@ -168,7 +164,7 @@ export class EventBusService {
             this.logger.error(`Error in custom error handler: ${eventName}`, {
               eventId: event.id,
               subscriber: subscriberName,
-              error: err.message
+              error: err.message,
             });
           }
         }
@@ -196,12 +192,12 @@ export class EventBusService {
    */
   private unsubscribe(eventName: string, handler: Function, subscriberName: string): void {
     this.eventEmitter.removeListener(eventName, handler);
-    
+
     // 更新订阅者记录
     const eventSubscribers = this.subscribers.get(eventName);
     if (eventSubscribers) {
       eventSubscribers.delete(subscriberName);
-      
+
       // 如果没有订阅者了，移除该事件的记录
       if (eventSubscribers.size === 0) {
         this.subscribers.delete(eventName);
@@ -209,7 +205,7 @@ export class EventBusService {
     }
 
     this.logger.info(`Unsubscribed from event: ${eventName}`, {
-      subscriber: subscriberName
+      subscriber: subscriberName,
     });
   }
 
@@ -220,12 +216,10 @@ export class EventBusService {
     return {
       eventNames: this.eventEmitter.eventNames(),
       subscribers: Object.fromEntries(
-        Array.from(this.subscribers.entries()).map(([event, subscribers]) => [
-          event, Array.from(subscribers)
-        ])
+        Array.from(this.subscribers.entries()).map(([event, subscribers]) => [event, Array.from(subscribers)]),
       ),
       maxListeners: this.config.maxListeners,
-      currentListeners: this.eventEmitter.listenerCount("") // 大致数量
+      currentListeners: this.eventEmitter.listenerCount(''), // 大致数量
     };
   }
 

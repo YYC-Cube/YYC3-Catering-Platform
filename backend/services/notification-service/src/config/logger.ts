@@ -29,7 +29,7 @@ const logFormat = winston.format.combine(
     stack: true,
   }),
   winston.format.splat(),
-  winston.format.json()
+  winston.format.json(),
 );
 
 // 创建日志记录器
@@ -42,10 +42,7 @@ const logger = winston.createLogger({
   transports: [
     // 控制台输出
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
+      format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
     }),
     // 错误日志文件
     new winston.transports.File({

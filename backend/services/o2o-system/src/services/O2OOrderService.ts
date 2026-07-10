@@ -12,7 +12,7 @@ import {
   PaymentMethod,
   DeliveryInfo,
   OrderItem,
-  OrderCustomer
+  OrderCustomer,
 } from '../models/O2OOrder';
 import { OrderRepository } from '../repositories/OrderRepository';
 import { DeliveryService } from './DeliveryService';
@@ -70,16 +70,16 @@ export class O2OOrderService extends EventEmitter {
 
   // 订单状态机配置
   private orderStatusTransitions: Record<O2OOrderStatus, O2OOrderStatus[]> = {
-    'pending': ['confirmed', 'cancelled'],
-    'confirmed': ['preparing', 'cancelled'],
-    'preparing': ['ready_for_pickup', 'cancelled'],
-    'ready_for_pickup': ['out_for_delivery', 'picked_up', 'cancelled'],
-    'out_for_delivery': ['delivered', 'failed'],
-    'picked_up': ['completed'],
-    'delivered': ['completed'],
-    'completed': [],
-    'cancelled': [],
-    'failed': ['pending', 'cancelled']
+    pending: ['confirmed', 'cancelled'],
+    confirmed: ['preparing', 'cancelled'],
+    preparing: ['ready_for_pickup', 'cancelled'],
+    ready_for_pickup: ['out_for_delivery', 'picked_up', 'cancelled'],
+    out_for_delivery: ['delivered', 'failed'],
+    picked_up: ['completed'],
+    delivered: ['completed'],
+    completed: [],
+    cancelled: [],
+    failed: ['pending', 'cancelled'],
   };
 
   constructor(dependencies: {
@@ -139,7 +139,6 @@ export class O2OOrderService extends EventEmitter {
       this.emit('orderCreated', savedOrder);
 
       return savedOrder;
-
     } catch (error) {
       console.error('Create order error:', error);
       throw error;
@@ -153,7 +152,7 @@ export class O2OOrderService extends EventEmitter {
     orderId: string,
     newStatus: O2OOrderStatus,
     updatedBy: string,
-    notes?: string
+    notes?: string,
   ): Promise<O2OOrder> {
     try {
       // 获取当前订单
@@ -191,11 +190,10 @@ export class O2OOrderService extends EventEmitter {
         order: updatedOrder,
         previousStatus,
         newStatus,
-        updatedBy
+        updatedBy,
       });
 
       return updatedOrder;
-
     } catch (error) {
       console.error('Update order status error:', error);
       throw error;
@@ -232,7 +230,6 @@ export class O2OOrderService extends EventEmitter {
 
       // 更新订单状态
       return await this.updateOrderStatus(orderId, 'cancelled', cancelledBy, reason);
-
     } catch (error) {
       console.error('Cancel order error:', error);
       throw error;
@@ -242,12 +239,15 @@ export class O2OOrderService extends EventEmitter {
   /**
    * 获取订单列表
    */
-  async getOrders(filter: OrderFilter = {}, pagination: {
-    page: number;
-    limit: number;
-    sortBy?: string;
-    sortOrder?: 'asc' | 'desc';
-  } = { page: 1, limit: 20 }): Promise<{
+  async getOrders(
+    filter: OrderFilter = {},
+    pagination: {
+      page: number;
+      limit: number;
+      sortBy?: string;
+      sortOrder?: 'asc' | 'desc';
+    } = { page: 1, limit: 20 },
+  ): Promise<{
     orders: O2OOrder[];
     total: number;
     page: number;
@@ -285,9 +285,8 @@ export class O2OOrderService extends EventEmitter {
 
       return {
         ...stats,
-        deliveryPerformance: deliveryStats
+        deliveryPerformance: deliveryStats,
       };
-
     } catch (error) {
       console.error('Get order statistics error:', error);
       throw error;
@@ -306,7 +305,7 @@ export class O2OOrderService extends EventEmitter {
       const result = {
         synced: 0,
         failed: 0,
-        errors: [] as string[]
+        errors: [] as string[],
       };
 
       // 获取待同步的外部订单
@@ -320,7 +319,7 @@ export class O2OOrderService extends EventEmitter {
           // 检查是否已存在
           const existingOrder = await this.orderRepository.findByExternalId(
             externalOrder.platform,
-            externalOrder.externalId
+            externalOrder.externalId,
           );
 
           if (existingOrder) {
@@ -332,7 +331,6 @@ export class O2OOrderService extends EventEmitter {
           }
 
           result.synced++;
-
         } catch (error) {
           result.failed++;
           result.errors.push(`Failed to sync order ${externalOrder.externalId}: ${error}`);
@@ -340,7 +338,6 @@ export class O2OOrderService extends EventEmitter {
       }
 
       return result;
-
     } catch (error) {
       console.error('Sync external orders error:', error);
       throw error;
@@ -353,7 +350,7 @@ export class O2OOrderService extends EventEmitter {
   async batchUpdateOrderStatus(
     orderIds: string[],
     newStatus: O2OOrderStatus,
-    updatedBy: string
+    updatedBy: string,
   ): Promise<{
     success: string[];
     failed: Array<{ orderId: string; error: string }>;
@@ -361,7 +358,7 @@ export class O2OOrderService extends EventEmitter {
     try {
       const result = {
         success: [] as string[],
-        failed: [] as Array<{ orderId: string; error: string }>
+        failed: [] as Array<{ orderId: string; error: string }>,
       };
 
       for (const orderId of orderIds) {
@@ -371,13 +368,12 @@ export class O2OOrderService extends EventEmitter {
         } catch (error) {
           result.failed.push({
             orderId,
-            error: error instanceof Error ? error.message : String(error)
+            error: error instanceof Error ? error.message : String(error),
           });
         }
       }
 
       return result;
-
     } catch (error) {
       console.error('Batch update order status error:', error);
       throw error;
@@ -413,7 +409,6 @@ export class O2OOrderService extends EventEmitter {
       this.emit('orderCompleted', order);
 
       return order;
-
     } catch (error) {
       console.error('Complete order error:', error);
       throw error;
@@ -450,15 +445,14 @@ export class O2OOrderService extends EventEmitter {
     }
   }
 
-  private async checkInventoryAvailability(items: Array<{
-    dishId: string;
-    quantity: number;
-  }>): Promise<void> {
+  private async checkInventoryAvailability(
+    items: Array<{
+      dishId: string;
+      quantity: number;
+    }>,
+  ): Promise<void> {
     for (const item of items) {
-      const availability = await this.inventoryService.checkAvailability(
-        item.dishId,
-        item.quantity
-      );
+      const availability = await this.inventoryService.checkAvailability(item.dishId, item.quantity);
 
       if (!availability.available) {
         throw new Error(`Insufficient inventory for item ${item.dishId}`);
@@ -484,8 +478,8 @@ export class O2OOrderService extends EventEmitter {
     const tax = subtotal * 0.1; // 假设10%税率
 
     // 计算配送费
-    const deliveryFee = orderRequest.deliveryInfo.type === 'delivery' ?
-      await this.calculateDeliveryFee(orderRequest.deliveryInfo) : 0;
+    const deliveryFee =
+      orderRequest.deliveryInfo.type === 'delivery' ? await this.calculateDeliveryFee(orderRequest.deliveryInfo) : 0;
 
     // 计算折扣
     let discount = 0;
@@ -500,14 +494,11 @@ export class O2OOrderService extends EventEmitter {
       tax,
       deliveryFee,
       discount,
-      total: Math.max(0, total)
+      total: Math.max(0, total),
     };
   }
 
-  private async buildOrder(
-    orderRequest: O2OOrderRequest,
-    orderAmount: any
-  ): Promise<O2OOrder> {
+  private async buildOrder(orderRequest: O2OOrderRequest, orderAmount: any): Promise<O2OOrder> {
     const orderNumber = await this.generateOrderNumber();
 
     return {
@@ -523,7 +514,7 @@ export class O2OOrderService extends EventEmitter {
         quantity: item.quantity,
         unitPrice: item.price,
         totalPrice: item.price * item.quantity,
-        customizations: item.customizations || {}
+        customizations: item.customizations || {},
       })),
       deliveryInfo: orderRequest.deliveryInfo,
       paymentMethod: orderRequest.paymentMethod,
@@ -535,7 +526,7 @@ export class O2OOrderService extends EventEmitter {
       status: 'pending',
       paymentStatus: 'pending',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
   }
 
@@ -549,13 +540,13 @@ export class O2OOrderService extends EventEmitter {
         orderId: order.id,
         amount: order.amount.total,
         method: order.paymentMethod,
-        customer: order.customer
+        customer: order.customer,
       });
     } catch (error) {
       console.error('Process payment error:', error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : 'Payment processing failed'
+        message: error instanceof Error ? error.message : 'Payment processing failed',
       };
     }
   }
@@ -585,7 +576,6 @@ export class O2OOrderService extends EventEmitter {
 
       // 发送内部通知
       await this.notificationService.sendInternalNotification(order, event);
-
     } catch (error) {
       console.error('Send order notifications error:', error);
     }
@@ -598,7 +588,7 @@ export class O2OOrderService extends EventEmitter {
         pickupAddress: await this.getRestaurantAddress(),
         deliveryAddress: order.deliveryInfo.address!,
         customer: order.customer,
-        estimatedTime: order.estimatedPrepTime
+        estimatedTime: order.estimatedPrepTime,
       });
     } catch (error) {
       console.error('Create delivery task error:', error);
@@ -619,17 +609,14 @@ export class O2OOrderService extends EventEmitter {
         orderId: order.id,
         amount: order.amount.total,
         originalTransactionId: order.paymentTransactionId,
-        reason: 'Order cancelled'
+        reason: 'Order cancelled',
       });
     } catch (error) {
       console.error('Process refund error:', error);
     }
   }
 
-  private isValidStatusTransition(
-    currentStatus: O2OOrderStatus,
-    newStatus: O2OOrderStatus
-  ): boolean {
+  private isValidStatusTransition(currentStatus: O2OOrderStatus, newStatus: O2OOrderStatus): boolean {
     const allowedTransitions = this.orderStatusTransitions[currentStatus];
     return allowedTransitions ? allowedTransitions.includes(newStatus) : false;
   }
@@ -642,7 +629,7 @@ export class O2OOrderService extends EventEmitter {
   private async handleStatusChange(
     order: O2OOrder,
     previousStatus: O2OOrderStatus,
-    newStatus: O2OOrderStatus
+    newStatus: O2OOrderStatus,
   ): Promise<void> {
     // 处理不同状态变更的特殊逻辑
     switch (newStatus) {
@@ -672,7 +659,7 @@ export class O2OOrderService extends EventEmitter {
 
   private async calculateDeliveryFee(deliveryInfo: DeliveryInfo): Promise<number> {
     // 基于距离、重量等因素计算配送费
-    const baseFee = 5.00;
+    const baseFee = 5.0;
     const distanceFee = deliveryInfo.distance ? deliveryInfo.distance * 2 : 0;
     return baseFee + distanceFee;
   }

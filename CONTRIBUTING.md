@@ -26,6 +26,7 @@
 ### 快速开始
 
 1. **Fork 项目**
+
    ```bash
    # 在 GitHub 上 Fork 项目
    # 然后克隆你的 Fork
@@ -34,6 +35,7 @@
    ```
 
 2. **安装依赖**
+
    ```bash
    # 使用 Bun (推荐)
    bun install
@@ -43,6 +45,7 @@
    ```
 
 3. **环境配置**
+
    ```bash
    # 复制环境配置文件
    cp .env.example .env
@@ -52,6 +55,7 @@
    ```
 
 4. **数据库设置**
+
    ```bash
    # 启动 PostgreSQL 和 Redis
    docker-compose up -d postgres redis
@@ -61,6 +65,7 @@
    ```
 
 5. **启动开发服务器**
+
    ```bash
    # 启动后端服务
    bun run dev:backend
@@ -133,7 +138,7 @@ function processData(data: any): any {
 ```typescript
 // ✅ 使用 PascalCase
 export default defineComponent({
-  name: 'CustomerApp',
+  name: "CustomerApp",
   // ...
 });
 ```
@@ -147,7 +152,7 @@ export default defineComponent({
 
 <script setup lang="ts">
 // 导入
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from "vue";
 
 // Props 定义
 interface Props {
@@ -171,7 +176,7 @@ const orderData = ref<Order | null>(null);
 
 // 计算属性
 const orderStatus = computed(() => {
-  return orderData.value?.status || 'unknown';
+  return orderData.value?.status || "unknown";
 });
 
 // 方法
@@ -246,6 +251,7 @@ git commit -m "build(deps): update vue to version 3.4.0"
 ### Pull Request 流程
 
 1. **创建分支**
+
    ```bash
    git checkout develop
    git pull origin develop
@@ -253,6 +259,7 @@ git commit -m "build(deps): update vue to version 3.4.0"
    ```
 
 2. **开发和测试**
+
    ```bash
    # 开发功能
    # 运行测试
@@ -262,6 +269,7 @@ git commit -m "build(deps): update vue to version 3.4.0"
    ```
 
 3. **提交和推送**
+
    ```bash
    git add .
    git commit -m "feat: your feature description"
@@ -283,24 +291,28 @@ git commit -m "build(deps): update vue to version 3.4.0"
 ### 审查清单
 
 **功能性**
+
 - [ ] 代码实现了预期的功能
 - [ ] 边界条件处理正确
 - [ ] 错误处理完善
 - [ ] 性能考虑充分
 
 **代码质量**
+
 - [ ] 代码遵循项目规范
 - [ ] 变量和函数命名清晰
 - [ ] 代码结构合理
 - [ ] 没有重复代码
 
 **安全性**
+
 - [ ] 输入验证充分
 - [ ] 没有安全漏洞
 - [ ] 敏感信息处理正确
 - [ ] 权限控制合理
 
 **测试**
+
 - [ ] 单元测试覆盖核心功能
 - [ ] 集成测试验证主要流程
 - [ ] 测试用例有意义
@@ -354,42 +366,39 @@ bun test:coverage
 
 ```typescript
 // OrderService.test.ts
-import { test, expect, describe, beforeEach } from 'bun:test';
-import { OrderService } from '../OrderService';
+import { test, expect, describe, beforeEach } from "bun:test";
+import { OrderService } from "../OrderService";
 
-describe('OrderService', () => {
+describe("OrderService", () => {
   let orderService: OrderService;
 
   beforeEach(() => {
     orderService = new OrderService(/* dependencies */);
   });
 
-  test('should create order successfully', async () => {
+  test("should create order successfully", async () => {
     const orderData = {
-      customerId: 'customer-123',
-      items: [
-        { dishId: 'dish-1', quantity: 2 }
-      ],
-      totalAmount: 58.00
+      customerId: "customer-123",
+      items: [{ dishId: "dish-1", quantity: 2 }],
+      totalAmount: 58.0,
     };
 
     const result = await orderService.createOrder(orderData);
 
     expect(result).toBeDefined();
     expect(result.id).toBeDefined();
-    expect(result.status).toBe('pending');
+    expect(result.status).toBe("pending");
     expect(result.customerId).toBe(orderData.customerId);
   });
 
-  test('should throw error for invalid order data', async () => {
+  test("should throw error for invalid order data", async () => {
     const invalidOrderData = {
-      customerId: '', // 无效的客户ID
+      customerId: "", // 无效的客户ID
       items: [],
-      totalAmount: -10 // 无效金额
+      totalAmount: -10, // 无效金额
     };
 
-    await expect(orderService.createOrder(invalidOrderData))
-      .rejects.toThrow('Invalid order data');
+    await expect(orderService.createOrder(invalidOrderData)).rejects.toThrow("Invalid order data");
   });
 });
 ```

@@ -160,7 +160,7 @@ export class KafkaService {
       const topicMessagesMap = new Map<string, any[]>();
 
       // 按主题分组消息
-      options.forEach((opt) => {
+      options.forEach(opt => {
         if (!topicMessagesMap.has(opt.topic)) {
           topicMessagesMap.set(opt.topic, []);
         }
@@ -195,10 +195,7 @@ export class KafkaService {
    * @param handler 消息处理函数
    * @returns Promise<string> 消费者ID
    */
-  async subscribe(
-    options: ConsumerOptions,
-    handler: MessageHandler
-  ): Promise<string> {
+  async subscribe(options: ConsumerOptions, handler: MessageHandler): Promise<string> {
     try {
       const consumerId = `${options.groupId}-${options.topics.join('-')}`;
 
@@ -284,11 +281,7 @@ export class KafkaService {
    * @param partitions 分区数
    * @param replicationFactor 副本因子
    */
-  async createTopic(
-    topic: string,
-    partitions: number = 1,
-    replicationFactor: number = 1
-  ): Promise<void> {
+  async createTopic(topic: string, partitions: number = 1, replicationFactor: number = 1): Promise<void> {
     try {
       const admin = this.kafka.admin();
       await admin.connect();

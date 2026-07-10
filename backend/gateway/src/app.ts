@@ -59,7 +59,7 @@ export class GatewayApp {
       db: gatewayConfig.cache.redis?.db || 1,
       keyPrefix: gatewayConfig.cache.redis?.keyPrefix || 'gateway:',
       retryDelayOnFailover: 100,
-      maxRetriesPerRequest: 3
+      maxRetriesPerRequest: 3,
     });
 
     // Redis连接事件监听
@@ -67,7 +67,7 @@ export class GatewayApp {
       console.log('✅ Redis connected successfully');
     });
 
-    this.redis.on('error', (error) => {
+    this.redis.on('error', error => {
       console.error('❌ Redis connection error:', error);
     });
 
@@ -93,10 +93,12 @@ export class GatewayApp {
 
     // 压缩中间件
     if (gatewayConfig.security.compression.enabled) {
-      this.app.use(compression({
-        threshold: gatewayConfig.security.compression.threshold,
-        level: gatewayConfig.security.compression.level
-      }));
+      this.app.use(
+        compression({
+          threshold: gatewayConfig.security.compression.threshold,
+          level: gatewayConfig.security.compression.level,
+        }),
+      );
     }
 
     // 解析请求体
@@ -105,18 +107,21 @@ export class GatewayApp {
 
     // CORS中间件
     if (gatewayConfig.cors.enabled) {
-      this.app.use(cors({
-        origin: gatewayConfig.cors.origins,
-        methods: gatewayConfig.cors.methods,
-        allowedHeaders: gatewayConfig.cors.allowedHeaders,
-        credentials: gatewayConfig.cors.credentials
-      }));
+      this.app.use(
+        cors({
+          origin: gatewayConfig.cors.origins,
+          methods: gatewayConfig.cors.methods,
+          allowedHeaders: gatewayConfig.cors.allowedHeaders,
+          credentials: gatewayConfig.cors.credentials,
+        }),
+      );
     }
 
     // 请求ID中间件
     this.app.use((req, res, next) => {
-      const requestId = req.headers[gatewayConfig.logging.requestIdHeader] as string ||
-                       `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const requestId =
+        (req.headers[gatewayConfig.logging.requestIdHeader] as string) ||
+        `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
       req.headers[gatewayConfig.logging.requestIdHeader] = requestId;
       res.setHeader(gatewayConfig.logging.requestIdHeader, requestId);
@@ -160,7 +165,7 @@ export class GatewayApp {
         timestamp: new Date().toISOString(),
         version: process.env.APP_VERSION || '1.0.0',
         service: 'yyc3-gateway',
-        uptime: process.uptime()
+        uptime: process.uptime(),
       });
     });
 
@@ -174,7 +179,7 @@ export class GatewayApp {
         } catch (error) {
           res.status(500).json({
             error: 'Failed to get metrics',
-            message: error.message
+            message: error.message,
           });
         }
       });
@@ -186,12 +191,12 @@ export class GatewayApp {
         const services = await this.circuitBreakerMiddleware.getServicesStatus();
         res.json({
           success: true,
-          data: services
+          data: services,
         });
       } catch (error) {
         res.status(500).json({
           success: false,
-          error: error.message
+          error: error.message,
         });
       }
     });
@@ -243,7 +248,7 @@ export class GatewayApp {
         code: 'NOT_FOUND',
         path: req.originalUrl,
         method: req.method,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     });
 
@@ -275,7 +280,6 @@ export class GatewayApp {
 
       // 优雅关闭处理
       this.setupGracefulShutdown();
-
     } catch (error) {
       console.error('❌ Failed to start gateway:', error);
       process.exit(1);

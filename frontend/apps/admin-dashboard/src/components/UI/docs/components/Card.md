@@ -15,7 +15,7 @@
 包含标题、内容和操作。
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/UI'
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/UI";
 
 export default function CardBasic() {
   return (
@@ -27,12 +27,10 @@ export default function CardBasic() {
         <p>这是卡片的内容区域</p>
       </CardContent>
       <CardFooter>
-        <button class="px-4 py-2 bg-primary-600 text-white rounded-lg">
-          确认
-        </button>
+        <button class="px-4 py-2 bg-primary-600 text-white rounded-lg">确认</button>
       </CardFooter>
     </Card>
-  )
+  );
 }
 ```
 
@@ -41,14 +39,14 @@ export default function CardBasic() {
 只有内容区域的简单卡片。
 
 ```tsx
-import { Card } from '@/components/UI'
+import { Card } from "@/components/UI";
 
 export default function CardSimple() {
   return (
     <Card>
       <p>这是一个简单的卡片</p>
     </Card>
-  )
+  );
 }
 ```
 
@@ -57,16 +55,12 @@ export default function CardSimple() {
 卡片可以包含图片。
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/UI'
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/UI";
 
 export default function CardImage() {
   return (
     <Card className="max-w-sm">
-      <img
-        src="/placeholder-image.jpg"
-        alt="示例图片"
-        class="w-full h-48 object-cover rounded-t-lg"
-      />
+      <img src="/placeholder-image.jpg" alt="示例图片" class="w-full h-48 object-cover rounded-t-lg" />
       <CardHeader>
         <CardTitle>带图片的卡片</CardTitle>
       </CardHeader>
@@ -74,7 +68,7 @@ export default function CardImage() {
         <p>这是卡片的内容描述</p>
       </CardContent>
     </Card>
-  )
+  );
 }
 ```
 
@@ -83,7 +77,7 @@ export default function CardImage() {
 鼠标悬停时显示阴影效果。
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/UI'
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/UI";
 
 export default function CardHover() {
   return (
@@ -95,7 +89,7 @@ export default function CardHover() {
         <p>鼠标悬停查看效果</p>
       </CardContent>
     </Card>
-  )
+  );
 }
 ```
 
@@ -104,14 +98,14 @@ export default function CardHover() {
 卡片加载时的占位状态。
 
 ```tsx
-import { Card } from '@/components/UI'
+import { Card } from "@/components/UI";
 
 export default function CardLoading() {
   return (
     <Card loading>
       <p>加载中...</p>
     </Card>
-  )
+  );
 }
 ```
 
@@ -119,25 +113,25 @@ export default function CardLoading() {
 
 ### Card Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-|------|------|------|--------|--------|
-| hoverable | 是否可悬停 | `boolean` | - | `false` |
-| bordered | 是否有边框 | `boolean` | - | `true` |
-| shadow | 阴影等级 | `string` | `none` / `sm` / `md` / `lg` / `xl` | `md` |
-| padding | 内边距 | `string` | `none` / `sm` / `md` / `lg` | `md` |
-| loading | 是否加载中 | `boolean` | - | `false` |
+| 参数      | 说明       | 类型      | 可选值                             | 默认值  |
+| --------- | ---------- | --------- | ---------------------------------- | ------- |
+| hoverable | 是否可悬停 | `boolean` | -                                  | `false` |
+| bordered  | 是否有边框 | `boolean` | -                                  | `true`  |
+| shadow    | 阴影等级   | `string`  | `none` / `sm` / `md` / `lg` / `xl` | `md`    |
+| padding   | 内边距     | `string`  | `none` / `sm` / `md` / `lg`        | `md`    |
+| loading   | 是否加载中 | `boolean` | -                                  | `false` |
 
 ### CardHeader Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-|------|------|------|--------|--------|
-| divider | 是否显示分隔线 | `boolean` | - | `false` |
+| 参数    | 说明           | 类型      | 可选值 | 默认值  |
+| ------- | -------------- | --------- | ------ | ------- |
+| divider | 是否显示分隔线 | `boolean` | -      | `false` |
 
 ### CardTitle Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-|------|------|------|--------|--------|
-| level | 标题级别 | `number` | `1` / `2` / `3` / `4` / `5` / `6` | `3` |
+| 参数  | 说明     | 类型     | 可选值                            | 默认值 |
+| ----- | -------- | -------- | --------------------------------- | ------ |
+| level | 标题级别 | `number` | `1` / `2` / `3` / `4` / `5` / `6` | `3`    |
 
 ### CardContent Props
 

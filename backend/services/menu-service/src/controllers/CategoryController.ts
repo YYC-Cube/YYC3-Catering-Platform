@@ -29,13 +29,13 @@ export class CategoryController {
       res.status(201).json({
         success: true,
         message: '菜单分类创建成功',
-        data: category
+        data: category,
       });
     } catch (error: any) {
       logger.error('创建菜单分类失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '创建菜单分类失败'
+        message: error.message || '创建菜单分类失败',
       });
     }
   }
@@ -53,7 +53,7 @@ export class CategoryController {
         isActive: isActive ? isActive === 'true' : undefined,
         keyword: keyword as string,
         page: Number(page),
-        limit: Number(limit)
+        limit: Number(limit),
       });
 
       res.status(200).json({
@@ -63,14 +63,14 @@ export class CategoryController {
           categories: result.categories,
           total: result.total,
           page: Number(page),
-          limit: Number(limit)
-        }
+          limit: Number(limit),
+        },
       });
     } catch (error: any) {
       logger.error('获取菜单分类列表失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取菜单分类列表失败'
+        message: error.message || '获取菜单分类列表失败',
       });
     }
   }
@@ -88,7 +88,7 @@ export class CategoryController {
       if (!category) {
         res.status(404).json({
           success: false,
-          message: '菜单分类不存在'
+          message: '菜单分类不存在',
         });
         return;
       }
@@ -96,13 +96,13 @@ export class CategoryController {
       res.status(200).json({
         success: true,
         message: '获取菜单分类详情成功',
-        data: category
+        data: category,
       });
     } catch (error: any) {
       logger.error('获取菜单分类详情失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取菜单分类详情失败'
+        message: error.message || '获取菜单分类详情失败',
       });
     }
   }
@@ -120,7 +120,7 @@ export class CategoryController {
       if (!category) {
         res.status(404).json({
           success: false,
-          message: '菜单分类不存在'
+          message: '菜单分类不存在',
         });
         return;
       }
@@ -128,13 +128,13 @@ export class CategoryController {
       res.status(200).json({
         success: true,
         message: '菜单分类更新成功',
-        data: category
+        data: category,
       });
     } catch (error: any) {
       logger.error('更新菜单分类失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '更新菜单分类失败'
+        message: error.message || '更新菜单分类失败',
       });
     }
   }
@@ -152,20 +152,20 @@ export class CategoryController {
       if (!success) {
         res.status(404).json({
           success: false,
-          message: '菜单分类不存在'
+          message: '菜单分类不存在',
         });
         return;
       }
 
       res.status(200).json({
         success: true,
-        message: '菜单分类删除成功'
+        message: '菜单分类删除成功',
       });
     } catch (error: any) {
       logger.error('删除菜单分类失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '删除菜单分类失败'
+        message: error.message || '删除菜单分类失败',
       });
     }
   }
@@ -184,7 +184,7 @@ export class CategoryController {
       if (!category) {
         res.status(404).json({
           success: false,
-          message: '菜单分类不存在'
+          message: '菜单分类不存在',
         });
         return;
       }
@@ -192,13 +192,13 @@ export class CategoryController {
       res.status(200).json({
         success: true,
         message: '菜单分类状态更新成功',
-        data: category
+        data: category,
       });
     } catch (error: any) {
       logger.error('更新菜单分类状态失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '更新菜单分类状态失败'
+        message: error.message || '更新菜单分类状态失败',
       });
     }
   }
@@ -216,13 +216,13 @@ export class CategoryController {
       res.status(200).json({
         success: true,
         message: '批量更新菜单分类排序成功',
-        data: { updatedCount }
+        data: { updatedCount },
       });
     } catch (error: any) {
       logger.error('批量更新菜单分类排序失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '批量更新菜单分类排序失败'
+        message: error.message || '批量更新菜单分类排序失败',
       });
     }
   }
@@ -240,13 +240,13 @@ export class CategoryController {
       res.status(200).json({
         success: true,
         message: '获取菜单分类树成功',
-        data: categoryTree
+        data: categoryTree,
       });
     } catch (error: any) {
       logger.error('获取菜单分类树失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取菜单分类树失败'
+        message: error.message || '获取菜单分类树失败',
       });
     }
   }

@@ -2,14 +2,14 @@
 
 ## 文档信息
 
-| 项目 | 内容 |
-|------|------|
+| 项目     | 内容                                    |
+| -------- | --------------------------------------- |
 | 文档编号 | 103-YYC3-AICP-开发阶段-后端代码评审细则 |
-| 文档版本 | v1.0.0 |
-| 创建日期 | 2025-01-04 |
-| 最后更新 | 2025-01-04 |
-| 文档状态 | 已完成 |
-| 文档分类 | 开发阶段文档 |
+| 文档版本 | v1.0.0                                  |
+| 创建日期 | 2025-01-04                              |
+| 最后更新 | 2025-01-04                              |
+| 文档状态 | 已完成                                  |
+| 文档分类 | 开发阶段文档                            |
 
 ---
 
@@ -90,11 +90,11 @@ backend/
 
 ```typescript
 // ✅ 正确 - 使用camelCase
-const userName = 'John';
+const userName = "John";
 const getUserById = (id: string) => {};
 
 // ❌ 错误 - 使用snake_case
-const user_name = 'John';
+const user_name = "John";
 const get_user_by_id = (id: string) => {};
 ```
 
@@ -104,7 +104,7 @@ const get_user_by_id = (id: string) => {};
 // ✅ 正确 - 使用PascalCase
 class UserService {}
 interface UserConfig {}
-type UserRole = 'admin' | 'user';
+type UserRole = "admin" | "user";
 
 // ❌ 错误 - 使用camelCase
 class userService {}
@@ -151,11 +151,11 @@ class UserService {
 ```typescript
 // ✅ 正确
 const result = a + b;
-const user = { id: 1, name: 'John' };
+const user = { id: 1, name: "John" };
 
 // ❌ 错误
-const result=a+b;
-const user={id:1,name:'John'};
+const result = a + b;
+const user = { id: 1, name: "John" };
 ```
 
 #### 3.2.2 行长度
@@ -165,11 +165,7 @@ const user={id:1,name:'John'};
 
 ```typescript
 // ✅ 正确
-const result = someVeryLongFunctionName(
-  param1,
-  param2,
-  param3
-);
+const result = someVeryLongFunctionName(param1, param2, param3);
 
 // ❌ 错误
 const result = someVeryLongFunctionName(param1, param2, param3, param4, param5, param6, param7, param8);
@@ -183,21 +179,21 @@ const result = someVeryLongFunctionName(param1, param2, param3, param4, param5, 
 
 ```typescript
 // ✅ 正确
-import { express } from 'express';
+import { express } from "express";
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello');
+app.get("/", (req, res) => {
+  res.send("Hello");
 });
 
 app.listen(3000);
 
 // ❌ 错误
-import { express } from 'express';
+import { express } from "express";
 const app = express();
-app.get('/', (req, res) => {
-  res.send('Hello');
+app.get("/", (req, res) => {
+  res.send("Hello");
 });
 app.listen(3000);
 ```
@@ -248,8 +244,8 @@ async getUserById(id: string): Promise<User | null> {
 
 ```typescript
 // 检查用户状态
-if (user.status !== 'active') {
-  throw new Error('用户已被禁用');
+if (user.status !== "active") {
+  throw new Error("用户已被禁用");
 }
 
 // 生成JWT令牌
@@ -266,27 +262,27 @@ const token = jwt.sign(payload, secret);
 
 ```typescript
 // ✅ 正确 - 使用RESTful风格
-router.get('/users', getAllUsers);           // 获取用户列表
-router.get('/users/:id', getUserById);        // 获取单个用户
-router.post('/users', createUser);            // 创建用户
-router.put('/users/:id', updateUser);         // 更新用户
-router.delete('/users/:id', deleteUser);      // 删除用户
+router.get("/users", getAllUsers); // 获取用户列表
+router.get("/users/:id", getUserById); // 获取单个用户
+router.post("/users", createUser); // 创建用户
+router.put("/users/:id", updateUser); // 更新用户
+router.delete("/users/:id", deleteUser); // 删除用户
 
 // ❌ 错误 - 不符合RESTful风格
-router.get('/getAllUsers', getAllUsers);
-router.get('/getUserById/:id', getUserById);
-router.post('/createUser', createUser);
+router.get("/getAllUsers", getAllUsers);
+router.get("/getUserById/:id", getUserById);
+router.post("/createUser", createUser);
 ```
 
 #### 4.1.2 路由版本控制
 
 ```typescript
 // ✅ 正确 - 使用版本控制
-router.use('/api/v1/users', userRoutes);
-router.use('/api/v2/users', userRoutesV2);
+router.use("/api/v1/users", userRoutes);
+router.use("/api/v2/users", userRoutesV2);
 
 // ❌ 错误 - 不使用版本控制
-router.use('/users', userRoutes);
+router.use("/users", userRoutes);
 ```
 
 ### 4.2 控制器规范
@@ -301,14 +297,14 @@ class UserController {
       const result = await userService.getAllUsers(req.query);
       return res.status(200).json({
         code: 200,
-        message: '获取用户列表成功',
+        message: "获取用户列表成功",
         data: result,
       });
     } catch (error: any) {
-      logger.error('获取用户列表失败:', error);
+      logger.error("获取用户列表失败:", error);
       return res.status(500).json({
         code: 500,
-        message: error.message || '获取用户列表失败',
+        message: error.message || "获取用户列表失败",
       });
     }
   }
@@ -437,16 +433,16 @@ const poolConfig: PoolConfig = {
   database: config.database.database,
   user: config.database.user,
   password: config.database.password,
-  max: 20,              // 最大连接数
-  min: 5,               // 最小连接数
+  max: 20, // 最大连接数
+  min: 5, // 最小连接数
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
 };
 
 // ❌ 错误 - 不合理的连接池配置
 const poolConfig: PoolConfig = {
-  max: 100,             // 连接数过多
-  min: 0,               // 最小连接数为0
+  max: 100, // 连接数过多
+  min: 0, // 最小连接数为0
   idleTimeoutMillis: 0, // 不设置空闲超时
 };
 ```
@@ -479,31 +475,20 @@ async getUserById(id: string): Promise<User | null> {
 
 ```typescript
 // ✅ 正确 - 使用参数化查询防止SQL注入
-const result = await pool.query(
-  'SELECT * FROM users WHERE id = $1 AND status = $2',
-  [userId, status]
-);
+const result = await pool.query("SELECT * FROM users WHERE id = $1 AND status = $2", [userId, status]);
 
 // ❌ 错误 - 拼接SQL字符串
-const result = await pool.query(
-  `SELECT * FROM users WHERE id = '${userId}' AND status = '${status}'`
-);
+const result = await pool.query(`SELECT * FROM users WHERE id = '${userId}' AND status = '${status}'`);
 ```
 
 #### 5.2.2 查询字段选择
 
 ```typescript
 // ✅ 正确 - 只查询需要的字段
-const result = await pool.query(
-  'SELECT id, name, email FROM users WHERE id = $1',
-  [userId]
-);
+const result = await pool.query("SELECT id, name, email FROM users WHERE id = $1", [userId]);
 
 // ❌ 错误 - 查询所有字段
-const result = await pool.query(
-  'SELECT * FROM users WHERE id = $1',
-  [userId]
-);
+const result = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
 ```
 
 #### 5.2.3 分页查询
@@ -514,13 +499,10 @@ const page = parseInt(req.query.page as string) || 1;
 const limit = parseInt(req.query.limit as string) || 10;
 const offset = (page - 1) * limit;
 
-const result = await pool.query(
-  'SELECT * FROM users ORDER BY created_at DESC LIMIT $1 OFFSET $2',
-  [limit, offset]
-);
+const result = await pool.query("SELECT * FROM users ORDER BY created_at DESC LIMIT $1 OFFSET $2", [limit, offset]);
 
 // ❌ 错误 - 不使用分页查询
-const result = await pool.query('SELECT * FROM users');
+const result = await pool.query("SELECT * FROM users");
 ```
 
 ### 5.3 事务处理
@@ -576,7 +558,7 @@ interface UserAttributes {
   username: string;
   email: string;
   password: string;
-  status: 'active' | 'inactive' | 'locked';
+  status: "active" | "inactive" | "locked";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -586,7 +568,7 @@ class User extends Model<UserAttributes> {
   public username!: string;
   public email!: string;
   public password!: string;
-  public status!: 'active' | 'inactive' | 'locked';
+  public status!: "active" | "inactive" | "locked";
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -613,29 +595,29 @@ User.init({
     allowNull: false,
     unique: true,
     validate: {
-      isEmail: { msg: '邮箱格式不正确' },
-      notEmpty: { msg: '邮箱不能为空' }
-    }
+      isEmail: { msg: "邮箱格式不正确" },
+      notEmpty: { msg: "邮箱不能为空" },
+    },
   },
   password: {
     type: DataTypes.STRING(100),
     allowNull: false,
     validate: {
-      len: { args: [8, 100], msg: '密码长度必须在8-100个字符之间' }
-    }
-  }
+      len: { args: [8, 100], msg: "密码长度必须在8-100个字符之间" },
+    },
+  },
 });
 
 // ❌ 错误 - 不添加验证
 User.init({
   email: {
     type: DataTypes.STRING(100),
-    allowNull: false
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING(100),
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 ```
 
@@ -655,24 +637,24 @@ export class AppError extends Error {
     super(message);
     this.code = code;
     this.status = status;
-    this.name = 'AppError';
+    this.name = "AppError";
   }
 }
 
 export class ValidationError extends AppError {
   constructor(message: string) {
-    super(message, 'VALIDATION_ERROR', 400);
+    super(message, "VALIDATION_ERROR", 400);
   }
 }
 
 export class NotFoundError extends AppError {
   constructor(message: string) {
-    super(message, 'NOT_FOUND', 404);
+    super(message, "NOT_FOUND", 404);
   }
 }
 
 // ❌ 错误 - 不分类错误
-throw new Error('用户不存在');
+throw new Error("用户不存在");
 ```
 
 ### 6.2 错误处理中间件
@@ -683,9 +665,9 @@ export const errorHandler = (err: Error | unknown, req: Request, res: Response, 
   let statusCode = 500;
   let errorResponse = {
     success: false,
-    message: 'Internal Server Error',
-    code: 'INTERNAL_SERVER_ERROR',
-    timestamp: new Date().toISOString()
+    message: "Internal Server Error",
+    code: "INTERNAL_SERVER_ERROR",
+    timestamp: new Date().toISOString(),
   };
 
   if (err instanceof AppError) {
@@ -694,10 +676,10 @@ export const errorHandler = (err: Error | unknown, req: Request, res: Response, 
     errorResponse.code = err.code;
   }
 
-  logger.error('Error occurred', {
+  logger.error("Error occurred", {
     error: err instanceof Error ? err.message : String(err),
     path: req.path,
-    method: req.method
+    method: req.method,
   });
 
   res.status(statusCode).json(errorResponse);
@@ -713,21 +695,22 @@ app.use((err, req, res, next) => {
 
 ```typescript
 // ✅ 正确 - 使用asyncHandler包装异步函数
-export const asyncHandler = <T extends (...args: any[]) => Promise<any>>(
-  fn: T
-): ((...args: Parameters<T>) => void) => {
+export const asyncHandler = <T extends (...args: any[]) => Promise<any>>(fn: T): ((...args: Parameters<T>) => void) => {
   return (...args: Parameters<T>) => {
     fn(...args).catch(args[2]);
   };
 };
 
-router.get('/users/:id', asyncHandler(async (req, res) => {
-  const user = await userService.getUserById(req.params.id);
-  res.json(user);
-}));
+router.get(
+  "/users/:id",
+  asyncHandler(async (req, res) => {
+    const user = await userService.getUserById(req.params.id);
+    res.json(user);
+  })
+);
 
 // ❌ 错误 - 不处理异步错误
-router.get('/users/:id', async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   const user = await userService.getUserById(req.params.id);
   res.json(user);
 });
@@ -737,7 +720,7 @@ router.get('/users/:id', async (req, res) => {
 
 ```typescript
 // ✅ 正确 - 详细的错误日志
-logger.error('Error occurred', {
+logger.error("Error occurred", {
   error: error.message,
   code: errorResponse.code,
   status: statusCode,
@@ -746,7 +729,7 @@ logger.error('Error occurred', {
   ip: req.ip,
   userId: req.user?.id,
   context: req.context,
-  stack: error.stack
+  stack: error.stack,
 });
 
 // ❌ 错误 - 简单的错误日志
@@ -765,19 +748,19 @@ logger.error(error.message);
 // ✅ 正确 - 使用JWT认证
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-  
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: '未提供认证令牌' });
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "未提供认证令牌" });
   }
-  
-  const token = authHeader.split(' ')[1];
-  
+
+  const token = authHeader.split(" ")[1];
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(403).json({ message: '无效的令牌' });
+    return res.status(403).json({ message: "无效的令牌" });
   }
 };
 
@@ -796,21 +779,21 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 export const authorize = (allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
-      return res.status(401).json({ message: '未通过认证' });
+      return res.status(401).json({ message: "未通过认证" });
     }
-    
+
     if (!allowedRoles.includes(req.user.role)) {
-      return res.status(403).json({ message: '没有访问权限' });
+      return res.status(403).json({ message: "没有访问权限" });
     }
-    
+
     next();
   };
 };
 
-router.get('/admin/users', authenticateToken, authorize(['admin']), getAllUsers);
+router.get("/admin/users", authenticateToken, authorize(["admin"]), getAllUsers);
 
 // ❌ 错误 - 不进行角色授权
-router.get('/admin/users', getAllUsers);
+router.get("/admin/users", getAllUsers);
 ```
 
 ### 7.2 输入验证
@@ -850,18 +833,18 @@ async createUser(req: Request, res: Response) {
 
 ```typescript
 // ✅ 正确 - 不记录敏感信息
-logger.info('User login', {
+logger.info("User login", {
   userId: user.id,
   email: user.email,
-  timestamp: new Date()
+  timestamp: new Date(),
 });
 
 // ❌ 错误 - 记录敏感信息
-logger.info('User login', {
+logger.info("User login", {
   userId: user.id,
   email: user.email,
   password: user.password,
-  token: token
+  token: token,
 });
 ```
 
@@ -869,22 +852,17 @@ logger.info('User login', {
 
 ```typescript
 // ✅ 正确 - 使用参数化查询
-const result = await pool.query(
-  'SELECT * FROM users WHERE id = $1',
-  [userId]
-);
+const result = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
 
 // ❌ 错误 - 拼接SQL字符串
-const result = await pool.query(
-  `SELECT * FROM users WHERE id = '${userId}'`
-);
+const result = await pool.query(`SELECT * FROM users WHERE id = '${userId}'`);
 ```
 
 ### 7.5 XSS防护
 
 ```typescript
 // ✅ 正确 - 对输出进行转义
-import xss from 'xss';
+import xss from "xss";
 
 const sanitizedInput = xss(req.body.description);
 
@@ -902,35 +880,32 @@ const description = req.body.description;
 
 ```typescript
 // ✅ 正确 - 在查询中使用索引
-const result = await pool.query(
-  'SELECT * FROM users WHERE email = $1',
-  [email]
-);
+const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
 
 // 确保email字段有索引
 // CREATE INDEX idx_users_email ON users(email);
 
 // ❌ 错误 - 不使用索引
-const result = await pool.query(
-  'SELECT * FROM users WHERE LOWER(email) = LOWER($1)',
-  [email]
-);
+const result = await pool.query("SELECT * FROM users WHERE LOWER(email) = LOWER($1)", [email]);
 ```
 
 #### 8.1.2 避免N+1查询
 
 ```typescript
 // ✅ 正确 - 使用JOIN避免N+1查询
-const result = await pool.query(`
+const result = await pool.query(
+  `
   SELECT u.*, o.id as order_id, o.total as order_total
   FROM users u
   LEFT JOIN orders o ON u.id = o.user_id
   WHERE u.id = $1
-`, [userId]);
+`,
+  [userId]
+);
 
 // ❌ 错误 - N+1查询
-const user = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
-const orders = await pool.query('SELECT * FROM orders WHERE user_id = $1', [userId]);
+const user = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
+const orders = await pool.query("SELECT * FROM orders WHERE user_id = $1", [userId]);
 ```
 
 ### 8.2 缓存使用
@@ -939,21 +914,21 @@ const orders = await pool.query('SELECT * FROM orders WHERE user_id = $1', [user
 // ✅ 正确 - 使用缓存
 async getUserById(id: string): Promise<User | null> {
   const cacheKey = `user:${id}`;
-  
+
   // 先从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await User.findByPk(id);
-  
+
   // 写入缓存
   if (user) {
     await redis.setex(cacheKey, 3600, JSON.stringify(user));
   }
-  
+
   return user;
 }
 
@@ -1017,16 +992,16 @@ const pool = new Pool({
 
 ```typescript
 // ✅ 正确 - 编写单元测试
-describe('UserService', () => {
-  describe('getUserById', () => {
-    it('应该返回用户信息', async () => {
-      const user = await userService.getUserById('123');
+describe("UserService", () => {
+  describe("getUserById", () => {
+    it("应该返回用户信息", async () => {
+      const user = await userService.getUserById("123");
       expect(user).toBeDefined();
-      expect(user.id).toBe('123');
+      expect(user.id).toBe("123");
     });
 
-    it('当用户不存在时应该返回null', async () => {
-      const user = await userService.getUserById('999');
+    it("当用户不存在时应该返回null", async () => {
+      const user = await userService.getUserById("999");
       expect(user).toBeNull();
     });
   });
@@ -1040,18 +1015,16 @@ describe('UserService', () => {
 
 ```typescript
 // ✅ 正确 - 编写集成测试
-describe('User API', () => {
-  it('应该创建用户', async () => {
-    const response = await request(app)
-      .post('/api/v1/users')
-      .send({
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'password123'
-      });
+describe("User API", () => {
+  it("应该创建用户", async () => {
+    const response = await request(app).post("/api/v1/users").send({
+      username: "testuser",
+      email: "test@example.com",
+      password: "password123",
+    });
 
     expect(response.status).toBe(201);
-    expect(response.body.data.username).toBe('testuser');
+    expect(response.body.data.username).toBe("testuser");
   });
 });
 
@@ -1073,42 +1046,42 @@ describe('User API', () => {
 
 ```typescript
 // ✅ 正确 - 正确使用日志级别
-logger.debug('Debug information', { userId });
-logger.info('User logged in', { userId, timestamp });
-logger.warn('Rate limit exceeded', { ip, count });
-logger.error('Database connection failed', { error });
+logger.debug("Debug information", { userId });
+logger.info("User logged in", { userId, timestamp });
+logger.warn("Rate limit exceeded", { ip, count });
+logger.error("Database connection failed", { error });
 
 // ❌ 错误 - 错误使用日志级别
-logger.info('Database connection failed', { error });
-logger.debug('User logged in', { userId });
+logger.info("Database connection failed", { error });
+logger.debug("User logged in", { userId });
 ```
 
 ### 10.2 日志内容
 
 ```typescript
 // ✅ 正确 - 详细的日志信息
-logger.info('User login', {
+logger.info("User login", {
   userId: user.id,
   email: user.email,
   ip: req.ip,
-  userAgent: req.headers['user-agent'],
-  timestamp: new Date()
+  userAgent: req.headers["user-agent"],
+  timestamp: new Date(),
 });
 
 // ❌ 错误 - 简单的日志信息
-logger.info('User login');
+logger.info("User login");
 ```
 
 ### 10.3 结构化日志
 
 ```typescript
 // ✅ 正确 - 使用结构化日志
-logger.info('Order created', {
+logger.info("Order created", {
   orderId: order.id,
   userId: order.userId,
   total: order.total,
   items: order.items.length,
-  timestamp: new Date()
+  timestamp: new Date(),
 });
 
 // ❌ 错误 - 非结构化日志
@@ -1198,15 +1171,15 @@ logger.info(`Order created: ${order.id} by user ${order.userId} with total ${ord
 
 ```typescript
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  logger.error('Error occurred', {
+  logger.error("Error occurred", {
     error: err.message,
     path: req.path,
-    method: req.method
+    method: req.method,
   });
 
   res.status(500).json({
     code: 500,
-    message: 'Internal Server Error'
+    message: "Internal Server Error",
   });
 };
 ```
@@ -1233,7 +1206,7 @@ SELECT id, name, email FROM users WHERE email = $1;
 
 ```typescript
 // ✅ 正确
-const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
+const result = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
 
 // ❌ 错误
 const result = await pool.query(`SELECT * FROM users WHERE id = '${userId}'`);

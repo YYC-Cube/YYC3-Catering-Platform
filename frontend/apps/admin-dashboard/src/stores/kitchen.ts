@@ -13,7 +13,7 @@ export const useKitchenStore = defineStore('kitchen', () => {
     inProgress: 0,
     pending: 0,
     completed: 0,
-    avgPrepTime: 0
+    avgPrepTime: 0,
   });
   const kitchenItems = ref<KitchenStatus[]>([]);
   const loading = ref(false);
@@ -75,10 +75,7 @@ export const useKitchenStore = defineStore('kitchen', () => {
   };
 
   const refreshKitchenData = async () => {
-    await Promise.all([
-      loadKitchenStats(),
-      loadKitchenStatus()
-    ]);
+    await Promise.all([loadKitchenStats(), loadKitchenStatus()]);
   };
 
   return {
@@ -96,6 +93,6 @@ export const useKitchenStore = defineStore('kitchen', () => {
     loadKitchenStats,
     loadKitchenStatus,
     updateItemStatus,
-    refreshKitchenData
+    refreshKitchenData,
   };
 });

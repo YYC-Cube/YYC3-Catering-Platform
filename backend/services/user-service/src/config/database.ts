@@ -20,7 +20,7 @@ const sequelize = new Sequelize({
   password: config.database.password,
   database: config.database.name,
   dialect: config.database.dialect as any,
-  logging: (msg) => logger.debug(msg),
+  logging: msg => logger.debug(msg),
   pool: {
     max: 10,
     min: 0,
@@ -62,8 +62,4 @@ async function syncDatabaseModels() {
 }
 
 // 导出数据库连接和辅助函数
-export {
-  sequelize,
-  testDatabaseConnection,
-  syncDatabaseModels,
-};
+export { sequelize, testDatabaseConnection, syncDatabaseModels };

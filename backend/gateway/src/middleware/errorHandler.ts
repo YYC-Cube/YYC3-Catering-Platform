@@ -60,7 +60,7 @@ export const errorHandler = (err: Error | unknown, req: Request, res: Response, 
     success: false,
     message: 'Internal Server Error',
     code: 'INTERNAL_SERVER_ERROR',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
   let statusCode = 500;
@@ -72,7 +72,7 @@ export const errorHandler = (err: Error | unknown, req: Request, res: Response, 
     errorResponse = {
       ...errorResponse,
       message: error.message,
-      code: error.code
+      code: error.code,
     };
   } else if (error instanceof Error) {
     // 处理原生错误
@@ -80,7 +80,7 @@ export const errorHandler = (err: Error | unknown, req: Request, res: Response, 
     errorResponse = {
       ...errorResponse,
       message: error.message || 'Internal Server Error',
-      code: 'INTERNAL_SERVER_ERROR'
+      code: 'INTERNAL_SERVER_ERROR',
     };
   } else {
     // 处理其他类型错误
@@ -88,7 +88,7 @@ export const errorHandler = (err: Error | unknown, req: Request, res: Response, 
     errorResponse = {
       ...errorResponse,
       message: String(err) || 'Internal Server Error',
-      code: 'INTERNAL_SERVER_ERROR'
+      code: 'INTERNAL_SERVER_ERROR',
     };
   }
 
@@ -109,7 +109,7 @@ export const errorHandler = (err: Error | unknown, req: Request, res: Response, 
     email: req.user?.email,
     roles: req.user?.roles,
     context: req.context,
-    stack: error.stack
+    stack: error.stack,
   });
 
   // 发送错误响应
@@ -119,9 +119,7 @@ export const errorHandler = (err: Error | unknown, req: Request, res: Response, 
 /**
  * 异步错误包装器
  */
-export const asyncHandler = <T extends (...args: any[]) => Promise<any>>(
-  fn: T
-): ((...args: Parameters<T>) => void) => {
+export const asyncHandler = <T extends (...args: any[]) => Promise<any>>(fn: T): ((...args: Parameters<T>) => void) => {
   return (...args: Parameters<T>) => {
     fn(...args).catch(args[2]); // args[2] 是 next 函数
   };

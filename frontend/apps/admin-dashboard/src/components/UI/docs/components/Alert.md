@@ -14,7 +14,7 @@
 使用 `variant` 属性来设置警告的类型。
 
 ```tsx
-import { Alert } from '@/components/UI'
+import { Alert } from "@/components/UI";
 
 export default function AlertBasic() {
   return (
@@ -24,7 +24,7 @@ export default function AlertBasic() {
       <Alert variant="warning">这是一条警告提示</Alert>
       <Alert variant="danger">这是一条错误提示</Alert>
     </div>
-  )
+  );
 }
 ```
 
@@ -33,14 +33,10 @@ export default function AlertBasic() {
 使用 `closable` 属性来显示关闭按钮。
 
 ```tsx
-import { Alert } from '@/components/UI'
+import { Alert } from "@/components/UI";
 
 export default function AlertClosable() {
-  return (
-    <Alert closable>
-      这是一条可关闭的警告提示
-    </Alert>
-  )
+  return <Alert closable>这是一条可关闭的警告提示</Alert>;
 }
 ```
 
@@ -49,7 +45,7 @@ export default function AlertClosable() {
 使用 `showIcon` 属性来显示图标。
 
 ```tsx
-import { Alert } from '@/components/UI'
+import { Alert } from "@/components/UI";
 
 export default function AlertWithIcon() {
   return (
@@ -67,7 +63,7 @@ export default function AlertWithIcon() {
         这是一条带图标的错误提示
       </Alert>
     </div>
-  )
+  );
 }
 ```
 
@@ -76,14 +72,14 @@ export default function AlertWithIcon() {
 使用 `banner` 属性来显示横幅模式。
 
 ```tsx
-import { Alert } from '@/components/UI'
+import { Alert } from "@/components/UI";
 
 export default function AlertBanner() {
   return (
     <Alert banner showIcon>
       这是一条横幅警告提示
     </Alert>
-  )
+  );
 }
 ```
 
@@ -92,17 +88,15 @@ export default function AlertBanner() {
 使用 `AlertTitle` 和 `AlertDescription` 组件来组合使用。
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription } from '@/components/UI'
+import { Alert, AlertTitle, AlertDescription } from "@/components/UI";
 
 export default function AlertCombined() {
   return (
     <Alert variant="warning" showIcon>
       <AlertTitle>警告标题</AlertTitle>
-      <AlertDescription>
-        这是一条警告提示的详细描述内容
-      </AlertDescription>
+      <AlertDescription>这是一条警告提示的详细描述内容</AlertDescription>
     </Alert>
-  )
+  );
 }
 ```
 
@@ -110,33 +104,33 @@ export default function AlertCombined() {
 
 ### Alert Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-|------|------|------|--------|--------|
-| variant | 警告类型 | `string` | `default` / `info` / `success` / `warning` / `danger` | `default` |
-| showIcon | 是否显示图标 | `boolean` | - | `false` |
-| closable | 是否可关闭 | `boolean` | - | `false` |
-| banner | 是否横幅模式 | `boolean` | - | `false` |
-| onClose | 关闭时的回调 | `Function` | - | - |
-| className | 自定义类名 | `string` | - | - |
+| 参数      | 说明         | 类型       | 可选值                                                | 默认值    |
+| --------- | ------------ | ---------- | ----------------------------------------------------- | --------- |
+| variant   | 警告类型     | `string`   | `default` / `info` / `success` / `warning` / `danger` | `default` |
+| showIcon  | 是否显示图标 | `boolean`  | -                                                     | `false`   |
+| closable  | 是否可关闭   | `boolean`  | -                                                     | `false`   |
+| banner    | 是否横幅模式 | `boolean`  | -                                                     | `false`   |
+| onClose   | 关闭时的回调 | `Function` | -                                                     | -         |
+| className | 自定义类名   | `string`   | -                                                     | -         |
 
 ### Alert Slots
 
-| 插槽名 | 说明 |
-|--------|------|
-| default | 默认内容 |
-| icon | 自定义图标 |
+| 插槽名  | 说明       |
+| ------- | ---------- |
+| default | 默认内容   |
+| icon    | 自定义图标 |
 
 ### AlertTitle Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ### AlertDescription Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ## 样式定制
 
@@ -174,9 +168,7 @@ export default function AlertCombined() {
 ```tsx
 <Alert variant="danger" showIcon>
   <AlertTitle>表单验证失败</AlertTitle>
-  <AlertDescription>
-    请检查表单中的错误信息并重新提交
-  </AlertDescription>
+  <AlertDescription>请检查表单中的错误信息并重新提交</AlertDescription>
 </Alert>
 ```
 
@@ -185,9 +177,7 @@ export default function AlertCombined() {
 ```tsx
 <Alert variant="success" showIcon closable>
   <AlertTitle>操作成功</AlertTitle>
-  <AlertDescription>
-    您的数据已成功保存
-  </AlertDescription>
+  <AlertDescription>您的数据已成功保存</AlertDescription>
 </Alert>
 ```
 
@@ -196,9 +186,7 @@ export default function AlertCombined() {
 ```tsx
 <Alert variant="warning" banner showIcon>
   <AlertTitle>重要通知</AlertTitle>
-  <AlertDescription>
-    系统将于今晚进行维护，请提前保存您的工作
-  </AlertDescription>
+  <AlertDescription>系统将于今晚进行维护，请提前保存您的工作</AlertDescription>
 </Alert>
 ```
 

@@ -14,13 +14,13 @@ import {
   createRequestIdMiddleware,
   createLoggingMiddleware,
   createResponseTimeMiddleware,
-  createHealthMiddleware
+  createHealthMiddleware,
 } from '../../../middleware/index';
 
 vi.mock('../../../config/database', () => ({
   dbManager: {
-    healthCheck: vi.fn()
-  }
+    healthCheck: vi.fn(),
+  },
 }));
 
 describe('中间件入口文件测试', () => {
@@ -74,10 +74,13 @@ describe('中间件入口文件测试', () => {
 
       errorMiddleware(error, request);
 
-      expect(consoleSpy).toHaveBeenCalledWith('中间件错误:', expect.objectContaining({
-        error: '测试错误',
-        url: 'http://example.com/'
-      }));
+      expect(consoleSpy).toHaveBeenCalledWith(
+        '中间件错误:',
+        expect.objectContaining({
+          error: '测试错误',
+          url: 'http://example.com/',
+        })
+      );
     });
   });
 
@@ -90,7 +93,7 @@ describe('中间件入口文件测试', () => {
     it('应该使用请求头中的x-request-id', () => {
       const requestIdMiddleware = createRequestIdMiddleware();
       const request = new Request('http://example.com', {
-        headers: { 'x-request-id': 'custom-request-id' }
+        headers: { 'x-request-id': 'custom-request-id' },
       });
 
       const result = requestIdMiddleware(request);
@@ -131,14 +134,12 @@ describe('中间件入口文件测试', () => {
       const loggingMiddleware = createLoggingMiddleware();
       const request = new Request('http://example.com/api/test', {
         method: 'POST',
-        headers: { 'user-agent': 'TestAgent/1.0' }
+        headers: { 'user-agent': 'TestAgent/1.0' },
       });
 
       loggingMiddleware(request);
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('POST /api/test')
-      );
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('POST /api/test'));
     });
 
     it('应该包含请求ID在日志中', () => {
@@ -149,37 +150,31 @@ describe('中间件入口文件测试', () => {
 
       loggingMiddleware(request, requestId);
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining(requestId)
-      );
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining(requestId));
     });
 
     it('应该从x-forwarded-for头获取IP', () => {
       const consoleSpy = vi.spyOn(console, 'log');
       const loggingMiddleware = createLoggingMiddleware();
       const request = new Request('http://example.com/api/test', {
-        headers: { 'x-forwarded-for': '192.168.1.1' }
+        headers: { 'x-forwarded-for': '192.168.1.1' },
       });
 
       loggingMiddleware(request);
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('192.168.1.1')
-      );
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('192.168.1.1'));
     });
 
     it('应该从x-real-ip头获取IP', () => {
       const consoleSpy = vi.spyOn(console, 'log');
       const loggingMiddleware = createLoggingMiddleware();
       const request = new Request('http://example.com/api/test', {
-        headers: { 'x-real-ip': '192.168.1.2' }
+        headers: { 'x-real-ip': '192.168.1.2' },
       });
 
       loggingMiddleware(request);
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('192.168.1.2')
-      );
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('192.168.1.2'));
     });
 
     it('应该使用默认IP当没有IP头时', () => {
@@ -189,9 +184,7 @@ describe('中间件入口文件测试', () => {
 
       loggingMiddleware(request);
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('127.0.0.1')
-      );
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('127.0.0.1'));
     });
 
     it('应该使用Unknown当没有user-agent时', () => {
@@ -201,9 +194,7 @@ describe('中间件入口文件测试', () => {
 
       loggingMiddleware(request);
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Unknown')
-      );
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Unknown'));
     });
   });
 
@@ -239,7 +230,7 @@ describe('中间件入口文件测试', () => {
     beforeEach(() => {
       vi.clearAllMocks();
       mockDbManager = {
-        healthCheck: vi.fn()
+        healthCheck: vi.fn(),
       };
     });
 
@@ -345,7 +336,7 @@ describe('中间件入口文件测试', () => {
 
       const request = new Request('http://example.com/api/test', {
         method: 'GET',
-        headers: { 'user-agent': 'TestAgent/1.0' }
+        headers: { 'user-agent': 'TestAgent/1.0' },
       });
 
       const requestId = requestIdMiddleware(request);
@@ -358,7 +349,7 @@ describe('中间件入口文件测试', () => {
 
     it('应该能够处理完整的请求流程', async () => {
       const localMockDbManager = {
-        healthCheck: vi.fn().mockResolvedValue(true)
+        healthCheck: vi.fn().mockResolvedValue(true),
       };
 
       const requestIdMiddleware = createRequestIdMiddleware();
@@ -367,7 +358,7 @@ describe('中间件入口文件测试', () => {
 
       const request = new Request('http://example.com/api/test', {
         method: 'GET',
-        headers: { 'user-agent': 'TestAgent/1.0' }
+        headers: { 'user-agent': 'TestAgent/1.0' },
       });
 
       const requestId = requestIdMiddleware(request);

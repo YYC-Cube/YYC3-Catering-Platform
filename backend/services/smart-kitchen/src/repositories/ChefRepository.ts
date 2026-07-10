@@ -8,7 +8,8 @@
 
 import { Chef as ChefModel, ChefSpecialization } from '../models/Chef';
 
-export interface ChefEntity { // 重命名接口以避免与模型类冲突
+export interface ChefEntity {
+  // 重命名接口以避免与模型类冲突
   id: string;
   name: string;
   skillLevel: number; // 1-5星
@@ -38,7 +39,7 @@ export class ChefRepository {
         experienceYears: 10,
         restaurantId: restaurantId,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         id: 'chef-2',
@@ -51,8 +52,8 @@ export class ChefRepository {
         experienceYears: 7,
         restaurantId: restaurantId,
         createdAt: new Date(),
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      },
     ];
   }
 
@@ -70,7 +71,7 @@ export class ChefRepository {
       experienceYears: 5,
       restaurantId: 'rest-1',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
   }
 
@@ -89,7 +90,7 @@ export class ChefRepository {
         experienceYears: 10,
         restaurantId: restaurantId,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         id: 'chef-2',
@@ -102,7 +103,7 @@ export class ChefRepository {
         experienceYears: 7,
         restaurantId: restaurantId,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         id: 'chef-3',
@@ -115,8 +116,8 @@ export class ChefRepository {
         experienceYears: 3,
         restaurantId: restaurantId,
         createdAt: new Date(),
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      },
     ];
   }
 

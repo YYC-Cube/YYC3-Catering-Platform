@@ -173,22 +173,10 @@ export class DevOpsAI {
 
   private async getSpecializedTools(role: string): Promise<AITool[]> {
     const toolsMap: Record<string, AITool[]> = {
-      devops_engineer: [
-        this.createDeploymentTool(),
-        this.createAutomationTool(),
-      ],
-      system_analyst: [
-        this.createLogAnalysisTool(),
-        this.createTroubleshootingTool(),
-      ],
-      it_manager: [
-        this.createBudgetPlanningTool(),
-        this.createVendorManagementTool(),
-      ],
-      security_analyst: [
-        this.createSecurityScanTool(),
-        this.createVulnerabilityAssessmentTool(),
-      ],
+      devops_engineer: [this.createDeploymentTool(), this.createAutomationTool()],
+      system_analyst: [this.createLogAnalysisTool(), this.createTroubleshootingTool()],
+      it_manager: [this.createBudgetPlanningTool(), this.createVendorManagementTool()],
+      security_analyst: [this.createSecurityScanTool(), this.createVulnerabilityAssessmentTool()],
     };
 
     return toolsMap[role] || [];

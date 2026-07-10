@@ -20,7 +20,7 @@ import { logger } from '../config/logger';
 const upload = multer({
   dest: 'uploads/',
   limits: {
-    fileSize: 10 * 1024 * 1024 // 10MB
+    fileSize: 10 * 1024 * 1024, // 10MB
   },
   fileFilter: (req, file, cb) => {
     // 允许的文件类型
@@ -30,7 +30,7 @@ const upload = multer({
     } else {
       cb(new Error('Unsupported file type'));
     }
-  }
+  },
 });
 
 export class AIAssistantController {
@@ -49,7 +49,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Message is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -59,8 +59,8 @@ export class AIAssistantController {
         metadata: {
           userId,
           platform: 'web',
-          timestamp: new Date()
-        }
+          timestamp: new Date(),
+        },
       };
 
       const response = await this.aiService.processTextMessage(aiRequest);
@@ -71,11 +71,10 @@ export class AIAssistantController {
         data: response,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Send message error:', error);
       res.status(500).json({
@@ -83,7 +82,7 @@ export class AIAssistantController {
         message: 'Internal server error',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -101,14 +100,14 @@ export class AIAssistantController {
           code: 400,
           message: 'Audio file is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
       const response = await this.aiService.processVoiceInput(
         audioFile.buffer,
         sessionId || this.generateSessionId(),
-        language
+        language,
       );
 
       const apiResponse: ApiResponse = {
@@ -117,11 +116,10 @@ export class AIAssistantController {
         data: response,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Process voice error:', error);
       res.status(500).json({
@@ -129,7 +127,7 @@ export class AIAssistantController {
         message: 'Voice processing failed',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -146,7 +144,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Text is required for voice generation',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -154,16 +152,15 @@ export class AIAssistantController {
         text,
         sessionId || this.generateSessionId(),
         language,
-        voice
+        voice,
       );
 
       res.set({
         'Content-Type': 'audio/mpeg',
-        'Content-Length': audioBuffer.length
+        'Content-Length': audioBuffer.length,
       });
 
       res.send(audioBuffer);
-
     } catch (error) {
       logger.error('Generate voice error:', error);
       res.status(500).json({
@@ -171,7 +168,7 @@ export class AIAssistantController {
         message: 'Voice generation failed',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -189,14 +186,14 @@ export class AIAssistantController {
           code: 400,
           message: 'Image file is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
       const response = await this.aiService.processImageAnalysis(
         imageFile.buffer,
         sessionId || this.generateSessionId(),
-        analysisType
+        analysisType,
       );
 
       const apiResponse: ApiResponse = {
@@ -205,11 +202,10 @@ export class AIAssistantController {
         data: response,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Analyze image error:', error);
       res.status(500).json({
@@ -217,7 +213,7 @@ export class AIAssistantController {
         message: 'Image analysis failed',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -229,14 +225,11 @@ export class AIAssistantController {
     try {
       const { sessionId, context } = req.body;
 
-      const response = await this.aiService.getRecommendations(
-        sessionId || this.generateSessionId(),
-        {
-          ...context,
-          customerProfile: req.user,
-          restaurantContext: req.tenant
-        }
-      );
+      const response = await this.aiService.getRecommendations(sessionId || this.generateSessionId(), {
+        ...context,
+        customerProfile: req.user,
+        restaurantContext: req.tenant,
+      });
 
       const apiResponse: ApiResponse = {
         code: 200,
@@ -244,11 +237,10 @@ export class AIAssistantController {
         data: response,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get recommendations error:', error);
       res.status(500).json({
@@ -256,7 +248,7 @@ export class AIAssistantController {
         message: 'Failed to generate recommendations',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -273,7 +265,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Session ID is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -285,11 +277,10 @@ export class AIAssistantController {
         data: { history },
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get conversation history error:', error);
       res.status(500).json({
@@ -297,7 +288,7 @@ export class AIAssistantController {
         message: 'Failed to retrieve conversation history',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -314,7 +305,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Session ID is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -326,11 +317,10 @@ export class AIAssistantController {
         data: null,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Clear conversation history error:', error);
       res.status(500).json({
@@ -338,7 +328,7 @@ export class AIAssistantController {
         message: 'Failed to clear conversation history',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -355,7 +345,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Session ID is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -367,11 +357,10 @@ export class AIAssistantController {
         data: stats,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get session stats error:', error);
       res.status(500).json({
@@ -379,7 +368,7 @@ export class AIAssistantController {
         message: 'Failed to retrieve session statistics',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -397,11 +386,10 @@ export class AIAssistantController {
         data: status,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get AI assistant status error:', error);
       res.status(500).json({
@@ -409,7 +397,7 @@ export class AIAssistantController {
         message: 'Failed to retrieve AI assistant status',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -425,7 +413,7 @@ export class AIAssistantController {
           code: 403,
           message: 'Insufficient permissions',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -438,11 +426,10 @@ export class AIAssistantController {
         data: null,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Update AI assistant config error:', error);
       res.status(500).json({
@@ -450,7 +437,7 @@ export class AIAssistantController {
         message: 'Failed to update AI assistant configuration',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -469,7 +456,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Restaurant ID is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -477,7 +464,7 @@ export class AIAssistantController {
       const timeRange = context?.timeRange || 'weekly';
       const dateRange = context?.dateRange || {
         startDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        endDate: new Date().toISOString().split('T')[0]
+        endDate: new Date().toISOString().split('T')[0],
       };
       const includePromotions = context?.factors?.promotions !== false;
       const historicalData = context?.historicalData;
@@ -490,7 +477,7 @@ export class AIAssistantController {
         dateRange,
         includePromotions,
         historicalData,
-        factors
+        factors,
       });
 
       const apiResponse: ApiResponse = {
@@ -499,11 +486,10 @@ export class AIAssistantController {
         data: forecast,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get sales forecast error:', error);
       res.status(500).json({
@@ -511,7 +497,7 @@ export class AIAssistantController {
         message: 'Failed to retrieve sales forecast',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -529,7 +515,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Restaurant ID is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -543,7 +529,7 @@ export class AIAssistantController {
         restaurantId,
         currentInventory,
         salesData,
-        supplierInfo
+        supplierInfo,
       });
 
       const apiResponse: ApiResponse = {
@@ -552,11 +538,10 @@ export class AIAssistantController {
         data: optimization,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get inventory optimization error:', error);
       res.status(500).json({
@@ -564,7 +549,7 @@ export class AIAssistantController {
         message: 'Failed to retrieve inventory optimization',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -582,7 +567,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Restaurant ID is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -594,7 +579,7 @@ export class AIAssistantController {
       const analysis = await this.aiService.getCustomerBehaviorAnalysis(sessionId, {
         restaurantId,
         customerData,
-        timeRange
+        timeRange,
       });
 
       const apiResponse: ApiResponse = {
@@ -603,11 +588,10 @@ export class AIAssistantController {
         data: analysis,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get customer behavior analysis error:', error);
       res.status(500).json({
@@ -615,7 +599,7 @@ export class AIAssistantController {
         message: 'Failed to retrieve customer behavior analysis',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -633,7 +617,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Restaurant ID is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -649,7 +633,7 @@ export class AIAssistantController {
         menuItems,
         salesData,
         season,
-        dietaryTrends
+        dietaryTrends,
       });
 
       const apiResponse: ApiResponse = {
@@ -658,11 +642,10 @@ export class AIAssistantController {
         data: optimization,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get menu optimization error:', error);
       res.status(500).json({
@@ -670,7 +653,7 @@ export class AIAssistantController {
         message: 'Failed to retrieve menu optimization',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -688,7 +671,7 @@ export class AIAssistantController {
           code: 400,
           message: 'Restaurant ID is required',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
 
@@ -700,7 +683,7 @@ export class AIAssistantController {
       const efficiency = await this.aiService.getOperationalEfficiency(sessionId, {
         restaurantId,
         operationalData,
-        goals
+        goals,
       });
 
       const apiResponse: ApiResponse = {
@@ -709,11 +692,10 @@ export class AIAssistantController {
         data: efficiency,
         timestamp: Date.now(),
         requestId: req.id,
-        success: true
+        success: true,
       };
 
       res.json(apiResponse);
-
     } catch (error) {
       logger.error('Get operational efficiency error:', error);
       res.status(500).json({
@@ -721,7 +703,7 @@ export class AIAssistantController {
         message: 'Failed to retrieve operational efficiency',
         timestamp: Date.now(),
         requestId: req.id,
-        success: false
+        success: false,
       });
     }
   }
@@ -732,7 +714,7 @@ export class AIAssistantController {
   static getUploadMiddleware() {
     return [
       upload.single('audio'), // 语音文件上传
-      upload.single('image')  // 图像文件上传
+      upload.single('image'), // 图像文件上传
     ];
   }
 
@@ -767,11 +749,11 @@ export const aiAssistantRoutes = {
   // 系统接口
   'GET /ai/status': 'getStatus',
   'PUT /ai/config': 'updateConfig',
-  
+
   // 经营决策支持接口
   'POST /ai/analytics/sales-forecast': 'getSalesForecast',
   'POST /ai/analytics/inventory-optimization': 'getInventoryOptimization',
   'POST /ai/analytics/customer-behavior': 'getCustomerBehaviorAnalysis',
   'POST /ai/analytics/menu-optimization': 'getMenuOptimization',
-  'POST /ai/analytics/operational-efficiency': 'getOperationalEfficiency'
+  'POST /ai/analytics/operational-efficiency': 'getOperationalEfficiency',
 };

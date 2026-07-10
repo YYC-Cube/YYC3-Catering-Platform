@@ -11,14 +11,14 @@
 ### 基础用法
 
 ```tsx
-import { List, ListItem, ListItemMeta } from '@/components/UI'
+import { List, ListItem, ListItemMeta } from "@/components/UI";
 
 export default function ListBasic() {
   const data = [
-    { title: '项目一', description: '项目一的描述' },
-    { title: '项目二', description: '项目二的描述' },
-    { title: '项目三', description: '项目三的描述' },
-  ]
+    { title: "项目一", description: "项目一的描述" },
+    { title: "项目二", description: "项目二的描述" },
+    { title: "项目三", description: "项目三的描述" },
+  ];
 
   return (
     <List
@@ -29,20 +29,20 @@ export default function ListBasic() {
         </ListItem>
       )}
     />
-  )
+  );
 }
 ```
 
 ### 带边框
 
 ```tsx
-import { List, ListItem, ListItemMeta } from '@/components/UI'
+import { List, ListItem, ListItemMeta } from "@/components/UI";
 
 export default function ListBordered() {
   const data = [
-    { title: '项目一', description: '项目一的描述' },
-    { title: '项目二', description: '项目二的描述' },
-  ]
+    { title: "项目一", description: "项目一的描述" },
+    { title: "项目二", description: "项目二的描述" },
+  ];
 
   return (
     <List
@@ -54,20 +54,20 @@ export default function ListBordered() {
         </ListItem>
       )}
     />
-  )
+  );
 }
 ```
 
 ### 分割线
 
 ```tsx
-import { List, ListItem, ListItemMeta } from '@/components/UI'
+import { List, ListItem, ListItemMeta } from "@/components/UI";
 
 export default function ListSplit() {
   const data = [
-    { title: '项目一', description: '项目一的描述' },
-    { title: '项目二', description: '项目二的描述' },
-  ]
+    { title: "项目一", description: "项目一的描述" },
+    { title: "项目二", description: "项目二的描述" },
+  ];
 
   return (
     <List
@@ -79,89 +79,85 @@ export default function ListSplit() {
         </ListItem>
       )}
     />
-  )
+  );
 }
 ```
 
 ### 带头像
 
 ```tsx
-import { List, ListItem, ListItemMeta } from '@/components/UI'
+import { List, ListItem, ListItemMeta } from "@/components/UI";
 
 export default function ListWithAvatar() {
   const data = [
-    { 
-      title: '张三', 
-      description: '前端开发工程师',
-      avatar: 'https://i.pravatar.cc/150?img=1'
+    {
+      title: "张三",
+      description: "前端开发工程师",
+      avatar: "https://i.pravatar.cc/150?img=1",
     },
-    { 
-      title: '李四', 
-      description: '后端开发工程师',
-      avatar: 'https://i.pravatar.cc/150?img=2'
+    {
+      title: "李四",
+      description: "后端开发工程师",
+      avatar: "https://i.pravatar.cc/150?img=2",
     },
-  ]
+  ];
 
   return (
     <List
       data={data}
       renderItem={(item: any) => (
         <ListItem>
-          <ListItemMeta 
-            title={item.title} 
-            description={item.description}
-            avatar={item.avatar}
-          />
+          <ListItemMeta title={item.title} description={item.description} avatar={item.avatar} />
         </ListItem>
       )}
     />
-  )
+  );
 }
 ```
 
 ### 操作按钮
 
 ```tsx
-import { List, ListItem, ListItemMeta } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { List, ListItem, ListItemMeta } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function ListWithActions() {
   const data = [
-    { title: '项目一', description: '项目一的描述' },
-    { title: '项目二', description: '项目二的描述' },
-  ]
+    { title: "项目一", description: "项目一的描述" },
+    { title: "项目二", description: "项目二的描述" },
+  ];
 
   return (
     <List
       data={data}
       renderItem={(item: any) => (
-        <ListItem actions={['编辑', '删除']}>
+        <ListItem actions={["编辑", "删除"]}>
           <ListItemMeta title={item.title} description={item.description} />
         </ListItem>
       )}
     />
-  )
+  );
 }
 ```
 
 ### 分页列表
 
 ```tsx
-import { List, ListItem, ListItemMeta } from '@/components/UI'
-import { Pagination } from '@/components/UI'
-import { ref } from 'vue'
+import { List, ListItem, ListItemMeta } from "@/components/UI";
+import { Pagination } from "@/components/UI";
+import { ref } from "vue";
 
 export default function ListWithPagination() {
-  const current = ref(1)
+  const current = ref(1);
   const data = Array.from({ length: 50 }, (_, i) => ({
     title: `项目 ${i + 1}`,
-    description: `项目 ${i + 1} 的描述`
-  }))
+    description: `项目 ${i + 1} 的描述`,
+  }));
 
-  const pageSize = 10
-  const startIndex = (current.value - 1) * pageSize
-  const endIndex = startIndex + pageSize
-  const visibleData = data.slice(startIndex, endIndex)
+  const pageSize = 10;
+  const startIndex = (current.value - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const visibleData = data.slice(startIndex, endIndex);
 
   return (
     <div>
@@ -173,20 +169,16 @@ export default function ListWithPagination() {
           </ListItem>
         )}
       />
-      <Pagination
-        v-model={current.value}
-        total={data.length}
-        pageSize={pageSize}
-      />
+      <Pagination v-model={current.value} total={data.length} pageSize={pageSize} />
     </div>
-  )
+  );
 }
 ```
 
 ### 加载状态
 
 ```tsx
-import { List, ListItem, ListItemMeta } from '@/components/UI'
+import { List, ListItem, ListItemMeta } from "@/components/UI";
 
 export default function ListLoading() {
   return (
@@ -199,14 +191,14 @@ export default function ListLoading() {
         </ListItem>
       )}
     />
-  )
+  );
 }
 ```
 
 ### 空状态
 
 ```tsx
-import { List, ListItem, ListItemMeta } from '@/components/UI'
+import { List, ListItem, ListItemMeta } from "@/components/UI";
 
 export default function ListEmpty() {
   return (
@@ -218,7 +210,7 @@ export default function ListEmpty() {
         </ListItem>
       )}
     />
-  )
+  );
 }
 ```
 
@@ -226,34 +218,34 @@ export default function ListEmpty() {
 
 ### List Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| data | 数据源 | `any[]` | - |
-| renderItem | 自定义渲染项 | `Function` | - |
-| bordered | 是否显示边框 | `boolean` | `false` |
-| split | 是否显示分割线 | `boolean` | `false` |
-| loading | 是否加载中 | `boolean` | `false` |
-| pagination | 分页配置 | `PaginationProps` | - |
-| onSelect | 选择回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数       | 说明           | 类型              | 默认值  |
+| ---------- | -------------- | ----------------- | ------- |
+| data       | 数据源         | `any[]`           | -       |
+| renderItem | 自定义渲染项   | `Function`        | -       |
+| bordered   | 是否显示边框   | `boolean`         | `false` |
+| split      | 是否显示分割线 | `boolean`         | `false` |
+| loading    | 是否加载中     | `boolean`         | `false` |
+| pagination | 分页配置       | `PaginationProps` | -       |
+| onSelect   | 选择回调       | `Function`        | -       |
+| className  | 自定义类名     | `string`          | -       |
 
 ### ListItem Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| actions | 操作按钮 | `string[]` | - |
-| disabled | 是否禁用 | `boolean` | `false` |
-| selected | 是否选中 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型       | 默认值  |
+| --------- | ---------- | ---------- | ------- |
+| actions   | 操作按钮   | `string[]` | -       |
+| disabled  | 是否禁用   | `boolean`  | `false` |
+| selected  | 是否选中   | `boolean`  | `false` |
+| className | 自定义类名 | `string`   | -       |
 
 ### ListItemMeta Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| title | 标题 | `string` | - |
-| description | 描述 | `string` | - |
-| avatar | 头像 | `string` | - |
-| className | 自定义类名 | `string` | - |
+| 参数        | 说明       | 类型     | 默认值 |
+| ----------- | ---------- | -------- | ------ |
+| title       | 标题       | `string` | -      |
+| description | 描述       | `string` | -      |
+| avatar      | 头像       | `string` | -      |
+| className   | 自定义类名 | `string` | -      |
 
 ## 样式定制
 
@@ -294,15 +286,15 @@ export default function ListEmpty() {
 
 ```tsx
 const users = [
-  { 
+  {
     id: 1,
-    name: '张三', 
+    name: '张三',
     description: '前端开发工程师',
     avatar: 'https://i.pravatar.cc/150?img=1'
   },
-  { 
+  {
     id: 2,
-    name: '李四', 
+    name: '李四',
     description: '后端开发工程师',
     avatar: 'https://i.pravatar.cc/150?img=2'
   },
@@ -312,8 +304,8 @@ const users = [
   data={users}
   renderItem={(user) => (
     <ListItem>
-      <ListItemMeta 
-        title={user.name} 
+      <ListItemMeta
+        title={user.name}
         description={user.description}
         avatar={user.avatar}
       />
@@ -326,15 +318,15 @@ const users = [
 
 ```tsx
 const articles = [
-  { 
+  {
     id: 1,
-    title: 'Vue 3 新特性介绍', 
+    title: 'Vue 3 新特性介绍',
     description: 'Vue 3 带来了许多新特性...',
     date: '2024-01-01'
   },
-  { 
+  {
     id: 2,
-    title: 'TypeScript 最佳实践', 
+    title: 'TypeScript 最佳实践',
     description: 'TypeScript 是 JavaScript 的超集...',
     date: '2024-01-02'
   },

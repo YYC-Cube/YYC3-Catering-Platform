@@ -231,7 +231,7 @@ export class DatabaseMigration {
         estimated_delivery_time TIMESTAMP WITH TIME ZONE,
         actual_delivery_time TIMESTAMP WITH TIME ZONE,
         status VARCHAR(20) DEFAULT 'assigned' -- assigned, picked_up, delivering, delivered
-      )`
+      )`,
     ];
 
     for (const sql of tables) {
@@ -285,44 +285,44 @@ export class DatabaseMigration {
       'CREATE INDEX IF NOT EXISTS idx_delivery_personnel_phone ON delivery_personnel(phone)',
       'CREATE INDEX IF NOT EXISTS idx_delivery_personnel_status ON delivery_personnel(status)',
       'CREATE INDEX IF NOT EXISTS idx_delivery_personnel_location ON delivery_personnel USING GIST(current_location)',
-      
+
       // 性能优化索引 - 2025-01-09
-      
+
       // 1. 菜品分类表索引优化
       'CREATE INDEX IF NOT EXISTS idx_menu_categories_restaurant_id ON menu_categories(restaurant_id)',
       'CREATE INDEX IF NOT EXISTS idx_menu_categories_sort_order ON menu_categories(sort_order)',
       'CREATE INDEX IF NOT EXISTS idx_menu_categories_is_active ON menu_categories(is_active)',
-      
+
       // 2. 菜品表索引优化（补充）
       'CREATE INDEX IF NOT EXISTS idx_menu_items_updated_at ON menu_items(updated_at)',
       'CREATE INDEX IF NOT EXISTS idx_menu_items_status_restaurant_id ON menu_items(status, restaurant_id)',
-      
+
       // 3. 订单表索引优化（补充）
       'CREATE INDEX IF NOT EXISTS idx_orders_updated_at ON orders(updated_at)',
       'CREATE INDEX IF NOT EXISTS idx_orders_status_payment_status ON orders(status, payment_status)',
-      
+
       // 4. 订单评价表索引优化
       'CREATE INDEX IF NOT EXISTS idx_order_reviews_order_id ON order_reviews(order_id)',
       'CREATE INDEX IF NOT EXISTS idx_order_reviews_customer_id ON order_reviews(customer_id)',
       'CREATE INDEX IF NOT EXISTS idx_order_reviews_created_at ON order_reviews(created_at)',
-      
+
       // 5. 订单操作日志表索引优化
       'CREATE INDEX IF NOT EXISTS idx_order_logs_order_id ON order_logs(order_id)',
       'CREATE INDEX IF NOT EXISTS idx_order_logs_action ON order_logs(action)',
       'CREATE INDEX IF NOT EXISTS idx_order_logs_timestamp ON order_logs(timestamp)',
-      
+
       // 6. 配送分配表索引优化
       'CREATE INDEX IF NOT EXISTS idx_order_delivery_assignments_order_id ON order_delivery_assignments(order_id)',
       'CREATE INDEX IF NOT EXISTS idx_order_delivery_assignments_delivery_personnel_id ON order_delivery_assignments(delivery_personnel_id)',
       'CREATE INDEX IF NOT EXISTS idx_order_delivery_assignments_status ON order_delivery_assignments(status)',
       'CREATE INDEX IF NOT EXISTS idx_order_delivery_assignments_assigned_at ON order_delivery_assignments(assigned_at)',
-      
+
       // 7. 菜品选项相关索引优化
       'CREATE INDEX IF NOT EXISTS idx_menu_item_options_menu_item_id ON menu_item_options(menu_item_id)',
       'CREATE INDEX IF NOT EXISTS idx_menu_item_options_sort_order ON menu_item_options(sort_order)',
       'CREATE INDEX IF NOT EXISTS idx_menu_option_choices_option_id ON menu_option_choices(option_id)',
       'CREATE INDEX IF NOT EXISTS idx_menu_option_choices_is_available ON menu_option_choices(is_available)',
-      'CREATE INDEX IF NOT EXISTS idx_menu_option_choices_sort_order ON menu_option_choices(sort_order)'
+      'CREATE INDEX IF NOT EXISTS idx_menu_option_choices_sort_order ON menu_option_choices(sort_order)',
     ];
 
     for (const sql of indexes) {
@@ -349,26 +349,33 @@ export class DatabaseMigration {
     const bcrypt = await import('bcrypt');
     const hashedPassword = await bcrypt.hash('admin123456', 10);
 
-    await dbManager.query(`
+    await dbManager.query(
+      `
       INSERT INTO users (email, phone, password_hash, first_name, last_name, role)
       VALUES ($1, $2, $3, $4, $5, $6)
-    `, ['admin@0379.love', '13800138000', hashedPassword, 'YYC³', '管理员', 'admin']);
+    `,
+      ['admin@0379.love', '13800138000', hashedPassword, 'YYC³', '管理员', 'admin']
+    );
 
     // 创建示例餐厅
-    const restaurantResult = await dbManager.query(`
+    const restaurantResult = await dbManager.query(
+      `
       INSERT INTO restaurants (name, description, address, phone, email, cuisine_type, price_range, created_by)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING id
-    `, [
-      'YYC³ 智能餐厅',
-      '融合传统与现代的智能餐饮体验',
-      '北京市朝阳区建国路88号',
-      '010-88888888',
-      'restaurant@0379.love',
-      '融合菜',
-      3,
-      (await dbManager.query('SELECT id FROM users WHERE email = $1', ['admin@0379.love'])).rows[0].id
-    ]);
+    `,
+      [
+        'YYC³ 智能餐厅',
+        '融合传统与现代的智能餐饮体验',
+        '北京市朝阳区建国路88号',
+        '010-88888888',
+        'restaurant@0379.love',
+        '融合菜',
+        3,
+        (await dbManager.query('SELECT id FROM users WHERE email = $1', ['admin@0379.love']))
+          .rows[0].id,
+      ]
+    );
 
     const restaurantId = restaurantResult.rows[0].id;
 
@@ -378,14 +385,17 @@ export class DatabaseMigration {
       { name: '汤品', description: '滋补汤品，温暖身心' },
       { name: '主菜', description: '招牌主菜，匠心制作' },
       { name: '甜品', description: '精致甜品，完美收尾' },
-      { name: '饮品', description: '特色饮品，清爽解腻' }
+      { name: '饮品', description: '特色饮品，清爽解腻' },
     ];
 
     for (const category of categories) {
-      await dbManager.query(`
+      await dbManager.query(
+        `
         INSERT INTO menu_categories (restaurant_id, name, description)
         VALUES ($1, $2, $3)
-      `, [restaurantId, category.name, category.description]);
+      `,
+        [restaurantId, category.name, category.description]
+      );
     }
 
     console.log('✅ 基础数据初始化完成');
@@ -395,14 +405,14 @@ export class DatabaseMigration {
 // 执行迁移
 if (import.meta.main) {
   const migration = new DatabaseMigration();
-  migration.run()
+  migration
+    .run()
     .then(() => {
       console.log('🎉 数据库迁移成功完成！');
       process.exit(0);
     })
-    .catch((error) => {
+    .catch(error => {
       console.error('💥 数据库迁移失败:', error);
       process.exit(1);
     });
 }
-

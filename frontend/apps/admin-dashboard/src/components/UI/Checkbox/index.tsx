@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { Check, Minus } from 'lucide-vue-next'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { Check, Minus } from 'lucide-vue-next';
 
 export const Checkbox = defineComponent({
   name: 'Checkbox',
@@ -53,62 +53,59 @@ export const Checkbox = defineComponent({
   setup(props, { emit }) {
     const isChecked = computed(() => {
       if (Array.isArray(props.modelValue)) {
-        return props.modelValue.includes(props.value as string)
+        return props.modelValue.includes(props.value as string);
       }
-      return props.modelValue === props.trueValue
-    })
+      return props.modelValue === props.trueValue;
+    });
 
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'w-4 h-4'
+          return 'w-4 h-4';
         case 'lg':
-          return 'w-6 h-6'
+          return 'w-6 h-6';
         default:
-          return 'w-5 h-5'
+          return 'w-5 h-5';
       }
-    })
+    });
 
     const iconSize = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 12
+          return 12;
         case 'lg':
-          return 20
+          return 20;
         default:
-          return 16
+          return 16;
       }
-    })
+    });
 
     const handleChange = (event: Event) => {
       if (props.disabled) {
-        return
+        return;
       }
 
-      let newValue: any
+      let newValue: any;
       if (Array.isArray(props.modelValue)) {
-        const currentValue = [...props.modelValue]
-        const index = currentValue.indexOf(props.value as string)
+        const currentValue = [...props.modelValue];
+        const index = currentValue.indexOf(props.value as string);
         if (index > -1) {
-          currentValue.splice(index, 1)
+          currentValue.splice(index, 1);
         } else {
-          currentValue.push(props.value as string)
+          currentValue.push(props.value as string);
         }
-        newValue = currentValue
+        newValue = currentValue;
       } else {
-        newValue = isChecked.value ? props.falseValue : props.trueValue
+        newValue = isChecked.value ? props.falseValue : props.trueValue;
       }
 
-      emit('update:modelValue', newValue)
-      emit('change', newValue)
-    }
+      emit('update:modelValue', newValue);
+      emit('change', newValue);
+    };
 
     return () => (
       <label
-        class={cn(
-          'inline-flex items-center gap-2 cursor-pointer',
-          props.disabled && 'opacity-50 cursor-not-allowed'
-        )}
+        class={cn('inline-flex items-center gap-2 cursor-pointer', props.disabled && 'opacity-50 cursor-not-allowed')}
       >
         <div class="relative">
           <input
@@ -121,29 +118,21 @@ export const Checkbox = defineComponent({
               isChecked.value && 'bg-primary-600 border-primary-600',
               !isChecked.value && 'hover:border-primary-400',
               props.disabled && 'opacity-50 cursor-not-allowed',
-              'focus:ring-primary-500/50'
+              'focus:ring-primary-500/50',
             )}
             onChange={handleChange}
           />
           {isChecked.value && (
             <div class={cn('absolute inset-0 flex items-center justify-center text-white pointer-events-none')}>
-              {props.indeterminate ? (
-                <Minus size={iconSize.value} />
-              ) : (
-                <Check size={iconSize.value} />
-              )}
+              {props.indeterminate ? <Minus size={iconSize.value} /> : <Check size={iconSize.value} />}
             </div>
           )}
         </div>
-        {props.label && (
-          <span class={cn('text-sm', props.disabled && 'text-neutral-400')}>
-            {props.label}
-          </span>
-        )}
+        {props.label && <span class={cn('text-sm', props.disabled && 'text-neutral-400')}>{props.label}</span>}
       </label>
-    )
+    );
   },
-})
+});
 
 export const CheckboxGroup = defineComponent({
   name: 'CheckboxGroup',
@@ -174,24 +163,19 @@ export const CheckboxGroup = defineComponent({
   emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
     const handleChange = (value: string) => {
-      const currentValue = [...props.modelValue]
-      const index = currentValue.indexOf(value)
+      const currentValue = [...props.modelValue];
+      const index = currentValue.indexOf(value);
       if (index > -1) {
-        currentValue.splice(index, 1)
+        currentValue.splice(index, 1);
       } else {
-        currentValue.push(value)
+        currentValue.push(value);
       }
-      emit('update:modelValue', currentValue)
-      emit('change', currentValue)
-    }
+      emit('update:modelValue', currentValue);
+      emit('change', currentValue);
+    };
 
     return () => (
-      <div
-        class={cn(
-          'flex gap-4',
-          props.direction === 'vertical' ? 'flex-col' : 'flex-row flex-wrap'
-        )}
-      >
+      <div class={cn('flex gap-4', props.direction === 'vertical' ? 'flex-col' : 'flex-row flex-wrap')}>
         {props.options.map(option => (
           <Checkbox
             key={option.value}
@@ -204,6 +188,6 @@ export const CheckboxGroup = defineComponent({
           />
         ))}
       </div>
-    )
+    );
   },
-})
+});

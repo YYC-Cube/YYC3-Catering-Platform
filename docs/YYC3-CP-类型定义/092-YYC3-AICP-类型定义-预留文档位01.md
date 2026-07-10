@@ -9,11 +9,11 @@
 @tags: [类型定义],[预留文档位01]
 ---
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
@@ -30,6 +30,7 @@
 YYC³平台使用TypeScript进行类型定义，确保类型安全。
 
 ### 类型目标
+
 - **类型安全**: 确保类型安全，减少运行时错误
 - **代码提示**: 提供代码提示，提高开发效率
 - **文档作用**: 类型定义作为文档，提高代码可读性
@@ -39,6 +40,7 @@ YYC³平台使用TypeScript进行类型定义，确保类型安全。
 YYC³平台定义了以下核心类型：
 
 ### 业务类型
+
 - **用户类型**: 用户信息类型定义
 - **订单类型**: 订单信息类型定义
 - **商品类型**: 商品信息类型定义
@@ -49,20 +51,19 @@ YYC³平台定义了以下核心类型：
 YYC³平台提供了以下类型工具：
 
 ### 工具类型
+
 - **Partial**: 将所有属性变为可选
 - **Pick**: 选取指定属性
 - **Omit**: 排除指定属性
 - **Record**: 键值对类型
 
-
-
 ---
 
 <div align="center">
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 </div>

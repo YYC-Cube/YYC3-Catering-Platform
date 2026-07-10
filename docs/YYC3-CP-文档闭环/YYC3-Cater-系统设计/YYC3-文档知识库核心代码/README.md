@@ -4,7 +4,7 @@
 
 **YYC³（YanYu Cloud Cube）**
 **标语**：万象归元于云枢 | 深栈智启新纪元
-***英文***：*All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era*
+**_英文_**：_All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era_
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org)
@@ -268,6 +268,7 @@ Content-Type: application/json
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -305,6 +306,7 @@ GET /api/documents?category=技术文档&status=published&limit=20&offset=0
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -322,6 +324,7 @@ GET /api/documents/:id
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -380,6 +383,7 @@ GET /api/documents/:id/quality
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -400,10 +404,7 @@ GET /api/documents/:id/quality
         "suggestion": "建议添加更多章节和示例"
       }
     ],
-    "suggestions": [
-      "建议添加更多章节和示例",
-      "建议定期更新文档内容"
-    ]
+    "suggestions": ["建议添加更多章节和示例", "建议定期更新文档内容"]
   }
 }
 ```
@@ -417,6 +418,7 @@ GET /api/documents/statistics
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -485,30 +487,30 @@ GET /api/documents/statistics
 
 ```typescript
 interface Document {
-  id: string;                    // 文档唯一标识
-  title: string;                 // 文档标题
-  description: string;           // 文档描述
-  content: string;               // 文档内容（Markdown）
-  category: string;              // 文档分类
-  subcategory: string;           // 子分类
-  tags: string[];                // 标签列表
-  keywords: string[];            // 关键词列表
-  qualityScore: number;          // 质量评分（0-100）
+  id: string; // 文档唯一标识
+  title: string; // 文档标题
+  description: string; // 文档描述
+  content: string; // 文档内容（Markdown）
+  category: string; // 文档分类
+  subcategory: string; // 子分类
+  tags: string[]; // 标签列表
+  keywords: string[]; // 关键词列表
+  qualityScore: number; // 质量评分（0-100）
   qualityMetrics: QualityMetrics; // 质量指标
-  version: string;              // 当前版本
-  versions: DocumentVersion[];  // 版本历史
-  status: DocumentStatus;       // 文档状态
-  viewCount: number;            // 浏览次数
-  likeCount: number;            // 点赞次数
-  shareCount: number;           // 分享次数
-  commentCount: number;         // 评论次数
-  references: string[];         // 引用的文档ID
-  referencedBy: string[];       // 被引用的文档ID
-  relatedDocuments: string[];   // 相关文档ID
-  author: string;              // 作者
-  createdAt: Date;             // 创建时间
-  updatedAt: Date;             // 更新时间
-  concepts: string[];          // 包含的概念
+  version: string; // 当前版本
+  versions: DocumentVersion[]; // 版本历史
+  status: DocumentStatus; // 文档状态
+  viewCount: number; // 浏览次数
+  likeCount: number; // 点赞次数
+  shareCount: number; // 分享次数
+  commentCount: number; // 评论次数
+  references: string[]; // 引用的文档ID
+  referencedBy: string[]; // 被引用的文档ID
+  relatedDocuments: string[]; // 相关文档ID
+  author: string; // 作者
+  createdAt: Date; // 创建时间
+  updatedAt: Date; // 更新时间
+  concepts: string[]; // 包含的概念
 }
 ```
 
@@ -516,11 +518,11 @@ interface Document {
 
 ```typescript
 interface QualityMetrics {
-  contentCompleteness: number;      // 内容完整性（0-100）
-  structureNormalization: number;   // 结构规范化（0-100）
-  technicalAccuracy: number;        // 技术准确性（0-100）
-  readability: number;             // 可读性（0-100）
-  practicality: number;             // 实用性（0-100）
+  contentCompleteness: number; // 内容完整性（0-100）
+  structureNormalization: number; // 结构规范化（0-100）
+  technicalAccuracy: number; // 技术准确性（0-100）
+  readability: number; // 可读性（0-100）
+  practicality: number; // 实用性（0-100）
 }
 ```
 
@@ -592,7 +594,7 @@ docker run -d \
 ### Docker Compose部署
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   app:

@@ -8,29 +8,29 @@
  * @license MIT
  */
 
-import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest'
-import { setupServer } from 'msw/node'
-import { http, HttpResponse } from 'msw'
+import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
+import { setupServer } from 'msw/node';
+import { http, HttpResponse } from 'msw';
 
 // 创建MSW服务器
-const server = setupServer()
+const server = setupServer();
 
 describe('Customer Management Integration Tests', () => {
   beforeAll(() => {
-    server.listen()
-  })
+    server.listen();
+  });
 
   afterAll(() => {
-    server.close()
-  })
+    server.close();
+  });
 
   beforeEach(() => {
-    server.resetHandlers()
-  })
+    server.resetHandlers();
+  });
 
   afterEach(() => {
-    server.resetHandlers()
-  })
+    server.resetHandlers();
+  });
 
   describe('客户创建到分群的完整流程', () => {
     it('应该正确完成客户创建到分群的完整流程', async () => {
@@ -39,8 +39,8 @@ describe('Customer Management Integration Tests', () => {
         phone: '13800138001',
         email: 'zhangsan@example.com',
         gender: 'male',
-        birthday: '1990-01-01'
-      }
+        birthday: '1990-01-01',
+      };
 
       const createdCustomer = {
         id: '1',
@@ -50,8 +50,8 @@ describe('Customer Management Integration Tests', () => {
         totalOrders: 0,
         points: 0,
         createdAt: '2026-01-20T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       const customerGroup = {
         id: '1',
@@ -66,8 +66,8 @@ describe('Customer Management Integration Tests', () => {
         enabled: true,
         createdBy: 'admin',
         createdAt: '2026-01-20T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       // 模拟创建客户API
       server.use(
@@ -75,10 +75,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: '创建成功',
-            data: createdCustomer
-          })
-        })
-      )
+            data: createdCustomer,
+          });
+        }),
+      );
 
       // 模拟添加到分群API
       server.use(
@@ -86,10 +86,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: '添加成功',
-            data: null
-          })
-        })
-      )
+            data: null,
+          });
+        }),
+      );
 
       // 模拟获取分群详情API
       server.use(
@@ -97,47 +97,47 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: 'success',
-            data: customerGroup
-          })
-        })
-      )
+            data: customerGroup,
+          });
+        }),
+      );
 
       // 步骤1：创建客户
       const createResponse = await fetch('http://localhost:3000/api/customers', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newCustomer)
-      })
+        body: JSON.stringify(newCustomer),
+      });
 
-      const createResult = await createResponse.json()
-      expect(createResult.code).toBe(200)
-      expect(createResult.data.id).toBe('1')
-      expect(createResult.data.name).toBe('张三')
+      const createResult = await createResponse.json();
+      expect(createResult.code).toBe(200);
+      expect(createResult.data.id).toBe('1');
+      expect(createResult.data.name).toBe('张三');
 
       // 步骤2：添加到分群
       const addMemberResponse = await fetch('http://localhost:3000/api/customer-groups/1/members', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          customerIds: ['1']
-        })
-      })
+          customerIds: ['1'],
+        }),
+      });
 
-      const addMemberResult = await addMemberResponse.json()
-      expect(addMemberResult.code).toBe(200)
+      const addMemberResult = await addMemberResponse.json();
+      expect(addMemberResult.code).toBe(200);
 
       // 步骤3：验证分群成员
-      const groupResponse = await fetch('http://localhost:3000/api/customer-groups/1')
-      const groupResult = await groupResponse.json()
+      const groupResponse = await fetch('http://localhost:3000/api/customer-groups/1');
+      const groupResult = await groupResponse.json();
 
-      expect(groupResult.code).toBe(200)
-      expect(groupResult.data.memberCount).toBe(1)
-    })
-  })
+      expect(groupResult.code).toBe(200);
+      expect(groupResult.data.memberCount).toBe(1);
+    });
+  });
 
   describe('客户生命周期自动流转', () => {
     it('应该正确处理客户从潜在客户到新客户的流转', async () => {
@@ -151,8 +151,8 @@ describe('Customer Management Integration Tests', () => {
         totalSpent: 0,
         points: 0,
         createdAt: '2026-01-01T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       const lifecycle = {
         id: '1',
@@ -161,8 +161,8 @@ describe('Customer Management Integration Tests', () => {
         previousStage: null,
         stageChangedAt: '2026-01-01T00:00:00Z',
         daysInCurrentStage: 20,
-        totalDaysInLifecycle: 20
-      }
+        totalDaysInLifecycle: 20,
+      };
 
       const updatedLifecycle = {
         ...lifecycle,
@@ -170,8 +170,8 @@ describe('Customer Management Integration Tests', () => {
         previousStage: 'potential',
         stageChangedAt: '2026-01-20T00:00:00Z',
         daysInCurrentStage: 0,
-        totalDaysInLifecycle: 20
-      }
+        totalDaysInLifecycle: 20,
+      };
 
       // 模拟获取客户详情API
       server.use(
@@ -179,10 +179,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: 'success',
-            data: customer
-          })
-        })
-      )
+            data: customer,
+          });
+        }),
+      );
 
       // 模拟获取生命周期API
       server.use(
@@ -190,10 +190,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: 'success',
-            data: lifecycle
-          })
-        })
-      )
+            data: lifecycle,
+          });
+        }),
+      );
 
       // 模拟更新生命周期API
       server.use(
@@ -201,10 +201,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: '更新成功',
-            data: updatedLifecycle
-          })
-        })
-      )
+            data: updatedLifecycle,
+          });
+        }),
+      );
 
       // 模拟创建订单API
       server.use(
@@ -218,17 +218,17 @@ describe('Customer Management Integration Tests', () => {
               orderNo: 'ORD202601200001',
               totalAmount: 100,
               status: 'completed',
-              createdAt: '2026-01-20T00:00:00Z'
-            }
-          })
-        })
-      )
+              createdAt: '2026-01-20T00:00:00Z',
+            },
+          });
+        }),
+      );
 
       // 步骤1：创建订单
       const orderResponse = await fetch('http://localhost:3000/api/orders', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           customerId: '1',
@@ -236,24 +236,24 @@ describe('Customer Management Integration Tests', () => {
             {
               dishId: '1',
               quantity: 1,
-              price: 100
-            }
-          ]
-        })
-      })
+              price: 100,
+            },
+          ],
+        }),
+      });
 
-      const orderResult = await orderResponse.json()
-      expect(orderResult.code).toBe(200)
+      const orderResult = await orderResponse.json();
+      expect(orderResult.code).toBe(200);
 
       // 步骤2：检查生命周期是否自动更新
-      const lifecycleResponse = await fetch('http://localhost:3000/api/customers/1/lifecycle')
-      const lifecycleResult = await lifecycleResponse.json()
+      const lifecycleResponse = await fetch('http://localhost:3000/api/customers/1/lifecycle');
+      const lifecycleResult = await lifecycleResponse.json();
 
-      expect(lifecycleResult.code).toBe(200)
-      expect(lifecycleResult.data.currentStage).toBe('new')
-      expect(lifecycleResult.data.previousStage).toBe('potential')
-    })
-  })
+      expect(lifecycleResult.code).toBe(200);
+      expect(lifecycleResult.data.currentStage).toBe('new');
+      expect(lifecycleResult.data.previousStage).toBe('potential');
+    });
+  });
 
   describe('RFM评分计算和客户等级划分', () => {
     it('应该正确计算RFM评分并划分客户等级', async () => {
@@ -267,8 +267,8 @@ describe('Customer Management Integration Tests', () => {
         totalSpent: 6000,
         lastOrderAt: '2026-01-18T00:00:00Z',
         createdAt: '2025-01-01T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       const rfmScore = {
         id: '1',
@@ -278,8 +278,8 @@ describe('Customer Management Integration Tests', () => {
         monetaryScore: 5,
         rfmScore: 15,
         customerLevel: '超级VIP',
-        calculatedAt: '2026-01-20T00:00:00Z'
-      }
+        calculatedAt: '2026-01-20T00:00:00Z',
+      };
 
       // 模拟获取客户详情API
       server.use(
@@ -287,10 +287,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: 'success',
-            data: customer
-          })
-        })
-      )
+            data: customer,
+          });
+        }),
+      );
 
       // 模拟计算RFM评分API
       server.use(
@@ -298,28 +298,28 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: '计算成功',
-            data: [rfmScore]
-          })
-        })
-      )
+            data: [rfmScore],
+          });
+        }),
+      );
 
       // 步骤1：计算RFM评分
       const rfmResponse = await fetch('http://localhost:3000/api/rfm/calculate', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          customerIds: ['1']
-        })
-      })
+          customerIds: ['1'],
+        }),
+      });
 
-      const rfmResult = await rfmResponse.json()
-      expect(rfmResult.code).toBe(200)
-      expect(rfmResult.data[0].rfmScore).toBe(15)
-      expect(rfmResult.data[0].customerLevel).toBe('超级VIP')
-    })
-  })
+      const rfmResult = await rfmResponse.json();
+      expect(rfmResult.code).toBe(200);
+      expect(rfmResult.data[0].rfmScore).toBe(15);
+      expect(rfmResult.data[0].customerLevel).toBe('超级VIP');
+    });
+  });
 
   describe('流失预测和预警处理', () => {
     it('应该正确预测客户流失并生成预警', async () => {
@@ -333,8 +333,8 @@ describe('Customer Management Integration Tests', () => {
         totalSpent: 500,
         lastOrderAt: '2025-10-20T00:00:00Z',
         createdAt: '2025-01-01T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       const churnPrediction = {
         id: '1',
@@ -346,16 +346,12 @@ describe('Customer Management Integration Tests', () => {
         riskLevel: 'high',
         riskFactors: ['90天未消费', '60天未消费', '30天未消费'],
         predictedChurnDate: '2026-03-20T00:00:00Z',
-        recommendations: [
-          '立即联系客户了解情况',
-          '发送关怀短信',
-          '提供专属优惠券'
-        ],
+        recommendations: ['立即联系客户了解情况', '发送关怀短信', '提供专属优惠券'],
         assignedTo: null,
         status: 'pending',
         createdAt: '2026-01-20T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       // 模拟获取客户详情API
       server.use(
@@ -363,10 +359,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: 'success',
-            data: customer
-          })
-        })
-      )
+            data: customer,
+          });
+        }),
+      );
 
       // 模拟预测流失API
       server.use(
@@ -374,10 +370,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: '预测成功',
-            data: [churnPrediction]
-          })
-        })
-      )
+            data: [churnPrediction],
+          });
+        }),
+      );
 
       // 模拟更新流失预测API
       server.use(
@@ -388,46 +384,46 @@ describe('Customer Management Integration Tests', () => {
             data: {
               ...churnPrediction,
               assignedTo: 'admin',
-              status: 'in_progress'
-            }
-          })
-        })
-      )
+              status: 'in_progress',
+            },
+          });
+        }),
+      );
 
       // 步骤1：预测客户流失
       const predictResponse = await fetch('http://localhost:3000/api/churn-predictions/predict', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          customerIds: ['1']
-        })
-      })
+          customerIds: ['1'],
+        }),
+      });
 
-      const predictResult = await predictResponse.json()
-      expect(predictResult.code).toBe(200)
-      expect(predictResult.data[0].churnProbability).toBe(0.8)
-      expect(predictResult.data[0].riskLevel).toBe('high')
+      const predictResult = await predictResponse.json();
+      expect(predictResult.code).toBe(200);
+      expect(predictResult.data[0].churnProbability).toBe(0.8);
+      expect(predictResult.data[0].riskLevel).toBe('high');
 
       // 步骤2：处理流失预警
       const updateResponse = await fetch('http://localhost:3000/api/churn-predictions/1', {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           assignedTo: 'admin',
-          status: 'in_progress'
-        })
-      })
+          status: 'in_progress',
+        }),
+      });
 
-      const updateResult = await updateResponse.json()
-      expect(updateResult.code).toBe(200)
-      expect(updateResult.data.assignedTo).toBe('admin')
-      expect(updateResult.data.status).toBe('in_progress')
-    })
-  })
+      const updateResult = await updateResponse.json();
+      expect(updateResult.code).toBe(200);
+      expect(updateResult.data.assignedTo).toBe('admin');
+      expect(updateResult.data.status).toBe('in_progress');
+    });
+  });
 
   describe('客户状态修改和历史记录', () => {
     it('应该正确修改客户状态并记录历史', async () => {
@@ -441,14 +437,14 @@ describe('Customer Management Integration Tests', () => {
         totalOrders: 10,
         points: 500,
         createdAt: '2026-01-01T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       const updatedCustomer = {
         ...customer,
         status: 'inactive',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       const statusHistory = {
         id: '1',
@@ -457,8 +453,8 @@ describe('Customer Management Integration Tests', () => {
         toStatus: 'inactive',
         reason: '客户要求',
         changedBy: 'admin',
-        changedAt: '2026-01-20T00:00:00Z'
-      }
+        changedAt: '2026-01-20T00:00:00Z',
+      };
 
       // 模拟获取客户详情API
       server.use(
@@ -466,10 +462,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: 'success',
-            data: customer
-          })
-        })
-      )
+            data: customer,
+          });
+        }),
+      );
 
       // 模拟更新客户状态API
       server.use(
@@ -477,10 +473,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: '更新成功',
-            data: updatedCustomer
-          })
-        })
-      )
+            data: updatedCustomer,
+          });
+        }),
+      );
 
       // 模拟获取状态历史API
       server.use(
@@ -488,37 +484,37 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: 'success',
-            data: [statusHistory]
-          })
-        })
-      )
+            data: [statusHistory],
+          });
+        }),
+      );
 
       // 步骤1：修改客户状态
       const updateResponse = await fetch('http://localhost:3000/api/customers/1/status', {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           status: 'inactive',
-          reason: '客户要求'
-        })
-      })
+          reason: '客户要求',
+        }),
+      });
 
-      const updateResult = await updateResponse.json()
-      expect(updateResult.code).toBe(200)
-      expect(updateResult.data.status).toBe('inactive')
+      const updateResult = await updateResponse.json();
+      expect(updateResult.code).toBe(200);
+      expect(updateResult.data.status).toBe('inactive');
 
       // 步骤2：查询状态历史
-      const historyResponse = await fetch('http://localhost:3000/api/customers/1/status-history')
-      const historyResult = await historyResponse.json()
+      const historyResponse = await fetch('http://localhost:3000/api/customers/1/status-history');
+      const historyResult = await historyResponse.json();
 
-      expect(historyResult.code).toBe(200)
-      expect(historyResult.data[0].fromStatus).toBe('active')
-      expect(historyResult.data[0].toStatus).toBe('inactive')
-      expect(historyResult.data[0].reason).toBe('客户要求')
-    })
-  })
+      expect(historyResult.code).toBe(200);
+      expect(historyResult.data[0].fromStatus).toBe('active');
+      expect(historyResult.data[0].toStatus).toBe('inactive');
+      expect(historyResult.data[0].reason).toBe('客户要求');
+    });
+  });
 
   describe('客户分群管理和批量操作', () => {
     it('应该正确创建分群并批量添加成员', async () => {
@@ -530,8 +526,8 @@ describe('Customer Management Integration Tests', () => {
         color: '#409EFF',
         icon: 'el-icon-star',
         priority: 1,
-        enabled: true
-      }
+        enabled: true,
+      };
 
       const createdGroup = {
         id: '1',
@@ -539,8 +535,8 @@ describe('Customer Management Integration Tests', () => {
         memberCount: 0,
         createdBy: 'admin',
         createdAt: '2026-01-20T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       const customers = [
         {
@@ -548,16 +544,16 @@ describe('Customer Management Integration Tests', () => {
           name: '张三',
           phone: '13800138001',
           email: 'zhangsan@example.com',
-          status: 'active'
+          status: 'active',
         },
         {
           id: '2',
           name: '李四',
           phone: '13800138002',
           email: 'lisi@example.com',
-          status: 'active'
-        }
-      ]
+          status: 'active',
+        },
+      ];
 
       // 模拟创建分群API
       server.use(
@@ -565,10 +561,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: '创建成功',
-            data: createdGroup
-          })
-        })
-      )
+            data: createdGroup,
+          });
+        }),
+      );
 
       // 模拟批量添加成员API
       server.use(
@@ -576,10 +572,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: '添加成功',
-            data: null
-          })
-        })
-      )
+            data: null,
+          });
+        }),
+      );
 
       // 模拟获取分群成员API
       server.use(
@@ -594,49 +590,49 @@ describe('Customer Management Integration Tests', () => {
                 groupId: '1',
                 customerName: c.name,
                 customerPhone: c.phone,
-                addedAt: '2026-01-20T00:00:00Z'
+                addedAt: '2026-01-20T00:00:00Z',
               })),
-              total: customers.length
-            }
-          })
-        })
-      )
+              total: customers.length,
+            },
+          });
+        }),
+      );
 
       // 步骤1：创建分群
       const createResponse = await fetch('http://localhost:3000/api/customer-groups', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(customerGroup)
-      })
+        body: JSON.stringify(customerGroup),
+      });
 
-      const createResult = await createResponse.json()
-      expect(createResult.code).toBe(200)
-      expect(createResult.data.id).toBe('1')
+      const createResult = await createResponse.json();
+      expect(createResult.code).toBe(200);
+      expect(createResult.data.id).toBe('1');
 
       // 步骤2：批量添加成员
       const addMembersResponse = await fetch('http://localhost:3000/api/customer-groups/1/members', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          customerIds: ['1', '2']
-        })
-      })
+          customerIds: ['1', '2'],
+        }),
+      });
 
-      const addMembersResult = await addMembersResponse.json()
-      expect(addMembersResult.code).toBe(200)
+      const addMembersResult = await addMembersResponse.json();
+      expect(addMembersResult.code).toBe(200);
 
       // 步骤3：验证分群成员
-      const membersResponse = await fetch('http://localhost:3000/api/customer-groups/1/members')
-      const membersResult = await membersResponse.json()
+      const membersResponse = await fetch('http://localhost:3000/api/customer-groups/1/members');
+      const membersResult = await membersResponse.json();
 
-      expect(membersResult.code).toBe(200)
-      expect(membersResult.data.total).toBe(2)
-    })
-  })
+      expect(membersResult.code).toBe(200);
+      expect(membersResult.data.total).toBe(2);
+    });
+  });
 
   describe('客户历史查询和数据导出', () => {
     it('应该正确查询客户历史并导出数据', async () => {
@@ -650,8 +646,8 @@ describe('Customer Management Integration Tests', () => {
         totalOrders: 10,
         points: 500,
         createdAt: '2026-01-01T00:00:00Z',
-        updatedAt: '2026-01-20T00:00:00Z'
-      }
+        updatedAt: '2026-01-20T00:00:00Z',
+      };
 
       const orderHistory = [
         {
@@ -660,7 +656,7 @@ describe('Customer Management Integration Tests', () => {
           orderNo: 'ORD202601200001',
           totalAmount: 100,
           status: 'completed',
-          createdAt: '2026-01-20T00:00:00Z'
+          createdAt: '2026-01-20T00:00:00Z',
         },
         {
           id: '2',
@@ -668,9 +664,9 @@ describe('Customer Management Integration Tests', () => {
           orderNo: 'ORD202601190001',
           totalAmount: 200,
           status: 'completed',
-          createdAt: '2026-01-19T00:00:00Z'
-        }
-      ]
+          createdAt: '2026-01-19T00:00:00Z',
+        },
+      ];
 
       // 模拟获取客户详情API
       server.use(
@@ -678,10 +674,10 @@ describe('Customer Management Integration Tests', () => {
           return HttpResponse.json({
             code: 200,
             message: 'success',
-            data: customer
-          })
-        })
-      )
+            data: customer,
+          });
+        }),
+      );
 
       // 模拟获取订单历史API
       server.use(
@@ -691,11 +687,11 @@ describe('Customer Management Integration Tests', () => {
             message: 'success',
             data: {
               data: orderHistory,
-              total: orderHistory.length
-            }
-          })
-        })
-      )
+              total: orderHistory.length,
+            },
+          });
+        }),
+      );
 
       // 模拟导出数据API
       server.use(
@@ -704,32 +700,32 @@ describe('Customer Management Integration Tests', () => {
             code: 200,
             message: '导出成功',
             data: {
-              url: 'https://example.com/export/customer-1-history.xlsx'
-            }
-          })
-        })
-      )
+              url: 'https://example.com/export/customer-1-history.xlsx',
+            },
+          });
+        }),
+      );
 
       // 步骤1：查询客户详情
-      const customerResponse = await fetch('http://localhost:3000/api/customers/1')
-      const customerResult = await customerResponse.json()
+      const customerResponse = await fetch('http://localhost:3000/api/customers/1');
+      const customerResult = await customerResponse.json();
 
-      expect(customerResult.code).toBe(200)
-      expect(customerResult.data.name).toBe('张三')
+      expect(customerResult.code).toBe(200);
+      expect(customerResult.data.name).toBe('张三');
 
       // 步骤2：查询订单历史
-      const historyResponse = await fetch('http://localhost:3000/api/customers/1/order-history')
-      const historyResult = await historyResponse.json()
+      const historyResponse = await fetch('http://localhost:3000/api/customers/1/order-history');
+      const historyResult = await historyResponse.json();
 
-      expect(historyResult.code).toBe(200)
-      expect(historyResult.data.data).toHaveLength(2)
+      expect(historyResult.code).toBe(200);
+      expect(historyResult.data.data).toHaveLength(2);
 
       // 步骤3：导出数据
-      const exportResponse = await fetch('http://localhost:3000/api/customers/1/export')
-      const exportResult = await exportResponse.json()
+      const exportResponse = await fetch('http://localhost:3000/api/customers/1/export');
+      const exportResult = await exportResponse.json();
 
-      expect(exportResult.code).toBe(200)
-      expect(exportResult.data.url).toBeDefined()
-    })
-  })
-})
+      expect(exportResult.code).toBe(200);
+      expect(exportResult.data.url).toBeDefined();
+    });
+  });
+});

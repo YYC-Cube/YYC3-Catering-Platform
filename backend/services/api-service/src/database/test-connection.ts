@@ -43,7 +43,9 @@ async function testConnection(): Promise<void> {
       if (usersSchema.rows.length > 0) {
         console.log('\n👤 users表结构:');
         usersSchema.rows.forEach(col => {
-          console.log(`  - ${col.column_name}: ${col.data_type} (${col.is_nullable}) ${col.column_default || ''}`);
+          console.log(
+            `  - ${col.column_name}: ${col.data_type} (${col.is_nullable}) ${col.column_default || ''}`
+          );
         });
       }
     } catch (error) {
@@ -59,7 +61,6 @@ async function testConnection(): Promise<void> {
     } catch (error) {
       console.log('❌ 基础查询失败:', error);
     }
-
   } catch (error) {
     console.error('❌ 数据库连接失败:', error);
   } finally {

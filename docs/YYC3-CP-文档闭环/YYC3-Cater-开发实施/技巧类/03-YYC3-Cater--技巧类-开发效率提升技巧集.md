@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ 开发效率提升技巧集
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 开发效率提升技巧集 |
-| **文档类型** | 技巧类文档 |
-| **所属阶段** | 开发实施 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 开发效率提升技巧集    |
+| **文档类型** | 技巧类文档                 |
+| **所属阶段** | 开发实施                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -55,6 +56,7 @@
 ### 1.1 效率提升的重要性
 
 在快节奏的软件开发中，提升开发效率至关重要：
+
 - 缩短开发周期
 - 提高代码质量
 - 减少重复劳动
@@ -64,6 +66,7 @@
 ### 1.2 适用范围
 
 本技巧集适用于 YYC³ 餐饮管理平台的所有开发人员，包括：
+
 - 前端开发工程师
 - 后端开发工程师
 - 全栈开发工程师
@@ -371,11 +374,7 @@ yarn config list
 {
   "TypeScript Interface": {
     "prefix": "ts-interface",
-    "body": [
-      "interface ${1:InterfaceName} {",
-      "  ${2:property}: ${3:type};",
-      "}"
-    ],
+    "body": ["interface ${1:InterfaceName} {", "  ${2:property}: ${3:type};", "}"],
     "description": "Create a TypeScript interface"
   }
 }
@@ -387,9 +386,7 @@ yarn config list
 {
   "TypeScript Type": {
     "prefix": "ts-type",
-    "body": [
-      "type ${1:TypeName} = ${2:type};"
-    ],
+    "body": ["type ${1:TypeName} = ${2:type};"],
     "description": "Create a TypeScript type alias"
   }
 }
@@ -451,22 +448,22 @@ npm install --save-dev plop
 
 ```javascript
 module.exports = function (plop) {
-  plop.setGenerator('component', {
-    description: 'Create a new component',
+  plop.setGenerator("component", {
+    description: "Create a new component",
     prompts: [
       {
-        type: 'input',
-        name: 'name',
-        message: 'Component name:'
-      }
+        type: "input",
+        name: "name",
+        message: "Component name:",
+      },
     ],
     actions: [
       {
-        type: 'add',
-        path: 'src/components/{{ name }}/{{ name }}.tsx',
-        templateFile: 'plop-templates/component.hbs'
-      }
-    ]
+        type: "add",
+        path: "src/components/{{ name }}/{{ name }}.tsx",
+        templateFile: "plop-templates/component.hbs",
+      },
+    ],
   });
 };
 ```
@@ -489,7 +486,7 @@ function processOrder(order: Order) {
   const tax = subtotal * 0.1;
   const shipping = subtotal > 100 ? 0 : 10;
   const total = subtotal + tax + shipping;
-  
+
   // ... other logic
 }
 ```
@@ -518,7 +515,7 @@ function processOrder(order: Order) {
   const tax = calculateTax(subtotal, 0.1);
   const shipping = calculateShipping(subtotal, 100, 10);
   const total = calculateTotal(subtotal, tax, shipping);
-  
+
   // ... other logic
 }
 ```
@@ -576,17 +573,17 @@ console.table(array);
 console.dir(object);
 
 // 性能测量
-console.time('timer');
+console.time("timer");
 // ... code ...
-console.timeEnd('timer');
+console.timeEnd("timer");
 
 // 条件断点
-console.assert(condition, 'message');
+console.assert(condition, "message");
 
 // 分组日志
-console.group('Group');
-console.log('Item 1');
-console.log('Item 2');
+console.group("Group");
+console.log("Item 1");
+console.log("Item 2");
 console.groupEnd();
 ```
 
@@ -670,25 +667,27 @@ npm install winston
 **配置 Winston：**
 
 ```typescript
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
     winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
+if (process.env.NODE_ENV !== "production") {
+  logger.add(
+    new winston.transports.Console({
+      format: winston.format.simple(),
+    })
+  );
 }
 
 export default logger;
@@ -697,10 +696,10 @@ export default logger;
 **使用日志：**
 
 ```typescript
-logger.info('Server started');
-logger.error('Error occurred', { error });
-logger.warn('Warning message');
-logger.debug('Debug message');
+logger.info("Server started");
+logger.error("Error occurred", { error });
+logger.warn("Warning message");
+logger.debug("Debug message");
 ```
 
 #### 4.3.2 结构化日志
@@ -714,20 +713,20 @@ npm install pino
 **配置 pino：**
 
 ```typescript
-import pino from 'pino';
+import pino from "pino";
 
 const logger = pino({
-  level: 'info',
+  level: "info",
   transport: {
-    target: 'pino-pretty',
+    target: "pino-pretty",
     options: {
-      colorize: true
-    }
-  }
+      colorize: true,
+    },
+  },
 });
 
-logger.info({ userId: '123', action: 'login' }, 'User logged in');
-logger.error({ error: err }, 'Failed to process request');
+logger.info({ userId: "123", action: "login" }, "User logged in");
+logger.error({ error: err }, "Failed to process request");
 ```
 
 ---
@@ -795,26 +794,22 @@ npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslin
 
 ```javascript
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
-  ],
-  plugins: ['@typescript-eslint'],
+  parser: "@typescript-eslint/parser",
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+  plugins: ["@typescript-eslint"],
   env: {
     node: true,
-    es2021: true
+    es2021: true,
   },
   parserOptions: {
     ecmaVersion: 2021,
-    sourceType: 'module'
+    sourceType: "module",
   },
   rules: {
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn'
-  }
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+  },
 };
 ```
 
@@ -845,17 +840,13 @@ npm install --save-dev jest @types/jest ts-jest
 
 ```javascript
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  roots: ['<rootDir>/src'],
-  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/**/*.d.ts',
-    '!src/**/*.interface.ts'
-  ],
-  coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov', 'html']
+  preset: "ts-jest",
+  testEnvironment: "node",
+  roots: ["<rootDir>/src"],
+  testMatch: ["**/__tests__/**/*.ts", "**/?(*.)+(spec|test).ts"],
+  collectCoverageFrom: ["src/**/*.ts", "!src/**/*.d.ts", "!src/**/*.interface.ts"],
+  coverageDirectory: "coverage",
+  coverageReporters: ["text", "lcov", "html"],
 };
 ```
 
@@ -886,18 +877,18 @@ npm install --save-dev vitest @vitest/ui
 **配置 vitest.config.ts：**
 
 ```typescript
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
     globals: true,
-    environment: 'node',
+    environment: "node",
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules/', 'dist/']
-    }
-  }
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      exclude: ["node_modules/", "dist/"],
+    },
+  },
 });
 ```
 
@@ -932,22 +923,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'npm'
-      
+          node-version: "18"
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run tests
         run: npm test
-      
+
       - name: Build
         run: npm run build
-      
+
       - name: Deploy
         run: npm run deploy
         env:
@@ -999,9 +990,11 @@ docker run -d -p 3000:3000 yyc3-catering-platform
 
 ```markdown
 ## 📝 描述
+
 简要描述此 PR 的目的和实现的功能。
 
 ## 🎯 变更类型
+
 - [ ] 新功能 (feat)
 - [ ] Bug 修复 (fix)
 - [ ] 文档更新 (docs)
@@ -1011,35 +1004,42 @@ docker run -d -p 3000:3000 yyc3-catering-platform
 - [ ] 其他 (chore)
 
 ## ✨ 变更内容
+
 - 变更 1
 - 变更 2
 - 变更 3
 
 ## 🧪 测试
+
 描述如何测试这些变更。
 
 ## 📸 截图
+
 如果有 UI 变更，请提供截图。
 
 ## 🔗 相关 Issue
+
 Closes #123
 ```
 
 #### 6.1.2 代码审查清单
 
 **功能审查：**
+
 - [ ] 功能是否按照需求实现
 - [ ] 边界情况是否处理
 - [ ] 错误处理是否完善
 - [ ] 用户体验是否良好
 
 **代码质量：**
+
 - [ ] 代码是否符合规范
 - [ ] 命名是否清晰
 - [ ] 注释是否充分
 - [ ] 是否有重复代码
 
 **性能审查：**
+
 - [ ] 是否有性能问题
 - [ ] 是否有内存泄漏
 - [ ] 数据库查询是否优化
@@ -1051,19 +1051,22 @@ Closes #123
 
 **Markdown 技巧：**
 
-```markdown
+````markdown
 # 标题 1
+
 ## 标题 2
+
 ### 标题 3
 
 **粗体**
-*斜体*
+_斜体_
 `代码`
 
 ```typescript
 // 代码块
-const message = 'Hello';
+const message = "Hello";
 ```
+````
 
 - 列表项 1
 - 列表项 2
@@ -1077,10 +1080,11 @@ const message = 'Hello';
 
 > 引用文本
 
-| 表头 1 | 表头 2 |
-|--------|--------|
+| 表头 1   | 表头 2   |
+| -------- | -------- |
 | 单元格 1 | 单元格 2 |
-```
+
+````
 
 #### 6.2.2 使用 Notion
 
@@ -1140,13 +1144,13 @@ function App() {
     </Suspense>
   );
 }
-```
+````
 
 **使用动态导入：**
 
 ```typescript
 const loadModule = async () => {
-  const module = await import('./heavyModule');
+  const module = await import("./heavyModule");
   module.doSomething();
 };
 ```
@@ -1194,17 +1198,17 @@ CREATE INDEX idx_order_user_id ON orders(user_id);
 **使用连接池：**
 
 ```typescript
-import { Pool } from 'pg';
+import { Pool } from "pg";
 
 const pool = new Pool({
-  host: 'localhost',
+  host: "localhost",
   port: 5432,
-  database: 'yyc3_catering',
-  user: 'postgres',
-  password: 'password',
+  database: "yyc3_catering",
+  user: "postgres",
+  password: "password",
   max: 20,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000
+  connectionTimeoutMillis: 2000,
 });
 ```
 
@@ -1213,7 +1217,7 @@ const pool = new Pool({
 **使用 Redis：**
 
 ```typescript
-import Redis from 'ioredis';
+import Redis from "ioredis";
 
 const redis = new Redis();
 
@@ -1222,9 +1226,9 @@ async function getCachedData(key: string): Promise<any> {
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   const data = await fetchDataFromDB();
-  await redis.set(key, JSON.stringify(data), 'EX', 3600);
+  await redis.set(key, JSON.stringify(data), "EX", 3600);
   return data;
 }
 ```
@@ -1237,19 +1241,19 @@ const cache = new Map<string, { data: any; expiry: number }>();
 function setCache(key: string, data: any, ttl: number): void {
   cache.set(key, {
     data,
-    expiry: Date.now() + ttl * 1000
+    expiry: Date.now() + ttl * 1000,
   });
 }
 
 function getCache(key: string): any | null {
   const cached = cache.get(key);
   if (!cached) return null;
-  
+
   if (Date.now() > cached.expiry) {
     cache.delete(key);
     return null;
   }
-  
+
   return cached.data;
 }
 ```
@@ -1261,11 +1265,13 @@ function getCache(key: string): any | null {
 ### 8.1 在线课程
 
 **前端：**
+
 - [React 官方文档](https://react.dev/)
 - [Next.js 官方文档](https://nextjs.org/docs)
 - [TypeScript 官方文档](https://www.typescriptlang.org/docs/)
 
 **后端：**
+
 - [Node.js 官方文档](https://nodejs.org/docs/)
 - [Express 官方文档](https://expressjs.com/)
 - [NestJS 官方文档](https://docs.nestjs.com/)
@@ -1273,6 +1279,7 @@ function getCache(key: string): any | null {
 ### 8.2 技术博客
 
 **推荐博客：**
+
 - [YYC³ 技术博客](https://blog.yyc3.com)
 - [阮一峰的网络日志](https://www.ruanyifeng.com/blog/)
 - [掘金](https://juejin.cn/)
@@ -1281,6 +1288,7 @@ function getCache(key: string): any | null {
 ### 8.3 开源项目
 
 **推荐项目：**
+
 - [YYC³ 餐饮管理平台](https://github.com/YYC-Cube/yyc3-catering-platform)
 - [Next.js](https://github.com/vercel/next.js)
 - [React](https://github.com/facebook/react)
@@ -1293,12 +1301,14 @@ function getCache(key: string): any | null {
 ### 9.1 代码质量
 
 **保持代码简洁：**
+
 - 遵循 SOLID 原则
 - 避免过度设计
 - 编写可读的代码
 - 添加必要的注释
 
 **保持代码一致：**
+
 - 遵循团队编码规范
 - 使用统一的命名约定
 - 保持代码风格一致
@@ -1307,6 +1317,7 @@ function getCache(key: string): any | null {
 ### 9.2 测试驱动开发
 
 **TDD 流程：**
+
 1. 编写失败的测试
 2. 编写最小代码使测试通过
 3. 重构代码
@@ -1316,10 +1327,8 @@ function getCache(key: string): any | null {
 
 ```typescript
 // 1. 编写测试
-test('should calculate total correctly', () => {
-  const total = calculateTotal([
-    { price: 10, quantity: 2 }
-  ]);
+test("should calculate total correctly", () => {
+  const total = calculateTotal([{ price: 10, quantity: 2 }]);
   expect(total).toBe(20);
 });
 
@@ -1337,6 +1346,7 @@ function calculateTotal(items: OrderItem[]): number {
 ### 9.3 持续集成
 
 **CI/CD 最佳实践：**
+
 - 自动化测试
 - 代码质量检查
 - 自动化部署
@@ -1349,12 +1359,14 @@ function calculateTotal(items: OrderItem[]): number {
 ### 10.1 性能问题
 
 **如何定位性能瓶颈？**
+
 - 使用 Chrome DevTools Performance 面板
 - 使用 Lighthouse 进行性能分析
 - 使用 Webpack Bundle Analyzer 分析打包体积
 - 使用 React DevTools Profiler 分析组件性能
 
 **如何优化加载速度？**
+
 - 使用代码分割
 - 优化图片
 - 使用 CDN
@@ -1364,12 +1376,14 @@ function calculateTotal(items: OrderItem[]): number {
 ### 10.2 调试问题
 
 **如何调试异步代码？**
+
 - 使用 async/await
 - 使用 Promise.catch()
 - 使用 console.log
 - 使用断点调试
 
 **如何调试内存泄漏？**
+
 - 使用 Chrome DevTools Memory 面板
 - 使用 heapdump
 - 使用 weak-napi
@@ -1379,13 +1393,10 @@ function calculateTotal(items: OrderItem[]): number {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1406,8 +1417,6 @@ function calculateTotal(items: OrderItem[]): number {
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -1436,8 +1445,6 @@ function calculateTotal(items: OrderItem[]): number {
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -1475,7 +1482,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -1491,8 +1498,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -1505,7 +1510,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1520,9 +1525,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1530,9 +1535,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1540,20 +1548,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1562,6 +1568,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1577,17 +1584,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1595,6 +1603,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1605,6 +1614,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1613,8 +1623,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1622,21 +1630,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1645,10 +1655,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1674,16 +1681,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1692,26 +1699,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1727,7 +1729,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1759,14 +1761,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1777,17 +1777,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1797,17 +1800,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1817,21 +1823,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

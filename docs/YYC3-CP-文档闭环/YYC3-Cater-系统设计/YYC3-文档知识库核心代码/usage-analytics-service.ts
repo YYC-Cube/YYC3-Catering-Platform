@@ -216,23 +216,23 @@ export class UsageAnalyticsService {
       const userIds = Array.from(this.userStats.keys());
 
       // 计算系统级统计
-      const totalViews = Array.from(this.documentStats.values())
-        .reduce((sum, stats) => sum + stats.totalViews, 0);
+      const totalViews = Array.from(this.documentStats.values()).reduce((sum, stats) => sum + stats.totalViews, 0);
 
-      const totalEdits = Array.from(this.documentStats.values())
-        .reduce((sum, stats) => sum + stats.totalEdits, 0);
+      const totalEdits = Array.from(this.documentStats.values()).reduce((sum, stats) => sum + stats.totalEdits, 0);
 
-      const totalDownloads = Array.from(this.documentStats.values())
-        .reduce((sum, stats) => sum + stats.totalDownloads, 0);
+      const totalDownloads = Array.from(this.documentStats.values()).reduce(
+        (sum, stats) => sum + stats.totalDownloads,
+        0,
+      );
 
-      const totalShares = Array.from(this.documentStats.values())
-        .reduce((sum, stats) => sum + stats.totalShares, 0);
+      const totalShares = Array.from(this.documentStats.values()).reduce((sum, stats) => sum + stats.totalShares, 0);
 
-      const totalComments = Array.from(this.documentStats.values())
-        .reduce((sum, stats) => sum + stats.totalComments, 0);
+      const totalComments = Array.from(this.documentStats.values()).reduce(
+        (sum, stats) => sum + stats.totalComments,
+        0,
+      );
 
-      const totalSearches = Array.from(this.searchQueries.values())
-        .reduce((sum, count) => sum + count, 0);
+      const totalSearches = Array.from(this.searchQueries.values()).reduce((sum, count) => sum + count, 0);
 
       // 获取最受欢迎的文档
       const mostViewedDocuments = await this.getMostViewedDocuments(10);
@@ -335,13 +335,11 @@ export class UsageAnalyticsService {
   async getDocumentAccessHistory(
     documentId: string,
     limit: number = 50,
-    offset: number = 0
+    offset: number = 0,
   ): Promise<DocumentAccessEvent[]> {
     try {
       const events = this.accessEvents.get(documentId) || [];
-      return events
-        .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
-        .slice(offset, offset + limit);
+      return events.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(offset, offset + limit);
     } catch (error) {
       this.logger.error('Failed to get document access history', { error, documentId });
       throw error;
@@ -351,11 +349,7 @@ export class UsageAnalyticsService {
   /**
    * 获取用户访问历史
    */
-  async getUserAccessHistory(
-    userId: string,
-    limit: number = 50,
-    offset: number = 0
-  ): Promise<DocumentAccessEvent[]> {
+  async getUserAccessHistory(userId: string, limit: number = 50, offset: number = 0): Promise<DocumentAccessEvent[]> {
     try {
       const userEvents: DocumentAccessEvent[] = [];
 
@@ -367,9 +361,7 @@ export class UsageAnalyticsService {
         }
       }
 
-      return userEvents
-        .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
-        .slice(offset, offset + limit);
+      return userEvents.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(offset, offset + limit);
     } catch (error) {
       this.logger.error('Failed to get user access history', { error, userId });
       throw error;
@@ -379,11 +371,7 @@ export class UsageAnalyticsService {
   /**
    * 导出使用报告
    */
-  async exportUsageReport(options: {
-    startDate?: Date;
-    endDate?: Date;
-    format?: 'json' | 'csv';
-  }): Promise<string> {
+  async exportUsageReport(options: { startDate?: Date; endDate?: Date; format?: 'json' | 'csv' }): Promise<string> {
     try {
       const { startDate, endDate, format = 'json' } = options;
 
@@ -405,9 +393,7 @@ export class UsageAnalyticsService {
       } else {
         // CSV格式
         const headers = 'Date,Views,Edits,Downloads,Searches,UniqueUsers\n';
-        const rows = trends.map(
-          (t) => `${t.date},${t.views},${t.edits},${t.downloads},${t.searches},${t.uniqueUsers}`
-        );
+        const rows = trends.map(t => `${t.date},${t.views},${t.edits},${t.downloads},${t.searches},${t.uniqueUsers}`);
         return headers + rows.join('\n');
       }
     } catch (error) {
@@ -427,7 +413,7 @@ export class UsageAnalyticsService {
       let cleanedCount = 0;
 
       for (const [docId, events] of this.accessEvents.entries()) {
-        const filteredEvents = events.filter((event) => event.timestamp > cutoffDate);
+        const filteredEvents = events.filter(event => event.timestamp > cutoffDate);
         if (filteredEvents.length !== events.length) {
           this.accessEvents.set(docId, filteredEvents);
           cleanedCount += events.length - filteredEvents.length;
@@ -473,9 +459,7 @@ export class UsageAnalyticsService {
         if (event.userId) {
           // 检查是否是新的查看者
           const events = this.accessEvents.get(event.documentId) || [];
-          const uniqueViewers = new Set(
-            events.filter((e) => e.action === 'view').map((e) => e.userId)
-          );
+          const uniqueViewers = new Set(events.filter(e => e.action === 'view').map(e => e.userId));
           stats.uniqueViewers = uniqueViewers.size;
         }
         break;
@@ -548,7 +532,9 @@ export class UsageAnalyticsService {
   /**
    * 获取最受欢迎的文档
    */
-  private async getMostViewedDocuments(limit: number): Promise<Array<{ documentId: string; title: string; views: number }>> {
+  private async getMostViewedDocuments(
+    limit: number,
+  ): Promise<Array<{ documentId: string; title: string; views: number }>> {
     const documents = await Promise.all(
       Array.from(this.documentStats.entries())
         .sort((a, b) => b[1].totalViews - a[1].totalViews)
@@ -560,7 +546,7 @@ export class UsageAnalyticsService {
             title: document?.title || 'Unknown',
             views: stats.totalViews,
           };
-        })
+        }),
     );
 
     return documents;

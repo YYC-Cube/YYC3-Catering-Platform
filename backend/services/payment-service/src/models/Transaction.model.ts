@@ -15,22 +15,22 @@ import sequelize from '../config/database';
 
 // 交易类型枚举
 export enum TransactionType {
-  PAYMENT = 'payment',      // 支付
-  REFUND = 'refund',        // 退款
-  AUTHORIZATION = 'authorization',// 授权
-  CAPTURE = 'capture',      // 捕获
-  VOID = 'void',            // 撤销
-  SETTLEMENT = 'settlement',// 结算
+  PAYMENT = 'payment', // 支付
+  REFUND = 'refund', // 退款
+  AUTHORIZATION = 'authorization', // 授权
+  CAPTURE = 'capture', // 捕获
+  VOID = 'void', // 撤销
+  SETTLEMENT = 'settlement', // 结算
 }
 
 // 交易状态枚举
 export enum TransactionStatus {
-  INITIATED = 'initiated',  // 已发起
-  PROCESSING = 'processing',// 处理中
-  COMPLETED = 'completed',  // 已完成
-  FAILED = 'failed',        // 失败
-  CANCELLED = 'cancelled',  // 已取消
-  PENDING = 'pending',      // 待处理
+  INITIATED = 'initiated', // 已发起
+  PROCESSING = 'processing', // 处理中
+  COMPLETED = 'completed', // 已完成
+  FAILED = 'failed', // 失败
+  CANCELLED = 'cancelled', // 已取消
+  PENDING = 'pending', // 待处理
 }
 
 // 交易模型属性接口
@@ -53,10 +53,16 @@ interface TransactionAttributes {
 }
 
 // 交易模型创建属性接口（可选属性）
-interface TransactionCreationAttributes extends Optional<TransactionAttributes, 'id' | 'created_at' | 'updated_at' | 'payment_id' | 'reference_id'> {}
+interface TransactionCreationAttributes extends Optional<
+  TransactionAttributes,
+  'id' | 'created_at' | 'updated_at' | 'payment_id' | 'reference_id'
+> {}
 
 // 交易模型类
-export class Transaction extends Model<TransactionAttributes, TransactionCreationAttributes> implements TransactionAttributes {
+export class Transaction
+  extends Model<TransactionAttributes, TransactionCreationAttributes>
+  implements TransactionAttributes
+{
   public id!: string;
   public payment_id?: string;
   public order_id!: string;
@@ -175,7 +181,7 @@ Transaction.init(
       { fields: ['status'] },
       { fields: ['channel'] },
     ],
-  }
+  },
 );
 
 export default Transaction;

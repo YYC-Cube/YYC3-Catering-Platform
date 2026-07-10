@@ -250,13 +250,10 @@ router.post('/subscribe', async (req, res) => {
     }
 
     // 注意：这里只是示例，实际使用时需要实现消息处理逻辑
-    const consumerId = await kafkaService.subscribe(
-      { topics, groupId, fromBeginning },
-      async (message) => {
-        // 消息处理逻辑
-        logger.info('处理Kafka消息', { message });
-      }
-    );
+    const consumerId = await kafkaService.subscribe({ topics, groupId, fromBeginning }, async message => {
+      // 消息处理逻辑
+      logger.info('处理Kafka消息', { message });
+    });
 
     res.json({
       success: true,

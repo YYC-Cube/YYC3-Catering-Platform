@@ -7,10 +7,10 @@
  * @created 2025-01-20
  */
 
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
-import { ref } from 'vue'
-import { useKitchen } from '@/composables/useKitchen'
-import { kitchenAPI } from '@/api/kitchen'
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { ref } from 'vue';
+import { useKitchen } from '@/composables/useKitchen';
+import { kitchenAPI } from '@/api/kitchen';
 import type {
   KitchenEquipment,
   KitchenEmployee,
@@ -19,8 +19,8 @@ import type {
   HygieneRecord,
   SafetyRecord,
   TaskStatus,
-  EmployeeStatus
-} from '@/types/kitchen'
+  EmployeeStatus,
+} from '@/types/kitchen';
 
 vi.mock('@/api/kitchen', () => ({
   kitchenAPI: {
@@ -55,18 +55,18 @@ vi.mock('@/api/kitchen', () => ({
     getDisplays: vi.fn(),
     createDisplay: vi.fn(),
     updateDisplay: vi.fn(),
-    deleteDisplay: vi.fn()
-  }
-}))
+    deleteDisplay: vi.fn(),
+  },
+}));
 
 vi.mock('element-plus', () => ({
   ElMessage: {
     success: vi.fn(),
     error: vi.fn(),
     warning: vi.fn(),
-    info: vi.fn()
-  }
-}))
+    info: vi.fn(),
+  },
+}));
 
 describe('useKitchen Composable', () => {
   const mockStats = {
@@ -80,8 +80,8 @@ describe('useKitchen Composable', () => {
     normalEquipment: 18,
     maintenanceEquipment: 2,
     lowStockItems: 3,
-    expiredItems: 1
-  }
+    expiredItems: 1,
+  };
 
   const mockEquipment: KitchenEquipment[] = [
     {
@@ -102,9 +102,9 @@ describe('useKitchen Composable', () => {
       specifications: { capacity: '200L', temperature: '100°C' },
       images: [],
       responsiblePersonId: 'emp-1',
-      createdAt: '2023-01-01T00:00:00Z'
-    }
-  ]
+      createdAt: '2023-01-01T00:00:00Z',
+    },
+  ];
 
   const mockEmployees: KitchenEmployee[] = [
     {
@@ -124,15 +124,15 @@ describe('useKitchen Composable', () => {
           name: '厨师证',
           issueDate: '2022-01-01',
           expiryDate: '2025-01-01',
-          issuer: '北京市烹饪协会'
-        }
+          issuer: '北京市烹饪协会',
+        },
       ],
       currentTasks: 2,
       totalTasksCompleted: 150,
       efficiency: 92.5,
       averageTime: 12,
       workSchedule: [],
-      createdAt: '2023-01-01T00:00:00Z'
+      createdAt: '2023-01-01T00:00:00Z',
     },
     {
       id: 'emp-2',
@@ -151,9 +151,9 @@ describe('useKitchen Composable', () => {
       efficiency: 88.0,
       averageTime: 15,
       workSchedule: [],
-      createdAt: '2023-06-01T00:00:00Z'
-    }
-  ]
+      createdAt: '2023-06-01T00:00:00Z',
+    },
+  ];
 
   const mockTasks: KitchenTask[] = [
     {
@@ -169,7 +169,7 @@ describe('useKitchen Composable', () => {
       estimatedTime: 15,
       assignedTo: 'emp-1',
       specialRequests: '少辣',
-      createdAt: '2025-01-20T10:00:00Z'
+      createdAt: '2025-01-20T10:00:00Z',
     },
     {
       id: 'task-2',
@@ -183,9 +183,9 @@ describe('useKitchen Composable', () => {
       tableNumber: 'A02',
       estimatedTime: 20,
       assignedTo: 'emp-2',
-      createdAt: '2025-01-20T10:05:00Z'
-    }
-  ]
+      createdAt: '2025-01-20T10:05:00Z',
+    },
+  ];
 
   const mockInventory: KitchenInventory[] = [
     {
@@ -202,65 +202,65 @@ describe('useKitchen Composable', () => {
       lastRestockDate: '2025-01-15',
       status: 'normal',
       location: '冷藏库A',
-      createdAt: '2025-01-01T00:00:00Z'
-    }
-  ]
+      createdAt: '2025-01-01T00:00:00Z',
+    },
+  ];
 
   beforeEach(() => {
-    vi.clearAllMocks()
-    vi.useFakeTimers()
-  })
+    vi.clearAllMocks();
+    vi.useFakeTimers();
+  });
 
   afterEach(() => {
-    vi.restoreAllMocks()
-    vi.useRealTimers()
-  })
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
 
   describe('状态管理', () => {
     it('应该初始化正确的状态', () => {
-      const { loading, stats, equipment, employees, tasks, inventory } = useKitchen()
+      const { loading, stats, equipment, employees, tasks, inventory } = useKitchen();
 
-      expect(loading.value).toBe(false)
-      expect(stats.value).toBeDefined()
-      expect(equipment.value).toEqual([])
-      expect(employees.value).toEqual([])
-      expect(tasks.value).toEqual([])
-      expect(inventory.value).toEqual([])
-    })
+      expect(loading.value).toBe(false);
+      expect(stats.value).toBeDefined();
+      expect(equipment.value).toEqual([]);
+      expect(employees.value).toEqual([]);
+      expect(tasks.value).toEqual([]);
+      expect(inventory.value).toEqual([]);
+    });
 
     it('应该正确计算设备利用率', () => {
-      const { equipmentUtilization } = useKitchen()
-      expect(equipmentUtilization.value).toBe(0)
-    })
+      const { equipmentUtilization } = useKitchen();
+      expect(equipmentUtilization.value).toBe(0);
+    });
 
     it('应该正确计算员工在线率', () => {
-      const { employeeOnlineRate } = useKitchen()
-      expect(employeeOnlineRate.value).toBe(0)
-    })
-  })
+      const { employeeOnlineRate } = useKitchen();
+      expect(employeeOnlineRate.value).toBe(0);
+    });
+  });
 
   describe('统计数据加载', () => {
     it('应该成功加载统计数据', async () => {
       const mockResponse = {
         success: true,
-        data: mockStats
-      }
-      vi.mocked(kitchenAPI.getStats).mockResolvedValue(mockResponse)
+        data: mockStats,
+      };
+      vi.mocked(kitchenAPI.getStats).mockResolvedValue(mockResponse);
 
-      const { loadStats, stats } = useKitchen()
-      await loadStats()
+      const { loadStats, stats } = useKitchen();
+      await loadStats();
 
-      expect(kitchenAPI.getStats).toHaveBeenCalled()
-      expect(stats.value).toEqual(mockStats)
-    })
+      expect(kitchenAPI.getStats).toHaveBeenCalled();
+      expect(stats.value).toEqual(mockStats);
+    });
 
     it('应该处理加载统计数据失败', async () => {
-      vi.mocked(kitchenAPI.getStats).mockRejectedValue(new Error('加载失败'))
+      vi.mocked(kitchenAPI.getStats).mockRejectedValue(new Error('加载失败'));
 
-      const { loadStats } = useKitchen()
-      await expect(loadStats()).resolves.toBeUndefined()
-    })
-  })
+      const { loadStats } = useKitchen();
+      await expect(loadStats()).resolves.toBeUndefined();
+    });
+  });
 
   describe('设备管理', () => {
     it('应该成功加载设备列表', async () => {
@@ -268,17 +268,17 @@ describe('useKitchen Composable', () => {
         success: true,
         data: {
           items: mockEquipment,
-          pagination: { page: 1, limit: 20, total: 1, totalPages: 1 }
-        }
-      }
-      vi.mocked(kitchenAPI.getEquipment).mockResolvedValue(mockResponse)
+          pagination: { page: 1, limit: 20, total: 1, totalPages: 1 },
+        },
+      };
+      vi.mocked(kitchenAPI.getEquipment).mockResolvedValue(mockResponse);
 
-      const { loadEquipment, equipment } = useKitchen()
-      await loadEquipment()
+      const { loadEquipment, equipment } = useKitchen();
+      await loadEquipment();
 
-      expect(kitchenAPI.getEquipment).toHaveBeenCalled()
-      expect(equipment.value).toEqual(mockEquipment)
-    })
+      expect(kitchenAPI.getEquipment).toHaveBeenCalled();
+      expect(equipment.value).toEqual(mockEquipment);
+    });
 
     it('应该成功创建设备', async () => {
       const newEquipment = {
@@ -297,64 +297,64 @@ describe('useKitchen Composable', () => {
         power: 3000,
         specifications: { capacity: '100L', temperature: '250°C' },
         images: [],
-        responsiblePersonId: 'emp-1'
-      }
+        responsiblePersonId: 'emp-1',
+      };
 
-      const createdEquipment = { ...newEquipment, id: 'eq-2', createdAt: '2025-01-20T00:00:00Z' }
-      const updatedEquipmentList = [...mockEquipment, createdEquipment]
+      const createdEquipment = { ...newEquipment, id: 'eq-2', createdAt: '2025-01-20T00:00:00Z' };
+      const updatedEquipmentList = [...mockEquipment, createdEquipment];
 
       const createResponse = {
         success: true,
-        data: createdEquipment
-      }
+        data: createdEquipment,
+      };
       const getResponse = {
         success: true,
         data: {
           items: updatedEquipmentList,
-          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 }
-        }
-      }
-      vi.mocked(kitchenAPI.createEquipment).mockResolvedValue(createResponse)
-      vi.mocked(kitchenAPI.getEquipment).mockResolvedValue(getResponse)
+          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 },
+        },
+      };
+      vi.mocked(kitchenAPI.createEquipment).mockResolvedValue(createResponse);
+      vi.mocked(kitchenAPI.getEquipment).mockResolvedValue(getResponse);
 
-      const { createEquipment, equipment } = useKitchen()
-      await createEquipment(newEquipment)
+      const { createEquipment, equipment } = useKitchen();
+      await createEquipment(newEquipment);
 
-      expect(kitchenAPI.createEquipment).toHaveBeenCalledWith(newEquipment)
-      expect(equipment.value.length).toBeGreaterThan(0)
-    })
+      expect(kitchenAPI.createEquipment).toHaveBeenCalledWith(newEquipment);
+      expect(equipment.value.length).toBeGreaterThan(0);
+    });
 
     it('应该成功更新设备', async () => {
       const updatedEquipment = {
         ...mockEquipment[0],
-        name: '商用蒸柜（更新）'
-      }
+        name: '商用蒸柜（更新）',
+      };
 
       const mockResponse = {
         success: true,
-        data: updatedEquipment
-      }
-      vi.mocked(kitchenAPI.updateEquipment).mockResolvedValue(mockResponse)
+        data: updatedEquipment,
+      };
+      vi.mocked(kitchenAPI.updateEquipment).mockResolvedValue(mockResponse);
 
-      const { updateEquipment } = useKitchen()
-      await updateEquipment('eq-1', updatedEquipment)
+      const { updateEquipment } = useKitchen();
+      await updateEquipment('eq-1', updatedEquipment);
 
-      expect(kitchenAPI.updateEquipment).toHaveBeenCalledWith('eq-1', updatedEquipment)
-    })
+      expect(kitchenAPI.updateEquipment).toHaveBeenCalledWith('eq-1', updatedEquipment);
+    });
 
     it('应该成功删除设备', async () => {
       const mockResponse = {
         success: true,
-        data: true
-      }
-      vi.mocked(kitchenAPI.deleteEquipment).mockResolvedValue(mockResponse)
+        data: true,
+      };
+      vi.mocked(kitchenAPI.deleteEquipment).mockResolvedValue(mockResponse);
 
-      const { deleteEquipment } = useKitchen()
-      await deleteEquipment('eq-1')
+      const { deleteEquipment } = useKitchen();
+      await deleteEquipment('eq-1');
 
-      expect(kitchenAPI.deleteEquipment).toHaveBeenCalledWith('eq-1')
-    })
-  })
+      expect(kitchenAPI.deleteEquipment).toHaveBeenCalledWith('eq-1');
+    });
+  });
 
   describe('员工管理', () => {
     it('应该成功加载员工列表', async () => {
@@ -362,17 +362,17 @@ describe('useKitchen Composable', () => {
         success: true,
         data: {
           items: mockEmployees,
-          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 }
-        }
-      }
-      vi.mocked(kitchenAPI.getEmployees).mockResolvedValue(mockResponse)
+          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 },
+        },
+      };
+      vi.mocked(kitchenAPI.getEmployees).mockResolvedValue(mockResponse);
 
-      const { loadEmployees, employees } = useKitchen()
-      await loadEmployees()
+      const { loadEmployees, employees } = useKitchen();
+      await loadEmployees();
 
-      expect(kitchenAPI.getEmployees).toHaveBeenCalled()
-      expect(employees.value).toEqual(mockEmployees)
-    })
+      expect(kitchenAPI.getEmployees).toHaveBeenCalled();
+      expect(employees.value).toEqual(mockEmployees);
+    });
 
     it('应该成功创建员工', async () => {
       const newEmployee = {
@@ -389,71 +389,71 @@ describe('useKitchen Composable', () => {
         totalTasksCompleted: 0,
         efficiency: 0,
         averageTime: 0,
-        workSchedule: []
-      }
+        workSchedule: [],
+      };
 
       const mockResponse = {
         success: true,
-        data: { ...newEmployee, id: 'emp-3', createdAt: '2025-01-20T00:00:00Z' }
-      }
-      vi.mocked(kitchenAPI.createEmployee).mockResolvedValue(mockResponse)
+        data: { ...newEmployee, id: 'emp-3', createdAt: '2025-01-20T00:00:00Z' },
+      };
+      vi.mocked(kitchenAPI.createEmployee).mockResolvedValue(mockResponse);
 
-      const { createEmployee } = useKitchen()
-      await createEmployee(newEmployee)
+      const { createEmployee } = useKitchen();
+      await createEmployee(newEmployee);
 
-      expect(kitchenAPI.createEmployee).toHaveBeenCalledWith(newEmployee)
-    })
+      expect(kitchenAPI.createEmployee).toHaveBeenCalledWith(newEmployee);
+    });
 
     it('应该成功更新员工', async () => {
       const updatedEmployee = {
         ...mockEmployees[0],
-        name: '张三（更新）'
-      }
+        name: '张三（更新）',
+      };
 
       const mockResponse = {
         success: true,
-        data: updatedEmployee
-      }
-      vi.mocked(kitchenAPI.updateEmployee).mockResolvedValue(mockResponse)
+        data: updatedEmployee,
+      };
+      vi.mocked(kitchenAPI.updateEmployee).mockResolvedValue(mockResponse);
 
-      const { updateEmployee } = useKitchen()
-      await updateEmployee('emp-1', updatedEmployee)
+      const { updateEmployee } = useKitchen();
+      await updateEmployee('emp-1', updatedEmployee);
 
-      expect(kitchenAPI.updateEmployee).toHaveBeenCalledWith('emp-1', updatedEmployee)
-    })
+      expect(kitchenAPI.updateEmployee).toHaveBeenCalledWith('emp-1', updatedEmployee);
+    });
 
     it('应该成功删除员工', async () => {
       const mockResponse = {
         success: true,
-        data: true
-      }
-      vi.mocked(kitchenAPI.deleteEmployee).mockResolvedValue(mockResponse)
+        data: true,
+      };
+      vi.mocked(kitchenAPI.deleteEmployee).mockResolvedValue(mockResponse);
 
-      const { deleteEmployee } = useKitchen()
-      await deleteEmployee('emp-1')
+      const { deleteEmployee } = useKitchen();
+      await deleteEmployee('emp-1');
 
-      expect(kitchenAPI.deleteEmployee).toHaveBeenCalledWith('emp-1')
-    })
+      expect(kitchenAPI.deleteEmployee).toHaveBeenCalledWith('emp-1');
+    });
 
     it('应该成功更新员工状态', async () => {
-      const newStatus: EmployeeStatus = 'break'
+      const newStatus: EmployeeStatus = 'break';
       const updatedEmployee = {
         ...mockEmployees[0],
-        status: newStatus
-      }
+        status: newStatus,
+      };
 
       const mockResponse = {
         success: true,
-        data: updatedEmployee
-      }
-      vi.mocked(kitchenAPI.updateEmployeeStatus).mockResolvedValue(mockResponse)
+        data: updatedEmployee,
+      };
+      vi.mocked(kitchenAPI.updateEmployeeStatus).mockResolvedValue(mockResponse);
 
-      const { updateEmployeeStatus } = useKitchen()
-      await updateEmployeeStatus('emp-1', newStatus)
+      const { updateEmployeeStatus } = useKitchen();
+      await updateEmployeeStatus('emp-1', newStatus);
 
-      expect(kitchenAPI.updateEmployeeStatus).toHaveBeenCalledWith('emp-1', newStatus)
-    })
-  })
+      expect(kitchenAPI.updateEmployeeStatus).toHaveBeenCalledWith('emp-1', newStatus);
+    });
+  });
 
   describe('任务管理', () => {
     it('应该成功加载任务列表', async () => {
@@ -461,17 +461,17 @@ describe('useKitchen Composable', () => {
         success: true,
         data: {
           items: mockTasks,
-          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 }
-        }
-      }
-      vi.mocked(kitchenAPI.getTasks).mockResolvedValue(mockResponse)
+          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 },
+        },
+      };
+      vi.mocked(kitchenAPI.getTasks).mockResolvedValue(mockResponse);
 
-      const { loadTasks, tasks } = useKitchen()
-      await loadTasks()
+      const { loadTasks, tasks } = useKitchen();
+      await loadTasks();
 
-      expect(kitchenAPI.getTasks).toHaveBeenCalled()
-      expect(tasks.value).toEqual(mockTasks)
-    })
+      expect(kitchenAPI.getTasks).toHaveBeenCalled();
+      expect(tasks.value).toEqual(mockTasks);
+    });
 
     it('应该成功创建任务', async () => {
       const newTask = {
@@ -484,89 +484,89 @@ describe('useKitchen Composable', () => {
         status: 'pending' as const,
         tableNumber: 'A03',
         estimatedTime: 18,
-        createdAt: '2025-01-20T10:10:00Z'
-      }
+        createdAt: '2025-01-20T10:10:00Z',
+      };
 
       const mockResponse = {
         success: true,
-        data: { ...newTask, id: 'task-3' }
-      }
-      vi.mocked(kitchenAPI.createTask).mockResolvedValue(mockResponse)
+        data: { ...newTask, id: 'task-3' },
+      };
+      vi.mocked(kitchenAPI.createTask).mockResolvedValue(mockResponse);
 
-      const { createTask } = useKitchen()
-      await createTask(newTask)
+      const { createTask } = useKitchen();
+      await createTask(newTask);
 
-      expect(kitchenAPI.createTask).toHaveBeenCalledWith(newTask)
-    })
+      expect(kitchenAPI.createTask).toHaveBeenCalledWith(newTask);
+    });
 
     it('应该成功更新任务', async () => {
       const updatedTask = {
         ...mockTasks[0],
-        status: 'preparing' as TaskStatus
-      }
+        status: 'preparing' as TaskStatus,
+      };
 
       const mockResponse = {
         success: true,
-        data: updatedTask
-      }
-      vi.mocked(kitchenAPI.updateTask).mockResolvedValue(mockResponse)
+        data: updatedTask,
+      };
+      vi.mocked(kitchenAPI.updateTask).mockResolvedValue(mockResponse);
 
-      const { updateTask } = useKitchen()
-      await updateTask('task-1', updatedTask)
+      const { updateTask } = useKitchen();
+      await updateTask('task-1', updatedTask);
 
-      expect(kitchenAPI.updateTask).toHaveBeenCalledWith('task-1', updatedTask)
-    })
+      expect(kitchenAPI.updateTask).toHaveBeenCalledWith('task-1', updatedTask);
+    });
 
     it('应该成功删除任务', async () => {
       const mockResponse = {
         success: true,
-        data: true
-      }
-      vi.mocked(kitchenAPI.deleteTask).mockResolvedValue(mockResponse)
+        data: true,
+      };
+      vi.mocked(kitchenAPI.deleteTask).mockResolvedValue(mockResponse);
 
-      const { deleteTask } = useKitchen()
-      await deleteTask('task-1')
+      const { deleteTask } = useKitchen();
+      await deleteTask('task-1');
 
-      expect(kitchenAPI.deleteTask).toHaveBeenCalledWith('task-1')
-    })
+      expect(kitchenAPI.deleteTask).toHaveBeenCalledWith('task-1');
+    });
 
     it('应该成功更新任务状态', async () => {
-      const newStatus: TaskStatus = 'ready'
+      const newStatus: TaskStatus = 'ready';
       const updatedTask = {
         ...mockTasks[0],
-        status: newStatus
-      }
+        status: newStatus,
+      };
 
       const mockResponse = {
         success: true,
-        data: updatedTask
-      }
-      vi.mocked(kitchenAPI.updateTaskStatus).mockResolvedValue(mockResponse)
+        data: updatedTask,
+      };
+      vi.mocked(kitchenAPI.updateTaskStatus).mockResolvedValue(mockResponse);
 
-      const { updateTaskStatus } = useKitchen()
-      await updateTaskStatus('task-1', newStatus)
+      const { updateTaskStatus } = useKitchen();
+      await updateTaskStatus('task-1', newStatus);
 
-      expect(kitchenAPI.updateTaskStatus).toHaveBeenCalledWith('task-1', newStatus)
-    })
+      expect(kitchenAPI.updateTaskStatus).toHaveBeenCalledWith('task-1', newStatus);
+    });
 
     it('应该成功分配任务', async () => {
       const assignedTask = {
         ...mockTasks[0],
-        assignedTo: 'emp-2'
-      }
+        assignedTo: 'emp-2',
+      };
 
       const mockResponse = {
         success: true,
-        data: assignedTask
-      }
-      vi.mocked(kitchenAPI.assignTask).mockResolvedValue(mockResponse)
+        data: assignedTask,
+      };
+      vi.mocked(kitchenAPI.assignTask).mockResolvedValue(mockResponse);
 
-      const { assignTask } = useKitchen()
-      await assignTask('task-1', 'emp-2')
+      const { assignTask } = useKitchen();
+      await assignTask('task-1', 'emp-2');
 
-      expect(kitchenAPI.assignTask).toHaveBeenCalledWith('task-1', 'emp-2')
-    })
-  })
+      expect(kitchenAPI.assignTask).toHaveBeenCalledWith('task-1', 'emp-2');
+    });
+  });
 
   describe('库存管理', () => {
     it('应该成功加载库存列表', async () => {
@@ -574,17 +574,17 @@ describe('useKitchen Composable', () => {
         success: true,
         data: {
           items: mockInventory,
-          pagination: { page: 1, limit: 20, total: 1, totalPages: 1 }
-        }
-      }
-      vi.mocked(kitchenAPI.getInventory).mockResolvedValue(mockResponse)
+          pagination: { page: 1, limit: 20, total: 1, totalPages: 1 },
+        },
+      };
+      vi.mocked(kitchenAPI.getInventory).mockResolvedValue(mockResponse);
 
-      const { loadInventory, inventory } = useKitchen()
-      await loadInventory()
+      const { loadInventory, inventory } = useKitchen();
+      await loadInventory();
 
-      expect(kitchenAPI.getInventory).toHaveBeenCalled()
-      expect(inventory.value).toEqual(mockInventory)
-    })
+      expect(kitchenAPI.getInventory).toHaveBeenCalled();
+      expect(inventory.value).toEqual(mockInventory);
+    });
 
     it('应该成功创建库存项', async () => {
       const newItem = {
@@ -599,70 +599,70 @@ describe('useKitchen Composable', () => {
         supplier: '供应商B',
         lastRestockDate: '2025-01-20',
         status: 'normal' as const,
-        location: '冷藏库B'
-      }
+        location: '冷藏库B',
+      };
 
       const mockResponse = {
         success: true,
-        data: { ...newItem, id: 'inv-2', createdAt: '2025-01-20T00:00:00Z' }
-      }
-      vi.mocked(kitchenAPI.createInventoryItem).mockResolvedValue(mockResponse)
+        data: { ...newItem, id: 'inv-2', createdAt: '2025-01-20T00:00:00Z' },
+      };
+      vi.mocked(kitchenAPI.createInventoryItem).mockResolvedValue(mockResponse);
 
-      const { createInventoryItem } = useKitchen()
-      await createInventoryItem(newItem)
+      const { createInventoryItem } = useKitchen();
+      await createInventoryItem(newItem);
 
-      expect(kitchenAPI.createInventoryItem).toHaveBeenCalledWith(newItem)
-    })
+      expect(kitchenAPI.createInventoryItem).toHaveBeenCalledWith(newItem);
+    });
 
     it('应该成功更新库存项', async () => {
       const updatedItem = {
         ...mockInventory[0],
-        quantity: 60
-      }
+        quantity: 60,
+      };
 
       const mockResponse = {
         success: true,
-        data: updatedItem
-      }
-      vi.mocked(kitchenAPI.updateInventoryItem).mockResolvedValue(mockResponse)
+        data: updatedItem,
+      };
+      vi.mocked(kitchenAPI.updateInventoryItem).mockResolvedValue(mockResponse);
 
-      const { updateInventoryItem } = useKitchen()
-      await updateInventoryItem('inv-1', updatedItem)
+      const { updateInventoryItem } = useKitchen();
+      await updateInventoryItem('inv-1', updatedItem);
 
-      expect(kitchenAPI.updateInventoryItem).toHaveBeenCalledWith('inv-1', updatedItem)
-    })
+      expect(kitchenAPI.updateInventoryItem).toHaveBeenCalledWith('inv-1', updatedItem);
+    });
 
     it('应该成功删除库存项', async () => {
       const mockResponse = {
         success: true,
-        data: true
-      }
-      vi.mocked(kitchenAPI.deleteInventoryItem).mockResolvedValue(mockResponse)
+        data: true,
+      };
+      vi.mocked(kitchenAPI.deleteInventoryItem).mockResolvedValue(mockResponse);
 
-      const { deleteInventoryItem } = useKitchen()
-      await deleteInventoryItem('inv-1')
+      const { deleteInventoryItem } = useKitchen();
+      await deleteInventoryItem('inv-1');
 
-      expect(kitchenAPI.deleteInventoryItem).toHaveBeenCalledWith('inv-1')
-    })
+      expect(kitchenAPI.deleteInventoryItem).toHaveBeenCalledWith('inv-1');
+    });
 
     it('应该成功补货', async () => {
       const restockedItem = {
         ...mockInventory[0],
-        quantity: 80
-      }
+        quantity: 80,
+      };
 
       const mockResponse = {
         success: true,
-        data: restockedItem
-      }
-      vi.mocked(kitchenAPI.restockInventory).mockResolvedValue(mockResponse)
+        data: restockedItem,
+      };
+      vi.mocked(kitchenAPI.restockInventory).mockResolvedValue(mockResponse);
 
-      const { restockInventory } = useKitchen()
-      await restockInventory('inv-1', 30)
+      const { restockInventory } = useKitchen();
+      await restockInventory('inv-1', 30);
 
-      expect(kitchenAPI.restockInventory).toHaveBeenCalledWith('inv-1', 30)
-    })
-  })
+      expect(kitchenAPI.restockInventory).toHaveBeenCalledWith('inv-1', 30);
+    });
+  });
 
   describe('卫生记录管理', () => {
     it('应该成功加载卫生记录', async () => {
@@ -681,32 +681,32 @@ describe('useKitchen Composable', () => {
               id: 'item-1',
               item: '地面清洁',
               standard: '无油污、无积水',
-              result: 'pass'
-            }
+              result: 'pass',
+            },
           ],
           result: 'pass',
           score: 100,
           issues: [],
           photos: [],
-          createdAt: '2025-01-20T08:00:00Z'
-        }
-      ]
+          createdAt: '2025-01-20T08:00:00Z',
+        },
+      ];
 
       const mockResponse = {
         success: true,
         data: {
           items: mockRecords,
-          pagination: { page: 1, limit: 20, total: 1, totalPages: 1 }
-        }
-      }
-      vi.mocked(kitchenAPI.getHygieneRecords).mockResolvedValue(mockResponse)
+          pagination: { page: 1, limit: 20, total: 1, totalPages: 1 },
+        },
+      };
+      vi.mocked(kitchenAPI.getHygieneRecords).mockResolvedValue(mockResponse);
 
-      const { loadHygieneRecords, hygieneRecords } = useKitchen()
-      await loadHygieneRecords()
+      const { loadHygieneRecords, hygieneRecords } = useKitchen();
+      await loadHygieneRecords();
 
-      expect(kitchenAPI.getHygieneRecords).toHaveBeenCalled()
-      expect(hygieneRecords.value).toEqual(mockRecords)
-    })
+      expect(kitchenAPI.getHygieneRecords).toHaveBeenCalled();
+      expect(hygieneRecords.value).toEqual(mockRecords);
+    });
 
     it('应该成功创建卫生记录', async () => {
       const newRecord = {
@@ -722,27 +722,27 @@ describe('useKitchen Composable', () => {
             id: 'item-2',
             item: '设备清洁',
             standard: '无油污、无残留',
-            result: 'pass'
-          }
+            result: 'pass',
+          },
         ],
         result: 'pass' as const,
         score: 100,
         issues: [],
-        photos: []
-      }
+        photos: [],
+      };
 
       const mockResponse = {
         success: true,
-        data: { ...newRecord, id: 'hyg-2', createdAt: '2025-01-20T09:00:00Z' }
-      }
-      vi.mocked(kitchenAPI.createHygieneRecord).mockResolvedValue(mockResponse)
+        data: { ...newRecord, id: 'hyg-2', createdAt: '2025-01-20T09:00:00Z' },
+      };
+      vi.mocked(kitchenAPI.createHygieneRecord).mockResolvedValue(mockResponse);
 
-      const { createHygieneRecord } = useKitchen()
-      await createHygieneRecord(newRecord)
+      const { createHygieneRecord } = useKitchen();
+      await createHygieneRecord(newRecord);
 
-      expect(kitchenAPI.createHygieneRecord).toHaveBeenCalledWith(newRecord)
-    })
-  })
+      expect(kitchenAPI.createHygieneRecord).toHaveBeenCalledWith(newRecord);
+    });
+  });
 
   describe('安全记录管理', () => {
     it('应该成功加载安全记录', async () => {
@@ -762,25 +762,25 @@ describe('useKitchen Composable', () => {
           photos: [],
           witnesses: [],
           actions: [],
-          createdAt: '2025-01-20T10:00:00Z'
-        }
-      ]
+          createdAt: '2025-01-20T10:00:00Z',
+        },
+      ];
 
       const mockResponse = {
         success: true,
         data: {
           items: mockRecords,
-          pagination: { page: 1, limit: 20, total: 1, totalPages: 1 }
-        }
-      }
-      vi.mocked(kitchenAPI.getSafetyRecords).mockResolvedValue(mockResponse)
+          pagination: { page: 1, limit: 20, total: 1, totalPages: 1 },
+        },
+      };
+      vi.mocked(kitchenAPI.getSafetyRecords).mockResolvedValue(mockResponse);
 
-      const { loadSafetyRecords, safetyRecords } = useKitchen()
-      await loadSafetyRecords()
+      const { loadSafetyRecords, safetyRecords } = useKitchen();
+      await loadSafetyRecords();
 
-      expect(kitchenAPI.getSafetyRecords).toHaveBeenCalled()
-      expect(safetyRecords.value).toEqual(mockRecords)
-    })
+      expect(kitchenAPI.getSafetyRecords).toHaveBeenCalled();
+      expect(safetyRecords.value).toEqual(mockRecords);
+    });
 
     it('应该成功创建安全记录', async () => {
       const newRecord = {
@@ -796,74 +796,74 @@ describe('useKitchen Composable', () => {
         status: 'reported' as const,
         photos: [],
         witnesses: [],
-        actions: []
-      }
+        actions: [],
+      };
 
       const mockResponse = {
         success: true,
-        data: { ...newRecord, id: 'safe-2', createdAt: '2025-01-20T11:00:00Z' }
-      }
-      vi.mocked(kitchenAPI.createSafetyRecord).mockResolvedValue(mockResponse)
+        data: { ...newRecord, id: 'safe-2', createdAt: '2025-01-20T11:00:00Z' },
+      };
+      vi.mocked(kitchenAPI.createSafetyRecord).mockResolvedValue(mockResponse);
 
-      const { createSafetyRecord } = useKitchen()
-      await createSafetyRecord(newRecord)
+      const { createSafetyRecord } = useKitchen();
+      await createSafetyRecord(newRecord);
 
-      expect(kitchenAPI.createSafetyRecord).toHaveBeenCalledWith(newRecord)
-    })
-  })
+      expect(kitchenAPI.createSafetyRecord).toHaveBeenCalledWith(newRecord);
+    });
+  });
 
   describe('数据刷新', () => {
     it('应该成功刷新所有数据', async () => {
       const mockStatsResponse = {
         success: true,
-        data: mockStats
-      }
+        data: mockStats,
+      };
       const mockTasksResponse = {
         success: true,
         data: {
           items: mockTasks,
-          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 }
-        }
-      }
+          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 },
+        },
+      };
       const mockEmployeesResponse = {
         success: true,
         data: {
           items: mockEmployees,
-          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 }
-        }
-      }
+          pagination: { page: 1, limit: 20, total: 2, totalPages: 1 },
+        },
+      };
 
-      vi.mocked(kitchenAPI.getStats).mockResolvedValue(mockStatsResponse)
-      vi.mocked(kitchenAPI.getTasks).mockResolvedValue(mockTasksResponse)
-      vi.mocked(kitchenAPI.getEmployees).mockResolvedValue(mockEmployeesResponse)
+      vi.mocked(kitchenAPI.getStats).mockResolvedValue(mockStatsResponse);
+      vi.mocked(kitchenAPI.getTasks).mockResolvedValue(mockTasksResponse);
+      vi.mocked(kitchenAPI.getEmployees).mockResolvedValue(mockEmployeesResponse);
 
-      const { refreshData } = useKitchen()
-      await refreshData()
+      const { refreshData } = useKitchen();
+      await refreshData();
 
-      expect(kitchenAPI.getStats).toHaveBeenCalled()
-      expect(kitchenAPI.getTasks).toHaveBeenCalled()
-      expect(kitchenAPI.getEmployees).toHaveBeenCalled()
-    })
-  })
+      expect(kitchenAPI.getStats).toHaveBeenCalled();
+      expect(kitchenAPI.getTasks).toHaveBeenCalled();
+      expect(kitchenAPI.getEmployees).toHaveBeenCalled();
+    });
+  });
 
   describe('自动刷新', () => {
     it('应该启动自动刷新', () => {
-      const { startAutoRefresh, stopAutoRefresh } = useKitchen()
+      const { startAutoRefresh, stopAutoRefresh } = useKitchen();
 
-      startAutoRefresh(5000)
+      startAutoRefresh(5000);
 
-      vi.advanceTimersByTime(5000)
+      vi.advanceTimersByTime(5000);
 
-      stopAutoRefresh()
-    })
+      stopAutoRefresh();
+    });
 
     it('应该停止自动刷新', () => {
-      const { startAutoRefresh, stopAutoRefresh } = useKitchen()
+      const { startAutoRefresh, stopAutoRefresh } = useKitchen();
 
-      startAutoRefresh(5000)
-      stopAutoRefresh()
+      startAutoRefresh(5000);
+      stopAutoRefresh();
 
-      vi.advanceTimersByTime(10000)
-    })
-  })
-})
+      vi.advanceTimersByTime(10000);
+    });
+  });
+});

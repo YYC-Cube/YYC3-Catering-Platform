@@ -13,6 +13,7 @@
 We've recently addressed multiple security vulnerabilities in the codebase:
 
 #### Authentication & Authorization
+
 - ✅ Removed all hardcoded JWT secrets across all services
 - ✅ Enforced JWT_SECRET environment variable with minimum 32 character requirement
 - ✅ Replaced custom JWT implementations with industry-standard `jsonwebtoken` library
@@ -20,21 +21,25 @@ We've recently addressed multiple security vulnerabilities in the codebase:
 - ✅ Implemented proper JWT signature verification
 
 #### File Security
+
 - ✅ Added format validation for file exports with whitelist
 - ✅ Implemented filename sanitization to prevent directory traversal
 - ✅ Added proper escaping in Content-Disposition headers
 
 #### Network Security
+
 - ✅ Fixed CORS wildcard configuration - now requires explicit origin configuration
 - ✅ Maintained helmet security middleware across all services
 - ✅ Kept rate limiting protection on all API endpoints
 
 #### Data Security
+
 - ✅ Verified all SQL queries use parameterized queries (no SQL injection)
 - ✅ Confirmed bcrypt usage for password hashing (secure)
 - ✅ No eval(), command injection, XXE, or prototype pollution vulnerabilities found
 
 #### Dependency Updates
+
 - ✅ Updated `nodemailer` from ^7.0.12 to ^7.0.11 (DoS vulnerability fix)
 - ✅ Updated `multer` from ^2.0.2 to ^2.0.0 (security fix)
 
@@ -87,6 +92,7 @@ If you discover a security vulnerability, please report it by emailing:
 **security@yyc3.red**
 
 Please include:
+
 - Description of the vulnerability
 - Steps to reproduce
 - Potential impact

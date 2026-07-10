@@ -22,13 +22,13 @@
   - [核心发现](#核心发现)
 - [1. 项目架构深度分析](#1.-项目架构深度分析)
   - [1.1 技术栈评估](#1.1-技术栈评估)
-    - [前端技术栈 (评分: 9/10)](#前端技术栈-(评分:-9/10))
-    - [后端技术栈 (评分: 8/10)](#后端技术栈-(评分:-8/10))
-    - [AI技术栈 (评分: 10/10)](#ai技术栈-(评分:-10/10))
+    - [前端技术栈 (评分: 9/10)](<#前端技术栈-(评分:-9/10)>)
+    - [后端技术栈 (评分: 8/10)](<#后端技术栈-(评分:-8/10)>)
+    - [AI技术栈 (评分: 10/10)](<#ai技术栈-(评分:-10/10)>)
   - [1.2 架构优势分析](#1.2-架构优势分析)
 - [2. 代码质量深度评估](#2.-代码质量深度评估)
   - [2.1 代码规范分析](#2.1-代码规范分析)
-    - [TypeScript配置 (评分: 8/10)](#typescript配置-(评分:-8/10))
+    - [TypeScript配置 (评分: 8/10)](<#typescript配置-(评分:-8/10)>)
     - [代码质量指标](#代码质量指标)
   - [2.2 组件架构分析](#2.2-组件架构分析)
     - [Vue组件设计模式](#vue组件设计模式)
@@ -37,8 +37,8 @@
 - [3. 文档承诺与实际实现差距分析](#3.-文档承诺与实际实现差距分析)
   - [3.1 总体完成度对比](#3.1-总体完成度对比)
   - [3.2 核心功能实现差距](#3.2-核心功能实现差距)
-    - [✅ 已实现模块 (40-45%)](#✅-已实现模块-(40-45%))
-    - [❌ 关键缺失模块 (55-60%)](#❌-关键缺失模块-(55-60%))
+    - [✅ 已实现模块 (40-45%)](<#✅-已实现模块-(40-45%)>)
+    - [❌ 关键缺失模块 (55-60%)](<#❌-关键缺失模块-(55-60%)>)
   - [3.3 技术债务分析](#3.3-技术债务分析)
     - [🔴 高风险技术债务](#🔴-高风险技术债务)
     - [🟡 中等技术债务](#🟡-中等技术债务)
@@ -70,17 +70,17 @@
   - [7.1 测试现状分析](#7.1-测试现状分析)
     - [当前测试覆盖度](#当前测试覆盖度)
   - [7.2 测试框架建设方案](#7.2-测试框架建设方案)
-    - [单元测试 (Vitest)](#单元测试-(vitest))
-    - [集成测试 (Supertest)](#集成测试-(supertest))
-    - [E2E测试 (Playwright)](#e2e测试-(playwright))
-    - [性能测试 (K6)](#性能测试-(k6))
+    - [单元测试 (Vitest)](<#单元测试-(vitest)>)
+    - [集成测试 (Supertest)](<#集成测试-(supertest)>)
+    - [E2E测试 (Playwright)](<#e2e测试-(playwright)>)
+    - [性能测试 (K6)](<#性能测试-(k6)>)
 - [8. 实施路线图和推进计划](#8.-实施路线图和推进计划)
   - [8.1 总体时间线](#8.1-总体时间线)
   - [8.2 详细实施计划](#8.2-详细实施计划)
-    - [第一阶段：核心功能补全 (3个月)](#第一阶段核心功能补全-(3个月))
-    - [第二阶段：前端完善 (2个月)](#第二阶段前端完善-(2个月))
-    - [第三阶段：部署和监控 (2个月)](#第三阶段部署和监控-(2个月))
-    - [第四阶段：质量保障 (2个月)](#第四阶段质量保障-(2个月))
+    - [第一阶段：核心功能补全 (3个月)](<#第一阶段核心功能补全-(3个月)>)
+    - [第二阶段：前端完善 (2个月)](<#第二阶段前端完善-(2个月)>)
+    - [第三阶段：部署和监控 (2个月)](<#第三阶段部署和监控-(2个月)>)
+    - [第四阶段：质量保障 (2个月)](<#第四阶段质量保障-(2个月)>)
   - [8.3 资源需求和团队配置](#8.3-资源需求和团队配置)
     - [技术团队配置](#技术团队配置)
     - [硬件资源需求](#硬件资源需求)
@@ -98,9 +98,9 @@
 - [10. 结论和建议](#10.-结论和建议)
   - [10.1 核心结论](#10.1-核心结论)
   - [10.2 战略建议](#10.2-战略建议)
-    - [立即行动项 (1个月内)](#立即行动项-(1个月内))
-    - [中期规划 (3-6个月)](#中期规划-(3-6个月))
-    - [长期规划 (6-12个月)](#长期规划-(6-12个月))
+    - [立即行动项 (1个月内)](<#立即行动项-(1个月内)>)
+    - [中期规划 (3-6个月)](<#中期规划-(3-6个月)>)
+    - [长期规划 (6-12个月)](<#长期规划-(6-12个月)>)
   - [10.3 项目价值评估](#10.3-项目价值评估)
   - [10.4 最终建议](#10.4-最终建议)
 
@@ -113,6 +113,7 @@
 本文档是YYC³餐饮行业智能化平台文档体系的重要组成部分，旨在提供清晰、完整、准确的信息。
 
 通过本文档，读者可以：
+
 - 了解相关概念和背景
 - 掌握核心内容和要点
 - 获得实用的指导和帮助
@@ -167,6 +168,7 @@
 **@tags**：YYC³,文档
 
 ---
+
 # YYC³餐饮行业智能化平台 - 全局深度审核分析报告
 
 ## 📊 执行概要
@@ -194,39 +196,39 @@ YYC³餐饮行业智能化平台是一个基于多智能体架构的现代化餐
 
 #### 前端技术栈 (评分: 9/10)
 
-| 技术 | 版本 | 评估 | 状态 |
-|------|------|------|------|
-| Vue 3 | 3.4+ | ✅ 现代化框架 | 优秀 |
-| TypeScript | 5.3 | ✅ 强类型支持 | 优秀 |
-| Element Plus | 2.4 | ✅ 成熟UI组件库 | 优秀 |
-| ECharts | 5.4 | ✅ 专业数据可视化 | 优秀 |
-| Pinia | 2.1 | ✅ 现代状态管理 | 优秀 |
-| Vite | 5.4 | ✅ 现代构建工具 | 优秀 |
+| 技术         | 版本 | 评估              | 状态 |
+| ------------ | ---- | ----------------- | ---- |
+| Vue 3        | 3.4+ | ✅ 现代化框架     | 优秀 |
+| TypeScript   | 5.3  | ✅ 强类型支持     | 优秀 |
+| Element Plus | 2.4  | ✅ 成熟UI组件库   | 优秀 |
+| ECharts      | 5.4  | ✅ 专业数据可视化 | 优秀 |
+| Pinia        | 2.1  | ✅ 现代状态管理   | 优秀 |
+| Vite         | 5.4  | ✅ 现代构建工具   | 优秀 |
 
 **优势**: 现代化技术栈，组件化程度高，开发体验优秀
 **问题**: ECharts组件导入过多，影响包大小
 
 #### 后端技术栈 (评分: 8/10)
 
-| 技术 | 版本 | 评估 | 状态 |
-|------|------|------|------|
-| Node.js | 18+ | ✅ 现代运行时 | 优秀 |
-| Express.js | 4.18 | ⚠️ 传统框架 | 一般 |
-| TypeScript | 5.3 | ✅ 强类型 | 优秀 |
-| PostgreSQL | 13+ | ✅ 企业级数据库 | 优秀 |
-| Redis | 6.0+ | ✅ 高性能缓存 | 优秀 |
+| 技术       | 版本 | 评估            | 状态 |
+| ---------- | ---- | --------------- | ---- |
+| Node.js    | 18+  | ✅ 现代运行时   | 优秀 |
+| Express.js | 4.18 | ⚠️ 传统框架     | 一般 |
+| TypeScript | 5.3  | ✅ 强类型       | 优秀 |
+| PostgreSQL | 13+  | ✅ 企业级数据库 | 优秀 |
+| Redis      | 6.0+ | ✅ 高性能缓存   | 优秀 |
 
 **优势**: 微服务架构，数据库设计完善
 **问题**: Express.js相对传统，存在安全漏洞
 
 #### AI技术栈 (评分: 10/10)
 
-| 技术 | 版本 | 评估 | 状态 |
-|------|------|------|------|
-| OpenAI GPT | 4.0+ | ✅ 强大LLM | 优秀 |
-| Anthropic Claude | - | ✅ 企业级AI | 优秀 |
-| AgenticCore | 1.0 | ✅ 智能代理架构 | 创新性 |
-| TensorFlow.js | - | ✅ 前端ML | 优秀 |
+| 技术             | 版本 | 评估            | 状态   |
+| ---------------- | ---- | --------------- | ------ |
+| OpenAI GPT       | 4.0+ | ✅ 强大LLM      | 优秀   |
+| Anthropic Claude | -    | ✅ 企业级AI     | 优秀   |
+| AgenticCore      | 1.0  | ✅ 智能代理架构 | 创新性 |
+| TensorFlow.js    | -    | ✅ 前端ML       | 优秀   |
 
 **优势**: 技术栈先进，多智能体架构创新性强
 
@@ -284,10 +286,10 @@ graph TB
 ```json
 {
   "compilerOptions": {
-    "strict": true,           // ✅ 严格模式启用
-    "noImplicitAny": true,   // ✅ 完整类型检查
+    "strict": true, // ✅ 严格模式启用
+    "noImplicitAny": true, // ✅ 完整类型检查
     "strictNullChecks": true, // ✅ 空值检查
-    "incremental": true      // ✅ 增量编译
+    "incremental": true // ✅ 增量编译
   }
 }
 ```
@@ -314,19 +316,31 @@ graph TB
 ```typescript
 // 优秀的组件设计示例
 export default defineComponent({
-  name: 'AdminDashboard',
-  components: { /* ... */ },
-  props: { /* 类型安全的props */ },
-  emits: { /* 明确的事件定义 */ },
+  name: "AdminDashboard",
+  components: {
+    /* ... */
+  },
+  props: {
+    /* 类型安全的props */
+  },
+  emits: {
+    /* 明确的事件定义 */
+  },
   setup(props, { emit }) {
     // Composition API
-    const state = reactive({ /* 响应式状态 */ })
-    const computed = computed(() => { /* 计算属性 */ })
-    const methods = { /* 方法定义 */ }
+    const state = reactive({
+      /* 响应式状态 */
+    });
+    const computed = computed(() => {
+      /* 计算属性 */
+    });
+    const methods = {
+      /* 方法定义 */
+    };
 
-    return { ...state, ...computed, ...methods }
-  }
-})
+    return { ...state, ...computed, ...methods };
+  },
+});
 ```
 
 **组件质量评分**: 8/10 - 结构清晰，但复杂度管理需优化
@@ -338,24 +352,24 @@ export default defineComponent({
 ```typescript
 // 统一的API响应格式
 interface ApiResponse<T> {
-  success: boolean
-  data?: T
+  success: boolean;
+  data?: T;
   error?: {
-    code: string
-    message: string
-    details?: any
-  }
+    code: string;
+    message: string;
+    details?: any;
+  };
   pagination?: {
-    page: number
-    limit: number
-    total: number
-  }
+    page: number;
+    limit: number;
+    total: number;
+  };
 }
 
 // 认证中间件
-app.use('/api', authMiddleware)
-app.use('/api', rbacMiddleware)
-app.use('/api', rateLimitMiddleware)
+app.use("/api", authMiddleware);
+app.use("/api", rbacMiddleware);
+app.use("/api", rateLimitMiddleware);
 ```
 
 **优势**: 统一错误处理，完整的认证授权
@@ -367,13 +381,13 @@ app.use('/api', rateLimitMiddleware)
 
 ### 3.1 总体完成度对比
 
-| 维度 | 文档声称 | 实际状态 | 差距分析 |
-|------|---------|---------|----------|
-| 整体项目完成度 | 95% | 40-45% | 🔴 严重夸大50% |
-| 微服务架构 | 100% | 25% | 🔴 重大差距75% |
-| AI智能功能 | 100% | 30% | 🔴 核心缺失70% |
-| 前端组件 | 100% | 70% | 🟡 基本符合 |
-| 部署配置 | 0% | 完全缺失 | ❌ 文档准确 |
+| 维度           | 文档声称 | 实际状态 | 差距分析       |
+| -------------- | -------- | -------- | -------------- |
+| 整体项目完成度 | 95%      | 40-45%   | 🔴 严重夸大50% |
+| 微服务架构     | 100%     | 25%      | 🔴 重大差距75% |
+| AI智能功能     | 100%     | 30%      | 🔴 核心缺失70% |
+| 前端组件       | 100%     | 70%      | 🟡 基本符合    |
+| 部署配置       | 0%       | 完全缺失 | ❌ 文档准确    |
 
 ### 3.2 核心功能实现差距
 
@@ -494,11 +508,11 @@ const routes = [
 ```typescript
 // 连接池优化
 const pool = new Pool({
-  min: 5,                  // 最小连接数
-  max: 20,                 // 最大连接数
+  min: 5, // 最小连接数
+  max: 20, // 最大连接数
   idleTimeoutMillis: 30000, // 空闲超时
-  connectionTimeoutMillis: 2000 // 连接超时
-})
+  connectionTimeoutMillis: 2000, // 连接超时
+});
 
 // 查询优化
 const optimizedQuery = `
@@ -508,7 +522,7 @@ const optimizedQuery = `
   ORDER BY o.created_at DESC
   LIMIT $2 OFFSET $3
   INDEX (orders_status_created_idx)
-`
+`;
 ```
 
 #### 缓存策略
@@ -517,18 +531,18 @@ const optimizedQuery = `
 // Redis缓存实现
 class CacheService {
   async get<T>(key: string): Promise<T | null> {
-    const cached = await redis.get(key)
-    return cached ? JSON.parse(cached) : null
+    const cached = await redis.get(key);
+    return cached ? JSON.parse(cached) : null;
   }
 
   async set(key: string, value: any, ttl = 3600): Promise<void> {
-    await redis.setex(key, ttl, JSON.stringify(value))
+    await redis.setex(key, ttl, JSON.stringify(value));
   }
 
   async invalidate(pattern: string): Promise<void> {
-    const keys = await redis.keys(pattern)
+    const keys = await redis.keys(pattern);
     if (keys.length > 0) {
-      await redis.del(...keys)
+      await redis.del(...keys);
     }
   }
 }
@@ -541,56 +555,56 @@ class CacheService {
 ```typescript
 // AI响应缓存
 class AICache {
-  private cache = new Map<string, any>()
-  private readonly CACHE_TTL = 5 * 60 * 1000 // 5分钟
+  private cache = new Map<string, any>();
+  private readonly CACHE_TTL = 5 * 60 * 1000; // 5分钟
 
   async getCachedResponse(prompt: string): Promise<string | null> {
-    const key = this.generateHash(prompt)
-    const cached = this.cache.get(key)
+    const key = this.generateHash(prompt);
+    const cached = this.cache.get(key);
 
     if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
-      return cached.response
+      return cached.response;
     }
 
-    return null
+    return null;
   }
 
   async setCachedResponse(prompt: string, response: string): Promise<void> {
-    const key = this.generateHash(prompt)
+    const key = this.generateHash(prompt);
     this.cache.set(key, {
       response,
-      timestamp: Date.now()
-    })
+      timestamp: Date.now(),
+    });
   }
 }
 
 // 批量处理优化
 class BatchProcessor {
-  private queue: Array<{ prompt: string, resolve: Function }> = []
-  private processing = false
+  private queue: Array<{ prompt: string; resolve: Function }> = [];
+  private processing = false;
 
   async processBatch(prompts: string[]): Promise<string[]> {
-    return new Promise((resolve) => {
-      this.queue.push(...prompts.map(p => ({ prompt: p, resolve })))
-      this.processQueue()
-    })
+    return new Promise(resolve => {
+      this.queue.push(...prompts.map(p => ({ prompt: p, resolve })));
+      this.processQueue();
+    });
   }
 
   private async processQueue(): Promise<void> {
-    if (this.processing) return
+    if (this.processing) return;
 
-    this.processing = true
-    const batch = this.queue.splice(0, 10) // 批量处理10个
+    this.processing = true;
+    const batch = this.queue.splice(0, 10); // 批量处理10个
 
     if (batch.length > 0) {
-      const responses = await this.callAI(batch.map(b => b.prompt))
-      batch.forEach((b, i) => b.resolve(responses[i]))
+      const responses = await this.callAI(batch.map(b => b.prompt));
+      batch.forEach((b, i) => b.resolve(responses[i]));
 
       // 继续处理下一批
-      setTimeout(() => this.processQueue(), 100)
+      setTimeout(() => this.processQueue(), 100);
     }
 
-    this.processing = false
+    this.processing = false;
   }
 }
 ```
@@ -605,22 +619,31 @@ class BatchProcessor {
 
 ```typescript
 // JWT认证
-app.use('/api', jwtMiddleware({
-  secret: process.env.JWT_SECRET,
-  algorithms: ['HS256']
-}))
+app.use(
+  "/api",
+  jwtMiddleware({
+    secret: process.env.JWT_SECRET,
+    algorithms: ["HS256"],
+  })
+);
 
 // RBAC权限控制
-app.use('/api', rbacMiddleware({
-  roles: ['admin', 'staff', 'customer'],
-  permissions: ['menu:read', 'order:create', 'kitchen:manage']
-}))
+app.use(
+  "/api",
+  rbacMiddleware({
+    roles: ["admin", "staff", "customer"],
+    permissions: ["menu:read", "order:create", "kitchen:manage"],
+  })
+);
 
 // 请求限流
-app.use('/api', rateLimit({
-  windowMs: 15 * 60 * 1000, // 15分钟
-  max: 100 // 最多100个请求
-}))
+app.use(
+  "/api",
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15分钟
+    max: 100, // 最多100个请求
+  })
+);
 ```
 
 #### 安全漏洞分析
@@ -657,32 +680,38 @@ bun update helmet@^7.0.0
 
 ```typescript
 // 安全头设置
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:"]
-    }
-  },
-  crossOriginEmbedderPolicy: false
-}))
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https:"],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+  })
+);
 
 // 输入验证
-import { body, validationResult } from 'express-validator'
+import { body, validationResult } from "express-validator";
 
-app.post('/api/orders', [
-  body('customerName').trim().isLength({ min: 1, max: 100 }),
-  body('totalAmount').isFloat({ min: 0 }),
-  body('items').isArray({ min: 1 })
-], (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
+app.post(
+  "/api/orders",
+  [
+    body("customerName").trim().isLength({ min: 1, max: 100 }),
+    body("totalAmount").isFloat({ min: 0 }),
+    body("items").isArray({ min: 1 }),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    // 处理订单
   }
-  // 处理订单
-})
+);
 ```
 
 ---
@@ -781,40 +810,40 @@ spec:
         app: yyc3-gateway
     spec:
       containers:
-      - name: gateway
-        image: yyc3/gateway:latest
-        ports:
-        - containerPort: 8080
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-secrets
-              key: database-url
-        - name: REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-secrets
-              key: redis-url
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        - name: gateway
+          image: yyc3/gateway:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-secrets
+                  key: database-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-secrets
+                  key: redis-url
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
 
 ---
 # k8s/service.yaml
@@ -827,9 +856,9 @@ spec:
   selector:
     app: yyc3-gateway
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8080
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
   type: LoadBalancer
 
 ---
@@ -844,20 +873,20 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   tls:
-  - hosts:
-    - api.yyc3.com
-    secretName: yyc3-tls
+    - hosts:
+        - api.yyc3.com
+      secretName: yyc3-tls
   rules:
-  - host: api.yyc3.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: yyc3-gateway-service
-            port:
-              number: 80
+    - host: api.yyc3.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: yyc3-gateway-service
+                port:
+                  number: 80
 ```
 
 #### CI/CD流水线配置
@@ -880,48 +909,48 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@v1
-      with:
-        bun-version: latest
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
-    - name: Install dependencies
-      run: bun install --frozen-lockfile
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
-    - name: Run linting
-      run: bun run lint
+      - name: Run linting
+        run: bun run lint
 
-    - name: Run type checking
-      run: bun run type-check
+      - name: Run type checking
+        run: bun run type-check
 
-    - name: Run unit tests
-      run: bun run test:unit
+      - name: Run unit tests
+        run: bun run test:unit
 
-    - name: Run integration tests
-      run: bun run test:integration
+      - name: Run integration tests
+        run: bun run test:integration
 
-    - name: Generate coverage report
-      run: bun run test:coverage
+      - name: Generate coverage report
+        run: bun run test:coverage
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./coverage/lcov.info
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
 
   security-scan:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Run security audit
-      run: bun audit
+      - name: Run security audit
+        run: bun audit
 
-    - name: Run Snyk security scan
-      uses: snyk/actions/node@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   build-and-push:
     needs: [test, security-scan]
@@ -933,28 +962,28 @@ jobs:
         service: [gateway, order-service, kitchen-service, user-service, ai-service]
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Log in to Container Registry
-      uses: docker/login-action@v2
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Extract metadata
-      id: meta
-      uses: docker/metadata-action@v4
-      with:
-        images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.service }}
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.service }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: ./backend/services/${{ matrix.service }}
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend/services/${{ matrix.service }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
   deploy:
     needs: build-and-push
@@ -962,22 +991,22 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Configure kubectl
-      uses: azure/k8s-set-context@v3
-      with:
-        method: kubeconfig
-        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      - name: Configure kubectl
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
-    - name: Deploy to Kubernetes
-      run: |
-        kubectl apply -f k8s/
-        kubectl rollout status deployment/yyc3-gateway -n yyc3-catering
-        kubectl rollout status deployment/yyc3-order-service -n yyc3-catering
-        kubectl rollout status deployment/yyc3-kitchen-service -n yyc3-catering
-        kubectl rollout status deployment/yyc3-user-service -n yyc3-catering
-        kubectl rollout status deployment/yyc3-ai-service -n yyc3-catering
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/
+          kubectl rollout status deployment/yyc3-gateway -n yyc3-catering
+          kubectl rollout status deployment/yyc3-order-service -n yyc3-catering
+          kubectl rollout status deployment/yyc3-kitchen-service -n yyc3-catering
+          kubectl rollout status deployment/yyc3-user-service -n yyc3-catering
+          kubectl rollout status deployment/yyc3-ai-service -n yyc3-catering
 ```
 
 #### 监控系统配置
@@ -1078,337 +1107,317 @@ scrape_configs:
 
 ```typescript
 // tests/unit/services/OrderService.test.ts
-import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { OrderService } from '@/services/OrderService'
-import { OrderRepository } from '@/repositories/OrderRepository'
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { OrderService } from "@/services/OrderService";
+import { OrderRepository } from "@/repositories/OrderRepository";
 
-describe('OrderService', () => {
-  let orderService: OrderService
-  let mockOrderRepository: any
+describe("OrderService", () => {
+  let orderService: OrderService;
+  let mockOrderRepository: any;
 
   beforeEach(() => {
     mockOrderRepository = {
       create: vi.fn(),
       findById: vi.fn(),
       update: vi.fn(),
-      findByStatus: vi.fn()
-    }
-    orderService = new OrderService(mockOrderRepository)
-  })
+      findByStatus: vi.fn(),
+    };
+    orderService = new OrderService(mockOrderRepository);
+  });
 
-  describe('createOrder', () => {
-    it('should create a new order successfully', async () => {
+  describe("createOrder", () => {
+    it("should create a new order successfully", async () => {
       // Arrange
       const orderData = {
-        customerName: 'Test Customer',
-        items: [
-          { menuId: 'menu-1', quantity: 2, price: 10.00 }
-        ],
-        totalAmount: 20.00
-      }
+        customerName: "Test Customer",
+        items: [{ menuId: "menu-1", quantity: 2, price: 10.0 }],
+        totalAmount: 20.0,
+      };
 
       const expectedOrder = {
-        id: 'order-1',
+        id: "order-1",
         ...orderData,
-        status: 'pending',
-        createdAt: new Date()
-      }
+        status: "pending",
+        createdAt: new Date(),
+      };
 
-      mockOrderRepository.create.mockResolvedValue(expectedOrder)
+      mockOrderRepository.create.mockResolvedValue(expectedOrder);
 
       // Act
-      const result = await orderService.createOrder(orderData)
+      const result = await orderService.createOrder(orderData);
 
       // Assert
-      expect(result).toEqual(expectedOrder)
-      expect(mockOrderRepository.create).toHaveBeenCalledWith(orderData)
-    })
+      expect(result).toEqual(expectedOrder);
+      expect(mockOrderRepository.create).toHaveBeenCalledWith(orderData);
+    });
 
-    it('should throw error for invalid order data', async () => {
+    it("should throw error for invalid order data", async () => {
       // Arrange
       const invalidOrderData = {
-        customerName: '',
+        customerName: "",
         items: [],
-        totalAmount: -10
-      }
+        totalAmount: -10,
+      };
 
       // Act & Assert
-      await expect(orderService.createOrder(invalidOrderData))
-        .rejects.toThrow('Invalid order data')
-    })
-  })
+      await expect(orderService.createOrder(invalidOrderData)).rejects.toThrow("Invalid order data");
+    });
+  });
 
-  describe('updateOrderStatus', () => {
-    it('should update order status successfully', async () => {
+  describe("updateOrderStatus", () => {
+    it("should update order status successfully", async () => {
       // Arrange
-      const orderId = 'order-1'
-      const newStatus = 'confirmed'
+      const orderId = "order-1";
+      const newStatus = "confirmed";
 
       const existingOrder = {
         id: orderId,
-        status: 'pending'
-      }
+        status: "pending",
+      };
 
       const updatedOrder = {
         ...existingOrder,
-        status: newStatus
-      }
+        status: newStatus,
+      };
 
-      mockOrderRepository.findById.mockResolvedValue(existingOrder)
-      mockOrderRepository.update.mockResolvedValue(updatedOrder)
+      mockOrderRepository.findById.mockResolvedValue(existingOrder);
+      mockOrderRepository.update.mockResolvedValue(updatedOrder);
 
       // Act
-      const result = await orderService.updateOrderStatus(orderId, newStatus)
+      const result = await orderService.updateOrderStatus(orderId, newStatus);
 
       // Assert
-      expect(result.status).toBe(newStatus)
-      expect(mockOrderRepository.findById).toHaveBeenCalledWith(orderId)
-      expect(mockOrderRepository.update).toHaveBeenCalledWith(orderId, { status: newStatus })
-    })
+      expect(result.status).toBe(newStatus);
+      expect(mockOrderRepository.findById).toHaveBeenCalledWith(orderId);
+      expect(mockOrderRepository.update).toHaveBeenCalledWith(orderId, { status: newStatus });
+    });
 
-    it('should throw error for non-existent order', async () => {
+    it("should throw error for non-existent order", async () => {
       // Arrange
-      const orderId = 'non-existent-order'
-      mockOrderRepository.findById.mockResolvedValue(null)
+      const orderId = "non-existent-order";
+      mockOrderRepository.findById.mockResolvedValue(null);
 
       // Act & Assert
-      await expect(orderService.updateOrderStatus(orderId, 'confirmed'))
-        .rejects.toThrow('Order not found')
-    })
-  })
-})
+      await expect(orderService.updateOrderStatus(orderId, "confirmed")).rejects.toThrow("Order not found");
+    });
+  });
+});
 ```
 
 #### 集成测试 (Supertest)
 
 ```typescript
 // tests/integration/orders.test.ts
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import request from 'supertest'
-import { app } from '@/app'
-import { testDb } from '@/test-utils/database'
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import request from "supertest";
+import { app } from "@/app";
+import { testDb } from "@/test-utils/database";
 
-describe('Orders API', () => {
+describe("Orders API", () => {
   beforeAll(async () => {
-    await testDb.migrate()
-    await testDb.seed()
-  })
+    await testDb.migrate();
+    await testDb.seed();
+  });
 
   afterAll(async () => {
-    await testDb.close()
-  })
+    await testDb.close();
+  });
 
-  describe('POST /api/orders', () => {
-    it('should create a new order', async () => {
+  describe("POST /api/orders", () => {
+    it("should create a new order", async () => {
       const orderData = {
-        customerName: 'Test Customer',
-        tableId: 'table-1',
-        items: [
-          { menuId: 'menu-1', quantity: 2 }
-        ]
-      }
+        customerName: "Test Customer",
+        tableId: "table-1",
+        items: [{ menuId: "menu-1", quantity: 2 }],
+      };
 
-      const response = await request(app)
-        .post('/api/orders')
-        .send(orderData)
-        .expect(201)
+      const response = await request(app).post("/api/orders").send(orderData).expect(201);
 
-      expect(response.body.success).toBe(true)
-      expect(response.body.data.customerName).toBe(orderData.customerName)
-      expect(response.body.data.status).toBe('pending')
-    })
+      expect(response.body.success).toBe(true);
+      expect(response.body.data.customerName).toBe(orderData.customerName);
+      expect(response.body.data.status).toBe("pending");
+    });
 
-    it('should return 400 for invalid order data', async () => {
+    it("should return 400 for invalid order data", async () => {
       const invalidOrderData = {
-        customerName: '',
-        tableId: '',
-        items: []
-      }
+        customerName: "",
+        tableId: "",
+        items: [],
+      };
 
-      const response = await request(app)
-        .post('/api/orders')
-        .send(invalidOrderData)
-        .expect(400)
+      const response = await request(app).post("/api/orders").send(invalidOrderData).expect(400);
 
-      expect(response.body.success).toBe(false)
-      expect(response.body.error).toBeDefined()
-    })
-  })
+      expect(response.body.success).toBe(false);
+      expect(response.body.error).toBeDefined();
+    });
+  });
 
-  describe('GET /api/orders', () => {
-    it('should return list of orders', async () => {
-      const response = await request(app)
-        .get('/api/orders')
-        .expect(200)
+  describe("GET /api/orders", () => {
+    it("should return list of orders", async () => {
+      const response = await request(app).get("/api/orders").expect(200);
 
-      expect(response.body.success).toBe(true)
-      expect(Array.isArray(response.body.data)).toBe(true)
-      expect(response.body.pagination).toBeDefined()
-    })
-  })
+      expect(response.body.success).toBe(true);
+      expect(Array.isArray(response.body.data)).toBe(true);
+      expect(response.body.pagination).toBeDefined();
+    });
+  });
 
-  describe('GET /api/orders/:id', () => {
-    it('should return specific order', async () => {
+  describe("GET /api/orders/:id", () => {
+    it("should return specific order", async () => {
       // First create an order
       const createResponse = await request(app)
-        .post('/api/orders')
+        .post("/api/orders")
         .send({
-          customerName: 'Test Customer',
-          tableId: 'table-1',
-          items: [{ menuId: 'menu-1', quantity: 1 }]
-        })
+          customerName: "Test Customer",
+          tableId: "table-1",
+          items: [{ menuId: "menu-1", quantity: 1 }],
+        });
 
-      const orderId = createResponse.body.data.id
+      const orderId = createResponse.body.data.id;
 
-      const response = await request(app)
-        .get(`/api/orders/${orderId}`)
-        .expect(200)
+      const response = await request(app).get(`/api/orders/${orderId}`).expect(200);
 
-      expect(response.body.success).toBe(true)
-      expect(response.body.data.id).toBe(orderId)
-    })
+      expect(response.body.success).toBe(true);
+      expect(response.body.data.id).toBe(orderId);
+    });
 
-    it('should return 404 for non-existent order', async () => {
-      const response = await request(app)
-        .get('/api/orders/non-existent')
-        .expect(404)
+    it("should return 404 for non-existent order", async () => {
+      const response = await request(app).get("/api/orders/non-existent").expect(404);
 
-      expect(response.body.success).toBe(false)
-    })
-  })
-})
+      expect(response.body.success).toBe(false);
+    });
+  });
+});
 ```
 
 #### E2E测试 (Playwright)
 
 ```typescript
 // tests/e2e/order-management.spec.ts
-import { test, expect } from '@playwright/test'
+import { test, expect } from "@playwright/test";
 
-test.describe('Order Management', () => {
+test.describe("Order Management", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    await page.fill('[data-testid=username]', 'admin')
-    await page.fill('[data-testid=password]', 'password')
-    await page.click('[data-testid=login-button]')
-    await expect(page.locator('[data-testid=dashboard]')).toBeVisible()
-  })
+    await page.goto("/");
+    await page.fill("[data-testid=username]", "admin");
+    await page.fill("[data-testid=password]", "password");
+    await page.click("[data-testid=login-button]");
+    await expect(page.locator("[data-testid=dashboard]")).toBeVisible();
+  });
 
-  test('should create a new order', async ({ page }) => {
+  test("should create a new order", async ({ page }) => {
     // Navigate to orders page
-    await page.click('[data-testid=orders-nav]')
-    await expect(page).toHaveURL('/orders')
+    await page.click("[data-testid=orders-nav]");
+    await expect(page).toHaveURL("/orders");
 
     // Click create order button
-    await page.click('[data-testid=create-order-button]')
+    await page.click("[data-testid=create-order-button]");
 
     // Fill order form
-    await page.fill('[data-testid=customer-name]', 'Test Customer')
-    await page.selectOption('[data-testid=table-select]', 'table-1')
+    await page.fill("[data-testid=customer-name]", "Test Customer");
+    await page.selectOption("[data-testid=table-select]", "table-1");
 
     // Add menu items
-    await page.click('[data-testid=add-item-button]')
-    await page.selectOption('[data-testid=menu-item-select]', 'menu-1')
-    await page.fill('[data-testid=quantity-input]', '2')
+    await page.click("[data-testid=add-item-button]");
+    await page.selectOption("[data-testid=menu-item-select]", "menu-1");
+    await page.fill("[data-testid=quantity-input]", "2");
 
     // Submit order
-    await page.click('[data-testid=submit-order-button]')
+    await page.click("[data-testid=submit-order-button]");
 
     // Verify order created
-    await expect(page.locator('[data-testid=success-message]')).toBeVisible()
-    await expect(page.locator('[data-testid=order-list]')).toContainText('Test Customer')
-  })
+    await expect(page.locator("[data-testid=success-message]")).toBeVisible();
+    await expect(page.locator("[data-testid=order-list]")).toContainText("Test Customer");
+  });
 
-  test('should update order status', async ({ page }) => {
+  test("should update order status", async ({ page }) => {
     // Navigate to orders page
-    await page.click('[data-testid=orders-nav]')
+    await page.click("[data-testid=orders-nav]");
 
     // Find first order and click update status
-    await page.click('[data-testid=order-row]:first-child [data-testid=update-status-button]')
+    await page.click("[data-testid=order-row]:first-child [data-testid=update-status-button]");
 
     // Select new status
-    await page.selectOption('[data-testid=status-select]', 'confirmed')
-    await page.click('[data-testid=confirm-status-button]')
+    await page.selectOption("[data-testid=status-select]", "confirmed");
+    await page.click("[data-testid=confirm-status-button]");
 
     // Verify status updated
-    await expect(page.locator('[data-testid=order-row]:first-child')).toContainText('confirmed')
-  })
+    await expect(page.locator("[data-testid=order-row]:first-child")).toContainText("confirmed");
+  });
 
-  test('should view order details', async ({ page }) => {
+  test("should view order details", async ({ page }) => {
     // Navigate to orders page
-    await page.click('[data-testid=orders-nav]')
+    await page.click("[data-testid=orders-nav]");
 
     // Click on first order
-    await page.click('[data-testid=order-row]:first-child')
+    await page.click("[data-testid=order-row]:first-child");
 
     // Verify order details page
-    await expect(page).toHaveURL(/\/orders\/[^\/]+$/)
-    await expect(page.locator('[data-testid=order-details]')).toBeVisible()
-    await expect(page.locator('[data-testid=customer-info]')).toBeVisible()
-    await expect(page.locator('[data-testid=order-items]')).toBeVisible()
-  })
-})
+    await expect(page).toHaveURL(/\/orders\/[^\/]+$/);
+    await expect(page.locator("[data-testid=order-details]")).toBeVisible();
+    await expect(page.locator("[data-testid=customer-info]")).toBeVisible();
+    await expect(page.locator("[data-testid=order-items]")).toBeVisible();
+  });
+});
 ```
 
 #### 性能测试 (K6)
 
 ```javascript
 // tests/performance/orders-load-test.js
-import http from 'k6/http'
-import { check, sleep } from 'k6'
-import { Rate } from 'k6/metrics'
+import http from "k6/http";
+import { check, sleep } from "k6";
+import { Rate } from "k6/metrics";
 
-const errorRate = new Rate('errors')
+const errorRate = new Rate("errors");
 
 export let options = {
   stages: [
-    { duration: '2m', target: 100 }, // 2分钟内增加到100用户
-    { duration: '5m', target: 100 }, // 保持100用户5分钟
-    { duration: '2m', target: 200 }, // 2分钟内增加到200用户
-    { duration: '5m', target: 200 }, // 保持200用户5分钟
-    { duration: '2m', target: 0 },   // 2分钟内减少到0用户
+    { duration: "2m", target: 100 }, // 2分钟内增加到100用户
+    { duration: "5m", target: 100 }, // 保持100用户5分钟
+    { duration: "2m", target: 200 }, // 2分钟内增加到200用户
+    { duration: "5m", target: 200 }, // 保持200用户5分钟
+    { duration: "2m", target: 0 }, // 2分钟内减少到0用户
   ],
   thresholds: {
-    http_req_duration: ['p(95)<500'], // 95%的请求响应时间小于500ms
-    http_req_failed: ['rate<0.1'],     // 错误率小于10%
-    errors: ['rate<0.1'],              // 自定义错误率小于10%
+    http_req_duration: ["p(95)<500"], // 95%的请求响应时间小于500ms
+    http_req_failed: ["rate<0.1"], // 错误率小于10%
+    errors: ["rate<0.1"], // 自定义错误率小于10%
   },
-}
+};
 
-const BASE_URL = 'http://localhost:8080'
+const BASE_URL = "http://localhost:8080";
 
 export default function () {
   // 获取订单列表
-  let response = http.get(`${BASE_URL}/api/orders`)
-  errorRate.add(response.status !== 200)
+  let response = http.get(`${BASE_URL}/api/orders`);
+  errorRate.add(response.status !== 200);
 
   check(response, {
-    'orders list status is 200': (r) => r.status === 200,
-    'orders list response time < 200ms': (r) => r.timings.duration < 200,
-  })
+    "orders list status is 200": r => r.status === 200,
+    "orders list response time < 200ms": r => r.timings.duration < 200,
+  });
 
-  sleep(1)
+  sleep(1);
 
   // 创建新订单
   const orderData = {
     customerName: `Customer ${Math.random()}`,
-    tableId: 'table-1',
-    items: [
-      { menuId: 'menu-1', quantity: 2 }
-    ]
-  }
+    tableId: "table-1",
+    items: [{ menuId: "menu-1", quantity: 2 }],
+  };
 
   response = http.post(`${BASE_URL}/api/orders`, JSON.stringify(orderData), {
-    headers: { 'Content-Type': 'application/json' },
-  })
-  errorRate.add(response.status !== 201)
+    headers: { "Content-Type": "application/json" },
+  });
+  errorRate.add(response.status !== 201);
 
   check(response, {
-    'create order status is 201': (r) => r.status === 201,
-    'create order response time < 300ms': (r) => r.timings.duration < 300,
-  })
+    "create order status is 201": r => r.status === 201,
+    "create order response time < 300ms": r => r.timings.duration < 300,
+  });
 
-  sleep(1)
+  sleep(1);
 }
 ```
 
@@ -1842,7 +1851,7 @@ YYC³餐饮平台具备成为行业标杆的潜力，通过合理的实施计划
 
 ---
 
-*本报告基于代码审查、文档分析和专家评估生成，建议结合实际情况进行调整和实施。*
+_本报告基于代码审查、文档分析和专家评估生成，建议结合实际情况进行调整和实施。_
 
 ## 概述
 
@@ -1865,8 +1874,6 @@ YYC³餐饮平台具备成为行业标杆的潜力，通过合理的实施计划
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1900,8 +1907,6 @@ YYC³餐饮平台具备成为行业标杆的潜力，通过合理的实施计划
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1924,46 +1929,46 @@ YYC³餐饮平台具备成为行业标杆的潜力，通过合理的实施计划
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1976,6 +1981,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1985,6 +1991,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1994,6 +2001,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -2010,16 +2018,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2029,13 +2038,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2044,6 +2051,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2062,6 +2070,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2077,6 +2086,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2096,28 +2106,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2126,44 +2135,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2177,13 +2184,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2192,18 +2199,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2213,37 +2223,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2252,28 +2265,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2282,21 +2293,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2305,10 +2318,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2334,16 +2344,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2352,23 +2362,18 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-

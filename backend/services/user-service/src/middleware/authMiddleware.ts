@@ -124,8 +124,4 @@ function checkUserType(userTypes: string[]) {
   };
 }
 
-export {
-  authenticateToken,
-  checkRole,
-  checkUserType,
-};
+export { authenticateToken, checkRole, checkUserType };

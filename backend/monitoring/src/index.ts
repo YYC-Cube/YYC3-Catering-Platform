@@ -39,9 +39,7 @@ export const initMonitoring = (config?: {
     port?: number;
   };
 }) => {
-  const metricsManager = PrometheusMetricsManagerFactory.getInstance(
-    config?.prometheus
-  );
+  const metricsManager = PrometheusMetricsManagerFactory.getInstance(config?.prometheus);
 
   return {
     metricsManager,
@@ -51,12 +49,7 @@ export const initMonitoring = (config?: {
 /**
  * 快速记录HTTP请求
  */
-export const recordHttpRequest = (
-  method: string,
-  path: string,
-  statusCode: number,
-  duration: number
-) => {
+export const recordHttpRequest = (method: string, path: string, statusCode: number, duration: number) => {
   const metricsManager = PrometheusMetricsManagerFactory.getInstance();
   metricsManager.recordHttpRequest(method, path, statusCode, duration);
 };
@@ -68,7 +61,7 @@ export const recordDatabaseQuery = (
   operation: string,
   table: string,
   duration: number,
-  status: 'success' | 'error'
+  status: 'success' | 'error',
 ) => {
   const metricsManager = PrometheusMetricsManagerFactory.getInstance();
   metricsManager.recordDatabaseQuery(operation, table, duration, status);
@@ -77,11 +70,7 @@ export const recordDatabaseQuery = (
 /**
  * 快速记录订单
  */
-export const recordOrder = (
-  status: string,
-  paymentMethod: string,
-  amount: number
-) => {
+export const recordOrder = (status: string, paymentMethod: string, amount: number) => {
   const metricsManager = PrometheusMetricsManagerFactory.getInstance();
   metricsManager.recordOrder(status, paymentMethod, amount);
 };

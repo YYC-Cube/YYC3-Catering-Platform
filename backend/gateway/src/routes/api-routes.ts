@@ -179,7 +179,7 @@ export const createRoutes = (): Router => {
     const routeHandler = createRouteHandler(routeConfig);
 
     // 为每个方法创建路由
-    routeConfig.methods.forEach((method) => {
+    routeConfig.methods.forEach(method => {
       const methodLower = method.toLowerCase();
       if (router[methodLower as keyof Router]) {
         (router as any)[methodLower](routeConfig.path, routeHandler);
@@ -202,7 +202,7 @@ export const createRoutes = (): Router => {
  * @returns 路由信息列表
  */
 export const getRouteInfo = () => {
-  return gatewayConfig.routes.map((route) => ({
+  return gatewayConfig.routes.map(route => ({
     path: route.path,
     target: route.target,
     methods: route.methods,
@@ -218,7 +218,7 @@ export const getRouteInfo = () => {
  * @returns 路由配置或undefined
  */
 export const findRouteByPath = (path: string): RouteConfig | undefined => {
-  return gatewayConfig.routes.find((route) => path.startsWith(route.path));
+  return gatewayConfig.routes.find(route => path.startsWith(route.path));
 };
 
 /**
@@ -252,7 +252,7 @@ export const validateRoutes = (): { valid: boolean; errors: string[] } => {
 
     // 检查方法是否有效
     const validMethods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'];
-    route.methods?.forEach((method) => {
+    route.methods?.forEach(method => {
       if (!validMethods.includes(method)) {
         errors.push(`Route ${index}: invalid method ${method}`);
       }

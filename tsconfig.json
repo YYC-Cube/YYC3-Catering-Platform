@@ -53,12 +53,7 @@
     "typeRoots": ["./node_modules/@types", "./types"],
     "types": ["node"]
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.vue",
-    "**/*.d.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.vue", "**/*.d.ts"],
   "exclude": [
     "node_modules",
     "dist",

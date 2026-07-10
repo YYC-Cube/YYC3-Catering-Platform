@@ -12,7 +12,7 @@
 ### 基础用法
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineBasic() {
   return (
@@ -23,14 +23,14 @@ export default function TimelineBasic() {
       <TimelineItem>开发完成</TimelineItem>
       <TimelineItem>测试通过</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
 ### 带时间
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineWithTime() {
   return (
@@ -41,14 +41,14 @@ export default function TimelineWithTime() {
       <TimelineItem time="2024-03-01">开发完成</TimelineItem>
       <TimelineItem time="2024-03-15">测试通过</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
 ### 颜色标记
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineColor() {
   return (
@@ -59,14 +59,14 @@ export default function TimelineColor() {
       <TimelineItem color="danger">开发完成</TimelineItem>
       <TimelineItem color="success">测试通过</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
 ### 带图标
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineWithIcon() {
   return (
@@ -77,14 +77,14 @@ export default function TimelineWithIcon() {
       <TimelineItem dot="💻">开发完成</TimelineItem>
       <TimelineItem dot="✅">测试通过</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
 ### 禁用状态
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineDisabled() {
   return (
@@ -95,14 +95,14 @@ export default function TimelineDisabled() {
       <TimelineItem disabled>开发完成</TimelineItem>
       <TimelineItem disabled>测试通过</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
 ### 交替排列
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineAlternate() {
   return (
@@ -113,14 +113,14 @@ export default function TimelineAlternate() {
       <TimelineItem>开发完成</TimelineItem>
       <TimelineItem>测试通过</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
 ### 右侧排列
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineRight() {
   return (
@@ -131,14 +131,14 @@ export default function TimelineRight() {
       <TimelineItem>开发完成</TimelineItem>
       <TimelineItem>测试通过</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
 ### 反向时间轴
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineReverse() {
   return (
@@ -149,14 +149,14 @@ export default function TimelineReverse() {
       <TimelineItem>完成初步设计</TimelineItem>
       <TimelineItem>创建服务</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
 ### 自定义颜色
 
 ```tsx
-import { Timeline, TimelineItem } from '@/components/UI'
+import { Timeline, TimelineItem } from "@/components/UI";
 
 export default function TimelineCustomColor() {
   return (
@@ -167,7 +167,7 @@ export default function TimelineCustomColor() {
       <TimelineItem color="#ffff00">开发完成</TimelineItem>
       <TimelineItem color="#ff00ff">测试通过</TimelineItem>
     </Timeline>
-  )
+  );
 }
 ```
 
@@ -175,22 +175,22 @@ export default function TimelineCustomColor() {
 
 ### Timeline Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| position | 时间轴位置 | `string` | `left` / `right` / `alternate` | `left` |
-| reverse | 是否反向 | `boolean` | `false` |
-| bordered | 是否带边框 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型      | 默认值                         |
+| --------- | ---------- | --------- | ------------------------------ | ------ |
+| position  | 时间轴位置 | `string`  | `left` / `right` / `alternate` | `left` |
+| reverse   | 是否反向   | `boolean` | `false`                        |
+| bordered  | 是否带边框 | `boolean` | `false`                        |
+| className | 自定义类名 | `string`  | -                              |
 
 ### TimelineItem Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| time | 时间 | `string` | - |
-| color | 颜色 | `string` | `primary` / `success` / `warning` / `danger` |
-| dot | 自定义节点 | `VNode` | - |
-| disabled | 是否禁用 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型      | 默认值                                       |
+| --------- | ---------- | --------- | -------------------------------------------- |
+| time      | 时间       | `string`  | -                                            |
+| color     | 颜色       | `string`  | `primary` / `success` / `warning` / `danger` |
+| dot       | 自定义节点 | `VNode`   | -                                            |
+| disabled  | 是否禁用   | `boolean` | `false`                                      |
+| className | 自定义类名 | `string`  | -                                            |
 
 ## 样式定制
 
@@ -235,27 +235,27 @@ export default function TimelineCustomColor() {
 
 ```tsx
 const projectProgress = [
-  { 
+  {
     time: '2024-01-01',
     title: '项目启动',
     description: '项目正式启动，组建团队'
   },
-  { 
+  {
     time: '2024-02-01',
     title: '需求分析',
     description: '完成需求调研和分析'
   },
-  { 
+  {
     time: '2024-03-01',
     title: '设计阶段',
     description: '完成UI/UX设计'
   },
-  { 
+  {
     time: '2024-04-01',
     title: '开发阶段',
     description: '进行功能开发'
   },
-  { 
+  {
     time: '2024-05-01',
     title: '测试阶段',
     description: '进行系统测试'
@@ -278,27 +278,27 @@ const projectProgress = [
 
 ```tsx
 const orderFlow = [
-  { 
+  {
     time: '2024-01-01 10:00',
     title: '订单创建',
     color: 'primary'
   },
-  { 
+  {
     time: '2024-01-01 10:30',
     title: '支付成功',
     color: 'success'
   },
-  { 
+  {
     time: '2024-01-01 11:00',
     title: '商家接单',
     color: 'primary'
   },
-  { 
+  {
     time: '2024-01-01 12:00',
     title: '配送中',
     color: 'warning'
   },
-  { 
+  {
     time: '2024-01-01 12:30',
     title: '已送达',
     color: 'success'
@@ -307,8 +307,8 @@ const orderFlow = [
 
 <Timeline>
   {orderFlow.map(item => (
-    <TimelineItem 
-      key={item.time} 
+    <TimelineItem
+      key={item.time}
       time={item.time}
       color={item.color}
     >
@@ -324,27 +324,27 @@ const orderFlow = [
 
 ```tsx
 const userActions = [
-  { 
+  {
     time: '2024-01-01 09:00',
     title: '登录系统',
     icon: '🔐'
   },
-  { 
+  {
     time: '2024-01-01 09:30',
     title: '查看订单',
     icon: '📋'
   },
-  { 
+  {
     time: '2024-01-01 10:00',
     title: '提交订单',
     icon: '🛒'
   },
-  { 
+  {
     time: '2024-01-01 10:30',
     title: '支付订单',
     icon: '💳'
   },
-  { 
+  {
     time: '2024-01-01 11:00',
     title: '退出登录',
     icon: '🚪'
@@ -353,8 +353,8 @@ const userActions = [
 
 <Timeline>
   {userActions.map(item => (
-    <TimelineItem 
-      key={item.time} 
+    <TimelineItem
+      key={item.time}
       time={item.time}
       dot={item.icon}
     >

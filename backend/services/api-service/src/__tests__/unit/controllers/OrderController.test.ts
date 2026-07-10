@@ -17,65 +17,83 @@ vi.mock('../../../config/database', () => ({
     query: vi.fn().mockImplementation((sql: string, params: any[]) => {
       if (sql.includes('INSERT INTO orders')) {
         return Promise.resolve({
-          rows: [{
-            id: '550e8400-e29b-41d4-a716-446655440000',
-            created_at: new Date(),
-          }]
+          rows: [
+            {
+              id: '550e8400-e29b-41d4-a716-446655440000',
+              created_at: new Date(),
+            },
+          ],
         });
       }
       if (sql.includes('INSERT INTO order_logs')) {
         return Promise.resolve({
-          rows: [{
-            id: '550e8400-e29b-41d4-a716-446655440001',
-            timestamp: new Date(),
-          }]
+          rows: [
+            {
+              id: '550e8400-e29b-41d4-a716-446655440001',
+              timestamp: new Date(),
+            },
+          ],
         });
       }
       if (sql.includes('SELECT COUNT(*)')) {
         return Promise.resolve({
-          rows: [{ total: '10' }]
+          rows: [{ total: '10' }],
         });
       }
       if (sql.includes('SELECT id, status FROM orders WHERE id')) {
         return Promise.resolve({
-          rows: [{
-            id: params[0],
-            status: 'pending',
-          }]
+          rows: [
+            {
+              id: params[0],
+              status: 'pending',
+            },
+          ],
         });
       }
       if (sql.includes('UPDATE orders') && sql.includes('status') && sql.includes('notes')) {
         return Promise.resolve({
-          rows: [{
-            id: params[2],
-            status: params[0],
-            notes: params[1],
-            updated_at: new Date(),
-          }]
+          rows: [
+            {
+              id: params[2],
+              status: params[0],
+              notes: params[1],
+              updated_at: new Date(),
+            },
+          ],
         });
       }
       if (sql.includes('UPDATE orders') && sql.includes('status')) {
         return Promise.resolve({
-          rows: [{
-            id: params[1],
-            status: params[0],
-            updated_at: new Date(),
-          }]
+          rows: [
+            {
+              id: params[1],
+              status: params[0],
+              updated_at: new Date(),
+            },
+          ],
         });
       }
       if (sql.includes('SELECT') && sql.includes('FROM orders') && sql.includes('total_orders')) {
         return Promise.resolve({
-          rows: [{
-            total_orders: '100',
-            completed_orders: '80',
-            cancelled_orders: '10',
-            paid_orders: '90',
-            total_revenue: '10000.00',
-            avg_order_value: '100.00',
-          }]
+          rows: [
+            {
+              total_orders: '100',
+              completed_orders: '80',
+              cancelled_orders: '10',
+              paid_orders: '90',
+              total_revenue: '10000.00',
+              avg_order_value: '100.00',
+            },
+          ],
         });
       }
-      if (sql.includes('SELECT') && sql.includes('FROM orders') && !sql.includes('total_orders') && !sql.includes('WHERE order_number') && !sql.includes('WHERE id')) {
+      if (
+        sql.includes('SELECT') &&
+        sql.includes('FROM orders') &&
+        !sql.includes('total_orders') &&
+        !sql.includes('WHERE order_number') &&
+        !sql.includes('WHERE id')
+      ) {
         return Promise.resolve({
           rows: [
             {
@@ -103,8 +121,8 @@ vi.mock('../../../config/database', () => ({
               promo_discount: 0,
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('WHERE order_number')) {
@@ -138,8 +156,8 @@ vi.mock('../../../config/database', () => ({
               promo_discount: 0,
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('SELECT') && sql.includes('FROM orders') && sql.includes('WHERE id = $1')) {
@@ -174,8 +192,8 @@ vi.mock('../../../config/database', () => ({
               promo_discount: 0,
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('WHERE id') && !sql.includes('status')) {
@@ -209,8 +227,8 @@ vi.mock('../../../config/database', () => ({
               promo_discount: 0,
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         });
       }
       return Promise.resolve({ rows: [] });
@@ -369,7 +387,9 @@ describe('OrderController', () => {
         createdBy: '550e8400-e29b-41d4-a716-446655440001',
       };
 
-      vi.spyOn(orderController as any, 'createOrder').mockRejectedValueOnce(new Error('数据库连接失败'));
+      vi.spyOn(orderController as any, 'createOrder').mockRejectedValueOnce(
+        new Error('数据库连接失败')
+      );
       await expect(orderController.createOrder(request)).rejects.toThrow('数据库连接失败');
     });
   });
@@ -562,7 +582,9 @@ describe('OrderController', () => {
     });
 
     it('应该拒绝空的订单ID', async () => {
-      await expect(orderController.updateOrderStatus('', 'confirmed')).rejects.toThrow('订单ID不能为空');
+      await expect(orderController.updateOrderStatus('', 'confirmed')).rejects.toThrow(
+        '订单ID不能为空'
+      );
     });
 
     it('应该支持添加备注', async () => {
@@ -631,7 +653,9 @@ describe('OrderController', () => {
     });
 
     it('应该拒绝空的订单ID', async () => {
-      await expect(orderController.processPayment('', 'wechat', {})).rejects.toThrow('订单ID不能为空');
+      await expect(orderController.processPayment('', 'wechat', {})).rejects.toThrow(
+        '订单ID不能为空'
+      );
     });
 
     it('应该生成交易ID', async () => {
@@ -755,11 +779,15 @@ describe('OrderController', () => {
     });
 
     it('应该拒绝空的订单ID', async () => {
-      await expect(orderController.assignDeliveryPersonnel('', 'driver1')).rejects.toThrow('订单ID和配送员ID不能为空');
+      await expect(orderController.assignDeliveryPersonnel('', 'driver1')).rejects.toThrow(
+        '订单ID和配送员ID不能为空'
+      );
     });
 
     it('应该拒绝空的配送员ID', async () => {
-      await expect(orderController.assignDeliveryPersonnel('1', '')).rejects.toThrow('订单ID和配送员ID不能为空');
+      await expect(orderController.assignDeliveryPersonnel('1', '')).rejects.toThrow(
+        '订单ID和配送员ID不能为空'
+      );
     });
 
     it('应该记录分配时间', async () => {

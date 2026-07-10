@@ -15,22 +15,22 @@ import sequelize from '../config/database';
 
 // 支付状态枚举
 export enum PaymentStatus {
-  PENDING = 'pending',      // 待支付
-  PROCESSING = 'processing',// 处理中
-  COMPLETED = 'completed',  // 已完成
-  FAILED = 'failed',        // 失败
-  REFUNDED = 'refunded',    // 已退款
-  CANCELLED = 'cancelled',  // 已取消
+  PENDING = 'pending', // 待支付
+  PROCESSING = 'processing', // 处理中
+  COMPLETED = 'completed', // 已完成
+  FAILED = 'failed', // 失败
+  REFUNDED = 'refunded', // 已退款
+  CANCELLED = 'cancelled', // 已取消
 }
 
 // 支付方式枚举
 export enum PaymentMethod {
-  ALIPAY = 'alipay',        // 支付宝
-  WECHAT_PAY = 'wechat_pay',// 微信支付
-  CREDIT_CARD = 'credit_card',// 信用卡
-  DEBIT_CARD = 'debit_card',  // 借记卡
-  BANK_TRANSFER = 'bank_transfer',// 银行转账
-  CASH = 'cash',            // 现金
+  ALIPAY = 'alipay', // 支付宝
+  WECHAT_PAY = 'wechat_pay', // 微信支付
+  CREDIT_CARD = 'credit_card', // 信用卡
+  DEBIT_CARD = 'debit_card', // 借记卡
+  BANK_TRANSFER = 'bank_transfer', // 银行转账
+  CASH = 'cash', // 现金
 }
 
 // 支付模型属性接口
@@ -182,7 +182,7 @@ Payment.init(
       { fields: ['status'] },
       { fields: ['payment_method'] },
     ],
-  }
+  },
 );
 
 export default Payment;

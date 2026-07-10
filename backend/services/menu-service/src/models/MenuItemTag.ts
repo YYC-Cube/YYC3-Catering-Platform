@@ -17,7 +17,7 @@ import { Tag } from './Tag';
 @Table({
   tableName: 'menu_item_tags',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class MenuItemTag extends Model<MenuItemTag> {
   @PrimaryKey

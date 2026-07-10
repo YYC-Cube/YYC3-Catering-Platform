@@ -65,6 +65,7 @@
 - **最少知识原则**：模块间最小化依赖，降低耦合度
 
 同时遵循YYC³「五高五标五化」核心理念：
+
 - **五高**：高可用、高性能、高安全、高扩展、高可维护
 - **五标**：标准化、规范化、自动化、智能化、可视化
 - **五化**：流程化、文档化、工具化、数字化、生态化
@@ -74,24 +75,28 @@
 技术栈选择基于以下考虑：
 
 **前端技术栈**
+
 - React 18+：采用现代化前端框架，组件化开发
 - TypeScript 5.0+：类型安全，提高代码质量
 - Next.js 14+：SSR/SSG支持，优化SEO和性能
 - Tailwind CSS：原子化CSS，快速构建UI
 
 **后端技术栈**
+
 - Node.js 18+：高性能JavaScript运行时
 - Express/Fastify：轻量级Web框架
 - PostgreSQL 15+：关系型数据库，ACID保证
 - Redis 7+：缓存和会话存储
 
 **基础设施**
+
 - Docker：容器化部署，环境一致性
 - Kubernetes：容器编排，自动化运维
 - Nginx：反向代理和负载均衡
 - Prometheus + Grafana：监控和告警
 
 **开发工具**
+
 - Git：版本控制
 - ESLint + Prettier：代码规范
 - Jest + Vitest：单元测试
@@ -104,27 +109,32 @@
 YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以下层次：
 
 **表现层（Presentation Layer）**
+
 - Web前端：React + Next.js构建的单页应用
 - 移动端：响应式设计，支持多设备访问
 - 管理后台：独立的管理界面
 
 **应用层（Application Layer）**
+
 - API网关：统一入口，路由分发
 - 业务服务：订单、用户、商品等核心业务逻辑
 - 认证授权：JWT认证，RBAC权限控制
 
 **领域层（Domain Layer）**
+
 - 领域模型：核心业务实体和规则
 - 领域服务：复杂业务逻辑封装
 - 仓储接口：数据访问抽象
 
 **基础设施层（Infrastructure Layer）**
+
 - 数据库：PostgreSQL主从架构
 - 缓存：Redis集群
 - 消息队列：RabbitMQ/Kafka
 - 文件存储：OSS/MinIO
 
 **跨层关注点**
+
 - 日志监控：ELK Stack
 - 配置管理：Apollo/Nacos
 - 服务发现：Consul/Eureka
@@ -135,36 +145,43 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 系统按照业务领域划分为以下核心模块：
 
 **用户模块（User Module）**
+
 - 用户注册、登录、认证
 - 用户信息管理
 - 权限和角色管理
 
 **商品模块（Product Module）**
+
 - 商品信息管理
 - 商品分类和标签
 - 库存管理
 
 **订单模块（Order Module）**
+
 - 订单创建和支付
 - 订单状态流转
 - 订单查询和统计
 
 **支付模块（Payment Module）**
+
 - 支付接口集成
 - 支付状态同步
 - 退款处理
 
 **营销模块（Marketing Module）**
+
 - 优惠券管理
 - 促销活动
 - 会员积分
 
 **报表模块（Report Module）**
+
 - 销售报表
 - 数据分析
 - 可视化展示
 
 **系统模块（System Module）**
+
 - 配置管理
 - 日志管理
 - 监控告警
@@ -211,6 +228,7 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 **@tags**：架构设计,UI设计,YYC³,色彩
 
 ---
+
 # YYC3 初现系统色
 
 ## 品牌视觉系统
@@ -230,7 +248,7 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
   --yyc-primary-700: #0050b3;
   --yyc-primary-800: #003a8c;
   --yyc-primary-900: #002766;
-  
+
   /* 辅助色 - 紫色系，代表创新和智能化 */
   --yyc-secondary-50: #f9f0ff;
   --yyc-secondary-100: #efdbff;
@@ -242,7 +260,7 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
   --yyc-secondary-700: #391085;
   --yyc-secondary-800: #22075e;
   --yyc-secondary-900: #120338;
-  
+
   /* 强调色 - 青色系，代表言语和交流 */
   --yyc-accent-50: #e6fffb;
   --yyc-accent-100: #b5f5ec;
@@ -254,7 +272,7 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
   --yyc-accent-700: #006d75;
   --yyc-accent-800: #00474f;
   --yyc-accent-900: #002329;
-  
+
   /* 中性色 */
   --yyc-gray-50: #fafafa;
   --yyc-gray-100: #f5f5f5;
@@ -266,27 +284,24 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
   --yyc-gray-700: #434343;
   --yyc-gray-800: #262626;
   --yyc-gray-900: #1f1f1f;
-  
+
   /* 状态色 */
   --yyc-success: #52c41a;
   --yyc-warning: #faad14;
   --yyc-error: #f5222d;
   --yyc-info: var(--yyc-primary-500);
-  
+
   /* 立方阴影效果 */
   --yyc-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --yyc-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
   --yyc-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.14);
   --yyc-shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.16);
-  
-  /* 立方效果 - 多面体阴影 */
-  --yyc-cube-shadow: 
-    0 1px 1px rgba(0,0,0,0.15),
-    0 2px 2px rgba(0,0,0,0.15),
-    0 4px 4px rgba(0,0,0,0.15),
-    0 8px 8px rgba(0,0,0,0.15);
-}
 
+  /* 立方效果 - 多面体阴影 */
+  --yyc-cube-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.15),
+    0 8px 8px rgba(0, 0, 0, 0.15);
+}
 ```
 
 ### 7.2 品牌字体系统
@@ -296,24 +311,24 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
   /* 字体族 */
   --yyc-font-family-sans: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
   --yyc-font-family-mono: "Fira Code", "SF Mono", "Monaco", "Inconsolata", monospace;
-  
+
   /* 字体大小 */
-  --yyc-text-xs: 0.75rem;   /* 12px */
-  --yyc-text-sm: 0.875rem;  /* 14px */
-  --yyc-text-base: 1rem;    /* 16px */
-  --yyc-text-lg: 1.125rem;  /* 18px */
-  --yyc-text-xl: 1.25rem;   /* 20px */
-  --yyc-text-2xl: 1.5rem;   /* 24px */
+  --yyc-text-xs: 0.75rem; /* 12px */
+  --yyc-text-sm: 0.875rem; /* 14px */
+  --yyc-text-base: 1rem; /* 16px */
+  --yyc-text-lg: 1.125rem; /* 18px */
+  --yyc-text-xl: 1.25rem; /* 20px */
+  --yyc-text-2xl: 1.5rem; /* 24px */
   --yyc-text-3xl: 1.875rem; /* 30px */
-  --yyc-text-4xl: 2.25rem;  /* 36px */
-  --yyc-text-5xl: 3rem;     /* 48px */
-  --yyc-text-6xl: 3.75rem;  /* 60px */
-  
+  --yyc-text-4xl: 2.25rem; /* 36px */
+  --yyc-text-5xl: 3rem; /* 48px */
+  --yyc-text-6xl: 3.75rem; /* 60px */
+
   /* 行高 */
   --yyc-leading-tight: 1.25;
   --yyc-leading-normal: 1.5;
   --yyc-leading-relaxed: 1.75;
-  
+
   /* 字重 */
   --yyc-font-light: 300;
   --yyc-font-normal: 400;
@@ -332,65 +347,82 @@ body {
 }
 
 /* 标题样式 */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: var(--yyc-font-bold);
   line-height: var(--yyc-leading-tight);
   color: var(--yyc-gray-900);
 }
 
-h1 { font-size: var(--yyc-text-4xl); }
-h2 { font-size: var(--yyc-text-3xl); }
-h3 { font-size: var(--yyc-text-2xl); }
-h4 { font-size: var(--yyc-text-xl); }
-h5 { font-size: var(--yyc-text-lg); }
-h6 { font-size: var(--yyc-text-base); }
-
-/* 代码字体样式 */
-code, pre {
-  font-family: var(--yyc-font-family-mono);
+h1 {
+  font-size: var(--yyc-text-4xl);
+}
+h2 {
+  font-size: var(--yyc-text-3xl);
+}
+h3 {
+  font-size: var(--yyc-text-2xl);
+}
+h4 {
+  font-size: var(--yyc-text-xl);
+}
+h5 {
+  font-size: var(--yyc-text-lg);
+}
+h6 {
+  font-size: var(--yyc-text-base);
 }
 
+/* 代码字体样式 */
+code,
+pre {
+  font-family: var(--yyc-font-family-mono);
+}
 ```
 
 ### 7.3 品牌Logo组件
 
 ```jsx
-import React from 'react';
-import PropTypes from 'prop-types';
-import './Logo.css';
+import React from "react";
+import PropTypes from "prop-types";
+import "./Logo.css";
 
-const Logo = ({ 
-  variant = 'full', 
-  size = 'medium', 
-  color = 'primary',
+const Logo = ({
+  variant = "full",
+  size = "medium",
+  color = "primary",
   withTagline = false,
-  className = '',
-  ...props 
+  className = "",
+  ...props
 }) => {
   const getLogoContent = () => {
     switch (variant) {
-      case 'icon':
+      case "icon":
         return (
           <div className={`yyc-logo-icon yyc-logo-${size} yyc-logo-${color} ${className}`} {...props}>
             <span className="yyc-logo-cube">YYC</span>
             <span className="yyc-logo-superscript">³</span>
           </div>
         );
-      case 'short':
+      case "short":
         return (
           <div className={`yyc-logo-short yyc-logo-${size} yyc-logo-${color} ${className}`} {...props}>
             <span className="yyc-logo-text">言语云</span>
             <span className="yyc-logo-superscript">³</span>
           </div>
         );
-      case 'short-en':
+      case "short-en":
         return (
           <div className={`yyc-logo-short-en yyc-logo-${size} yyc-logo-${color} ${className}`} {...props}>
             <span className="yyc-logo-text">YYCloud</span>
             <span className="yyc-logo-superscript">³</span>
           </div>
         );
-      case 'full':
+      case "full":
       default:
         return (
           <div className={`yyc-logo-full yyc-logo-${size} yyc-logo-${color} ${className}`} {...props}>
@@ -398,11 +430,7 @@ const Logo = ({
               <span className="yyc-logo-text">言语云立方</span>
               <span className="yyc-logo-superscript">³</span>
             </div>
-            {withTagline && (
-              <div className="yyc-logo-tagline">
-                万象归元于云枢丨深栈智启新纪元
-              </div>
-            )}
+            {withTagline && <div className="yyc-logo-tagline">万象归元于云枢丨深栈智启新纪元</div>}
           </div>
         );
     }
@@ -412,47 +440,46 @@ const Logo = ({
 };
 
 Logo.propTypes = {
-  variant: PropTypes.oneOf(['icon', 'short', 'short-en', 'full']),
-  size: PropTypes.oneOf(['small', 'medium', 'large', 'xlarge']),
-  color: PropTypes.oneOf(['primary', 'secondary', 'accent', 'white', 'black']),
+  variant: PropTypes.oneOf(["icon", "short", "short-en", "full"]),
+  size: PropTypes.oneOf(["small", "medium", "large", "xlarge"]),
+  color: PropTypes.oneOf(["primary", "secondary", "accent", "white", "black"]),
   withTagline: PropTypes.bool,
   className: PropTypes.string,
 };
 
 export default Logo;
-
 ```
 
 ### 7.4 品牌按钮组件
 
 ```jsx
-import React from 'react';
-import PropTypes from 'prop-types';
-import './Button.css';
-import classNames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import "./Button.css";
+import classNames from "classnames";
 
-const Button = ({ 
-  children, 
-  variant = 'primary', 
-  size = 'medium', 
-  shape = 'rounded',
+const Button = ({
+  children,
+  variant = "primary",
+  size = "medium",
+  shape = "rounded",
   disabled = false,
   loading = false,
   icon = null,
-  iconPosition = 'left',
-  className = '',
+  iconPosition = "left",
+  className = "",
   onClick,
-  ...props 
+  ...props
 }) => {
   const buttonClasses = classNames(
-    'yyc-btn',
+    "yyc-btn",
     `yyc-btn-${variant}`,
     `yyc-btn-${size}`,
     `yyc-btn-${shape}`,
-    { 
-      'yyc-btn-disabled': disabled,
-      'yyc-btn-loading': loading,
-      'yyc-btn-with-icon': icon,
+    {
+      "yyc-btn-disabled": disabled,
+      "yyc-btn-loading": loading,
+      "yyc-btn-with-icon": icon,
     },
     className
   );
@@ -463,56 +490,50 @@ const Button = ({
   };
 
   return (
-    <button 
-      className={buttonClasses} 
-      onClick={onClick}
-      disabled={disabled || loading}
-      {...props}
-    >
+    <button className={buttonClasses} onClick={onClick} disabled={disabled || loading} {...props}>
       {loading && <span className="yyc-btn-spinner"></span>}
-      {iconPosition === 'left' && renderIcon()}
+      {iconPosition === "left" && renderIcon()}
       <span className="yyc-btn-text">{children}</span>
-      {iconPosition === 'right' && renderIcon()}
+      {iconPosition === "right" && renderIcon()}
     </button>
   );
 };
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(['primary', 'secondary', 'accent', 'outline', 'ghost', 'link']),
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  shape: PropTypes.oneOf(['rounded', 'square', 'pill']),
+  variant: PropTypes.oneOf(["primary", "secondary", "accent", "outline", "ghost", "link"]),
+  size: PropTypes.oneOf(["small", "medium", "large"]),
+  shape: PropTypes.oneOf(["rounded", "square", "pill"]),
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   icon: PropTypes.node,
-  iconPosition: PropTypes.oneOf(['left', 'right']),
+  iconPosition: PropTypes.oneOf(["left", "right"]),
   className: PropTypes.string,
   onClick: PropTypes.func,
 };
 
 export default Button;
-
 ```
 
 ### 7.5 品牌卡片组件
 
 ```jsx
-import React from 'react';
-import PropTypes from 'prop-types';
-import './Card.css';
-import classNames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import "./Card.css";
+import classNames from "classnames";
 
-const Card = ({ 
-  children, 
-  variant = 'elevated', 
-  padding = 'medium',
-  rounded = 'medium',
-  shadow = 'medium',
-  className = '',
-  ...props 
+const Card = ({
+  children,
+  variant = "elevated",
+  padding = "medium",
+  rounded = "medium",
+  shadow = "medium",
+  className = "",
+  ...props
 }) => {
   const cardClasses = classNames(
-    'yyc-card',
+    "yyc-card",
     `yyc-card-${variant}`,
     `yyc-card-padding-${padding}`,
     `yyc-card-rounded-${rounded}`,
@@ -527,19 +548,19 @@ const Card = ({
   );
 };
 
-const CardHeader = ({ children, className = '', ...props }) => (
+const CardHeader = ({ children, className = "", ...props }) => (
   <div className={`yyc-card-header ${className}`} {...props}>
     {children}
   </div>
 );
 
-const CardBody = ({ children, className = '', ...props }) => (
+const CardBody = ({ children, className = "", ...props }) => (
   <div className={`yyc-card-body ${className}`} {...props}>
     {children}
   </div>
 );
 
-const CardFooter = ({ children, className = '', ...props }) => (
+const CardFooter = ({ children, className = "", ...props }) => (
   <div className={`yyc-card-footer ${className}`} {...props}>
     {children}
   </div>
@@ -550,26 +571,19 @@ Card.Body = CardBody;
 Card.Footer = CardFooter;
 
 export default Card;
-
 ```
 
 ### 7.6 品牌标语组件
 
 ```jsx
-import React from 'react';
-import PropTypes from 'prop-types';
-import './Tagline.css';
-import classNames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import "./Tagline.css";
+import classNames from "classnames";
 
-const Tagline = ({ 
-  variant = 'full', 
-  size = 'medium', 
-  language = 'zh',
-  className = '',
-  ...props 
-}) => {
+const Tagline = ({ variant = "full", size = "medium", language = "zh", className = "", ...props }) => {
   const taglineClasses = classNames(
-    'yyc-tagline',
+    "yyc-tagline",
     `yyc-tagline-${variant}`,
     `yyc-tagline-${size}`,
     `yyc-tagline-${language}`,
@@ -577,10 +591,10 @@ const Tagline = ({
   );
 
   const getTaglineContent = () => {
-    if (language === 'en') {
-      return 'All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era';
+    if (language === "en") {
+      return "All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era";
     }
-    return '万象归元于云枢丨深栈智启新纪元';
+    return "万象归元于云枢丨深栈智启新纪元";
   };
 
   return (
@@ -591,33 +605,25 @@ const Tagline = ({
 };
 
 Tagline.propTypes = {
-  variant: PropTypes.oneOf(['full', 'short']),
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  language: PropTypes.oneOf(['zh', 'en']),
+  variant: PropTypes.oneOf(["full", "short"]),
+  size: PropTypes.oneOf(["small", "medium", "large"]),
+  language: PropTypes.oneOf(["zh", "en"]),
   className: PropTypes.string,
 };
 
 export default Tagline;
-
 ```
 
 ### 7.7 品牌布局模板
 
 ```jsx
-import React from 'react';
-import PropTypes from 'prop-types';
-import './Layout.css';
-import Logo from './Logo';
-import Tagline from './Tagline';
+import React from "react";
+import PropTypes from "prop-types";
+import "./Layout.css";
+import Logo from "./Logo";
+import Tagline from "./Tagline";
 
-const Layout = ({ 
-  children, 
-  header = true,
-  footer = true,
-  sidebar = false,
-  className = '',
-  ...props 
-}) => {
+const Layout = ({ children, header = true, footer = true, sidebar = false, className = "", ...props }) => {
   return (
     <div className={`yyc-layout ${className}`} {...props}>
       {header && (
@@ -630,24 +636,20 @@ const Layout = ({
           </div>
         </header>
       )}
-      
+
       <div className="yyc-layout-body">
         {sidebar && (
           <aside className="yyc-layout-sidebar">
             <div className="yyc-layout-sidebar-content">
               <Logo variant="short" size="large" withTagline={true} />
-              <nav className="yyc-layout-nav">
-                {/* 导航项 */}
-              </nav>
+              <nav className="yyc-layout-nav">{/* 导航项 */}</nav>
             </div>
           </aside>
         )}
-        
-        <main className="yyc-layout-main">
-          {children}
-        </main>
+
+        <main className="yyc-layout-main">{children}</main>
       </div>
-      
+
       {footer && (
         <footer className="yyc-layout-footer">
           <div className="yyc-layout-footer-content">
@@ -676,92 +678,83 @@ Layout.propTypes = {
 };
 
 export default Layout;
-
 ```
 
 ### 7.8 低代码可视化组件封装
 
 ```jsx
-import React from 'react';
-import { createComponent } from '@lowcode-engine/core';
-import { Card, Button, Logo, Tagline } from './YYCComponents';
+import React from "react";
+import { createComponent } from "@lowcode-engine/core";
+import { Card, Button, Logo, Tagline } from "./YYCComponents";
 
 // 定义组件属性
 const componentSchema = {
-  id: 'yyc-card-block',
-  name: 'YYC品牌卡片',
-  category: '品牌组件',
-  icon: 'card',
-  description: '言语云立方品牌卡片组件',
+  id: "yyc-card-block",
+  name: "YYC品牌卡片",
+  category: "品牌组件",
+  icon: "card",
+  description: "言语云立方品牌卡片组件",
   props: [
     {
-      name: 'title',
-      type: 'string',
-      label: '卡片标题',
-      defaultValue: '言语云立方'
+      name: "title",
+      type: "string",
+      label: "卡片标题",
+      defaultValue: "言语云立方",
     },
     {
-      name: 'content',
-      type: 'richText',
-      label: '卡片内容',
-      defaultValue: '以言语驱动服务，以语言连接需求'
+      name: "content",
+      type: "richText",
+      label: "卡片内容",
+      defaultValue: "以言语驱动服务，以语言连接需求",
     },
     {
-      name: 'buttonText',
-      type: 'string',
-      label: '按钮文本',
-      defaultValue: '了解更多'
+      name: "buttonText",
+      type: "string",
+      label: "按钮文本",
+      defaultValue: "了解更多",
     },
     {
-      name: 'variant',
-      type: 'select',
-      label: '卡片样式',
+      name: "variant",
+      type: "select",
+      label: "卡片样式",
       options: [
-        { label: '浮起', value: 'elevated' },
-        { label: '边框', value: 'outlined' },
-        { label: '填充', value: 'filled' }
+        { label: "浮起", value: "elevated" },
+        { label: "边框", value: "outlined" },
+        { label: "填充", value: "filled" },
       ],
-      defaultValue: 'elevated'
+      defaultValue: "elevated",
     },
     {
-      name: 'showLogo',
-      type: 'boolean',
-      label: '显示Logo',
-      defaultValue: true
+      name: "showLogo",
+      type: "boolean",
+      label: "显示Logo",
+      defaultValue: true,
     },
     {
-      name: 'showTagline',
-      type: 'boolean',
-      label: '显示标语',
-      defaultValue: false
+      name: "showTagline",
+      type: "boolean",
+      label: "显示标语",
+      defaultValue: false,
     },
     {
-      name: 'logoVariant',
-      type: 'select',
-      label: 'Logo样式',
+      name: "logoVariant",
+      type: "select",
+      label: "Logo样式",
       options: [
-        { label: '图标', value: 'icon' },
-        { label: '中文简称', value: 'short' },
-        { label: '英文简称', value: 'short-en' },
-        { label: '全称', value: 'full' }
+        { label: "图标", value: "icon" },
+        { label: "中文简称", value: "short" },
+        { label: "英文简称", value: "short-en" },
+        { label: "全称", value: "full" },
       ],
-      defaultValue: 'short',
-      visible: (props) => props.showLogo
-    }
-  ]
+      defaultValue: "short",
+      visible: props => props.showLogo,
+    },
+  ],
 };
 
 // 创建组件
-const YYCCardBlock = createComponent(componentSchema, (props) => {
-  const {
-    title,
-    content,
-    buttonText,
-    variant,
-    showLogo,
-    showTagline,
-    logoVariant
-  } = props;
+const YYCCardBlock = createComponent(componentSchema, props => {
+  const { title, content, buttonText, variant, showLogo, showTagline, logoVariant } = props;
 
   return (
     <Card variant={variant} className="yyc-card-block">
@@ -774,14 +767,15 @@ const YYCCardBlock = createComponent(componentSchema, (props) => {
         <div className="yyc-card-block-content" dangerouslySetInnerHTML={{ __html: content }} />
       </Card.Body>
       <Card.Footer>
-        <Button variant="primary" size="medium">{buttonText}</Button>
+        <Button variant="primary" size="medium">
+          {buttonText}
+        </Button>
       </Card.Footer>
     </Card>
   );
 });
 
 export default YYCCardBlock;
-
 ```
 
 ### 7.9 品牌CSS变量和工具类
@@ -793,22 +787,22 @@ export default YYCCardBlock;
   --yyc-brand-primary: var(--yyc-primary-500);
   --yyc-brand-secondary: var(--yyc-secondary-500);
   --yyc-brand-accent: var(--yyc-accent-500);
-  
+
   /* 品牌间距 */
-  --yyc-space-xs: 0.25rem;   /* 4px */
-  --yyc-space-sm: 0.5rem;    /* 8px */
-  --yyc-space-md: 1rem;      /* 16px */
-  --yyc-space-lg: 1.5rem;    /* 24px */
-  --yyc-space-xl: 2rem;      /* 32px */
-  --yyc-space-2xl: 3rem;     /* 48px */
-  --yyc-space-3xl: 4rem;     /* 64px */
-  
+  --yyc-space-xs: 0.25rem; /* 4px */
+  --yyc-space-sm: 0.5rem; /* 8px */
+  --yyc-space-md: 1rem; /* 16px */
+  --yyc-space-lg: 1.5rem; /* 24px */
+  --yyc-space-xl: 2rem; /* 32px */
+  --yyc-space-2xl: 3rem; /* 48px */
+  --yyc-space-3xl: 4rem; /* 64px */
+
   /* 品牌圆角 */
-  --yyc-radius-sm: 0.25rem;  /* 4px */
-  --yyc-radius-md: 0.5rem;   /* 8px */
-  --yyc-radius-lg: 1rem;     /* 16px */
+  --yyc-radius-sm: 0.25rem; /* 4px */
+  --yyc-radius-md: 0.5rem; /* 8px */
+  --yyc-radius-lg: 1rem; /* 16px */
   --yyc-radius-full: 9999px;
-  
+
   /* 品牌动画 */
   --yyc-transition-fast: 150ms;
   --yyc-transition-normal: 300ms;
@@ -817,83 +811,207 @@ export default YYCCardBlock;
 
 /* 品牌工具类 */
 /* 间距 */
-.yyc-m-0 { margin: 0; }
-.yyc-m-1 { margin: var(--yyc-space-xs); }
-.yyc-m-2 { margin: var(--yyc-space-sm); }
-.yyc-m-3 { margin: var(--yyc-space-md); }
-.yyc-m-4 { margin: var(--yyc-space-lg); }
-.yyc-m-5 { margin: var(--yyc-space-xl); }
-.yyc-m-6 { margin: var(--yyc-space-2xl); }
-.yyc-m-7 { margin: var(--yyc-space-3xl); }
+.yyc-m-0 {
+  margin: 0;
+}
+.yyc-m-1 {
+  margin: var(--yyc-space-xs);
+}
+.yyc-m-2 {
+  margin: var(--yyc-space-sm);
+}
+.yyc-m-3 {
+  margin: var(--yyc-space-md);
+}
+.yyc-m-4 {
+  margin: var(--yyc-space-lg);
+}
+.yyc-m-5 {
+  margin: var(--yyc-space-xl);
+}
+.yyc-m-6 {
+  margin: var(--yyc-space-2xl);
+}
+.yyc-m-7 {
+  margin: var(--yyc-space-3xl);
+}
 
-.yyc-p-0 { padding: 0; }
-.yyc-p-1 { padding: var(--yyc-space-xs); }
-.yyc-p-2 { padding: var(--yyc-space-sm); }
-.yyc-p-3 { padding: var(--yyc-space-md); }
-.yyc-p-4 { padding: var(--yyc-space-lg); }
-.yyc-p-5 { padding: var(--yyc-space-xl); }
-.yyc-p-6 { padding: var(--yyc-space-2xl); }
-.yyc-p-7 { padding: var(--yyc-space-3xl); }
+.yyc-p-0 {
+  padding: 0;
+}
+.yyc-p-1 {
+  padding: var(--yyc-space-xs);
+}
+.yyc-p-2 {
+  padding: var(--yyc-space-sm);
+}
+.yyc-p-3 {
+  padding: var(--yyc-space-md);
+}
+.yyc-p-4 {
+  padding: var(--yyc-space-lg);
+}
+.yyc-p-5 {
+  padding: var(--yyc-space-xl);
+}
+.yyc-p-6 {
+  padding: var(--yyc-space-2xl);
+}
+.yyc-p-7 {
+  padding: var(--yyc-space-3xl);
+}
 
 /* 文本颜色 */
-.yyc-text-primary { color: var(--yyc-primary-500); }
-.yyc-text-secondary { color: var(--yyc-secondary-500); }
-.yyc-text-accent { color: var(--yyc-accent-500); }
-.yyc-text-success { color: var(--yyc-success); }
-.yyc-text-warning { color: var(--yyc-warning); }
-.yyc-text-error { color: var(--yyc-error); }
-.yyc-text-info { color: var(--yyc-info); }
+.yyc-text-primary {
+  color: var(--yyc-primary-500);
+}
+.yyc-text-secondary {
+  color: var(--yyc-secondary-500);
+}
+.yyc-text-accent {
+  color: var(--yyc-accent-500);
+}
+.yyc-text-success {
+  color: var(--yyc-success);
+}
+.yyc-text-warning {
+  color: var(--yyc-warning);
+}
+.yyc-text-error {
+  color: var(--yyc-error);
+}
+.yyc-text-info {
+  color: var(--yyc-info);
+}
 
 /* 背景颜色 */
-.yyc-bg-primary { background-color: var(--yyc-primary-500); }
-.yyc-bg-secondary { background-color: var(--yyc-secondary-500); }
-.yyc-bg-accent { background-color: var(--yyc-accent-500); }
-.yyc-bg-success { background-color: var(--yyc-success); }
-.yyc-bg-warning { background-color: var(--yyc-warning); }
-.yyc-bg-error { background-color: var(--yyc-error); }
-.yyc-bg-info { background-color: var(--yyc-info); }
+.yyc-bg-primary {
+  background-color: var(--yyc-primary-500);
+}
+.yyc-bg-secondary {
+  background-color: var(--yyc-secondary-500);
+}
+.yyc-bg-accent {
+  background-color: var(--yyc-accent-500);
+}
+.yyc-bg-success {
+  background-color: var(--yyc-success);
+}
+.yyc-bg-warning {
+  background-color: var(--yyc-warning);
+}
+.yyc-bg-error {
+  background-color: var(--yyc-error);
+}
+.yyc-bg-info {
+  background-color: var(--yyc-info);
+}
 
 /* 文本对齐 */
-.yyc-text-left { text-align: left; }
-.yyc-text-center { text-align: center; }
-.yyc-text-right { text-align: right; }
+.yyc-text-left {
+  text-align: left;
+}
+.yyc-text-center {
+  text-align: center;
+}
+.yyc-text-right {
+  text-align: right;
+}
 
 /* 显示 */
-.yyc-d-none { display: none; }
-.yyc-d-inline { display: inline; }
-.yyc-d-inline-block { display: inline-block; }
-.yyc-d-block { display: block; }
-.yyc-d-flex { display: flex; }
-.yyc-d-grid { display: grid; }
+.yyc-d-none {
+  display: none;
+}
+.yyc-d-inline {
+  display: inline;
+}
+.yyc-d-inline-block {
+  display: inline-block;
+}
+.yyc-d-block {
+  display: block;
+}
+.yyc-d-flex {
+  display: flex;
+}
+.yyc-d-grid {
+  display: grid;
+}
 
 /* Flexbox */
-.yyc-flex-row { flex-direction: row; }
-.yyc-flex-col { flex-direction: column; }
-.yyc-flex-wrap { flex-wrap: wrap; }
-.yyc-flex-nowrap { flex-wrap: nowrap; }
-.yyc-justify-start { justify-content: flex-start; }
-.yyc-justify-end { justify-content: flex-end; }
-.yyc-justify-center { justify-content: center; }
-.yyc-justify-between { justify-content: space-between; }
-.yyc-justify-around { justify-content: space-around; }
-.yyc-items-start { align-items: flex-start; }
-.yyc-items-end { align-items: flex-end; }
-.yyc-items-center { align-items: center; }
-.yyc-items-stretch { align-items: stretch; }
+.yyc-flex-row {
+  flex-direction: row;
+}
+.yyc-flex-col {
+  flex-direction: column;
+}
+.yyc-flex-wrap {
+  flex-wrap: wrap;
+}
+.yyc-flex-nowrap {
+  flex-wrap: nowrap;
+}
+.yyc-justify-start {
+  justify-content: flex-start;
+}
+.yyc-justify-end {
+  justify-content: flex-end;
+}
+.yyc-justify-center {
+  justify-content: center;
+}
+.yyc-justify-between {
+  justify-content: space-between;
+}
+.yyc-justify-around {
+  justify-content: space-around;
+}
+.yyc-items-start {
+  align-items: flex-start;
+}
+.yyc-items-end {
+  align-items: flex-end;
+}
+.yyc-items-center {
+  align-items: center;
+}
+.yyc-items-stretch {
+  align-items: stretch;
+}
 
 /* 圆角 */
-.yyc-rounded-none { border-radius: 0; }
-.yyc-rounded-sm { border-radius: var(--yyc-radius-sm); }
-.yyc-rounded-md { border-radius: var(--yyc-radius-md); }
-.yyc-rounded-lg { border-radius: var(--yyc-radius-lg); }
-.yyc-rounded-full { border-radius: var(--yyc-radius-full); }
+.yyc-rounded-none {
+  border-radius: 0;
+}
+.yyc-rounded-sm {
+  border-radius: var(--yyc-radius-sm);
+}
+.yyc-rounded-md {
+  border-radius: var(--yyc-radius-md);
+}
+.yyc-rounded-lg {
+  border-radius: var(--yyc-radius-lg);
+}
+.yyc-rounded-full {
+  border-radius: var(--yyc-radius-full);
+}
 
 /* 阴影 */
-.yyc-shadow-none { box-shadow: none; }
-.yyc-shadow-sm { box-shadow: var(--yyc-shadow-sm); }
-.yyc-shadow-md { box-shadow: var(--yyc-shadow-md); }
-.yyc-shadow-lg { box-shadow: var(--yyc-shadow-lg); }
-.yyc-shadow-xl { box-shadow: var(--yyc-shadow-xl); }
+.yyc-shadow-none {
+  box-shadow: none;
+}
+.yyc-shadow-sm {
+  box-shadow: var(--yyc-shadow-sm);
+}
+.yyc-shadow-md {
+  box-shadow: var(--yyc-shadow-md);
+}
+.yyc-shadow-lg {
+  box-shadow: var(--yyc-shadow-lg);
+}
+.yyc-shadow-xl {
+  box-shadow: var(--yyc-shadow-xl);
+}
 
 /* 立方效果 */
 .yyc-cube {
@@ -907,39 +1025,31 @@ export default YYCCardBlock;
 }
 
 .yyc-cube::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
   transform: translateZ(-1px);
   pointer-events: none;
 }
-
 ```
 
 ### 7.10 品牌组件库导出文件
 
 ```javascript
 // index.js - 组件库导出文件
-import Logo from './components/Logo';
-import Button from './components/Button';
-import Card from './components/Card';
-import Tagline from './components/Tagline';
-import Layout from './components/Layout';
-import YYCCardBlock from './lowcode/YYCCardBlock';
+import Logo from "./components/Logo";
+import Button from "./components/Button";
+import Card from "./components/Card";
+import Tagline from "./components/Tagline";
+import Layout from "./components/Layout";
+import YYCCardBlock from "./lowcode/YYCCardBlock";
 
 // 组件列表
-export {
-  Logo,
-  Button,
-  Card,
-  Tagline,
-  Layout,
-  YYCCardBlock
-};
+export { Logo, Button, Card, Tagline, Layout, YYCCardBlock };
 
 // 默认导出
 export default {
@@ -948,15 +1058,14 @@ export default {
   Card,
   Tagline,
   Layout,
-  YYCCardBlock
+  YYCCardBlock,
 };
 
 // CSS导入
-import './styles/variables.css';
-import './styles/fonts.css';
-import './styles/components.css';
-import './styles/utilities.css';
-
+import "./styles/variables.css";
+import "./styles/fonts.css";
+import "./styles/components.css";
+import "./styles/utilities.css";
 ```
 
 ## 八、品牌标识代码实现
@@ -970,15 +1079,15 @@ import './styles/utilities.css';
 ```javascript
 // 检测环境是否支持上标字符
 const canRenderSuperscript = () => {
-  const testElement = document.createElement('div');
-  testElement.innerHTML = '³';
-  return testElement.textContent === '³';
+  const testElement = document.createElement("div");
+  testElement.innerHTML = "³";
+  return testElement.textContent === "³";
 };
 
 // 品牌标识组件
-const BrandLogo = ({ size = 'medium' }) => {
+const BrandLogo = ({ size = "medium" }) => {
   const supportsSuperscript = canRenderSuperscript();
-  
+
   return (
     <div className={`brand-logo brand-logo-${size}`}>
       {supportsSuperscript ? (
@@ -992,7 +1101,6 @@ const BrandLogo = ({ size = 'medium' }) => {
     </div>
   );
 };
-
 ```
 
 #### 方案二：Unicode与后备方案
@@ -1002,8 +1110,13 @@ const BrandLogo = ({ size = 'medium' }) => {
 const BrandIdentifier = () => {
   return (
     <span>
-      YYC<span className="superscript" title="Cube">³</span>
-      <span className="fallback" aria-hidden="true">YYC3</span>
+      YYC
+      <span className="superscript" title="Cube">
+        ³
+      </span>
+      <span className="fallback" aria-hidden="true">
+        YYC3
+      </span>
     </span>
   );
 };
@@ -1029,7 +1142,6 @@ const styles = `
     }
   }
 `;
-
 ```
 
 ### 8.2 Logo资源使用方案
@@ -1040,80 +1152,72 @@ const styles = `
 // Logo资源管理器
 const LogoResources = {
   // 主标识
-  primary: 'https://pan.baidu.com/s/1AkFFZKvDPcK0N4eTedxQnw?pwd=yyc3',
-  
+  primary: "https://pan.baidu.com/s/1AkFFZKvDPcK0N4eTedxQnw?pwd=yyc3",
+
   // 无色版本
-  monochrome: 'https://pan.baidu.com/s/1Gd-uTH0o4Ve8VsdN0WSbxQ?pwd=yyc3',
-  
+  monochrome: "https://pan.baidu.com/s/1Gd-uTH0o4Ve8VsdN0WSbxQ?pwd=yyc3",
+
   // 徽标版本
-  emblem: 'https://pan.baidu.com/s/1X3FTINsNmekTJjukmakSTg?pwd=yyc3',
-  
+  emblem: "https://pan.baidu.com/s/1X3FTINsNmekTJjukmakSTg?pwd=yyc3",
+
   // 简化版本
-  simplified: 'https://pan.baidu.com/s/1UFub2IE4Hvki1TaCJQO-OA?pwd=yyc3',
-  
+  simplified: "https://pan.baidu.com/s/1UFub2IE4Hvki1TaCJQO-OA?pwd=yyc3",
+
   // 获取Logo URL
-  getLogo: function(type = 'primary') {
+  getLogo: function (type = "primary") {
     return this[type] || this.primary;
-  }
+  },
 };
 
 // Logo组件
-const BrandLogoImage = ({ type = 'primary', alt = 'YYC³ 言语云', ...props }) => {
-  return (
-    <img 
-      src={LogoResources.getLogo(type)} 
-      alt={alt}
-      className="brand-logo-image"
-      {...props}
-    />
-  );
+const BrandLogoImage = ({ type = "primary", alt = "YYC³ 言语云", ...props }) => {
+  return <img src={LogoResources.getLogo(type)} alt={alt} className="brand-logo-image" {...props} />;
 };
-
 ```
 
 ### 8.3 完整品牌标识组件
 
 ```javascript
-import React from 'react';
+import React from "react";
 
-const YYC3Brand = ({ 
-  variant = 'full', // full, short, icon
-  type = 'primary', // primary, monochrome, emblem, simplified
-  size = 'medium', // small, medium, large
+const YYC3Brand = ({
+  variant = "full", // full, short, icon
+  type = "primary", // primary, monochrome, emblem, simplified
+  size = "medium", // small, medium, large
   showText = true,
-  ...props 
+  ...props
 }) => {
   // 检测环境是否支持上标字符
   const [supportsSuperscript, setSupportsSuperscript] = React.useState(true);
-  
+
   React.useEffect(() => {
-    const testElement = document.createElement('div');
-    testElement.innerHTML = '³';
-    setSupportsSuperscript(testElement.textContent === '³');
+    const testElement = document.createElement("div");
+    testElement.innerHTML = "³";
+    setSupportsSuperscript(testElement.textContent === "³");
   }, []);
-  
+
   // 渲染文本部分
   const renderText = () => {
     if (!showText) return null;
-    
-    const superscript = supportsSuperscript ? '³' : '3';
-    
+
+    const superscript = supportsSuperscript ? "³" : "3";
+
     switch (variant) {
-      case 'short':
+      case "short":
         return (
           <div className="brand-text-container">
             <span className="brand-text">言语云</span>
             <span className="brand-superscript">{superscript}</span>
           </div>
         );
-      case 'icon':
+      case "icon":
         return (
           <div className="brand-text-container">
             <span className="brand-text">YYC</span>
             <span className="brand-superscript">{superscript}</span>
           </div>
         );
-      case 'full':
+      case "full":
       default:
         return (
           <div className="brand-text-container">
@@ -1123,21 +1227,16 @@ const YYC3Brand = ({
         );
     }
   };
-  
+
   return (
     <div className={`yyc3-brand yyc3-brand-${size} yyc3-brand-${variant}`} {...props}>
-      <img 
-        src={LogoResources.getLogo(type)} 
-        alt="YYC³ 言语语云立方"
-        className="brand-logo-image"
-      />
+      <img src={LogoResources.getLogo(type)} alt="YYC³ 言语语云立方" className="brand-logo-image" />
       {renderText()}
     </div>
   );
 };
 
 export default YYC3Brand;
-
 ```
 
 ### 8.4 样式定义
@@ -1148,7 +1247,7 @@ export default YYC3Brand;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   font-weight: 600;
 }
 
@@ -1194,14 +1293,13 @@ export default YYC3Brand;
   flex-direction: column;
   align-items: flex-start;
 }
-
 ```
 
 ### 8.5 使用示例
 
 ```javascript
 // 在应用中使用
-import YYC3Brand from './components/YYC3Brand';
+import YYC3Brand from "./components/YYC3Brand";
 
 function App() {
   return (
@@ -1209,23 +1307,19 @@ function App() {
       <header className="app-header">
         <YYC3Brand variant="icon" size="large" />
       </header>
-      
+
       <main className="app-main">
         <h1>欢迎使用言语云立方</h1>
         <YYC3Brand variant="full" type="monochrome" />
       </main>
-      
+
       <footer className="app-footer">
         <YYC3Brand variant="short" size="small" />
       </footer>
     </div>
   );
 }
-
 ```
-
-
-
 
 ## 概述
 
@@ -1248,8 +1342,6 @@ function App() {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1283,8 +1375,6 @@ function App() {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1307,46 +1397,46 @@ function App() {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1359,6 +1449,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1368,6 +1459,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1377,6 +1469,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1393,16 +1486,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1412,13 +1506,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1427,6 +1519,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1445,6 +1538,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1460,6 +1554,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1479,28 +1574,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1509,44 +1603,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1560,13 +1652,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1575,18 +1667,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1596,37 +1691,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1635,28 +1733,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1665,21 +1761,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1688,10 +1786,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1717,16 +1812,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1735,26 +1830,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -1763,21 +1853,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1786,10 +1878,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1815,16 +1904,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1833,25 +1922,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

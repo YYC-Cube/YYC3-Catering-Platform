@@ -17,7 +17,7 @@ export enum PaymentMethod {
   ALIPAY = 'alipay',
   WECHAT_PAY = 'wechat_pay',
   BANK_TRANSFER = 'bank_transfer',
-  CRYPTOCURRENCY = 'cryptocurrency'
+  CRYPTOCURRENCY = 'cryptocurrency',
 }
 
 /**
@@ -29,7 +29,7 @@ export enum PaymentStatus {
   COMPLETED = 'completed',
   FAILED = 'failed',
   REFUNDED = 'refunded',
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }
 
 /**

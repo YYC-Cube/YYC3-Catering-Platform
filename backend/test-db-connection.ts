@@ -186,9 +186,7 @@ async function testDatabaseConnection() {
     const queryPromises = [];
 
     for (let i = 0; i < concurrentQueries; i++) {
-      queryPromises.push(
-        pool.query(`SELECT pg_sleep(0.1) as sleep, ${i} as query_id`)
-      );
+      queryPromises.push(pool.query(`SELECT pg_sleep(0.1) as sleep, ${i} as query_id`));
     }
 
     const stressTestStart = Date.now();

@@ -44,16 +44,13 @@ export class InternalModelAdapter extends ModelAdapter {
       };
     } catch (error: any) {
       console.error('Internal AI API error:', error);
-      
+
       // 降级到模拟响应
       return this.getFallbackResponse(prompt);
     }
   }
 
-  async streamGenerate(
-    prompt: string,
-    onChunk: (chunk: string) => void
-  ): Promise<void> {
+  async streamGenerate(prompt: string, onChunk: (chunk: string) => void): Promise<void> {
     this.validateConfig();
 
     try {

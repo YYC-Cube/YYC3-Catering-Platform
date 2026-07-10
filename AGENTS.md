@@ -55,6 +55,7 @@ yyc3-catering-platform/
 ```
 
 ### Workspace definitions
+
 - `package.json` `workspaces` **and** `pnpm-workspace.yaml` are now **aligned**: `frontend/*`, `backend/services/*`, `backend/common`, `backend/shared`, `agentic-core`.
 - Use `pnpm --filter <pkg-name> <cmd>` to target a specific package.
 
@@ -64,7 +65,7 @@ yyc3-catering-platform/
 
 - **Node.js** ≥ 18, **npm** ≥ 9, **pnpm** 9 (CI pins pnpm 9 + Node 18.x)
 - **Bun** ≥ 1.0 (used by `api-service` and referenced in CONTRIBUTING.md; gateway CI uses `oven-sh/setup-bun`)
-- **PostgreSQL** 13+ *and* **MySQL** 8 (services are heterogeneous — see gotchas)
+- **PostgreSQL** 13+ _and_ **MySQL** 8 (services are heterogeneous — see gotchas)
 - **Redis** 6+, **RabbitMQ**, **Kafka**, **Consul**, **Nacos** (via docker-compose)
 - **Helm** 3.9+ for deployments
 - Engines declared in root `package.json`: `"node": ">=18.0.0"`, `"npm": ">=9.0.0"`
@@ -76,11 +77,13 @@ yyc3-catering-platform/
 All commands run from repo root unless noted. **Prefer `pnpm`** (CI uses pnpm; lockfile is `pnpm-lock.yaml`).
 
 ### Install
+
 ```bash
 pnpm install            # runs scripts/setup-env.js via postinstall
 ```
 
 ### Development
+
 ```bash
 pnpm dev                # concurrently: admin-dashboard + api-service
 pnpm dev:admin          # @yyc3/admin-dashboard only
@@ -91,6 +94,7 @@ pnpm dev:all            # admin + customer + staff + backend concurrently
 ```
 
 ### Build
+
 ```bash
 pnpm build              # build:frontend && build:backend
 pnpm build:frontend     # pnpm --filter "frontend/*" build
@@ -98,6 +102,7 @@ pnpm build:backend      # pnpm --filter "backend/services/*" build
 ```
 
 ### Test
+
 ```bash
 pnpm test               # unit + integration (via vitest configs)
 pnpm test:unit          # vitest run --config vitest.unit.config.ts --coverage
@@ -106,11 +111,13 @@ pnpm test:smoke         # vitest run --config vitest.smoke.config.ts
 pnpm test:coverage      # same as test:unit
 pnpm test:e2e           # playwright test (admin-dashboard)
 ```
+
 - Per-service tests: `pnpm --filter yyc3-user-service test` (most use `vitest run`; `api-service` uses `bun test`).
 - Frontend component tests live next to source as `__tests__/*.test.ts` or `*.spec.ts`.
 - Playwright config: `frontend/apps/admin-dashboard/playwright.config.ts` (baseURL `http://localhost:3200`, webServer auto-starts `pnpm dev`).
 
 ### Lint / Format / Type-check
+
 ```bash
 pnpm lint               # eslint . --ext .ts,.tsx,.js,.jsx
 pnpm lint:backend       # eslint backend --ext .ts
@@ -124,6 +131,7 @@ pnpm type-check:frontend# tsc --noEmit -p frontend/tsconfig.json
 ```
 
 ### Docker / Infra locally
+
 ```bash
 pnpm docker:up          # docker-compose up -d (MySQL, Redis, Kafka, RabbitMQ, ...)
 pnpm docker:down
@@ -131,6 +139,7 @@ pnpm docker:logs
 ```
 
 ### Database (delegated to api-service)
+
 ```bash
 pnpm db:migrate
 pnpm db:migrate:rollback
@@ -140,6 +149,7 @@ pnpm db:restore
 ```
 
 ### Deploy (Helm)
+
 ```bash
 pnpm deploy:dev         # build + helm upgrade ... --namespace yyc3-dev
 pnpm deploy:prod        # build + helm upgrade ... --namespace yyc3-prod
@@ -150,7 +160,9 @@ pnpm deploy:prod        # build + helm upgrade ... --namespace yyc3-prod
 ## 4. Backend Service Architecture
 
 ### Canonical microservice layout
+
 See `backend/services/microservice-template/`. New services should follow:
+
 ```
 src/
 ├── config/         config.ts, database.ts, logger.ts
@@ -164,6 +176,7 @@ src/
 ```
 
 ### Conventions observed
+
 - **Express apps** (`user-service`, `order-service`, `payment-service`, `api-gateway`, ...):
   - Bootstrap pattern: `cors` → `helmet` → `compression` → `express.json` → `morgan` → routes → 404 → global error handler → `SIGINT`/`SIGTERM` graceful shutdown.
   - Health endpoint: `GET /health` returns `{ status: 'UP', service, timestamp }`.
@@ -180,17 +193,19 @@ src/
 - **Every TypeScript file has a JSDoc file header** with `@fileoverview`, `@description`, `@author YYC³`, `@version`, `@created`, `@copyright`, `@license`. The gateway CI explicitly checks for `@author YYC³` in headers.
 
 ### Service port map (from `api-gateway/src/config/services.ts`)
-| Service | Default port |
-|---|---|
-| api-gateway | 3200 |
-| user-service | 3201 |
-| restaurant/menu | 3202 |
-| order-service | 3203 |
-| payment-service | 3204 |
-| notification-service | 3205 |
-| analytics-service | 3303 |
+
+| Service              | Default port |
+| -------------------- | ------------ |
+| api-gateway          | 3200         |
+| user-service         | 3201         |
+| restaurant/menu      | 3202         |
+| order-service        | 3203         |
+| payment-service      | 3204         |
+| notification-service | 3205         |
+| analytics-service    | 3303         |
 
 ### Heterogeneity — read the package.json before assuming
+
 - `api-service` (the one wired into `pnpm dev:backend`) is **Bun + PostgreSQL** — scripts use `bun --watch`, `bun build`, `bun test`. No Express; uses Bun's native HTTP.
 - `user-service`, `order-service`, etc. are **Node + Express + MySQL (mysql2/sequelize-typescript)** — scripts use `nodemon`, `tsc`, `vitest`.
 - `smart-kitchen` has its **own** `docker-compose.yml`, `vitest.config.ts`, Mosquitto, Prometheus scraping.
@@ -198,6 +213,7 @@ src/
 - Shared types split across `backend/shared/` (Auth, ApiResponse) and root `types/` (entities: menu, order, payment, table, user).
 
 ### API Gateway (`backend/services/api-gateway/`)
+
 - Reverse proxy via `http-proxy-middleware`. Per-route factory `createProxyRoute(path, serviceName, secure)`.
 - Authenticated routes use `authMiddleware`; public routes use `optionalAuthMiddleware`.
 - On proxy, user identity is forwarded as `X-User-ID` / `X-User-Email` headers.
@@ -210,6 +226,7 @@ src/
 All three apps are **Vue 3 + `<script setup lang="ts">` + Vite + TypeScript**.
 
 ### admin-dashboard (`@yyc3/admin-dashboard`) — primary app
+
 - **UI**: Element Plus + `@element-plus/icons-vue` + `radix-vue` + `lucide-vue-next`
 - **State**: Pinia (`@/stores/auth`, `app`, `notification`, ...)
 - **Router**: vue-router 4
@@ -217,10 +234,11 @@ All three apps are **Vue 3 + `<script setup lang="ts">` + Vite + TypeScript**.
 - **Styling**: SCSS + Tailwind CSS 4 + CSS custom properties (`var(--color-primary)`, `--page-theme-color`). Design tokens imported from `@/styles/tokens.scss`.
 - **Composables**: `@/composables/usePageTheme`, etc.
 - **i18n**: `src/locales/{en-US,zh-CN,ja-JP}.ts`
-- **Path alias**: `@` → `frontend/apps/admin-dashboard/src` (per-app tsconfig) *and* `@admin-dashboard` (root vitest config).
+- **Path alias**: `@` → `frontend/apps/admin-dashboard/src` (per-app tsconfig) _and_ `@admin-dashboard` (root vitest config).
 - **AI subsystem**: substantial code under `src/lib/` — `ai-widget/` (AutonomousAIEngine, MemorySystem, ToolRegistry, model adapters for OpenAI/internal), `closed-loop/`, `industries/`, `integration/`.
 
 ### Component conventions
+
 - PascalCase filenames: `OrderDetailDialog.vue`, `MetricCard.vue`.
 - Layout primitives prefixed `YT`: `YTGrid`, `YTLayout`, `YTResponsive`, `YTAnnouncer`, `YTFocusManager` (accessibility-aware).
 - Views are flat under `src/views/` (one `.vue` per feature page). Tests sit in `src/views/__tests__/`.
@@ -228,6 +246,7 @@ All three apps are **Vue 3 + `<script setup lang="ts">` + Vite + TypeScript**.
 - Heavy use of `defineProps<Props>()` / `defineEmits<Emits>()` with TS interfaces.
 
 ### Frontend testing
+
 - Unit: **Vitest** + `@vue/test-utils` + `@testing-library/vue` + jsdom. Config in `vitest.config.ts` (root) and per-app.
 - E2E: **Playwright** — `admin-dashboard/tests/e2e/*.spec.ts`. `playwright.config.ts` auto-starts the dev server on port 3200.
 - Pattern: mock Element Plus, icons, and child components with `vi.mock(...)` before mounting (see `views/__tests__/CustomerManagement.test.ts`).
@@ -237,20 +256,24 @@ All three apps are **Vue 3 + `<script setup lang="ts">` + Vite + TypeScript**.
 ## 6. TypeScript Configuration
 
 Root `tsconfig.json` is **very strict**:
+
 - `"strict": true` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns`, `noImplicitOverride`, `noPropertyAccessFromIndexSignature`, `strictPropertyInitialization`, etc.
 - `target: ES2022`, `module: ESNext`, `moduleResolution: "bundler"`, `noEmit: true` (type-checking only).
 - Root config **excludes** `frontend`, `backend`, `agentic-core`, `docs`, `tests` — each sub-project has its own `tsconfig.json`. Run `pnpm type-check:backend` / `type-check:frontend` for those.
 - Path aliases (root): `@/*`, `@backend/*`, `@frontend/*`, `@agentic-core/*`, `@yyc3/types/*`.
 
 ### ESLint (`.eslintrc.cjs`)
+
 - `@typescript-eslint/no-explicit-any: error`, `explicit-module-boundary-types: error`, `no-misused-promises: error`, `no-floating-promises: warn`.
 - Root eslint **ignores** most sub-trees (`frontend`, `backend`, `agentic-core`, `packages`, `tests`, `types/unified.d.ts`, `test-*.js`, `ts-checker.js`, etc.). Sub-projects have their own eslint configs (e.g. `microservice-template/.eslintrc.json`).
 - When adding a new TS file, ensure explicit return types on exported functions.
 
 ### Prettier (`.prettierrc.js`)
+
 - `printWidth: 120`, `tabWidth: 2`, single quotes, `arrowParens: 'avoid'`, `trailingComma: 'es5'` (TS/TSX override: `'all'`), `endOfLine: 'lf'`, `semi: true`.
 
 ### Husky / lint-staged
+
 - `pre-commit`: lint-staged (`eslint --fix` + `prettier --write` on `*.{ts,js}`; `prettier --write` on `*.{json,md}`).
 - `pre-push`: `npm test`.
 
@@ -277,16 +300,18 @@ Root `tsconfig.json` is **very strict**:
 ## 8. Response & Error Envelope
 
 Unified response shape (see `backend/shared/types/ApiResponse.ts`):
+
 ```ts
 interface ApiResponse<T = any> {
-  code: number;        // HTTP-style status code
-  message: string;     // human-readable (usually Chinese)
+  code: number; // HTTP-style status code
+  message: string; // human-readable (usually Chinese)
   data?: T;
   timestamp: number;
   requestId?: string;
   success: boolean;
 }
 ```
+
 - HTTP status code is also set on the response (e.g. `res.status(404).json({ code: 404, ... })`).
 - Errors are logged via `winston` with Chinese messages; production should not leak stack traces.
 - The api-gateway uses a slightly different shape (`{ success, error, code: 'NOT_FOUND' }`) — check the service you're editing.
@@ -311,7 +336,9 @@ interface ApiResponse<T = any> {
 Three workflows in `.github/workflows/`:
 
 ### `ci-cd.yml` (root, pnpm-based)
+
 Triggered on push/PR to `main`/`develop`. Jobs (sequential):
+
 1. `lint-and-format` — pnpm 9, Node 18.x: `format`, `lint`, `type-check`.
 2. `sonarqube-analysis` — runs `test:coverage`, uploads to SonarQube (needs `SONAR_TOKEN`, `SONAR_HOST_URL` secrets).
 3. `test` — `test:unit` + `test:coverage`, uploads `coverage/` artifact.
@@ -321,9 +348,11 @@ Triggered on push/PR to `main`/`develop`. Jobs (sequential):
 7. `deploy-prod` (on `main`) — DB backup → migration → Helm upgrade to `yyc3-prod` (3 replicas, HPA), smoke tests, **helm rollback on failure**, Slack notify.
 
 ### `gateway-ci.yml` (Bun-based, scoped to `backend/gateway/**`)
+
 Uses `oven-sh/setup-bun`. Includes quality check, SonarQube, test (with Redis service container), Docker build/push to `ghcr.io/<repo>/gateway` (multi-arch `linux/amd64,linux/arm64`), Trivy scan, integration test (k6 load test), staging/prod deploy, production performance test.
 
 ### `codeql.yml`
+
 GitHub CodeQL analysis.
 
 **Required GitHub secrets** (inferred): `SONAR_TOKEN`, `SONAR_HOST_URL`, `KUBE_CONFIG_DEV`, `KUBE_CONFIG_PROD`, `DB_*_DEV/PROD`, `REDIS_*_DEV/PROD`, `JWT_SECRET_DEV/PROD`, `SLACK_WEBHOOK`.
@@ -333,6 +362,7 @@ GitHub CodeQL analysis.
 ## 11. Testing Patterns
 
 ### Backend (Vitest)
+
 - Location: `backend/services/<svc>/src/__tests__/unit/**/*.test.ts` — mirrors the `src/` tree (e.g. `services/UserService.test.ts` next to `services/UserService.ts`).
 - Pattern: `vi.mock('<model-module>')` to stub Sequelize models, then `vi.spyOn(Model, 'findOne' | 'findByPk' | 'findAndCountAll' | 'create' | 'update' | 'destroy')` returning mock data. See `user-service/src/__tests__/unit/services/UserService.test.ts`.
 - `beforeEach(() => vi.clearAllMocks())`.
@@ -340,11 +370,13 @@ GitHub CodeQL analysis.
 - Run via root `pnpm test:unit` or `pnpm --filter yyc3-<svc> test`.
 
 ### Frontend (Vitest + Vue Test Utils)
+
 - Location: `frontend/apps/admin-dashboard/src/**/__tests__/*.test.ts` or `*.spec.ts`.
 - Pattern: mock `@/api/*` modules, Element Plus (`ElMessage`, `ElMessageBox`, component stubs), `@element-plus/icons-vue`, and child `.vue` components with `vi.mock(..., () => ({ default: vi.fn() }))` before importing the component under test.
 - Playwright E2E in `admin-dashboard/tests/e2e/` — tests `login` and `order-management` flows.
 
 ### Top-level tests
+
 - `tests/api/{auth,menu,orders,ai-assistant}.test.ts` and `tests/example.test.ts`.
 - `tests/run-tests.ts` is a custom runner.
 
@@ -355,7 +387,7 @@ GitHub CodeQL analysis.
 1. ~~**README is partially out of date.**~~ **FIXED (2026-07-10):** README now reflects the actual Vue 3 + Element Plus stack and real directory structure. See `PLAN.md` D1.
 2. **Mixed runtimes.** `api-service` runs on **Bun** (PostgreSQL); most other services run on **Node + Express** (MySQL via `sequelize-typescript`). Don't assume one runtime/DB — always check the service's `package.json`.
 3. **Two databases.** MySQL (most services, docker-compose `yyc3_catering`) **and** PostgreSQL (api-service). Pick based on the specific service you're editing.
-4. **Two "shared type" locations**: `backend/shared/` (runtime TS, workspace `@yyc3/shared-types`) and root `types/` (`.d.ts` only, `@yyc3/types/*`). They are not the same package. Note `backend/common/` (`@yyc3/common`) is a *third* shared package providing runtime services (LoggerService / EventBusService / CommunicationService).
+4. **Two "shared type" locations**: `backend/shared/` (runtime TS, workspace `@yyc3/shared-types`) and root `types/` (`.d.ts` only, `@yyc3/types/*`). They are not the same package. Note `backend/common/` (`@yyc3/common`) is a _third_ shared package providing runtime services (LoggerService / EventBusService / CommunicationService).
 5. **Root `tsconfig.json` excludes `frontend`, `backend`, `agentic-core`** — `pnpm type-check` only checks the root `src/`. Use `pnpm type-check:backend` / `type-check:frontend` for those trees. Each service also has its own `tsconfig.json`.
 6. **Root ESLint also ignores** `frontend`, `backend`, `agentic-core`, `packages`, `tests`, `types/unified.d.ts`, `types/global.d.ts`, `test-*.js`, `ts-checker.js`, `check-versions.js`, `generate-test-token.js`, and `scripts/**`. Use the per-project eslint config or the `lint:backend` / `lint:frontend` scripts.
 7. **Bilingual codebase.** Identifiers/keywords are English; log messages, error strings, JSDoc descriptions, and most docs/comments are Chinese. Don't translate existing Chinese strings to English unless asked.
@@ -392,18 +424,18 @@ When making changes in this repo:
 
 ## 14. Key Reference Files
 
-| Need | Look at |
-|---|---|
-| Microservice scaffold | `backend/services/microservice-template/` |
-| Express + Sequelize example | `backend/services/user-service/src/` |
-| Gateway proxy pattern | `backend/services/api-gateway/src/routes/index.ts` |
-| Bun + Postgres service | `backend/services/api-service/` |
-| Vue 3 app shell | `frontend/apps/admin-dashboard/src/App.vue` |
-| Component test pattern | `frontend/apps/admin-dashboard/src/views/__tests__/CustomerManagement.test.ts` |
-| Service test pattern | `backend/services/user-service/src/__tests__/unit/services/UserService.test.ts` |
-| Shared API types | `backend/shared/types/ApiResponse.ts`, `backend/shared/types/Auth.ts` |
-| Entity type defs | `types/entities/{menu,order,payment,table,user}.d.ts` |
-| Dockerized infra | `docker-compose.yaml` |
-| Helm umbrella chart | `helm/`, `infra/phase1/iac/helm/charts/yyc3-catering-platform/` |
-| CI pipelines | `.github/workflows/{ci-cd,gateway-ci,codeql}.yml` |
-| Contribution / commit rules | `CONTRIBUTING.md` |
+| Need                        | Look at                                                                         |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| Microservice scaffold       | `backend/services/microservice-template/`                                       |
+| Express + Sequelize example | `backend/services/user-service/src/`                                            |
+| Gateway proxy pattern       | `backend/services/api-gateway/src/routes/index.ts`                              |
+| Bun + Postgres service      | `backend/services/api-service/`                                                 |
+| Vue 3 app shell             | `frontend/apps/admin-dashboard/src/App.vue`                                     |
+| Component test pattern      | `frontend/apps/admin-dashboard/src/views/__tests__/CustomerManagement.test.ts`  |
+| Service test pattern        | `backend/services/user-service/src/__tests__/unit/services/UserService.test.ts` |
+| Shared API types            | `backend/shared/types/ApiResponse.ts`, `backend/shared/types/Auth.ts`           |
+| Entity type defs            | `types/entities/{menu,order,payment,table,user}.d.ts`                           |
+| Dockerized infra            | `docker-compose.yaml`                                                           |
+| Helm umbrella chart         | `helm/`, `infra/phase1/iac/helm/charts/yyc3-catering-platform/`                 |
+| CI pipelines                | `.github/workflows/{ci-cd,gateway-ci,codeql}.yml`                               |
+| Contribution / commit rules | `CONTRIBUTING.md`                                                               |

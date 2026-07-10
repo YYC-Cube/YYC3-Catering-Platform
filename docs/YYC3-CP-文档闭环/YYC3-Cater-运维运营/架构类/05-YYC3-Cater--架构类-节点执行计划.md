@@ -19,21 +19,21 @@
 
 - [📋 文档信息](#📋-文档信息)
 - [🎯 当下执行的"小步"](#🎯-当下执行的"小步")
-  - [步骤1: 响应式布局容器 (今天完成)](#步骤1:-响应式布局容器-(今天完成))
-  - [步骤2: 移动端适配验证 (明天完成)](#步骤2:-移动端适配验证-(明天完成))
-  - [步骤3: 业务组件扩展准备 (后天完成)](#步骤3:-业务组件扩展准备-(后天完成))
+  - [步骤1: 响应式布局容器 (今天完成)](<#步骤1:-响应式布局容器-(今天完成)>)
+  - [步骤2: 移动端适配验证 (明天完成)](<#步骤2:-移动端适配验证-(明天完成)>)
+  - [步骤3: 业务组件扩展准备 (后天完成)](<#步骤3:-业务组件扩展准备-(后天完成)>)
 - [📊 每日进度追踪](#📊-每日进度追踪)
-  - [Day 1 (2025-12-11) - 今日目标](#day-1-(2025-12-11)---今日目标)
-    - [上午任务 (9:00-12:00)](#上午任务-(9:00-12:00))
-    - [下午任务 (14:00-18:00)](#下午任务-(14:00-18:00))
-    - [晚间任务 (20:00-22:00)](#晚间任务-(20:00-22:00))
+  - [Day 1 (2025-12-11) - 今日目标](<#day-1-(2025-12-11)---今日目标>)
+    - [上午任务 (9:00-12:00)](<#上午任务-(9:00-12:00)>)
+    - [下午任务 (14:00-18:00)](<#下午任务-(14:00-18:00)>)
+    - [晚间任务 (20:00-22:00)](<#晚间任务-(20:00-22:00)>)
 - [🔄 实时进度更新](#🔄-实时进度更新)
   - [当前状态: 2025-12-11 01:30](#当前状态:-2025-12-11-01:30)
 - [🛠️ 技术实施细节](#🛠️-技术实施细节)
   - [YTLayout.vue 组件设计](#ytlayout.vue-组件设计)
   - [响应式断点Hook](#响应式断点hook)
 - [📋 明日任务预览](#📋-明日任务预览)
-  - [Day 2 (2025-12-12) - 移动端适配验证](#day-2-(2025-12-12)---移动端适配验证)
+  - [Day 2 (2025-12-12) - 移动端适配验证](<#day-2-(2025-12-12)---移动端适配验证>)
 - [🎯 成功指标](#🎯-成功指标)
   - [今日成功标准](#今日成功标准)
   - [本周成功标准](#本周成功标准)
@@ -47,6 +47,7 @@
 本文档是YYC³餐饮行业智能化平台文档体系的重要组成部分，旨在提供清晰、完整、准确的信息。
 
 通过本文档，读者可以：
+
 - 了解相关概念和背景
 - 掌握核心内容和要点
 - 获得实用的指导和帮助
@@ -101,6 +102,7 @@
 **@tags**：YYC³,文档
 
 ---
+
 # YYC³节点执行计划
 
 > **执行智慧**: "繁星点点，边缘转换；小步稳行，大道至简"
@@ -114,6 +116,7 @@
 **依托**: 节点1的设计系统 (`tokens.scss`)
 
 **具体任务**:
+
 - [ ] 创建 `YTLayout.vue` 主布局组件
 - [ ] 创建 `YTGrid.vue` 网格系统
 - [ ] 创建 `YTResponsive.vue` 响应式工具
@@ -121,12 +124,14 @@
 - [ ] 验证响应式效果
 
 **完成标准**:
+
 - 支持4个断点的自适应布局
 - 组件渲染时间 < 100ms
 - 单元测试覆盖率 > 85%
 - 通过移动端兼容性测试
 
 **风险控制**:
+
 - CSS兼容性问题 → 使用Autoprefixer + PostCSS
 - 性能问题 → 避免复杂选择器，使用CSS变量
 - 测试覆盖不足 → 编写完整的测试用例
@@ -138,6 +143,7 @@
 **依托**: 步骤1的响应式组件
 
 **具体任务**:
+
 - [ ] 测试手机端布局效果
 - [ ] 测试平板端布局效果
 - [ ] 测试桌面端布局效果
@@ -145,6 +151,7 @@
 - [ ] 验证可访问性标准
 
 **完成标准**:
+
 - iPhone 12/13/14 完美适配
 - iPad Air/Pro 完美适配
 - 桌面端 1920x1080 完美适配
@@ -158,6 +165,7 @@
 **依托**: 步骤2的响应式框架
 
 **具体任务**:
+
 - [ ] 设计订单管理组件架构
 - [ ] 设计菜单管理组件架构
 - [ ] 准备组件开发规范文档
@@ -171,18 +179,21 @@
 ### Day 1 (2025-12-11) - 今日目标
 
 #### 上午任务 (9:00-12:00)
+
 - [x] 创建节点执行计划文档
 - [ ] 创建 `YTLayout.vue` 基础结构
 - [ ] 实现响应式断点逻辑
 - [ ] 编写基础样式
 
 #### 下午任务 (14:00-18:00)
+
 - [ ] 完善 `YTLayout.vue` 功能
 - [ ] 创建 `YTGrid.vue` 网格组件
 - [ ] 实现组件间通信机制
 - [ ] 编写单元测试
 
 #### 晚间任务 (20:00-22:00)
+
 - [ ] 代码审查和优化
 - [ ] 性能测试和调优
 - [ ] 文档更新和完善
@@ -195,6 +206,7 @@
 ### 当前状态: 2025-12-11 01:30
 
 **今日进度**:
+
 ```
 任务1: 节点执行计划     ████████████████████ 100% ✅
 任务2: YTLayout.vue    ░░░░░░░░░░░░░░░░░░░░░   0% ⏳
@@ -213,11 +225,7 @@
 
 ```vue
 <template>
-  <div
-    class="yt-layout"
-    :class="layoutClasses"
-    :style="layoutStyles"
-  >
+  <div class="yt-layout" :class="layoutClasses" :style="layoutStyles">
     <!-- 顶部导航栏 -->
     <header v-if="showHeader" class="yt-layout__header">
       <slot name="header" />
@@ -236,36 +244,32 @@
     </footer>
 
     <!-- 侧边栏 (可选) -->
-    <aside
-      v-if="showSidebar"
-      class="yt-layout__sidebar"
-      :class="{ 'yt-layout__sidebar--open': sidebarOpen }"
-    >
+    <aside v-if="showSidebar" class="yt-layout__sidebar" :class="{ 'yt-layout__sidebar--open': sidebarOpen }">
       <slot name="sidebar" />
     </aside>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted } from 'vue'
-import { useBreakpoints } from '@/composables/useBreakpoints'
+import { computed, ref, onMounted, onUnmounted } from "vue";
+import { useBreakpoints } from "@/composables/useBreakpoints";
 
 interface Props {
   // 布局配置
-  showHeader?: boolean
-  showFooter?: boolean
-  showSidebar?: boolean
-  fixedHeader?: boolean
-  fixedFooter?: boolean
+  showHeader?: boolean;
+  showFooter?: boolean;
+  showSidebar?: boolean;
+  fixedHeader?: boolean;
+  fixedFooter?: boolean;
 
   // 响应式配置
-  collapseSidebar?: boolean
-  sidebarBreakpoint?: string
+  collapseSidebar?: boolean;
+  sidebarBreakpoint?: string;
 
   // 样式配置
-  maxWidth?: string
-  padding?: string
-  gap?: string
+  maxWidth?: string;
+  padding?: string;
+  gap?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -275,61 +279,62 @@ const props = withDefaults(defineProps<Props>(), {
   fixedHeader: false,
   fixedFooter: false,
   collapseSidebar: true,
-  sidebarBreakpoint: 'md',
-  maxWidth: '1200px',
-  padding: 'var(--spacing-lg)',
-  gap: 'var(--spacing-lg)'
-})
+  sidebarBreakpoint: "md",
+  maxWidth: "1200px",
+  padding: "var(--spacing-lg)",
+  gap: "var(--spacing-lg)",
+});
 
 // 响应式断点
-const { currentBreakpoint, isMobile, isTablet, isDesktop } = useBreakpoints()
-const sidebarOpen = ref(!isMobile.value)
+const { currentBreakpoint, isMobile, isTablet, isDesktop } = useBreakpoints();
+const sidebarOpen = ref(!isMobile.value);
 
 // 计算属性
 const layoutClasses = computed(() => [
   `yt-layout--${currentBreakpoint.value}`,
   {
-    'yt-layout--mobile': isMobile.value,
-    'yt-layout--tablet': isTablet.value,
-    'yt-layout--desktop': isDesktop.value,
-    'yt-layout--sidebar-open': sidebarOpen.value,
-    'yt-layout--fixed-header': props.fixedHeader,
-    'yt-layout--fixed-footer': props.fixedFooter
-  }
-])
+    "yt-layout--mobile": isMobile.value,
+    "yt-layout--tablet": isTablet.value,
+    "yt-layout--desktop": isDesktop.value,
+    "yt-layout--sidebar-open": sidebarOpen.value,
+    "yt-layout--fixed-header": props.fixedHeader,
+    "yt-layout--fixed-footer": props.fixedFooter,
+  },
+]);
 
 const layoutStyles = computed(() => ({
-  '--layout-max-width': props.maxWidth,
-  '--layout-padding': props.padding,
-  '--layout-gap': props.gap
-}))
+  "--layout-max-width": props.maxWidth,
+  "--layout-padding": props.padding,
+  "--layout-gap": props.gap,
+}));
 
 // 响应式处理
 const handleResize = () => {
   if (props.collapseSidebar && props.sidebarBreakpoint) {
-    const breakpointValue = getComputedStyle(document.documentElement)
-      .getPropertyValue(`--breakpoint-${props.sidebarBreakpoint}`)
+    const breakpointValue = getComputedStyle(document.documentElement).getPropertyValue(
+      `--breakpoint-${props.sidebarBreakpoint}`
+    );
 
     if (window.innerWidth < parseInt(breakpointValue)) {
-      sidebarOpen.value = false
+      sidebarOpen.value = false;
     } else {
-      sidebarOpen.value = true
+      sidebarOpen.value = true;
     }
   }
-}
+};
 
 onMounted(() => {
-  window.addEventListener('resize', handleResize)
-  handleResize()
-})
+  window.addEventListener("resize", handleResize);
+  handleResize();
+});
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-})
+  window.removeEventListener("resize", handleResize);
+});
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/tokens.scss';
+@import "@/styles/tokens.scss";
 
 .yt-layout {
   display: flex;
@@ -425,48 +430,48 @@ onUnmounted(() => {
 
 ```typescript
 // composables/useBreakpoints.ts
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from "vue";
 
 export function useBreakpoints() {
-  const currentBreakpoint = ref('lg')
-  const windowWidth = ref(0)
+  const currentBreakpoint = ref("lg");
+  const windowWidth = ref(0);
 
   const updateBreakpoint = () => {
-    windowWidth.value = window.innerWidth
+    windowWidth.value = window.innerWidth;
 
     if (windowWidth.value < 640) {
-      currentBreakpoint.value = 'sm'
+      currentBreakpoint.value = "sm";
     } else if (windowWidth.value < 768) {
-      currentBreakpoint.value = 'md'
+      currentBreakpoint.value = "md";
     } else if (windowWidth.value < 1024) {
-      currentBreakpoint.value = 'lg'
+      currentBreakpoint.value = "lg";
     } else if (windowWidth.value < 1280) {
-      currentBreakpoint.value = 'xl'
+      currentBreakpoint.value = "xl";
     } else {
-      currentBreakpoint.value = '2xl'
+      currentBreakpoint.value = "2xl";
     }
-  }
+  };
 
-  const isMobile = computed(() => ['sm'].includes(currentBreakpoint.value))
-  const isTablet = computed(() => ['md'].includes(currentBreakpoint.value))
-  const isDesktop = computed(() => ['lg', 'xl', '2xl'].includes(currentBreakpoint.value))
+  const isMobile = computed(() => ["sm"].includes(currentBreakpoint.value));
+  const isTablet = computed(() => ["md"].includes(currentBreakpoint.value));
+  const isDesktop = computed(() => ["lg", "xl", "2xl"].includes(currentBreakpoint.value));
 
   onMounted(() => {
-    updateBreakpoint()
-    window.addEventListener('resize', updateBreakpoint)
-  })
+    updateBreakpoint();
+    window.addEventListener("resize", updateBreakpoint);
+  });
 
   onUnmounted(() => {
-    window.removeEventListener('resize', updateBreakpoint)
-  })
+    window.removeEventListener("resize", updateBreakpoint);
+  });
 
   return {
     currentBreakpoint,
     windowWidth,
     isMobile,
     isTablet,
-    isDesktop
-  }
+    isDesktop,
+  };
 }
 ```
 
@@ -477,16 +482,19 @@ export function useBreakpoints() {
 ### Day 2 (2025-12-12) - 移动端适配验证
 
 **上午任务**:
+
 - [ ] 测试 `YTLayout.vue` 在移动端的效果
 - [ ] 优化移动端触摸交互
 - [ ] 验证移动端性能表现
 
 **下午任务**:
+
 - [ ] 完成 `YTGrid.vue` 网格系统
 - [ ] 创建 `YTResponsive.vue` 响应式工具
 - [ ] 编写完整的组件测试
 
 **晚间任务**:
+
 - [ ] 性能基准测试
 - [ ] 兼容性测试
 - [ ] 文档更新
@@ -496,12 +504,14 @@ export function useBreakpoints() {
 ## 🎯 成功指标
 
 ### 今日成功标准
+
 - [ ] `YTLayout.vue` 组件100%完成
 - [ ] 响应式断点逻辑正常工作
 - [ ] 单元测试覆盖率 > 85%
 - [ ] 组件渲染性能 < 100ms
 
 ### 本周成功标准
+
 - [ ] 节点2完成度达到100%
 - [ ] 移动端适配100%验证通过
 - [ ] 为节点3做好准备
@@ -514,8 +524,6 @@ export function useBreakpoints() {
 **协作方式**: 每日站会 + 实时进度同步
 
 > **执行箴言**: "繁星点点，各有其道；边缘转换，渐进为妙。小步稳行，大道至简；节点依托，节停总结！"
-
-
 
 ## 概述
 
@@ -538,8 +546,6 @@ export function useBreakpoints() {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -573,8 +579,6 @@ export function useBreakpoints() {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -597,46 +601,46 @@ export function useBreakpoints() {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -649,6 +653,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -658,6 +663,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -667,6 +673,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -683,16 +690,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -702,13 +710,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -717,6 +723,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -735,6 +742,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -750,6 +758,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -769,28 +778,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -799,44 +807,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -850,13 +856,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -865,18 +871,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -886,37 +895,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -925,28 +937,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -955,21 +965,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -978,10 +990,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1007,16 +1016,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1025,26 +1034,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -1053,21 +1057,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1076,10 +1082,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1105,16 +1108,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1123,25 +1126,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

@@ -5,6 +5,7 @@
 ## 🏗️ 核心架构
 
 ### 1. 核心引擎 (AutonomousAIEngine)
+
 - ✅ 多模型支持（OpenAI、内部模型、Azure、自定义）
 - ✅ 上下文感知
 - ✅ 工具自动选择和执行
@@ -12,6 +13,7 @@
 - ✅ 性能监控
 
 ### 2. 记忆系统 (MemorySystem)
+
 - ✅ 长期对话记忆
 - ✅ 用户偏好存储
 - ✅ 知识库管理
@@ -19,6 +21,7 @@
 - ✅ 自动清理机制
 
 ### 3. 学习系统 (LearningSystem)
+
 - ✅ 交互模式识别
 - ✅ 性能自动评估
 - ✅ 用户反馈学习
@@ -26,6 +29,7 @@
 - ✅ 持续优化
 
 ### 4. 工具系统 (ToolRegistry)
+
 - ✅ 动态工具注册
 - ✅ 智能工具推荐
 - ✅ 并行工具执行
@@ -33,12 +37,14 @@
 - ✅ 餐饮业务专用工具集
 
 ### 5. 上下文管理 (ContextManager)
+
 - ✅ 页面上下文提取
 - ✅ 用户行为追踪
 - ✅ 业务上下文集成
 - ✅ 路由感知
 
 ### 6. 模型适配器
+
 - ✅ OpenAI适配器
 - ✅ 内部模型适配器（带智能降级）
 - ✅ 流式响应支持
@@ -72,32 +78,32 @@
 import { AutonomousAIEngine } from './ai-widget/AutonomousAIEngine';
 
 const engine = new AutonomousAIEngine({
-  apiType: 'internal',
-  modelName: 'yyc3-model',
-  enableLearning: true,
-  enableMemory: true,
-  enableToolUse: true,
-  enableContextAwareness: true,
-  position: 'bottom-right',
-  theme: 'light',
-  language: 'zh-CN',
-  businessContext: {
-    industry: 'restaurant',
-    userRole: 'manager',
-    availableFeatures: ['order_management', 'menu_management'],
-  },
+apiType: 'internal',
+modelName: 'yyc3-model',
+enableLearning: true,
+enableMemory: true,
+enableToolUse: true,
+enableContextAwareness: true,
+position: 'bottom-right',
+theme: 'light',
+language: 'zh-CN',
+businessContext: {
+industry: 'restaurant',
+userRole: 'manager',
+availableFeatures: ['order_management', 'menu_management'],
+},
 });
 
 // 处理消息
 const response = await engine.processMessage({
-  id: '123',
-  content: '今天的营收情况如何？',
-  timestamp: new Date(),
-  user: {
-    id: 'user-001',
-    name: '张经理',
-    role: 'manager',
-  },
+id: '123',
+content: '今天的营收情况如何？',
+timestamp: new Date(),
+user: {
+id: 'user-001',
+name: '张经理',
+role: 'manager',
+},
 });
 \`\`\`
 
@@ -105,15 +111,15 @@ const response = await engine.processMessage({
 
 \`\`\`typescript
 await engine.processMessageStream(
-  {
-    id: '123',
-    content: '分析本月销售趋势',
-    timestamp: new Date(),
-    user: { id: 'user-001' },
-  },
-  (chunk) => {
-    console.log('收到片段:', chunk);
-  }
+{
+id: '123',
+content: '分析本月销售趋势',
+timestamp: new Date(),
+user: { id: 'user-001' },
+},
+(chunk) => {
+console.log('收到片段:', chunk);
+}
 );
 \`\`\`
 
@@ -123,27 +129,27 @@ await engine.processMessageStream(
 import { AITool } from './ai-widget/types';
 
 const customTool: AITool = {
-  name: 'custom_action',
-  description: '执行自定义操作',
-  category: 'custom',
-  parameters: {
-    type: 'object',
-    properties: {
-      action: { type: 'string', description: '操作类型' },
-    },
-    required: ['action'],
-  },
-  execute: async (params) => {
-    // 自定义逻辑
-    return {
-      success: true,
-      data: { result: 'completed' },
-    };
-  },
+name: 'custom_action',
+description: '执行自定义操作',
+category: 'custom',
+parameters: {
+type: 'object',
+properties: {
+action: { type: 'string', description: '操作类型' },
+},
+required: ['action'],
+},
+execute: async (params) => {
+// 自定义逻辑
+return {
+success: true,
+data: { result: 'completed' },
+};
+},
 };
 
 engine.updateConfig({
-  customTools: [customTool],
+customTools: [customTool],
 });
 \`\`\`
 
@@ -165,6 +171,7 @@ engine.updateConfig({
 ## 🎨 UI组件（待集成到YUBot）
 
 下一步将创建：
+
 1. 增强版YUBot组件
 2. AI聊天界面
 3. 工具执行可视化
@@ -175,18 +182,18 @@ engine.updateConfig({
 
 \`\`\`
 /src/app/ai-widget/
-├── types.ts                    # 核心类型定义
-├── AutonomousAIEngine.ts       # AI引擎核心
-├── MemorySystem.ts             # 记忆系统
-├── LearningSystem.ts           # 学习系统
-├── ToolRegistry.ts             # 工具注册表
-├── ContextManager.ts           # 上下文管理器
+├── types.ts # 核心类型定义
+├── AutonomousAIEngine.ts # AI引擎核心
+├── MemorySystem.ts # 记忆系统
+├── LearningSystem.ts # 学习系统
+├── ToolRegistry.ts # 工具注册表
+├── ContextManager.ts # 上下文管理器
 ├── adapters/
-│   ├── ModelAdapter.ts         # 适配器基类
-│   ├── OpenAIModelAdapter.ts   # OpenAI适配器
-│   └── InternalModelAdapter.ts # 内部模型适配器
+│ ├── ModelAdapter.ts # 适配器基类
+│ ├── OpenAIModelAdapter.ts # OpenAI适配器
+│ └── InternalModelAdapter.ts # 内部模型适配器
 └── tools/
-    └── restaurant-tools.ts     # 餐饮业务工具集
+└── restaurant-tools.ts # 餐饮业务工具集
 \`\`\`
 
 ## 🎯 核心优势

@@ -9,11 +9,11 @@
 @tags: [开发阶段],[集成测试],[质量保障]
 ---
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
@@ -28,9 +28,11 @@
 ### 1. 背景与目标
 
 #### 1.1 项目背景
+
 YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五化」理念的智能化应用系统，致力于提供高质量、高可用、高安全的成长守护体系。
 
 #### 1.2 文档目标
+
 - 规范集成测试文档相关的业务标准与技术落地要求
 - 为项目相关人员提供清晰的参考依据
 - 保障相关模块开发、实施、运维的一致性与规范性
@@ -38,6 +40,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 ### 2. 设计原则
 
 #### 2.1 五高原则
+
 - **高可用性**：确保系统7x24小时稳定运行
 - **高性能**：优化响应时间和处理能力
 - **高安全性**：保护用户数据和隐私安全
@@ -45,6 +48,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 - **高可维护性**：便于后续维护和升级
 
 #### 2.2 五标体系
+
 - **标准化**：统一的技术和流程标准
 - **规范化**：严格的开发和管理规范
 - **自动化**：提高开发效率和质量
@@ -52,6 +56,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 - **可视化**：直观的监控和管理界面
 
 #### 2.3 五化架构
+
 - **流程化**：标准化的开发流程
 - **文档化**：完善的文档体系
 - **工具化**：高效的开发工具链
@@ -63,6 +68,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 #### 3.1 集成测试概述
 
 集成测试是在单元测试之后，验证多个模块或组件协同工作是否正常的测试阶段。YYC³项目的集成测试包括：
+
 - **后端集成测试**：验证服务间、模块间的接口集成
 - **前端集成测试**：验证前端组件与后端 API 的集成
 - **端到端测试**：验证完整的业务流程
@@ -74,23 +80,23 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 后端集成测试使用 Vitest/Jest 框架，配置示例：
 
 ```typescript
-import { defineConfig } from 'vitest/config';
-import path from 'path';
+import { defineConfig } from "vitest/config";
+import path from "path";
 
 export default defineConfig({
   test: {
     globals: true,
-    environment: 'node',
-    setupFiles: ['./tests/integration-setup.ts'],
-    testMatch: ['**/*.integration.test.ts', '**/*.integration.spec.ts'],
+    environment: "node",
+    setupFiles: ["./tests/integration-setup.ts"],
+    testMatch: ["**/*.integration.test.ts", "**/*.integration.spec.ts"],
     maxConcurrency: 3,
-    timeout: 30000
+    timeout: 30000,
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  }
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 });
 ```
 
@@ -99,35 +105,35 @@ export default defineConfig({
 前端端到端测试使用 Playwright 框架，配置示例：
 
 ```typescript
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: "./tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: "html",
   use: {
-    baseURL: 'http://localhost:3000',
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure'
+    baseURL: "http://localhost:3000",
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] }
-    }
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI
-  }
+    command: "npm run dev",
+    url: "http://localhost:3000",
+    reuseExistingServer: !process.env.CI,
+  },
 });
 ```
 
@@ -139,15 +145,15 @@ export default defineConfig({
 
 ```typescript
 // tests/integration-setup.ts
-import { beforeAll, afterAll } from 'vitest';
+import { beforeAll, afterAll } from "vitest";
 
 beforeAll(async () => {
   // 启动测试数据库
   await startTestDatabase();
-  
+
   // 初始化测试数据
   await seedTestData();
-  
+
   // 启动测试服务
   await startTestServices();
 });
@@ -155,7 +161,7 @@ beforeAll(async () => {
 afterAll(async () => {
   // 清理测试数据
   await cleanupTestData();
-  
+
   // 停止测试服务
   await stopTestServices();
 });
@@ -171,19 +177,19 @@ export class OrderFactory {
   static createTestOrder(overrides = {}) {
     return {
       orderNo: `ORD${Date.now()}`,
-      storeId: 'test-store-001',
-      tableNumber: 'A01',
-      orderType: 'dine_in',
-      status: 'pending',
+      storeId: "test-store-001",
+      tableNumber: "A01",
+      orderType: "dine_in",
+      status: "pending",
       items: [
         {
           itemId: 1,
           quantity: 2,
-          price: 28.00
-        }
+          price: 28.0,
+        },
       ],
-      totalAmount: 56.00,
-      ...overrides
+      totalAmount: 56.0,
+      ...overrides,
     };
   }
 }
@@ -200,11 +206,11 @@ export class OrderFactory {
  * @file 订单API集成测试
  * @description 测试订单API与业务系统的集成
  */
-import { describe, it, expect, beforeAll } from 'vitest';
-import { OrderService } from '@/services/OrderService';
-import { OrderFactory } from '../factories/orderFactory';
+import { describe, it, expect, beforeAll } from "vitest";
+import { OrderService } from "@/services/OrderService";
+import { OrderFactory } from "../factories/orderFactory";
 
-describe('订单API集成测试', () => {
+describe("订单API集成测试", () => {
   let orderService: OrderService;
   let authToken: string;
 
@@ -212,16 +218,16 @@ describe('订单API集成测试', () => {
     orderService = new OrderService();
     // 获取测试认证令牌
     const authResult = await orderService.authenticate({
-      username: 'testuser',
-      password: 'testpass'
+      username: "testuser",
+      password: "testpass",
     });
     authToken = authResult.token;
   });
 
-  describe('订单创建流程', () => {
-    it('应该成功创建订单并触发相关服务', async () => {
+  describe("订单创建流程", () => {
+    it("应该成功创建订单并触发相关服务", async () => {
       const orderData = OrderFactory.createTestOrder({
-        customerId: 'test-customer-001'
+        customerId: "test-customer-001",
       });
 
       const result = await orderService.createOrder(orderData, authToken);
@@ -229,18 +235,14 @@ describe('订单API集成测试', () => {
       // 验证订单创建成功
       expect(result.success).toBe(true);
       expect(result.data.orderNo).toMatch(/^ORD\d{12}$/);
-      expect(result.data.status).toBe('pending');
+      expect(result.data.status).toBe("pending");
 
       // 验证库存服务被调用
-      const inventoryCheck = await orderService.checkInventory(
-        result.data.id
-      );
+      const inventoryCheck = await orderService.checkInventory(result.data.id);
       expect(inventoryCheck.itemsUpdated).toBe(true);
 
       // 验证通知服务被调用
-      const notificationSent = await orderService.checkNotification(
-        result.data.id
-      );
+      const notificationSent = await orderService.checkNotification(result.data.id);
       expect(notificationSent.sent).toBe(true);
     });
   });
@@ -256,31 +258,31 @@ describe('订单API集成测试', () => {
  * @file NLP与业务系统集成测试
  * @description 测试NLP模块与业务系统的集成功能
  */
-import { AIAssistantService } from '../services/AIAssistantService';
-import { AIResponse } from '../models/AIAssistant';
+import { AIAssistantService } from "../services/AIAssistantService";
+import { AIResponse } from "../models/AIAssistant";
 
-const testSessionId = 'test-session-123';
+const testSessionId = "test-session-123";
 const aiAssistant = new AIAssistantService({
-  defaultProvider: 'local',
+  defaultProvider: "local",
   enableVoiceInteraction: false,
   enableImageAnalysis: false,
   enableRealTimeTranslation: false,
   knowledgeBaseEnabled: false,
   maxConversationHistory: 50,
   responseTimeout: 30000,
-  languageSupport: ['zh-CN', 'en-US']
+  languageSupport: ["zh-CN", "en-US"],
 });
 
-describe('智能客服NLP模块和业务系统集成测试', () => {
-  it('用户点餐应该正确解析意图并调用订单服务', async () => {
+describe("智能客服NLP模块和业务系统集成测试", () => {
+  it("用户点餐应该正确解析意图并调用订单服务", async () => {
     const request = {
       sessionId: testSessionId,
-      message: '我要一份宫保鸡丁和米饭',
+      message: "我要一份宫保鸡丁和米饭",
       metadata: {
-        language: 'zh-CN',
-        restaurantId: 'test-restaurant-001',
-        customerId: 'test-customer-001'
-      }
+        language: "zh-CN",
+        restaurantId: "test-restaurant-001",
+        customerId: "test-customer-001",
+      },
     };
 
     const result: AIResponse = await aiAssistant.processTextMessage(request);
@@ -301,7 +303,7 @@ describe('智能客服NLP模块和业务系统集成测试', () => {
     // 验证业务上下文
     expect(result.data?.businessContext).toBeDefined();
     expect(result.data?.businessContext?.data).toBeDefined();
-    expect(result.data?.businessContext?.intent).toBe('order_food');
+    expect(result.data?.businessContext?.intent).toBe("order_food");
   });
 });
 ```
@@ -315,40 +317,40 @@ describe('智能客服NLP模块和业务系统集成测试', () => {
  * @file 登录功能端到端测试
  * @description 测试用户登录流程
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('登录功能测试', () => {
+test.describe("登录功能测试", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/login');
+    await page.goto("/login");
   });
 
-  test('登录页面应该正常加载', async ({ page }) => {
+  test("登录页面应该正常加载", async ({ page }) => {
     await expect(page).toHaveTitle(/登录/);
-    await expect(page.getByLabel('用户名')).toBeVisible();
-    await expect(page.getByLabel('密码')).toBeVisible();
-    await expect(page.getByRole('button', { name: '登录' })).toBeVisible();
+    await expect(page.getByLabel("用户名")).toBeVisible();
+    await expect(page.getByLabel("密码")).toBeVisible();
+    await expect(page.getByRole("button", { name: "登录" })).toBeVisible();
   });
 
-  test('成功登录应该跳转到仪表盘', async ({ page }) => {
-    await page.getByLabel('用户名').fill('admin');
-    await page.getByLabel('密码').fill('password123');
-    await page.getByRole('button', { name: '登录' }).click();
-    
-    await expect(page).toHaveURL('/dashboard');
-    await expect(page.getByText('工作台')).toBeVisible();
+  test("成功登录应该跳转到仪表盘", async ({ page }) => {
+    await page.getByLabel("用户名").fill("admin");
+    await page.getByLabel("密码").fill("password123");
+    await page.getByRole("button", { name: "登录" }).click();
+
+    await expect(page).toHaveURL("/dashboard");
+    await expect(page.getByText("工作台")).toBeVisible();
   });
 
-  test('使用无效凭证登录应该显示错误信息', async ({ page }) => {
-    await page.getByLabel('用户名').fill('invaliduser');
-    await page.getByLabel('密码').fill('invalidpassword');
-    await page.getByRole('button', { name: '登录' }).click();
-    
+  test("使用无效凭证登录应该显示错误信息", async ({ page }) => {
+    await page.getByLabel("用户名").fill("invaliduser");
+    await page.getByLabel("密码").fill("invalidpassword");
+    await page.getByRole("button", { name: "登录" }).click();
+
     await expect(page.getByText(/用户名或密码错误/)).toBeVisible();
-    await expect(page).toHaveURL('/login');
+    await expect(page).toHaveURL("/login");
   });
 
-  test('空字段登录应该显示验证错误', async ({ page }) => {
-    await page.getByRole('button', { name: '登录' }).click();
+  test("空字段登录应该显示验证错误", async ({ page }) => {
+    await page.getByRole("button", { name: "登录" }).click();
     await expect(page.getByText(/请输入用户名/)).toBeVisible();
     await expect(page.getByText(/请输入密码/)).toBeVisible();
   });
@@ -362,76 +364,73 @@ test.describe('登录功能测试', () => {
  * @file 订单管理功能端到端测试
  * @description 测试订单管理流程
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
 async function login(page: any) {
-  await page.goto('/login');
-  await page.getByLabel('用户名').fill('admin');
-  await page.getByLabel('密码').fill('password123');
-  await page.getByRole('button', { name: '登录' }).click();
-  await expect(page).toHaveURL('/dashboard');
+  await page.goto("/login");
+  await page.getByLabel("用户名").fill("admin");
+  await page.getByLabel("密码").fill("password123");
+  await page.getByRole("button", { name: "登录" }).click();
+  await expect(page).toHaveURL("/dashboard");
 }
 
-test.describe('订单管理功能测试', () => {
+test.describe("订单管理功能测试", () => {
   test.beforeEach(async ({ page }) => {
     await login(page);
-    await page.getByRole('link', { name: '订单管理' }).click();
-    await expect(page).toHaveURL('/orders');
+    await page.getByRole("link", { name: "订单管理" }).click();
+    await expect(page).toHaveURL("/orders");
   });
 
-  test('订单列表应该正常加载', async ({ page }) => {
-    await expect(page.getByText('订单列表')).toBeVisible();
-    await expect(page.locator('.order-table')).toBeVisible();
-    await expect(page.getByText('订单编号')).toBeVisible();
-    await expect(page.getByText('客户信息')).toBeVisible();
-    await expect(page.getByText('订单状态')).toBeVisible();
+  test("订单列表应该正常加载", async ({ page }) => {
+    await expect(page.getByText("订单列表")).toBeVisible();
+    await expect(page.locator(".order-table")).toBeVisible();
+    await expect(page.getByText("订单编号")).toBeVisible();
+    await expect(page.getByText("客户信息")).toBeVisible();
+    await expect(page.getByText("订单状态")).toBeVisible();
   });
 
-  test('应该可以搜索订单', async ({ page }) => {
-    const searchInput = page.getByPlaceholder('搜索订单编号');
-    await searchInput.fill('ORD001');
-    await page.getByRole('button', { name: '搜索' }).click();
-    await expect(page.getByText('ORD001')).toBeVisible();
+  test("应该可以搜索订单", async ({ page }) => {
+    const searchInput = page.getByPlaceholder("搜索订单编号");
+    await searchInput.fill("ORD001");
+    await page.getByRole("button", { name: "搜索" }).click();
+    await expect(page.getByText("ORD001")).toBeVisible();
   });
 
-  test('应该可以查看订单详情', async ({ page }) => {
-    await page.locator('.order-item').first()
-      .getByRole('button', { name: '详情' }).click();
-    await expect(page.locator('.order-detail-dialog')).toBeVisible();
-    await expect(page.getByText('订单详情')).toBeVisible();
-    await page.getByRole('button', { name: '关闭' }).click();
-    await expect(page.locator('.order-detail-dialog')).not.toBeVisible();
+  test("应该可以查看订单详情", async ({ page }) => {
+    await page.locator(".order-item").first().getByRole("button", { name: "详情" }).click();
+    await expect(page.locator(".order-detail-dialog")).toBeVisible();
+    await expect(page.getByText("订单详情")).toBeVisible();
+    await page.getByRole("button", { name: "关闭" }).click();
+    await expect(page.locator(".order-detail-dialog")).not.toBeVisible();
   });
 
-  test('应该可以更新订单状态', async ({ page }) => {
-    await page.locator('.order-item').first()
-      .getByRole('button', { name: '更新状态' }).click();
-    await page.getByRole('combobox', { name: '订单状态' })
-      .selectOption('preparing');
-    await page.getByRole('button', { name: '保存' }).click();
-    await expect(page.getByText('准备中')).toBeVisible();
-    await expect(page.getByText('状态更新成功')).toBeVisible();
+  test("应该可以更新订单状态", async ({ page }) => {
+    await page.locator(".order-item").first().getByRole("button", { name: "更新状态" }).click();
+    await page.getByRole("combobox", { name: "订单状态" }).selectOption("preparing");
+    await page.getByRole("button", { name: "保存" }).click();
+    await expect(page.getByText("准备中")).toBeVisible();
+    await expect(page.getByText("状态更新成功")).toBeVisible();
   });
 
-  test('应该可以导出订单数据', async ({ page }) => {
-    await page.getByRole('button', { name: '导出订单' }).click();
-    const downloadPromise = page.waitForEvent('download');
-    await page.getByRole('button', { name: '确认导出' }).click();
+  test("应该可以导出订单数据", async ({ page }) => {
+    await page.getByRole("button", { name: "导出订单" }).click();
+    const downloadPromise = page.waitForEvent("download");
+    await page.getByRole("button", { name: "确认导出" }).click();
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toContain('orders-');
-    expect(download.suggestedFilename()).toEndWith('.xlsx');
+    expect(download.suggestedFilename()).toContain("orders-");
+    expect(download.suggestedFilename()).toEndWith(".xlsx");
   });
 });
 ```
 
 #### 3.6 集成测试覆盖率要求
 
-| 测试类型 | 覆盖率要求 | 说明 |
-|---------|-----------|------|
-| API 集成测试 | ≥ 85% | 所有 API 接口必须有集成测试 |
-| 服务集成测试 | ≥ 80% | 关键服务间交互必须有集成测试 |
-| 端到端测试 | ≥ 70% | 核心业务流程必须有端到端测试 |
-| 数据库集成测试 | ≥ 75% | 数据库操作必须有集成测试 |
+| 测试类型       | 覆盖率要求 | 说明                         |
+| -------------- | ---------- | ---------------------------- |
+| API 集成测试   | ≥ 85%      | 所有 API 接口必须有集成测试  |
+| 服务集成测试   | ≥ 80%      | 关键服务间交互必须有集成测试 |
+| 端到端测试     | ≥ 70%      | 核心业务流程必须有端到端测试 |
+| 数据库集成测试 | ≥ 75%      | 数据库操作必须有集成测试     |
 
 #### 3.7 集成测试执行
 
@@ -484,8 +483,8 @@ jobs:
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'pnpm'
+          node-version: "18"
+          cache: "pnpm"
 
       - name: 安装依赖
         run: pnpm install
@@ -533,7 +532,7 @@ jobs:
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

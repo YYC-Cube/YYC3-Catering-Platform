@@ -14,22 +14,22 @@ export interface ApiResponse<T = any> {
    * 响应状态码
    */
   code: number;
-  
+
   /**
    * 响应消息
    */
   message: string;
-  
+
   /**
    * 响应数据
    */
   data?: T;
-  
+
   /**
    * 时间戳
    */
   timestamp: string;
-  
+
   /**
    * 跟踪ID
    */
@@ -44,32 +44,32 @@ export interface PaginationResponse<T = any> {
    * 数据列表
    */
   items: T[];
-  
+
   /**
    * 当前页码
    */
   page: number;
-  
+
   /**
    * 每页大小
    */
   limit: number;
-  
+
   /**
    * 总记录数
    */
   total: number;
-  
+
   /**
    * 总页数
    */
   totalPages: number;
-  
+
   /**
    * 是否有下一页
    */
   hasNext: boolean;
-  
+
   /**
    * 是否有上一页
    */
@@ -84,7 +84,7 @@ export interface PaginationParams {
    * 页码
    */
   page?: number;
-  
+
   /**
    * 每页大小
    */
@@ -99,7 +99,7 @@ export interface SortParams {
    * 排序字段
    */
   sortBy?: string;
-  
+
   /**
    * 排序方向
    */

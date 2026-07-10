@@ -3,76 +3,73 @@
  */
 
 // API 基础URL配置
-const API_BASE_URL = (import.meta as any).env.VITE_API_BASE_URL || 'http://localhost:3006/api/v1'
+const API_BASE_URL = (import.meta as any).env.VITE_API_BASE_URL || 'http://localhost:3006/api/v1';
 
 // HTTP 请求工具函数
 class HttpClient {
-  private baseURL: string
+  private baseURL: string;
 
   constructor(baseURL: string) {
-    this.baseURL = baseURL
+    this.baseURL = baseURL;
   }
 
-  private async request<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<T> {
-    const url = `${this.baseURL}${endpoint}`
+  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+    const url = `${this.baseURL}${endpoint}`;
 
     // 获取认证token
-    const token = this.getToken()
+    const token = this.getToken();
 
     const defaultHeaders: HeadersInit = {
       'Content-Type': 'application/json',
-    }
+    };
 
     if (token) {
-      defaultHeaders.Authorization = `Bearer ${token}`
+      defaultHeaders.Authorization = `Bearer ${token}`;
     }
 
     const config: RequestInit = {
       headers: defaultHeaders,
       ...options,
-    }
+    };
 
     try {
-      const response = await fetch(url, config)
+      const response = await fetch(url, config);
 
       if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status} ${response.statusText}`)
+        throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
       }
 
-      const data = await response.json()
-      return data
+      const data = await response.json();
+      return data;
     } catch (error) {
-      console.error('API request failed:', error)
-      throw error
+      console.error('API request failed:', error);
+      throw error;
     }
   }
 
   private getToken(): string | null {
     if (typeof localStorage !== 'undefined') {
-      return localStorage.getItem('auth_token')
+      return localStorage.getItem('auth_token');
     }
-    return null
+    return null;
   }
 
   async get<T>(endpoint: string, options: { params?: any; responseType?: string } = {}): Promise<T> {
-    let fullEndpoint = endpoint
+    let fullEndpoint = endpoint;
     if (options.params) {
-      const params = new URLSearchParams()
+      const params = new URLSearchParams();
       Object.entries(options.params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-          params.append(key, value.toString())
+          params.append(key, value.toString());
         }
-      })
-      const paramsString = params.toString()
+      });
+      const paramsString = params.toString();
       if (paramsString) {
-        fullEndpoint += `?${paramsString}`
+        fullEndpoint += `?${paramsString}`;
       }
     }
 
-    return this.request<T>(fullEndpoint, { method: 'GET' })
+    return this.request<T>(fullEndpoint, { method: 'GET' });
   }
 
   async post<T>(endpoint: string, data?: any, options: { headers?: HeadersInit } = {}): Promise<T> {
@@ -80,45 +77,45 @@ class HttpClient {
       method: 'POST',
       body: data ? JSON.stringify(data) : undefined,
       headers: options.headers,
-    }
+    };
 
     // 如果是FormData，不需要JSON.stringify
     if (data instanceof FormData) {
-      delete requestOptions.body
-      requestOptions.body = data
+      delete requestOptions.body;
+      requestOptions.body = data;
       // FormData会自动设置正确的Content-Type
       if (requestOptions.headers && requestOptions.headers['Content-Type']) {
-        delete requestOptions.headers['Content-Type']
+        delete requestOptions.headers['Content-Type'];
       }
     }
 
-    return this.request<T>(endpoint, requestOptions)
+    return this.request<T>(endpoint, requestOptions);
   }
 
   async put<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PUT',
       body: data ? JSON.stringify(data) : undefined,
-    })
+    });
   }
 
   async patch<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PATCH',
       body: data ? JSON.stringify(data) : undefined,
-    })
+    });
   }
 
   async delete<T>(endpoint: string, options: { data?: any } = {}): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'DELETE',
       body: options.data ? JSON.stringify(options.data) : undefined,
-    })
+    });
   }
 }
 
 // 创建HTTP客户端实例
-const httpClient = new HttpClient(API_BASE_URL)
+const httpClient = new HttpClient(API_BASE_URL);
 
 // 客户数据类型定义
 export interface Customer {
@@ -220,8 +217,8 @@ export const importCustomers = (file: File) => {
   formData.append('file', file);
   return httpClient.post('/api/customers/import', formData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+      'Content-Type': 'multipart/form-data',
+    },
   });
 };
 
@@ -601,7 +598,9 @@ export const deleteCustomerGroup = (groupId: string) => {
 
 // 获取分群成员列表
 export const getCustomerGroupMembers = (groupId: string, params?: { page?: number; size?: number }) => {
-  return httpClient.get<{ data: CustomerGroupMember[]; total: number }>(`/api/customer-groups/${groupId}/members`, { params });
+  return httpClient.get<{ data: CustomerGroupMember[]; total: number }>(`/api/customer-groups/${groupId}/members`, {
+    params,
+  });
 };
 
 // 添加客户到分群
@@ -756,12 +755,16 @@ export interface CustomerPreference {
 
 // 获取客户偏好
 export const getCustomerPreferences = (customerId: string, preferenceType?: string) => {
-  return httpClient.get<CustomerPreference[]>(`/api/customers/${customerId}/preferences`, { params: { preferenceType } });
+  return httpClient.get<CustomerPreference[]>(`/api/customers/${customerId}/preferences`, {
+    params: { preferenceType },
+  });
 };
 
 // 获取客户偏好详情
 export const getCustomerPreferenceDetail = (customerId: string, preferenceType: string, preferenceKey: string) => {
-  return httpClient.get<CustomerPreference>(`/api/customers/${customerId}/preferences/${preferenceType}/${preferenceKey}`);
+  return httpClient.get<CustomerPreference>(
+    `/api/customers/${customerId}/preferences/${preferenceType}/${preferenceKey}`,
+  );
 };
 
 // 设置客户偏好
@@ -770,8 +773,16 @@ export const setCustomerPreference = (customerId: string, data: Partial<Customer
 };
 
 // 更新客户偏好
-export const updateCustomerPreference = (customerId: string, preferenceType: string, preferenceKey: string, value: string) => {
-  return httpClient.put<CustomerPreference>(`/api/customers/${customerId}/preferences/${preferenceType}/${preferenceKey}`, { preferenceValue: value });
+export const updateCustomerPreference = (
+  customerId: string,
+  preferenceType: string,
+  preferenceKey: string,
+  value: string,
+) => {
+  return httpClient.put<CustomerPreference>(
+    `/api/customers/${customerId}/preferences/${preferenceType}/${preferenceKey}`,
+    { preferenceValue: value },
+  );
 };
 
 // 删除客户偏好
@@ -792,7 +803,10 @@ export interface CustomerStatusHistory {
 
 // 获取客户状态历史
 export const getCustomerStatusHistory = (customerId: string, params?: { page?: number; size?: number }) => {
-  return httpClient.get<{ data: CustomerStatusHistory[]; total: number }>(`/api/customers/${customerId}/status-history`, { params });
+  return httpClient.get<{ data: CustomerStatusHistory[]; total: number }>(
+    `/api/customers/${customerId}/status-history`,
+    { params },
+  );
 };
 
 // 客户统计接口
@@ -877,7 +891,11 @@ export interface BatchOperationResult {
 }
 
 // 批量更新客户状态
-export const batchUpdateCustomerStatus = (customerIds: string[], status: 'active' | 'inactive' | 'blacklisted', reason?: string) => {
+export const batchUpdateCustomerStatus = (
+  customerIds: string[],
+  status: 'active' | 'inactive' | 'blacklisted',
+  reason?: string,
+) => {
   return httpClient.patch<BatchOperationResult>('/api/customers/batch/status', { customerIds, status, reason });
 };
 

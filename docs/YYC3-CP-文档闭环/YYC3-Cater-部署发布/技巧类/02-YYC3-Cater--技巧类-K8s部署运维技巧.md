@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ K8s部署运维技巧
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ K8s部署运维技巧 |
-| **文档类型** | 技巧类文档 |
-| **所属阶段** | 部署发布 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ K8s部署运维技巧       |
+| **文档类型** | 技巧类文档                 |
+| **所属阶段** | 部署发布                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -133,100 +134,100 @@ spec:
         runAsUser: 1001
         fsGroup: 1001
       containers:
-      - name: web
-        image: yyc3/web:1.0.0
-        imagePullPolicy: IfNotPresent
-        ports:
-        - name: http
-          containerPort: 3200
-          protocol: TCP
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: PORT
-          value: "3200"
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-secrets
-              key: database-url
-        - name: REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-secrets
-              key: redis-url
-        resources:
-          requests:
-            cpu: 250m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3200
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          successThreshold: 1
-          failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3200
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 3
-          successThreshold: 1
-          failureThreshold: 3
-        startupProbe:
-          httpGet:
-            path: /startup
-            port: 3200
-          initialDelaySeconds: 0
-          periodSeconds: 5
-          timeoutSeconds: 3
-          successThreshold: 1
-          failureThreshold: 30
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - sh
-              - -c
-              - sleep 15
-        volumeMounts:
-        - name: config
-          mountPath: /app/config
-          readOnly: true
-        - name: logs
-          mountPath: /app/logs
+        - name: web
+          image: yyc3/web:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3200
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3200"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-secrets
+                  key: database-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-secrets
+                  key: redis-url
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3200
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3200
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 3
+          startupProbe:
+            httpGet:
+              path: /startup
+              port: 3200
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 30
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - sleep 15
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+              readOnly: true
+            - name: logs
+              mountPath: /app/logs
       volumes:
-      - name: config
-        configMap:
-          name: yyc3-web-config
-      - name: logs
-        emptyDir: {}
+        - name: config
+          configMap:
+            name: yyc3-web-config
+        - name: logs
+          emptyDir: {}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - yyc3-web
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - yyc3-web
+                topologyKey: kubernetes.io/hostname
       nodeSelector:
         node-role.kubernetes.io/worker: "true"
       tolerations:
-      - key: "workload"
-        operator: "Equal"
-        value: "web"
-        effect: "NoSchedule"
+        - key: "workload"
+          operator: "Equal"
+          value: "web"
+          effect: "NoSchedule"
 ```
 
 ### 1.2 Service配置
@@ -247,10 +248,10 @@ spec:
     clientIP:
       timeoutSeconds: 10800
   ports:
-  - name: http
-    port: 80
-    targetPort: 3200
-    protocol: TCP
+    - name: http
+      port: 80
+      targetPort: 3200
+      protocol: TCP
   selector:
     app: yyc3-web
 ```
@@ -279,20 +280,20 @@ metadata:
     nginx.ingress.kubernetes.io/rate-limit: "100"
 spec:
   tls:
-  - hosts:
-    - web.yyc3.com
-    secretName: yyc3-web-tls
+    - hosts:
+        - web.yyc3.com
+      secretName: yyc3-web-tls
   rules:
-  - host: web.yyc3.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: yyc3-web
-            port:
-              number: 80
+    - host: web.yyc3.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: yyc3-web
+                port:
+                  number: 80
 ```
 
 ---
@@ -411,32 +412,32 @@ spec:
         version: v1.1.0
     spec:
       containers:
-      - name: web
-        image: yyc3/web:1.1.0
-        ports:
-        - containerPort: 3200
-        env:
-        - name: NODE_ENV
-          value: "production"
-        resources:
-          requests:
-            cpu: 250m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3200
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3200
-          initialDelaySeconds: 10
-          periodSeconds: 5
+        - name: web
+          image: yyc3/web:1.1.0
+          ports:
+            - containerPort: 3200
+          env:
+            - name: NODE_ENV
+              value: "production"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3200
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3200
+            initialDelaySeconds: 10
+            periodSeconds: 5
 ```
 
 ---
@@ -459,10 +460,10 @@ spec:
   selector:
     app: yyc3-web
   ports:
-  - name: http
-    port: 3200
-    targetPort: 3200
-    protocol: TCP
+    - name: http
+      port: 3200
+      targetPort: 3200
+      protocol: TCP
 ```
 
 ### 3.2 ExternalName Service
@@ -478,7 +479,7 @@ spec:
   type: ExternalName
   externalName: postgres.yyc3.com
   ports:
-  - port: 5432
+    - port: 5432
 ```
 
 ### 3.3 Service Mesh配置
@@ -494,21 +495,21 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "web.yyc3.com"
-  - port:
-      number: 443
-      name: https
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      credentialName: yyc3-web-tls
-    hosts:
-    - "web.yyc3.com"
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "web.yyc3.com"
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: yyc3-web-tls
+      hosts:
+        - "web.yyc3.com"
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -517,22 +518,22 @@ metadata:
   namespace: yyc3-production
 spec:
   hosts:
-  - "web.yyc3.com"
+    - "web.yyc3.com"
   gateways:
-  - yyc3-gateway
+    - yyc3-gateway
   http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        host: yyc3-web
-        port:
-          number: 80
-    timeout: 60s
-    retries:
-      attempts: 3
-      perTryTimeout: 30s
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: yyc3-web
+            port:
+              number: 80
+      timeout: 60s
+      retries:
+        attempts: 3
+        perTryTimeout: 30s
 ```
 
 ---
@@ -658,44 +659,44 @@ spec:
   template:
     spec:
       containers:
-      - name: web
-        image: yyc3/web:1.0.0
-        env:
-        # 从ConfigMap注入
-        - name: APP_CONFIG
-          valueFrom:
-            configMapKeyRef:
-              name: yyc3-web-config
-              key: app.config.json
-        # 从Secret注入
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-secrets
-              key: database-url
-        # 直接设置
-        - name: NODE_ENV
-          value: "production"
-        - name: PORT
-          value: "3200"
-        # 从字段注入
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: POD_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        envFrom:
-        - configMapRef:
-            name: yyc3-web-config
-        - secretRef:
-            name: yyc3-secrets
+        - name: web
+          image: yyc3/web:1.0.0
+          env:
+            # 从ConfigMap注入
+            - name: APP_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: yyc3-web-config
+                  key: app.config.json
+            # 从Secret注入
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-secrets
+                  key: database-url
+            # 直接设置
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3200"
+            # 从字段注入
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          envFrom:
+            - configMapRef:
+                name: yyc3-web-config
+            - secretRef:
+                name: yyc3-secrets
 ```
 
 ---
@@ -802,45 +803,45 @@ spec:
   minReplicas: 3
   maxReplicas: 10
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
-  - type: Pods
-    pods:
-      metric:
-        name: http_requests_per_second
-      target:
-        type: AverageValue
-        averageValue: "1000"
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+    - type: Pods
+      pods:
+        metric:
+          name: http_requests_per_second
+        target:
+          type: AverageValue
+          averageValue: "1000"
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 300
       policies:
-      - type: Percent
-        value: 10
-        periodSeconds: 60
-      - type: Pods
-        value: 2
-        periodSeconds: 60
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+        - type: Pods
+          value: 2
+          periodSeconds: 60
       selectPolicy: Min
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
-      - type: Percent
-        value: 100
-        periodSeconds: 15
-      - type: Pods
-        value: 4
-        periodSeconds: 15
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+        - type: Pods
+          value: 4
+          periodSeconds: 15
       selectPolicy: Max
 ```
 
@@ -856,20 +857,20 @@ metadata:
 spec:
   targetRef:
     apiVersion: "apps/v1"
-    kind:       Deployment
-    name:       yyc3-web
+    kind: Deployment
+    name: yyc3-web
   updatePolicy:
     updateMode: "Auto"
   resourcePolicy:
     containerPolicies:
-    - containerName: "web"
-      minAllowed:
-        cpu: "100m"
-        memory: "128Mi"
-      maxAllowed:
-        cpu: "1000m"
-        memory: "1Gi"
-      controlledResources: ["cpu", "memory"]
+      - containerName: "web"
+        minAllowed:
+          cpu: "100m"
+          memory: "128Mi"
+        maxAllowed:
+          cpu: "1000m"
+          memory: "1Gi"
+        controlledResources: ["cpu", "memory"]
 ```
 
 ### 6.3 Cluster Autoscaler
@@ -912,7 +913,7 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1        # 最多可以比期望副本数多1个Pod
+      maxSurge: 1 # 最多可以比期望副本数多1个Pod
       maxUnavailable: 0 # 最多可以有0个不可用Pod
   replicas: 3
   selector:
@@ -924,10 +925,10 @@ spec:
         app: yyc3-web
     spec:
       containers:
-      - name: web
-        image: yyc3/web:1.0.0
-        ports:
-        - containerPort: 3200
+        - name: web
+          image: yyc3/web:1.0.0
+          ports:
+            - containerPort: 3200
 ```
 
 ### 7.2 蓝绿部署
@@ -955,10 +956,10 @@ spec:
         version: blue
     spec:
       containers:
-      - name: web
-        image: yyc3/web:1.0.0
-        ports:
-        - containerPort: 3200
+        - name: web
+          image: yyc3/web:1.0.0
+          ports:
+            - containerPort: 3200
 ---
 # web-green-deployment.yaml
 apiVersion: apps/v1
@@ -982,10 +983,10 @@ spec:
         version: green
     spec:
       containers:
-      - name: web
-        image: yyc3/web:1.1.0
-        ports:
-        - containerPort: 3200
+        - name: web
+          image: yyc3/web:1.1.0
+          ports:
+            - containerPort: 3200
 ---
 # web-service-blue-green.yaml
 apiVersion: v1
@@ -996,10 +997,10 @@ metadata:
 spec:
   selector:
     app: yyc3-web
-    version: blue  # 切换到green进行蓝绿部署
+    version: blue # 切换到green进行蓝绿部署
   ports:
-  - port: 80
-    targetPort: 3200
+    - port: 80
+      targetPort: 3200
 ```
 
 ### 7.3 更新监控
@@ -1162,57 +1163,57 @@ metadata:
     release: prometheus
 spec:
   groups:
-  - name: yyc3-web-alerts
-    rules:
-    - alert: HighRequestLatency
-      expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 0.5
-      for: 5m
-      labels:
-        severity: warning
-        team: yyc3
-      annotations:
-        summary: "High request latency detected"
-        description: "95th percentile latency is {{ $value }}s"
+    - name: yyc3-web-alerts
+      rules:
+        - alert: HighRequestLatency
+          expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 0.5
+          for: 5m
+          labels:
+            severity: warning
+            team: yyc3
+          annotations:
+            summary: "High request latency detected"
+            description: "95th percentile latency is {{ $value }}s"
 
-    - alert: HighErrorRate
-      expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
-      for: 5m
-      labels:
-        severity: critical
-        team: yyc3
-      annotations:
-        summary: "High error rate detected"
-        description: "Error rate is {{ $value | humanizePercentage }}"
+        - alert: HighErrorRate
+          expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+          for: 5m
+          labels:
+            severity: critical
+            team: yyc3
+          annotations:
+            summary: "High error rate detected"
+            description: "Error rate is {{ $value | humanizePercentage }}"
 
-    - alert: PodCrashLooping
-      expr: rate(kube_pod_container_status_restarts_total[15m]) > 0
-      for: 5m
-      labels:
-        severity: warning
-        team: yyc3
-      annotations:
-        summary: "Pod is crash looping"
-        description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is crash looping"
+        - alert: PodCrashLooping
+          expr: rate(kube_pod_container_status_restarts_total[15m]) > 0
+          for: 5m
+          labels:
+            severity: warning
+            team: yyc3
+          annotations:
+            summary: "Pod is crash looping"
+            description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is crash looping"
 
-    - alert: HighCPUUsage
-      expr: rate(container_cpu_usage_seconds_total{container!="POD",container!=""}[5m]) > 0.8
-      for: 5m
-      labels:
-        severity: warning
-        team: yyc3
-      annotations:
-        summary: "High CPU usage detected"
-        description: "Container {{ $labels.container }} is using {{ $value | humanizePercentage }} of CPU"
+        - alert: HighCPUUsage
+          expr: rate(container_cpu_usage_seconds_total{container!="POD",container!=""}[5m]) > 0.8
+          for: 5m
+          labels:
+            severity: warning
+            team: yyc3
+          annotations:
+            summary: "High CPU usage detected"
+            description: "Container {{ $labels.container }} is using {{ $value | humanizePercentage }} of CPU"
 
-    - alert: HighMemoryUsage
-      expr: container_memory_usage_bytes{container!="POD",container!=""} / container_spec_memory_limit_bytes{container!="POD",container!=""} > 0.8
-      for: 5m
-      labels:
-        severity: warning
-        team: yyc3
-      annotations:
-        summary: "High memory usage detected"
-        description: "Container {{ $labels.container }} is using {{ $value | humanizePercentage }} of memory"
+        - alert: HighMemoryUsage
+          expr: container_memory_usage_bytes{container!="POD",container!=""} / container_spec_memory_limit_bytes{container!="POD",container!=""} > 0.8
+          for: 5m
+          labels:
+            severity: warning
+            team: yyc3
+          annotations:
+            summary: "High memory usage detected"
+            description: "Container {{ $labels.container }} is using {{ $value | humanizePercentage }} of memory"
 ```
 
 ---
@@ -1394,58 +1395,58 @@ spec:
     spec:
       # 1. 设置资源请求和限制
       containers:
-      - name: web
-        image: yyc3/web:1.0.0
-        resources:
-          requests:
-            cpu: 250m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
+        - name: web
+          image: yyc3/web:1.0.0
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
 
-        # 2. 配置健康检查
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3200
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
+          # 2. 配置健康检查
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3200
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
 
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3200
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3200
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
 
-        # 3. 配置安全上下文
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 1001
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
-          capabilities:
-            drop:
-            - ALL
+          # 3. 配置安全上下文
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
 
       # 4. 配置Pod反亲和性
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - yyc3-web
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - yyc3-web
+                topologyKey: kubernetes.io/hostname
 
       # 5. 配置节点选择器
       nodeSelector:
@@ -1453,10 +1454,10 @@ spec:
 
       # 6. 配置容忍度
       tolerations:
-      - key: "workload"
-        operator: "Equal"
-        value: "web"
-        effect: "NoSchedule"
+        - key: "workload"
+          operator: "Equal"
+          value: "web"
+          effect: "NoSchedule"
 ```
 
 ### 10.2 安全最佳实践
@@ -1477,48 +1478,48 @@ spec:
     fsGroup: 1001
 
   containers:
-  - name: web
-    image: yyc3/web:1.0.0
+    - name: web
+      image: yyc3/web:1.0.0
 
-    # 2. 容器安全上下文
-    securityContext:
-      allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
-      capabilities:
-        drop:
-        - ALL
+      # 2. 容器安全上下文
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+            - ALL
 
-    # 3. 资源限制
-    resources:
-      requests:
-        cpu: 250m
-        memory: 256Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
+      # 3. 资源限制
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
 
-    # 4. 使用Secret管理敏感信息
-    env:
-    - name: DATABASE_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: yyc3-secrets
-          key: database-password
+      # 4. 使用Secret管理敏感信息
+      env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: yyc3-secrets
+              key: database-password
 
-    # 5. 只读根文件系统
-    volumeMounts:
-    - name: config
-      mountPath: /app/config
-      readOnly: true
-    - name: tmp
-      mountPath: /tmp
+      # 5. 只读根文件系统
+      volumeMounts:
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
 
   volumes:
-  - name: config
-    configMap:
-      name: yyc3-web-config
-  - name: tmp
-    emptyDir: {}
+    - name: config
+      configMap:
+        name: yyc3-web-config
+    - name: tmp
+      emptyDir: {}
 
   # 6. 网络策略
   # 在NetworkPolicy中限制Pod间通信
@@ -1553,57 +1554,54 @@ spec:
 
     spec:
       containers:
-      - name: web
-        image: yyc3/web:1.0.0
+        - name: web
+          image: yyc3/web:1.0.0
 
-        # 2. 健康检查端点
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3200
-          initialDelaySeconds: 30
-          periodSeconds: 10
+          # 2. 健康检查端点
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3200
+            initialDelaySeconds: 30
+            periodSeconds: 10
 
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3200
-          initialDelaySeconds: 10
-          periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3200
+            initialDelaySeconds: 10
+            periodSeconds: 5
 
-        # 3. 日志配置
-        env:
-        - name: LOG_LEVEL
-          value: "info"
-        - name: LOG_FORMAT
-          value: "json"
+          # 3. 日志配置
+          env:
+            - name: LOG_LEVEL
+              value: "info"
+            - name: LOG_FORMAT
+              value: "json"
 
-        # 4. 分布式追踪
-        - name: JAEGER_AGENT_HOST
-          value: "jaeger-agent.monitoring.svc.cluster.local"
-        - name: JAEGER_SAMPLER_TYPE
-          value: "probabilistic"
-        - name: JAEGER_SAMPLER_PARAM
-          value: "0.1"
+            # 4. 分布式追踪
+            - name: JAEGER_AGENT_HOST
+              value: "jaeger-agent.monitoring.svc.cluster.local"
+            - name: JAEGER_SAMPLER_TYPE
+              value: "probabilistic"
+            - name: JAEGER_SAMPLER_PARAM
+              value: "0.1"
 
-        # 5. 监控指标
-        - name: ENABLE_METRICS
-          value: "true"
-        - name: METRICS_PORT
-          value: "3200"
+            # 5. 监控指标
+            - name: ENABLE_METRICS
+              value: "true"
+            - name: METRICS_PORT
+              value: "3200"
 ```
 
 ---
 
 ## 📄 文档标尾
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1624,8 +1622,6 @@ spec:
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -1654,8 +1650,6 @@ spec:
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -1693,7 +1687,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -1709,8 +1703,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -1723,7 +1715,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1738,9 +1730,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1748,9 +1740,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1758,20 +1753,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1780,6 +1773,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1795,17 +1789,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1813,6 +1808,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1823,6 +1819,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1831,8 +1828,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1840,21 +1835,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1863,10 +1860,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1892,16 +1886,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1910,26 +1904,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1945,7 +1934,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1977,14 +1966,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1995,17 +1982,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -2015,17 +2005,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -2035,21 +2028,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

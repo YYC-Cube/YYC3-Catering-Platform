@@ -17,58 +17,75 @@ vi.mock('../../../config/database', () => ({
     query: vi.fn().mockImplementation((sql: string, params: any[]) => {
       if (sql.includes('INSERT INTO menu_items')) {
         return Promise.resolve({
-          rows: [{
-            id: '550e8400-e29b-41d4-a716-446655440000',
-            created_at: new Date(),
-          }]
+          rows: [
+            {
+              id: '550e8400-e29b-41d4-a716-446655440000',
+              created_at: new Date(),
+            },
+          ],
         });
       }
       if (sql.includes('UPDATE menu_items') && sql.includes('SET status')) {
         return Promise.resolve({
-          rows: [{
-            id: params[params.length - 1],
-            status: params[0],
-            updated_at: new Date(),
-          }]
+          rows: [
+            {
+              id: params[params.length - 1],
+              status: params[0],
+              updated_at: new Date(),
+            },
+          ],
         });
       }
-      if (sql.includes('UPDATE menu_items') && sql.includes('DELETE') || sql.includes('SET deleted_at')) {
+      if (
+        (sql.includes('UPDATE menu_items') && sql.includes('DELETE')) ||
+        sql.includes('SET deleted_at')
+      ) {
         return Promise.resolve({
-          rows: [{
-            id: params[params.length - 1],
-            deleted_at: new Date(),
-          }]
+          rows: [
+            {
+              id: params[params.length - 1],
+              deleted_at: new Date(),
+            },
+          ],
         });
       }
       if (sql.includes('UPDATE menu_items') && sql.includes('RETURNING updated_at')) {
         return Promise.resolve({
-          rows: [{
-            updated_at: new Date(),
-          }]
+          rows: [
+            {
+              updated_at: new Date(),
+            },
+          ],
         });
       }
-      if (sql.includes('SELECT') && sql.includes('FROM menu_items') && sql.includes('WHERE id = $1')) {
+      if (
+        sql.includes('SELECT') &&
+        sql.includes('FROM menu_items') &&
+        sql.includes('WHERE id = $1')
+      ) {
         const itemId = params[0];
         if (itemId === '999999') {
           return Promise.resolve({ rows: [] });
         }
         return Promise.resolve({
-          rows: [{
-            id: itemId,
-            restaurant_id: '1',
-            category_id: '1',
-            name: '测试菜品',
-            description: '测试描述',
-            price: 38.0,
-            status: 'available',
-            created_at: new Date(),
-            updated_at: new Date(),
-          }]
+          rows: [
+            {
+              id: itemId,
+              restaurant_id: '1',
+              category_id: '1',
+              name: '测试菜品',
+              description: '测试描述',
+              price: 38.0,
+              status: 'available',
+              created_at: new Date(),
+              updated_at: new Date(),
+            },
+          ],
         });
       }
       if (sql.includes('SELECT') && sql.includes('COUNT(*)')) {
         return Promise.resolve({
-          rows: [{ count: '10' }]
+          rows: [{ count: '10' }],
         });
       }
       if (sql.includes('SELECT') && sql.includes('FROM menu_categories')) {
@@ -81,8 +98,8 @@ vi.mock('../../../config/database', () => ({
               sort_order: 1,
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('SELECT') && sql.includes('category_id') && sql.includes('COUNT(*)')) {
@@ -94,8 +111,8 @@ vi.mock('../../../config/database', () => ({
               item_count: '10',
               available_count: '8',
               avg_rating: '4.5',
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('SELECT') && sql.includes('menu_item_id') && sql.includes('SUM(quantity)')) {
@@ -107,8 +124,8 @@ vi.mock('../../../config/database', () => ({
               total_quantity: '100',
               total_revenue: '3800.00',
               avg_rating: '4.5',
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('is_new = true')) {
@@ -141,8 +158,8 @@ vi.mock('../../../config/database', () => ({
               review_count: 50,
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('is_popular = true')) {
@@ -175,8 +192,8 @@ vi.mock('../../../config/database', () => ({
               review_count: 200,
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('is_recommended = true')) {
@@ -209,8 +226,8 @@ vi.mock('../../../config/database', () => ({
               review_count: 100,
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         });
       }
       if (sql.includes('SELECT') && sql.includes('menu_item_id') && sql.includes('SUM(quantity)')) {
@@ -222,8 +239,8 @@ vi.mock('../../../config/database', () => ({
               total_quantity: '100',
               total_revenue: '3800.00',
               avg_rating: '4.5',
-            }
-          ]
+            },
+          ],
         });
       }
       return Promise.resolve({ rows: [] });
@@ -276,7 +293,9 @@ describe('MenuController', () => {
         price: 38.0,
       };
 
-      vi.spyOn(menuController as any, 'createMenuItem').mockRejectedValueOnce(new Error('数据库连接失败'));
+      vi.spyOn(menuController as any, 'createMenuItem').mockRejectedValueOnce(
+        new Error('数据库连接失败')
+      );
       await expect(menuController.createMenuItem(request)).rejects.toThrow('数据库连接失败');
     });
   });
@@ -459,7 +478,9 @@ describe('MenuController', () => {
     it('应该拒绝空的ID列表', async () => {
       const ids: string[] = [];
       const status = 'available' as const;
-      await expect(menuController.batchUpdateMenuItemStatus(ids, status)).rejects.toThrow('菜品ID列表不能为空');
+      await expect(menuController.batchUpdateMenuItemStatus(ids, status)).rejects.toThrow(
+        '菜品ID列表不能为空'
+      );
     });
 
     it('应该支持更新为不可用状态', async () => {
@@ -551,7 +572,7 @@ describe('MenuController', () => {
       const filters = {
         restaurantId: '1',
         categoryId: '1',
-        status: 'available'
+        status: 'available',
       };
       const result = await menuController.searchMenuItems(keyword, filters);
       expect(result.items).toBeDefined();
@@ -561,7 +582,7 @@ describe('MenuController', () => {
       const keyword = '宫保';
       const filters = {
         page: 1,
-        limit: 10
+        limit: 10,
       };
       const result = await menuController.searchMenuItems(keyword, filters);
       expect(result.page).toBe(1);

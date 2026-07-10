@@ -51,9 +51,9 @@ app.post(
             .optional(),
         })
         .optional(),
-    })
+    }),
   ),
-  async (c) => {
+  async c => {
     try {
       const body = c.req.valid('json');
 
@@ -92,10 +92,10 @@ app.post(
           success: false,
           error: error instanceof Error ? error.message : '生成推荐失败',
         },
-        500
+        500,
       );
     }
-  }
+  },
 );
 
 /**
@@ -113,9 +113,9 @@ app.post(
       documentId: z.string().min(1, '文档ID不能为空'),
       actionType: z.nativeEnum(UserActionType),
       rating: z.number().min(1).max(5).optional(),
-    })
+    }),
   ),
-  async (c) => {
+  async c => {
     try {
       const { userId, documentId, actionType, rating } = c.req.valid('json');
 
@@ -150,10 +150,10 @@ app.post(
           success: false,
           error: error instanceof Error ? error.message : '记录用户行为失败',
         },
-        500
+        500,
       );
     }
-  }
+  },
 );
 
 /**
@@ -162,7 +162,7 @@ app.post(
  * @access 私有
  * @returns {Promise<Response>} 用户偏好信息
  */
-app.get('/preferences/:userId', async (c) => {
+app.get('/preferences/:userId', async c => {
   try {
     const userId = c.req.param('userId');
 
@@ -176,15 +176,15 @@ app.get('/preferences/:userId', async (c) => {
       data: preference,
     });
   } catch (error) {
-      logger.error('Error retrieving user preferences:', { error });
-      return c.json(
-        {
-          success: false,
-          error: error instanceof Error ? error.message : '获取用户偏好失败',
-        },
-        500
-      );
-    }
+    logger.error('Error retrieving user preferences:', { error });
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取用户偏好失败',
+      },
+      500,
+    );
+  }
 });
 
 /**
@@ -193,7 +193,7 @@ app.get('/preferences/:userId', async (c) => {
  * @access 私有
  * @returns {Promise<Response>} 推荐统计信息
  */
-app.get('/stats/:userId', async (c) => {
+app.get('/stats/:userId', async c => {
   try {
     const userId = c.req.param('userId');
 
@@ -207,15 +207,15 @@ app.get('/stats/:userId', async (c) => {
       data: stats,
     });
   } catch (error) {
-      logger.error('Error retrieving recommendation stats:', { error });
-      return c.json(
-        {
-          success: false,
-          error: error instanceof Error ? error.message : '获取推荐统计失败',
-        },
-        500
-      );
-    }
+    logger.error('Error retrieving recommendation stats:', { error });
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取推荐统计失败',
+      },
+      500,
+    );
+  }
 });
 
 /**
@@ -224,10 +224,10 @@ app.get('/stats/:userId', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 推荐策略列表
  */
-app.get('/strategies', (c) => {
-  const strategies = Object.values(RecommendationStrategy).map((strategy) => ({
+app.get('/strategies', c => {
+  const strategies = Object.values(RecommendationStrategy).map(strategy => ({
     value: strategy,
-    label: strategy.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()),
+    label: strategy.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase()),
     description: getStrategyDescription(strategy),
   }));
 
@@ -243,10 +243,10 @@ app.get('/strategies', (c) => {
  * @access 公开
  * @returns {Promise<Response>} 用户行为类型列表
  */
-app.get('/action-types', (c) => {
-  const actionTypes = Object.values(UserActionType).map((type) => ({
+app.get('/action-types', c => {
+  const actionTypes = Object.values(UserActionType).map(type => ({
     value: type,
-    label: type.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()),
+    label: type.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase()),
     description: getActionTypeDescription(type),
   }));
 
@@ -274,11 +274,11 @@ app.post(
           actionType: z.nativeEnum(UserActionType),
           rating: z.number().min(1).max(5).optional(),
           timestamp: z.string().datetime().optional(),
-        })
+        }),
       ),
-    })
+    }),
   ),
-  async (c) => {
+  async c => {
     try {
       const { actions } = c.req.valid('json');
 
@@ -287,7 +287,7 @@ app.post(
       }
 
       // 验证所有文档是否存在
-      const documentIds = [...new Set(actions.map((a) => a.documentId))];
+      const documentIds = [...new Set(actions.map(a => a.documentId))];
       for (const documentId of documentIds) {
         const doc = await documentRepository.findById(documentId);
         if (!doc) {
@@ -321,10 +321,10 @@ app.post(
           success: false,
           error: error instanceof Error ? error.message : '批量记录用户行为失败',
         },
-        500
+        500,
       );
     }
-  }
+  },
 );
 
 /**

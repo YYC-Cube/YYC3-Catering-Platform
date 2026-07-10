@@ -175,22 +175,10 @@ export class ProjectManagementAI {
 
   private async getSpecializedTools(role: string): Promise<AITool[]> {
     const toolsMap: Record<string, AITool[]> = {
-      project_manager: [
-        this.createStakeholderCommunicationTool(),
-        this.createBudgetManagementTool(),
-      ],
-      scrum_master: [
-        this.createSprintPlanningTool(),
-        this.createTeamFacilitationTool(),
-      ],
-      product_owner: [
-        this.createBacklogManagementTool(),
-        this.createPrioritizationTool(),
-      ],
-      team_lead: [
-        this.createTaskAssignmentTool(),
-        this.createTeamCoordinationTool(),
-      ],
+      project_manager: [this.createStakeholderCommunicationTool(), this.createBudgetManagementTool()],
+      scrum_master: [this.createSprintPlanningTool(), this.createTeamFacilitationTool()],
+      product_owner: [this.createBacklogManagementTool(), this.createPrioritizationTool()],
+      team_lead: [this.createTaskAssignmentTool(), this.createTeamCoordinationTool()],
     };
 
     return toolsMap[role] || [];

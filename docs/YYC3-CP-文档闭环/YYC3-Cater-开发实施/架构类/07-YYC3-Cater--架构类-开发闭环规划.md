@@ -21,7 +21,7 @@
 - [🎯 规划概述](#🎯-规划概述)
   - [开发闭环理念](#开发闭环理念)
   - [闭环框架结构](#闭环框架结构)
-- [📋 第一闭环：规划闭环 (Planning Loop)](#📋-第一闭环规划闭环-(planning-loop))
+- [📋 第一闭环：规划闭环 (Planning Loop)](<#📋-第一闭环规划闭环-(planning-loop)>)
   - [1.1 需求管理流程](#1.1-需求管理流程)
     - [需求收集与筛选](#需求收集与筛选)
     - [评估标准矩阵](#评估标准矩阵)
@@ -30,7 +30,7 @@
     - [容量规划模型](#容量规划模型)
   - [1.3 交付物标准](#1.3-交付物标准)
     - [规划文档清单](#规划文档清单)
-- [💻 第二闭环：开发闭环 (Development Loop)](#💻-第二闭环开发闭环-(development-loop))
+- [💻 第二闭环：开发闭环 (Development Loop)](<#💻-第二闭环开发闭环-(development-loop)>)
   - [2.1 开发标准与规范](#2.1-开发标准与规范)
     - [YYC³开发规范执行清单](#yyc³开发规范执行清单)
     - [开发环境标准化](#开发环境标准化)
@@ -45,7 +45,7 @@
   - [🧪 测试检查](#🧪-测试检查)
   - [2.3 开发效率工具](#2.3-开发效率工具)
     - [YYC³开发工具链](#yyc³开发工具链)
-- [🧪 第三闭环：测试闭环 (Testing Loop)](#🧪-第三闭环测试闭环-(testing-loop))
+- [🧪 第三闭环：测试闭环 (Testing Loop)](<#🧪-第三闭环测试闭环-(testing-loop)>)
   - [3.1 测试策略框架](#3.1-测试策略框架)
     - [测试金字塔模型](#测试金字塔模型)
     - [测试覆盖率标准](#测试覆盖率标准)
@@ -54,7 +54,7 @@
     - [测试用例模板](#测试用例模板)
   - [3.3 质量门禁机制](#3.3-质量门禁机制)
     - [质量门禁配置](#质量门禁配置)
-- [🚀 第四闭环：部署闭环 (Deployment Loop)](#🚀-第四闭环部署闭环-(deployment-loop))
+- [🚀 第四闭环：部署闭环 (Deployment Loop)](<#🚀-第四闭环部署闭环-(deployment-loop)>)
   - [4.1 部署策略](#4.1-部署策略)
     - [多环境部署架构](#多环境部署架构)
     - [环境配置管理](#环境配置管理)
@@ -63,7 +63,7 @@
     - [Docker Compose 配置](#docker-compose-配置)
   - [4.3 CI/CD 流水线](#4.3-ci/cd-流水线)
     - [完整部署流水线](#完整部署流水线)
-- [📊 第五闭环：监控闭环 (Monitoring Loop)](#📊-第五闭环监控闭环-(monitoring-loop))
+- [📊 第五闭环：监控闭环 (Monitoring Loop)](<#📊-第五闭环监控闭环-(monitoring-loop)>)
   - [5.1 监控体系架构](#5.1-监控体系架构)
     - [三层监控模型](#三层监控模型)
   - [5.2 监控指标定义](#5.2-监控指标定义)
@@ -72,7 +72,7 @@
   - [5.3 告警系统设计](#5.3-告警系统设计)
     - [告警规则配置](#告警规则配置)
     - [告警通知配置](#告警通知配置)
-- [🔄 第六闭环：优化闭环 (Optimization Loop)](#🔄-第六闭环优化闭环-(optimization-loop))
+- [🔄 第六闭环：优化闭环 (Optimization Loop)](<#🔄-第六闭环优化闭环-(optimization-loop)>)
   - [6.1 持续改进流程](#6.1-持续改进流程)
     - [数据驱动优化模型](#数据驱动优化模型)
   - [6.2 性能优化策略](#6.2-性能优化策略)
@@ -103,6 +103,7 @@
 - 快速上手开发和维护
 
 功能实现遵循以下原则：
+
 - **用户友好**：界面简洁，操作流畅
 - **性能优化**：响应迅速，体验流畅
 - **安全可靠**：数据安全，系统稳定
@@ -113,22 +114,26 @@
 本功能实现使用以下技术栈：
 
 **前端技术**
+
 - React 18+：组件化开发
 - TypeScript 5.0+：类型安全
 - Ant Design：UI组件库
 - Axios：HTTP客户端
 
 **后端技术**
+
 - Node.js 18+：服务端运行时
 - Express：Web框架
 - TypeScript：类型安全
 - Prisma：ORM框架
 
 **数据库**
+
 - PostgreSQL 15+：关系型数据库
 - Redis 7+：缓存数据库
 
 **工具链**
+
 - ESLint：代码检查
 - Prettier：代码格式化
 - Jest：单元测试
@@ -139,22 +144,26 @@
 开发环境配置要求：
 
 **系统要求**
+
 - 操作系统：macOS/Linux/Windows
 - Node.js：18.0.0或更高版本
 - npm：9.0.0或更高版本
 - Git：2.30.0或更高版本
 
 **数据库**
+
 - PostgreSQL：15.0或更高版本
 - Redis：7.0或更高版本
 
 **开发工具**
+
 - VS Code：推荐IDE
 - Postman：API测试工具
 - DBeaver：数据库管理工具
 
 **环境变量**
 创建`.env`文件，配置以下变量：
+
 ```env
 NODE_ENV=development
 PORT=3000
@@ -211,11 +220,12 @@ JWT_SECRET=your-secret-key
 **@tags**：YYC³,文档
 
 ---
+
 # YYC³餐饮行业智能化平台 - 开发闭环规划
 
 > **YYC³（YanYu Cloud Cube）**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***英文***：*All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era*
+> **_英文_**：_All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era_
 
 ---
 
@@ -248,6 +258,7 @@ JWT_SECRET=your-secret-key
 ### 1.1 需求管理流程
 
 #### 需求收集与筛选
+
 ```mermaid
 graph LR
     A[需求收集] --> B[需求分析]
@@ -259,21 +270,22 @@ graph LR
 
 #### 评估标准矩阵
 
-| 需求类型 | 评估维度 | 权重 | 评分标准 |
-|---------|---------|------|----------|
-| **业务需求** | 用户价值 | 30% | ROI > 2:1为优秀 |
-| | 市场竞争力 | 25% | 差异化程度 |
-| | 实现复杂度 | 20% | 技术难度评估 |
-| | 资源需求 | 15% | 人力时间成本 |
-| | 风险评估 | 10% | 实施风险等级 |
-| **技术需求** | 架构优化 | 35% | 性能提升幅度 |
-| | 代码质量 | 30% | 技术债务减少 |
-| | 安全增强 | 20% | 安全风险降低 |
-| | 可维护性 | 15% | 开发效率提升 |
+| 需求类型     | 评估维度   | 权重 | 评分标准        |
+| ------------ | ---------- | ---- | --------------- |
+| **业务需求** | 用户价值   | 30%  | ROI > 2:1为优秀 |
+|              | 市场竞争力 | 25%  | 差异化程度      |
+|              | 实现复杂度 | 20%  | 技术难度评估    |
+|              | 资源需求   | 15%  | 人力时间成本    |
+|              | 风险评估   | 10%  | 实施风险等级    |
+| **技术需求** | 架构优化   | 35%  | 性能提升幅度    |
+|              | 代码质量   | 30%  | 技术债务减少    |
+|              | 安全增强   | 20%  | 安全风险降低    |
+|              | 可维护性   | 15%  | 开发效率提升    |
 
 ### 1.2 项目规划方法
 
 #### 敏捷规划框架
+
 - **Sprint周期**：2周为一个迭代周期
 - **发布周期**：每4周一个小版本，每12周一个大版本
 - **规划层级**：
@@ -296,8 +308,8 @@ interface CapacityPlanning {
   taskEstimation: {
     storyPoints: number;
     hoursPerPoint: number;
-    complexity: 'Low' | 'Medium' | 'High';
-    riskLevel: 'Low' | 'Medium' | 'High';
+    complexity: "Low" | "Medium" | "High";
+    riskLevel: "Low" | "Medium" | "High";
   };
 
   sprintPlanning: {
@@ -311,6 +323,7 @@ interface CapacityPlanning {
 ### 1.3 交付物标准
 
 #### 规划文档清单
+
 - [ ] **产品需求文档 (PRD)**
   - 功能需求描述
   - 用户故事清单
@@ -344,31 +357,31 @@ interface CapacityPlanning {
 interface YYC3DevelopmentStandards {
   // 项目命名规范
   projectNaming: {
-    prefix: 'yyc3';
-    format: 'yyc3-{category}-{feature}';
-    example: 'yyc3-catering-platform';
+    prefix: "yyc3";
+    format: "yyc3-{category}-{feature}";
+    example: "yyc3-catering-platform";
   };
 
   // 代码文件规范
   codeStandards: {
     fileHeader: boolean; // 必须包含标准文件头
-    namingConvention: 'camelCase' | 'PascalCase' | 'kebab-case';
+    namingConvention: "camelCase" | "PascalCase" | "kebab-case";
     typeSafety: boolean; // TypeScript严格模式
     documentation: boolean; // JSDoc注释
   };
 
   // Git工作流规范
   gitWorkflow: {
-    branchingStrategy: 'GitFlow';
-    commitFormat: 'ConventionalCommits';
-    codeReview: 'Mandatory';
+    branchingStrategy: "GitFlow";
+    commitFormat: "ConventionalCommits";
+    codeReview: "Mandatory";
     ciIntegration: boolean;
   };
 
   // 质量标准
   qualityStandards: {
     testCoverage: number; // >= 90%
-    lintRules: 'YYC3ESLint';
+    lintRules: "YYC3ESLint";
     buildSuccess: boolean;
     securityScan: boolean;
   };
@@ -481,30 +494,35 @@ jobs:
 ## YYC³ 代码审查清单
 
 ### 🔍 基础检查
+
 - [ ] 代码符合YYC³文件头规范
 - [ ] 命名规范遵循YYC³标准
 - [ ] TypeScript类型定义完整
 - [ ] 函数/类有适当的JSDoc注释
 
 ### 🏗️ 架构检查
+
 - [ ] 模块职责单一且明确
 - [ ] 依赖关系合理，无循环依赖
 - [ ] 接口设计简洁且可扩展
 - [ ] 错误处理机制完善
 
 ### 🔒 安全检查
+
 - [ ] 输入验证和参数校验
 - [ ] 敏感信息未硬编码
 - [ ] SQL注入防护措施
 - [ ] XSS攻击防护
 
 ### ⚡ 性能检查
+
 - [ ] 无明显性能瓶颈
 - [ ] 数据库查询优化
 - [ ] 缓存策略合理
 - [ ] 资源使用效率高
 
 ### 🧪 测试检查
+
 - [ ] 单元测试覆盖主要逻辑
 - [ ] 集成测试验证关键流程
 - [ ] 测试用例边界条件完整
@@ -559,13 +577,13 @@ graph TD
 
 #### 测试覆盖率标准
 
-| 测试类型 | 覆盖率要求 | 测试重点 | 工具选择 |
-|---------|-----------|----------|----------|
-| **单元测试** | ≥ 90% | 业务逻辑、工具函数 | Vitest + Testing Library |
-| **集成测试** | ≥ 80% | API接口、数据库交互 | Supertest + Test Containers |
-| **E2E测试** | ≥ 70% | 用户流程、关键业务场景 | Playwright |
-| **性能测试** | ≥ 60% | 响应时间、并发处理 | K6 + Artillery |
-| **安全测试** | ≥ 85% | 漏洞扫描、渗透测试 | OWASP ZAP + Snyk |
+| 测试类型     | 覆盖率要求 | 测试重点               | 工具选择                    |
+| ------------ | ---------- | ---------------------- | --------------------------- |
+| **单元测试** | ≥ 90%      | 业务逻辑、工具函数     | Vitest + Testing Library    |
+| **集成测试** | ≥ 80%      | API接口、数据库交互    | Supertest + Test Containers |
+| **E2E测试**  | ≥ 70%      | 用户流程、关键业务场景 | Playwright                  |
+| **性能测试** | ≥ 60%      | 响应时间、并发处理     | K6 + Artillery              |
+| **安全测试** | ≥ 85%      | 漏洞扫描、渗透测试     | OWASP ZAP + Snyk            |
 
 ### 3.2 自动化测试体系
 
@@ -573,50 +591,44 @@ graph TD
 
 ```typescript
 // vitest.config.ts
-import { defineConfig } from 'vitest/config';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
+    environment: "jsdom",
+    setupFiles: ["./src/test/setup.ts"],
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'src/test/',
-        '**/*.d.ts',
-        '**/*.config.*',
-        '**/coverage/**'
-      ],
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      exclude: ["node_modules/", "src/test/", "**/*.d.ts", "**/*.config.*", "**/coverage/**"],
       thresholds: {
         global: {
           branches: 80,
           functions: 90,
           lines: 90,
-          statements: 90
-        }
-      }
+          statements: 90,
+        },
+      },
     },
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
-    exclude: ['node_modules/', 'dist/', '**/*.config.*']
-  }
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    exclude: ["node_modules/", "dist/", "**/*.config.*"],
+  },
 });
 
 // 测试设置文件
 // src/test/setup.ts
-import '@testing-library/jest-dom';
-import { cleanup } from '@testing-library/react';
-import { afterAll, afterEach, beforeAll } from 'vitest';
+import "@testing-library/jest-dom";
+import { cleanup } from "@testing-library/react";
+import { afterAll, afterEach, beforeAll } from "vitest";
 
 // 全局测试设置
 beforeAll(() => {
   // 设置测试环境变量
-  process.env.NODE_ENV = 'test';
-  process.env.JWT_SECRET = 'test-jwt-secret';
+  process.env.NODE_ENV = "test";
+  process.env.JWT_SECRET = "test-jwt-secret";
 });
 
 // 每个测试后清理
@@ -819,7 +831,7 @@ interface EnvironmentConfig {
     name: string;
     version: string;
     port: number;
-    env: 'development' | 'testing' | 'staging' | 'production';
+    env: "development" | "testing" | "staging" | "production";
   };
 
   // 数据库配置
@@ -861,7 +873,7 @@ interface EnvironmentConfig {
   monitoring: {
     enabled: boolean;
     metricsEndpoint: string;
-    logLevel: 'debug' | 'info' | 'warn' | 'error';
+    logLevel: "debug" | "info" | "warn" | "error";
   };
 }
 
@@ -869,37 +881,37 @@ interface EnvironmentConfig {
 const configs: Record<string, EnvironmentConfig> = {
   development: {
     app: {
-      name: 'yyc3-catering-dev',
-      version: '1.0.0',
+      name: "yyc3-catering-dev",
+      version: "1.0.0",
       port: 3000,
-      env: 'development'
+      env: "development",
     },
     database: {
-      host: 'localhost',
+      host: "localhost",
       port: 5432,
-      name: 'yyc3_catering_dev',
+      name: "yyc3_catering_dev",
       ssl: false,
-      poolSize: 5
+      poolSize: 5,
     },
     // ... 其他配置
   },
 
   production: {
     app: {
-      name: 'yyc3-catering-prod',
-      version: '1.0.0',
+      name: "yyc3-catering-prod",
+      version: "1.0.0",
       port: 3000,
-      env: 'production'
+      env: "production",
     },
     database: {
       host: process.env.DB_HOST!,
-      port: parseInt(process.env.DB_PORT || '5432'),
+      port: parseInt(process.env.DB_PORT || "5432"),
       name: process.env.DB_NAME!,
       ssl: true,
-      poolSize: 20
+      poolSize: 20,
     },
     // ... 其他配置
-  }
+  },
 };
 ```
 
@@ -1276,7 +1288,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          channel: '#deployments'
+          channel: "#deployments"
           webhook_url: ${{ secrets.SLACK_WEBHOOK }}
 ```
 
@@ -1313,67 +1325,67 @@ interface YYC3MonitoringMetrics {
   // 基础设施指标
   infrastructure: {
     system: {
-      cpuUsage: number;        // CPU使用率
-      memoryUsage: number;     // 内存使用率
-      diskUsage: number;       // 磁盘使用率
-      networkIO: number;       // 网络I/O
+      cpuUsage: number; // CPU使用率
+      memoryUsage: number; // 内存使用率
+      diskUsage: number; // 磁盘使用率
+      networkIO: number; // 网络I/O
     };
 
     database: {
-      connectionCount: number;     // 数据库连接数
-      queryLatency: number;        // 查询延迟
-      transactionRate: number;     // 事务处理率
-      errorRate: number;           // 错误率
+      connectionCount: number; // 数据库连接数
+      queryLatency: number; // 查询延迟
+      transactionRate: number; // 事务处理率
+      errorRate: number; // 错误率
     };
 
     cache: {
-      hitRate: number;             // 缓存命中率
-      memoryUsage: number;         // 内存使用
-      evictionRate: number;        // 驱逐率
+      hitRate: number; // 缓存命中率
+      memoryUsage: number; // 内存使用
+      evictionRate: number; // 驱逐率
     };
   };
 
   // 应用性能指标
   application: {
     performance: {
-      responseTime: number;        // 平均响应时间
-      p95ResponseTime: number;     // 95分位响应时间
-      p99ResponseTime: number;     // 99分位响应时间
-      throughput: number;          // 吞吐量 (RPS)
+      responseTime: number; // 平均响应时间
+      p95ResponseTime: number; // 95分位响应时间
+      p99ResponseTime: number; // 99分位响应时间
+      throughput: number; // 吞吐量 (RPS)
     };
 
     errors: {
-      errorRate: number;           // 错误率
-      criticalErrorCount: number;  // 严重错误数
-      warningCount: number;        // 警告数量
+      errorRate: number; // 错误率
+      criticalErrorCount: number; // 严重错误数
+      warningCount: number; // 警告数量
     };
 
     availability: {
-      uptime: number;              // 可用性
-      downtime: number;            // 停机时间
-      serviceHealth: boolean;      // 服务健康状态
+      uptime: number; // 可用性
+      downtime: number; // 停机时间
+      serviceHealth: boolean; // 服务健康状态
     };
   };
 
   // 业务指标
   business: {
     users: {
-      activeUsers: number;         // 活跃用户数
-      newUsers: number;            // 新用户数
-      userRetention: number;       // 用户留存率
+      activeUsers: number; // 活跃用户数
+      newUsers: number; // 新用户数
+      userRetention: number; // 用户留存率
     };
 
     catering: {
-      orderCount: number;          // 订单数量
-      orderValue: number;          // 订单金额
-      conversionRate: number;      // 转化率
-      averageOrderValue: number;   // 平均订单价值
+      orderCount: number; // 订单数量
+      orderValue: number; // 订单金额
+      conversionRate: number; // 转化率
+      averageOrderValue: number; // 平均订单价值
     };
 
     ai: {
-      aiRequestCount: number;      // AI请求次数
-      aiResponseTime: number;      // AI响应时间
-      aiAccuracy: number;          // AI准确率
+      aiRequestCount: number; // AI请求次数
+      aiResponseTime: number; // AI响应时间
+      aiAccuracy: number; // AI准确率
       aiFeatureUsage: Record<string, number>; // AI功能使用情况
     };
   };
@@ -1384,7 +1396,7 @@ interface YYC3MonitoringMetrics {
 
 ```typescript
 // monitoring/metrics.ts - YYC³监控指标收集器
-import { createPrometheusMetrics } from '@yyc3/monitoring';
+import { createPrometheusMetrics } from "@yyc3/monitoring";
 
 export class YYC3MetricsCollector {
   private metrics: YYC3MonitoringMetrics;
@@ -1398,10 +1410,10 @@ export class YYC3MetricsCollector {
     return {
       infrastructure: {
         system: {
-          cpuUsage: this.createGauge('yyc3_system_cpu_usage', 'CPU usage percentage'),
-          memoryUsage: this.createGauge('yyc3_system_memory_usage', 'Memory usage percentage'),
-          diskUsage: this.createGauge('yyc3_system_disk_usage', 'Disk usage percentage'),
-          networkIO: this.createGauge('yyc3_system_network_io', 'Network I/O bytes per second'),
+          cpuUsage: this.createGauge("yyc3_system_cpu_usage", "CPU usage percentage"),
+          memoryUsage: this.createGauge("yyc3_system_memory_usage", "Memory usage percentage"),
+          diskUsage: this.createGauge("yyc3_system_disk_usage", "Disk usage percentage"),
+          networkIO: this.createGauge("yyc3_system_network_io", "Network I/O bytes per second"),
         },
         // ... 其他指标初始化
       },
@@ -1447,7 +1459,7 @@ export class YYC3MetricsCollector {
     app.use((req, res, next) => {
       const start = Date.now();
 
-      res.on('finish', () => {
+      res.on("finish", () => {
         const duration = Date.now() - start;
         const route = req.route?.path || req.path;
 
@@ -1457,9 +1469,7 @@ export class YYC3MetricsCollector {
           .observe(duration / 1000);
 
         // 记录请求计数
-        this.metrics.application.performance.throughput
-          .labels(req.method, route, String(res.statusCode))
-          .inc();
+        this.metrics.application.performance.throughput.labels(req.method, route, String(res.statusCode)).inc();
       });
 
       next();
@@ -1565,7 +1575,7 @@ groups:
 
 ```typescript
 // alerts/notification.ts - YYC³告警通知系统
-import { Alertmanager, SlackNotifier, EmailNotifier } from '@yyc3/alerts';
+import { Alertmanager, SlackNotifier, EmailNotifier } from "@yyc3/alerts";
 
 export class YYC3AlertNotification {
   private alertmanager: Alertmanager;
@@ -1578,13 +1588,13 @@ export class YYC3AlertNotification {
     this.email = new EmailNotifier({
       smtp: {
         host: process.env.SMTP_HOST!,
-        port: parseInt(process.env.SMTP_PORT || '587'),
+        port: parseInt(process.env.SMTP_PORT || "587"),
         secure: false,
         auth: {
           user: process.env.SMTP_USER!,
-          pass: process.env.SMTP_PASSWORD!
-        }
-      }
+          pass: process.env.SMTP_PASSWORD!,
+        },
+      },
     });
 
     this.setupNotificationRules();
@@ -1592,17 +1602,17 @@ export class YYC3AlertNotification {
 
   private setupNotificationRules(): void {
     // 严重告警 - 立即通知所有渠道
-    this.alertmanager.on('critical', (alert) => {
+    this.alertmanager.on("critical", alert => {
       this.sendCriticalAlert(alert);
     });
 
     // 警告告警 - 通知Slack
-    this.alertmanager.on('warning', (alert) => {
+    this.alertmanager.on("warning", alert => {
       this.sendWarningAlert(alert);
     });
 
     // 信息告警 - 仅记录日志
-    this.alertmanager.on('info', (alert) => {
+    this.alertmanager.on("info", alert => {
       this.logger.info(`Info alert: ${alert.summary}`);
     });
   }
@@ -1612,21 +1622,21 @@ export class YYC3AlertNotification {
 
     // 发送Slack通知
     await this.slack.send({
-      channel: '#alerts-critical',
-      color: 'danger',
-      title: '🚨 Critical Alert',
-      text: message
+      channel: "#alerts-critical",
+      color: "danger",
+      title: "🚨 Critical Alert",
+      text: message,
     });
 
     // 发送邮件通知
     await this.email.send({
-      to: ['admin@yyc3.com', 'devops@yyc3.com'],
+      to: ["admin@yyc3.com", "devops@yyc3.com"],
       subject: `Critical Alert: ${alert.summary}`,
-      html: this.generateAlertHTML(alert)
+      html: this.generateAlertHTML(alert),
     });
 
     // 发送短信通知（可选）
-    if (alert.labels.notifySms === 'true') {
+    if (alert.labels.notifySms === "true") {
       await this.sendSMSNotification(alert);
     }
   }
@@ -1635,10 +1645,10 @@ export class YYC3AlertNotification {
     const message = this.formatAlertMessage(alert);
 
     await this.slack.send({
-      channel: '#alerts-warning',
-      color: 'warning',
-      title: '⚠️ Warning Alert',
-      text: message
+      channel: "#alerts-warning",
+      color: "warning",
+      title: "⚠️ Warning Alert",
+      text: message,
     });
   }
 
@@ -1832,10 +1842,10 @@ export class YYC3KnowledgeBase {
         id: generateId(),
         title: lesson.title,
         content: lesson.content,
-        category: 'lessons-learned',
+        category: "lessons-learned",
         tags: lesson.tags,
         createdAt: new Date(),
-        relatedIncidents: [incident.id]
+        relatedIncidents: [incident.id],
       };
 
       await this.saveDocument(doc);
@@ -1845,18 +1855,18 @@ export class YYC3KnowledgeBase {
   // 智能搜索
   public async search(query: string): Promise<KnowledgeSearchResult[]> {
     return this.searchEngine.search(query, {
-      categories: ['best-practices', 'troubleshooting', 'architecture'],
+      categories: ["best-practices", "troubleshooting", "architecture"],
       limit: 10,
-      includeRelated: true
+      includeRelated: true,
     });
   }
 
   // 生成最佳实践报告
   public async generateBestPracticesReport(): Promise<BestPracticesReport> {
-    const categories = ['performance', 'security', 'reliability', 'scalability'];
+    const categories = ["performance", "security", "reliability", "scalability"];
     const report: BestPracticesReport = {
       generatedAt: new Date(),
-      categories: {}
+      categories: {},
     };
 
     for (const category of categories) {
@@ -1864,7 +1874,7 @@ export class YYC3KnowledgeBase {
       report.categories[category] = {
         count: practices.length,
         practices: practices.slice(0, 5), // Top 5
-        adoptionRate: await this.getAdoptionRate(category)
+        adoptionRate: await this.getAdoptionRate(category),
       };
     }
 
@@ -1881,20 +1891,20 @@ export class YYC3KnowledgeBase {
 
 #### YYC³开发闭环KPI
 
-| 闭环类型 | 核心KPI | 目标值 | 测量频率 |
-|---------|---------|--------|----------|
-| **规划闭环** | 需求准确率 | ≥ 90% | 每版本 |
-| | 规划完成率 | ≥ 95% | 每迭代 |
-| **开发闭环** | 代码质量分数 | ≥ 8.5/10 | 每日 |
-| | Bug密度 | ≤ 0.5/KLOC | 每版本 |
-| **测试闭环** | 测试覆盖率 | ≥ 90% | 每次提交 |
-| | 自动化测试通过率 | ≥ 98% | 每次构建 |
-| **部署闭环** | 部署成功率 | ≥ 99% | 每次部署 |
-| | 部署时间 | ≤ 30分钟 | 每次部署 |
-| **监控闭环** | MTTR (平均修复时间) | ≤ 30分钟 | 每月 |
-| | 告警准确率 | ≥ 95% | 每月 |
-| **优化闭环** | 性能改进幅度 | ≥ 20%/季度 | 每季度 |
-| | 优化建议采纳率 | ≥ 80% | 每月 |
+| 闭环类型     | 核心KPI             | 目标值     | 测量频率 |
+| ------------ | ------------------- | ---------- | -------- |
+| **规划闭环** | 需求准确率          | ≥ 90%      | 每版本   |
+|              | 规划完成率          | ≥ 95%      | 每迭代   |
+| **开发闭环** | 代码质量分数        | ≥ 8.5/10   | 每日     |
+|              | Bug密度             | ≤ 0.5/KLOC | 每版本   |
+| **测试闭环** | 测试覆盖率          | ≥ 90%      | 每次提交 |
+|              | 自动化测试通过率    | ≥ 98%      | 每次构建 |
+| **部署闭环** | 部署成功率          | ≥ 99%      | 每次部署 |
+|              | 部署时间            | ≤ 30分钟   | 每次部署 |
+| **监控闭环** | MTTR (平均修复时间) | ≤ 30分钟   | 每月     |
+|              | 告警准确率          | ≥ 95%      | 每月     |
+| **优化闭环** | 性能改进幅度        | ≥ 20%/季度 | 每季度   |
+|              | 优化建议采纳率      | ≥ 80%      | 每月     |
 
 ### 6.2 持续改进机制
 
@@ -1918,41 +1928,26 @@ export class YYC3ImprovementCommittee {
   private scheduleRegularMeetings(): void {
     // 每周技术评审会
     this.scheduleMeeting({
-      type: 'technical-review',
-      frequency: 'weekly',
-      participants: ['tech-lead', 'senior-developers'],
-      agenda: [
-        '代码质量审查',
-        '架构优化讨论',
-        '技术债务管理',
-        '最佳实践分享'
-      ]
+      type: "technical-review",
+      frequency: "weekly",
+      participants: ["tech-lead", "senior-developers"],
+      agenda: ["代码质量审查", "架构优化讨论", "技术债务管理", "最佳实践分享"],
     });
 
     // 每月回顾会
     this.scheduleMeeting({
-      type: 'retrospective',
-      frequency: 'monthly',
-      participants: ['all-members'],
-      agenda: [
-        '过去一个月回顾',
-        '成功经验总结',
-        '问题根因分析',
-        '改进措施制定'
-      ]
+      type: "retrospective",
+      frequency: "monthly",
+      participants: ["all-members"],
+      agenda: ["过去一个月回顾", "成功经验总结", "问题根因分析", "改进措施制定"],
     });
 
     // 每季度战略会
     this.scheduleMeeting({
-      type: 'strategic',
-      frequency: 'quarterly',
-      participants: ['leadership', 'tech-lead', 'product-lead'],
-      agenda: [
-        '季度目标回顾',
-        '市场趋势分析',
-        '技术路线规划',
-        '资源配置优化'
-      ]
+      type: "strategic",
+      frequency: "quarterly",
+      participants: ["leadership", "tech-lead", "product-lead"],
+      agenda: ["季度目标回顾", "市场趋势分析", "技术路线规划", "资源配置优化"],
     });
   }
 
@@ -1991,6 +1986,7 @@ export class YYC3ImprovementCommittee {
 ### 闭环执行承诺
 
 YYC³团队承诺：
+
 - 严格按照六环闭环流程执行开发
 - 持续监控和优化各环节效率
 - 定期评估和改进闭环机制
@@ -1999,6 +1995,7 @@ YYC³团队承诺：
 ### 预期成果
 
 通过本开发闭环规划的实施，预期在6个月内实现：
+
 - 开发效率提升40%
 - 代码质量提升30%
 - 系统稳定性提升50%
@@ -2019,8 +2016,6 @@ YYC³团队承诺：
 **项目地址**：<https://yyc3.com/catering-platform>
 
 </div>
-
-
 
 ## 概述
 
@@ -2043,8 +2038,6 @@ YYC³团队承诺：
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -2078,8 +2071,6 @@ YYC³团队承诺：
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -2102,46 +2093,46 @@ YYC³团队承诺：
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -2154,6 +2145,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -2163,6 +2155,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -2172,6 +2165,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -2188,16 +2182,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2207,13 +2202,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2222,6 +2215,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2240,6 +2234,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2255,6 +2250,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2274,28 +2270,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2304,44 +2299,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2355,13 +2348,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2370,18 +2363,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2391,37 +2387,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2430,28 +2429,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2460,21 +2457,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2483,10 +2482,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2512,16 +2508,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2530,25 +2526,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

@@ -16,7 +16,7 @@ import { EntityRelationship } from './EntityRelationship';
 @Table({
   tableName: 'dish_entities',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class DishEntity extends Model<DishEntity> {
   @PrimaryKey

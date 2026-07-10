@@ -156,7 +156,7 @@ export class CacheMiddleware {
 
         if (cachedData !== null) {
           logger.debug('缓存命中', { key: cacheKey, path: req.path });
-          
+
           // 设置缓存头
           res.setHeader('X-Cache', 'HIT');
           res.setHeader('X-Cache-Key', cacheKey);
@@ -179,11 +179,9 @@ export class CacheMiddleware {
           // 缓存响应数据
           if (res.statusCode >= 200 && res.statusCode < 300) {
             const ttl = options?.ttl || this.config.defaultTTL;
-            this.cacheClient
-              .set(cacheKey, data, { ttl })
-              .catch((error: Error) => {
-                logger.error('缓存写入失败', { key: cacheKey, error });
-              });
+            this.cacheClient.set(cacheKey, data, { ttl }).catch((error: Error) => {
+              logger.error('缓存写入失败', { key: cacheKey, error });
+            });
           }
 
           return originalJson(data);

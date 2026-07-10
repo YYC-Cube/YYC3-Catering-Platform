@@ -10,9 +10,11 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 项目文档归档架构说明
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--归类迭代
 - 遵循规范：五高五标五化要求
@@ -98,29 +100,29 @@ const DEFAULT_ARCHITECTURE_PRINCIPLES: ArchiveArchitecturePrinciples = {
   availability: {
     highAvailability: true,
     faultTolerance: true,
-    disasterRecovery: true
+    disasterRecovery: true,
   },
   performance: {
     responseTime: 200,
     throughput: 1000,
-    concurrency: 100
+    concurrency: 100,
   },
   scalability: {
     horizontalScaling: true,
     verticalScaling: true,
-    elasticScaling: true
+    elasticScaling: true,
   },
   security: {
     authentication: true,
     accessControl: true,
     encryption: true,
-    auditLogging: true
+    auditLogging: true,
   },
   maintainability: {
     modularDesign: true,
     clearInterfaces: true,
-    completeDocumentation: true
-  }
+    completeDocumentation: true,
+  },
 };
 ```
 
@@ -136,15 +138,15 @@ const DEFAULT_ARCHITECTURE_PRINCIPLES: ArchiveArchitecturePrinciples = {
  */
 enum ArchiveArchitectureLayer {
   /** 展示层 */
-  PRESENTATION = 'presentation',
+  PRESENTATION = "presentation",
   /** 应用层 */
-  APPLICATION = 'application',
+  APPLICATION = "application",
   /** 业务层 */
-  BUSINESS = 'business',
+  BUSINESS = "business",
   /** 数据层 */
-  DATA = 'data',
+  DATA = "data",
   /** 基础设施层 */
-  INFRASTRUCTURE = 'infrastructure'
+  INFRASTRUCTURE = "infrastructure",
 }
 
 /**
@@ -170,41 +172,40 @@ interface ArchitectureComponent {
  */
 class ArchiveArchitecture {
   private components: Map<string, ArchitectureComponent> = new Map();
-  
+
   /**
    * 添加组件
    */
   addComponent(component: ArchitectureComponent): void {
     this.components.set(component.componentId, component);
   }
-  
+
   /**
    * 获取组件
    */
   getComponent(componentId: string): ArchitectureComponent | undefined {
     return this.components.get(componentId);
   }
-  
+
   /**
    * 获取层次组件
    */
   getLayerComponents(layer: ArchiveArchitectureLayer): ArchitectureComponent[] {
-    return Array.from(this.components.values())
-      .filter(c => c.layer === layer);
+    return Array.from(this.components.values()).filter(c => c.layer === layer);
   }
-  
+
   /**
    * 获取依赖关系
    */
   getDependencies(componentId: string): ArchitectureComponent[] {
     const component = this.components.get(componentId);
     if (!component) return [];
-    
+
     return component.dependencies
       .map(depId => this.components.get(depId))
       .filter((c): c is ArchitectureComponent => c !== undefined);
   }
-  
+
   /**
    * 验证架构
    */
@@ -213,40 +214,40 @@ class ArchiveArchitecture {
     errors: string[];
   } {
     const errors: string[] = [];
-    
+
     // 检查循环依赖
     const visited = new Set<string>();
     const recursionStack = new Set<string>();
-    
+
     const checkCycle = (componentId: string): boolean => {
       if (recursionStack.has(componentId)) {
         errors.push(`发现循环依赖: ${componentId}`);
         return true;
       }
-      
+
       if (visited.has(componentId)) return false;
-      
+
       visited.add(componentId);
       recursionStack.add(componentId);
-      
+
       const component = this.components.get(componentId);
       if (component) {
         for (const depId of component.dependencies) {
           if (checkCycle(depId)) return true;
         }
       }
-      
+
       recursionStack.delete(componentId);
       return false;
     };
-    
+
     for (const componentId of this.components.keys()) {
       if (checkCycle(componentId)) break;
     }
-    
+
     return {
       valid: errors.length === 0,
-      errors
+      errors,
     };
   }
 }
@@ -308,21 +309,21 @@ interface CoreComponentConfig {
  */
 class CoreComponentManager {
   private components: Map<CoreComponentType, CoreComponentConfig> = new Map();
-  
+
   /**
    * 注册组件
    */
   registerComponent(type: CoreComponentType, config: CoreComponentConfig): void {
     this.components.set(type, config);
   }
-  
+
   /**
    * 获取组件配置
    */
   getComponentConfig(type: CoreComponentType): CoreComponentConfig | undefined {
     return this.components.get(type);
   }
-  
+
   /**
    * 更新组件配置
    */
@@ -332,7 +333,7 @@ class CoreComponentManager {
       Object.assign(config, updates);
     }
   }
-  
+
   /**
    * 扩展组件
    */
@@ -342,7 +343,7 @@ class CoreComponentManager {
       config.instances = instances;
     }
   }
-  
+
   /**
    * 获取所有组件
    */
@@ -429,14 +430,14 @@ interface StorageConfig {
 class StorageManager {
   private configs: Map<StorageType, StorageConfig> = new Map();
   private documents: Map<string, DocumentStorageModel> = new Map();
-  
+
   /**
    * 添加存储配置
    */
   addStorageConfig(type: StorageType, config: StorageConfig): void {
     this.configs.set(type, config);
   }
-  
+
   /**
    * 存储文档
    */
@@ -445,25 +446,25 @@ class StorageManager {
     if (!config) {
       throw new Error(`未找到存储类型配置: ${document.storageType}`);
     }
-    
+
     // 实现文档存储逻辑
     this.documents.set(document.documentId, document);
   }
-  
+
   /**
    * 获取文档
    */
   async retrieveDocument(documentId: string): Promise<DocumentStorageModel | null> {
     return this.documents.get(documentId) || null;
   }
-  
+
   /**
    * 删除文档
    */
   async deleteDocument(documentId: string): Promise<void> {
     this.documents.delete(documentId);
   }
-  
+
   /**
    * 移动文档
    */
@@ -472,18 +473,18 @@ class StorageManager {
     if (!document) {
       throw new Error(`文档不存在: ${documentId}`);
     }
-    
+
     const newConfig = this.configs.get(newStorageType);
     if (!newConfig) {
       throw new Error(`未找到存储类型配置: ${newStorageType}`);
     }
-    
+
     // 实现文档移动逻辑
     document.storageType = newStorageType;
     document.location = newConfig.path;
     document.updatedAt = new Date();
   }
-  
+
   /**
    * 获取存储统计
    */
@@ -496,10 +497,10 @@ class StorageManager {
     const config = this.configs.get(type);
     const documents = Array.from(this.documents.values())
       .filter(d => d.storageType === type);
-    
+
     const totalSize = documents.reduce((sum, d) => sum + d.size, 0);
     const capacityLimit = config?.capacityLimit || Infinity;
-    
+
     return {
       totalDocuments: documents.length,
       totalSize,
@@ -566,28 +567,28 @@ interface IndexField {
  */
 class IndexManager {
   private indexes: Map<string, IndexConfig> = new Map();
-  
+
   /**
    * 创建索引
    */
   createIndex(config: IndexConfig): void {
     this.indexes.set(config.indexId, config);
   }
-  
+
   /**
    * 删除索引
    */
   deleteIndex(indexId: string): void {
     this.indexes.delete(indexId);
   }
-  
+
   /**
    * 获取索引
    */
   getIndex(indexId: string): IndexConfig | undefined {
     return this.indexes.get(indexId);
   }
-  
+
   /**
    * 更新索引
    */
@@ -597,28 +598,28 @@ class IndexManager {
       Object.assign(index, updates);
     }
   }
-  
+
   /**
    * 索引文档
    */
   async indexDocument(documentId: string, document: any): Promise<void> {
     // 实现文档索引逻辑
   }
-  
+
   /**
    * 删除文档索引
    */
   async unindexDocument(documentId: string): Promise<void> {
     // 实现文档删除索引逻辑
   }
-  
+
   /**
    * 批量索引
    */
   async bulkIndex(documents: Array<{ documentId: string; document: any }>): Promise<void> {
     // 实现批量索引逻辑
   }
-  
+
   /**
    * 搜索索引
    */
@@ -727,12 +728,12 @@ interface SearchResult {
 class SearchEngine {
   private config: SearchEngineConfig;
   private indexManager: IndexManager;
-  
+
   constructor(config: SearchEngineConfig, indexManager: IndexManager) {
     this.config = config;
     this.indexManager = indexManager;
   }
-  
+
   /**
    * 执行检索
    */
@@ -747,7 +748,7 @@ class SearchEngine {
       total: 0
     };
   }
-  
+
   /**
    * 多字段检索
    */
@@ -755,7 +756,7 @@ class SearchEngine {
     // 实现多字段检索
     return [];
   }
-  
+
   /**
    * 模糊检索
    */
@@ -763,7 +764,7 @@ class SearchEngine {
     // 实现模糊检索
     return [];
   }
-  
+
   /**
    * 聚合查询
    */
@@ -775,7 +776,7 @@ class SearchEngine {
     // 实现聚合查询
     return {};
   }
-  
+
   /**
    * 建议查询
    */
@@ -811,7 +812,7 @@ enum SearchOptimizationStrategy {
 class SearchOptimizer {
   private cache: Map<string, { results: SearchResult[]; timestamp: number }> = new Map();
   private cacheTTL: number = 300000; // 5分钟
-  
+
   /**
    * 缓存检索结果
    */
@@ -821,23 +822,23 @@ class SearchOptimizer {
       timestamp: Date.now()
     });
   }
-  
+
   /**
    * 获取缓存结果
    */
   getCachedResults(queryKey: string): SearchResult[] | null {
     const cached = this.cache.get(queryKey);
     if (!cached) return null;
-    
+
     const age = Date.now() - cached.timestamp;
     if (age > this.cacheTTL) {
       this.cache.delete(queryKey);
       return null;
     }
-    
+
     return cached.results;
   }
-  
+
   /**
    * 优化查询
    */
@@ -845,7 +846,7 @@ class SearchOptimizer {
     // 实现查询优化逻辑
     return query;
   }
-  
+
   /**
    * 分析查询性能
    */
@@ -861,7 +862,7 @@ class SearchOptimizer {
       resultsCount: 0
     };
   }
-  
+
   /**
    * 清理过期缓存
    */
@@ -916,7 +917,7 @@ interface VersionDiff {
   /** 前一个版本ID */
   previousVersionId?: string;
   /** 差异类型 */
-  diffType: 'added' | 'modified' | 'deleted';
+  diffType: "added" | "modified" | "deleted";
   /** 差异内容 */
   diff: string;
 }
@@ -926,14 +927,19 @@ interface VersionDiff {
  */
 class VersionController {
   private versions: Map<string, DocumentVersion[]> = new Map();
-  
+
   /**
    * 创建新版本
    */
-  async createVersion(documentId: string, content: string, author: string, changeDescription: string): Promise<DocumentVersion> {
+  async createVersion(
+    documentId: string,
+    content: string,
+    author: string,
+    changeDescription: string
+  ): Promise<DocumentVersion> {
     const documentVersions = this.versions.get(documentId) || [];
     const versionNumber = documentVersions.length + 1;
-    
+
     const version: DocumentVersion = {
       versionId: `${documentId}-v${versionNumber}`,
       documentId,
@@ -943,22 +949,22 @@ class VersionController {
       createdAt: new Date(),
       content,
       size: content.length,
-      hash: this.calculateHash(content)
+      hash: this.calculateHash(content),
     };
-    
+
     documentVersions.push(version);
     this.versions.set(documentId, documentVersions);
-    
+
     return version;
   }
-  
+
   /**
    * 获取文档版本
    */
   getVersions(documentId: string): DocumentVersion[] {
     return this.versions.get(documentId) || [];
   }
-  
+
   /**
    * 获取特定版本
    */
@@ -966,7 +972,7 @@ class VersionController {
     const versions = this.versions.get(documentId);
     return versions?.find(v => v.versionNumber === versionNumber);
   }
-  
+
   /**
    * 获取最新版本
    */
@@ -974,20 +980,20 @@ class VersionController {
     const versions = this.versions.get(documentId);
     return versions?.[versions.length - 1];
   }
-  
+
   /**
    * 比较版本
    */
   compareVersions(documentId: string, version1: number, version2: number): VersionDiff[] {
     const v1 = this.getVersion(documentId, version1);
     const v2 = this.getVersion(documentId, version2);
-    
+
     if (!v1 || !v2) return [];
-    
+
     // 实现版本比较逻辑
     return [];
   }
-  
+
   /**
    * 回滚版本
    */
@@ -996,16 +1002,11 @@ class VersionController {
     if (!version) {
       throw new Error(`版本不存在: ${versionNumber}`);
     }
-    
+
     // 创建新版本，内容为回滚版本的内容
-    return this.createVersion(
-      documentId,
-      version.content,
-      'system',
-      `回滚到版本 ${versionNumber}`
-    );
+    return this.createVersion(documentId, version.content, "system", `回滚到版本 ${versionNumber}`);
   }
-  
+
   /**
    * 删除版本
    */
@@ -1018,13 +1019,13 @@ class VersionController {
       }
     }
   }
-  
+
   /**
    * 计算哈希
    */
   private calculateHash(content: string): string {
     // 实现哈希计算
-    return '';
+    return "";
   }
 }
 ```
@@ -1041,7 +1042,7 @@ interface ChangeRecord {
   /** 文档ID */
   documentId: string;
   /** 变更类型 */
-  changeType: 'created' | 'updated' | 'deleted' | 'restored';
+  changeType: "created" | "updated" | "deleted" | "restored";
   /** 变更作者 */
   author: string;
   /** 变更时间 */
@@ -1061,7 +1062,7 @@ interface ChangeRecord {
  */
 class ChangeTracker {
   private records: Map<string, ChangeRecord[]> = new Map();
-  
+
   /**
    * 记录变更
    */
@@ -1070,14 +1071,14 @@ class ChangeTracker {
     documentRecords.push(record);
     this.records.set(record.documentId, documentRecords);
   }
-  
+
   /**
    * 获取变更历史
    */
   getChangeHistory(documentId: string): ChangeRecord[] {
     return this.records.get(documentId) || [];
   }
-  
+
   /**
    * 获取特定时间范围的变更
    */
@@ -1085,7 +1086,7 @@ class ChangeTracker {
     const records = this.getChangeHistory(documentId);
     return records.filter(r => r.timestamp >= start && r.timestamp <= end);
   }
-  
+
   /**
    * 获取特定作者的变更
    */
@@ -1093,7 +1094,7 @@ class ChangeTracker {
     const records = this.getChangeHistory(documentId);
     return records.filter(r => r.author === author);
   }
-  
+
   /**
    * 获取变更统计
    */
@@ -1104,24 +1105,24 @@ class ChangeTracker {
     changesByDay: Record<string, number>;
   } {
     const records = this.getChangeHistory(documentId);
-    
+
     const changesByType: Record<string, number> = {};
     const changesByAuthor: Record<string, number> = {};
     const changesByDay: Record<string, number> = {};
-    
+
     for (const record of records) {
       changesByType[record.changeType] = (changesByType[record.changeType] || 0) + 1;
       changesByAuthor[record.author] = (changesByAuthor[record.author] || 0) + 1;
-      
-      const day = record.timestamp.toISOString().split('T')[0];
+
+      const day = record.timestamp.toISOString().split("T")[0];
       changesByDay[day] = (changesByDay[day] || 0) + 1;
     }
-    
+
     return {
       totalChanges: records.length,
       changesByType,
       changesByAuthor,
-      changesByDay
+      changesByDay,
     };
   }
 }
@@ -1139,17 +1140,17 @@ class ChangeTracker {
  */
 enum PermissionType {
   /** 查看 */
-  VIEW = 'view',
+  VIEW = "view",
   /** 编辑 */
-  EDIT = 'edit',
+  EDIT = "edit",
   /** 删除 */
-  DELETE = 'delete',
+  DELETE = "delete",
   /** 下载 */
-  DOWNLOAD = 'download',
+  DOWNLOAD = "download",
   /** 共享 */
-  SHARE = 'share',
+  SHARE = "share",
   /** 管理 */
-  MANAGE = 'manage'
+  MANAGE = "manage",
 }
 
 /**
@@ -1175,7 +1176,7 @@ interface AccessControlPolicy {
   /** 策略名称 */
   name: string;
   /** 适用范围 */
-  scope: 'global' | 'project' | 'document';
+  scope: "global" | "project" | "document";
   /** 角色权限映射 */
   rolePermissions: Map<string, PermissionType[]>;
   /** 默认权限 */
@@ -1189,14 +1190,14 @@ class AccessController {
   private roles: Map<string, Role> = new Map();
   private policies: Map<string, AccessControlPolicy> = new Map();
   private userRoles: Map<string, string[]> = new Map();
-  
+
   /**
    * 添加角色
    */
   addRole(role: Role): void {
     this.roles.set(role.roleId, role);
   }
-  
+
   /**
    * 分配用户角色
    */
@@ -1207,30 +1208,30 @@ class AccessController {
       this.userRoles.set(userId, userRoles);
     }
   }
-  
+
   /**
    * 检查权限
    */
   hasPermission(userId: string, permission: PermissionType, documentId?: string): boolean {
     const userRoles = this.userRoles.get(userId) || [];
-    
+
     for (const roleId of userRoles) {
       const role = this.roles.get(roleId);
       if (role && role.permissions.includes(permission)) {
         return true;
       }
     }
-    
+
     return false;
   }
-  
+
   /**
    * 获取用户权限
    */
   getUserPermissions(userId: string): PermissionType[] {
     const userRoles = this.userRoles.get(userId) || [];
     const permissions: PermissionType[] = [];
-    
+
     for (const roleId of userRoles) {
       const role = this.roles.get(roleId);
       if (role) {
@@ -1241,10 +1242,10 @@ class AccessController {
         }
       }
     }
-    
+
     return permissions;
   }
-  
+
   /**
    * 撤销用户角色
    */
@@ -1268,21 +1269,21 @@ class AccessController {
  */
 enum AuditEventType {
   /** 登录 */
-  LOGIN = 'login',
+  LOGIN = "login",
   /** 登出 */
-  LOGOUT = 'logout',
+  LOGOUT = "logout",
   /** 文档访问 */
-  DOCUMENT_ACCESS = 'document_access',
+  DOCUMENT_ACCESS = "document_access",
   /** 文档创建 */
-  DOCUMENT_CREATE = 'document_create',
+  DOCUMENT_CREATE = "document_create",
   /** 文档更新 */
-  DOCUMENT_UPDATE = 'document_update',
+  DOCUMENT_UPDATE = "document_update",
   /** 文档删除 */
-  DOCUMENT_DELETE = 'document_delete',
+  DOCUMENT_DELETE = "document_delete",
   /** 权限变更 */
-  PERMISSION_CHANGE = 'permission_change',
+  PERMISSION_CHANGE = "permission_change",
   /** 配置变更 */
-  CONFIG_CHANGE = 'config_change'
+  CONFIG_CHANGE = "config_change",
 }
 
 /**
@@ -1304,7 +1305,7 @@ interface AuditLog {
   /** 操作详情 */
   details: Record<string, any>;
   /** 操作结果 */
-  result: 'success' | 'failure';
+  result: "success" | "failure";
   /** 错误信息 */
   errorMessage?: string;
 }
@@ -1314,20 +1315,20 @@ interface AuditLog {
  */
 class AuditLogger {
   private logs: AuditLog[] = [];
-  
+
   /**
    * 记录事件
    */
-  logEvent(event: Omit<AuditLog, 'logId' | 'timestamp'>): void {
+  logEvent(event: Omit<AuditLog, "logId" | "timestamp">): void {
     const log: AuditLog = {
       ...event,
       logId: `audit-${Date.now()}`,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
-    
+
     this.logs.push(log);
   }
-  
+
   /**
    * 查询日志
    */
@@ -1336,68 +1337,71 @@ class AuditLogger {
     userId?: string;
     startTime?: Date;
     endTime?: Date;
-    result?: 'success' | 'failure';
+    result?: "success" | "failure";
     limit?: number;
   }): AuditLog[] {
     let results = [...this.logs];
-    
+
     if (query.eventType) {
       results = results.filter(log => log.eventType === query.eventType);
     }
-    
+
     if (query.userId) {
       results = results.filter(log => log.userId === query.userId);
     }
-    
+
     if (query.startTime) {
       results = results.filter(log => log.timestamp >= query.startTime!);
     }
-    
+
     if (query.endTime) {
       results = results.filter(log => log.timestamp <= query.endTime!);
     }
-    
+
     if (query.result) {
       results = results.filter(log => log.result === query.result);
     }
-    
+
     if (query.limit) {
       results = results.slice(0, query.limit);
     }
-    
+
     return results;
   }
-  
+
   /**
    * 获取用户活动
    */
-  getUserActivity(userId: string, days: number = 7): {
+  getUserActivity(
+    userId: string,
+    days: number = 7
+  ): {
     totalEvents: number;
     eventsByType: Record<string, number>;
     successRate: number;
   } {
     const startTime = new Date();
     startTime.setDate(startTime.getDate() - days);
-    
+
     const logs = this.queryLogs({ userId, startTime });
-    
+
     const eventsByType: Record<string, number> = {};
     let successCount = 0;
-    
+
     for (const log of logs) {
       eventsByType[log.eventType] = (eventsByType[log.eventType] || 0) + 1;
-      if (log.result === 'success') {
+      if (log.result === "success") {
         successCount++;
       }
     }
-    
+
     return {
       totalEvents: logs.length,
       eventsByType,
-      successRate: logs.length > 0 ? successCount / logs.length : 0
+      successRate: logs.length > 0 ? successCount / logs.length : 0,
     };
   }
-  
+
   /**
    * 导出日志
    */
@@ -1420,11 +1424,11 @@ class AuditLogger {
  */
 enum BackupType {
   /** 完整备份 */
-  FULL = 'full',
+  FULL = "full",
   /** 增量备份 */
-  INCREMENTAL = 'incremental',
+  INCREMENTAL = "incremental",
   /** 差异备份 */
-  DIFFERENTIAL = 'differential'
+  DIFFERENTIAL = "differential",
 }
 
 /**
@@ -1438,7 +1442,7 @@ interface BackupConfig {
   /** 备份类型 */
   type: BackupType;
   /** 备份频率 */
-  frequency: 'hourly' | 'daily' | 'weekly' | 'monthly';
+  frequency: "hourly" | "daily" | "weekly" | "monthly";
   /** 保留天数 */
   retentionDays: number;
   /** 备份位置 */
@@ -1464,7 +1468,7 @@ interface BackupRecord {
   /** 备份文件 */
   files: string[];
   /** 备份状态 */
-  status: 'pending' | 'running' | 'completed' | 'failed';
+  status: "pending" | "running" | "completed" | "failed";
   /** 错误信息 */
   errorMessage?: string;
 }
@@ -1475,14 +1479,14 @@ interface BackupRecord {
 class BackupManager {
   private configs: Map<string, BackupConfig> = new Map();
   private records: Map<string, BackupRecord[]> = new Map();
-  
+
   /**
    * 添加备份配置
    */
   addBackupConfig(config: BackupConfig): void {
     this.configs.set(config.backupId, config);
   }
-  
+
   /**
    * 执行备份
    */
@@ -1491,66 +1495,66 @@ class BackupManager {
     if (!config) {
       throw new Error(`备份配置不存在: ${backupId}`);
     }
-    
+
     const record: BackupRecord = {
       recordId: `backup-${Date.now()}`,
       backupId,
       timestamp: new Date(),
       size: 0,
       files: [],
-      status: 'pending'
+      status: "pending",
     };
-    
+
     const records = this.records.get(backupId) || [];
     records.push(record);
     this.records.set(backupId, records);
-    
+
     try {
-      record.status = 'running';
-      
+      record.status = "running";
+
       // 实现备份逻辑
-      record.status = 'completed';
+      record.status = "completed";
     } catch (error) {
-      record.status = 'failed';
-      record.errorMessage = error instanceof Error ? error.message : '未知错误';
+      record.status = "failed";
+      record.errorMessage = error instanceof Error ? error.message : "未知错误";
     }
-    
+
     return record;
   }
-  
+
   /**
    * 获取备份记录
    */
   getBackupRecords(backupId: string): BackupRecord[] {
     return this.records.get(backupId) || [];
   }
-  
+
   /**
    * 删除过期备份
    */
   deleteExpiredBackups(backupId: string): number {
     const config = this.configs.get(backupId);
     if (!config) return 0;
-    
+
     const records = this.records.get(backupId) || [];
     const now = new Date();
     const retentionDate = new Date();
     retentionDate.setDate(retentionDate.getDate() - config.retentionDays);
-    
+
     const expiredRecords = records.filter(r => r.timestamp < retentionDate);
-    
+
     for (const record of expiredRecords) {
       const index = records.indexOf(record);
       if (index !== -1) {
         records.splice(index, 1);
       }
     }
-    
+
     this.records.set(backupId, records);
-    
+
     return expiredRecords.length;
   }
-  
+
   /**
    * 获取备份统计
    */
@@ -1561,22 +1565,21 @@ class BackupManager {
     lastBackupTime?: Date;
   } {
     const records = this.records.get(backupId) || [];
-    
+
     const totalBackups = records.length;
     const totalSize = records.reduce((sum, r) => sum + r.size, 0);
-    const successCount = records.filter(r => r.status === 'completed').length;
+    const successCount = records.filter(r => r.status === "completed").length;
     const successRate = totalBackups > 0 ? successCount / totalBackups : 0;
-    
-    const completedRecords = records.filter(r => r.status === 'completed');
-    const lastBackupTime = completedRecords.length > 0 
-      ? completedRecords[completedRecords.length - 1].timestamp 
-      : undefined;
-    
+
+    const completedRecords = records.filter(r => r.status === "completed");
+    const lastBackupTime =
+      completedRecords.length > 0 ? completedRecords[completedRecords.length - 1].timestamp : undefined;
+
     return {
       totalBackups,
       totalSize,
       successRate,
-      lastBackupTime
+      lastBackupTime,
     };
   }
 }
@@ -1612,7 +1615,7 @@ interface RestoreRecord {
   /** 恢复时间 */
   timestamp: Date;
   /** 恢复状态 */
-  status: 'pending' | 'running' | 'completed' | 'failed';
+  status: "pending" | "running" | "completed" | "failed";
   /** 恢复文件 */
   files: string[];
   /** 错误信息 */
@@ -1624,7 +1627,7 @@ interface RestoreRecord {
  */
 class RestoreManager {
   private records: Map<string, RestoreRecord> = new Map();
-  
+
   /**
    * 执行恢复
    */
@@ -1633,47 +1636,47 @@ class RestoreManager {
       recordId: `restore-${Date.now()}`,
       restoreId: config.restoreId,
       timestamp: new Date(),
-      status: 'pending',
-      files: []
+      status: "pending",
+      files: [],
     };
-    
+
     this.records.set(record.recordId, record);
-    
+
     try {
-      record.status = 'running';
-      
+      record.status = "running";
+
       // 实现恢复逻辑
-      record.status = 'completed';
+      record.status = "completed";
     } catch (error) {
-      record.status = 'failed';
-      record.errorMessage = error instanceof Error ? error.message : '未知错误';
+      record.status = "failed";
+      record.errorMessage = error instanceof Error ? error.message : "未知错误";
     }
-    
+
     return record;
   }
-  
+
   /**
    * 获取恢复记录
    */
   getRestoreRecord(recordId: string): RestoreRecord | undefined {
     return this.records.get(recordId);
   }
-  
+
   /**
    * 获取所有恢复记录
    */
   getAllRestoreRecords(): RestoreRecord[] {
     return Array.from(this.records.values());
   }
-  
+
   /**
    * 取消恢复
    */
   async cancelRestore(recordId: string): Promise<void> {
     const record = this.records.get(recordId);
-    if (record && record.status === 'running') {
-      record.status = 'failed';
-      record.errorMessage = '恢复已取消';
+    if (record && record.status === "running") {
+      record.status = "failed";
+      record.errorMessage = "恢复已取消";
     }
   }
 }
@@ -1711,7 +1714,7 @@ interface PerformanceMetrics {
  */
 class PerformanceMonitor {
   private metrics: Map<string, PerformanceMetrics[]> = new Map();
-  
+
   /**
    * 记录指标
    */
@@ -1720,29 +1723,29 @@ class PerformanceMonitor {
     componentMetrics.push(metrics);
     this.metrics.set(componentId, componentMetrics);
   }
-  
+
   /**
    * 获取指标
    */
   getMetrics(componentId: string, timeRange?: { start: Date; end: Date }): PerformanceMetrics[] {
     let metrics = this.metrics.get(componentId) || [];
-    
+
     if (timeRange) {
       metrics = metrics.filter(m => {
         // 假设指标有timestamp字段
         return true;
       });
     }
-    
+
     return metrics;
   }
-  
+
   /**
    * 计算平均值
    */
   calculateAverage(componentId: string): PerformanceMetrics {
     const metrics = this.getMetrics(componentId);
-    
+
     if (metrics.length === 0) {
       return {
         responseTime: 0,
@@ -1751,10 +1754,10 @@ class PerformanceMonitor {
         cpuUsage: 0,
         memoryUsage: 0,
         diskUsage: 0,
-        networkUsage: 0
+        networkUsage: 0,
       };
     }
-    
+
     const sum = metrics.reduce((acc, m) => ({
       responseTime: acc.responseTime + m.responseTime,
       throughput: acc.throughput + m.throughput,
@@ -1762,9 +1765,9 @@ class PerformanceMonitor {
       cpuUsage: acc.cpuUsage + m.cpuUsage,
       memoryUsage: acc.memoryUsage + m.memoryUsage,
       diskUsage: acc.diskUsage + m.diskUsage,
-      networkUsage: acc.networkUsage + m.networkUsage
+      networkUsage: acc.networkUsage + m.networkUsage,
     }));
-    
+
     return {
       responseTime: sum.responseTime / metrics.length,
       throughput: sum.throughput / metrics.length,
@@ -1772,14 +1775,17 @@ class PerformanceMonitor {
       cpuUsage: sum.cpuUsage / metrics.length,
       memoryUsage: sum.memoryUsage / metrics.length,
       diskUsage: sum.diskUsage / metrics.length,
-      networkUsage: sum.networkUsage / metrics.length
+      networkUsage: sum.networkUsage / metrics.length,
     };
   }
-  
+
   /**
    * 检测异常
    */
-  detectAnomalies(componentId: string, threshold: number = 2): {
+  detectAnomalies(
+    componentId: string,
+    threshold: number = 2
+  ): {
     metric: string;
     value: number;
     expected: number;
@@ -1787,14 +1793,14 @@ class PerformanceMonitor {
   }[] {
     const metrics = this.getMetrics(componentId);
     const average = this.calculateAverage(componentId);
-    
+
     const anomalies: Array<{
       metric: string;
       value: number;
       expected: number;
       deviation: number;
     }> = [];
-    
+
     for (const metric of metrics) {
       const checkMetric = (name: string, value: number, expected: number) => {
         const deviation = Math.abs(value - expected);
@@ -1802,16 +1808,16 @@ class PerformanceMonitor {
           anomalies.push({ metric: name, value, expected, deviation });
         }
       };
-      
-      checkMetric('responseTime', metric.responseTime, average.responseTime);
-      checkMetric('throughput', metric.throughput, average.throughput);
-      checkMetric('errorRate', metric.errorRate, average.errorRate);
-      checkMetric('cpuUsage', metric.cpuUsage, average.cpuUsage);
-      checkMetric('memoryUsage', metric.memoryUsage, average.memoryUsage);
-      checkMetric('diskUsage', metric.diskUsage, average.diskUsage);
-      checkMetric('networkUsage', metric.networkUsage, average.networkUsage);
+
+      checkMetric("responseTime", metric.responseTime, average.responseTime);
+      checkMetric("throughput", metric.throughput, average.throughput);
+      checkMetric("errorRate", metric.errorRate, average.errorRate);
+      checkMetric("cpuUsage", metric.cpuUsage, average.cpuUsage);
+      checkMetric("memoryUsage", metric.memoryUsage, average.memoryUsage);
+      checkMetric("diskUsage", metric.diskUsage, average.diskUsage);
+      checkMetric("networkUsage", metric.networkUsage, average.networkUsage);
     }
-    
+
     return anomalies;
   }
 }
@@ -1825,13 +1831,13 @@ class PerformanceMonitor {
  */
 enum AlertLevel {
   /** 信息 */
-  INFO = 'info',
+  INFO = "info",
   /** 警告 */
-  WARNING = 'warning',
+  WARNING = "warning",
   /** 错误 */
-  ERROR = 'error',
+  ERROR = "error",
   /** 严重 */
-  CRITICAL = 'critical'
+  CRITICAL = "critical",
 }
 
 /**
@@ -1845,7 +1851,7 @@ interface AlertRule {
   /** 监控指标 */
   metric: string;
   /** 条件 */
-  condition: 'greater_than' | 'less_than' | 'equals' | 'not_equals';
+  condition: "greater_than" | "less_than" | "equals" | "not_equals";
   /** 阈值 */
   threshold: number;
   /** 告警级别 */
@@ -1884,42 +1890,42 @@ interface Alert {
 class AlertManager {
   private rules: Map<string, AlertRule> = new Map();
   private alerts: Alert[] = [];
-  
+
   /**
    * 添加告警规则
    */
   addRule(rule: AlertRule): void {
     this.rules.set(rule.ruleId, rule);
   }
-  
+
   /**
    * 检查告警
    */
   checkAlerts(metrics: PerformanceMetrics): Alert[] {
     const newAlerts: Alert[] = [];
-    
+
     for (const rule of this.rules.values()) {
       if (!rule.enabled) continue;
-      
+
       const value = (metrics as any)[rule.metric];
       if (value === undefined) continue;
-      
+
       let triggered = false;
       switch (rule.condition) {
-        case 'greater_than':
+        case "greater_than":
           triggered = value > rule.threshold;
           break;
-        case 'less_than':
+        case "less_than":
           triggered = value < rule.threshold;
           break;
-        case 'equals':
+        case "equals":
           triggered = value === rule.threshold;
           break;
-        case 'not_equals':
+        case "not_equals":
           triggered = value !== rule.threshold;
           break;
       }
-      
+
       if (triggered) {
         const alert: Alert = {
           alertId: `alert-${Date.now()}`,
@@ -1928,47 +1934,42 @@ class AlertManager {
           message: `${rule.name}: ${rule.metric} ${rule.condition} ${rule.threshold}, 实际值: ${value}`,
           timestamp: new Date(),
           value,
-          acknowledged: false
+          acknowledged: false,
         };
-        
+
         this.alerts.push(alert);
         newAlerts.push(alert);
       }
     }
-    
+
     return newAlerts;
   }
-  
+
   /**
    * 获取告警
    */
-  getAlerts(filter?: {
-    level?: AlertLevel;
-    acknowledged?: boolean;
-    startTime?: Date;
-    endTime?: Date;
-  }): Alert[] {
+  getAlerts(filter?: { level?: AlertLevel; acknowledged?: boolean; startTime?: Date; endTime?: Date }): Alert[] {
     let alerts = [...this.alerts];
-    
+
     if (filter?.level) {
       alerts = alerts.filter(a => a.level === filter.level);
     }
-    
+
     if (filter?.acknowledged !== undefined) {
       alerts = alerts.filter(a => a.acknowledged === filter.acknowledged);
     }
-    
+
     if (filter?.startTime) {
       alerts = alerts.filter(a => a.timestamp >= filter.startTime!);
     }
-    
+
     if (filter?.endTime) {
       alerts = alerts.filter(a => a.timestamp <= filter.endTime!);
     }
-    
+
     return alerts;
   }
-  
+
   /**
    * 确认告警
    */
@@ -2008,13 +2009,10 @@ class AlertManager {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -2037,8 +2035,6 @@ class AlertManager {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -2072,8 +2068,6 @@ class AlertManager {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -2096,46 +2090,46 @@ class AlertManager {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -2148,6 +2142,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -2157,6 +2152,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -2166,6 +2162,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -2182,16 +2179,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2201,13 +2199,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2216,6 +2212,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2234,6 +2231,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2249,6 +2247,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2268,28 +2267,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2298,44 +2296,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2349,13 +2345,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2364,18 +2360,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2385,37 +2384,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2424,28 +2426,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2454,21 +2454,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2477,10 +2479,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2506,16 +2505,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2524,26 +2523,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -2552,21 +2546,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2575,10 +2571,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2604,16 +2597,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2622,25 +2615,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

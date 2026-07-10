@@ -8,17 +8,19 @@ vi.mock('../../../config/database', () => ({
       const normalizedSql = sql.replace(/\s+/g, ' ').trim();
       if (normalizedSql.includes('SELECT id, email, role, status FROM users')) {
         return Promise.resolve({
-          rows: [{
-            id: params[0],
-            email: 'test@example.com',
-            role: 'user',
-            status: 'active'
-          }]
+          rows: [
+            {
+              id: params[0],
+              email: 'test@example.com',
+              role: 'user',
+              status: 'active',
+            },
+          ],
         });
       }
       return Promise.resolve({ rows: [] });
-    })
-  }
+    }),
+  },
 }));
 
 describe('AuthenticationMiddleware Debug', () => {
@@ -33,7 +35,7 @@ describe('AuthenticationMiddleware Debug', () => {
     const payload = {
       userId: 'user123',
       email: 'test@example.com',
-      role: 'user'
+      role: 'user',
     };
 
     const token = auth.generateToken(payload);

@@ -218,7 +218,7 @@ describe('KafkaService', () => {
           topics: ['test-topic'],
           groupId: 'test-group',
         },
-        handler
+        handler,
       );
 
       expect(consumerId).toBe('test-group-test-topic');
@@ -241,7 +241,7 @@ describe('KafkaService', () => {
           topics: ['test-topic'],
           groupId: 'test-group',
         },
-        handler
+        handler,
       );
 
       const consumerId2 = await kafkaService.subscribe(
@@ -249,7 +249,7 @@ describe('KafkaService', () => {
           topics: ['test-topic'],
           groupId: 'test-group',
         },
-        handler
+        handler,
       );
 
       expect(consumerId1).toBe(consumerId2);
@@ -265,8 +265,8 @@ describe('KafkaService', () => {
             topics: ['test-topic'],
             groupId: 'test-group',
           },
-          vi.fn()
-        )
+          vi.fn(),
+        ),
       ).rejects.toThrow('Connection failed');
     });
   });
@@ -283,7 +283,7 @@ describe('KafkaService', () => {
           topics: ['test-topic'],
           groupId: 'test-group',
         },
-        handler
+        handler,
       );
 
       await kafkaService.unsubscribe(consumerId);
@@ -390,7 +390,7 @@ describe('KafkaService', () => {
           topics: ['test-topic'],
           groupId: 'test-group',
         },
-        handler
+        handler,
       );
 
       await kafkaService.close();
@@ -431,7 +431,7 @@ describe('KafkaService', () => {
           topics: ['test-topic'],
           groupId: 'test-group',
         },
-        handler
+        handler,
       );
 
       const status = kafkaService.getStatus();

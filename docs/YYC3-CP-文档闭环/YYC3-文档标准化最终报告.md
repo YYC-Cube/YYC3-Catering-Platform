@@ -28,6 +28,7 @@
 YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖10个主要分类。通过系统性的文档整理、编号规范化、质量审核等工作，文档体系得到了显著改善。
 
 **关键成果**：
+
 - ✅ 架构设计类文档编号完全规范化（01-18连续编号）
 - ✅ 文档分类体系清晰，覆盖全面
 - ✅ 建立了完整的文档索引系统
@@ -36,6 +37,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **总体评分**：21.1/100（F级）
 
 **主要挑战**：
+
 - 🔴 文档格式统一性不足（0分）
 - 🔴 文档内容完整性不足（0分）
 - 🔴 文档间上下文衔接不足（0分）
@@ -89,12 +91,14 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 ### 1. 文档编号规范化
 
 **架构设计类文档**：
+
 - ✅ 实现了01-18连续编号
 - ✅ 删除了重复编号文档
 - ✅ 统一了文档命名格式
 - ✅ 编号连续性达到100%
 
 **其他分类文档**：
+
 - 🟡 部分文档存在编号断层
 - 🟡 编号规范性达到60%
 - 🟡 需要进一步优化
@@ -103,15 +107,16 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 
 建立了清晰的三维分类体系：
 
-| 维度 | 说明 | 覆盖范围 |
-|------|------|----------|
-| **业务维度** | 按业务功能分类 | 10个主要分类 |
+| 维度         | 说明           | 覆盖范围       |
+| ------------ | -------------- | -------------- |
+| **业务维度** | 按业务功能分类 | 10个主要分类   |
 | **类型维度** | 按文档类型分类 | 架构类、技巧类 |
-| **编号维度** | 按重要性排序 | 01-18编号 |
+| **编号维度** | 按重要性排序   | 01-18编号      |
 
 ### 3. 文档索引系统
 
 创建了完整的文档索引系统，包括：
+
 - 总体统计概览
 - 分类文档索引
 - 质量评估报告
@@ -122,6 +127,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 建立了完整的审核报告体系：
 
 **审核脚本**（9个）：
+
 1. `yyc3-check-document-numbers.py` - 编号审核
 2. `yyc3-check-document-format.py` - 格式审核
 3. `yyc3-check-document-content.py` - 内容审核
@@ -133,6 +139,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 9. `yyc3-check-all-docs.py` - 综合审核
 
 **审核报告**（8个）：
+
 1. `YYC3-Cater-全链路闭环补全总结报告.md`
 2. `YYC3-Cater-文档对齐与全链路闭环审核报告.md`
 3. `YYC3-文档编号审核报告.md`
@@ -148,53 +155,58 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 
 ### 评估维度
 
-| 评估维度 | 权重 | 得分 | 加权得分 | 状态 |
-|----------|------|------|----------|------|
-| **文档编号规范性** | 20% | 68 | 13.6 | 🟡 警告 |
-| **文档格式统一性** | 25% | 0 | 0 | 🔴 严重 |
-| **文档内容完整性** | 30% | 0 | 0 | 🔴 严重 |
-| **文件命名规范性** | 15% | 50 | 7.5 | 🟡 警告 |
-| **文档间上下文衔接** | 10% | 0 | 0 | 🔴 严重 |
-| **总分** | **100%** | - | **21.1** | 🔴 F级 |
+| 评估维度             | 权重     | 得分 | 加权得分 | 状态    |
+| -------------------- | -------- | ---- | -------- | ------- |
+| **文档编号规范性**   | 20%      | 68   | 13.6     | 🟡 警告 |
+| **文档格式统一性**   | 25%      | 0    | 0        | 🔴 严重 |
+| **文档内容完整性**   | 30%      | 0    | 0        | 🔴 严重 |
+| **文件命名规范性**   | 15%      | 50   | 7.5      | 🟡 警告 |
+| **文档间上下文衔接** | 10%      | 0    | 0        | 🔴 严重 |
+| **总分**             | **100%** | -    | **21.1** | 🔴 F级  |
 
 ### 分类评估
 
-| 分类 | 编号规范性 | 格式统一性 | 内容完整性 | 命名规范性 | 上下文衔接 | 总体评分 |
-|------|-----------|-----------|-----------|-----------|-----------|----------|
-| **架构设计** | 100% | 50% | 30% | 0% | 0% | **C** |
-| **开发实施** | 60% | 50% | 30% | 0% | 0% | **F** |
-| **部署发布** | 60% | 50% | 30% | 0% | 0% | **F** |
-| **运维运营** | 60% | 50% | 30% | 0% | 0% | **F** |
-| **测试验证** | 60% | 50% | 30% | 0% | 0% | **F** |
-| **需求规划** | 60% | 50% | 30% | 0% | 0% | **F** |
-| **用户指南** | 60% | 50% | 30% | 0% | 0% | **F** |
-| **归类迭代** | 60% | 50% | 30% | 0% | 0% | **F** |
-| **模版规范** | 60% | 50% | 30% | 0% | 0% | **F** |
-| **审核报告** | 100% | 100% | 100% | 100% | 100% | **A** |
+| 分类         | 编号规范性 | 格式统一性 | 内容完整性 | 命名规范性 | 上下文衔接 | 总体评分 |
+| ------------ | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
+| **架构设计** | 100%       | 50%        | 30%        | 0%         | 0%         | **C**    |
+| **开发实施** | 60%        | 50%        | 30%        | 0%         | 0%         | **F**    |
+| **部署发布** | 60%        | 50%        | 30%        | 0%         | 0%         | **F**    |
+| **运维运营** | 60%        | 50%        | 30%        | 0%         | 0%         | **F**    |
+| **测试验证** | 60%        | 50%        | 30%        | 0%         | 0%         | **F**    |
+| **需求规划** | 60%        | 50%        | 30%        | 0%         | 0%         | **F**    |
+| **用户指南** | 60%        | 50%        | 30%        | 0%         | 0%         | **F**    |
+| **归类迭代** | 60%        | 50%        | 30%        | 0%         | 0%         | **F**    |
+| **模版规范** | 60%        | 50%        | 30%        | 0%         | 0%         | **F**    |
+| **审核报告** | 100%       | 100%       | 100%       | 100%       | 100%       | **A**    |
 
 ### 评分说明
 
 **文档编号规范性（68%）**：
+
 - 架构设计类（18个）：编号连续性100%
 - 其他分类（67个）：编号规范性60%
 - 综合得分：(18/85) × 100% + (67/85) × 60% = 21.2% + 47.3% = 68.5%
 
 **文档格式统一性（0%）**：
+
 - 103个文档缺少标准章节标题（概述、功能特性、技术栈、实现等）
 - 部分文档缺少目录
 - 部分文档缺少文档信息表格
 
 **文档内容完整性（0%）**：
+
 - 部分文档内容过少（少于50行有效内容）
 - 部分文档缺少必要章节
 - 部分文档内容不够详细
 
 **文件命名规范性（50%）**：
+
 - 103个文件名包含大写字母（中文文档特性）
 - 部分文件名包含空格
 - 部分文件名缺少前缀
 
 **文档间上下文衔接（0%）**：
+
 - 103个文档均为孤立文档（未被其他文档引用）
 - 文档间缺少关联和引用
 - 文档体系不够完整
@@ -208,6 +220,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 #### 1. 文档格式统一性不足（0分）
 
 **问题描述**：
+
 - 103个文档缺少标准章节标题
 - 部分文档缺少目录
 - 部分文档缺少文档信息表格
@@ -215,11 +228,13 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **影响范围**：103个文档（100%）
 
 **业务影响**：
+
 - 降低文档可读性和可维护性
 - 增加文档查找和理解成本
 - 影响文档体系的专业性
 
 **建议措施**：
+
 - 为所有文档添加标准章节（概述、功能特性、技术栈、实现）
 - 为所有文档添加目录
 - 为所有文档添加文档信息表格
@@ -227,6 +242,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 #### 2. 文档内容完整性不足（0分）
 
 **问题描述**：
+
 - 部分文档内容过少（少于50行有效内容）
 - 部分文档缺少必要章节
 - 部分文档内容不够详细
@@ -234,11 +250,13 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **影响范围**：部分文档（约20-30个）
 
 **业务影响**：
+
 - 文档参考价值不足
 - 无法满足实际使用需求
 - 影响项目质量和效率
 
 **建议措施**：
+
 - 补充内容过少的文档，至少达到50行有效内容
 - 为所有文档添加必要章节
 - 完善文档内容，确保详细和准确
@@ -246,6 +264,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 #### 3. 文档间上下文衔接不足（0分）
 
 **问题描述**：
+
 - 103个文档均为孤立文档（未被其他文档引用）
 - 文档间缺少关联和引用
 - 文档体系不够完整
@@ -253,11 +272,13 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **影响范围**：103个文档（100%）
 
 **业务影响**：
+
 - 文档体系不够完整
 - 难以形成知识体系
 - 影响文档使用效率
 
 **建议措施**：
+
 - 为文档添加关联和引用
 - 建立文档间的知识网络
 - 完善文档体系的完整性
@@ -267,16 +288,19 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 #### 1. 文档编号规范性需进一步提升（68分）
 
 **问题描述**：
+
 - 架构设计类文档编号已完全规范化（100%）
 - 其他分类文档编号规范性不足（60%）
 
 **影响范围**：67个文档（65%）
 
 **业务影响**：
+
 - 影响文档查找和管理效率
 - 降低文档体系的规范性
 
 **建议措施**：
+
 - 对其他分类文档进行编号规范化
 - 建立统一的编号规范
 - 定期检查和维护编号规范性
@@ -284,6 +308,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 #### 2. 文件命名规范性不足（50分）
 
 **问题描述**：
+
 - 103个文件名包含大写字母（中文文档特性）
 - 部分文件名包含空格
 - 部分文件名缺少前缀
@@ -291,11 +316,13 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **影响范围**：103个文档（100%）
 
 **业务影响**：
+
 - 文件名不符合kebab-case规范
 - 影响跨平台兼容性
 - 降低文档的专业性
 
 **建议措施**：
+
 - 中文文档特性，非关键问题，无需修正
 - 如需优化，可考虑统一命名规范
 - 建立文件命名规范文档
@@ -313,6 +340,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：3-5个工作日
 
 **具体措施**：
+
 - 识别内容过少的文档（少于50行有效内容）
 - 根据文档类型和用途，补充必要内容
 - 确保内容详细、准确、有用
@@ -324,6 +352,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：5-7个工作日
 
 **具体措施**：
+
 - 为所有文档添加概述章节
 - 为所有文档添加功能特性章节
 - 为所有文档添加技术栈章节
@@ -336,6 +365,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：2-3个工作日
 
 **具体措施**：
+
 - 使用自动化工具生成目录
 - 确保目录格式统一
 - 定期更新目录
@@ -347,6 +377,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：1-2个工作日
 
 **具体措施**：
+
 - 创建文档信息表格模版
 - 为所有文档添加文档信息表格
 - 确保表格格式统一
@@ -360,6 +391,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：2-3个工作日
 
 **具体措施**：
+
 - 识别编号不规范的文档
 - 按照编号规范重新编号
 - 更新文档索引和引用
@@ -371,6 +403,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：5-7个工作日
 
 **具体措施**：
+
 - 分析文档间的关联关系
 - 为文档添加相关文档引用
 - 建立文档间的知识网络
@@ -382,6 +415,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：5-7个工作日
 
 **具体措施**：
+
 - 审核所有文档的内容
 - 补充缺失的内容
 - 修正错误的内容
@@ -395,6 +429,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：持续进行
 
 **具体措施**：
+
 - 制定文档审核标准
 - 建立文档审核流程
 - 定期进行文档审核
@@ -406,6 +441,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：1-2个工作日
 
 **具体措施**：
+
 - 制定文档编写培训计划
 - 组织文档编写培训
 - 提供文档编写指导
@@ -417,6 +453,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：持续进行
 
 **具体措施**：
+
 - 收集文档使用反馈
 - 分析文档使用情况
 - 持续优化文档体系
@@ -430,6 +467,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：持续进行
 
 **具体措施**：
+
 - 制定文档质量审核计划
 - 定期进行文档质量审核
 - 根据审核结果改进文档
@@ -441,6 +479,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：持续进行
 
 **具体措施**：
+
 - 整理文档内容
 - 建立文档知识库
 - 提供文档搜索和检索功能
@@ -452,6 +491,7 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **预计工作量**：持续进行
 
 **具体措施**：
+
 - 收集用户反馈
 - 分析文档使用情况
 - 持续优化文档体系
@@ -465,12 +505,14 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **目标**：解决严重问题，提高文档质量
 
 **主要任务**：
+
 1. 补充内容过少的文档（3-5个工作日）
 2. 为所有文档添加标准章节（5-7个工作日）
 3. 为所有文档添加目录（2-3个工作日）
 4. 为所有文档添加文档信息表格（1-2个工作日）
 
 **预期成果**：
+
 - 文档格式统一性从0%提升到80%
 - 文档内容完整性从0%提升到70%
 - 总体评分从21.1分提升到40-50分
@@ -480,11 +522,13 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **目标**：解决警告问题，完善文档体系
 
 **主要任务**：
+
 1. 为其他分类文档进行编号规范化（2-3个工作日）
 2. 为文档添加关联和引用（5-7个工作日）
 3. 完善文档内容（5-7个工作日）
 
 **预期成果**：
+
 - 文档编号规范性从68%提升到90%
 - 文档间上下文衔接从0%提升到60%
 - 总体评分从40-50分提升到60-70分
@@ -494,11 +538,13 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **目标**：建立文档管理机制，持续改进文档质量
 
 **主要任务**：
+
 1. 建立文档审核机制（持续进行）
 2. 组织文档编写培训（1-2个工作日）
 3. 持续改进文档体系（持续进行）
 
 **预期成果**：
+
 - 建立完善的文档管理机制
 - 提高团队的文档编写能力
 - 文档质量持续提升
@@ -508,11 +554,13 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 **目标**：建立文档知识库，形成完整的知识体系
 
 **主要任务**：
+
 1. 定期审核文档质量（持续进行）
 2. 建立文档知识库（持续进行）
 3. 持续优化文档体系（持续进行）
 
 **预期成果**：
+
 - 建立完整的文档知识库
 - 文档质量持续提升
 - 文档使用效率持续提高
@@ -524,18 +572,21 @@ YYC³文档闭环系统标准化工作已完成，共处理103个文档，涵盖
 YYC³文档闭环系统标准化工作已完成，文档体系得到了显著改善。通过系统性的文档整理、编号规范化、质量审核等工作，建立了完整的文档索引系统和审核报告体系。
 
 **主要成果**：
+
 - ✅ 架构设计类文档编号完全规范化（01-18连续编号）
 - ✅ 文档分类体系清晰，覆盖全面
 - ✅ 建立了完整的文档索引系统
 - ✅ 创建了17个审核报告和9个审核脚本
 
 **主要挑战**：
+
 - 🔴 文档格式统一性不足（0分）
 - 🔴 文档内容完整性不足（0分）
 - 🔴 文档间上下文衔接不足（0分）
 - 🟡 文档编号规范性需进一步提升（68分）
 
 **后续计划**：
+
 - 立即行动（P0）：解决严重问题，提高文档质量
 - 短期行动（P1）：解决警告问题，完善文档体系
 - 中期行动（P2）：建立文档管理机制，持续改进文档质量
@@ -547,10 +598,10 @@ YYC³文档闭环系统标准化工作已完成，文档体系得到了显著改
 
 <div align="center">
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 **Made with ❤️ by YYC³ Team**
 
@@ -577,8 +628,6 @@ YYC³文档闭环系统标准化工作已完成，文档体系得到了显著改
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -607,8 +656,6 @@ YYC³文档闭环系统标准化工作已完成，文档体系得到了显著改
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -646,7 +693,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -662,8 +709,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -676,7 +721,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -691,9 +736,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -701,9 +746,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -711,20 +759,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -733,6 +779,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -748,17 +795,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -766,6 +814,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -776,6 +825,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -784,8 +834,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -793,21 +841,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -816,10 +866,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -845,16 +892,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -863,26 +910,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -898,7 +940,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -930,14 +972,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -948,17 +988,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -968,17 +1011,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -988,22 +1034,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
-
 
 ## 代码示例
 
@@ -1017,7 +1064,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1032,9 +1079,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1042,9 +1089,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1052,20 +1102,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 最佳实践
 
@@ -1074,21 +1122,23 @@ try {
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1097,10 +1147,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1126,16 +1173,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1144,23 +1191,18 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-

@@ -79,14 +79,14 @@ export class ContextManager extends EventEmitter {
       context: { ...context },
       timestamp: Date.now(),
       source: 'update',
-      changes
+      changes,
     };
 
     this.contextHistory.push(history);
 
     // 更新当前上下文
     this.currentContext = { ...context };
-    
+
     // 限制历史记录数量
     if (this.contextHistory.length > 100) {
       this.contextHistory.shift();
@@ -114,7 +114,7 @@ export class ContextManager extends EventEmitter {
     // 例如从外部系统获取最新信息
     const refreshedContext = {
       ...this.currentContext,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     this.updateContext(refreshedContext);
@@ -139,7 +139,7 @@ export class ContextManager extends EventEmitter {
     return {
       valid: errors.length === 0,
       errors,
-      warnings
+      warnings,
     };
   }
 
@@ -158,7 +158,7 @@ export class ContextManager extends EventEmitter {
       if (JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
         changes[key] = {
           old: oldValue,
-          new: newValue
+          new: newValue,
         };
       }
     }

@@ -10,28 +10,29 @@
 **@tags**：架构设计,YYC³,系统架构
 
 ---
+
 # 🔖 YYC³ 接口架构设计文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 接口架构设计文档 |
-| **文档类型** | 架构设计文档 |
-| **所属阶段** | 系统架构设计 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 接口架构设计文档      |
+| **文档类型** | 架构设计文档               |
+| **所属阶段** | 系统架构设计               |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -73,6 +74,7 @@
 - **最少知识原则**：模块间最小化依赖，降低耦合度
 
 同时遵循YYC³「五高五标五化」核心理念：
+
 - **五高**：高可用、高性能、高安全、高扩展、高可维护
 - **五标**：标准化、规范化、自动化、智能化、可视化
 - **五化**：流程化、文档化、工具化、数字化、生态化
@@ -82,24 +84,28 @@
 技术栈选择基于以下考虑：
 
 **前端技术栈**
+
 - React 18+：采用现代化前端框架，组件化开发
 - TypeScript 5.0+：类型安全，提高代码质量
 - Next.js 14+：SSR/SSG支持，优化SEO和性能
 - Tailwind CSS：原子化CSS，快速构建UI
 
 **后端技术栈**
+
 - Node.js 18+：高性能JavaScript运行时
 - Express/Fastify：轻量级Web框架
 - PostgreSQL 15+：关系型数据库，ACID保证
 - Redis 7+：缓存和会话存储
 
 **基础设施**
+
 - Docker：容器化部署，环境一致性
 - Kubernetes：容器编排，自动化运维
 - Nginx：反向代理和负载均衡
 - Prometheus + Grafana：监控和告警
 
 **开发工具**
+
 - Git：版本控制
 - ESLint + Prettier：代码规范
 - Jest + Vitest：单元测试
@@ -112,27 +118,32 @@
 YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以下层次：
 
 **表现层（Presentation Layer）**
+
 - Web前端：React + Next.js构建的单页应用
 - 移动端：响应式设计，支持多设备访问
 - 管理后台：独立的管理界面
 
 **应用层（Application Layer）**
+
 - API网关：统一入口，路由分发
 - 业务服务：订单、用户、商品等核心业务逻辑
 - 认证授权：JWT认证，RBAC权限控制
 
 **领域层（Domain Layer）**
+
 - 领域模型：核心业务实体和规则
 - 领域服务：复杂业务逻辑封装
 - 仓储接口：数据访问抽象
 
 **基础设施层（Infrastructure Layer）**
+
 - 数据库：PostgreSQL主从架构
 - 缓存：Redis集群
 - 消息队列：RabbitMQ/Kafka
 - 文件存储：OSS/MinIO
 
 **跨层关注点**
+
 - 日志监控：ELK Stack
 - 配置管理：Apollo/Nacos
 - 服务发现：Consul/Eureka
@@ -143,36 +154,43 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 系统按照业务领域划分为以下核心模块：
 
 **用户模块（User Module）**
+
 - 用户注册、登录、认证
 - 用户信息管理
 - 权限和角色管理
 
 **商品模块（Product Module）**
+
 - 商品信息管理
 - 商品分类和标签
 - 库存管理
 
 **订单模块（Order Module）**
+
 - 订单创建和支付
 - 订单状态流转
 - 订单查询和统计
 
 **支付模块（Payment Module）**
+
 - 支付接口集成
 - 支付状态同步
 - 退款处理
 
 **营销模块（Marketing Module）**
+
 - 优惠券管理
 - 促销活动
 - 会员积分
 
 **报表模块（Report Module）**
+
 - 销售报表
 - 数据分析
 - 可视化展示
 
 **系统模块（System Module）**
+
 - 配置管理
 - 日志管理
 - 监控告警
@@ -229,13 +247,13 @@ API 网关（认证、授权、限流、熔断）
 
 ### 1.3 技术选型
 
-| 技术 | 用途 |
-|------|------|
-| Hono | Web 框架 |
-| Zod | 数据验证 |
-| JWT | 认证令牌 |
+| 技术            | 用途     |
+| --------------- | -------- |
+| Hono            | Web 框架 |
+| Zod             | 数据验证 |
+| JWT             | 认证令牌 |
 | Swagger/OpenAPI | 接口文档 |
-| Postman | 接口测试 |
+| Postman         | 接口测试 |
 
 ---
 
@@ -251,6 +269,7 @@ API 网关（认证、授权、限流、熔断）
 - 层级不超过 3 层
 
 **示例**：
+
 ```
 ✅ 正确：
 GET    /api/users
@@ -267,30 +286,30 @@ GET    /api/users/:id/orders/:id/items
 
 #### 2.1.2 HTTP 方法
 
-| 方法 | 用途 | 是否幂等 |
-|------|------|----------|
-| GET | 获取资源 | 是 |
-| POST | 创建资源 | 否 |
-| PUT | 完整更新资源 | 是 |
-| PATCH | 部分更新资源 | 否 |
-| DELETE | 删除资源 | 是 |
+| 方法   | 用途         | 是否幂等 |
+| ------ | ------------ | -------- |
+| GET    | 获取资源     | 是       |
+| POST   | 创建资源     | 否       |
+| PUT    | 完整更新资源 | 是       |
+| PATCH  | 部分更新资源 | 否       |
+| DELETE | 删除资源     | 是       |
 
 #### 2.1.3 HTTP 状态码
 
-| 状态码 | 说明 | 使用场景 |
-|--------|------|----------|
-| 200 OK | 请求成功 | GET、PUT、PATCH、DELETE 成功 |
-| 201 Created | 资源创建成功 | POST 成功 |
-| 204 No Content | 请求成功但无返回内容 | DELETE 成功 |
-| 400 Bad Request | 请求参数错误 | 参数验证失败 |
-| 401 Unauthorized | 未认证 | 缺少或无效的认证令牌 |
-| 403 Forbidden | 无权限 | 已认证但无权限访问 |
-| 404 Not Found | 资源不存在 | 请求的资源不存在 |
-| 409 Conflict | 资源冲突 | 资源已存在或状态冲突 |
-| 422 Unprocessable Entity | 请求格式正确但语义错误 | 业务逻辑错误 |
-| 429 Too Many Requests | 请求过多 | 超过限流阈值 |
-| 500 Internal Server Error | 服务器内部错误 | 服务器异常 |
-| 503 Service Unavailable | 服务不可用 | 服务维护或过载 |
+| 状态码                    | 说明                   | 使用场景                     |
+| ------------------------- | ---------------------- | ---------------------------- |
+| 200 OK                    | 请求成功               | GET、PUT、PATCH、DELETE 成功 |
+| 201 Created               | 资源创建成功           | POST 成功                    |
+| 204 No Content            | 请求成功但无返回内容   | DELETE 成功                  |
+| 400 Bad Request           | 请求参数错误           | 参数验证失败                 |
+| 401 Unauthorized          | 未认证                 | 缺少或无效的认证令牌         |
+| 403 Forbidden             | 无权限                 | 已认证但无权限访问           |
+| 404 Not Found             | 资源不存在             | 请求的资源不存在             |
+| 409 Conflict              | 资源冲突               | 资源已存在或状态冲突         |
+| 422 Unprocessable Entity  | 请求格式正确但语义错误 | 业务逻辑错误                 |
+| 429 Too Many Requests     | 请求过多               | 超过限流阈值                 |
+| 500 Internal Server Error | 服务器内部错误         | 服务器异常                   |
+| 503 Service Unavailable   | 服务不可用             | 服务维护或过载               |
 
 ### 2.2 请求规范
 
@@ -391,42 +410,46 @@ GET /api/users?page=1&pageSize=20&status=1&keyword=test
 使用 Zod 进行数据验证。
 
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 // 用户创建验证
 const createUserSchema = z.object({
-  email: z.string().email('邮箱格式不正确'),
-  password: z.string().min(8, '密码长度不能少于8位'),
-  nickname: z.string().min(2, '昵称长度不能少于2位').optional()
+  email: z.string().email("邮箱格式不正确"),
+  password: z.string().min(8, "密码长度不能少于8位"),
+  nickname: z.string().min(2, "昵称长度不能少于2位").optional(),
 });
 
 // 订单创建验证
 const createOrderSchema = z.object({
-  userId: z.string().uuid('用户ID格式不正确'),
-  items: z.array(z.object({
-    productId: z.string().uuid('商品ID格式不正确'),
-    quantity: z.number().int().positive('数量必须为正整数')
-  })).min(1, '订单至少包含一个商品'),
+  userId: z.string().uuid("用户ID格式不正确"),
+  items: z
+    .array(
+      z.object({
+        productId: z.string().uuid("商品ID格式不正确"),
+        quantity: z.number().int().positive("数量必须为正整数"),
+      })
+    )
+    .min(1, "订单至少包含一个商品"),
   address: z.object({
     province: z.string(),
     city: z.string(),
     district: z.string(),
-    detail: z.string()
-  })
+    detail: z.string(),
+  }),
 });
 ```
 
 #### 2.4.2 验证中间件
 
 ```typescript
-import { zValidator } from '@hono/zod-validator';
-import { Hono } from 'hono';
+import { zValidator } from "@hono/zod-validator";
+import { Hono } from "hono";
 
 const app = new Hono();
 
 // 使用验证中间件
-app.post('/users', zValidator('json', createUserSchema), async (c) => {
-  const data = c.req.valid('json');
+app.post("/users", zValidator("json", createUserSchema), async c => {
+  const data = c.req.valid("json");
   // 处理业务逻辑
   return c.json({ success: true, data });
 });
@@ -445,6 +468,7 @@ POST /api/users/register
 ```
 
 **请求体**：
+
 ```json
 {
   "email": "test@example.com",
@@ -455,6 +479,7 @@ POST /api/users/register
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -476,6 +501,7 @@ POST /api/users/login
 ```
 
 **请求体**：
+
 ```json
 {
   "email": "test@example.com",
@@ -484,6 +510,7 @@ POST /api/users/login
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -508,6 +535,7 @@ Authorization: Bearer {token}
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -545,6 +573,7 @@ GET /api/products?page=1&pageSize=20&categoryId=123&keyword=test&sort=price&orde
 | order | string | 否 | 排序方式：asc, desc |
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -580,6 +609,7 @@ GET /api/products/:id
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -594,10 +624,7 @@ GET /api/products/:id
     "costPrice": 79.99,
     "stock": 100,
     "sales": 50,
-    "images": [
-      "https://example.com/image1.jpg",
-      "https://example.com/image2.jpg"
-    ],
+    "images": ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
     "specifications": {
       "color": ["红色", "蓝色", "黑色"],
       "size": ["S", "M", "L", "XL"]
@@ -624,6 +651,7 @@ Authorization: Bearer {token}
 ```
 
 **请求体**：
+
 ```json
 {
   "items": [
@@ -647,6 +675,7 @@ Authorization: Bearer {token}
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -689,6 +718,7 @@ Authorization: Bearer {token}
 | status | number | 否 | 订单状态：0-待支付，1-已支付，2-配送中，3-已完成，4-已取消，5-已退款 |
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -731,6 +761,7 @@ Authorization: Bearer {token}
 ```
 
 **请求体**：
+
 ```json
 {
   "paymentMethod": "wechat"
@@ -738,6 +769,7 @@ Authorization: Bearer {token}
 ```
 
 **响应**：
+
 ```json
 {
   "success": true,
@@ -762,6 +794,7 @@ POST /api/payments/callback
 ```
 
 **请求体**（微信支付）：
+
 ```json
 {
   "id": "123",
@@ -778,6 +811,7 @@ POST /api/payments/callback
 ```
 
 **响应**：
+
 ```json
 {
   "code": "SUCCESS",
@@ -796,11 +830,13 @@ POST /api/payments/callback
 使用 JWT（JSON Web Token）进行身份认证。
 
 **Token 结构**：
+
 ```
 Header.Payload.Signature
 ```
 
 **Payload 示例**：
+
 ```json
 {
   "userId": "123",
@@ -814,17 +850,17 @@ Header.Payload.Signature
 #### 4.1.2 Token 生成
 
 ```typescript
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 function generateToken(user: User): string {
   const payload = {
     userId: user.id,
     email: user.email,
-    roles: user.roles
+    roles: user.roles,
   };
-  
+
   return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '7d'
+    expiresIn: "7d",
   });
 }
 ```
@@ -836,7 +872,7 @@ function verifyToken(token: string): any {
   try {
     return jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
-    throw new Error('Token 无效或已过期');
+    throw new Error("Token 无效或已过期");
   }
 }
 ```
@@ -857,26 +893,26 @@ function verifyToken(token: string): any {
 #### 4.2.2 权限中间件
 
 ```typescript
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 function requireRole(roles: string[]) {
   return async (c: any, next: any) => {
-    const user = c.get('user');
-    
+    const user = c.get("user");
+
     if (!user) {
-      return c.json({ success: false, code: 401, message: '未认证' }, 401);
+      return c.json({ success: false, code: 401, message: "未认证" }, 401);
     }
-    
+
     if (!roles.includes(user.role)) {
-      return c.json({ success: false, code: 403, message: '无权限' }, 403);
+      return c.json({ success: false, code: 403, message: "无权限" }, 403);
     }
-    
+
     await next();
   };
 }
 
 // 使用权限中间件
-app.get('/admin/users', requireRole(['admin']), async (c) => {
+app.get("/admin/users", requireRole(["admin"]), async c => {
   // 只有 admin 角色可以访问
 });
 ```
@@ -892,23 +928,23 @@ app.get('/admin/users', requireRole(['admin']), async (c) => {
 #### 4.3.2 限流实现
 
 ```typescript
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(10, '10 s'),
+  limiter: Ratelimit.slidingWindow(10, "10 s"),
   analytics: true,
 });
 
 async function rateLimitMiddleware(c: any, next: any) {
-  const ip = c.req.header('x-forwarded-for') || c.req.header('x-real-ip');
+  const ip = c.req.header("x-forwarded-for") || c.req.header("x-real-ip");
   const { success } = await ratelimit.limit(ip);
-  
+
   if (!success) {
-    return c.json({ success: false, code: 429, message: '请求过于频繁' }, 429);
+    return c.json({ success: false, code: 429, message: "请求过于频繁" }, 429);
   }
-  
+
   await next();
 }
 ```
@@ -923,30 +959,30 @@ async function rateLimitMiddleware(c: any, next: any) {
 #### 4.4.2 敏感数据加密
 
 ```typescript
-import crypto from 'crypto';
+import crypto from "crypto";
 
 function encrypt(text: string): string {
-  const algorithm = 'aes-256-cbc';
-  const key = crypto.scryptSync(process.env.ENCRYPTION_KEY, 'salt', 32);
+  const algorithm = "aes-256-cbc";
+  const key = crypto.scryptSync(process.env.ENCRYPTION_KEY, "salt", 32);
   const iv = crypto.randomBytes(16);
-  
+
   const cipher = crypto.createCipheriv(algorithm, key, iv);
-  let encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  
-  return iv.toString('hex') + ':' + encrypted;
+  let encrypted = cipher.update(text, "utf8", "hex");
+  encrypted += cipher.final("hex");
+
+  return iv.toString("hex") + ":" + encrypted;
 }
 
 function decrypt(encrypted: string): string {
-  const algorithm = 'aes-256-cbc';
-  const key = crypto.scryptSync(process.env.ENCRYPTION_KEY, 'salt', 32);
-  const [ivHex, encrypted] = encrypted.split(':');
-  const iv = Buffer.from(ivHex, 'hex');
-  
+  const algorithm = "aes-256-cbc";
+  const key = crypto.scryptSync(process.env.ENCRYPTION_KEY, "salt", 32);
+  const [ivHex, encrypted] = encrypted.split(":");
+  const iv = Buffer.from(ivHex, "hex");
+
   const decipher = crypto.createDecipheriv(algorithm, key, iv);
-  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  
+  let decrypted = decipher.update(encrypted, "hex", "utf8");
+  decrypted += decipher.final("utf8");
+
   return decrypted;
 }
 ```
@@ -981,14 +1017,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegister'
+              $ref: "#/components/schemas/UserRegister"
       responses:
-        '201':
+        "201":
           description: 注册成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 components:
   schemas:
     UserRegister:
@@ -1021,20 +1057,20 @@ components:
 使用 Swagger UI 展示接口文档。
 
 ```typescript
-import { swaggerUI } from '@hono/swagger-ui';
-import { OpenAPIHono } from '@hono/zod-openapi';
+import { swaggerUI } from "@hono/swagger-ui";
+import { OpenAPIHono } from "@hono/zod-openapi";
 
 const app = new OpenAPIHono();
 
-app.doc('/doc', {
-  openapi: '3.0.0',
+app.doc("/doc", {
+  openapi: "3.0.0",
   info: {
-    version: '1.0.0',
-    title: 'YYC³ API',
+    version: "1.0.0",
+    title: "YYC³ API",
   },
 });
 
-app.get('/swagger', swaggerUI({ url: '/doc' }));
+app.get("/swagger", swaggerUI({ url: "/doc" }));
 ```
 
 ### 5.3 接口文档管理
@@ -1053,38 +1089,38 @@ app.get('/swagger', swaggerUI({ url: '/doc' }));
 使用 Vitest 进行接口单元测试。
 
 ```typescript
-import { describe, it, expect, beforeEach } from 'vitest';
-import { app } from '../app';
+import { describe, it, expect, beforeEach } from "vitest";
+import { app } from "../app";
 
-describe('User API', () => {
+describe("User API", () => {
   beforeEach(() => {
     // 初始化测试数据
   });
 
-  it('应该成功注册用户', async () => {
-    const response = await app.request('/api/users/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+  it("应该成功注册用户", async () => {
+    const response = await app.request("/api/users/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: 'test@example.com',
-        password: 'password123'
-      })
+        email: "test@example.com",
+        password: "password123",
+      }),
     });
 
     expect(response.status).toBe(201);
     const data = await response.json();
     expect(data.success).toBe(true);
-    expect(data.data.email).toBe('test@example.com');
+    expect(data.data.email).toBe("test@example.com");
   });
 
-  it('应该返回邮箱格式错误', async () => {
-    const response = await app.request('/api/users/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+  it("应该返回邮箱格式错误", async () => {
+    const response = await app.request("/api/users/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: 'invalid-email',
-        password: 'password123'
-      })
+        email: "invalid-email",
+        password: "password123",
+      }),
     });
 
     expect(response.status).toBe(400);
@@ -1099,36 +1135,30 @@ describe('User API', () => {
 使用 Supertest 进行接口集成测试。
 
 ```typescript
-import request from 'supertest';
-import { app } from '../app';
+import request from "supertest";
+import { app } from "../app";
 
-describe('User API Integration', () => {
-  it('应该成功登录并获取用户信息', async () => {
+describe("User API Integration", () => {
+  it("应该成功登录并获取用户信息", async () => {
     // 注册
-    await request(app)
-      .post('/api/users/register')
-      .send({
-        email: 'test@example.com',
-        password: 'password123'
-      });
+    await request(app).post("/api/users/register").send({
+      email: "test@example.com",
+      password: "password123",
+    });
 
     // 登录
-    const loginResponse = await request(app)
-      .post('/api/users/login')
-      .send({
-        email: 'test@example.com',
-        password: 'password123'
-      });
+    const loginResponse = await request(app).post("/api/users/login").send({
+      email: "test@example.com",
+      password: "password123",
+    });
 
     const token = loginResponse.body.data.token;
 
     // 获取用户信息
-    const profileResponse = await request(app)
-      .get('/api/users/profile')
-      .set('Authorization', `Bearer ${token}`);
+    const profileResponse = await request(app).get("/api/users/profile").set("Authorization", `Bearer ${token}`);
 
     expect(profileResponse.status).toBe(200);
-    expect(profileResponse.body.data.email).toBe('test@example.com');
+    expect(profileResponse.body.data.email).toBe("test@example.com");
   });
 });
 ```
@@ -1140,24 +1170,25 @@ describe('User API Integration', () => {
 ```yaml
 # load-test.yml
 config:
-  target: 'http://localhost:3201'
+  target: "http://localhost:3201"
   phases:
     - duration: 60
       arrivalRate: 10
-  processor: './load-test-processor.js'
+  processor: "./load-test-processor.js"
 
 scenarios:
-  - name: '用户登录'
+  - name: "用户登录"
     flow:
       - post:
-          url: '/api/users/login'
+          url: "/api/users/login"
           json:
-            email: 'test@example.com'
-            password: 'password123'
+            email: "test@example.com"
+            password: "password123"
       - think: 1
 ```
 
 运行压力测试：
+
 ```bash
 artillery run load-test.yml
 ```
@@ -1184,24 +1215,24 @@ artillery run load-test.yml
 ### 7.3 版本切换
 
 ```typescript
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 const v1 = new Hono();
 const v2 = new Hono();
 
 // v1 接口
-v1.get('/users', async (c) => {
-  return c.json({ version: 'v1' });
+v1.get("/users", async c => {
+  return c.json({ version: "v1" });
 });
 
 // v2 接口
-v2.get('/users', async (c) => {
-  return c.json({ version: 'v2' });
+v2.get("/users", async c => {
+  return c.json({ version: "v2" });
 });
 
 // 挂载版本路由
-app.route('/api/v1', v1);
-app.route('/api/v2', v2);
+app.route("/api/v1", v1);
+app.route("/api/v2", v2);
 ```
 
 ---
@@ -1230,17 +1261,20 @@ app.route('/api/v2', v2);
 记录每个接口请求的详细信息。
 
 ```typescript
-import { logger } from 'hono/logger';
+import { logger } from "hono/logger";
 
-app.use('*', logger((message) => {
-  console.log({
-    method: message.method,
-    path: message.path,
-    status: message.status,
-    latency: message.latency,
-    ip: message.remoteAddress
-  });
-}));
+app.use(
+  "*",
+  logger(message => {
+    console.log({
+      method: message.method,
+      path: message.path,
+      status: message.status,
+      latency: message.latency,
+      ip: message.remoteAddress,
+    });
+  })
+);
 ```
 
 #### 8.2.2 错误日志
@@ -1253,14 +1287,17 @@ app.onError((err, c) => {
     error: err.message,
     stack: err.stack,
     path: c.req.path,
-    method: c.req.method
+    method: c.req.method,
   });
-  
-  return c.json({
-    success: false,
-    code: 500,
-    message: '服务器内部错误'
-  }, 500);
+
+  return c.json(
+    {
+      success: false,
+      code: 500,
+      message: "服务器内部错误",
+    },
+    500
+  );
 });
 ```
 
@@ -1283,13 +1320,10 @@ app.onError((err, c) => {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1312,8 +1346,6 @@ app.onError((err, c) => {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1347,8 +1379,6 @@ app.onError((err, c) => {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1371,46 +1401,46 @@ app.onError((err, c) => {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1423,6 +1453,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1432,6 +1463,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1441,6 +1473,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1457,16 +1490,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1476,13 +1510,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1491,6 +1523,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1509,6 +1542,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1524,6 +1558,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1543,28 +1578,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1573,44 +1607,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1624,13 +1656,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1639,18 +1671,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1660,37 +1695,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1699,28 +1737,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1729,21 +1765,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1752,10 +1790,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1781,16 +1816,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1799,26 +1834,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -1827,21 +1857,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1850,10 +1882,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1879,16 +1908,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1897,25 +1926,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

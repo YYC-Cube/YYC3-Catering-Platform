@@ -14,7 +14,7 @@
 ### 基础用法
 
 ```tsx
-import { Skeleton } from '@/components/UI'
+import { Skeleton } from "@/components/UI";
 
 export default function SkeletonBasic() {
   return (
@@ -23,14 +23,14 @@ export default function SkeletonBasic() {
       <Skeleton />
       <Skeleton />
     </div>
-  )
+  );
 }
 ```
 
 ### 复杂组合
 
 ```tsx
-import { Skeleton } from '@/components/UI'
+import { Skeleton } from "@/components/UI";
 
 export default function SkeletonComplex() {
   return (
@@ -41,14 +41,14 @@ export default function SkeletonComplex() {
         <Skeleton.Paragraph />
       </Skeleton>
     </div>
-  )
+  );
 }
 ```
 
 ### 头像
 
 ```tsx
-import { Skeleton } from '@/components/UI'
+import { Skeleton } from "@/components/UI";
 
 export default function SkeletonAvatar() {
   return (
@@ -57,14 +57,14 @@ export default function SkeletonAvatar() {
       <Skeleton.Avatar />
       <Skeleton.Avatar />
     </div>
-  )
+  );
 }
 ```
 
 ### 标题
 
 ```tsx
-import { Skeleton } from '@/components/UI'
+import { Skeleton } from "@/components/UI";
 
 export default function SkeletonTitle() {
   return (
@@ -73,14 +73,14 @@ export default function SkeletonTitle() {
       <Skeleton.Title />
       <Skeleton.Title />
     </div>
-  )
+  );
 }
 ```
 
 ### 段落
 
 ```tsx
-import { Skeleton } from '@/components/UI'
+import { Skeleton } from "@/components/UI";
 
 export default function SkeletonParagraph() {
   return (
@@ -89,14 +89,14 @@ export default function SkeletonParagraph() {
       <Skeleton.Paragraph />
       <Skeleton.Paragraph />
     </div>
-  )
+  );
 }
 ```
 
 ### 激活动画
 
 ```tsx
-import { Skeleton } from '@/components/UI'
+import { Skeleton } from "@/components/UI";
 
 export default function SkeletonActive() {
   return (
@@ -105,28 +105,20 @@ export default function SkeletonActive() {
       <Skeleton active />
       <Skeleton active />
     </div>
-  )
+  );
 }
 ```
 
 ### 加载状态
 
 ```tsx
-import { Skeleton } from '@/components/UI'
-import { ref } from 'vue'
+import { Skeleton } from "@/components/UI";
+import { ref } from "vue";
 
 export default function SkeletonLoading() {
-  const loading = ref(true)
+  const loading = ref(true);
 
-  return (
-    <div>
-      {loading.value ? (
-        <Skeleton active />
-      ) : (
-        <div>实际内容</div>
-      )}
-    </div>
-  )
+  return <div>{loading.value ? <Skeleton active /> : <div>实际内容</div>}</div>;
 }
 ```
 
@@ -134,34 +126,34 @@ export default function SkeletonLoading() {
 
 ### Skeleton Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| loading | 是否显示骨架屏 | `boolean` | `true` |
-| active | 是否显示动画效果 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明             | 类型      | 默认值  |
+| --------- | ---------------- | --------- | ------- |
+| loading   | 是否显示骨架屏   | `boolean` | `true`  |
+| active    | 是否显示动画效果 | `boolean` | `false` |
+| className | 自定义类名       | `string`  | -       |
 
 ### Skeleton.Avatar Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| size | 尺寸 | `string \| number` | `sm` / `md` / `lg` | `md` |
-| shape | 形状 | `string` | `circle` / `square` | `circle` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型               | 默认值              |
+| --------- | ---------- | ------------------ | ------------------- | -------- |
+| size      | 尺寸       | `string \| number` | `sm` / `md` / `lg`  | `md`     |
+| shape     | 形状       | `string`           | `circle` / `square` | `circle` |
+| className | 自定义类名 | `string`           | -                   |
 
 ### Skeleton.Title Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| width | 宽度 | `string \| number` | `100%` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型               | 默认值 |
+| --------- | ---------- | ------------------ | ------ |
+| width     | 宽度       | `string \| number` | `100%` |
+| className | 自定义类名 | `string`           | -      |
 
 ### Skeleton.Paragraph Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| rows | 行数 | `number` | `3` |
-| width | 宽度 | `string \| number \| (string \| number)[]` | - |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型                                       | 默认值 |
+| --------- | ---------- | ------------------------------------------ | ------ |
+| rows      | 行数       | `number`                                   | `3`    |
+| width     | 宽度       | `string \| number \| (string \| number)[]` | -      |
+| className | 自定义类名 | `string`                                   | -      |
 
 ## 样式定制
 
@@ -191,62 +183,68 @@ export default function SkeletonLoading() {
 ### 1. 列表骨架屏
 
 ```tsx
-{loading.value ? (
-  <div class="space-y-4">
-    {Array.from({ length: 5 }).map((_, i) => (
-      <Skeleton key={i} active>
-        <Skeleton.Avatar />
-        <Skeleton.Title />
-        <Skeleton.Paragraph />
-      </Skeleton>
-    ))}
-  </div>
-) : (
-  <List data={data} renderItem={renderItem} />
-)}
+{
+  loading.value ? (
+    <div class="space-y-4">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Skeleton key={i} active>
+          <Skeleton.Avatar />
+          <Skeleton.Title />
+          <Skeleton.Paragraph />
+        </Skeleton>
+      ))}
+    </div>
+  ) : (
+    <List data={data} renderItem={renderItem} />
+  );
+}
 ```
 
 ### 2. 卡片骨架屏
 
 ```tsx
-{loading.value ? (
-  <div class="grid grid-cols-3 gap-4">
-    {Array.from({ length: 6 }).map((_, i) => (
-      <Card key={i}>
-        <Skeleton active>
-          <Skeleton.Avatar />
-          <Skeleton.Title />
-          <Skeleton.Paragraph />
-        </Skeleton>
-      </Card>
-    ))}
-  </div>
-) : (
-  <div class="grid grid-cols-3 gap-4">
-    {data.map(item => (
-      <Card key={item.id}>{item.content}</Card>
-    ))}
-  </div>
-)}
+{
+  loading.value ? (
+    <div class="grid grid-cols-3 gap-4">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <Card key={i}>
+          <Skeleton active>
+            <Skeleton.Avatar />
+            <Skeleton.Title />
+            <Skeleton.Paragraph />
+          </Skeleton>
+        </Card>
+      ))}
+    </div>
+  ) : (
+    <div class="grid grid-cols-3 gap-4">
+      {data.map(item => (
+        <Card key={item.id}>{item.content}</Card>
+      ))}
+    </div>
+  );
+}
 ```
 
 ### 3. 表格骨架屏
 
 ```tsx
-{loading.value ? (
-  <div class="space-y-2">
-    {Array.from({ length: 10 }).map((_, i) => (
-      <div key={i} class="flex space-x-2">
-        <Skeleton.Paragraph rows={1} width="20%" />
-        <Skeleton.Paragraph rows={1} width="30%" />
-        <Skeleton.Paragraph rows={1} width="30%" />
-        <Skeleton.Paragraph rows={1} width="20%" />
-      </div>
-    ))}
-  </div>
-) : (
-  <Table columns={columns} data={data} />
-)}
+{
+  loading.value ? (
+    <div class="space-y-2">
+      {Array.from({ length: 10 }).map((_, i) => (
+        <div key={i} class="flex space-x-2">
+          <Skeleton.Paragraph rows={1} width="20%" />
+          <Skeleton.Paragraph rows={1} width="30%" />
+          <Skeleton.Paragraph rows={1} width="30%" />
+          <Skeleton.Paragraph rows={1} width="20%" />
+        </div>
+      ))}
+    </div>
+  ) : (
+    <Table columns={columns} data={data} />
+  );
+}
 ```
 
 ## 常见问题

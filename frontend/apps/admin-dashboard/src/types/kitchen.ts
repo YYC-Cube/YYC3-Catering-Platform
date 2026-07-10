@@ -31,20 +31,9 @@ export interface KitchenEquipment {
   updatedAt?: string;
 }
 
-export type EquipmentType = 
-  | 'cooking'
-  | 'refrigeration'
-  | 'baking'
-  | 'dishwashing'
-  | 'cutting'
-  | 'mixing'
-  | 'other';
+export type EquipmentType = 'cooking' | 'refrigeration' | 'baking' | 'dishwashing' | 'cutting' | 'mixing' | 'other';
 
-export type EquipmentStatus = 
-  | 'normal'
-  | 'maintenance'
-  | 'repair'
-  | 'scrapped';
+export type EquipmentStatus = 'normal' | 'maintenance' | 'repair' | 'scrapped';
 
 export interface KitchenEmployee {
   id: string;
@@ -67,19 +56,9 @@ export interface KitchenEmployee {
   updatedAt?: string;
 }
 
-export type EmployeePosition = 
-  | 'chef'
-  | 'sous_chef'
-  | 'line_cook'
-  | 'prep_cook'
-  | 'dishwasher'
-  | 'other';
+export type EmployeePosition = 'chef' | 'sous_chef' | 'line_cook' | 'prep_cook' | 'dishwasher' | 'other';
 
-export type EmployeeStatus = 
-  | 'online'
-  | 'busy'
-  | 'break'
-  | 'offline';
+export type EmployeeStatus = 'online' | 'busy' | 'break' | 'offline';
 
 export interface Certification {
   id: string;
@@ -118,26 +97,11 @@ export interface KitchenTask {
   updatedAt?: string;
 }
 
-export type TaskStation = 
-  | 'hot_dish'
-  | 'cold_dish'
-  | 'soup'
-  | 'bar'
-  | 'dessert'
-  | 'general';
+export type TaskStation = 'hot_dish' | 'cold_dish' | 'soup' | 'bar' | 'dessert' | 'general';
 
-export type TaskPriority = 
-  | 'low'
-  | 'normal'
-  | 'high'
-  | 'urgent';
+export type TaskPriority = 'low' | 'normal' | 'high' | 'urgent';
 
-export type TaskStatus = 
-  | 'pending'
-  | 'preparing'
-  | 'ready'
-  | 'served'
-  | 'cancelled';
+export type TaskStatus = 'pending' | 'preparing' | 'ready' | 'served' | 'cancelled';
 
 export interface KitchenInventory {
   id: string;
@@ -158,20 +122,9 @@ export interface KitchenInventory {
   updatedAt?: string;
 }
 
-export type InventoryCategory = 
-  | 'vegetables'
-  | 'meat'
-  | 'seafood'
-  | 'dairy'
-  | 'dry_goods'
-  | 'spices'
-  | 'other';
+export type InventoryCategory = 'vegetables' | 'meat' | 'seafood' | 'dairy' | 'dry_goods' | 'spices' | 'other';
 
-export type InventoryStatus = 
-  | 'normal'
-  | 'low_stock'
-  | 'out_of_stock'
-  | 'expired';
+export type InventoryStatus = 'normal' | 'low_stock' | 'out_of_stock' | 'expired';
 
 export interface HygieneRecord {
   id: string;
@@ -192,11 +145,7 @@ export interface HygieneRecord {
   updatedAt?: string;
 }
 
-export type HygieneType = 
-  | 'daily'
-  | 'weekly'
-  | 'monthly'
-  | 'special';
+export type HygieneType = 'daily' | 'weekly' | 'monthly' | 'special';
 
 export interface HygieneCheckItem {
   id: string;
@@ -206,10 +155,7 @@ export interface HygieneCheckItem {
   notes?: string;
 }
 
-export type HygieneResult = 
-  | 'pass'
-  | 'fail'
-  | 'conditional';
+export type HygieneResult = 'pass' | 'fail' | 'conditional';
 
 export interface HygieneIssue {
   id: string;
@@ -239,24 +185,11 @@ export interface SafetyRecord {
   updatedAt?: string;
 }
 
-export type SafetyType = 
-  | 'fire'
-  | 'injury'
-  | 'equipment'
-  | 'food_poisoning'
-  | 'other';
+export type SafetyType = 'fire' | 'injury' | 'equipment' | 'food_poisoning' | 'other';
 
-export type SafetySeverity = 
-  | 'minor'
-  | 'moderate'
-  | 'severe'
-  | 'critical';
+export type SafetySeverity = 'minor' | 'moderate' | 'severe' | 'critical';
 
-export type SafetyStatus = 
-  | 'reported'
-  | 'investigating'
-  | 'resolved'
-  | 'closed';
+export type SafetyStatus = 'reported' | 'investigating' | 'resolved' | 'closed';
 
 export interface SafetyAction {
   id: string;

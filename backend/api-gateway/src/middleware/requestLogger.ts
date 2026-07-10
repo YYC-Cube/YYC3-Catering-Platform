@@ -81,12 +81,7 @@ function generateRequestId(): string {
  * 错误日志中间件
  * 记录应用程序错误
  */
-export const errorLogger = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void => {
+export const errorLogger = (err: Error, req: Request, res: Response, next: NextFunction): void => {
   const requestId = req.headers['x-request-id'] || 'unknown';
 
   logger.error('应用程序错误', {

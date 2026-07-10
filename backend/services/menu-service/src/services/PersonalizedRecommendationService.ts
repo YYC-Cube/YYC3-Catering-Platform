@@ -29,7 +29,7 @@ class PersonalizedRecommendationService {
   async getPersonalizedRecommendations(
     userId: string,
     limit: number = 10,
-    recommendationStrategy: 'collaborative' | 'content_based' | 'hybrid' = 'hybrid'
+    recommendationStrategy: 'collaborative' | 'content_based' | 'hybrid' = 'hybrid',
   ) {
     switch (recommendationStrategy) {
       case 'collaborative':
@@ -80,7 +80,7 @@ class PersonalizedRecommendationService {
       {
         replacements: { userId },
         type: sequelize.QueryTypes.SELECT,
-      }
+      },
     );
 
     if (similarUsers.length === 0) {
@@ -226,7 +226,7 @@ class PersonalizedRecommendationService {
   async saveUserInteraction(
     userId: string,
     menuItemId: number,
-    interactionType: 'click' | 'order' | 'view' | 'add_to_cart'
+    interactionType: 'click' | 'order' | 'view' | 'add_to_cart',
   ) {
     let recommendation = await Recommendation.findOne({
       where: {

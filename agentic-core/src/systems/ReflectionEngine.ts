@@ -90,7 +90,6 @@ export class ReflectionEngine extends EventEmitter {
 
       // 生成洞察
       await this.generateInsights();
-
     } catch (error) {
       console.error('Error analyzing execution:', error);
     }
@@ -112,7 +111,7 @@ export class ReflectionEngine extends EventEmitter {
       source: 'execution',
       confidence: 0.9,
       timestamp: Date.now(),
-      recommendations: ['继续使用当前策略', '考虑优化执行时间']
+      recommendations: ['继续使用当前策略', '考虑优化执行时间'],
     };
 
     this.insights.push(insight);
@@ -134,11 +133,7 @@ export class ReflectionEngine extends EventEmitter {
       source: 'execution',
       confidence: 0.95,
       timestamp: Date.now(),
-      recommendations: [
-        `检查参数配置`,
-        `验证上下文信息`,
-        `考虑替代方案`
-      ]
+      recommendations: [`检查参数配置`, `验证上下文信息`, `考虑替代方案`],
     };
 
     this.insights.push(insight);
@@ -156,7 +151,7 @@ export class ReflectionEngine extends EventEmitter {
         type,
         description: type === 'success' ? '成功执行模式' : '错误执行模式',
         frequency: 0,
-        examples: []
+        examples: [],
       };
     }
 
@@ -181,10 +176,7 @@ export class ReflectionEngine extends EventEmitter {
           source: 'pattern',
           confidence: 0.8,
           timestamp: Date.now(),
-          recommendations: [
-            `${pattern.type === 'success' ? '标准化' : '避免'}此模式`,
-            `分析根本原因`
-          ]
+          recommendations: [`${pattern.type === 'success' ? '标准化' : '避免'}此模式`, `分析根本原因`],
         };
 
         this.insights.push(insight);
@@ -210,7 +202,7 @@ export class ReflectionEngine extends EventEmitter {
     }
 
     this.learningHistory.push(example);
-    
+
     // 简单的学习逻辑
     // 可以根据需要扩展为更复杂的机器学习算法
     if (example.feedback && example.feedback < 0) {
@@ -222,7 +214,7 @@ export class ReflectionEngine extends EventEmitter {
         source: 'feedback',
         confidence: 0.85,
         timestamp: Date.now(),
-        recommendations: ['调整参数', '修改执行策略', '考虑替代方法']
+        recommendations: ['调整参数', '修改执行策略', '考虑替代方法'],
       };
 
       this.insights.push(insight);

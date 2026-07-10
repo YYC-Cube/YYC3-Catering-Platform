@@ -29,13 +29,13 @@ export class TagController {
       res.status(201).json({
         success: true,
         message: '标签创建成功',
-        data: tag
+        data: tag,
       });
     } catch (error: any) {
       logger.error('创建标签失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '创建标签失败'
+        message: error.message || '创建标签失败',
       });
     }
   }
@@ -53,7 +53,7 @@ export class TagController {
         isActive: isActive ? isActive === 'true' : undefined,
         keyword: keyword as string,
         page: Number(page),
-        limit: Number(limit)
+        limit: Number(limit),
       });
 
       res.status(200).json({
@@ -63,14 +63,14 @@ export class TagController {
           tags: result.tags,
           total: result.total,
           page: Number(page),
-          limit: Number(limit)
-        }
+          limit: Number(limit),
+        },
       });
     } catch (error: any) {
       logger.error('获取标签列表失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取标签列表失败'
+        message: error.message || '获取标签列表失败',
       });
     }
   }
@@ -88,7 +88,7 @@ export class TagController {
       if (!tag) {
         res.status(404).json({
           success: false,
-          message: '标签不存在'
+          message: '标签不存在',
         });
         return;
       }
@@ -96,13 +96,13 @@ export class TagController {
       res.status(200).json({
         success: true,
         message: '获取标签详情成功',
-        data: tag
+        data: tag,
       });
     } catch (error: any) {
       logger.error('获取标签详情失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取标签详情失败'
+        message: error.message || '获取标签详情失败',
       });
     }
   }
@@ -120,7 +120,7 @@ export class TagController {
       if (!tag) {
         res.status(404).json({
           success: false,
-          message: '标签不存在'
+          message: '标签不存在',
         });
         return;
       }
@@ -128,13 +128,13 @@ export class TagController {
       res.status(200).json({
         success: true,
         message: '标签更新成功',
-        data: tag
+        data: tag,
       });
     } catch (error: any) {
       logger.error('更新标签失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '更新标签失败'
+        message: error.message || '更新标签失败',
       });
     }
   }
@@ -152,20 +152,20 @@ export class TagController {
       if (!success) {
         res.status(404).json({
           success: false,
-          message: '标签不存在'
+          message: '标签不存在',
         });
         return;
       }
 
       res.status(200).json({
         success: true,
-        message: '标签删除成功'
+        message: '标签删除成功',
       });
     } catch (error: any) {
       logger.error('删除标签失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '删除标签失败'
+        message: error.message || '删除标签失败',
       });
     }
   }
@@ -184,7 +184,7 @@ export class TagController {
       if (!tag) {
         res.status(404).json({
           success: false,
-          message: '标签不存在'
+          message: '标签不存在',
         });
         return;
       }
@@ -192,13 +192,13 @@ export class TagController {
       res.status(200).json({
         success: true,
         message: '标签状态更新成功',
-        data: tag
+        data: tag,
       });
     } catch (error: any) {
       logger.error('更新标签状态失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '更新标签状态失败'
+        message: error.message || '更新标签状态失败',
       });
     }
   }
@@ -216,13 +216,13 @@ export class TagController {
       res.status(200).json({
         success: true,
         message: '批量更新标签排序成功',
-        data: { updatedCount }
+        data: { updatedCount },
       });
     } catch (error: any) {
       logger.error('批量更新标签排序失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '批量更新标签排序失败'
+        message: error.message || '批量更新标签排序失败',
       });
     }
   }
@@ -238,13 +238,13 @@ export class TagController {
       res.status(200).json({
         success: true,
         message: '获取激活标签成功',
-        data: tags
+        data: tags,
       });
     } catch (error: any) {
       logger.error('获取激活标签失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '获取激活标签失败'
+        message: error.message || '获取激活标签失败',
       });
     }
   }
@@ -261,13 +261,13 @@ export class TagController {
       res.status(200).json({
         success: true,
         message: `获取标签类型 ${tagType} 成功`,
-        data: tags
+        data: tags,
       });
     } catch (error: any) {
       logger.error('根据标签类型获取标签失败:', error);
       res.status(500).json({
         success: false,
-        message: error.message || '根据标签类型获取标签失败'
+        message: error.message || '根据标签类型获取标签失败',
       });
     }
   }

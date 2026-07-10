@@ -69,12 +69,12 @@ export class SampleController {
     try {
       // 验证请求参数
       const validatedData = createSampleRequestSchema.parse(req.body);
-      
+
       // 调用服务层创建示例
       const sample = await sampleService.createSample(validatedData);
-      
+
       logger.info('Sample created successfully:', { id: sample.id, name: sample.name });
-      
+
       // 返回成功响应
       return successResponse(res, sample, '示例创建成功', 201);
     } catch (error) {
@@ -82,7 +82,7 @@ export class SampleController {
       throw error;
     }
   }
-  
+
   /**
    * 获取示例列表
    * @param req 请求对象
@@ -92,27 +92,20 @@ export class SampleController {
     try {
       // 验证查询参数
       const validatedQuery = getSampleListQuerySchema.parse(req.query);
-      
+
       // 调用服务层获取示例列表
       const { samples, total } = await sampleService.getSampleList(validatedQuery);
-      
+
       logger.info('Sample list retrieved successfully:', { count: samples.length, total });
-      
+
       // 返回分页响应
-      return paginationResponse(
-        res,
-        samples,
-        validatedQuery.page,
-        validatedQuery.limit,
-        total,
-        '示例列表获取成功',
-      );
+      return paginationResponse(res, samples, validatedQuery.page, validatedQuery.limit, total, '示例列表获取成功');
     } catch (error) {
       // 重新抛出错误，由全局错误处理器处理
       throw error;
     }
   }
-  
+
   /**
    * 获取示例详情
    * @param req 请求对象
@@ -122,16 +115,16 @@ export class SampleController {
     try {
       // 验证路径参数
       const { id } = sampleIdParamsSchema.parse(req.params);
-      
+
       // 调用服务层获取示例详情
       const sample = await sampleService.getSampleById(id);
-      
+
       if (!sample) {
         throw new ResourceNotFoundException(`示例ID ${id} 不存在`);
       }
-      
+
       logger.info('Sample retrieved successfully:', { id: sample.id, name: sample.name });
-      
+
       // 返回成功响应
       return successResponse(res, sample, '示例详情获取成功');
     } catch (error) {
@@ -139,7 +132,7 @@ export class SampleController {
       throw error;
     }
   }
-  
+
   /**
    * 更新示例
    * @param req 请求对象
@@ -149,19 +142,19 @@ export class SampleController {
     try {
       // 验证路径参数
       const { id } = sampleIdParamsSchema.parse(req.params);
-      
+
       // 验证请求体
       const validatedData = updateSampleRequestSchema.parse(req.body);
-      
+
       // 调用服务层更新示例
       const updatedSample = await sampleService.updateSample(id, validatedData);
-      
+
       if (!updatedSample) {
         throw new ResourceNotFoundException(`示例ID ${id} 不存在`);
       }
-      
+
       logger.info('Sample updated successfully:', { id: updatedSample.id, name: updatedSample.name });
-      
+
       // 返回成功响应
       return successResponse(res, updatedSample, '示例更新成功');
     } catch (error) {
@@ -169,7 +162,7 @@ export class SampleController {
       throw error;
     }
   }
-  
+
   /**
    * 删除示例
    * @param req 请求对象
@@ -179,16 +172,16 @@ export class SampleController {
     try {
       // 验证路径参数
       const { id } = sampleIdParamsSchema.parse(req.params);
-      
+
       // 调用服务层删除示例
       const deletedSample = await sampleService.deleteSample(id);
-      
+
       if (!deletedSample) {
         throw new ResourceNotFoundException(`示例ID ${id} 不存在`);
       }
-      
+
       logger.info('Sample deleted successfully:', { id: deletedSample.id, name: deletedSample.name });
-      
+
       // 返回成功响应
       return successResponse(res, null, '示例删除成功');
     } catch (error) {
@@ -196,7 +189,7 @@ export class SampleController {
       throw error;
     }
   }
-  
+
   /**
    * 批量删除示例
    * @param req 请求对象
@@ -205,15 +198,17 @@ export class SampleController {
   public async batchDeleteSamples(req: Request, res: Response): Promise<Response> {
     try {
       // 验证请求体
-      const { ids } = z.object({
-        ids: z.array(z.string().uuid('无效的示例ID')).min(1, '至少需要一个示例ID'),
-      }).parse(req.body);
-      
+      const { ids } = z
+        .object({
+          ids: z.array(z.string().uuid('无效的示例ID')).min(1, '至少需要一个示例ID'),
+        })
+        .parse(req.body);
+
       // 调用服务层批量删除示例
       const result = await sampleService.batchDeleteSamples(ids);
-      
+
       logger.info('Samples deleted successfully:', { count: result.deletedCount, ids });
-      
+
       // 返回成功响应
       return successResponse(res, result, `成功删除 ${result.deletedCount} 个示例`);
     } catch (error) {

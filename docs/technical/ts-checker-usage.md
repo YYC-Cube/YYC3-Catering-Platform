@@ -26,6 +26,7 @@
 ```
 
 **示例**：
+
 ```bash
 # 检查单个文件
 ./ts-checker.js tests/api/menu.test.ts
@@ -41,6 +42,7 @@
 ```
 
 这个命令会自动修复：
+
 - 为所有子项目添加`composite: true`设置
 - 移除或调整`noEmit: true`设置，确保TypeScript可以正常工作
 
@@ -71,6 +73,7 @@
 4. 检查并修复tsconfig.node.json
 
 主要修复内容包括：
+
 - 为所有子项目添加`composite: true`
 - 移除或调整`noEmit: true`设置
 - 确保项目引用配置正确

@@ -19,22 +19,21 @@ import routes from './routes/index.js';
 // 创建Winston日志记录器
 const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   defaultMeta: { service: 'ai-assistant' },
   transports: [
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
 });
 
 // 开发环境下输出到控制台
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
+  logger.add(
+    new winston.transports.Console({
+      format: winston.format.simple(),
+    }),
+  );
 }
 
 // 创建Express应用
@@ -51,7 +50,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     service: 'ai-assistant',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -63,7 +62,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
   logger.error('Error occurred:', { error: err.message, stack: err.stack });
   res.status(500).json({
     error: 'Internal Server Error',
-    message: 'An unexpected error occurred'
+    message: 'An unexpected error occurred',
   });
 });
 
@@ -71,7 +70,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 app.use('*', (req: express.Request, res: express.Response) => {
   res.status(404).json({
     error: 'Not Found',
-    message: `Route ${req.originalUrl} not found`
+    message: `Route ${req.originalUrl} not found`,
   });
 });
 
@@ -87,7 +86,7 @@ app.listen(PORT, HOST, () => {
     host: HOST,
     port: PORT,
     nodeVersion: process.version,
-    platform: process.platform
+    platform: process.platform,
   });
 });
 

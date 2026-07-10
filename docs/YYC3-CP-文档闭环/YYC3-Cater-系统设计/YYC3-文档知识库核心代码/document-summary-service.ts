@@ -102,10 +102,7 @@ class DocumentSummaryService {
    * @param config 摘要配置
    * @returns 摘要结果
    */
-  async generateSummary(
-    documentId: string,
-    config: Partial<SummaryConfig> = {}
-  ): Promise<SummaryResult> {
+  async generateSummary(documentId: string, config: Partial<SummaryConfig> = {}): Promise<SummaryResult> {
     const startTime = Date.now();
 
     try {
@@ -138,14 +135,10 @@ class DocumentSummaryService {
       }
 
       // 提取关键词
-      const keywords = finalConfig.includeKeywords
-        ? this.extractKeywords(document.content)
-        : [];
+      const keywords = finalConfig.includeKeywords ? this.extractKeywords(document.content) : [];
 
       // 提取关键点
-      const keyPoints = finalConfig.includeKeyPoints
-        ? this.extractKeyPoints(document.content)
-        : [];
+      const keyPoints = finalConfig.includeKeyPoints ? this.extractKeyPoints(document.content) : [];
 
       // 计算压缩率
       const originalLength = document.content.length;
@@ -185,10 +178,7 @@ class DocumentSummaryService {
    * @param config 摘要配置
    * @returns 摘要结果列表
    */
-  async generateBatchSummary(
-    documentIds: string[],
-    config: Partial<SummaryConfig> = {}
-  ): Promise<SummaryResult[]> {
+  async generateBatchSummary(documentIds: string[], config: Partial<SummaryConfig> = {}): Promise<SummaryResult[]> {
     const results: SummaryResult[] = [];
 
     for (const documentId of documentIds) {
@@ -209,10 +199,7 @@ class DocumentSummaryService {
    * @param config 摘要配置
    * @returns 摘要文本
    */
-  private async extractiveSummary(
-    content: string,
-    config: SummaryConfig
-  ): Promise<string> {
+  private async extractiveSummary(content: string, config: SummaryConfig): Promise<string> {
     // 分句
     const sentences = this.splitIntoSentences(content);
 
@@ -248,9 +235,7 @@ class DocumentSummaryService {
     }
 
     // 选择前N个句子
-    const selectedSentences = scoredSentences
-      .slice(0, sentenceCount)
-      .map((s) => s.sentence);
+    const selectedSentences = scoredSentences.slice(0, sentenceCount).map(s => s.sentence);
 
     // 按原文顺序排序
     const sortedSentences = selectedSentences.sort((a, b) => {
@@ -276,10 +261,7 @@ class DocumentSummaryService {
    * @param config 摘要配置
    * @returns 摘要文本
    */
-  private async abstractiveSummary(
-    content: string,
-    config: SummaryConfig
-  ): Promise<string> {
+  private async abstractiveSummary(content: string, config: SummaryConfig): Promise<string> {
     // 构建提示词
     const prompt = this.buildAbstractivePrompt(content, config);
 
@@ -295,10 +277,7 @@ class DocumentSummaryService {
    * @param config 摘要配置
    * @returns 摘要文本
    */
-  private async hybridSummary(
-    content: string,
-    config: SummaryConfig
-  ): Promise<string> {
+  private async hybridSummary(content: string, config: SummaryConfig): Promise<string> {
     // 先进行抽取式摘要
     const extractiveSummary = await this.extractiveSummary(content, config);
 
@@ -357,7 +336,7 @@ class DocumentSummaryService {
       // 由于这是一个示例，我们使用模拟实现
 
       // 模拟LLM调用延迟
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       // 模拟生成结果
       const result = this.generateMockLLMResult(prompt);
@@ -413,12 +392,7 @@ YYC³文档知识库系统是一个综合性文档管理平台，集成了文档
    * @param totalSentences 总句子数
    * @returns 分数
    */
-  private calculateSentenceScore(
-    sentence: string,
-    content: string,
-    index: number,
-    totalSentences: number
-  ): number {
+  private calculateSentenceScore(sentence: string, content: string, index: number, totalSentences: number): number {
     let score = 0;
 
     // 1. 句子长度分数（适中长度得分更高）
@@ -439,7 +413,7 @@ YYC³文档知识库系统是一个综合性文档管理平台，集成了文档
 
     // 3. 关键词分数（包含关键词的句子得分更高）
     const keywords = this.extractKeywords(content);
-    const keywordCount = keywords.filter((keyword) => sentence.includes(keyword)).length;
+    const keywordCount = keywords.filter(keyword => sentence.includes(keyword)).length;
     score += Math.min(keywordCount * 0.1, 0.3);
 
     // 4. 数字和特殊字符分数（包含数字和特殊字符的句子得分更高）
@@ -458,9 +432,35 @@ YYC³文档知识库系统是一个综合性文档管理平台，集成了文档
   private extractKeywords(content: string): string[] {
     const keywords: string[] = [];
     const stopWords = new Set([
-      '的', '是', '在', '和', '了', '有', '我', '你', '他', '她', '它',
-      '我们', '你们', '他们', '这', '那', '这个', '那个', '一个', '一些',
-      'the', 'is', 'at', 'which', 'on', 'and', 'a', 'an', 'in',
+      '的',
+      '是',
+      '在',
+      '和',
+      '了',
+      '有',
+      '我',
+      '你',
+      '他',
+      '她',
+      '它',
+      '我们',
+      '你们',
+      '他们',
+      '这',
+      '那',
+      '这个',
+      '那个',
+      '一个',
+      '一些',
+      'the',
+      'is',
+      'at',
+      'which',
+      'on',
+      'and',
+      'a',
+      'an',
+      'in',
     ]);
 
     // 简化的关键词提取
@@ -479,7 +479,7 @@ YYC³文档知识库系统是一个综合性文档管理平台，集成了文档
     const sortedWords = Array.from(wordFrequency.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, 10)
-      .map((entry) => entry[0]);
+      .map(entry => entry[0]);
 
     return sortedWords;
   }
@@ -523,8 +523,8 @@ YYC³文档知识库系统是一个综合性文档管理平台，集成了文档
 
     return content
       .split(/[。！？\n]/)
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0);
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
   }
 
   /**
@@ -538,7 +538,7 @@ YYC³文档知识库系统是一个综合性文档管理平台，集成了文档
     // 实际应用中应该使用更复杂的算法
 
     const keywords = this.extractKeywords(content);
-    const keywordCount = keywords.filter((keyword) => summary.includes(keyword)).length;
+    const keywordCount = keywords.filter(keyword => summary.includes(keyword)).length;
 
     const confidence = Math.min(keywordCount / keywords.length, 1.0);
 

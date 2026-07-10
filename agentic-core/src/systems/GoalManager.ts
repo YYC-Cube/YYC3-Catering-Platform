@@ -69,10 +69,7 @@ export class GoalManager extends EventEmitter {
   /**
    * 初始化目标管理器
    */
-  async initialize(config?: {
-    autoEvaluation?: boolean;
-    evaluationIntervalMs?: number;
-  }): Promise<void> {
+  async initialize(config?: { autoEvaluation?: boolean; evaluationIntervalMs?: number }): Promise<void> {
     this.autoEvaluation = config?.autoEvaluation ?? true;
 
     if (this.autoEvaluation) {
@@ -82,7 +79,7 @@ export class GoalManager extends EventEmitter {
 
     this.logger.info('GoalManager initialized', {
       autoEvaluation: this.autoEvaluation,
-      evaluationIntervalMs: config?.evaluationIntervalMs
+      evaluationIntervalMs: config?.evaluationIntervalMs,
     });
   }
 
@@ -101,18 +98,18 @@ export class GoalManager extends EventEmitter {
         progress: 0,
         completedSteps: 0,
         totalSteps: 1,
-        lastUpdated: new Date()
+        lastUpdated: new Date(),
       },
       successCriteria: config.successCriteria || [],
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     // 构建goal对象，只添加存在的可选属性
     const goal: Goal = {
       ...goalBase,
       ...(config.dependencies ? { dependencies: config.dependencies } : {}),
-      ...(config.context ? { context: config.context } : {})
+      ...(config.context ? { context: config.context } : {}),
     };
 
     // 仅当config.deadline存在时才设置deadline属性
@@ -137,7 +134,7 @@ export class GoalManager extends EventEmitter {
       progress: 0,
       status: GoalStatus.PENDING,
       lastUpdated: new Date(),
-      metrics: {}
+      metrics: {},
     });
 
     // 记录操作历史
@@ -158,7 +155,7 @@ export class GoalManager extends EventEmitter {
     goalId: string,
     status: GoalStatus,
     feedback?: string,
-    metrics?: Record<string, number>
+    metrics?: Record<string, number>,
   ): Promise<void> {
     const goal = this.activeGoals.get(goalId);
     if (!goal) {
@@ -190,21 +187,21 @@ export class GoalManager extends EventEmitter {
       previousStatus,
       newStatus: status,
       feedback,
-      metrics
+      metrics,
     });
 
     // 发送事件
     this.emit('goalStatusChanged', {
       goal,
       previousStatus,
-      newStatus: status
+      newStatus: status,
     });
 
     this.logger.info('Goal status updated', {
       goalId,
       previousStatus,
       newStatus: status,
-      progress: goal.progress
+      progress: goal.progress,
     });
 
     // 如果目标完成，自动评估
@@ -216,10 +213,7 @@ export class GoalManager extends EventEmitter {
   /**
    * 更新目标进度
    */
-  async updateGoalProgress(
-    goalId: string,
-    metrics: Record<string, number>
-  ): Promise<void> {
+  async updateGoalProgress(goalId: string, metrics: Record<string, number>): Promise<void> {
     const goal = this.activeGoals.get(goalId);
     if (!goal) {
       throw new Error(`Goal not found: ${goalId}`);
@@ -237,25 +231,25 @@ export class GoalManager extends EventEmitter {
       goal.updatedAt = new Date();
 
       // 记录操作历史
-    this.recordHistory(goalId, 'progress_updated', {
-      previousProgress: goal.progress,
-      newProgress: newProgressValue,
-      metrics
-    });
+      this.recordHistory(goalId, 'progress_updated', {
+        previousProgress: goal.progress,
+        newProgress: newProgressValue,
+        metrics,
+      });
 
-    // 发送进度更新事件
-    this.emit('goalProgressUpdated', {
-      goalId,
-      previousProgress: goal.progress,
-      newProgress: newProgressValue,
-      metrics
-    });
+      // 发送进度更新事件
+      this.emit('goalProgressUpdated', {
+        goalId,
+        previousProgress: goal.progress,
+        newProgress: newProgressValue,
+        metrics,
+      });
 
-    this.logger.debug('Goal progress updated', {
-      goalId,
-      newProgress: newProgressValue,
-      metrics
-    });
+      this.logger.debug('Goal progress updated', {
+        goalId,
+        newProgress: newProgressValue,
+        metrics,
+      });
     }
   }
 
@@ -264,7 +258,7 @@ export class GoalManager extends EventEmitter {
    */
   getActiveGoals(): Goal[] {
     return Array.from(this.activeGoals.values()).filter(
-      goal => goal.status !== GoalStatus.COMPLETED && goal.status !== GoalStatus.FAILED
+      goal => goal.status !== GoalStatus.COMPLETED && goal.status !== GoalStatus.FAILED,
     );
   }
 
@@ -320,7 +314,7 @@ export class GoalManager extends EventEmitter {
     this.logger.info('Goal evaluated', {
       goalId,
       evaluation: evaluation.evaluation,
-      score: evaluation.score
+      score: evaluation.score,
     });
 
     return evaluation;
@@ -339,7 +333,7 @@ export class GoalManager extends EventEmitter {
       } catch (error) {
         this.logger.error('Failed to evaluate goal', {
           goalId: goal.id,
-          error: error instanceof Error ? error.message : String(error)
+          error: error instanceof Error ? error.message : String(error),
         });
       }
     }
@@ -399,14 +393,14 @@ export class GoalManager extends EventEmitter {
       [GoalStatus.PAUSED]: 0,
       [GoalStatus.COMPLETED]: 0,
       [GoalStatus.FAILED]: 0,
-      [GoalStatus.CANCELLED]: 0
+      [GoalStatus.CANCELLED]: 0,
     };
 
     const byType: Record<GoalType, number> = {
       [GoalType.PRIMARY]: 0,
       [GoalType.SECONDARY]: 0,
       [GoalType.TERTIARY]: 0,
-      [GoalType.URGENT]: 0
+      [GoalType.URGENT]: 0,
     };
 
     let totalProgress = 0;
@@ -419,8 +413,11 @@ export class GoalManager extends EventEmitter {
 
       totalProgress += goal.progress.progress;
 
-      if (goal.deadline && goal.deadline < now &&
-          ![GoalStatus.COMPLETED, GoalStatus.FAILED, GoalStatus.CANCELLED].includes(goal.status)) {
+      if (
+        goal.deadline &&
+        goal.deadline < now &&
+        ![GoalStatus.COMPLETED, GoalStatus.FAILED, GoalStatus.CANCELLED].includes(goal.status)
+      ) {
         overdueCount++;
       }
     }
@@ -430,7 +427,7 @@ export class GoalManager extends EventEmitter {
       byStatus,
       byType,
       averageProgress: goals.length > 0 ? totalProgress / goals.length : 0,
-      overdueCount
+      overdueCount,
     };
   }
 
@@ -442,11 +439,9 @@ export class GoalManager extends EventEmitter {
     let cleanedCount = 0;
 
     for (const [goalId, goal] of this.activeGoals.entries()) {
-      const isCompletedOrFailed =
-        [GoalStatus.COMPLETED, GoalStatus.FAILED, GoalStatus.CANCELLED].includes(goal.status);
+      const isCompletedOrFailed = [GoalStatus.COMPLETED, GoalStatus.FAILED, GoalStatus.CANCELLED].includes(goal.status);
 
-      const isOldEnough = goal.updatedAt &&
-        (now.getTime() - goal.updatedAt.getTime()) > maxAge;
+      const isOldEnough = goal.updatedAt && now.getTime() - goal.updatedAt.getTime() > maxAge;
 
       if (isCompletedOrFailed && isOldEnough) {
         this.activeGoals.delete(goalId);
@@ -548,10 +543,7 @@ export class GoalManager extends EventEmitter {
     return totalCriteria > 0 ? (completedCriteria / totalCriteria) * 100 : 0;
   }
 
-  private async performGoalEvaluation(
-    goal: Goal,
-    progress: GoalProgress
-  ): Promise<GoalEvaluation> {
+  private async performGoalEvaluation(goal: Goal, progress: GoalProgress): Promise<GoalEvaluation> {
     const completedCriteria: string[] = [];
     const failedCriteria: string[] = [];
 
@@ -620,18 +612,13 @@ export class GoalManager extends EventEmitter {
       details: {
         completedCriteria,
         failedCriteria,
-        overallAssessment
+        overallAssessment,
       },
-      recommendations: this.generateRecommendations(evaluation, failedCriteria, goal)
+      recommendations: this.generateRecommendations(evaluation, failedCriteria, goal),
     };
   }
 
-  private generateAssessment(
-    evaluation: string,
-    score: number,
-    goal: Goal,
-    progress: GoalProgress
-  ): string {
+  private generateAssessment(evaluation: string, score: number, goal: Goal, progress: GoalProgress): string {
     if (evaluation === 'achieved') {
       return `目标 ${goal.name} 已成功完成，得分: ${score.toFixed(2)}`;
     } else if (evaluation === 'failed') {
@@ -641,11 +628,7 @@ export class GoalManager extends EventEmitter {
     }
   }
 
-  private generateRecommendations(
-    evaluation: string,
-    failedCriteria: string[],
-    goal: Goal
-  ): string[] {
+  private generateRecommendations(evaluation: string, failedCriteria: string[], goal: Goal): string[] {
     const recommendations: string[] = [];
 
     if (failedCriteria.length > 0) {
@@ -672,7 +655,7 @@ export class GoalManager extends EventEmitter {
       goalId,
       action,
       timestamp: new Date(),
-      data
+      data,
     });
   }
 

@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ 日志分析与问题定位技巧
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
+| 属性         | 内容                        |
+| ------------ | --------------------------- |
 | **文档标题** | YYC³ 日志分析与问题定位技巧 |
-| **文档类型** | 技巧类文档 |
-| **所属阶段** | 运维运营 |
-| **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **文档类型** | 技巧类文档                  |
+| **所属阶段** | 运维运营                    |
+| **遵循规范** | YYC³ 团队标准化规范 v1.0.0  |
+| **版本号**   | v1.0.0                      |
+| **创建日期** | 2025-01-30                  |
+| **作者**     | YYC³ Team                   |
+| **更新日期** | 2025-01-30                  |
 
 ---
 
@@ -310,56 +311,52 @@ YYC³ 日志体系基于 ELK Stack (Elasticsearch + Logstash + Kibana) + Fluentd
 
 ```typescript
 // === log-analyzer.ts ===
-import { Client } from '@elastic/elasticsearch';
+import { Client } from "@elastic/elasticsearch";
 
 export class LogAnalyzer {
   private client: Client;
 
   constructor() {
     this.client = new Client({
-      node: process.env.ELASTICSEARCH_URL || 'http://localhost:9200'
+      node: process.env.ELASTICSEARCH_URL || "http://localhost:9200",
     });
   }
 
   /**
    * 分析错误日志趋势
    */
-  async analyzeErrorTrend(timeRange: string = 'now-24h'): Promise<any> {
+  async analyzeErrorTrend(timeRange: string = "now-24h"): Promise<any> {
     const result = await this.client.search({
-      index: 'yyc3-*-logs-*',
+      index: "yyc3-*-logs-*",
       body: {
         size: 0,
         query: {
           bool: {
-            must: [
-              { match: { level: 'ERROR' } }
-            ],
-            filter: [
-              { range: { '@timestamp': { gte: timeRange } } }
-            ]
-          }
+            must: [{ match: { level: "ERROR" } }],
+            filter: [{ range: { "@timestamp": { gte: timeRange } } }],
+          },
         },
         aggs: {
           error_over_time: {
             date_histogram: {
-              field: '@timestamp',
-              calendar_interval: '1h'
-            }
+              field: "@timestamp",
+              calendar_interval: "1h",
+            },
           },
           top_errors: {
             terms: {
-              field: 'message.keyword',
-              size: 10
-            }
+              field: "message.keyword",
+              size: 10,
+            },
           },
           by_service: {
             terms: {
-              field: 'service',
-              size: 20
-            }
-          }
-        }
-      }
+              field: "service",
+              size: 20,
+            },
+          },
+        },
+      },
     });
 
     return result.aggregations;
@@ -368,47 +365,43 @@ export class LogAnalyzer {
   /**
    * 分析慢请求
    */
-  async analyzeSlowRequests(threshold: number = 1000, timeRange: string = 'now-24h'): Promise<any> {
+  async analyzeSlowRequests(threshold: number = 1000, timeRange: string = "now-24h"): Promise<any> {
     const result = await this.client.search({
-      index: 'yyc3-*-logs-*',
+      index: "yyc3-*-logs-*",
       body: {
         size: 0,
         query: {
           bool: {
-            must: [
-              { range: { duration: { gte: threshold } } }
-            ],
-            filter: [
-              { range: { '@timestamp': { gte: timeRange } } }
-            ]
-          }
+            must: [{ range: { duration: { gte: threshold } } }],
+            filter: [{ range: { "@timestamp": { gte: timeRange } } }],
+          },
         },
         aggs: {
           slow_requests_over_time: {
             date_histogram: {
-              field: '@timestamp',
-              calendar_interval: '1h'
-            }
+              field: "@timestamp",
+              calendar_interval: "1h",
+            },
           },
           by_path: {
             terms: {
-              field: 'path',
-              size: 20
-            }
+              field: "path",
+              size: 20,
+            },
           },
           by_method: {
             terms: {
-              field: 'method',
-              size: 10
-            }
+              field: "method",
+              size: 10,
+            },
           },
           avg_duration: {
             avg: {
-              field: 'duration'
-            }
-          }
-        }
-      }
+              field: "duration",
+            },
+          },
+        },
+      },
     });
 
     return result.aggregations;
@@ -417,25 +410,19 @@ export class LogAnalyzer {
   /**
    * 分析用户行为
    */
-  async analyzeUserBehavior(userId: string, timeRange: string = 'now-7d'): Promise<any> {
+  async analyzeUserBehavior(userId: string, timeRange: string = "now-7d"): Promise<any> {
     const result = await this.client.search({
-      index: 'yyc3-*-logs-*',
+      index: "yyc3-*-logs-*",
       body: {
         size: 100,
         query: {
           bool: {
-            must: [
-              { term: { user_id: userId } }
-            ],
-            filter: [
-              { range: { '@timestamp': { gte: timeRange } } }
-            ]
-          }
+            must: [{ term: { user_id: userId } }],
+            filter: [{ range: { "@timestamp": { gte: timeRange } } }],
+          },
         },
-        sort: [
-          { '@timestamp': { order: 'desc' } }
-        ]
-      }
+        sort: [{ "@timestamp": { order: "desc" } }],
+      },
     });
 
     return result.hits.hits;
@@ -455,26 +442,31 @@ export class LogAnalyzer {
 ## 问题定位流程
 
 ### 1. 问题确认
+
 - 确认问题现象
 - 确认问题范围
 - 确认问题影响
 
 ### 2. 日志收集
+
 - 收集相关日志
 - 收集系统日志
 - 收集应用日志
 
 ### 3. 日志分析
+
 - 分析错误日志
 - 分析慢请求日志
 - 分析业务日志
 
 ### 4. 问题定位
+
 - 定位问题时间
 - 定位问题位置
 - 定位问题原因
 
 ### 5. 问题验证
+
 - 验证问题定位
 - 验证问题原因
 - 验证解决方案
@@ -674,39 +666,39 @@ groups:
 
 ```typescript
 // === logger.ts ===
-import winston from 'winston';
+import winston from "winston";
 
 const logFormat = winston.format.combine(
-  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.errors({ stack: true }),
   winston.format.splat(),
   winston.format.json()
 );
 
 export const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
+  level: process.env.LOG_LEVEL || "info",
   format: logFormat,
   defaultMeta: {
-    service: 'yyc3-cater',
-    environment: process.env.NODE_ENV || 'production'
+    service: "yyc3-cater",
+    environment: process.env.NODE_ENV || "production",
   },
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 日志使用示例
-logger.info('User logged in', {
-  user_id: 'user-123',
-  ip: '192.168.1.1',
-  timestamp: new Date().toISOString()
+logger.info("User logged in", {
+  user_id: "user-123",
+  ip: "192.168.1.1",
+  timestamp: new Date().toISOString(),
 });
 
-logger.error('Database connection failed', {
+logger.error("Database connection failed", {
   error: error.message,
   stack: error.stack,
-  database: 'yyc3-db'
+  database: "yyc3-db",
 });
 ```
 
@@ -726,7 +718,7 @@ for log_file in "$LOG_DIR"/*.log; do
     if [ -f "$log_file" ]; then
         # 压缩旧日志
         find "$LOG_DIR" -name "*.log" -mtime +1 -exec gzip {} \;
-        
+
         # 删除过期日志
         find "$LOG_DIR" -name "*.log.gz" -mtime +$RETENTION_DAYS -delete
     fi
@@ -747,6 +739,7 @@ echo "Log rotation completed"
 ## 常见问题排查清单
 
 ### 1. 服务不可用
+
 - [ ] 检查服务状态
 - [ ] 检查端口监听
 - [ ] 检查进程状态
@@ -754,6 +747,7 @@ echo "Log rotation completed"
 - [ ] 检查资源使用
 
 ### 2. 性能下降
+
 - [ ] 检查慢请求日志
 - [ ] 检查数据库查询
 - [ ] 检查缓存命中率
@@ -761,6 +755,7 @@ echo "Log rotation completed"
 - [ ] 检查网络延迟
 
 ### 3. 错误增加
+
 - [ ] 检查错误日志
 - [ ] 检查错误类型
 - [ ] 检查错误频率
@@ -768,6 +763,7 @@ echo "Log rotation completed"
 - [ ] 检查相关变更
 
 ### 4. 数据异常
+
 - [ ] 检查数据日志
 - [ ] 检查数据库日志
 - [ ] 检查数据一致性
@@ -779,13 +775,10 @@ echo "Log rotation completed"
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -806,8 +799,6 @@ echo "Log rotation completed"
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -836,8 +827,6 @@ echo "Log rotation completed"
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -875,7 +864,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -891,8 +880,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -905,7 +892,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -920,9 +907,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -930,9 +917,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -940,20 +930,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -962,6 +950,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -977,17 +966,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -995,6 +985,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1005,6 +996,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1013,8 +1005,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1022,21 +1012,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1045,10 +1037,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1074,16 +1063,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1092,26 +1081,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1127,7 +1111,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1159,14 +1143,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1177,17 +1159,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1197,17 +1182,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1217,21 +1205,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

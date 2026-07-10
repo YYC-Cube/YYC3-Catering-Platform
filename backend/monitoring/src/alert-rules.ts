@@ -224,7 +224,7 @@ export function generateAlertRulesYaml(): string {
       yaml += `        for: ${rule.for}\n`;
       yaml += `        labels:\n`;
       yaml += `          severity: ${rule.severity}\n`;
-      
+
       if (rule.labels) {
         for (const [key, value] of Object.entries(rule.labels)) {
           yaml += `          ${key}: ${value}\n`;
@@ -260,7 +260,7 @@ export async function exportAlertRulesToFile(filePath: string): Promise<void> {
  */
 export function findAlertRule(name: string): AlertRule | undefined {
   for (const group of alertRules) {
-    const rule = group.rules.find((r) => r.name === name);
+    const rule = group.rules.find(r => r.name === name);
     if (rule) {
       return rule;
     }

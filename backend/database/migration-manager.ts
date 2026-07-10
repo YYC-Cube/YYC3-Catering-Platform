@@ -72,7 +72,8 @@ export class MigrationManager {
    * 获取所有迁移文件
    */
   async getMigrations(): Promise<Migration[]> {
-    const files = fs.readdirSync(this.migrationsDir)
+    const files = fs
+      .readdirSync(this.migrationsDir)
       .filter(file => file.endsWith('.sql'))
       .sort();
 
@@ -81,13 +82,13 @@ export class MigrationManager {
     for (const file of files) {
       const filePath = path.join(this.migrationsDir, file);
       const content = fs.readFileSync(filePath, 'utf-8');
-      
+
       // 提取版本号和名称
       const match = file.match(/^(\d+)_(.+)\.sql$/);
       if (match) {
         const version = match[1];
         const name = match[2].replace(/-/g, ' ');
-        
+
         migrations.push({
           version,
           name,
@@ -139,10 +140,13 @@ export class MigrationManager {
       await client.query(migration.up);
 
       // 记录迁移
-      await client.query(`
+      await client.query(
+        `
         INSERT INTO ${MIGRATIONS_TABLE} (version, name)
         VALUES ($1, $2)
-      `, [migration.version, migration.name]);
+      `,
+        [migration.version, migration.name],
+      );
 
       await client.query('COMMIT');
       console.log(`✓ 迁移执行成功: ${migration.version}_${migration.name}`);
@@ -160,7 +164,7 @@ export class MigrationManager {
    */
   async migrate(): Promise<void> {
     console.log('开始执行数据库迁移...');
-    
+
     await this.init();
     const pendingMigrations = await this.getPendingMigrations();
 
@@ -208,10 +212,13 @@ export class MigrationManager {
       }
 
       // 删除迁移记录
-      await client.query(`
+      await client.query(
+        `
         DELETE FROM ${MIGRATIONS_TABLE} 
         WHERE version = $1
-      `, [targetVersion]);
+      `,
+        [targetVersion],
+      );
 
       await client.query('COMMIT');
       console.log(`✓ 迁移回滚成功: ${targetVersion}`);
@@ -305,7 +312,7 @@ END $$;
  */
 export async function createMigrationManager(): Promise<MigrationManager> {
   const { Pool } = await import('pg');
-  
+
   const pool = new Pool({
     host: process.env.DB_HOST || 'localhost',
     port: parseInt(process.env.DB_PORT || '5432'),

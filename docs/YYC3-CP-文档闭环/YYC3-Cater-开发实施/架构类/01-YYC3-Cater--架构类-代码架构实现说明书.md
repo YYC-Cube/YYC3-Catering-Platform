@@ -10,15 +10,17 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 代码架构实现说明书
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--开发实施
 - 遵循规范：五高五标五化要求
@@ -59,59 +61,59 @@
  */
 export enum ArchitecturePrinciple {
   // SOLID原则
-  SINGLE_RESPONSIBILITY = 'SINGLE_RESPONSIBILITY',           // 单一职责
-  OPEN_CLOSED = 'OPEN_CLOSED',                               // 开闭原则
-  LISKOV_SUBSTITUTION = 'LISKOV_SUBSTITUTION',               // 里氏替换
-  INTERFACE_SEGREGATION = 'INTERFACE_SEGREGATION',           // 接口隔离
-  DEPENDENCY_INVERSION = 'DEPENDENCY_INVERSION',             // 依赖倒置
-  
+  SINGLE_RESPONSIBILITY = "SINGLE_RESPONSIBILITY", // 单一职责
+  OPEN_CLOSED = "OPEN_CLOSED", // 开闭原则
+  LISKOV_SUBSTITUTION = "LISKOV_SUBSTITUTION", // 里氏替换
+  INTERFACE_SEGREGATION = "INTERFACE_SEGREGATION", // 接口隔离
+  DEPENDENCY_INVERSION = "DEPENDENCY_INVERSION", // 依赖倒置
+
   // DRY原则
-  DONT_REPEAT_YOURSELF = 'DONT_REPEAT_YOURSELF',           // 不要重复自己
-  
+  DONT_REPEAT_YOURSELF = "DONT_REPEAT_YOURSELF", // 不要重复自己
+
   // KISS原则
-  KEEP_IT_SIMPLE_STUPID = 'KEEP_IT_SIMPLE_STUPID',         // 保持简单
-  
+  KEEP_IT_SIMPLE_STUPID = "KEEP_IT_SIMPLE_STUPID", // 保持简单
+
   // YAGNI原则
-  YOU_AINT_GONNA_NEED_IT = 'YOU_AINT_GONNA_NEED_IT',       // 你不会需要它
-  
+  YOU_AINT_GONNA_NEED_IT = "YOU_AINT_GONNA_NEED_IT", // 你不会需要它
+
   // 其他原则
-  SEPARATION_OF_CONCERNS = 'SEPARATION_OF_CONCERNS',       // 关注点分离
-  COMPOSITION_OVER_INHERITANCE = 'COMPOSITION_OVER_INHERITANCE', // 组合优于继承
-  LOOSE_COUPLING = 'LOOSE_COUPLING',                       // 松耦合
-  HIGH_COHESION = 'HIGH_COHESION'                           // 高内聚
+  SEPARATION_OF_CONCERNS = "SEPARATION_OF_CONCERNS", // 关注点分离
+  COMPOSITION_OVER_INHERITANCE = "COMPOSITION_OVER_INHERITANCE", // 组合优于继承
+  LOOSE_COUPLING = "LOOSE_COUPLING", // 松耦合
+  HIGH_COHESION = "HIGH_COHESION", // 高内聚
 }
 
 /**
  * 架构原则描述
  */
 export const architecturePrinciples: Record<ArchitecturePrinciple, string> = {
-  [ArchitecturePrinciple.SINGLE_RESPONSIBILITY]: '一个类应该只有一个引起它变化的原因',
-  [ArchitecturePrinciple.OPEN_CLOSED]: '软件实体应该对扩展开放，对修改关闭',
-  [ArchitecturePrinciple.LISKOV_SUBSTITUTION]: '子类必须能够替换父类而不影响程序正确性',
-  [ArchitecturePrinciple.INTERFACE_SEGREGATION]: '客户端不应该依赖它不需要的接口',
-  [ArchitecturePrinciple.DEPENDENCY_INVERSION]: '高层模块不应该依赖低层模块，都应该依赖抽象',
-  [ArchitecturePrinciple.DONT_REPEAT_YOURSELF]: '避免代码重复，通过抽象和封装实现复用',
-  [ArchitecturePrinciple.KEEP_IT_SIMPLE_STUPID]: '保持设计简单，避免不必要的复杂性',
-  [ArchitecturePrinciple.YOU_AINT_GONNA_NEED_IT]: '不要实现当前不需要的功能',
-  [ArchitecturePrinciple.SEPARATION_OF_CONCERNS]: '将系统划分为关注点分离的模块',
-  [ArchitecturePrinciple.COMPOSITION_OVER_INHERITANCE]: '优先使用组合而非继承实现代码复用',
-  [ArchitecturePrinciple.LOOSE_COUPLING]: '模块之间应该保持松耦合，降低相互依赖',
-  [ArchitecturePrinciple.HIGH_COHESION]: '相关的功能应该组织在一起，提高内聚性'
+  [ArchitecturePrinciple.SINGLE_RESPONSIBILITY]: "一个类应该只有一个引起它变化的原因",
+  [ArchitecturePrinciple.OPEN_CLOSED]: "软件实体应该对扩展开放，对修改关闭",
+  [ArchitecturePrinciple.LISKOV_SUBSTITUTION]: "子类必须能够替换父类而不影响程序正确性",
+  [ArchitecturePrinciple.INTERFACE_SEGREGATION]: "客户端不应该依赖它不需要的接口",
+  [ArchitecturePrinciple.DEPENDENCY_INVERSION]: "高层模块不应该依赖低层模块，都应该依赖抽象",
+  [ArchitecturePrinciple.DONT_REPEAT_YOURSELF]: "避免代码重复，通过抽象和封装实现复用",
+  [ArchitecturePrinciple.KEEP_IT_SIMPLE_STUPID]: "保持设计简单，避免不必要的复杂性",
+  [ArchitecturePrinciple.YOU_AINT_GONNA_NEED_IT]: "不要实现当前不需要的功能",
+  [ArchitecturePrinciple.SEPARATION_OF_CONCERNS]: "将系统划分为关注点分离的模块",
+  [ArchitecturePrinciple.COMPOSITION_OVER_INHERITANCE]: "优先使用组合而非继承实现代码复用",
+  [ArchitecturePrinciple.LOOSE_COUPLING]: "模块之间应该保持松耦合，降低相互依赖",
+  [ArchitecturePrinciple.HIGH_COHESION]: "相关的功能应该组织在一起，提高内聚性",
 };
 
 /**
  * 架构质量指标
  */
 export interface ArchitectureQualityMetrics {
-  maintainability: number;      // 可维护性 (0-100)
-  scalability: number;         // 可扩展性 (0-100)
-  testability: number;         // 可测试性 (0-100)
-  performance: number;         // 性能 (0-100)
-  security: number;            // 安全性 (0-100)
-  codeDuplication: number;      // 代码重复率 (0-100)
+  maintainability: number; // 可维护性 (0-100)
+  scalability: number; // 可扩展性 (0-100)
+  testability: number; // 可测试性 (0-100)
+  performance: number; // 性能 (0-100)
+  security: number; // 安全性 (0-100)
+  codeDuplication: number; // 代码重复率 (0-100)
   cyclomaticComplexity: number; // 圈复杂度
-  coupling: number;            // 耦合度 (0-100)
-  cohesion: number;            // 内聚度 (0-100)
+  coupling: number; // 耦合度 (0-100)
+  cohesion: number; // 内聚度 (0-100)
 }
 
 /**
@@ -131,7 +133,7 @@ export class ArchitectureEvaluator {
       codeDuplication: metrics.codeDuplication || 0,
       cyclomaticComplexity: metrics.cyclomaticComplexity || 0,
       coupling: metrics.coupling || 0,
-      cohesion: metrics.cohesion || 0
+      cohesion: metrics.cohesion || 0,
     };
   }
 
@@ -145,10 +147,10 @@ export class ArchitectureEvaluator {
       testability: 0.15,
       performance: 0.15,
       security: 0.15,
-      codeDuplication: -0.1,  // 代码重复率越低越好
+      codeDuplication: -0.1, // 代码重复率越低越好
       cyclomaticComplexity: -0.05,
       coupling: -0.05,
-      cohesion: 0.05
+      cohesion: 0.05,
     };
 
     let score = 0;
@@ -174,39 +176,39 @@ export class ArchitectureEvaluator {
     recommendations: string[];
   } {
     const overallScore = this.calculateOverallScore(metrics);
-    let grade = 'F';
+    let grade = "F";
 
-    if (overallScore >= 90) grade = 'A';
-    else if (overallScore >= 80) grade = 'B';
-    else if (overallScore >= 70) grade = 'C';
-    else if (overallScore >= 60) grade = 'D';
+    if (overallScore >= 90) grade = "A";
+    else if (overallScore >= 80) grade = "B";
+    else if (overallScore >= 70) grade = "C";
+    else if (overallScore >= 60) grade = "D";
 
     const recommendations: string[] = [];
 
     if (metrics.maintainability < 70) {
-      recommendations.push('提高代码可维护性：增加注释、改善命名、减少复杂度');
+      recommendations.push("提高代码可维护性：增加注释、改善命名、减少复杂度");
     }
 
     if (metrics.scalability < 70) {
-      recommendations.push('提高系统可扩展性：采用微服务架构、实现水平扩展');
+      recommendations.push("提高系统可扩展性：采用微服务架构、实现水平扩展");
     }
 
     if (metrics.testability < 70) {
-      recommendations.push('提高代码可测试性：降低耦合度、增加单元测试');
+      recommendations.push("提高代码可测试性：降低耦合度、增加单元测试");
     }
 
     if (metrics.codeDuplication > 20) {
-      recommendations.push('减少代码重复：提取公共方法、使用设计模式');
+      recommendations.push("减少代码重复：提取公共方法、使用设计模式");
     }
 
     if (metrics.cyclomaticComplexity > 10) {
-      recommendations.push('降低圈复杂度：拆分复杂函数、简化逻辑');
+      recommendations.push("降低圈复杂度：拆分复杂函数、简化逻辑");
     }
 
     return {
       overallScore,
       grade,
-      recommendations
+      recommendations,
     };
   }
 }
@@ -219,15 +221,15 @@ export class ArchitectureEvaluator {
  * 架构风格
  */
 export enum ArchitectureStyle {
-  LAYERED = 'LAYERED',                   // 分层架构
-  MICROSERVICES = 'MICROSERVICES',       // 微服务架构
-  EVENT_DRIVEN = 'EVENT_DRIVEN',         // 事件驱动架构
-  HEXAGONAL = 'HEXAGONAL',               // 六边形架构
-  CLEAN = 'CLEAN',                       // 整洁架构
-  ONION = 'ONION',                       // 洋葱架构
-  SERVERLESS = 'SERVERLESS',             // 无服务器架构
-  CQRS = 'CQRS',                         // 命令查询职责分离
-  EVENT_SOURCING = 'EVENT_SOURCING'     // 事件溯源
+  LAYERED = "LAYERED", // 分层架构
+  MICROSERVICES = "MICROSERVICES", // 微服务架构
+  EVENT_DRIVEN = "EVENT_DRIVEN", // 事件驱动架构
+  HEXAGONAL = "HEXAGONAL", // 六边形架构
+  CLEAN = "CLEAN", // 整洁架构
+  ONION = "ONION", // 洋葱架构
+  SERVERLESS = "SERVERLESS", // 无服务器架构
+  CQRS = "CQRS", // 命令查询职责分离
+  EVENT_SOURCING = "EVENT_SOURCING", // 事件溯源
 }
 
 /**
@@ -251,22 +253,22 @@ export class ArchitectureStyleSelector {
    */
   selectStyle(
     teamSize: number,
-    projectComplexity: 'low' | 'medium' | 'high',
-    scalabilityRequirement: 'low' | 'medium' | 'high',
-    performanceRequirement: 'low' | 'medium' | 'high'
+    projectComplexity: "low" | "medium" | "high",
+    scalabilityRequirement: "low" | "medium" | "high",
+    performanceRequirement: "low" | "medium" | "high"
   ): ArchitectureStyle {
     // 大型团队、高复杂度、高扩展性需求
-    if (teamSize > 20 && projectComplexity === 'high' && scalabilityRequirement === 'high') {
+    if (teamSize > 20 && projectComplexity === "high" && scalabilityRequirement === "high") {
       return ArchitectureStyle.MICROSERVICES;
     }
 
     // 中等团队、中等复杂度
-    if (teamSize > 10 && projectComplexity === 'medium') {
+    if (teamSize > 10 && projectComplexity === "medium") {
       return ArchitectureStyle.EVENT_DRIVEN;
     }
 
     // 高性能需求
-    if (performanceRequirement === 'high') {
+    if (performanceRequirement === "high") {
       return ArchitectureStyle.CQRS;
     }
 
@@ -279,15 +281,15 @@ export class ArchitectureStyleSelector {
    */
   getStyleDescription(style: ArchitectureStyle): string {
     const descriptions: Record<ArchitectureStyle, string> = {
-      [ArchitectureStyle.LAYERED]: '分层架构：将系统划分为表现层、业务逻辑层、数据访问层',
-      [ArchitectureStyle.MICROSERVICES]: '微服务架构：将系统拆分为多个独立部署的小服务',
-      [ArchitectureStyle.EVENT_DRIVEN]: '事件驱动架构：通过事件驱动组件间的通信',
-      [ArchitectureStyle.HEXAGONAL]: '六边形架构：将业务逻辑与外部依赖隔离',
-      [ArchitectureStyle.CLEAN]: '整洁架构：依赖规则确保代码向内依赖',
-      [ArchitectureStyle.ONION]: '洋葱架构：类似六边形架构，强调层次结构',
-      [ArchitectureStyle.SERVERLESS]: '无服务器架构：使用云服务管理基础设施',
-      [ArchitectureStyle.CQRS]: 'CQRS：分离命令和查询操作',
-      [ArchitectureStyle.EVENT_SOURCING]: '事件溯源：通过事件流重建系统状态'
+      [ArchitectureStyle.LAYERED]: "分层架构：将系统划分为表现层、业务逻辑层、数据访问层",
+      [ArchitectureStyle.MICROSERVICES]: "微服务架构：将系统拆分为多个独立部署的小服务",
+      [ArchitectureStyle.EVENT_DRIVEN]: "事件驱动架构：通过事件驱动组件间的通信",
+      [ArchitectureStyle.HEXAGONAL]: "六边形架构：将业务逻辑与外部依赖隔离",
+      [ArchitectureStyle.CLEAN]: "整洁架构：依赖规则确保代码向内依赖",
+      [ArchitectureStyle.ONION]: "洋葱架构：类似六边形架构，强调层次结构",
+      [ArchitectureStyle.SERVERLESS]: "无服务器架构：使用云服务管理基础设施",
+      [ArchitectureStyle.CQRS]: "CQRS：分离命令和查询操作",
+      [ArchitectureStyle.EVENT_SOURCING]: "事件溯源：通过事件流重建系统状态",
     };
 
     return descriptions[style];
@@ -314,11 +316,11 @@ export class ArchitectureStyleSelector {
  * 分层类型
  */
 export enum LayerType {
-  PRESENTATION = 'PRESENTATION',       // 表现层
-  APPLICATION = 'APPLICATION',         // 应用层
-  DOMAIN = 'DOMAIN',                 // 领域层
-  INFRASTRUCTURE = 'INFRASTRUCTURE',   // 基础设施层
-  DATA_ACCESS = 'DATA_ACCESS'         // 数据访问层
+  PRESENTATION = "PRESENTATION", // 表现层
+  APPLICATION = "APPLICATION", // 应用层
+  DOMAIN = "DOMAIN", // 领域层
+  INFRASTRUCTURE = "INFRASTRUCTURE", // 基础设施层
+  DATA_ACCESS = "DATA_ACCESS", // 数据访问层
 }
 
 /**
@@ -329,7 +331,7 @@ export const layerDependencyRules: Record<LayerType, LayerType[]> = {
   [LayerType.APPLICATION]: [LayerType.DOMAIN, LayerType.INFRASTRUCTURE],
   [LayerType.DOMAIN]: [],
   [LayerType.INFRASTRUCTURE]: [LayerType.DATA_ACCESS],
-  [LayerType.DATA_ACCESS]: []
+  [LayerType.DATA_ACCESS]: [],
 };
 
 /**
@@ -339,10 +341,7 @@ export class LayerValidator {
   /**
    * 验证分层依赖
    */
-  validateDependencies(
-    sourceLayer: LayerType,
-    targetLayer: LayerType
-  ): boolean {
+  validateDependencies(sourceLayer: LayerType, targetLayer: LayerType): boolean {
     const allowedTargets = layerDependencyRules[sourceLayer];
     return allowedTargets.includes(targetLayer);
   }
@@ -350,9 +349,7 @@ export class LayerValidator {
   /**
    * 检测循环依赖
    */
-  detectCircularDependencies(
-    layers: Map<LayerType, LayerType[]>
-  ): LayerType[][] {
+  detectCircularDependencies(layers: Map<LayerType, LayerType[]>): LayerType[][] {
     const cycles: LayerType[][] = [];
     const visited = new Set<LayerType>();
     const recursionStack = new Set<LayerType>();
@@ -403,10 +400,7 @@ export class PresentationLayer {
   /**
    * API控制器
    */
-  static createController<T>(
-    service: T,
-    validationSchema?: any
-  ): any {
+  static createController<T>(service: T, validationSchema?: any): any {
     return {
       async handleRequest(req: any, res: any): Promise<void> {
         try {
@@ -425,31 +419,27 @@ export class PresentationLayer {
           // 返回响应
           res.json({
             success: true,
-            data: result
+            data: result,
           });
         } catch (error) {
           res.status(500).json({
             success: false,
-            error: error.message
+            error: error.message,
           });
         }
-      }
+      },
     };
   }
 
   /**
    * 响应格式化器
    */
-  static formatResponse<T>(
-    data: T,
-    message?: string,
-    statusCode: number = 200
-  ): any {
+  static formatResponse<T>(data: T, message?: string, statusCode: number = 200): any {
     return {
       success: statusCode < 400,
       message,
       data,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 
@@ -461,9 +451,9 @@ export class PresentationLayer {
       success: false,
       error: {
         message: error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }
@@ -492,9 +482,7 @@ export abstract class ApplicationService {
   /**
    * 事务管理
    */
-  protected async withTransaction<T>(
-    callback: () => Promise<T>
-  ): Promise<T> {
+  protected async withTransaction<T>(callback: () => Promise<T>): Promise<T> {
     // 实现事务管理
     return callback();
   }
@@ -509,7 +497,7 @@ export abstract class ApplicationService {
   /**
    * 日志记录
    */
-  protected log(message: string, level: 'info' | 'warn' | 'error' = 'info'): void {
+  protected log(message: string, level: "info" | "warn" | "error" = "info"): void {
     // 实现日志记录
   }
 }
@@ -590,7 +578,7 @@ export class Module {
     }
 
     console.log(`Initializing module: ${this.metadata.name}`);
-    
+
     // 初始化依赖
     for (const dep of this.metadata.dependencies) {
       await this.loadDependency(dep);
@@ -629,7 +617,7 @@ export class ModuleLoader {
    * 注册模块
    */
   registerModule(module: Module): void {
-    this.modules.set(module['metadata'].name, module);
+    this.modules.set(module["metadata"].name, module);
     this.updateModuleGraph(module);
   }
 
@@ -637,7 +625,7 @@ export class ModuleLoader {
    * 更新模块图
    */
   private updateModuleGraph(module: Module): void {
-    const metadata = module['metadata'];
+    const metadata = module["metadata"];
     this.moduleGraph.set(metadata.name, metadata.dependencies);
   }
 
@@ -757,7 +745,7 @@ export class DIContainer {
    */
   register(name: string, factory: () => any, singleton: boolean = true): void {
     this.factories.set(name, factory);
-    
+
     if (singleton) {
       const instance = factory();
       this.singletons.set(name, instance);
@@ -896,68 +884,68 @@ export abstract class BaseService<T> {
 export const standardDirectoryStructure = {
   src: {
     // 源代码目录
-    api: 'API接口层',
-    controllers: '控制器',
-    services: '业务逻辑层',
-    repositories: '数据访问层',
-    models: '数据模型',
-    dto: '数据传输对象',
-    entities: '实体定义',
-    utils: '工具函数',
-    helpers: '辅助函数',
-    constants: '常量定义',
-    config: '配置文件',
-    middleware: '中间件',
-    validators: '验证器',
-    filters: '过滤器',
-    interceptors: '拦截器',
-    decorators: '装饰器',
-    guards: '守卫',
-    pipes: '管道',
-    exceptions: '异常定义',
-    types: '类型定义',
-    interfaces: '接口定义',
-    enums: '枚举定义'
+    api: "API接口层",
+    controllers: "控制器",
+    services: "业务逻辑层",
+    repositories: "数据访问层",
+    models: "数据模型",
+    dto: "数据传输对象",
+    entities: "实体定义",
+    utils: "工具函数",
+    helpers: "辅助函数",
+    constants: "常量定义",
+    config: "配置文件",
+    middleware: "中间件",
+    validators: "验证器",
+    filters: "过滤器",
+    interceptors: "拦截器",
+    decorators: "装饰器",
+    guards: "守卫",
+    pipes: "管道",
+    exceptions: "异常定义",
+    types: "类型定义",
+    interfaces: "接口定义",
+    enums: "枚举定义",
   },
   tests: {
     // 测试目录
-    unit: '单元测试',
-    integration: '集成测试',
-    e2e: '端到端测试'
+    unit: "单元测试",
+    integration: "集成测试",
+    e2e: "端到端测试",
   },
   docs: {
     // 文档目录
-    api: 'API文档',
-    architecture: '架构文档',
-    user: '用户文档'
+    api: "API文档",
+    architecture: "架构文档",
+    user: "用户文档",
   },
   scripts: {
     // 脚本目录
-    build: '构建脚本',
-    deploy: '部署脚本',
-    migrate: '迁移脚本'
-  }
+    build: "构建脚本",
+    deploy: "部署脚本",
+    migrate: "迁移脚本",
+  },
 };
 
 /**
  * 文件命名规范
  */
 export const fileNamingConventions = {
-  controllers: 'PascalCase.controller.ts',
-  services: 'PascalCase.service.ts',
-  repositories: 'PascalCase.repository.ts',
-  models: 'PascalCase.model.ts',
-  dto: 'PascalCase.dto.ts',
-  entities: 'PascalCase.entity.ts',
-  utils: 'camelCase.util.ts',
-  helpers: 'camelCase.helper.ts',
-  constants: 'UPPER_SNAKE_CASE.constant.ts',
-  config: 'kebab-case.config.ts',
-  middleware: 'kebab-case.middleware.ts',
-  validators: 'PascalCase.validator.ts',
-  types: 'PascalCase.type.ts',
-  interfaces: 'PascalCase.interface.ts',
-  enums: 'PascalCase.enum.ts'
+  controllers: "PascalCase.controller.ts",
+  services: "PascalCase.service.ts",
+  repositories: "PascalCase.repository.ts",
+  models: "PascalCase.model.ts",
+  dto: "PascalCase.dto.ts",
+  entities: "PascalCase.entity.ts",
+  utils: "camelCase.util.ts",
+  helpers: "camelCase.helper.ts",
+  constants: "UPPER_SNAKE_CASE.constant.ts",
+  config: "kebab-case.config.ts",
+  middleware: "kebab-case.middleware.ts",
+  validators: "PascalCase.validator.ts",
+  types: "PascalCase.type.ts",
+  interfaces: "PascalCase.interface.ts",
+  enums: "PascalCase.enum.ts",
 };
 ```
 
@@ -971,32 +959,32 @@ export const fileOrganizationPrinciples = {
   /**
    * 单一职责原则
    */
-  singleResponsibility: '每个文件应该只包含一个主要类或功能',
+  singleResponsibility: "每个文件应该只包含一个主要类或功能",
 
   /**
    * 相关性原则
    */
-  cohesion: '相关的功能应该组织在同一个文件或目录中',
+  cohesion: "相关的功能应该组织在同一个文件或目录中",
 
   /**
    * 最小化原则
    */
-  minimization: '文件大小应该保持在合理范围内，避免过大的文件',
+  minimization: "文件大小应该保持在合理范围内，避免过大的文件",
 
   /**
    * 可读性原则
    */
-  readability: '文件名应该清晰表达其内容，使用一致的命名约定',
+  readability: "文件名应该清晰表达其内容，使用一致的命名约定",
 
   /**
    * 可维护性原则
    */
-  maintainability: '文件结构应该易于理解和修改',
+  maintainability: "文件结构应该易于理解和修改",
 
   /**
    * 可测试性原则
    */
-  testability: '文件应该易于测试，避免紧密耦合'
+  testability: "文件应该易于测试，避免紧密耦合",
 };
 ```
 
@@ -1036,7 +1024,7 @@ export class Singleton {
 export class Factory {
   static create<T>(type: string, ...args: any[]): T {
     // 根据类型创建对象
-    throw new Error('Not implemented');
+    throw new Error("Not implemented");
   }
 }
 
@@ -1134,7 +1122,7 @@ export class Proxy {
 
 class RealSubject {
   request(): string {
-    return 'RealSubject: Handling request';
+    return "RealSubject: Handling request";
   }
 }
 
@@ -1159,13 +1147,13 @@ export class Facade {
 
 class Subsystem1 {
   operation1(): string {
-    return 'Subsystem1: Ready';
+    return "Subsystem1: Ready";
   }
 }
 
 class Subsystem2 {
   operation2(): string {
-    return 'Subsystem2: Go';
+    return "Subsystem2: Go";
   }
 }
 ```
@@ -1315,7 +1303,7 @@ export class CodeQualityChecker {
     cyclomaticComplexity: number;
     cognitiveComplexity: number;
   } {
-    const lines = code.split('\n');
+    const lines = code.split("\n");
     let cyclomatic = 1;
     let cognitive = 1;
 
@@ -1338,7 +1326,7 @@ export class CodeQualityChecker {
 
     return {
       cyclomaticComplexity: cyclomatic,
-      cognitiveComplexity: cognitive
+      cognitiveComplexity: cognitive,
     };
   }
 
@@ -1346,7 +1334,7 @@ export class CodeQualityChecker {
    * 检查是否是条件语句
    */
   private isConditional(line: string): boolean {
-    const keywords = ['if', 'else if', 'switch', 'case', '?:'];
+    const keywords = ["if", "else if", "switch", "case", "?:"];
     return keywords.some(keyword => line.trim().startsWith(keyword));
   }
 
@@ -1354,7 +1342,7 @@ export class CodeQualityChecker {
    * 检查是否是循环语句
    */
   private isLoop(line: string): boolean {
-    const keywords = ['for', 'while', 'do'];
+    const keywords = ["for", "while", "do"];
     return keywords.some(keyword => line.trim().startsWith(keyword));
   }
 
@@ -1362,7 +1350,7 @@ export class CodeQualityChecker {
    * 检查是否是catch语句
    */
   private isCatch(line: string): boolean {
-    return line.trim().startsWith('catch');
+    return line.trim().startsWith("catch");
   }
 
   /**
@@ -1375,7 +1363,7 @@ export class CodeQualityChecker {
     // 实现代码重复检查
     return {
       duplicationRate: 0,
-      duplicatedBlocks: []
+      duplicatedBlocks: [],
     };
   }
 
@@ -1390,7 +1378,7 @@ export class CodeQualityChecker {
     return {
       lineCoverage: testResults.lines?.covered / testResults.lines?.total || 0,
       branchCoverage: testResults.branches?.covered / testResults.branches?.total || 0,
-      functionCoverage: testResults.functions?.covered / testResults.functions?.total || 0
+      functionCoverage: testResults.functions?.covered / testResults.functions?.total || 0,
     };
   }
 }
@@ -1422,7 +1410,7 @@ export class CodeReviewer {
    */
   private checkRule(code: string, rule: ReviewRule): ReviewResult[] {
     const violations: ReviewResult[] = [];
-    const lines = code.split('\n');
+    const lines = code.split("\n");
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
@@ -1431,7 +1419,7 @@ export class CodeReviewer {
           rule: rule.name,
           line: i + 1,
           message: rule.message,
-          severity: rule.severity
+          severity: rule.severity,
         });
       }
     }
@@ -1447,7 +1435,7 @@ export interface ReviewRule {
   name: string;
   check: (line: string) => boolean;
   message: string;
-  severity: 'error' | 'warning' | 'info';
+  severity: "error" | "warning" | "info";
 }
 
 /**
@@ -1457,7 +1445,7 @@ export interface ReviewResult {
   rule: string;
   line: number;
   message: string;
-  severity: 'error' | 'warning' | 'info';
+  severity: "error" | "warning" | "info";
 }
 
 /**
@@ -1465,23 +1453,23 @@ export interface ReviewResult {
  */
 export const commonReviewRules: ReviewRule[] = [
   {
-    name: 'no-console',
-    check: (line: string) => line.includes('console.log'),
-    message: '避免使用console.log',
-    severity: 'warning'
+    name: "no-console",
+    check: (line: string) => line.includes("console.log"),
+    message: "避免使用console.log",
+    severity: "warning",
   },
   {
-    name: 'max-line-length',
+    name: "max-line-length",
     check: (line: string) => line.length > 120,
-    message: '行长度超过120字符',
-    severity: 'warning'
+    message: "行长度超过120字符",
+    severity: "warning",
   },
   {
-    name: 'no-debugger',
-    check: (line: string) => line.includes('debugger'),
-    message: '移除debugger语句',
-    severity: 'error'
-  }
+    name: "no-debugger",
+    check: (line: string) => line.includes("debugger"),
+    message: "移除debugger语句",
+    severity: "error",
+  },
 ];
 ```
 
@@ -1513,19 +1501,16 @@ export class PerformanceOptimizer {
   /**
    * 带缓存的函数执行
    */
-  cached<T extends (...args: any[]) => any>(
-    fn: T,
-    keyGenerator?: (...args: Parameters<T>) => string
-  ): T {
+  cached<T extends (...args: any[]) => any>(fn: T, keyGenerator?: (...args: Parameters<T>) => string): T {
     return ((...args: Parameters<T>) => {
       const key = keyGenerator ? keyGenerator(...args) : JSON.stringify(args);
 
       if (this.cache.has(key)) {
-        this.updateStats(key, 'hit');
+        this.updateStats(key, "hit");
         return this.cache.get(key);
       }
 
-      this.updateStats(key, 'miss');
+      this.updateStats(key, "miss");
       const result = fn(...args);
       this.cache.set(key, result);
 
@@ -1536,13 +1521,13 @@ export class PerformanceOptimizer {
   /**
    * 更新缓存统计
    */
-  private updateStats(key: string, type: 'hit' | 'miss'): void {
+  private updateStats(key: string, type: "hit" | "miss"): void {
     if (!this.cacheStats.has(key)) {
       this.cacheStats.set(key, { hits: 0, misses: 0 });
     }
 
     const stats = this.cacheStats.get(key)!;
-    if (type === 'hit') {
+    if (type === "hit") {
       stats.hits++;
     } else {
       stats.misses++;
@@ -1562,7 +1547,7 @@ export class PerformanceOptimizer {
       result.set(key, {
         hits: stats.hits,
         misses: stats.misses,
-        hitRate
+        hitRate,
       });
     }
 
@@ -1580,10 +1565,7 @@ export class PerformanceOptimizer {
   /**
    * 防抖
    */
-  debounce<T extends (...args: any[]) => any>(
-    fn: T,
-    delay: number
-  ): (...args: Parameters<T>) => void {
+  debounce<T extends (...args: any[]) => any>(fn: T, delay: number): (...args: Parameters<T>) => void {
     let timeoutId: NodeJS.Timeout;
 
     return (...args: Parameters<T>) => {
@@ -1595,10 +1577,7 @@ export class PerformanceOptimizer {
   /**
    * 节流
    */
-  throttle<T extends (...args: any[]) => any>(
-    fn: T,
-    delay: number
-  ): (...args: Parameters<T>) => void {
+  throttle<T extends (...args: any[]) => any>(fn: T, delay: number): (...args: Parameters<T>) => void {
     let lastCall = 0;
 
     return (...args: Parameters<T>) => {
@@ -1887,37 +1866,37 @@ export const namingConventions = {
   /**
    * 类名：PascalCase
    */
-  className: 'UserService',
+  className: "UserService",
 
   /**
    * 接口名：PascalCase，以I开头
    */
-  interfaceName: 'IUserRepository',
+  interfaceName: "IUserRepository",
 
   /**
    * 函数名：camelCase
    */
-  functionName: 'getUserById',
+  functionName: "getUserById",
 
   /**
    * 变量名：camelCase
    */
-  variableName: 'userName',
+  variableName: "userName",
 
   /**
    * 常量名：UPPER_SNAKE_CASE
    */
-  constantName: 'MAX_RETRY_COUNT',
+  constantName: "MAX_RETRY_COUNT",
 
   /**
    * 私有成员：_camelCase
    */
-  privateMember: '_internalMethod',
+  privateMember: "_internalMethod",
 
   /**
    * 文件名：kebab-case
    */
-  fileName: 'user-service.ts'
+  fileName: "user-service.ts",
 };
 
 /**
@@ -1937,7 +1916,7 @@ export const codeFormattingRules = {
   /**
    * 引号：单引号
    */
-  quotes: 'single',
+  quotes: "single",
 
   /**
    * 分号：必须使用
@@ -1947,7 +1926,7 @@ export const codeFormattingRules = {
   /**
    * 尾随逗号：多行时使用
    */
-  trailingComma: 'es5'
+  trailingComma: "es5",
 };
 
 /**
@@ -1986,12 +1965,12 @@ export const commentGuidelines = {
   /**
    * 行内注释
    */
-  inlineComment: '// 简短说明',
+  inlineComment: "// 简短说明",
 
   /**
    * TODO注释
    */
-  todoComment: '// TODO: 待办事项描述'
+  todoComment: "// TODO: 待办事项描述",
 };
 ```
 
@@ -2006,37 +1985,37 @@ export const gitWorkflow = {
    * 分支命名规范
    */
   branchNaming: {
-    feature: 'feature/功能描述',
-    bugfix: 'bugfix/问题描述',
-    hotfix: 'hotfix/紧急问题描述',
-    release: 'release/版本号',
-    refactor: 'refactor/重构描述'
+    feature: "feature/功能描述",
+    bugfix: "bugfix/问题描述",
+    hotfix: "hotfix/紧急问题描述",
+    release: "release/版本号",
+    refactor: "refactor/重构描述",
   },
 
   /**
    * 提交信息规范
    */
   commitMessage: {
-    format: 'type(scope): subject',
+    format: "type(scope): subject",
     types: {
-      feat: '新功能',
-      fix: 'Bug修复',
-      docs: '文档更新',
-      style: '代码格式调整',
-      refactor: '代码重构',
-      perf: '性能优化',
-      test: '测试相关',
-      chore: '构建或辅助工具变动',
-      ci: 'CI/CD相关',
-      revert: '回滚提交'
-    }
+      feat: "新功能",
+      fix: "Bug修复",
+      docs: "文档更新",
+      style: "代码格式调整",
+      refactor: "代码重构",
+      perf: "性能优化",
+      test: "测试相关",
+      chore: "构建或辅助工具变动",
+      ci: "CI/CD相关",
+      revert: "回滚提交",
+    },
   },
 
   /**
    * Pull Request规范
    */
   pullRequest: {
-    title: '简短描述PR的目的',
+    title: "简短描述PR的目的",
     description: `
 ## 变更说明
 描述本次PR的主要变更内容
@@ -2049,8 +2028,8 @@ Closes #issue-number
 
 ## 截图
 如有UI变更，请提供截图
-    `
-  }
+    `,
+  },
 };
 ```
 
@@ -2058,13 +2037,10 @@ Closes #issue-number
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -2087,8 +2063,6 @@ Closes #issue-number
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -2122,8 +2096,6 @@ Closes #issue-number
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -2146,46 +2118,46 @@ Closes #issue-number
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -2198,6 +2170,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -2207,6 +2180,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -2216,6 +2190,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -2232,16 +2207,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2251,13 +2227,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2266,6 +2240,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2284,6 +2259,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2299,6 +2275,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2318,28 +2295,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2348,44 +2324,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2399,13 +2373,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2414,18 +2388,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2435,37 +2412,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2474,28 +2454,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2504,21 +2482,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2527,10 +2507,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2556,16 +2533,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2574,25 +2551,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

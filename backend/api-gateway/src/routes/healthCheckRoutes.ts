@@ -186,7 +186,7 @@ router.put(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**

@@ -51,6 +51,7 @@
 ```
 
 **关键设计**:
+
 - **异构运行时**: 多数服务用 Node.js + Express;`api-service` 用 **Bun** 原生 HTTP。
 - **异构数据库**: 多数服务用 **MySQL**(sequelize-typescript);`api-service` 用 **PostgreSQL**(raw `pg`);`analytics-service` 亦用 PostgreSQL。
 - **API 网关** 作为唯一入口,以反向代理方式分发请求到各下游服务。
@@ -59,19 +60,19 @@
 
 ## 2. 服务清单与端口映射
 
-| 服务 | 框架 | 数据库 | 默认端口 | 运行时 |
-|---|---|---|---|---|
-| `api-gateway` | Express | — | **3200** | Node |
-| `api-service` | Bun.serve | PostgreSQL | **3000** | Bun |
-| `user-service` | Express + sequelize-typescript | MySQL | **3201** | Node |
-| `order-service` | Express + sequelize-typescript | MySQL | **3202** | Node |
-| `menu-service` | Express + sequelize-typescript | MySQL | **3201** ⚠️ | Node |
-| `payment-service` | Express + Sequelize | MySQL | **3204** | Node |
-| `notification-service` | Express + Sequelize | MySQL | **3206** | Node |
-| `analytics-service` | Express + sequelize-typescript | PostgreSQL | **3303** | Node |
-| `smart-kitchen` | Express | Redis (无 ORM) | **3645** | Node |
-| `smart-ops-service` | Express | MongoDB | **3205** | Node |
-| `ai-assistant` | Express | — | **3201** ⚠️ | Node |
+| 服务                   | 框架                           | 数据库         | 默认端口    | 运行时 |
+| ---------------------- | ------------------------------ | -------------- | ----------- | ------ |
+| `api-gateway`          | Express                        | —              | **3200**    | Node   |
+| `api-service`          | Bun.serve                      | PostgreSQL     | **3000**    | Bun    |
+| `user-service`         | Express + sequelize-typescript | MySQL          | **3201**    | Node   |
+| `order-service`        | Express + sequelize-typescript | MySQL          | **3202**    | Node   |
+| `menu-service`         | Express + sequelize-typescript | MySQL          | **3201** ⚠️ | Node   |
+| `payment-service`      | Express + Sequelize            | MySQL          | **3204**    | Node   |
+| `notification-service` | Express + Sequelize            | MySQL          | **3206**    | Node   |
+| `analytics-service`    | Express + sequelize-typescript | PostgreSQL     | **3303**    | Node   |
+| `smart-kitchen`        | Express                        | Redis (无 ORM) | **3645**    | Node   |
+| `smart-ops-service`    | Express                        | MongoDB        | **3205**    | Node   |
+| `ai-assistant`         | Express                        | —              | **3201** ⚠️ | Node   |
 
 ### ⚠️ 端口冲突(需注意)
 
@@ -86,16 +87,16 @@ SERVICE_PORT=3211 pnpm --filter yyc3-menu-service dev
 
 `api-gateway/src/config/services.ts` 中的默认值(需通过环境变量覆盖以匹配实际端口):
 
-| 网关路由前缀 | 目标服务 | 网关默认 URL | 实际服务端口 |
-|---|---|---|---|
-| `/api/users` | user-service | `localhost:3201` | 3201 ✅ |
-| `/api/restaurants` | restaurantService | `localhost:3202` | 3202 (order-service) |
-| `/api/menu-items` | restaurantService | `localhost:3202` | 3201 (menu-service) ⚠️ |
-| `/api/orders` | orderService | `localhost:3203` | 3202 (order-service) ⚠️ |
-| `/api/cart` | orderService | `localhost:3203` | 3202 ⚠️ |
-| `/api/payments` | paymentService | `localhost:3204` | 3204 ✅ |
-| `/api/notifications` | notificationService | `localhost:3205` | 3206 ⚠️ |
-| `/api/analytics` | analyticsService | `localhost:3303` | 3303 ✅ |
+| 网关路由前缀         | 目标服务            | 网关默认 URL     | 实际服务端口            |
+| -------------------- | ------------------- | ---------------- | ----------------------- |
+| `/api/users`         | user-service        | `localhost:3201` | 3201 ✅                 |
+| `/api/restaurants`   | restaurantService   | `localhost:3202` | 3202 (order-service)    |
+| `/api/menu-items`    | restaurantService   | `localhost:3202` | 3201 (menu-service) ⚠️  |
+| `/api/orders`        | orderService        | `localhost:3203` | 3202 (order-service) ⚠️ |
+| `/api/cart`          | orderService        | `localhost:3203` | 3202 ⚠️                 |
+| `/api/payments`      | paymentService      | `localhost:3204` | 3204 ✅                 |
+| `/api/notifications` | notificationService | `localhost:3205` | 3206 ⚠️                 |
+| `/api/analytics`     | analyticsService    | `localhost:3303` | 3303 ✅                 |
 
 > ⚠️ 网关默认端口映射与实际服务端口存在不一致,本地全量启动时需通过环境变量对齐(见第 10 节)。
 
@@ -161,39 +162,39 @@ cp -r backend/services/microservice-template backend/services/my-service
 
 ### 数据库分布总览
 
-| 服务 | ORM | 数据库 | 环境变量前缀 |
-|---|---|---|---|
-| user-service | `sequelize-typescript` | MySQL | `DATABASE_*` |
-| order-service | `sequelize-typescript` | MySQL | `DB_*` |
-| menu-service | `sequelize-typescript` + `mysql2` | MySQL | `DB_*` |
-| payment-service | `Sequelize` (vanilla) | MySQL | `DB_*` |
-| notification-service | `Sequelize` (vanilla) | MySQL | `DB_*` |
-| analytics-service | `sequelize-typescript` | PostgreSQL | `DB_*` |
-| api-service | `pg.Pool` (raw driver) | PostgreSQL | `DATABASE_*` |
-| smart-ops-service | — | MongoDB | `DATABASE_URL` |
-| smart-kitchen | — | Redis-backed | — |
+| 服务                 | ORM                               | 数据库       | 环境变量前缀   |
+| -------------------- | --------------------------------- | ------------ | -------------- |
+| user-service         | `sequelize-typescript`            | MySQL        | `DATABASE_*`   |
+| order-service        | `sequelize-typescript`            | MySQL        | `DB_*`         |
+| menu-service         | `sequelize-typescript` + `mysql2` | MySQL        | `DB_*`         |
+| payment-service      | `Sequelize` (vanilla)             | MySQL        | `DB_*`         |
+| notification-service | `Sequelize` (vanilla)             | MySQL        | `DB_*`         |
+| analytics-service    | `sequelize-typescript`            | PostgreSQL   | `DB_*`         |
+| api-service          | `pg.Pool` (raw driver)            | PostgreSQL   | `DATABASE_*`   |
+| smart-ops-service    | —                                 | MongoDB      | `DATABASE_URL` |
+| smart-kitchen        | —                                 | Redis-backed | —              |
 
 ### Sequelize 连接模板(MySQL 服务)
 
 ```typescript
 // 参照 user-service/src/config/database.ts
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize } from "sequelize-typescript";
 
 const sequelize = new Sequelize({
-  host: config.database.host,        // env: DATABASE_HOST
-  port: config.database.port,        // env: DATABASE_PORT
-  username: config.database.user,    // env: DATABASE_USER
-  password: config.database.password,// env: DATABASE_PASSWORD
-  database: config.database.name,    // env: DATABASE_NAME
-  dialect: config.database.dialect,  // 'mysql'
-  logging: (msg) => logger.debug(msg),
+  host: config.database.host, // env: DATABASE_HOST
+  port: config.database.port, // env: DATABASE_PORT
+  username: config.database.user, // env: DATABASE_USER
+  password: config.database.password, // env: DATABASE_PASSWORD
+  database: config.database.name, // env: DATABASE_NAME
+  dialect: config.database.dialect, // 'mysql'
+  logging: msg => logger.debug(msg),
   pool: { max: 10, min: 0, acquire: 30000, idle: 10000 },
   define: {
-    charset: 'utf8mb4',
-    collate: 'utf8mb4_unicode_ci',
-    underscored: true,       // 列名自动转 snake_case
-    timestamps: true,        // created_at / updated_at
-    paranoid: true,          // 软删除 deleted_at
+    charset: "utf8mb4",
+    collate: "utf8mb4_unicode_ci",
+    underscored: true, // 列名自动转 snake_case
+    timestamps: true, // created_at / updated_at
+    paranoid: true, // 软删除 deleted_at
   },
 });
 ```
@@ -202,10 +203,10 @@ const sequelize = new Sequelize({
 
 不同服务使用了不同的环境变量前缀,这是当前已知的不一致(见 PLAN.md):
 
-| 前缀 | 使用服务 |
-|---|---|
-| `DATABASE_HOST` / `DATABASE_PORT` | user-service, api-service |
-| `DB_HOST` / `DB_PORT` | order-service, menu-service, payment-service, notification-service, analytics-service |
+| 前缀                              | 使用服务                                                                              |
+| --------------------------------- | ------------------------------------------------------------------------------------- |
+| `DATABASE_HOST` / `DATABASE_PORT` | user-service, api-service                                                             |
+| `DB_HOST` / `DB_PORT`             | order-service, menu-service, payment-service, notification-service, analytics-service |
 
 **新服务建议统一使用 `DB_*` 前缀**(与 docker-compose 一致)。
 
@@ -213,13 +214,11 @@ const sequelize = new Sequelize({
 
 ```typescript
 // 参照 user-service/src/models/User.ts
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
 
 @Table({
-  tableName: 'users',                          // 复数 + snake_case
-  indexes: [
-    { name: 'idx_users_phone', fields: ['phone'], unique: true },
-  ],
+  tableName: "users", // 复数 + snake_case
+  indexes: [{ name: "idx_users_phone", fields: ["phone"], unique: true }],
 })
 export class User extends Model<User> {
   @Column({
@@ -235,7 +234,7 @@ export class User extends Model<User> {
 
   @ForeignKey(() => Role)
   @Column({ type: DataType.UUID, allowNull: false })
-  role_id: string;                              // snake_case 外键
+  role_id: string; // snake_case 外键
 
   @BelongsTo(() => Role)
   role: Role;
@@ -243,6 +242,7 @@ export class User extends Model<User> {
 ```
 
 **命名规范**:
+
 - 表名:复数 + snake_case (`users`、`order_items`、`food_safety_records`)
 - 列名:snake_case (`role_id`、`last_login_at`、`created_at`)
 - 主键:`id`,UUID 类型
@@ -253,7 +253,7 @@ export class User extends Model<User> {
 
 ```typescript
 // 开发环境自动同步表结构(非生产)
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   await sequelize.sync({ alter: true });
 }
 ```
@@ -276,26 +276,26 @@ ServiceDiscoveryClient  ◀──发现──    │
 
 ### 三层设计
 
-| 层 | 文件 | 职责 |
-|---|---|---|
-| **ConsulClient** | `service-registry/src/consul-client.ts` | 封装 Consul HTTP API(Axios) |
-| **ServiceRegistryManager** | `service-registry/src/service-registry-manager.ts` | 服务注册生命周期管理 |
+| 层                         | 文件                                               | 职责                         |
+| -------------------------- | -------------------------------------------------- | ---------------------------- |
+| **ConsulClient**           | `service-registry/src/consul-client.ts`            | 封装 Consul HTTP API(Axios)  |
+| **ServiceRegistryManager** | `service-registry/src/service-registry-manager.ts` | 服务注册生命周期管理         |
 | **ServiceDiscoveryClient** | `service-registry/src/service-discovery-client.ts` | 客户端发现 + 缓存 + 负载均衡 |
 
 ### 注册示例
 
 ```typescript
-import { initServiceRegistry } from '@yyc3/service-registry';
+import { initServiceRegistry } from "@yyc3/service-registry";
 
 const registry = initServiceRegistry({
-  name: 'user-service',
-  address: 'localhost',
+  name: "user-service",
+  address: "localhost",
   port: 3201,
   healthCheck: {
-    type: 'http',
-    http: 'http://localhost:3201/health',
-    interval: '10s',
-    timeout: '5s',
+    type: "http",
+    http: "http://localhost:3201/health",
+    interval: "10s",
+    timeout: "5s",
   },
 });
 // 自动注册;失败自动重试(最多 10 次,间隔 5s)
@@ -305,12 +305,12 @@ const registry = initServiceRegistry({
 ### 发现 + 调用示例
 
 ```typescript
-import { callService } from '@yyc3/service-registry';
+import { callService } from "@yyc3/service-registry";
 
 // 自动负载均衡(random / round-robin / least-connections / weighted)
-const result = await callService('user-service', {
-  method: 'GET',
-  path: '/api/v1/users/123',
+const result = await callService("user-service", {
+  method: "GET",
+  path: "/api/v1/users/123",
 });
 ```
 
@@ -368,8 +368,8 @@ export const optionalAuthMiddleware = (req, res, next) => { ... };
 ```typescript
 // api-gateway/src/routes/index.ts — onProxyReq 回调
 if ((req as any).user) {
-  proxyReq.setHeader('X-User-ID', (req as any).user.userId);
-  proxyReq.setHeader('X-User-Email', (req as any).user.email);
+  proxyReq.setHeader("X-User-ID", (req as any).user.userId);
+  proxyReq.setHeader("X-User-Email", (req as any).user.email);
 }
 ```
 
@@ -379,15 +379,15 @@ if ((req as any).user) {
 
 ```typescript
 // secure = true → 需认证 (authMiddleware)
-createProxyRoute('/api/users',        'userService',         true);
-createProxyRoute('/api/orders',       'orderService',         true);
-createProxyRoute('/api/payments',     'paymentService',       true);
-createProxyRoute('/api/notifications','notificationService',  true);
+createProxyRoute("/api/users", "userService", true);
+createProxyRoute("/api/orders", "orderService", true);
+createProxyRoute("/api/payments", "paymentService", true);
+createProxyRoute("/api/notifications", "notificationService", true);
 
 // secure = false → 可选认证 (optionalAuthMiddleware)
-createProxyRoute('/api/restaurants',  'restaurantService',    false);
-createProxyRoute('/api/menu-items',   'restaurantService',    false);
-createProxyRoute('/api/analytics',    'analyticsService',     false);
+createProxyRoute("/api/restaurants", "restaurantService", false);
+createProxyRoute("/api/menu-items", "restaurantService", false);
+createProxyRoute("/api/analytics", "analyticsService", false);
 ```
 
 ### JWT Secret 配置
@@ -408,12 +408,12 @@ JWT_SECRET=your-very-secure-secret-key   # 生产环境必须替换
 ```typescript
 // backend/shared/types/ApiResponse.ts
 interface ApiResponse<T = any> {
-  code: number;          // HTTP 状态码
-  message: string;       // 人类可读消息(中文)
-  data?: T;              // 业务数据
-  timestamp: number;     // Unix 毫秒时间戳
-  requestId?: string;    // 请求追踪 ID
-  success: boolean;      // 成功/失败标志
+  code: number; // HTTP 状态码
+  message: string; // 人类可读消息(中文)
+  data?: T; // 业务数据
+  timestamp: number; // Unix 毫秒时间戳
+  requestId?: string; // 请求追踪 ID
+  success: boolean; // 成功/失败标志
 }
 ```
 
@@ -423,24 +423,24 @@ interface ApiResponse<T = any> {
 // 成功响应
 return res.status(200).json({
   code: 200,
-  message: '获取用户列表成功',
+  message: "获取用户列表成功",
   data: result,
 });
 
 // 错误响应
 return res.status(404).json({
   code: 404,
-  message: '用户不存在',
+  message: "用户不存在",
 });
 
 // 异常捕获
 try {
   // ...
 } catch (error: any) {
-  logger.error('操作失败:', error);
+  logger.error("操作失败:", error);
   return res.status(500).json({
     code: 500,
-    message: error.message || '服务器内部错误',
+    message: error.message || "服务器内部错误",
   });
 }
 ```
@@ -449,17 +449,17 @@ try {
 
 `backend/src/middleware/errorHandler.ts` 定义了 Hono 风格的错误层级(供 api-service 使用):
 
-| 错误类 | HTTP 状态码 | 用途 |
-|---|---|---|
-| `ValidationError` | 400 | 请求参数校验失败 |
-| `AuthenticationError` | 401 | 认证失败 |
-| `AuthorizationError` | 403 | 权限不足 |
-| `NotFoundError` | 404 | 资源不存在 |
-| `ConflictError` | 409 | 资源冲突 |
-| `RateLimitError` | 429 | 限流触发 |
-| `BusinessError` | 400 | 业务规则违反 |
-| `ExternalServiceError` | 502 | 外部依赖故障 |
-| `DatabaseError` | 500 | 数据库操作失败 |
+| 错误类                 | HTTP 状态码 | 用途             |
+| ---------------------- | ----------- | ---------------- |
+| `ValidationError`      | 400         | 请求参数校验失败 |
+| `AuthenticationError`  | 401         | 认证失败         |
+| `AuthorizationError`   | 403         | 权限不足         |
+| `NotFoundError`        | 404         | 资源不存在       |
+| `ConflictError`        | 409         | 资源冲突         |
+| `RateLimitError`       | 429         | 限流触发         |
+| `BusinessError`        | 400         | 业务规则违反     |
+| `ExternalServiceError` | 502         | 外部依赖故障     |
+| `DatabaseError`        | 500         | 数据库操作失败   |
 
 > 多数 Express 服务的 Controller 使用简化版 `try/catch + res.status(error.status || 500)`,未采用上述完整体系。新服务建议引入 `AppError` 层级。
 
@@ -468,10 +468,10 @@ try {
 所有服务应在 `app.ts` 中暴露:
 
 ```typescript
-app.get('/health', (req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({
-    status: 'UP',
-    service: 'user-service',
+    status: "UP",
+    service: "user-service",
     timestamp: new Date().toISOString(),
   });
 });
@@ -486,28 +486,28 @@ app.get('/health', (req, res) => {
 `backend/libs/logger/logger.service.ts` 基于 Winston + daily-rotate-file:
 
 ```typescript
-import { createLoggerService, LogLevel } from '@libs/logger/logger.service';
+import { createLoggerService, LogLevel } from "@libs/logger/logger.service";
 
 const logger = createLoggerService({
-  level: process.env['LOG_LEVEL'] || LogLevel.INFO,
-  filePath: process.env['LOG_FILE_PATH'] || './logs/service.log',
-  maxFiles: process.env['LOG_MAX_FILES'] || '14d',
-  maxSize: process.env['LOG_MAX_SIZE'] || '20m',
-  format: process.env['LOG_FORMAT'] || 'json',
+  level: process.env["LOG_LEVEL"] || LogLevel.INFO,
+  filePath: process.env["LOG_FILE_PATH"] || "./logs/service.log",
+  maxFiles: process.env["LOG_MAX_FILES"] || "14d",
+  maxSize: process.env["LOG_MAX_SIZE"] || "20m",
+  format: process.env["LOG_FORMAT"] || "json",
 });
 
-logger.info('数据库连接成功');
-logger.error('登录失败', { userId: '123', error: err.message });
+logger.info("数据库连接成功");
+logger.error("登录失败", { userId: "123", error: err.message });
 ```
 
 ### 日志约定
 
-| 级别 | 使用场景 | 示例 |
-|---|---|---|
-| `debug` | SQL 日志、详细调试信息 | `logger.debug('SQL: SELECT * FROM users')` |
-| `info` | 正常业务流程、启动/关闭 | `logger.info('用户服务已启动,监听端口 3201')` |
-| `warn` | 异常但可恢复的情况 | `logger.warn('Redis 连接超时,使用本地缓存')` |
-| `error` | 错误、异常、需要关注 | `logger.error('数据库连接失败:', error)` |
+| 级别    | 使用场景                | 示例                                          |
+| ------- | ----------------------- | --------------------------------------------- |
+| `debug` | SQL 日志、详细调试信息  | `logger.debug('SQL: SELECT * FROM users')`    |
+| `info`  | 正常业务流程、启动/关闭 | `logger.info('用户服务已启动,监听端口 3201')` |
+| `warn`  | 异常但可恢复的情况      | `logger.warn('Redis 连接超时,使用本地缓存')`  |
+| `error` | 错误、异常、需要关注    | `logger.error('数据库连接失败:', error)`      |
 
 - 日志消息统一使用**中文**。
 - 结构化日志传递上下文对象:`logger.info('代理请求', { serviceName, url, method })`。
@@ -515,11 +515,11 @@ logger.error('登录失败', { userId: '123', error: err.message });
 
 ### 各服务差异
 
-| 服务 | 日志实现 | 文件保留 |
-|---|---|---|
-| api-gateway | 共享库 `@libs/logger` | 14 天 |
-| user-service | 独立 Winston 配置(error + combined 双文件) | 30 天 |
-| ai-assistant | 行内配置(app.ts 中) | — |
+| 服务         | 日志实现                                   | 文件保留 |
+| ------------ | ------------------------------------------ | -------- |
+| api-gateway  | 共享库 `@libs/logger`                      | 14 天    |
+| user-service | 独立 Winston 配置(error + combined 双文件) | 30 天    |
+| ai-assistant | 行内配置(app.ts 中)                        | —        |
 
 ---
 
@@ -527,14 +527,14 @@ logger.error('登录失败', { userId: '123', error: err.message });
 
 ### 现有 Dockerfile 清单
 
-| 服务 | 基础镜像 | 包管理器 | 安全特性 |
-|---|---|---|---|
-| `api-gateway` | `oven/bun:1-alpine` | pnpm | ✅ 非 root 用户 + dumb-init + healthcheck |
-| `user-service` | `node:18-alpine` | npm | ❌ root 运行,无 init,无 healthcheck |
-| `api-service` | Bun 专用 | bun | ✅ 多阶段构建 |
-| `menu-service` | — | — | — |
-| `notification-service` | — | — | — |
-| `smart-kitchen` | — | — | — |
+| 服务                   | 基础镜像            | 包管理器 | 安全特性                                  |
+| ---------------------- | ------------------- | -------- | ----------------------------------------- |
+| `api-gateway`          | `oven/bun:1-alpine` | pnpm     | ✅ 非 root 用户 + dumb-init + healthcheck |
+| `user-service`         | `node:18-alpine`    | npm      | ❌ root 运行,无 init,无 healthcheck       |
+| `api-service`          | Bun 专用            | bun      | ✅ 多阶段构建                             |
+| `menu-service`         | —                   | —        | —                                         |
+| `notification-service` | —                   | —        | —                                         |
+| `smart-kitchen`        | —                   | —        | —                                         |
 
 ### 推荐 Dockerfile 模板(Node + Express 服务)
 
@@ -585,19 +585,19 @@ docker-compose up -d mysql redis consul
 
 ### 基础设施端口与凭据(开发环境)
 
-| 组件 | 端口 | 凭据(仅开发) |
-|---|---|---|
-| MySQL | 3306 | root / `123456`,db: `yyc3_catering`,user: `yyc3_user` |
-| Redis | 6379 | password: `123456` |
-| RabbitMQ | 5672 (AMQP) / 15672 (UI) | admin / `123456`,vhost: `/yyc3` |
-| Kafka | 9092 / 29092 | — |
-| Consul | 8500 (HTTP) / 8600 (DNS) | — |
-| Nacos | 8848 | — |
-| Elasticsearch | 9200 | — |
-| Kibana | 5601 | — |
-| Logstash | 5044 | — |
-| Prometheus | 9090 | — |
-| Grafana | 3000 | admin / admin |
+| 组件          | 端口                     | 凭据(仅开发)                                          |
+| ------------- | ------------------------ | ----------------------------------------------------- |
+| MySQL         | 3306                     | root / `123456`,db: `yyc3_catering`,user: `yyc3_user` |
+| Redis         | 6379                     | password: `123456`                                    |
+| RabbitMQ      | 5672 (AMQP) / 15672 (UI) | admin / `123456`,vhost: `/yyc3`                       |
+| Kafka         | 9092 / 29092             | —                                                     |
+| Consul        | 8500 (HTTP) / 8600 (DNS) | —                                                     |
+| Nacos         | 8848                     | —                                                     |
+| Elasticsearch | 9200                     | —                                                     |
+| Kibana        | 5601                     | —                                                     |
+| Logstash      | 5044                     | —                                                     |
+| Prometheus    | 9090                     | —                                                     |
+| Grafana       | 3000                     | admin / admin                                         |
 
 > ⚠️ 以上均为**开发环境默认凭据**,**严禁用于生产**。生产凭据治理见 `PLAN.md` D5。
 
@@ -670,25 +670,25 @@ PORT=3201
 
 ```typescript
 // backend/services/user-service/src/__tests__/unit/services/UserService.test.ts
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import userService from '../../../services/UserService';
-import { User, UserStatus } from '../../../models/User';
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import userService from "../../../services/UserService";
+import { User, UserStatus } from "../../../models/User";
 
 // 模拟 Sequelize Model
-vi.mock('../../../models/User');
+vi.mock("../../../models/User");
 
-describe('UserService', () => {
+describe("UserService", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('应该成功注册新用户', async () => {
-    vi.spyOn(User, 'findOne').mockResolvedValue(null);
-    vi.spyOn(User, 'create').mockResolvedValue({ id: '1' } as any);
+  it("应该成功注册新用户", async () => {
+    vi.spyOn(User, "findOne").mockResolvedValue(null);
+    vi.spyOn(User, "create").mockResolvedValue({ id: "1" } as any);
 
     const result = await userService.register({
-      phone: '13800138000',
-      password: 'password123',
+      phone: "13800138000",
+      password: "password123",
     });
 
     expect(result).toBeDefined();
@@ -697,6 +697,7 @@ describe('UserService', () => {
 ```
 
 **测试约定**:
+
 - 框架: **Vitest**(部分老服务可能用 Jest,新服务统一用 Vitest)
 - 位置: `src/__tests__/unit/**/*.test.ts`,镜像源码结构
 - Mock: 使用 `vi.mock()` + `vi.spyOn()` 模拟 Sequelize Model
@@ -709,15 +710,15 @@ git commit -m "feat(user-service): 添加密码重置功能"
 #           ↑ type(scope): description
 ```
 
-| Type | 用途 |
-|---|---|
-| `feat` | 新功能 |
-| `fix` | Bug 修复 |
+| Type       | 用途               |
+| ---------- | ------------------ |
+| `feat`     | 新功能             |
+| `fix`      | Bug 修复           |
 | `refactor` | 代码重构(不改行为) |
-| `perf` | 性能优化 |
-| `test` | 测试相关 |
-| `docs` | 文档更新 |
-| `chore` | 构建/工具变动 |
+| `perf`     | 性能优化           |
+| `test`     | 测试相关           |
+| `docs`     | 文档更新           |
+| `chore`    | 构建/工具变动      |
 
 ---
 
@@ -748,9 +749,11 @@ RESTAURANT_SERVICE_URL=http://localhost:3211  # menu-service
 ### ⚠️ JWT Secret Fallback
 
 `api-gateway/src/middleware/auth.ts` 中 `jwt.verify` 有硬编码 fallback:
+
 ```typescript
-jwt.verify(token, process.env['JWT_SECRET'] || 'your-secret-key-change-in-production')
+jwt.verify(token, process.env["JWT_SECRET"] || "your-secret-key-change-in-production");
 ```
+
 **生产环境必须设置 `JWT_SECRET`**。
 
 ### ⚠️ 双数据库
@@ -768,6 +771,7 @@ MySQL(多数服务)和 PostgreSQL(api-service、analytics-service)并存。docke
 ### ⚠️ Stub 服务
 
 以下服务仅有最小骨架,功能不完整(见 `PLAN.md` D4):
+
 - `o2o-system` (1 文件)
 - `chain-operation` (4 文件,无 tsconfig)
 - `food-safety` (4 文件,无 tsconfig)
@@ -777,16 +781,16 @@ MySQL(多数服务)和 PostgreSQL(api-service、analytics-service)并存。docke
 
 ## 附录:关键文件索引
 
-| 内容 | 文件路径 |
-|---|---|
-| 微服务模板 | `backend/services/microservice-template/` |
-| 共享类型 | `backend/shared/types/ApiResponse.ts`、`Auth.ts` |
-| 共享服务库 | `backend/common/services/{LoggerService,EventBusService,CommunicationService}.ts` |
-| 日志库 | `backend/libs/logger/logger.service.ts` |
-| 错误处理 | `backend/src/middleware/errorHandler.ts` |
-| 网关路由 | `backend/services/api-gateway/src/routes/index.ts` |
-| 网关认证 | `backend/services/api-gateway/src/middleware/auth.ts` |
-| 网关服务配置 | `backend/services/api-gateway/src/config/services.ts` |
-| 服务注册 | `backend/services/service-registry/src/` |
-| 本地基础设施 | `docker-compose.yaml` |
-| Helm 部署 | `helm/`、`infra/phase1/iac/helm/charts/` |
+| 内容         | 文件路径                                                                          |
+| ------------ | --------------------------------------------------------------------------------- |
+| 微服务模板   | `backend/services/microservice-template/`                                         |
+| 共享类型     | `backend/shared/types/ApiResponse.ts`、`Auth.ts`                                  |
+| 共享服务库   | `backend/common/services/{LoggerService,EventBusService,CommunicationService}.ts` |
+| 日志库       | `backend/libs/logger/logger.service.ts`                                           |
+| 错误处理     | `backend/src/middleware/errorHandler.ts`                                          |
+| 网关路由     | `backend/services/api-gateway/src/routes/index.ts`                                |
+| 网关认证     | `backend/services/api-gateway/src/middleware/auth.ts`                             |
+| 网关服务配置 | `backend/services/api-gateway/src/config/services.ts`                             |
+| 服务注册     | `backend/services/service-registry/src/`                                          |
+| 本地基础设施 | `docker-compose.yaml`                                                             |
+| Helm 部署    | `helm/`、`infra/phase1/iac/helm/charts/`                                          |

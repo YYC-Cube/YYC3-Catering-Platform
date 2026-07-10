@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { Inbox, FileX, SearchX, WifiOff, AlertCircle } from 'lucide-vue-next'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { Inbox, FileX, SearchX, WifiOff, AlertCircle } from 'lucide-vue-next';
 
 export const Empty = defineComponent({
   name: 'Empty',
@@ -49,80 +49,69 @@ export const Empty = defineComponent({
     const iconComponent = computed(() => {
       switch (props.type) {
         case 'error':
-          return FileX
+          return FileX;
         case 'search':
-          return SearchX
+          return SearchX;
         case 'network':
-          return WifiOff
+          return WifiOff;
         case 'default':
         default:
-          return Inbox
+          return Inbox;
       }
-    })
+    });
 
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'w-16 h-16'
+          return 'w-16 h-16';
         case 'lg':
-          return 'w-32 h-32'
+          return 'w-32 h-32';
         case 'xl':
-          return 'w-48 h-48'
+          return 'w-48 h-48';
         case 'md':
         default:
-          return 'w-24 h-24'
+          return 'w-24 h-24';
       }
-    })
+    });
 
     const textSizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'text-sm'
+          return 'text-sm';
         case 'lg':
-          return 'text-lg'
+          return 'text-lg';
         case 'xl':
-          return 'text-xl'
+          return 'text-xl';
         case 'md':
         default:
-          return 'text-base'
+          return 'text-base';
       }
-    })
+    });
 
     const iconSize = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 32
+          return 32;
         case 'lg':
-          return 64
+          return 64;
         case 'xl':
-          return 96
+          return 96;
         case 'md':
         default:
-          return 48
+          return 48;
       }
-    })
+    });
 
     const handleAction = () => {
-      emit('action')
-    }
+      emit('action');
+    };
 
     return () => (
-      <div
-        class={cn(
-          'flex flex-col items-center justify-center p-8 text-neutral-400',
-          props.className
-        )}
-      >
+      <div class={cn('flex flex-col items-center justify-center p-8 text-neutral-400', props.className)}>
         {props.image ? (
-          <img
-            src={props.image}
-            alt="empty"
-            class={cn('mb-4', sizeClasses.value)}
-          />
+          <img src={props.image} alt="empty" class={cn('mb-4', sizeClasses.value)} />
         ) : slots.image ? (
-          <div class={cn('mb-4', sizeClasses.value)}>
-            {slots.image()}
-          </div>
+          <div class={cn('mb-4', sizeClasses.value)}>{slots.image()}</div>
         ) : (
           <div class={cn('mb-4', sizeClasses.value, 'flex items-center justify-center')}>
             <iconComponent.value size={iconSize.value} class="text-neutral-300" />
@@ -131,11 +120,7 @@ export const Empty = defineComponent({
         <p class={cn('mb-2 text-neutral-600', textSizeClasses.value)}>
           {slots.description ? slots.description() : props.description}
         </p>
-        {slots.default && (
-          <p class="text-sm text-neutral-400 mb-4">
-            {slots.default()}
-          </p>
-        )}
+        {slots.default && <p class="text-sm text-neutral-400 mb-4">{slots.default()}</p>}
         {props.showAction && (
           <button
             type="button"
@@ -145,15 +130,11 @@ export const Empty = defineComponent({
             {props.actionText}
           </button>
         )}
-        {slots.action && (
-          <div class="mt-4">
-            {slots.action()}
-          </div>
-        )}
+        {slots.action && <div class="mt-4">{slots.action()}</div>}
       </div>
-    )
+    );
   },
-})
+});
 
 export const EmptyState = defineComponent({
   name: 'EmptyState',
@@ -186,26 +167,15 @@ export const EmptyState = defineComponent({
   emits: ['action'],
   setup(props, { emit, slots }) {
     const handleAction = () => {
-      emit('action')
-    }
+      emit('action');
+    };
 
     return () => (
-      <div
-        class={cn(
-          'flex flex-col items-center justify-center min-h-[400px] p-8',
-          props.className
-        )}
-      >
+      <div class={cn('flex flex-col items-center justify-center min-h-[400px] p-8', props.className)}>
         {props.image ? (
-          <img
-            src={props.image}
-            alt="empty"
-            class="w-32 h-32 mb-6 opacity-50"
-          />
+          <img src={props.image} alt="empty" class="w-32 h-32 mb-6 opacity-50" />
         ) : slots.image ? (
-          <div class="w-32 h-32 mb-6">
-            {slots.image()}
-          </div>
+          <div class="w-32 h-32 mb-6">{slots.image()}</div>
         ) : props.icon ? (
           <div class="w-32 h-32 mb-6 flex items-center justify-center">
             <props.icon size={64} class="text-neutral-300" />
@@ -215,18 +185,12 @@ export const EmptyState = defineComponent({
             <Inbox size={64} class="text-neutral-300" />
           </div>
         )}
-        <h3 class="text-lg font-semibold text-neutral-700 mb-2">
-          {slots.title ? slots.title() : props.title}
-        </h3>
+        <h3 class="text-lg font-semibold text-neutral-700 mb-2">{slots.title ? slots.title() : props.title}</h3>
         <p class="text-sm text-neutral-500 mb-6 text-center max-w-md">
           {slots.description ? slots.description() : props.description}
         </p>
-        {slots.action ? (
-          slots.action()
-        ) : props.action ? (
-          <props.action onClick={handleAction} />
-        ) : null}
+        {slots.action ? slots.action() : props.action ? <props.action onClick={handleAction} /> : null}
       </div>
-    )
+    );
   },
-})
+});

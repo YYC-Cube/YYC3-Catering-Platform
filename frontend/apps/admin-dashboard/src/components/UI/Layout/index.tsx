@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import { defineComponent, ref, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
+import { defineComponent, ref, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
 
 export const Layout = defineComponent({
   name: 'Layout',
@@ -25,18 +25,12 @@ export const Layout = defineComponent({
   },
   setup(props, { attrs, slots }) {
     return () => (
-      <div
-        class={cn(
-          'min-h-screen flex flex-col',
-          props.hasSider && 'flex-row',
-          props.className
-        )}
-      >
+      <div class={cn('min-h-screen flex flex-col', props.hasSider && 'flex-row', props.className)}>
         {slots.default?.()}
       </div>
-    )
+    );
   },
-})
+});
 
 export const LayoutHeader = defineComponent({
   name: 'LayoutHeader',
@@ -57,25 +51,25 @@ export const LayoutHeader = defineComponent({
   setup(props, { attrs, slots }) {
     const heightStyle = computed(() => {
       if (typeof props.height === 'number') {
-        return { height: `${props.height}px` }
+        return { height: `${props.height}px` };
       }
-      return { height: props.height }
-    })
+      return { height: props.height };
+    });
 
     return () => (
       <header
         class={cn(
           'flex items-center justify-between px-6 bg-white border-b border-neutral-200',
           props.fixed && 'fixed top-0 left-0 right-0 z-40',
-          props.className
+          props.className,
         )}
         style={heightStyle.value}
       >
         {slots.default?.()}
       </header>
-    )
+    );
   },
-})
+});
 
 export const LayoutSider = defineComponent({
   name: 'LayoutSider',
@@ -113,38 +107,36 @@ export const LayoutSider = defineComponent({
   setup(props, { emit, slots }) {
     const currentWidth = computed(() => {
       if (props.collapsed) {
-        return props.collapsedWidth
+        return props.collapsedWidth;
       }
-      return props.width
-    })
+      return props.width;
+    });
 
     const widthStyle = computed(() => {
       if (typeof currentWidth.value === 'number') {
-        return { width: `${currentWidth.value}px` }
+        return { width: `${currentWidth.value}px` };
       }
-      return { width: currentWidth.value }
-    })
+      return { width: currentWidth.value };
+    });
 
     const themeClasses = computed(() => {
-      return props.theme === 'dark'
-        ? 'bg-neutral-900 text-white'
-        : 'bg-white text-neutral-900'
-    })
+      return props.theme === 'dark' ? 'bg-neutral-900 text-white' : 'bg-white text-neutral-900';
+    });
 
     return () => (
       <aside
         class={cn(
           'flex-shrink-0 border-r border-neutral-200 transition-all duration-300',
           themeClasses.value,
-          props.className
+          props.className,
         )}
         style={widthStyle.value}
       >
         {slots.default?.()}
       </aside>
-    )
+    );
   },
-})
+});
 
 export const LayoutContent = defineComponent({
   name: 'LayoutContent',
@@ -155,18 +147,9 @@ export const LayoutContent = defineComponent({
     },
   },
   setup(props, { attrs, slots }) {
-    return () => (
-      <main
-        class={cn(
-          'flex-1 overflow-auto bg-neutral-50',
-          props.className
-        )}
-      >
-        {slots.default?.()}
-      </main>
-    )
+    return () => <main class={cn('flex-1 overflow-auto bg-neutral-50', props.className)}>{slots.default?.()}</main>;
   },
-})
+});
 
 export const LayoutFooter = defineComponent({
   name: 'LayoutFooter',
@@ -186,11 +169,11 @@ export const LayoutFooter = defineComponent({
         class={cn(
           'flex items-center justify-center px-6 py-4 bg-white border-t border-neutral-200 text-sm text-neutral-600',
           props.fixed && 'fixed bottom-0 left-0 right-0 z-40',
-          props.className
+          props.className,
         )}
       >
         {slots.default?.()}
       </footer>
-    )
+    );
   },
-})
+});

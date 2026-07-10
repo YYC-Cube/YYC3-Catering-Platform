@@ -11,15 +11,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'dist/',
-        '.github/',
-        'docs/',
-        'tests/',
-        '**/*.d.ts',
-        '**/node_modules/**',
-      ],
+      exclude: ['node_modules/', 'dist/', '.github/', 'docs/', 'tests/', '**/*.d.ts', '**/node_modules/**'],
     },
     // 测试文件匹配模式
     include: [
@@ -30,16 +22,10 @@ export default defineConfig({
       'backend/**/*.test.ts',
       'backend/**/*.spec.ts',
       'frontend/**/*.test.ts',
-      'frontend/**/*.spec.ts'
+      'frontend/**/*.spec.ts',
     ],
     // 排除的文件
-    exclude: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/.github/**',
-      '**/docs/**',
-      '**/*.d.ts'
-    ],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/.github/**', '**/docs/**', '**/*.d.ts'],
     // 测试报告配置
     reporters: ['default', 'html'],
     // 测试结果输出目录

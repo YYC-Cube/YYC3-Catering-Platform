@@ -64,11 +64,7 @@ export class ValueValidationFramework {
     return {
       satisfaction: 4.6, // 满意度 (1-5)
       nps: 72, // Net Promoter Score
-      userTestimonials: [
-        '大大提升了订单处理效率',
-        'AI助手非常智能，解决了很多问题',
-        '数据分析功能很有价值',
-      ],
+      userTestimonials: ['大大提升了订单处理效率', 'AI助手非常智能，解决了很多问题', '数据分析功能很有价值'],
       commonPraise: ['操作简便', 'AI智能', '数据洞察', '响应快速'],
       improvementAreas: ['移动端体验', '报表定制', '批量操作'],
     };
@@ -157,8 +153,7 @@ export class ValueValidationFramework {
     };
 
     const uniquenessScore =
-      Object.values(differentiators).reduce((sum, score) => sum + score, 0) /
-      Object.values(differentiators).length;
+      Object.values(differentiators).reduce((sum, score) => sum + score, 0) / Object.values(differentiators).length;
 
     return Math.round(uniquenessScore * 10) / 10;
   }
@@ -176,8 +171,7 @@ export class ValueValidationFramework {
     };
 
     const alignmentScore =
-      Object.values(alignmentFactors).reduce((sum, score) => sum + score, 0) /
-      Object.values(alignmentFactors).length;
+      Object.values(alignmentFactors).reduce((sum, score) => sum + score, 0) / Object.values(alignmentFactors).length;
 
     return Math.round(alignmentScore * 10) / 10;
   }

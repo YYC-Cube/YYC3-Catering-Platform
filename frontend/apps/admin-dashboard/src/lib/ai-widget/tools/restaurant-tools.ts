@@ -30,7 +30,7 @@ export const RESTAURANT_TOOLS: AITool[] = [
         limit: { type: 'number', description: '返回数量限制', default: 10 },
       },
     },
-    execute: async (params) => {
+    execute: async params => {
       // 模拟订单数据
       const mockOrders = [
         {
@@ -84,7 +84,7 @@ export const RESTAURANT_TOOLS: AITool[] = [
       },
       required: ['orderId', 'status'],
     },
-    execute: async (params) => {
+    execute: async params => {
       return {
         success: true,
         data: {
@@ -114,7 +114,7 @@ export const RESTAURANT_TOOLS: AITool[] = [
         limit: { type: 'number', description: '返回数量限制', default: 10 },
       },
     },
-    execute: async (params) => {
+    execute: async params => {
       const mockDishes = [
         {
           dishId: 'DISH-001',
@@ -154,17 +154,15 @@ export const RESTAURANT_TOOLS: AITool[] = [
       let filtered = mockDishes;
 
       if (params.keyword) {
-        filtered = filtered.filter((dish) =>
-          dish.name.includes(params.keyword!)
-        );
+        filtered = filtered.filter(dish => dish.name.includes(params.keyword!));
       }
 
       if (params.category) {
-        filtered = filtered.filter((dish) => dish.category === params.category);
+        filtered = filtered.filter(dish => dish.category === params.category);
       }
 
       if (params.availableOnly) {
-        filtered = filtered.filter((dish) => dish.availability);
+        filtered = filtered.filter(dish => dish.availability);
       }
 
       return {
@@ -193,7 +191,7 @@ export const RESTAURANT_TOOLS: AITool[] = [
       },
       required: ['dishId', 'availability'],
     },
-    execute: async (params) => {
+    execute: async params => {
       return {
         success: true,
         data: {
@@ -238,7 +236,7 @@ export const RESTAURANT_TOOLS: AITool[] = [
       },
       required: ['period'],
     },
-    execute: async (params) => {
+    execute: async params => {
       return {
         success: true,
         data: {
@@ -276,7 +274,7 @@ export const RESTAURANT_TOOLS: AITool[] = [
         limit: { type: 'number', description: '返回数量', default: 10 },
       },
     },
-    execute: async (params) => {
+    execute: async params => {
       const mockCustomers = [
         {
           customerId: 'CUST-001',
@@ -328,7 +326,7 @@ export const RESTAURANT_TOOLS: AITool[] = [
       },
       required: ['metric'],
     },
-    execute: async (params) => {
+    execute: async params => {
       return {
         success: true,
         data: {
@@ -364,7 +362,7 @@ export const RESTAURANT_TOOLS: AITool[] = [
         includeDetails: { type: 'boolean', description: '包含详细信息', default: false },
       },
     },
-    execute: async (params) => {
+    execute: async params => {
       return {
         success: true,
         data: {

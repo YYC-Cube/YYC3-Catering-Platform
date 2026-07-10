@@ -18,7 +18,7 @@ const logFormat = winston.format.combine(
     stack: true,
   }),
   winston.format.splat(),
-  winston.format.json(),
+  winston.format.json()
 );
 
 // 创建日志器
@@ -33,10 +33,7 @@ const logger = winston.createLogger({
   transports: [
     // 控制台输出
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple(),
-      ),
+      format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
     }),
   ],
 });
@@ -49,7 +46,7 @@ if (config.logger.fileTransport) {
       maxsize: 5242880, // 5MB
       maxFiles: 5,
       tailable: true,
-    }),
+    })
   );
 }
 
@@ -57,11 +54,8 @@ if (config.logger.fileTransport) {
 if (config.service.env === 'development') {
   logger.add(
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.prettyPrint(),
-      ),
-    }),
+      format: winston.format.combine(winston.format.colorize(), winston.format.prettyPrint()),
+    })
   );
 }
 

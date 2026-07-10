@@ -76,36 +76,36 @@ graph TD
 
 ## 2. 工具选型
 
-| 工具类别 | 工具名称 | 版本 | 用途 | 优势 |
-|---------|---------|-----|-----|-----|
-| 代码管理 | GitHub | 最新 | 代码仓库、版本控制 | 广泛使用、生态完善、与GitHub Actions集成良好 |
-| CI/CD工具 | GitHub Actions | 最新 | 流水线自动化 | 与GitHub深度集成、配置简单、支持多种环境 |
-| 代码质量 | SonarQube | 9.9LTS | 代码质量检查、安全扫描 | 全面的代码质量分析、支持多种语言、可定制规则 |
-| 自动化测试 | Jest | 29.7.0 | 单元测试、集成测试 | 快速、易用、支持快照测试 |
-| 容器化 | Docker | 24.0.0 | 容器构建、运行 | 标准化容器格式、生态完善 |
-| 镜像扫描 | Trivy | 0.46.0 | 容器镜像漏洞扫描 | 快速、全面、支持多种镜像格式 |
-| 镜像仓库 | Harbor | 2.8.0 | 容器镜像管理 | 企业级功能、安全扫描集成、RBAC支持 |
-| 编排工具 | Kubernetes | 1.27.0 | 容器编排、部署管理 | 强大的编排能力、高可用、可扩展 |
-| 包管理 | Helm | 3.12.0 | Kubernetes应用打包、部署 | 简化部署配置、支持版本管理、回滚 |
-| 监控告警 | Prometheus + Grafana | 2.45.0 + 10.2.0 | 监控、可视化、告警 | 强大的监控能力、灵活的可视化、丰富的告警规则 |
+| 工具类别   | 工具名称             | 版本            | 用途                     | 优势                                         |
+| ---------- | -------------------- | --------------- | ------------------------ | -------------------------------------------- |
+| 代码管理   | GitHub               | 最新            | 代码仓库、版本控制       | 广泛使用、生态完善、与GitHub Actions集成良好 |
+| CI/CD工具  | GitHub Actions       | 最新            | 流水线自动化             | 与GitHub深度集成、配置简单、支持多种环境     |
+| 代码质量   | SonarQube            | 9.9LTS          | 代码质量检查、安全扫描   | 全面的代码质量分析、支持多种语言、可定制规则 |
+| 自动化测试 | Jest                 | 29.7.0          | 单元测试、集成测试       | 快速、易用、支持快照测试                     |
+| 容器化     | Docker               | 24.0.0          | 容器构建、运行           | 标准化容器格式、生态完善                     |
+| 镜像扫描   | Trivy                | 0.46.0          | 容器镜像漏洞扫描         | 快速、全面、支持多种镜像格式                 |
+| 镜像仓库   | Harbor               | 2.8.0           | 容器镜像管理             | 企业级功能、安全扫描集成、RBAC支持           |
+| 编排工具   | Kubernetes           | 1.27.0          | 容器编排、部署管理       | 强大的编排能力、高可用、可扩展               |
+| 包管理     | Helm                 | 3.12.0          | Kubernetes应用打包、部署 | 简化部署配置、支持版本管理、回滚             |
+| 监控告警   | Prometheus + Grafana | 2.45.0 + 10.2.0 | 监控、可视化、告警       | 强大的监控能力、灵活的可视化、丰富的告警规则 |
 
 ## 3. 流水线配置
 
 ### 3.1 整体流水线流程
 
-| 阶段 | 名称 | 主要任务 | 触发条件 | 失败策略 |
-|-----|-----|---------|---------|---------|
-| 1 | 代码提交 | 开发者提交代码到GitHub | 代码push到develop/main分支 | 无 |
-| 2 | CI触发 | Webhook触发GitHub Actions | 代码提交或PR创建 | 无 |
-| 3 | 代码质量检查 | SonarQube代码分析 | CI触发后立即执行 | 严重问题时失败 |
-| 4 | 自动化测试 | 单元测试、集成测试 | 代码质量检查通过后执行 | 测试失败时失败 |
-| 5 | 镜像构建 | Docker镜像构建 | 测试通过后执行 | 构建失败时失败 |
-| 6 | 镜像扫描 | Trivy漏洞扫描 | 镜像构建完成后执行 | 高危漏洞时失败 |
-| 7 | 镜像推送 | 推送到Harbor镜像仓库 | 镜像扫描通过后执行 | 推送失败时失败 |
-| 8 | CD触发 | 根据分支触发不同环境的部署 | 镜像推送完成后执行 | 无 |
-| 9 | 环境部署 | 使用Helm部署到Kubernetes | CD触发后执行 | 部署失败时失败并回滚 |
-| 10 | 部署验证 | 验证服务是否正常运行 | 部署完成后执行 | 验证失败时失败并回滚 |
-| 11 | 监控告警 | 监控服务运行状态 | 部署验证通过后执行 | 异常时告警 |
+| 阶段 | 名称         | 主要任务                   | 触发条件                   | 失败策略             |
+| ---- | ------------ | -------------------------- | -------------------------- | -------------------- |
+| 1    | 代码提交     | 开发者提交代码到GitHub     | 代码push到develop/main分支 | 无                   |
+| 2    | CI触发       | Webhook触发GitHub Actions  | 代码提交或PR创建           | 无                   |
+| 3    | 代码质量检查 | SonarQube代码分析          | CI触发后立即执行           | 严重问题时失败       |
+| 4    | 自动化测试   | 单元测试、集成测试         | 代码质量检查通过后执行     | 测试失败时失败       |
+| 5    | 镜像构建     | Docker镜像构建             | 测试通过后执行             | 构建失败时失败       |
+| 6    | 镜像扫描     | Trivy漏洞扫描              | 镜像构建完成后执行         | 高危漏洞时失败       |
+| 7    | 镜像推送     | 推送到Harbor镜像仓库       | 镜像扫描通过后执行         | 推送失败时失败       |
+| 8    | CD触发       | 根据分支触发不同环境的部署 | 镜像推送完成后执行         | 无                   |
+| 9    | 环境部署     | 使用Helm部署到Kubernetes   | CD触发后执行               | 部署失败时失败并回滚 |
+| 10   | 部署验证     | 验证服务是否正常运行       | 部署完成后执行             | 验证失败时失败并回滚 |
+| 11   | 监控告警     | 监控服务运行状态           | 部署验证通过后执行         | 异常时告警           |
 
 ### 3.2 代码质量检查配置
 
@@ -221,9 +221,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: [ develop, main ]
+    branches: [develop, main]
   pull_request:
-    branches: [ develop, main ]
+    branches: [develop, main]
 
 jobs:
   unit-tests:
@@ -236,8 +236,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'adopt'
+          java-version: "17"
+          distribution: "adopt"
 
       - name: Cache Maven dependencies
         uses: actions/cache@v3
@@ -292,9 +292,9 @@ name: Integration Tests
 
 on:
   push:
-    branches: [ develop, main ]
+    branches: [develop, main]
   pull_request:
-    branches: [ develop, main ]
+    branches: [develop, main]
 
 jobs:
   integration-tests:
@@ -331,8 +331,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'adopt'
+          java-version: "17"
+          distribution: "adopt"
 
       - name: Cache Maven dependencies
         uses: actions/cache@v3
@@ -386,7 +386,7 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 #### 3.4.2 GitHub Actions集成
 
-```yaml
+````yaml
 # .github/workflows/build-push-image.yml
 name: Build and Push Docker Image
 
@@ -490,8 +490,9 @@ USER yyc3
 
 # 启动应用
 ENTRYPOINT ["dumb-init", "bun", "run", "start"]
-```
-```
+````
+
+````
 
 ### 3.5 镜像安全扫描配置
 
@@ -547,7 +548,7 @@ jobs:
             echo "Critical or High vulnerabilities found!"
             exit 1
           fi
-```
+````
 
 ### 3.6 Kubernetes部署配置
 
@@ -738,13 +739,13 @@ nodeSelector:
 affinity:
   podAntiAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
-    - labelSelector:
-        matchExpressions:
-        - key: app.kubernetes.io/name
-          operator: In
-          values:
-          - user-service
-      topologyKey: "kubernetes.io/hostname"
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+                - user-service
+        topologyKey: "kubernetes.io/hostname"
 
 tolerations:
   - key: "role"
@@ -784,7 +785,7 @@ on:
       - develop
       - main
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
   deploy:
@@ -814,7 +815,7 @@ jobs:
         run: |
           # 部署前检查
           helm lint ./helm
-          
+
           # 根据分支选择环境
           if [ "${{ github.ref }}" == "refs/heads/develop" ]; then
             ENV=dev
@@ -823,7 +824,7 @@ jobs:
           else
             ENV=staging
           fi
-          
+
           # 部署应用
           helm upgrade --install ${{ github.event.repository.name }} ./helm \
             --namespace yyc3-${ENV} \
@@ -842,13 +843,13 @@ jobs:
           else
             ENV=staging
           fi
-          
+
           # 等待部署完成
           kubectl rollout status deployment/${{ github.event.repository.name }} -n yyc3-${ENV} --timeout=5m
-          
+
           # 检查Pod状态
           kubectl get pods -n yyc3-${ENV} -l app.kubernetes.io/name=${{ github.event.repository.name }}
-          
+
           # 检查服务状态
           kubectl get service -n yyc3-${ENV} ${{ github.event.repository.name }}
 
@@ -863,7 +864,7 @@ jobs:
           else
             ENV=staging
           fi
-          
+
           # 尝试回滚到上一个版本
           helm rollback ${{ github.event.repository.name }} 0 -n yyc3-${ENV}
 ```
@@ -872,12 +873,12 @@ jobs:
 
 ### 4.1 环境分类
 
-| 环境名称 | 用途 | 分支 | 部署策略 | 资源配置 | 数据来源 |
-|---------|-----|-----|---------|---------|---------|
-| 开发环境 (dev) | 开发人员测试 | develop | 自动部署 | 低配 | 测试数据 |
-| 测试环境 (test) | 功能测试、集成测试 | release | 手动触发 | 中配 | 测试数据 |
-| 预发布环境 (staging) | 预发布验证、用户验收测试 | main | 手动触发 | 高配 | 生产镜像数据 |
-| 生产环境 (prod) | 线上业务运行 | tags | 手动触发+审批 | 高配 | 生产数据 |
+| 环境名称             | 用途                     | 分支    | 部署策略      | 资源配置 | 数据来源     |
+| -------------------- | ------------------------ | ------- | ------------- | -------- | ------------ |
+| 开发环境 (dev)       | 开发人员测试             | develop | 自动部署      | 低配     | 测试数据     |
+| 测试环境 (test)      | 功能测试、集成测试       | release | 手动触发      | 中配     | 测试数据     |
+| 预发布环境 (staging) | 预发布验证、用户验收测试 | main    | 手动触发      | 高配     | 生产镜像数据 |
+| 生产环境 (prod)      | 线上业务运行             | tags    | 手动触发+审批 | 高配     | 生产数据     |
 
 ### 4.2 环境隔离
 
@@ -904,8 +905,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 25%  # 允许超过期望Pod数量的最大百分比
-      maxUnavailable: 25%  # 允许不可用Pod的最大百分比
+      maxSurge: 25% # 允许超过期望Pod数量的最大百分比
+      maxUnavailable: 25% # 允许不可用Pod的最大百分比
 ```
 
 ### 5.2 蓝绿部署
@@ -1010,47 +1011,47 @@ MAJOR.MINOR.PATCH
 
 ### 9.1 构建失败
 
-| 问题 | 可能原因 | 解决方案 |
-|-----|---------|---------|
-| 依赖下载失败 | 网络问题或依赖仓库不可用 | 检查网络连接，使用国内镜像源 |
-| 编译错误 | 代码语法错误或依赖版本冲突 | 修复代码错误，检查依赖版本 |
-| 测试失败 | 测试用例编写错误或功能实现错误 | 修复测试用例或功能实现 |
+| 问题         | 可能原因                           | 解决方案                               |
+| ------------ | ---------------------------------- | -------------------------------------- |
+| 依赖下载失败 | 网络问题或依赖仓库不可用           | 检查网络连接，使用国内镜像源           |
+| 编译错误     | 代码语法错误或依赖版本冲突         | 修复代码错误，检查依赖版本             |
+| 测试失败     | 测试用例编写错误或功能实现错误     | 修复测试用例或功能实现                 |
 | 镜像构建失败 | Dockerfile语法错误或构建上下文问题 | 检查Dockerfile语法，确保构建上下文正确 |
 
 ### 9.2 部署失败
 
-| 问题 | 可能原因 | 解决方案 |
-|-----|---------|---------|
-| 镜像拉取失败 | 镜像仓库认证失败或镜像不存在 | 检查镜像仓库认证信息，确保镜像存在 |
-| Pod启动失败 | 配置错误或资源不足 | 检查配置文件，调整资源配额 |
-| 健康检查失败 | 应用启动时间过长或功能异常 | 调整健康检查参数，修复应用功能 |
-| 服务不可访问 | 网络配置错误或Ingress配置错误 | 检查网络策略和Ingress配置 |
+| 问题         | 可能原因                      | 解决方案                           |
+| ------------ | ----------------------------- | ---------------------------------- |
+| 镜像拉取失败 | 镜像仓库认证失败或镜像不存在  | 检查镜像仓库认证信息，确保镜像存在 |
+| Pod启动失败  | 配置错误或资源不足            | 检查配置文件，调整资源配额         |
+| 健康检查失败 | 应用启动时间过长或功能异常    | 调整健康检查参数，修复应用功能     |
+| 服务不可访问 | 网络配置错误或Ingress配置错误 | 检查网络策略和Ingress配置          |
 
 ### 9.3 性能问题
 
-| 问题 | 可能原因 | 解决方案 |
-|-----|---------|---------|
-| 构建时间过长 | 依赖下载慢或构建任务过多 | 使用缓存，并行执行构建任务 |
-| 部署时间过长 | Pod启动时间长或资源不足 | 优化应用启动时间，增加资源配额 |
-| 测试时间过长 | 测试用例过多或测试效率低 | 优化测试用例，并行执行测试 |
+| 问题         | 可能原因                 | 解决方案                       |
+| ------------ | ------------------------ | ------------------------------ |
+| 构建时间过长 | 依赖下载慢或构建任务过多 | 使用缓存，并行执行构建任务     |
+| 部署时间过长 | Pod启动时间长或资源不足  | 优化应用启动时间，增加资源配额 |
+| 测试时间过长 | 测试用例过多或测试效率低 | 优化测试用例，并行执行测试     |
 
 ## 10. 附录
 
 ### 10.1 常用命令
 
-| 命令 | 用途 | 示例 |
-|-----|-----|-----|
-| `helm install` | 安装Helm Chart | `helm install user-service ./helm -n yyc3-dev` |
-| `helm upgrade` | 升级Helm Chart | `helm upgrade user-service ./helm -n yyc3-dev` |
-| `helm rollback` | 回滚Helm Chart | `helm rollback user-service 1 -n yyc3-dev` |
-| `helm uninstall` | 卸载Helm Chart | `helm uninstall user-service -n yyc3-dev` |
-| `helm status` | 查看Helm Chart状态 | `helm status user-service -n yyc3-dev` |
-| `kubectl get pods` | 查看Pod状态 | `kubectl get pods -n yyc3-dev` |
-| `kubectl describe pod` | 查看Pod详细信息 | `kubectl describe pod user-service-xxx -n yyc3-dev` |
-| `kubectl logs` | 查看Pod日志 | `kubectl logs user-service-xxx -n yyc3-dev` |
-| `kubectl rollout status` | 查看部署状态 | `kubectl rollout status deployment/user-service -n yyc3-dev` |
-| `kubectl rollout history` | 查看部署历史 | `kubectl rollout history deployment/user-service -n yyc3-dev` |
-| `kubectl rollout undo` | 回滚部署 | `kubectl rollout undo deployment/user-service -n yyc3-dev` |
+| 命令                      | 用途               | 示例                                                          |
+| ------------------------- | ------------------ | ------------------------------------------------------------- |
+| `helm install`            | 安装Helm Chart     | `helm install user-service ./helm -n yyc3-dev`                |
+| `helm upgrade`            | 升级Helm Chart     | `helm upgrade user-service ./helm -n yyc3-dev`                |
+| `helm rollback`           | 回滚Helm Chart     | `helm rollback user-service 1 -n yyc3-dev`                    |
+| `helm uninstall`          | 卸载Helm Chart     | `helm uninstall user-service -n yyc3-dev`                     |
+| `helm status`             | 查看Helm Chart状态 | `helm status user-service -n yyc3-dev`                        |
+| `kubectl get pods`        | 查看Pod状态        | `kubectl get pods -n yyc3-dev`                                |
+| `kubectl describe pod`    | 查看Pod详细信息    | `kubectl describe pod user-service-xxx -n yyc3-dev`           |
+| `kubectl logs`            | 查看Pod日志        | `kubectl logs user-service-xxx -n yyc3-dev`                   |
+| `kubectl rollout status`  | 查看部署状态       | `kubectl rollout status deployment/user-service -n yyc3-dev`  |
+| `kubectl rollout history` | 查看部署历史       | `kubectl rollout history deployment/user-service -n yyc3-dev` |
+| `kubectl rollout undo`    | 回滚部署           | `kubectl rollout undo deployment/user-service -n yyc3-dev`    |
 
 ### 10.2 CI/CD流水线检查清单
 

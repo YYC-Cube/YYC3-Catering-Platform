@@ -10,28 +10,29 @@
 **@tags**：架构设计,YYC³,系统架构
 
 ---
+
 # 🔖 YYC³ 监控架构设计文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 监控架构设计文档 |
-| **文档类型** | 架构设计文档 |
-| **所属阶段** | 系统架构设计 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 监控架构设计文档      |
+| **文档类型** | 架构设计文档               |
+| **所属阶段** | 系统架构设计               |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -73,6 +74,7 @@
 - **最少知识原则**：模块间最小化依赖，降低耦合度
 
 同时遵循YYC³「五高五标五化」核心理念：
+
 - **五高**：高可用、高性能、高安全、高扩展、高可维护
 - **五标**：标准化、规范化、自动化、智能化、可视化
 - **五化**：流程化、文档化、工具化、数字化、生态化
@@ -82,24 +84,28 @@
 技术栈选择基于以下考虑：
 
 **前端技术栈**
+
 - React 18+：采用现代化前端框架，组件化开发
 - TypeScript 5.0+：类型安全，提高代码质量
 - Next.js 14+：SSR/SSG支持，优化SEO和性能
 - Tailwind CSS：原子化CSS，快速构建UI
 
 **后端技术栈**
+
 - Node.js 18+：高性能JavaScript运行时
 - Express/Fastify：轻量级Web框架
 - PostgreSQL 15+：关系型数据库，ACID保证
 - Redis 7+：缓存和会话存储
 
 **基础设施**
+
 - Docker：容器化部署，环境一致性
 - Kubernetes：容器编排，自动化运维
 - Nginx：反向代理和负载均衡
 - Prometheus + Grafana：监控和告警
 
 **开发工具**
+
 - Git：版本控制
 - ESLint + Prettier：代码规范
 - Jest + Vitest：单元测试
@@ -112,27 +118,32 @@
 YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以下层次：
 
 **表现层（Presentation Layer）**
+
 - Web前端：React + Next.js构建的单页应用
 - 移动端：响应式设计，支持多设备访问
 - 管理后台：独立的管理界面
 
 **应用层（Application Layer）**
+
 - API网关：统一入口，路由分发
 - 业务服务：订单、用户、商品等核心业务逻辑
 - 认证授权：JWT认证，RBAC权限控制
 
 **领域层（Domain Layer）**
+
 - 领域模型：核心业务实体和规则
 - 领域服务：复杂业务逻辑封装
 - 仓储接口：数据访问抽象
 
 **基础设施层（Infrastructure Layer）**
+
 - 数据库：PostgreSQL主从架构
 - 缓存：Redis集群
 - 消息队列：RabbitMQ/Kafka
 - 文件存储：OSS/MinIO
 
 **跨层关注点**
+
 - 日志监控：ELK Stack
 - 配置管理：Apollo/Nacos
 - 服务发现：Consul/Eureka
@@ -143,36 +154,43 @@ YYC³餐饮行业智能化平台采用分层架构设计，从上到下分为以
 系统按照业务领域划分为以下核心模块：
 
 **用户模块（User Module）**
+
 - 用户注册、登录、认证
 - 用户信息管理
 - 权限和角色管理
 
 **商品模块（Product Module）**
+
 - 商品信息管理
 - 商品分类和标签
 - 库存管理
 
 **订单模块（Order Module）**
+
 - 订单创建和支付
 - 订单状态流转
 - 订单查询和统计
 
 **支付模块（Payment Module）**
+
 - 支付接口集成
 - 支付状态同步
 - 退款处理
 
 **营销模块（Marketing Module）**
+
 - 优惠券管理
 - 促销活动
 - 会员积分
 
 **报表模块（Report Module）**
+
 - 销售报表
 - 数据分析
 - 可视化展示
 
 **系统模块（System Module）**
+
 - 配置管理
 - 日志管理
 - 监控告警
@@ -256,22 +274,22 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
   external_labels:
-    cluster: 'yyc3-production'
-    environment: 'production'
+    cluster: "yyc3-production"
+    environment: "production"
 
 # 告警规则文件
 rule_files:
-  - '/etc/prometheus/rules/*.yml'
+  - "/etc/prometheus/rules/*.yml"
 
 # 抓取配置
 scrape_configs:
   # Prometheus 自身监控
-  - job_name: 'prometheus'
+  - job_name: "prometheus"
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ["localhost:9090"]
 
   # Kubernetes Pods 监控
-  - job_name: 'kubernetes-pods'
+  - job_name: "kubernetes-pods"
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
@@ -297,25 +315,25 @@ scrape_configs:
         target_label: kubernetes_pod_name
 
   # Kubernetes Nodes 监控
-  - job_name: 'kubernetes-nodes'
+  - job_name: "kubernetes-nodes"
     kubernetes_sd_configs:
       - role: node
     relabel_configs:
       - source_labels: [__address__]
-        regex: '(.*):10250'
-        replacement: '${1}:9100'
+        regex: "(.*):10250"
+        replacement: "${1}:9100"
         target_label: __address__
 
   # 应用服务监控
-  - job_name: 'yyc3-backend'
+  - job_name: "yyc3-backend"
     static_configs:
-      - targets: ['yyc3-backend-service:3000']
-    metrics_path: '/metrics'
+      - targets: ["yyc3-backend-service:3000"]
+    metrics_path: "/metrics"
 
-  - job_name: 'yyc3-frontend'
+  - job_name: "yyc3-frontend"
     static_configs:
-      - targets: ['yyc3-frontend-service:80']
-    metrics_path: '/metrics'
+      - targets: ["yyc3-frontend-service:80"]
+    metrics_path: "/metrics"
 ```
 
 ### 2.2 应用指标
@@ -332,42 +350,42 @@ scrape_configs:
  * @created 2025-01-30
  */
 
-import { Counter, Histogram, Registry } from 'prom-client';
+import { Counter, Histogram, Registry } from "prom-client";
 
 // 创建指标注册表
 const register = new Registry();
 
 // HTTP 请求总数
 export const httpRequestsTotal = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'path', 'status_code'],
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "path", "status_code"],
   registers: [register],
 });
 
 // HTTP 请求持续时间
 export const httpRequestDuration = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'path', 'status_code'],
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "path", "status_code"],
   buckets: [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10],
   registers: [register],
 });
 
 // HTTP 请求大小
 export const httpRequestSize = new Histogram({
-  name: 'http_request_size_bytes',
-  help: 'HTTP request size in bytes',
-  labelNames: ['method', 'path'],
+  name: "http_request_size_bytes",
+  help: "HTTP request size in bytes",
+  labelNames: ["method", "path"],
   buckets: [100, 1000, 10000, 100000, 1000000],
   registers: [register],
 });
 
 // HTTP 响应大小
 export const httpResponseSize = new Histogram({
-  name: 'http_response_size_bytes',
-  help: 'HTTP response size in bytes',
-  labelNames: ['method', 'path', 'status_code'],
+  name: "http_response_size_bytes",
+  help: "HTTP response size in bytes",
+  labelNames: ["method", "path", "status_code"],
   buckets: [100, 1000, 10000, 100000, 1000000],
   registers: [register],
 });
@@ -388,40 +406,40 @@ export const metrics = register;
  * @created 2025-01-30
  */
 
-import { Counter, Histogram, Gauge, Registry } from 'prom-client';
+import { Counter, Histogram, Gauge, Registry } from "prom-client";
 
 const register = new Registry();
 
 // 数据库查询总数
 export const dbQueriesTotal = new Counter({
-  name: 'db_queries_total',
-  help: 'Total number of database queries',
-  labelNames: ['operation', 'table', 'status'],
+  name: "db_queries_total",
+  help: "Total number of database queries",
+  labelNames: ["operation", "table", "status"],
   registers: [register],
 });
 
 // 数据库查询持续时间
 export const dbQueryDuration = new Histogram({
-  name: 'db_query_duration_seconds',
-  help: 'Database query duration in seconds',
-  labelNames: ['operation', 'table'],
+  name: "db_query_duration_seconds",
+  help: "Database query duration in seconds",
+  labelNames: ["operation", "table"],
   buckets: [0.001, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1],
   registers: [register],
 });
 
 // 数据库连接池大小
 export const dbConnectionPoolSize = new Gauge({
-  name: 'db_connection_pool_size',
-  help: 'Database connection pool size',
-  labelNames: ['state'],
+  name: "db_connection_pool_size",
+  help: "Database connection pool size",
+  labelNames: ["state"],
   registers: [register],
 });
 
 // 慢查询数量
 export const dbSlowQueries = new Counter({
-  name: 'db_slow_queries_total',
-  help: 'Total number of slow database queries',
-  labelNames: ['table'],
+  name: "db_slow_queries_total",
+  help: "Total number of slow database queries",
+  labelNames: ["table"],
   registers: [register],
 });
 
@@ -442,49 +460,49 @@ export const metrics = register;
  * @created 2025-01-30
  */
 
-import { Counter, Histogram, Gauge, Registry } from 'prom-client';
+import { Counter, Histogram, Gauge, Registry } from "prom-client";
 
 const register = new Registry();
 
 // 订单创建总数
 export const ordersCreatedTotal = new Counter({
-  name: 'orders_created_total',
-  help: 'Total number of orders created',
-  labelNames: ['restaurant_id', 'order_type'],
+  name: "orders_created_total",
+  help: "Total number of orders created",
+  labelNames: ["restaurant_id", "order_type"],
   registers: [register],
 });
 
 // 订单支付总数
 export const ordersPaidTotal = new Counter({
-  name: 'orders_paid_total',
-  help: 'Total number of orders paid',
-  labelNames: ['payment_method', 'status'],
+  name: "orders_paid_total",
+  help: "Total number of orders paid",
+  labelNames: ["payment_method", "status"],
   registers: [register],
 });
 
 // 订单金额
 export const orderAmount = new Histogram({
-  name: 'order_amount_cny',
-  help: 'Order amount in CNY',
-  labelNames: ['restaurant_id'],
+  name: "order_amount_cny",
+  help: "Order amount in CNY",
+  labelNames: ["restaurant_id"],
   buckets: [10, 50, 100, 200, 500, 1000, 2000, 5000],
   registers: [register],
 });
 
 // 订单处理时间
 export const orderProcessingDuration = new Histogram({
-  name: 'order_processing_duration_seconds',
-  help: 'Order processing duration in seconds',
-  labelNames: ['restaurant_id', 'order_type'],
+  name: "order_processing_duration_seconds",
+  help: "Order processing duration in seconds",
+  labelNames: ["restaurant_id", "order_type"],
   buckets: [60, 120, 300, 600, 900, 1800, 3600],
   registers: [register],
 });
 
 // 活跃订单数
 export const activeOrders = new Gauge({
-  name: 'active_orders',
-  help: 'Number of active orders',
-  labelNames: ['status'],
+  name: "active_orders",
+  help: "Number of active orders",
+  labelNames: ["status"],
   registers: [register],
 });
 
@@ -502,48 +520,48 @@ export const metrics = register;
 ```yaml
 # === fluentd.conf ===
 <source>
-  @type tail
-  path /var/log/containers/*.log
-  pos_file /var/log/fluentd-containers.log.pos
-  tag kubernetes.*
-  read_from_head true
-  <parse>
-    @type json
-    time_format %Y-%m-%dT%H:%M:%S.%NZ
-  </parse>
+@type tail
+path /var/log/containers/*.log
+pos_file /var/log/fluentd-containers.log.pos
+tag kubernetes.*
+read_from_head true
+<parse>
+@type json
+time_format %Y-%m-%dT%H:%M:%S.%NZ
+</parse>
 </source>
 
 <filter kubernetes.**>
-  @type kubernetes_metadata
+@type kubernetes_metadata
 </filter>
 
 <filter kubernetes.**>
-  @type grep
-  <regexp>
-    key $.kubernetes.namespace_name
-    pattern /^yyc3-(production|staging)$/
-  </regexp>
+@type grep
+<regexp>
+key $.kubernetes.namespace_name
+pattern /^yyc3-(production|staging)$/
+</regexp>
 </filter>
 
 <match kubernetes.**>
-  @type elasticsearch
-  host elasticsearch.logging.svc.cluster.local
-  port 9200
-  logstash_format true
-  logstash_prefix yyc3-${record['kubernetes']['namespace_name']}
-  logstash_dateformat %Y.%m.%d
-  include_tag_key true
-  type_name _doc
-  <buffer>
-    @type file
-    path /var/log/fluentd-buffers/kubernetes.system.buffer
-    flush_mode interval
-    flush_interval 5s
-    chunk_limit_size 2M
-    queue_limit_length 32
-    retry_max_interval 30
-    retry_forever true
-  </buffer>
+@type elasticsearch
+host elasticsearch.logging.svc.cluster.local
+port 9200
+logstash_format true
+logstash_prefix yyc3-${record['kubernetes']['namespace_name']}
+logstash_dateformat %Y.%m.%d
+include_tag_key true
+type_name _doc
+<buffer>
+@type file
+path /var/log/fluentd-buffers/kubernetes.system.buffer
+flush_mode interval
+flush_interval 5s
+chunk_limit_size 2M
+queue_limit_length 32
+retry_max_interval 30
+retry_forever true
+</buffer>
 </match>
 ```
 
@@ -564,13 +582,13 @@ export const metrics = register;
 export interface LogEntry {
   // 时间戳
   timestamp: string;
-  
+
   // 日志级别
-  level: 'debug' | 'info' | 'warn' | 'error' | 'fatal';
-  
+  level: "debug" | "info" | "warn" | "error" | "fatal";
+
   // 消息
   message: string;
-  
+
   // 上下文信息
   context?: {
     // 服务名称
@@ -584,7 +602,7 @@ export interface LogEntry {
     // 进程 ID
     pid: number;
   };
-  
+
   // 请求信息
   request?: {
     // 请求 ID
@@ -602,7 +620,7 @@ export interface LogEntry {
     // User-Agent
     userAgent?: string;
   };
-  
+
   // 错误信息
   error?: {
     // 错误名称
@@ -614,7 +632,7 @@ export interface LogEntry {
     // 错误代码
     code?: string;
   };
-  
+
   // 自定义字段
   [key: string]: any;
 }
@@ -635,20 +653,16 @@ export function formatLogEntry(entry: LogEntry): string {
  * @param context 上下文
  * @returns 日志条目
  */
-export function createLogEntry(
-  level: LogEntry['level'],
-  message: string,
-  context?: Partial<LogEntry>
-): LogEntry {
+export function createLogEntry(level: LogEntry["level"], message: string, context?: Partial<LogEntry>): LogEntry {
   return {
     timestamp: new Date().toISOString(),
     level,
     message,
     context: {
-      service: process.env.SERVICE_NAME || 'unknown',
-      environment: process.env.NODE_ENV || 'development',
-      version: process.env.APP_VERSION || '1.0.0',
-      hostname: require('os').hostname(),
+      service: process.env.SERVICE_NAME || "unknown",
+      environment: process.env.NODE_ENV || "development",
+      version: process.env.APP_VERSION || "1.0.0",
+      hostname: require("os").hostname(),
       pid: process.pid,
       ...context?.context,
     },
@@ -675,15 +689,15 @@ export function createLogEntry(
  * @created 2025-01-30
  */
 
-import { NodeSDK } from '@opentelemetry/sdk-node';
-import { Resource } from '@opentelemetry/resources';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
-import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
-import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
-import { PgInstrumentation } from '@opentelemetry/instrumentation-pg';
-import { IORedisInstrumentation } from '@opentelemetry/instrumentation-ioredis';
-import { JaegerExporter } from '@opentelemetry/exporter-trace-jaeger';
-import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
+import { NodeSDK } from "@opentelemetry/sdk-node";
+import { Resource } from "@opentelemetry/resources";
+import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
+import { HttpInstrumentation } from "@opentelemetry/instrumentation-http";
+import { ExpressInstrumentation } from "@opentelemetry/instrumentation-express";
+import { PgInstrumentation } from "@opentelemetry/instrumentation-pg";
+import { IORedisInstrumentation } from "@opentelemetry/instrumentation-ioredis";
+import { JaegerExporter } from "@opentelemetry/exporter-trace-jaeger";
+import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-base";
 
 /**
  * 初始化 OpenTelemetry SDK
@@ -691,15 +705,15 @@ import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
 export function initializeTracing(): NodeSDK {
   const resource = Resource.default().merge(
     new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: process.env.SERVICE_NAME || 'yyc3-backend',
-      [SemanticResourceAttributes.SERVICE_VERSION]: process.env.APP_VERSION || '1.0.0',
-      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: process.env.NODE_ENV || 'development',
+      [SemanticResourceAttributes.SERVICE_NAME]: process.env.SERVICE_NAME || "yyc3-backend",
+      [SemanticResourceAttributes.SERVICE_VERSION]: process.env.APP_VERSION || "1.0.0",
+      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: process.env.NODE_ENV || "development",
     })
   );
 
   // Jaeger 导出器
   const jaegerExporter = new JaegerExporter({
-    endpoint: process.env.JAEGER_ENDPOINT || 'http://localhost:14268/api/traces',
+    endpoint: process.env.JAEGER_ENDPOINT || "http://localhost:14268/api/traces",
   });
 
   const sdk = new NodeSDK({
@@ -715,7 +729,7 @@ export function initializeTracing(): NodeSDK {
   });
 
   sdk.start();
-  console.log('OpenTelemetry tracing initialized');
+  console.log("OpenTelemetry tracing initialized");
 
   return sdk;
 }
@@ -735,8 +749,8 @@ export function initializeTracing(): NodeSDK {
  * @created 2025-01-30
  */
 
-import { trace } from '@opentelemetry/api';
-import { Request, Response, NextFunction } from 'express';
+import { trace } from "@opentelemetry/api";
+import { Request, Response, NextFunction } from "express";
 
 /**
  * 追踪中间件
@@ -745,17 +759,17 @@ import { Request, Response, NextFunction } from 'express';
  * @param next 下一个中间件
  */
 export function tracingMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const tracer = trace.getTracer('yyc3-backend');
+  const tracer = trace.getTracer("yyc3-backend");
 
   const span = tracer.startSpan(`${req.method} ${req.path}`, {
     attributes: {
-      'http.method': req.method,
-      'http.url': req.url,
-      'http.target': req.path,
-      'http.host': req.get('host'),
-      'http.user_agent': req.get('user-agent'),
-      'http.client_ip': req.ip,
-      'user.id': (req as any).userId,
+      "http.method": req.method,
+      "http.url": req.url,
+      "http.target": req.path,
+      "http.host": req.get("host"),
+      "http.user_agent": req.get("user-agent"),
+      "http.client_ip": req.ip,
+      "user.id": (req as any).userId,
     },
   });
 
@@ -763,10 +777,10 @@ export function tracingMiddleware(req: Request, res: Response, next: NextFunctio
   trace.setSpan(trace.active(), span);
 
   // 记录响应
-  res.on('finish', () => {
+  res.on("finish", () => {
     span.setAttributes({
-      'http.status_code': res.statusCode,
-      'http.response_size': res.get('content-length'),
+      "http.status_code": res.statusCode,
+      "http.response_size": res.get("content-length"),
     });
 
     if (res.statusCode >= 400) {
@@ -913,36 +927,36 @@ groups:
 # === alertmanager.yml ===
 global:
   resolve_timeout: 5m
-  slack_api_url: '${SLACK_WEBHOOK_URL}'
+  slack_api_url: "${SLACK_WEBHOOK_URL}"
 
 route:
-  receiver: 'default-receiver'
+  receiver: "default-receiver"
   group_wait: 10s
   group_interval: 10s
   repeat_interval: 12h
-  group_by: ['alertname', 'cluster', 'service']
+  group_by: ["alertname", "cluster", "service"]
 
   routes:
     # Critical 告警立即通知
     - match:
         severity: critical
-      receiver: 'critical-receiver'
+      receiver: "critical-receiver"
       group_wait: 0s
       repeat_interval: 5m
 
     # Warning 告警延迟通知
     - match:
         severity: warning
-      receiver: 'warning-receiver'
+      receiver: "warning-receiver"
       group_wait: 5m
       repeat_interval: 1h
 
 receivers:
-  - name: 'default-receiver'
+  - name: "default-receiver"
     slack_configs:
-      - channel: '#yyc3-alerts'
+      - channel: "#yyc3-alerts"
         send_resolved: true
-        title: '{{ .Status | toUpper }}: {{ .CommonLabels.alertname }}'
+        title: "{{ .Status | toUpper }}: {{ .CommonLabels.alertname }}"
         text: >-
           {{ range .Alerts }}
           *Alert:* {{ .Labels.alertname }}
@@ -953,12 +967,12 @@ receivers:
           {{ end }}
           {{ end }}
 
-  - name: 'critical-receiver'
+  - name: "critical-receiver"
     slack_configs:
-      - channel: '#yyc3-critical'
+      - channel: "#yyc3-critical"
         send_resolved: true
-        title: '🚨 CRITICAL: {{ .CommonLabels.alertname }}'
-        color: 'danger'
+        title: "🚨 CRITICAL: {{ .CommonLabels.alertname }}"
+        color: "danger"
         text: >-
           {{ range .Alerts }}
           *Alert:* {{ .Labels.alertname }}
@@ -969,12 +983,12 @@ receivers:
           {{ end }}
           {{ end }}
 
-  - name: 'warning-receiver'
+  - name: "warning-receiver"
     slack_configs:
-      - channel: '#yyc3-warnings'
+      - channel: "#yyc3-warnings"
         send_resolved: true
-        title: '⚠️ WARNING: {{ .CommonLabels.alertname }}'
-        color: 'warning'
+        title: "⚠️ WARNING: {{ .CommonLabels.alertname }}"
+        color: "warning"
         text: >-
           {{ range .Alerts }}
           *Alert:* {{ .Labels.alertname }}
@@ -1001,7 +1015,7 @@ receivers:
  * @created 2025-01-30
  */
 
-import { PerformanceObserver, performance } from 'perf_hooks';
+import { PerformanceObserver, performance } from "perf_hooks";
 
 /**
  * 性能监控类
@@ -1085,7 +1099,7 @@ export const performanceMonitor = new PerformanceMonitor();
  * @created 2025-01-30
  */
 
-import { onCLS, onFID, onFCP, onLCP, onTTFB } from 'web-vitals';
+import { onCLS, onFID, onFCP, onLCP, onTTFB } from "web-vitals";
 
 /**
  * Web Vitals 指标接口
@@ -1093,7 +1107,7 @@ import { onCLS, onFID, onFCP, onLCP, onTTFB } from 'web-vitals';
 interface WebVitalsMetric {
   name: string;
   value: number;
-  rating: 'good' | 'needs-improvement' | 'poor';
+  rating: "good" | "needs-improvement" | "poor";
   id: string;
   delta: number;
 }
@@ -1103,10 +1117,10 @@ interface WebVitalsMetric {
  * @param metric 指标
  */
 function sendToAnalytics(metric: WebVitalsMetric): void {
-  fetch('/api/analytics/web-vitals', {
-    method: 'POST',
+  fetch("/api/analytics/web-vitals", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(metric),
     keepalive: true,
@@ -1118,9 +1132,9 @@ function sendToAnalytics(metric: WebVitalsMetric): void {
  */
 export function initWebVitals(): void {
   // CLS (Cumulative Layout Shift)
-  onCLS((metric) => {
+  onCLS(metric => {
     sendToAnalytics({
-      name: 'CLS',
+      name: "CLS",
       value: metric.value,
       rating: metric.rating as any,
       id: metric.id,
@@ -1129,9 +1143,9 @@ export function initWebVitals(): void {
   });
 
   // FID (First Input Delay)
-  onFID((metric) => {
+  onFID(metric => {
     sendToAnalytics({
-      name: 'FID',
+      name: "FID",
       value: metric.value,
       rating: metric.rating as any,
       id: metric.id,
@@ -1140,9 +1154,9 @@ export function initWebVitals(): void {
   });
 
   // FCP (First Contentful Paint)
-  onFCP((metric) => {
+  onFCP(metric => {
     sendToAnalytics({
-      name: 'FCP',
+      name: "FCP",
       value: metric.value,
       rating: metric.rating as any,
       id: metric.id,
@@ -1151,9 +1165,9 @@ export function initWebVitals(): void {
   });
 
   // LCP (Largest Contentful Paint)
-  onLCP((metric) => {
+  onLCP(metric => {
     sendToAnalytics({
-      name: 'LCP',
+      name: "LCP",
       value: metric.value,
       rating: metric.rating as any,
       id: metric.id,
@@ -1162,9 +1176,9 @@ export function initWebVitals(): void {
   });
 
   // TTFB (Time to First Byte)
-  onTTFB((metric) => {
+  onTTFB(metric => {
     sendToAnalytics({
-      name: 'TTFB',
+      name: "TTFB",
       value: metric.value,
       rating: metric.rating as any,
       id: metric.id,
@@ -1192,56 +1206,56 @@ export function initWebVitals(): void {
  * @created 2025-01-30
  */
 
-import { Counter, Histogram, Gauge, Registry } from 'prom-client';
+import { Counter, Histogram, Gauge, Registry } from "prom-client";
 
 const register = new Registry();
 
 // 用户注册数
 export const userRegistrations = new Counter({
-  name: 'user_registrations_total',
-  help: 'Total number of user registrations',
-  labelNames: ['channel'],
+  name: "user_registrations_total",
+  help: "Total number of user registrations",
+  labelNames: ["channel"],
   registers: [register],
 });
 
 // 活跃用户数
 export const activeUsers = new Gauge({
-  name: 'active_users',
-  help: 'Number of active users',
-  labelNames: ['period'], // daily, weekly, monthly
+  name: "active_users",
+  help: "Number of active users",
+  labelNames: ["period"], // daily, weekly, monthly
   registers: [register],
 });
 
 // 订单转化率
 export const orderConversionRate = new Gauge({
-  name: 'order_conversion_rate',
-  help: 'Order conversion rate',
-  labelNames: ['funnel_step'], // view, add_to_cart, checkout, payment
+  name: "order_conversion_rate",
+  help: "Order conversion rate",
+  labelNames: ["funnel_step"], // view, add_to_cart, checkout, payment
   registers: [register],
 });
 
 // GMV (Gross Merchandise Value)
 export const gmv = new Counter({
-  name: 'gmv_total',
-  help: 'Gross Merchandise Value',
-  labelNames: ['restaurant_id', 'category'],
+  name: "gmv_total",
+  help: "Gross Merchandise Value",
+  labelNames: ["restaurant_id", "category"],
   registers: [register],
 });
 
 // 平均订单价值
 export const averageOrderValue = new Histogram({
-  name: 'average_order_value_cny',
-  help: 'Average order value in CNY',
-  labelNames: ['restaurant_id'],
+  name: "average_order_value_cny",
+  help: "Average order value in CNY",
+  labelNames: ["restaurant_id"],
   buckets: [10, 50, 100, 200, 500, 1000],
   registers: [register],
 });
 
 // 用户留存率
 export const userRetentionRate = new Gauge({
-  name: 'user_retention_rate',
-  help: 'User retention rate',
-  labelNames: ['period'], // day1, day7, day30
+  name: "user_retention_rate",
+  help: "User retention rate",
+  labelNames: ["period"], // day1, day7, day30
   registers: [register],
 });
 
@@ -1260,6 +1274,7 @@ export const metrics = register;
 ## 监控覆盖检查清单
 
 ### 基础设施监控
+
 - [ ] CPU 使用率
 - [ ] 内存使用率
 - [ ] 磁盘使用率
@@ -1267,6 +1282,7 @@ export const metrics = register;
 - [ ] 容器资源使用
 
 ### 应用监控
+
 - [ ] HTTP 请求指标
 - [ ] 数据库查询指标
 - [ ] 缓存命中率
@@ -1274,6 +1290,7 @@ export const metrics = register;
 - [ ] 错误率和延迟
 
 ### 业务监控
+
 - [ ] 用户注册数
 - [ ] 活跃用户数
 - [ ] 订单转化率
@@ -1281,6 +1298,7 @@ export const metrics = register;
 - [ ] 用户留存率
 
 ### 告警配置
+
 - [ ] Critical 告警配置
 - [ ] Warning 告警配置
 - [ ] 告警通知渠道
@@ -1288,6 +1306,7 @@ export const metrics = register;
 - [ ] 告警抑制规则
 
 ### 仪表板
+
 - [ ] 系统概览仪表板
 - [ ] 应用性能仪表板
 - [ ] 业务指标仪表板
@@ -1299,13 +1318,10 @@ export const metrics = register;
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1328,8 +1344,6 @@ export const metrics = register;
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1363,8 +1377,6 @@ export const metrics = register;
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1387,46 +1399,46 @@ export const metrics = register;
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1439,6 +1451,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1448,6 +1461,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1457,6 +1471,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1473,16 +1488,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1492,13 +1508,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1507,6 +1521,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1525,6 +1540,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1540,6 +1556,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1559,28 +1576,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1589,44 +1605,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1640,13 +1654,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1655,18 +1669,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1676,37 +1693,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1715,28 +1735,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1745,21 +1763,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1768,10 +1788,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1797,16 +1814,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1815,25 +1832,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

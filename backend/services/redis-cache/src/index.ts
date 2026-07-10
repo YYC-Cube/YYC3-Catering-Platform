@@ -13,10 +13,7 @@ export { RedisCacheClient, RedisCacheClientFactory } from './cache-client';
 export type { RedisConfig, CacheOptions, CacheStats, TaggedCacheItem } from './cache-client';
 
 // 缓存策略管理
-export {
-  CacheStrategyManager,
-  HierarchicalCacheManager,
-} from './cache-strategy';
+export { CacheStrategyManager, HierarchicalCacheManager } from './cache-strategy';
 export type {
   CacheStrategy,
   CacheStrategyConfig,
@@ -59,7 +56,7 @@ export async function createCacheClient(config: RedisConfig): Promise<RedisCache
  */
 export function createCacheStrategyManager(
   cacheClient: RedisCacheClient,
-  strategy: CacheStrategy = 'ttl'
+  strategy: CacheStrategy = 'ttl',
 ): CacheStrategyManager {
   const { CacheStrategyManager } = require('./cache-strategy');
   return new CacheStrategyManager(cacheClient, { strategy });
@@ -79,9 +76,7 @@ export function createHierarchicalCacheManager(): HierarchicalCacheManager {
  * @param config 键生成器配置
  * @returns 缓存键生成器实例
  */
-export function createCacheKeyGenerator(
-  config?: CacheKeyGeneratorConfig
-): CacheKeyGenerator {
+export function createCacheKeyGenerator(config?: CacheKeyGeneratorConfig): CacheKeyGenerator {
   const { CacheKeyGenerator } = require('./cache-utils');
   return new CacheKeyGenerator(config);
 }
@@ -92,10 +87,7 @@ export function createCacheKeyGenerator(
  * @param keyGenerator 键生成器
  * @returns 缓存锁实例
  */
-export function createCacheLock(
-  cacheClient: RedisCacheClient,
-  keyGenerator: CacheKeyGenerator
-): CacheLock {
+export function createCacheLock(cacheClient: RedisCacheClient, keyGenerator: CacheKeyGenerator): CacheLock {
   const { CacheLock } = require('./cache-utils');
   return new CacheLock(cacheClient, keyGenerator);
 }

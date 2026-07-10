@@ -15,7 +15,7 @@ import { Table, Column, Model, DataType, PrimaryKey } from 'sequelize-typescript
 @Table({
   tableName: 'knowledge_graph_queries',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class KnowledgeGraphQuery extends Model<KnowledgeGraphQuery> {
   @PrimaryKey

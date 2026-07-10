@@ -8,63 +8,63 @@
  * @license MIT
  */
 
-import { defineComponent, ref } from 'vue'
-import { Button } from '@/components/UI/Button'
-import { Input } from '@/components/UI/Input'
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/UI/Card'
-import { Badge } from '@/components/UI/Badge'
-import { Alert } from '@/components/UI/Alert'
-import { Modal } from '@/components/UI/Modal'
-import { Avatar, AvatarGroup } from '@/components/UI/Avatar'
-import { Divider } from '@/components/UI/Divider'
-import { Skeleton, SkeletonText, SkeletonAvatar } from '@/components/UI/Skeleton'
-import { Empty } from '@/components/UI/Empty'
-import { Checkbox, CheckboxGroup } from '@/components/UI/Checkbox'
-import { Radio, RadioGroup } from '@/components/UI/Radio'
-import { Switch } from '@/components/UI/Switch'
-import { Select } from '@/components/UI/Select'
-import { Form, FormField, FormLabel, FormError } from '@/components/UI/Form'
-import { Dropdown } from '@/components/UI/Dropdown'
-import { Breadcrumb } from '@/components/UI/Breadcrumb'
-import { Pagination } from '@/components/UI/Pagination'
-import { Table } from '@/components/UI/Table'
-import { List } from '@/components/UI/List'
-import { Tree } from '@/components/UI/Tree'
-import { Timeline } from '@/components/UI/Timeline'
-import { Drawer } from '@/components/UI/Drawer'
-import { Dialog } from '@/components/UI/Dialog'
-import { Tooltip } from '@/components/UI/Tooltip'
-import { Layout, LayoutHeader, LayoutSider, LayoutContent, LayoutFooter } from '@/components/UI/Layout'
-import { Grid, GridItem } from '@/components/UI/Grid'
-import { Space } from '@/components/UI/Space'
-import { Flex, FlexItem } from '@/components/UI/Flex'
-import { Search, User, Bell, Settings, LogOut, Menu, X, Plus, Edit, Trash } from 'lucide-vue-next'
+import { defineComponent, ref } from 'vue';
+import { Button } from '@/components/UI/Button';
+import { Input } from '@/components/UI/Input';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/UI/Card';
+import { Badge } from '@/components/UI/Badge';
+import { Alert } from '@/components/UI/Alert';
+import { Modal } from '@/components/UI/Modal';
+import { Avatar, AvatarGroup } from '@/components/UI/Avatar';
+import { Divider } from '@/components/UI/Divider';
+import { Skeleton, SkeletonText, SkeletonAvatar } from '@/components/UI/Skeleton';
+import { Empty } from '@/components/UI/Empty';
+import { Checkbox, CheckboxGroup } from '@/components/UI/Checkbox';
+import { Radio, RadioGroup } from '@/components/UI/Radio';
+import { Switch } from '@/components/UI/Switch';
+import { Select } from '@/components/UI/Select';
+import { Form, FormField, FormLabel, FormError } from '@/components/UI/Form';
+import { Dropdown } from '@/components/UI/Dropdown';
+import { Breadcrumb } from '@/components/UI/Breadcrumb';
+import { Pagination } from '@/components/UI/Pagination';
+import { Table } from '@/components/UI/Table';
+import { List } from '@/components/UI/List';
+import { Tree } from '@/components/UI/Tree';
+import { Timeline } from '@/components/UI/Timeline';
+import { Drawer } from '@/components/UI/Drawer';
+import { Dialog } from '@/components/UI/Dialog';
+import { Tooltip } from '@/components/UI/Tooltip';
+import { Layout, LayoutHeader, LayoutSider, LayoutContent, LayoutFooter } from '@/components/UI/Layout';
+import { Grid, GridItem } from '@/components/UI/Grid';
+import { Space } from '@/components/UI/Space';
+import { Flex, FlexItem } from '@/components/UI/Flex';
+import { Search, User, Bell, Settings, LogOut, Menu, X, Plus, Edit, Trash } from 'lucide-vue-next';
 
 export default function ComponentExamples() {
-  const modalVisible = ref(false)
-  const drawerVisible = ref(false)
-  const dialogVisible = ref(false)
-  const inputValue = ref('')
-  const selectValue = ref('')
-  const checkboxValue = ref([])
-  const radioValue = ref('option1')
-  const switchValue = ref(false)
-  const currentPage = ref(1)
-  const pageSize = ref(10)
-  const total = ref(100)
+  const modalVisible = ref(false);
+  const drawerVisible = ref(false);
+  const dialogVisible = ref(false);
+  const inputValue = ref('');
+  const selectValue = ref('');
+  const checkboxValue = ref([]);
+  const radioValue = ref('option1');
+  const switchValue = ref(false);
+  const currentPage = ref(1);
+  const pageSize = ref(10);
+  const total = ref(100);
 
   const tableData = ref([
     { id: 1, name: '张三', age: 25, address: '北京市朝阳区' },
     { id: 2, name: '李四', age: 30, address: '上海市浦东新区' },
     { id: 3, name: '王五', age: 28, address: '广州市天河区' },
-  ])
+  ]);
 
   const tableColumns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: '姓名', dataIndex: 'name', key: 'name' },
     { title: '年龄', dataIndex: 'age', key: 'age' },
     { title: '地址', dataIndex: 'address', key: 'address' },
-  ]
+  ];
 
   const dropdownItems = [
     { label: '个人中心', value: 'profile', icon: User },
@@ -72,19 +72,19 @@ export default function ComponentExamples() {
     { label: '系统设置', value: 'settings', icon: Settings },
     { divider: true },
     { label: '退出登录', value: 'logout', icon: LogOut, danger: true },
-  ]
+  ];
 
   const breadcrumbItems = [
     { label: '首页', path: '/' },
     { label: '组件库', path: '/components' },
     { label: '示例', path: '/examples' },
-  ]
+  ];
 
   const selectOptions = [
     { label: '选项一', value: 'option1' },
     { label: '选项二', value: 'option2' },
     { label: '选项三', value: 'option3' },
-  ]
+  ];
 
   const treeData = [
     {
@@ -103,14 +103,14 @@ export default function ComponentExamples() {
         { label: '子节点 2-2', value: '2-2' },
       ],
     },
-  ]
+  ];
 
   const timelineData = [
     { title: '创建项目', time: '2024-01-01 10:00' },
     { title: '完成设计', time: '2024-01-05 14:00' },
     { title: '开始开发', time: '2024-01-10 09:00' },
     { title: '测试上线', time: '2024-01-20 16:00' },
-  ]
+  ];
 
   return (
     <div class="min-h-screen bg-neutral-50 p-8">
@@ -214,7 +214,9 @@ export default function ComponentExamples() {
               <Badge variant="danger">危险</Badge>
               <Badge count={5}>消息</Badge>
               <Badge count={99}>通知</Badge>
-              <Badge count={100} maxCount={99}>更多</Badge>
+              <Badge count={100} maxCount={99}>
+                更多
+              </Badge>
             </Space>
           </CardContent>
         </Card>
@@ -241,14 +243,10 @@ export default function ComponentExamples() {
             <CardTitle>Modal 模态框</CardTitle>
           </CardHeader>
           <CardContent>
-            <Button type="primary" onClick={() => modalVisible.value = true}>
+            <Button type="primary" onClick={() => (modalVisible.value = true)}>
               打开模态框
             </Button>
-            <Modal
-              visible={modalVisible.value}
-              title="模态框示例"
-              onUpdate:visible={(v) => modalVisible.value = v}
-            >
+            <Modal visible={modalVisible.value} title="模态框示例" onUpdate:visible={v => (modalVisible.value = v)}>
               <p>这是模态框的内容</p>
             </Modal>
           </CardContent>
@@ -260,14 +258,10 @@ export default function ComponentExamples() {
             <CardTitle>Drawer 抽屉</CardTitle>
           </CardHeader>
           <CardContent>
-            <Button type="primary" onClick={() => drawerVisible.value = true}>
+            <Button type="primary" onClick={() => (drawerVisible.value = true)}>
               打开抽屉
             </Button>
-            <Drawer
-              visible={drawerVisible.value}
-              title="抽屉示例"
-              onUpdate:visible={(v) => drawerVisible.value = v}
-            >
+            <Drawer visible={drawerVisible.value} title="抽屉示例" onUpdate:visible={v => (drawerVisible.value = v)}>
               <p>这是抽屉的内容</p>
             </Drawer>
           </CardContent>
@@ -279,7 +273,7 @@ export default function ComponentExamples() {
             <CardTitle>Dialog 对话框</CardTitle>
           </CardHeader>
           <CardContent>
-            <Button type="danger" onClick={() => dialogVisible.value = true}>
+            <Button type="danger" onClick={() => (dialogVisible.value = true)}>
               打开确认对话框
             </Button>
             <Dialog
@@ -287,7 +281,7 @@ export default function ComponentExamples() {
               type="warning"
               title="确认删除"
               content="确定要删除这条数据吗？"
-              onUpdate:visible={(v) => dialogVisible.value = v}
+              onUpdate:visible={v => (dialogVisible.value = v)}
               onOk={() => console.log('确认')}
               onCancel={() => console.log('取消')}
             />
@@ -398,11 +392,7 @@ export default function ComponentExamples() {
                   <Input type="email" placeholder="请输入邮箱" />
                 </FormField>
                 <FormField name="role" label="角色">
-                  <Select
-                    v-model={selectValue.value}
-                    options={selectOptions}
-                    placeholder="请选择角色"
-                  />
+                  <Select v-model={selectValue.value} options={selectOptions} placeholder="请选择角色" />
                 </FormField>
                 <FormField name="agree" label="同意协议">
                   <Checkbox v-model={checkboxValue.value} label="我同意用户协议" />
@@ -421,7 +411,7 @@ export default function ComponentExamples() {
             <Dropdown
               trigger={<Button>点击打开</Button>}
               items={dropdownItems}
-              onSelect={(item) => console.log('选中:', item)}
+              onSelect={item => console.log('选中:', item)}
             />
           </CardContent>
         </Card>
@@ -432,10 +422,7 @@ export default function ComponentExamples() {
             <CardTitle>Breadcrumb 面包屑</CardTitle>
           </CardHeader>
           <CardContent>
-            <Breadcrumb
-              items={breadcrumbItems}
-              onClick={(item) => console.log('点击:', item)}
-            />
+            <Breadcrumb items={breadcrumbItems} onClick={item => console.log('点击:', item)} />
           </CardContent>
         </Card>
 
@@ -449,7 +436,7 @@ export default function ComponentExamples() {
               currentPage={currentPage.value}
               pageSize={pageSize.value}
               total={total.value}
-              onChange={(page) => currentPage.value = page}
+              onChange={page => (currentPage.value = page)}
             />
           </CardContent>
         </Card>
@@ -460,11 +447,7 @@ export default function ComponentExamples() {
             <CardTitle>Table 表格</CardTitle>
           </CardHeader>
           <CardContent>
-            <Table
-              columns={tableColumns}
-              data={tableData.value}
-              rowKey="id"
-            />
+            <Table columns={tableColumns} data={tableData.value} rowKey="id" />
           </CardContent>
         </Card>
 
@@ -494,11 +477,9 @@ export default function ComponentExamples() {
           </CardHeader>
           <CardContent>
             <Grid cols={4} gap={4}>
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+              {[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
                 <GridItem key={item}>
-                  <div class="bg-primary-100 text-primary-700 p-4 rounded-lg text-center">
-                    {item}
-                  </div>
+                  <div class="bg-primary-100 text-primary-700 p-4 rounded-lg text-center">{item}</div>
                 </GridItem>
               ))}
             </Grid>
@@ -520,5 +501,5 @@ export default function ComponentExamples() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

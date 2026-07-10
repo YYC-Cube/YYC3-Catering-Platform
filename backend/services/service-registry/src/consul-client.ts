@@ -99,7 +99,7 @@ export class ConsulClient {
 
   constructor(config: ConsulConfig) {
     this.baseUrl = `${config.scheme || 'http'}://${config.host}:${config.port}/v1`;
-    
+
     this.client = axios.create({
       baseURL: this.baseUrl,
       headers: {
@@ -173,16 +173,13 @@ export class ConsulClient {
    */
   public async discoverService(serviceName: string): Promise<ServiceInstance[]> {
     try {
-      const response = await this.client.get<ServiceInstance[]>(
-        `/health/service/${serviceName}`,
-        {
-          params: {
-            passing: true,
-          },
-        }
-      );
+      const response = await this.client.get<ServiceInstance[]>(`/health/service/${serviceName}`, {
+        params: {
+          passing: true,
+        },
+      });
 
-      const instances = response.data.map((item) => ({
+      const instances = response.data.map(item => ({
         ID: item.Service.ID,
         Service: item.Service.Service,
         Tags: item.Service.Tags,
@@ -212,7 +209,7 @@ export class ConsulClient {
    */
   public async getOneServiceInstance(
     serviceName: string,
-    strategy: 'random' | 'round-robin' | 'least-connections' = 'random'
+    strategy: 'random' | 'round-robin' | 'least-connections' = 'random',
   ): Promise<ServiceInstance | null> {
     const instances = await this.discoverService(serviceName);
 

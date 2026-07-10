@@ -12,182 +12,146 @@
 ### 基础用法
 
 ```tsx
-import { Table } from '@/components/UI'
+import { Table } from "@/components/UI";
 
 export default function TableBasic() {
   const columns = [
-    { key: 'name', title: '姓名' },
-    { key: 'age', title: '年龄' },
-    { key: 'email', title: '邮箱' },
-  ]
+    { key: "name", title: "姓名" },
+    { key: "age", title: "年龄" },
+    { key: "email", title: "邮箱" },
+  ];
 
   const data = [
-    { name: '张三', age: 25, email: 'zhangsan@example.com' },
-    { name: '李四', age: 30, email: 'lisi@example.com' },
-    { name: '王五', age: 28, email: 'wangwu@example.com' },
-  ]
+    { name: "张三", age: 25, email: "zhangsan@example.com" },
+    { name: "李四", age: 30, email: "lisi@example.com" },
+    { name: "王五", age: 28, email: "wangwu@example.com" },
+  ];
 
-  return (
-    <Table
-      columns={columns}
-      data={data}
-    />
-  )
+  return <Table columns={columns} data={data} />;
 }
 ```
 
 ### 带边框
 
 ```tsx
-import { Table } from '@/components/UI'
+import { Table } from "@/components/UI";
 
 export default function TableBordered() {
   const columns = [
-    { key: 'name', title: '姓名' },
-    { key: 'age', title: '年龄' },
-  ]
+    { key: "name", title: "姓名" },
+    { key: "age", title: "年龄" },
+  ];
 
   const data = [
-    { name: '张三', age: 25 },
-    { name: '李四', age: 30 },
-  ]
+    { name: "张三", age: 25 },
+    { name: "李四", age: 30 },
+  ];
 
-  return (
-    <Table
-      columns={columns}
-      data={data}
-      bordered
-    />
-  )
+  return <Table columns={columns} data={data} bordered />;
 }
 ```
 
 ### 斑马纹
 
 ```tsx
-import { Table } from '@/components/UI'
+import { Table } from "@/components/UI";
 
 export default function TableStriped() {
   const columns = [
-    { key: 'name', title: '姓名' },
-    { key: 'age', title: '年龄' },
-  ]
+    { key: "name", title: "姓名" },
+    { key: "age", title: "年龄" },
+  ];
 
   const data = [
-    { name: '张三', age: 25 },
-    { name: '李四', age: 30 },
-  ]
+    { name: "张三", age: 25 },
+    { name: "李四", age: 30 },
+  ];
 
-  return (
-    <Table
-      columns={columns}
-      data={data}
-      striped
-    />
-  )
+  return <Table columns={columns} data={data} striped />;
 }
 ```
 
 ### 悬停高亮
 
 ```tsx
-import { Table } from '@/components/UI'
+import { Table } from "@/components/UI";
 
 export default function TableHoverable() {
   const columns = [
-    { key: 'name', title: '姓名' },
-    { key: 'age', title: '年龄' },
-  ]
+    { key: "name", title: "姓名" },
+    { key: "age", title: "年龄" },
+  ];
 
   const data = [
-    { name: '张三', age: 25 },
-    { name: '李四', age: 30 },
-  ]
+    { name: "张三", age: 25 },
+    { name: "李四", age: 30 },
+  ];
 
-  return (
-    <Table
-      columns={columns}
-      data={data}
-      hoverable
-    />
-  )
+  return <Table columns={columns} data={data} hoverable />;
 }
 ```
 
 ### 紧凑模式
 
 ```tsx
-import { Table } from '@/components/UI'
+import { Table } from "@/components/UI";
 
 export default function TableCompact() {
   const columns = [
-    { key: 'name', title: '姓名' },
-    { key: 'age', title: '年龄' },
-  ]
+    { key: "name", title: "姓名" },
+    { key: "age", title: "年龄" },
+  ];
 
   const data = [
-    { name: '张三', age: 25 },
-    { name: '李四', age: 30 },
-  ]
+    { name: "张三", age: 25 },
+    { name: "李四", age: 30 },
+  ];
 
-  return (
-    <Table
-      columns={columns}
-      data={data}
-      compact
-    />
-  )
+  return <Table columns={columns} data={data} compact />;
 }
 ```
 
 ### 自定义列
 
 ```tsx
-import { Table } from '@/components/UI'
+import { Table } from "@/components/UI";
 
 export default function TableCustomColumn() {
   const columns = [
-    { 
-      key: 'name', 
-      title: '姓名',
-      render: (text: string, record: any) => (
-        <span style={{ color: 'blue' }}>{text}</span>
-      )
+    {
+      key: "name",
+      title: "姓名",
+      render: (text: string, record: any) => <span style={{ color: "blue" }}>{text}</span>,
     },
-    { 
-      key: 'age', 
-      title: '年龄',
-      render: (text: number) => `${text}岁`
+    {
+      key: "age",
+      title: "年龄",
+      render: (text: number) => `${text}岁`,
     },
-  ]
+  ];
 
   const data = [
-    { name: '张三', age: 25 },
-    { name: '李四', age: 30 },
-  ]
+    { name: "张三", age: 25 },
+    { name: "李四", age: 30 },
+  ];
 
-  return (
-    <Table
-      columns={columns}
-      data={data}
-    />
-  )
+  return <Table columns={columns} data={data} />;
 }
 ```
 
 ### 操作列
 
 ```tsx
-import { Table } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Table } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TableActions() {
   const columns = [
-    { key: 'name', title: '姓名' },
-    { key: 'age', title: '年龄' },
+    { key: "name", title: "姓名" },
+    { key: "age", title: "年龄" },
     {
-      key: 'actions',
-      title: '操作',
+      key: "actions",
+      title: "操作",
       render: (_: any, record: any) => (
         <div class="space-x-2">
           <Button size="sm" onClick={() => handleEdit(record)}>
@@ -197,70 +161,54 @@ export default function TableActions() {
             删除
           </Button>
         </div>
-      )
+      ),
     },
-  ]
+  ];
 
   const data = [
-    { id: 1, name: '张三', age: 25 },
-    { id: 2, name: '李四', age: 30 },
-  ]
+    { id: 1, name: "张三", age: 25 },
+    { id: 2, name: "李四", age: 30 },
+  ];
 
   const handleEdit = (record: any) => {
-    console.log('编辑:', record)
-  }
+    console.log("编辑:", record);
+  };
 
   const handleDelete = (record: any) => {
-    console.log('删除:', record)
-  }
+    console.log("删除:", record);
+  };
 
-  return (
-    <Table
-      columns={columns}
-      data={data}
-    />
-  )
+  return <Table columns={columns} data={data} />;
 }
 ```
 
 ### 加载状态
 
 ```tsx
-import { Table } from '@/components/UI'
+import { Table } from "@/components/UI";
 
 export default function TableLoading() {
   const columns = [
-    { key: 'name', title: '姓名' },
-    { key: 'age', title: '年龄' },
-  ]
+    { key: "name", title: "姓名" },
+    { key: "age", title: "年龄" },
+  ];
 
-  return (
-    <Table
-      columns={columns}
-      data={[]}
-      loading
-    />
-  )
+  return <Table columns={columns} data={[]} loading />;
 }
 ```
 
 ### 空状态
 
 ```tsx
-import { Table } from '@/components/UI'
+import { Table } from "@/components/UI";
 
 export default function TableEmpty() {
   const columns = [
-    { key: 'name', title: '姓名' },
-    { key: 'age', title: '年龄' },
-  ]
+    { key: "name", title: "姓名" },
+    { key: "age", title: "年龄" },
+  ];
 
-  return (
-    <Table
-      columns={columns}
-      data={[]}
-    />
-  )
+  return <Table columns={columns} data={[]} />;
 }
 ```
 
@@ -268,27 +216,27 @@ export default function TableEmpty() {
 
 ### Table Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| columns | 列配置 | `Column[]` | - |
-| data | 数据源 | `any[]` | - |
-| bordered | 是否显示边框 | `boolean` | `false` |
-| striped | 是否显示斑马纹 | `boolean` | `false` |
-| hoverable | 是否悬停高亮 | `boolean` | `false` |
-| compact | 是否紧凑模式 | `boolean` | `false` |
-| loading | 是否加载中 | `boolean` | `false` |
-| onSelect | 行选择回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明           | 类型       | 默认值  |
+| --------- | -------------- | ---------- | ------- |
+| columns   | 列配置         | `Column[]` | -       |
+| data      | 数据源         | `any[]`    | -       |
+| bordered  | 是否显示边框   | `boolean`  | `false` |
+| striped   | 是否显示斑马纹 | `boolean`  | `false` |
+| hoverable | 是否悬停高亮   | `boolean`  | `false` |
+| compact   | 是否紧凑模式   | `boolean`  | `false` |
+| loading   | 是否加载中     | `boolean`  | `false` |
+| onSelect  | 行选择回调     | `Function` | -       |
+| className | 自定义类名     | `string`   | -       |
 
 ### Column 类型定义
 
 ```typescript
 interface Column {
-  key: string
-  title: string
-  width?: number
-  align?: 'left' | 'center' | 'right'
-  render?: (text: any, record: any, index: number) => VNode
+  key: string;
+  title: string;
+  width?: number;
+  align?: "left" | "center" | "right";
+  render?: (text: any, record: any, index: number) => VNode;
 }
 ```
 
@@ -358,42 +306,35 @@ const fetchData = async () => {
 ### 2. 可选表格
 
 ```tsx
-const selectedRows = ref([])
+const selectedRows = ref([]);
 
 const handleSelect = (record: any, selected: boolean) => {
   if (selected) {
-    selectedRows.value.push(record)
+    selectedRows.value.push(record);
   } else {
-    selectedRows.value = selectedRows.value.filter(r => r.id !== record.id)
+    selectedRows.value = selectedRows.value.filter(r => r.id !== record.id);
   }
-}
+};
 
-<Table
-  columns={columns}
-  data={data}
-  onSelect={handleSelect}
-/>
+<Table columns={columns} data={data} onSelect={handleSelect} />;
 ```
 
 ### 3. 排序表格
 
 ```tsx
-const sortField = ref('')
-const sortOrder = ref('asc')
+const sortField = ref("");
+const sortOrder = ref("asc");
 
 const handleSort = (field: string) => {
   if (sortField.value === field) {
-    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+    sortOrder.value = sortOrder.value === "asc" ? "desc" : "asc";
   } else {
-    sortField.value = field
-    sortOrder.value = 'asc'
+    sortField.value = field;
+    sortOrder.value = "asc";
   }
-}
+};
 
-<Table
-  columns={columns}
-  data={sortedData.value}
-/>
+<Table columns={columns} data={sortedData.value} />;
 ```
 
 ## 常见问题

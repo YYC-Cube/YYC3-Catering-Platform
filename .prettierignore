@@ -7,3 +7,9 @@ dist/
 coverage/
 node_modules/
 pnpm-lock.yaml
+
+# 排除有语法错误的测试文件(Prettier 无法解析)
+frontend/apps/admin-dashboard/src/components/layout/__tests__/YTLayout.test.ts
+frontend/apps/admin-dashboard/src/components/UI/Pagination/index.tsx
+frontend/apps/admin-dashboard/src/views/__tests__/ChainManagement.integration.test.ts
+frontend/apps/admin-dashboard/src/views/__tests__/PaymentManagement.integration.test.ts

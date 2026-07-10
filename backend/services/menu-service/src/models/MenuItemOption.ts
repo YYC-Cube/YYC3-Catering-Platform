@@ -16,7 +16,7 @@ import { MenuItem } from './MenuItem';
 @Table({
   tableName: 'menu_item_options',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class MenuItemOption extends Model<MenuItemOption> {
   @PrimaryKey

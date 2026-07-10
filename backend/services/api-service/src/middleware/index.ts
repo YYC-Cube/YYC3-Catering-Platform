@@ -20,7 +20,7 @@ export {
   optionalAuth,
   type AuthenticatedRequest,
   type AuthenticationResult,
-  type JWTPayload
+  type JWTPayload,
 } from './auth';
 
 // 限流中间件
@@ -34,7 +34,7 @@ export {
   loginRateLimit,
   registerRateLimit,
   type RateLimitConfig,
-  type RateLimitResult
+  type RateLimitResult,
 } from './rate-limiter';
 
 // 验证中间件
@@ -50,14 +50,14 @@ export {
   validateFile,
   type ValidationSchema,
   type ValidationResult,
-  type SanitizationResult
+  type SanitizationResult,
 } from './validation';
 
 // 通用中间件工具
 export const createErrorMiddleware = () => {
   return (error: Error, request: Request): Response => {
     console.error('中间件错误:', {
-      error: error instanceof Error ? error.message : "未知错误",
+      error: error instanceof Error ? error.message : '未知错误',
       stack: error.stack,
       url: request.url,
       method: request.method,
@@ -65,7 +65,7 @@ export const createErrorMiddleware = () => {
 
     const errorResponse = {
       success: false,
-      error: error instanceof Error ? error.message : "未知错误",
+      error: error instanceof Error ? error.message : '未知错误',
       code: 'MIDDLEWARE_ERROR',
       timestamp: new Date().toISOString(),
     };
@@ -80,8 +80,9 @@ export const createErrorMiddleware = () => {
 // 请求ID中间件
 export const createRequestIdMiddleware = () => {
   return (request: Request): { requestId: string } => {
-    const requestId = request.headers.get('x-request-id') ||
-                     `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const requestId =
+      request.headers.get('x-request-id') ||
+      `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
     return { requestId };
   };
@@ -95,9 +96,8 @@ export const createLoggingMiddleware = () => {
     const url = new URL(request.url);
     const path = url.pathname;
     const userAgent = request.headers.get('user-agent') || 'Unknown';
-    const ip = request.headers.get('x-forwarded-for') ||
-               request.headers.get('x-real-ip') ||
-               '127.0.0.1';
+    const ip =
+      request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '127.0.0.1';
 
     console.log(`[${timestamp}] ${requestId || ''} ${method} ${path} - ${userAgent} (${ip})`);
   };
@@ -107,7 +107,7 @@ export const createLoggingMiddleware = () => {
 export const createResponseTimeMiddleware = () => {
   return (): { startTime: number } => {
     return {
-      startTime: Date.now()
+      startTime: Date.now(),
     };
   };
 };
@@ -149,7 +149,7 @@ export const createHealthMiddleware = (dbManager: any) => {
       health.services.database = {
         status: 'unhealthy',
         responseTime: '0ms',
-        error: error instanceof Error ? error.message : "未知错误",
+        error: error instanceof Error ? error.message : '未知错误',
       };
     }
 

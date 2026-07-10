@@ -31,10 +31,7 @@ export class MemorySystem {
   /**
    * 存储对话记录
    */
-  async storeConversation(
-    userMessage: UserMessage,
-    aiResponse: AIResponse
-  ): Promise<void> {
+  async storeConversation(userMessage: UserMessage, aiResponse: AIResponse): Promise<void> {
     const conversationId = this.getCurrentConversationId(userMessage.user.id);
 
     let conversation = this.conversationCache.get(conversationId);
@@ -61,7 +58,7 @@ export class MemorySystem {
         content: aiResponse.content,
         timestamp: aiResponse.timestamp,
         toolCalls: aiResponse.toolCalls,
-      }
+      },
     );
 
     // 持久化
@@ -85,18 +82,13 @@ export class MemorySystem {
       allMessages.push(...conversation.messages);
     }
 
-    return allMessages
-      .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
-      .slice(0, count);
+    return allMessages.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(0, count);
   }
 
   /**
    * 存储用户偏好
    */
-  async storeUserPreference(
-    userId: string,
-    preferences: UserPreferences
-  ): Promise<void> {
+  async storeUserPreference(userId: string, preferences: UserPreferences): Promise<void> {
     const memoryItem: MemoryItem = {
       id: `pref-${userId}`,
       type: 'preference',
@@ -123,11 +115,7 @@ export class MemorySystem {
   /**
    * 存储知识项
    */
-  async storeKnowledge(
-    key: string,
-    knowledge: any,
-    importance: number = 0.5
-  ): Promise<void> {
+  async storeKnowledge(key: string, knowledge: any, importance: number = 0.5): Promise<void> {
     const memoryItem: MemoryItem = {
       id: `know-${key}`,
       type: 'knowledge',
@@ -197,13 +185,11 @@ export class MemorySystem {
     // 清理旧对话（保留最近的）
     if (this.conversationCache.size > this.config.maxConversations) {
       const conversations = Array.from(this.conversationCache.values());
-      conversations.sort(
-        (a, b) => b.startTime.getTime() - a.startTime.getTime()
-      );
+      conversations.sort((a, b) => b.startTime.getTime() - a.startTime.getTime());
 
       const toKeep = conversations.slice(0, this.config.maxConversations);
       this.conversationCache.clear();
-      toKeep.forEach((conv) => {
+      toKeep.forEach(conv => {
         this.conversationCache.set(conv.id, conv);
       });
     }

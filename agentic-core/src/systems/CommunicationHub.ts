@@ -96,7 +96,7 @@ export class CommunicationHub extends EventEmitter {
     }
 
     this.channels.set(channel.id, channel);
-    
+
     // 连接通道
     if (!channel.connected) {
       channel.connect().then(connected => {
@@ -109,7 +109,7 @@ export class CommunicationHub extends EventEmitter {
     }
 
     // 设置消息接收处理
-    channel.receive((message) => this.handleIncomingMessage(message));
+    channel.receive(message => this.handleIncomingMessage(message));
 
     this.emit('channelRegistered', channel);
   }
@@ -124,14 +124,14 @@ export class CommunicationHub extends EventEmitter {
       name: '内部通信通道',
       type: 'internal',
       connected: true,
-      send: async (message) => {
+      send: async message => {
         // 内部消息直接处理
         this.handleIncomingMessage(message);
         return true;
       },
       receive: () => {}, // 内部通道不需要接收处理
       connect: async () => true,
-      disconnect: async () => {}
+      disconnect: async () => {},
     });
 
     // 这里可以添加更多默认通道
@@ -174,7 +174,7 @@ export class CommunicationHub extends EventEmitter {
   private handleIncomingMessage(message: Message): void {
     // 记录消息
     this.recordMessage(message);
-    
+
     // 路由消息
     this.routeMessage(message);
 
@@ -209,7 +209,7 @@ export class CommunicationHub extends EventEmitter {
    */
   private recordMessage(message: Message): void {
     this.messageHistory.push(message);
-    
+
     // 限制历史记录数量
     if (this.messageHistory.length > 1000) {
       this.messageHistory.shift();
@@ -222,13 +222,13 @@ export class CommunicationHub extends EventEmitter {
   public getStats(): CommunicationStats {
     const sent = this.messageHistory.filter(m => m.type !== 'request').length;
     const received = this.messageHistory.filter(m => m.type === 'request').length;
-    
+
     return {
       totalMessages: this.messageHistory.length,
       sent,
       received,
       pending: this.pendingMessages.size,
-      errors: 0 // 这里可以添加错误统计
+      errors: 0, // 这里可以添加错误统计
     };
   }
 
@@ -276,7 +276,7 @@ export class CommunicationHub extends EventEmitter {
     sender: string,
     recipient: string,
     priority: Message['priority'] = 'medium',
-    metadata: Record<string, any> = {}
+    metadata: Record<string, any> = {},
   ): Message {
     return {
       id: this.generateId(),
@@ -286,7 +286,7 @@ export class CommunicationHub extends EventEmitter {
       recipient,
       timestamp: Date.now(),
       priority,
-      metadata
+      metadata,
     };
   }
 

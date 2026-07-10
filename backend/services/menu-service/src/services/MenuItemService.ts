@@ -111,7 +111,7 @@ class UserProfile {
       browsingHistory: this.browsingHistory,
       demographicInfo: this.demographicInfo,
       behavioralPatterns: this.behavioralPatterns,
-      interactionHistory: this.interactionHistory
+      interactionHistory: this.interactionHistory,
     };
   }
 
@@ -154,7 +154,7 @@ class DeepLearningRecommendationModel {
       browsingFrequency: 0.2,
       interactionScore: 0.25,
       similarityScore: 0.15,
-      contextMatch: 0.1
+      contextMatch: 0.1,
     };
     this.userProfiles = new Map<number, UserProfile>();
   }
@@ -170,7 +170,7 @@ class DeepLearningRecommendationModel {
   // 更新用户画像
   updateUserProfile(userId: number, data: Partial<UserProfile>): void {
     const profile = this.getUserProfile(userId);
-    
+
     if (data.preferences) {
       Object.assign(profile.preferences, data.preferences);
     }
@@ -195,7 +195,7 @@ class DeepLearningRecommendationModel {
   trainModel(trainingData: Record<string, any>[]): void {
     // 简化版模型训练，实际项目中可以替换为真实的机器学习模型
     logger.info(`训练推荐模型，使用 ${trainingData.length} 条数据`);
-    
+
     // 计算特征权重（这里使用简单的统计方法）
     const featureCounts: Record<string, number> = {};
     const totalCount = trainingData.length;
@@ -210,7 +210,7 @@ class DeepLearningRecommendationModel {
     const sumWeights = Object.values(featureCounts).reduce((sum, count) => sum + count, 0);
     if (sumWeights > 0) {
       this.featureWeights = Object.fromEntries(
-        Object.entries(featureCounts).map(([feature, count]) => [feature, count / sumWeights])
+        Object.entries(featureCounts).map(([feature, count]) => [feature, count / sumWeights]),
       );
     }
 
@@ -219,50 +219,42 @@ class DeepLearningRecommendationModel {
   }
 
   // 预测推荐分数
-  predictScore(
-    userId: number,
-    menuItemId: number,
-    context: Record<string, any> = {}
-  ): number {
+  predictScore(userId: number, menuItemId: number, context: Record<string, any> = {}): number {
     const userProfile = this.getUserProfile(userId);
-    
+
     // 计算基础分数
     let score = 0;
-    
+
     // 订单历史分数
     const orderWeight = userProfile.orderHistory.filter(id => id === menuItemId).length;
     score += orderWeight * this.featureWeights.orderFrequency;
-    
+
     // 浏览历史分数
     const browseWeight = userProfile.browsingHistory.filter(id => id === menuItemId).length;
     score += browseWeight * this.featureWeights.browsingFrequency;
-    
+
     // 偏好分数
     score += (userProfile.preferences[menuItemId] || 0) * 0.05;
-    
+
     // 上下文匹配分数
     if (context.time_of_day && context.time_of_day === 'lunch') {
       score += 0.1; // 午餐时段的菜品额外加分
     }
-    
+
     // 多样性调整
     score += Math.random() * 0.1; // 添加一些随机性以增加多样性
-    
+
     return Math.max(0, score);
   }
 
   // 批量预测分数
-  predictBatchScores(
-    userId: number,
-    menuItemIds: number[],
-    context: Record<string, any> = {}
-  ): Record<number, number> {
+  predictBatchScores(userId: number, menuItemIds: number[], context: Record<string, any> = {}): Record<number, number> {
     const scores: Record<number, number> = {};
-    
+
     menuItemIds.forEach(itemId => {
       scores[itemId] = this.predictScore(userId, itemId, context);
     });
-    
+
     return scores;
   }
 }
@@ -290,7 +282,7 @@ export class MenuItemService {
       if (options && options.length > 0) {
         const menuItemOptions = options.map(option => ({
           menu_item_id: menuItem.id,
-          ...option
+          ...option,
         }));
         await MenuItemOption.bulkCreate(menuItemOptions);
       }
@@ -299,7 +291,7 @@ export class MenuItemService {
       if (images && images.length > 0) {
         const menuItemImages = images.map(image => ({
           menu_item_id: menuItem.id,
-          ...image
+          ...image,
         })) as Optional<MenuItemImage, 'id'>[];
         await MenuItemImage.bulkCreate(menuItemImages);
       }
@@ -308,7 +300,7 @@ export class MenuItemService {
       if (tags && tags.length > 0) {
         const menuItemTags = tags.map(tagId => ({
           menu_item_id: menuItem.id,
-          tag_id: tagId
+          tag_id: tagId,
         })) as Optional<MenuItemTag, 'id'>[];
         await MenuItemTag.bulkCreate(menuItemTags);
       }
@@ -339,9 +331,17 @@ export class MenuItemService {
     limit?: number;
   }): Promise<{ menuItems: MenuItem[]; total: number }> {
     try {
-      const { 
-        categoryId, keyword, isActive, isPopular, isRecommend, isNew, 
-        minPrice, maxPrice, page = 1, limit = 20 
+      const {
+        categoryId,
+        keyword,
+        isActive,
+        isPopular,
+        isRecommend,
+        isNew,
+        minPrice,
+        maxPrice,
+        page = 1,
+        limit = 20,
       } = params;
       const offset = (page - 1) * limit;
 
@@ -383,16 +383,19 @@ export class MenuItemService {
         where,
         offset,
         limit,
-        order: [['sales', 'DESC'], ['id', 'ASC']],
+        order: [
+          ['sales', 'DESC'],
+          ['id', 'ASC'],
+        ],
         include: [
           { model: MenuItemOption, separate: true, order: [['sort_order', 'ASC']] },
           { model: MenuItemImage, separate: true, order: [['sort_order', 'ASC']] },
-          { 
-            model: MenuItemTag, 
+          {
+            model: MenuItemTag,
             separate: true,
-            include: [{ model: Tag }]
-          }
-        ]
+            include: [{ model: Tag }],
+          },
+        ],
       });
 
       logger.info(`获取菜品列表成功，共 ${count} 条记录`);
@@ -414,11 +417,11 @@ export class MenuItemService {
         include: [
           { model: MenuItemOption, order: [['sort_order', 'ASC']] },
           { model: MenuItemImage, order: [['sort_order', 'ASC']] },
-          { 
-            model: MenuItemTag, 
-            include: [{ model: Tag }]
-          }
-        ]
+          {
+            model: MenuItemTag,
+            include: [{ model: Tag }],
+          },
+        ],
       });
       return menuItem;
     } catch (error) {
@@ -453,7 +456,7 @@ export class MenuItemService {
         if (options.length > 0) {
           const menuItemOptions = options.map(option => ({
             menu_item_id: id,
-            ...option
+            ...option,
           }));
           await MenuItemOption.bulkCreate(menuItemOptions);
         }
@@ -467,7 +470,7 @@ export class MenuItemService {
         if (images.length > 0) {
           const menuItemImages = images.map(image => ({
             menu_item_id: id,
-            ...image
+            ...image,
           })) as Optional<MenuItemImage, 'id'>[];
           await MenuItemImage.bulkCreate(menuItemImages);
         }
@@ -481,7 +484,7 @@ export class MenuItemService {
         if (tags.length > 0) {
           const menuItemTags = tags.map(tagId => ({
             menu_item_id: id,
-            tag_id: tagId
+            tag_id: tagId,
           })) as Optional<MenuItemTag, 'id'>[];
           await MenuItemTag.bulkCreate(menuItemTags);
         }
@@ -606,7 +609,10 @@ export class MenuItemService {
     try {
       return await DynamicPrice.findAll({
         where: { menu_item_id: menuItemId },
-        order: [['is_active', 'DESC'], ['created_at', 'DESC']]
+        order: [
+          ['is_active', 'DESC'],
+          ['created_at', 'DESC'],
+        ],
       });
     } catch (error) {
       logger.error(`获取菜品动态价格规则失败: ${menuItemId}`, error);
@@ -629,19 +635,13 @@ export class MenuItemService {
           is_active: true,
           [Op.and]: [
             {
-              [Op.or]: [
-                { effective_from: null },
-                { effective_from: { [Op.lte]: now.toDate() } }
-              ]
+              [Op.or]: [{ effective_from: null }, { effective_from: { [Op.lte]: now.toDate() } }],
             },
             {
-              [Op.or]: [
-                { effective_to: null },
-                { effective_to: { [Op.gte]: now.toDate() } }
-              ]
-            }
-          ]
-        }
+              [Op.or]: [{ effective_to: null }, { effective_to: { [Op.gte]: now.toDate() } }],
+            },
+          ],
+        },
       });
 
       // 根据规则配置和上下文信息匹配最佳动态价格
@@ -655,12 +655,12 @@ export class MenuItemService {
           const currentHour = now.hour();
           const currentMinute = now.minute();
           const currentTime = currentHour * 60 + currentMinute;
-          
+
           const [startHour, startMinute] = rule_config.start_time.split(':').map(Number);
           const [endHour, endMinute] = rule_config.end_time.split(':').map(Number);
           const startTime = startHour * 60 + startMinute;
           const endTime = endHour * 60 + endMinute;
-          
+
           if (startTime <= endTime) {
             isMatch = currentTime >= startTime && currentTime <= endTime;
           } else {
@@ -668,7 +668,7 @@ export class MenuItemService {
             isMatch = currentTime >= startTime || currentTime <= endTime;
           }
         }
-        
+
         // 星期几规则匹配
         if (isMatch && rule_config.day_of_week && rule_config.day_of_week.length > 0) {
           if (!rule_config.day_of_week.includes(now.day())) {
@@ -699,14 +699,17 @@ export class MenuItemService {
    * @param params 更新参数
    * @returns 更新后的动态价格
    */
-  async updateDynamicPrice(id: number, params: Partial<{
-    dynamic_price?: number;
-    price_type?: 'time_based' | 'demand_based' | 'user_segment' | 'promotion' | 'special_event';
-    rule_config?: any;
-    is_active?: boolean;
-    start_time?: Date | null;
-    end_time?: Date | null;
-  }>): Promise<DynamicPrice | null> {
+  async updateDynamicPrice(
+    id: number,
+    params: Partial<{
+      dynamic_price?: number;
+      price_type?: 'time_based' | 'demand_based' | 'user_segment' | 'promotion' | 'special_event';
+      rule_config?: any;
+      is_active?: boolean;
+      start_time?: Date | null;
+      end_time?: Date | null;
+    }>,
+  ): Promise<DynamicPrice | null> {
     try {
       const dynamicPrice = await DynamicPrice.findByPk(id);
       if (!dynamicPrice) {
@@ -759,7 +762,9 @@ export class MenuItemService {
   }): Promise<Recommendation> {
     try {
       const recommendation = await Recommendation.create(params);
-      logger.info(`生成个性化推荐成功: ${recommendation.id} - 用户ID: ${recommendation.user_id}, 菜品ID: ${recommendation.menu_item_id}`);
+      logger.info(
+        `生成个性化推荐成功: ${recommendation.id} - 用户ID: ${recommendation.user_id}, 菜品ID: ${recommendation.menu_item_id}`,
+      );
       return recommendation;
     } catch (error) {
       logger.error('生成个性化推荐失败:', error);
@@ -777,9 +782,12 @@ export class MenuItemService {
     try {
       return await Recommendation.findAll({
         where: { user_id: userId, is_active: true },
-        order: [['score', 'DESC'], ['rank', 'ASC']],
+        order: [
+          ['score', 'DESC'],
+          ['rank', 'ASC'],
+        ],
         limit,
-        include: [{ model: MenuItem }]
+        include: [{ model: MenuItem }],
       });
     } catch (error) {
       logger.error(`获取用户个性化推荐列表失败: ${userId}`, error);
@@ -796,8 +804,11 @@ export class MenuItemService {
     try {
       return await Recommendation.findAll({
         where: { menu_item_id: menuItemId },
-        order: [['is_active', 'DESC'], ['score', 'DESC']],
-        include: [{ model: MenuItem }]
+        order: [
+          ['is_active', 'DESC'],
+          ['score', 'DESC'],
+        ],
+        include: [{ model: MenuItem }],
       });
     } catch (error) {
       logger.error(`获取菜品推荐情况失败: ${menuItemId}`, error);
@@ -811,12 +822,15 @@ export class MenuItemService {
    * @param params 更新参数
    * @returns 更新后的推荐
    */
-  async updateRecommendationUsage(id: number, params: Partial<{
-    is_used?: boolean;
-    used_at?: Date;
-    click_count?: number;
-    order_count?: number;
-  }>): Promise<Recommendation | null> {
+  async updateRecommendationUsage(
+    id: number,
+    params: Partial<{
+      is_used?: boolean;
+      used_at?: Date;
+      click_count?: number;
+      order_count?: number;
+    }>,
+  ): Promise<Recommendation | null> {
     try {
       const recommendation = await Recommendation.findByPk(id);
       if (!recommendation) {
@@ -836,18 +850,18 @@ export class MenuItemService {
         ...params,
         click_count: recommendation.click_count,
         order_count: recommendation.order_count,
-        is_interacted: true
+        is_interacted: true,
       });
 
       // 更新用户画像
       if (params.click_count) {
         this.recommendationModel.updateUserProfile(recommendation.user_id, {
-          preferences: { [recommendation.menu_item_id]: 1 }
+          preferences: { [recommendation.menu_item_id]: 1 },
         });
       } else if (params.order_count) {
         this.recommendationModel.updateUserProfile(recommendation.user_id, {
           preferences: { [recommendation.menu_item_id]: 3 },
-          orderHistory: [recommendation.menu_item_id]
+          orderHistory: [recommendation.menu_item_id],
         });
       }
 
@@ -877,42 +891,42 @@ export class MenuItemService {
           logger.warn('Invalid context JSON string:', e);
         }
       }
-      
+
       // 1. 获取所有活跃菜品
       const allMenuItems = await MenuItem.findAll({
         where: { is_active: true },
-        attributes: ['id']
+        attributes: ['id'],
       });
       const menuItemIds = allMenuItems.map(item => item.id);
-      
+
       // 2. 使用深度学习模型预测推荐分数
       const scores = this.recommendationModel.predictBatchScores(userId, menuItemIds, contextInfo);
-      
+
       // 3. 按分数排序菜品
       const sortedItems = menuItemIds
         .map(id => ({ id, score: scores[id] || 0 }))
         .sort((a, b) => b.score - a.score)
         .slice(0, limit);
-      
+
       // 4. 获取详细菜品信息
       const recommendedMenuItems = await MenuItem.findAll({
         where: { id: sortedItems.map(item => item.id) },
         include: [
           { model: MenuItemOption, order: [['sort_order', 'ASC']] },
           { model: MenuItemImage, order: [['sort_order', 'ASC']] },
-          { model: MenuItemTag, include: [{ model: Tag }] }
-        ]
+          { model: MenuItemTag, include: [{ model: Tag }] },
+        ],
       });
-      
+
       // 5. 按分数排序菜品
       const menuItemMap = new Map(recommendedMenuItems.map(item => [item.id, item]));
       const sortedMenuItems = sortedItems.map(item => menuItemMap.get(item.id)!).filter(Boolean);
-      
+
       // 6. 记录推荐结果
       for (let i = 0; i < sortedMenuItems.length; i++) {
         const menuItem = sortedMenuItems[i];
         const score = sortedItems[i].score;
-        
+
         await Recommendation.create({
           user_id: userId,
           menu_item_id: menuItem.id,
@@ -928,11 +942,11 @@ export class MenuItemService {
             model_version: this.recommendationModel.modelVersion,
             confidence_score: Math.min(1, score + 0.1), // 简单的置信度计算
             cold_start: menuItemIds.length === 0,
-            diversity_score: 0.5 + Math.random() * 0.5
-          }
+            diversity_score: 0.5 + Math.random() * 0.5,
+          },
         });
       }
-      
+
       return sortedMenuItems;
     } catch (error) {
       logger.error(`生成智能推荐失败: ${userId}`, error);
@@ -996,15 +1010,15 @@ export class MenuItemService {
   async batchGenerateRecommendations(
     userIds: number[],
     context?: string,
-    limit: number = 10
+    limit: number = 10,
   ): Promise<Record<number, MenuItem[]>> {
     try {
       const results: Record<number, MenuItem[]> = {};
-      
+
       for (const userId of userIds) {
         results[userId] = await this.generateSmartRecommendations(userId, limit, context);
       }
-      
+
       return results;
     } catch (error) {
       logger.error('批量生成推荐失败:', error);

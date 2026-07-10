@@ -64,7 +64,7 @@ const syncModels = async (): Promise<void> => {
     // 这里使用动态导入是为了避免循环依赖
     const modelsPath = __dirname + '/../models/*.model.ts';
     const modelFiles = require('glob').sync(modelsPath);
-    
+
     for (const file of modelFiles) {
       const modelModule = await import(file);
       const model = modelModule.default || modelModule[Object.keys(modelModule)[0]];

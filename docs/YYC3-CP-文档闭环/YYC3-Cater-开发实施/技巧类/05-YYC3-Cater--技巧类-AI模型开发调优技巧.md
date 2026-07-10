@@ -10,15 +10,17 @@
 **@tags**：YYC³,文档
 
 ---
+
 # AI模型开发调优技巧
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ## 文档信息
+
 - 文档类型：技巧类
 - 所属阶段：YYC3-Cater--开发实施
 - 遵循规范：五高五标五化要求
@@ -58,15 +60,15 @@
  * AI模型开发阶段
  */
 export enum DevelopmentStage {
-  DATA_COLLECTION = 'DATA_COLLECTION',           // 数据收集
-  DATA_PREPROCESSING = 'DATA_PREPROCESSING',     // 数据预处理
-  FEATURE_ENGINEERING = 'FEATURE_ENGINEERING',   // 特征工程
-  MODEL_SELECTION = 'MODEL_SELECTION',           // 模型选择
-  TRAINING = 'TRAINING',                         // 训练
-  VALIDATION = 'VALIDATION',                     // 验证
-  TESTING = 'TESTING',                           // 测试
-  DEPLOYMENT = 'DEPLOYMENT',                     // 部署
-  MONITORING = 'MONITORING'                     // 监控
+  DATA_COLLECTION = "DATA_COLLECTION", // 数据收集
+  DATA_PREPROCESSING = "DATA_PREPROCESSING", // 数据预处理
+  FEATURE_ENGINEERING = "FEATURE_ENGINEERING", // 特征工程
+  MODEL_SELECTION = "MODEL_SELECTION", // 模型选择
+  TRAINING = "TRAINING", // 训练
+  VALIDATION = "VALIDATION", // 验证
+  TESTING = "TESTING", // 测试
+  DEPLOYMENT = "DEPLOYMENT", // 部署
+  MONITORING = "MONITORING", // 监控
 }
 
 /**
@@ -91,7 +93,7 @@ export class AIDevelopmentPipeline {
    */
   private async executeStage(stage: DevelopmentStage): Promise<void> {
     console.log(`执行阶段: ${stage}`);
-    
+
     switch (stage) {
       case DevelopmentStage.DATA_COLLECTION:
         await this.collectData();
@@ -196,33 +198,33 @@ export class AIDevelopmentPipeline {
  */
 export enum ModelType {
   // 传统机器学习
-  LINEAR_REGRESSION = 'LINEAR_REGRESSION',
-  LOGISTIC_REGRESSION = 'LOGISTIC_REGRESSION',
-  DECISION_TREE = 'DECISION_TREE',
-  RANDOM_FOREST = 'RANDOM_FOREST',
-  GRADIENT_BOOSTING = 'GRADIENT_BOOSTING',
-  
+  LINEAR_REGRESSION = "LINEAR_REGRESSION",
+  LOGISTIC_REGRESSION = "LOGISTIC_REGRESSION",
+  DECISION_TREE = "DECISION_TREE",
+  RANDOM_FOREST = "RANDOM_FOREST",
+  GRADIENT_BOOSTING = "GRADIENT_BOOSTING",
+
   // 深度学习
-  CNN = 'CNN',                    // 卷积神经网络
-  RNN = 'RNN',                    // 循环神经网络
-  LSTM = 'LSTM',                  // 长短期记忆网络
-  TRANSFORMER = 'TRANSFORMER',    // Transformer
-  GAN = 'GAN',                    // 生成对抗网络
-  
+  CNN = "CNN", // 卷积神经网络
+  RNN = "RNN", // 循环神经网络
+  LSTM = "LSTM", // 长短期记忆网络
+  TRANSFORMER = "TRANSFORMER", // Transformer
+  GAN = "GAN", // 生成对抗网络
+
   // 自然语言处理
-  BERT = 'BERT',                  // BERT模型
-  GPT = 'GPT',                    // GPT模型
-  T5 = 'T5',                      // T5模型
-  
+  BERT = "BERT", // BERT模型
+  GPT = "GPT", // GPT模型
+  T5 = "T5", // T5模型
+
   // 计算机视觉
-  RESNET = 'RESNET',              // ResNet
-  EFFICIENTNET = 'EFFICIENTNET',  // EfficientNet
-  YOLO = 'YOLO',                  // YOLO目标检测
-  
+  RESNET = "RESNET", // ResNet
+  EFFICIENTNET = "EFFICIENTNET", // EfficientNet
+  YOLO = "YOLO", // YOLO目标检测
+
   // 推荐系统
-  COLLABORATIVE_FILTERING = 'COLLABORATIVE_FILTERING',
-  MATRIX_FACTORIZATION = 'MATRIX_FACTORIZATION',
-  DEEP_FM = 'DEEP_FM'             // DeepFM
+  COLLABORATIVE_FILTERING = "COLLABORATIVE_FILTERING",
+  MATRIX_FACTORIZATION = "MATRIX_FACTORIZATION",
+  DEEP_FM = "DEEP_FM", // DeepFM
 }
 
 /**
@@ -301,16 +303,16 @@ export class DataCollector {
 
     for (const augmentation of augmentations) {
       switch (augmentation) {
-        case 'rotation':
+        case "rotation":
           // 图像旋转
           break;
-        case 'flip':
+        case "flip":
           // 图像翻转
           break;
-        case 'noise':
+        case "noise":
           // 添加噪声
           break;
-        case 'translation':
+        case "translation":
           // 平移
           break;
       }
@@ -331,26 +333,21 @@ export class DataCleaner {
   /**
    * 处理缺失值
    */
-  handleMissingValues(
-    data: any[],
-    strategy: 'drop' | 'mean' | 'median' | 'mode' | 'fill'
-  ): any[] {
+  handleMissingValues(data: any[], strategy: "drop" | "mean" | "median" | "mode" | "fill"): any[] {
     const cleanedData = [...data];
 
-    if (strategy === 'drop') {
+    if (strategy === "drop") {
       // 删除包含缺失值的行
-      return cleanedData.filter(row => 
-        Object.values(row).every(value => value !== null && value !== undefined)
-      );
+      return cleanedData.filter(row => Object.values(row).every(value => value !== null && value !== undefined));
     }
 
     // 计算填充值
     let fillValue: any;
-    if (strategy === 'mean') {
+    if (strategy === "mean") {
       fillValue = this.calculateMean(cleanedData);
-    } else if (strategy === 'median') {
+    } else if (strategy === "median") {
       fillValue = this.calculateMedian(cleanedData);
-    } else if (strategy === 'mode') {
+    } else if (strategy === "mode") {
       fillValue = this.calculateMode(cleanedData);
     }
 
@@ -369,16 +366,13 @@ export class DataCleaner {
   /**
    * 处理异常值
    */
-  handleOutliers(
-    data: number[],
-    method: 'zscore' | 'iqr' | 'isolation'
-  ): number[] {
+  handleOutliers(data: number[], method: "zscore" | "iqr" | "isolation"): number[] {
     switch (method) {
-      case 'zscore':
+      case "zscore":
         return this.handleOutliersByZScore(data);
-      case 'iqr':
+      case "iqr":
         return this.handleOutliersByIQR(data);
-      case 'isolation':
+      case "isolation":
         return this.handleOutliersByIsolation(data);
       default:
         return data;
@@ -390,13 +384,9 @@ export class DataCleaner {
    */
   private handleOutliersByZScore(data: number[], threshold: number = 3): number[] {
     const mean = this.calculateMean(data);
-    const stdDev = Math.sqrt(
-      data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / data.length
-    );
+    const stdDev = Math.sqrt(data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / data.length);
 
-    return data.filter(val => 
-      Math.abs((val - mean) / stdDev) < threshold
-    );
+    return data.filter(val => Math.abs((val - mean) / stdDev) < threshold);
   }
 
   /**
@@ -410,16 +400,14 @@ export class DataCleaner {
     const lowerBound = q1 - 1.5 * iqr;
     const upperBound = q3 + 1.5 * iqr;
 
-    return data.filter(val => 
-      val >= lowerBound && val <= upperBound
-    );
+    return data.filter(val => val >= lowerBound && val <= upperBound);
   }
 
   /**
    * 计算均值
    */
   private calculateMean(data: any[]): number {
-    const numericData = data.filter(val => typeof val === 'number');
+    const numericData = data.filter(val => typeof val === "number");
     return numericData.reduce((sum, val) => sum + val, 0) / numericData.length;
   }
 
@@ -427,13 +415,9 @@ export class DataCleaner {
    * 计算中位数
    */
   private calculateMedian(data: any[]): number {
-    const numericData = data
-      .filter(val => typeof val === 'number')
-      .sort((a, b) => a - b);
+    const numericData = data.filter(val => typeof val === "number").sort((a, b) => a - b);
     const mid = Math.floor(numericData.length / 2);
-    return numericData.length % 2 !== 0
-      ? numericData[mid]
-      : (numericData[mid - 1] + numericData[mid]) / 2;
+    return numericData.length % 2 !== 0 ? numericData[mid] : (numericData[mid - 1] + numericData[mid]) / 2;
   }
 
   /**
@@ -444,8 +428,7 @@ export class DataCleaner {
     for (const val of data) {
       frequency.set(val, (frequency.get(val) || 0) + 1);
     }
-    return Array.from(frequency.entries())
-      .sort((a, b) => b[1] - a[1])[0][0];
+    return Array.from(frequency.entries()).sort((a, b) => b[1] - a[1])[0][0];
   }
 
   /**
@@ -468,16 +451,13 @@ export class FeatureEngineer {
   /**
    * 特征标准化
    */
-  normalizeFeatures(
-    data: number[][],
-    method: 'minmax' | 'zscore' | 'robust'
-  ): number[][] {
+  normalizeFeatures(data: number[][], method: "minmax" | "zscore" | "robust"): number[][] {
     switch (method) {
-      case 'minmax':
+      case "minmax":
         return this.minMaxNormalize(data);
-      case 'zscore':
+      case "zscore":
         return this.zScoreNormalize(data);
-      case 'robust':
+      case "robust":
         return this.robustNormalize(data);
       default:
         return data;
@@ -514,9 +494,7 @@ export class FeatureEngineer {
     for (let i = 0; i < numFeatures; i++) {
       const column = data.map(row => row[i]);
       const mean = column.reduce((sum, val) => sum + val, 0) / column.length;
-      const stdDev = Math.sqrt(
-        column.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / column.length
-      );
+      const stdDev = Math.sqrt(column.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / column.length);
 
       for (let j = 0; j < normalized.length; j++) {
         normalized[j][i] = (normalized[j][i] - mean) / stdDev;
@@ -555,17 +533,17 @@ export class FeatureEngineer {
   selectFeatures(
     data: number[][],
     labels: number[],
-    method: 'correlation' | 'mutual_info' | 'chi2' | 'rfe',
+    method: "correlation" | "mutual_info" | "chi2" | "rfe",
     k: number = 10
   ): number[][] {
     switch (method) {
-      case 'correlation':
+      case "correlation":
         return this.selectByCorrelation(data, labels, k);
-      case 'mutual_info':
+      case "mutual_info":
         return this.selectByMutualInfo(data, labels, k);
-      case 'chi2':
+      case "chi2":
         return this.selectByChi2(data, labels, k);
-      case 'rfe':
+      case "rfe":
         return this.selectByRFE(data, labels, k);
       default:
         return data;
@@ -575,11 +553,7 @@ export class FeatureEngineer {
   /**
    * 基于相关性的特征选择
    */
-  private selectByCorrelation(
-    data: number[][],
-    labels: number[],
-    k: number
-  ): number[][] {
+  private selectByCorrelation(data: number[][], labels: number[], k: number): number[][] {
     const numFeatures = data[0].length;
     const correlations: number[] = [];
 
@@ -624,11 +598,7 @@ export class FeatureEngineer {
   /**
    * 基于互信息的特征选择
    */
-  private selectByMutualInfo(
-    data: number[][],
-    labels: number[],
-    k: number
-  ): number[][] {
+  private selectByMutualInfo(data: number[][], labels: number[], k: number): number[][] {
     // 实现互信息计算
     return data;
   }
@@ -636,11 +606,7 @@ export class FeatureEngineer {
   /**
    * 基于卡方检验的特征选择
    */
-  private selectByChi2(
-    data: number[][],
-    labels: number[],
-    k: number
-  ): number[][] {
+  private selectByChi2(data: number[][], labels: number[], k: number): number[][] {
     // 实现卡方检验
     return data;
   }
@@ -648,11 +614,7 @@ export class FeatureEngineer {
   /**
    * 递归特征消除
    */
-  private selectByRFE(
-    data: number[][],
-    labels: number[],
-    k: number
-  ): number[][] {
+  private selectByRFE(data: number[][], labels: number[], k: number): number[][] {
     // 实现RFE算法
     return data;
   }
@@ -660,17 +622,13 @@ export class FeatureEngineer {
   /**
    * 特征降维
    */
-  reduceDimensionality(
-    data: number[][],
-    method: 'pca' | 'tsne' | 'umap',
-    nComponents: number = 2
-  ): number[][] {
+  reduceDimensionality(data: number[][], method: "pca" | "tsne" | "umap", nComponents: number = 2): number[][] {
     switch (method) {
-      case 'pca':
+      case "pca":
         return this.applyPCA(data, nComponents);
-      case 'tsne':
+      case "tsne":
         return this.applyTSNE(data, nComponents);
-      case 'umap':
+      case "umap":
         return this.applyUMAP(data, nComponents);
       default:
         return data;
@@ -726,31 +684,28 @@ export class ModelSelector {
    * 根据任务类型选择模型
    */
   selectModelByTask(
-    taskType: 'classification' | 'regression' | 'clustering' | 'recommendation',
+    taskType: "classification" | "regression" | "clustering" | "recommendation",
     dataSize: number,
     featureCount: number
   ): ModelType {
     switch (taskType) {
-      case 'classification':
+      case "classification":
         return this.selectClassificationModel(dataSize, featureCount);
-      case 'regression':
+      case "regression":
         return this.selectRegressionModel(dataSize, featureCount);
-      case 'clustering':
+      case "clustering":
         return this.selectClusteringModel(dataSize, featureCount);
-      case 'recommendation':
+      case "recommendation":
         return this.selectRecommendationModel(dataSize, featureCount);
       default:
-        throw new Error('Unknown task type');
+        throw new Error("Unknown task type");
     }
   }
 
   /**
    * 选择分类模型
    */
-  private selectClassificationModel(
-    dataSize: number,
-    featureCount: number
-  ): ModelType {
+  private selectClassificationModel(dataSize: number, featureCount: number): ModelType {
     if (dataSize < 1000) {
       return ModelType.LOGISTIC_REGRESSION;
     } else if (dataSize < 10000) {
@@ -765,10 +720,7 @@ export class ModelSelector {
   /**
    * 选择回归模型
    */
-  private selectRegressionModel(
-    dataSize: number,
-    featureCount: number
-  ): ModelType {
+  private selectRegressionModel(dataSize: number, featureCount: number): ModelType {
     if (dataSize < 1000) {
       return ModelType.LINEAR_REGRESSION;
     } else if (dataSize < 10000) {
@@ -781,20 +733,14 @@ export class ModelSelector {
   /**
    * 选择聚类模型
    */
-  private selectClusteringModel(
-    dataSize: number,
-    featureCount: number
-  ): ModelType {
+  private selectClusteringModel(dataSize: number, featureCount: number): ModelType {
     return ModelType.RANDOM_FOREST; // 使用随机森林进行聚类
   }
 
   /**
    * 选择推荐模型
    */
-  private selectRecommendationModel(
-    dataSize: number,
-    featureCount: number
-  ): ModelType {
+  private selectRecommendationModel(dataSize: number, featureCount: number): ModelType {
     if (dataSize < 10000) {
       return ModelType.COLLABORATIVE_FILTERING;
     } else if (dataSize < 100000) {
@@ -817,13 +763,7 @@ export class ModelSelector {
     const results = new Map<ModelType, number>();
 
     for (const modelType of models) {
-      const accuracy = await this.evaluateModel(
-        modelType,
-        trainData,
-        trainLabels,
-        testData,
-        testLabels
-      );
+      const accuracy = await this.evaluateModel(modelType, trainData, trainLabels, testData, testLabels);
       results.set(modelType, accuracy);
     }
 
@@ -859,63 +799,63 @@ export class NeuralNetworkArchitect {
   designCNN(
     inputShape: [number, number, number],
     numClasses: number,
-    complexity: 'simple' | 'medium' | 'complex' = 'medium'
+    complexity: "simple" | "medium" | "complex" = "medium"
   ): any {
     const architecture: any = {
-      type: 'CNN',
-      layers: []
+      type: "CNN",
+      layers: [],
     };
 
     // 输入层
     architecture.layers.push({
-      type: 'input',
-      shape: inputShape
+      type: "input",
+      shape: inputShape,
     });
 
     // 卷积层
-    const numConvLayers = complexity === 'simple' ? 2 : complexity === 'medium' ? 3 : 4;
-    const filters = complexity === 'simple' ? [32, 64] : complexity === 'medium' ? [32, 64, 128] : [32, 64, 128, 256];
+    const numConvLayers = complexity === "simple" ? 2 : complexity === "medium" ? 3 : 4;
+    const filters = complexity === "simple" ? [32, 64] : complexity === "medium" ? [32, 64, 128] : [32, 64, 128, 256];
 
     for (let i = 0; i < numConvLayers; i++) {
       architecture.layers.push({
-        type: 'conv2d',
+        type: "conv2d",
         filters: filters[i],
         kernelSize: 3,
-        activation: 'relu',
-        padding: 'same'
+        activation: "relu",
+        padding: "same",
       });
 
       architecture.layers.push({
-        type: 'batch_normalization'
+        type: "batch_normalization",
       });
 
       architecture.layers.push({
-        type: 'max_pooling2d',
-        poolSize: 2
+        type: "max_pooling2d",
+        poolSize: 2,
       });
     }
 
     // 全连接层
     architecture.layers.push({
-      type: 'flatten'
+      type: "flatten",
     });
 
     architecture.layers.push({
-      type: 'dense',
+      type: "dense",
       units: 512,
-      activation: 'relu'
+      activation: "relu",
     });
 
     architecture.layers.push({
-      type: 'dropout',
-      rate: 0.5
+      type: "dropout",
+      rate: 0.5,
     });
 
     // 输出层
     architecture.layers.push({
-      type: 'dense',
+      type: "dense",
       units: numClasses,
-      activation: 'softmax'
+      activation: "softmax",
     });
 
     return architecture;
@@ -924,21 +864,16 @@ export class NeuralNetworkArchitect {
   /**
    * 设计RNN架构
    */
-  designRNN(
-    inputSize: number,
-    hiddenSize: number,
-    numLayers: number = 2,
-    rnnType: 'lstm' | 'gru' = 'lstm'
-  ): any {
+  designRNN(inputSize: number, hiddenSize: number, numLayers: number = 2, rnnType: "lstm" | "gru" = "lstm"): any {
     const architecture: any = {
-      type: 'RNN',
-      layers: []
+      type: "RNN",
+      layers: [],
     };
 
     // 输入层
     architecture.layers.push({
-      type: 'input',
-      size: inputSize
+      type: "input",
+      size: inputSize,
     });
 
     // RNN层
@@ -946,20 +881,20 @@ export class NeuralNetworkArchitect {
       architecture.layers.push({
         type: rnnType,
         units: hiddenSize,
-        returnSequences: i < numLayers - 1
+        returnSequences: i < numLayers - 1,
       });
 
       architecture.layers.push({
-        type: 'dropout',
-        rate: 0.2
+        type: "dropout",
+        rate: 0.2,
       });
     }
 
     // 输出层
     architecture.layers.push({
-      type: 'dense',
+      type: "dense",
       units: 1,
-      activation: 'sigmoid'
+      activation: "sigmoid",
     });
 
     return architecture;
@@ -977,40 +912,40 @@ export class NeuralNetworkArchitect {
     dff: number = 2048
   ): any {
     const architecture: any = {
-      type: 'Transformer',
-      layers: []
+      type: "Transformer",
+      layers: [],
     };
 
     // 嵌入层
     architecture.layers.push({
-      type: 'embedding',
+      type: "embedding",
       inputDim: vocabSize,
       outputDim: dModel,
-      inputLength: maxLen
+      inputLength: maxLen,
     });
 
     // 位置编码
     architecture.layers.push({
-      type: 'positional_encoding',
-      dModel
+      type: "positional_encoding",
+      dModel,
     });
 
     // Transformer层
     for (let i = 0; i < numLayers; i++) {
       architecture.layers.push({
-        type: 'transformer_encoder',
+        type: "transformer_encoder",
         numHeads,
         dModel,
         dff,
-        dropout: 0.1
+        dropout: 0.1,
       });
     }
 
     // 输出层
     architecture.layers.push({
-      type: 'dense',
+      type: "dense",
       units: vocabSize,
-      activation: 'softmax'
+      activation: "softmax",
     });
 
     return architecture;
@@ -1037,13 +972,13 @@ export class NeuralNetworkArchitect {
  * 训练策略
  */
 export enum TrainingStrategy {
-  BATCH_GRADIENT_DESCENT = 'BATCH_GRADIENT_DESCENT',
-  STOCHASTIC_GRADIENT_DESCENT = 'STOCHASTIC_GRADIENT_DESCENT',
-  MINI_BATCH_GRADIENT_DESCENT = 'MINI_BATCH_GRADIENT_DESCENT',
-  ADAM = 'ADAM',
-  ADAGRAD = 'ADAGRAD',
-  RMSPROP = 'RMSPROP',
-  ADAMW = 'ADAMW'
+  BATCH_GRADIENT_DESCENT = "BATCH_GRADIENT_DESCENT",
+  STOCHASTIC_GRADIENT_DESCENT = "STOCHASTIC_GRADIENT_DESCENT",
+  MINI_BATCH_GRADIENT_DESCENT = "MINI_BATCH_GRADIENT_DESCENT",
+  ADAM = "ADAM",
+  ADAGRAD = "ADAGRAD",
+  RMSPROP = "RMSPROP",
+  ADAMW = "ADAMW",
 }
 
 /**
@@ -1063,16 +998,11 @@ export class Trainer {
       loss: [],
       accuracy: [],
       valLoss: [],
-      valAccuracy: []
+      valAccuracy: [],
     };
 
     for (let epoch = 0; epoch < config.epochs; epoch++) {
-      const epochLoss = await this.trainEpoch(
-        model,
-        trainData,
-        trainLabels,
-        config
-      );
+      const epochLoss = await this.trainEpoch(model, trainData, trainLabels, config);
 
       history.loss.push(epochLoss);
 
@@ -1082,7 +1012,7 @@ export class Trainer {
         history.valLoss.push(valLoss);
 
         if (this.shouldStopEarly(history.valLoss)) {
-          console.log('Early stopping triggered');
+          console.log("Early stopping triggered");
           break;
         }
       }
@@ -1096,12 +1026,7 @@ export class Trainer {
   /**
    * 训练一个epoch
    */
-  private async trainEpoch(
-    model: any,
-    data: number[][],
-    labels: number[],
-    config: TrainingConfig
-  ): Promise<number> {
+  private async trainEpoch(model: any, data: number[][], labels: number[], config: TrainingConfig): Promise<number> {
     let totalLoss = 0;
     const numBatches = Math.ceil(data.length / config.batchSize);
 
@@ -1121,12 +1046,7 @@ export class Trainer {
   /**
    * 训练一个batch
    */
-  private async trainBatch(
-    model: any,
-    data: number[][],
-    labels: number[],
-    config: TrainingConfig
-  ): Promise<number> {
+  private async trainBatch(model: any, data: number[][], labels: number[], config: TrainingConfig): Promise<number> {
     // 实现batch训练逻辑
     return 0.5;
   }
@@ -1134,11 +1054,7 @@ export class Trainer {
   /**
    * 验证模型
    */
-  private async validate(
-    model: any,
-    data: number[][],
-    labels: number[]
-  ): Promise<number> {
+  private async validate(model: any, data: number[][], labels: number[]): Promise<number> {
     // 实现验证逻辑
     return 0.4;
   }
@@ -1187,17 +1103,17 @@ export class LearningRateScheduler {
   /**
    * 更新学习率
    */
-  update(strategy: 'step' | 'exponential' | 'cosine' | 'warmup'): number {
+  update(strategy: "step" | "exponential" | "cosine" | "warmup"): number {
     this.epoch++;
 
     switch (strategy) {
-      case 'step':
+      case "step":
         return this.stepDecay();
-      case 'exponential':
+      case "exponential":
         return this.exponentialDecay();
-      case 'cosine':
+      case "cosine":
         return this.cosineDecay();
-      case 'warmup':
+      case "warmup":
         return this.warmup();
       default:
         return this.currentLearningRate;
@@ -1207,10 +1123,7 @@ export class LearningRateScheduler {
   /**
    * 阶梯衰减
    */
-  private stepDecay(
-    stepSize: number = 10,
-    decayRate: number = 0.1
-  ): number {
+  private stepDecay(stepSize: number = 10, decayRate: number = 0.1): number {
     if (this.epoch % stepSize === 0) {
       this.currentLearningRate *= decayRate;
     }
@@ -1230,8 +1143,7 @@ export class LearningRateScheduler {
    */
   private cosineDecay(totalEpochs: number = 100): number {
     const progress = this.epoch / totalEpochs;
-    this.currentLearningRate = this.initialLearningRate * 
-      (1 + Math.cos(Math.PI * progress)) / 2;
+    this.currentLearningRate = (this.initialLearningRate * (1 + Math.cos(Math.PI * progress))) / 2;
     return this.currentLearningRate;
   }
 
@@ -1240,8 +1152,7 @@ export class LearningRateScheduler {
    */
   private warmup(warmupEpochs: number = 5): number {
     if (this.epoch <= warmupEpochs) {
-      this.currentLearningRate = this.initialLearningRate * 
-        (this.epoch / warmupEpochs);
+      this.currentLearningRate = this.initialLearningRate * (this.epoch / warmupEpochs);
     }
     return this.currentLearningRate;
   }
@@ -1302,10 +1213,10 @@ export class Regularizer {
    */
   static dataAugmentation(augmentations: string[]): any {
     return {
-      rotation: augmentations.includes('rotation'),
-      flip: augmentations.includes('flip'),
-      noise: augmentations.includes('noise'),
-      translation: augmentations.includes('translation')
+      rotation: augmentations.includes("rotation"),
+      flip: augmentations.includes("flip"),
+      noise: augmentations.includes("noise"),
+      translation: augmentations.includes("translation"),
     };
   }
 }
@@ -1342,12 +1253,8 @@ export class ModelEvaluator {
    * 计算精确率
    */
   calculatePrecision(predictions: number[], labels: number[]): number {
-    const truePositives = predictions.filter((pred, idx) => 
-      pred === 1 && labels[idx] === 1
-    ).length;
-    const falsePositives = predictions.filter((pred, idx) => 
-      pred === 1 && labels[idx] === 0
-    ).length;
+    const truePositives = predictions.filter((pred, idx) => pred === 1 && labels[idx] === 1).length;
+    const falsePositives = predictions.filter((pred, idx) => pred === 1 && labels[idx] === 0).length;
 
     return truePositives / (truePositives + falsePositives);
   }
@@ -1356,12 +1263,8 @@ export class ModelEvaluator {
    * 计算召回率
    */
   calculateRecall(predictions: number[], labels: number[]): number {
-    const truePositives = predictions.filter((pred, idx) => 
-      pred === 1 && labels[idx] === 1
-    ).length;
-    const falseNegatives = predictions.filter((pred, idx) => 
-      pred === 0 && labels[idx] === 1
-    ).length;
+    const truePositives = predictions.filter((pred, idx) => pred === 1 && labels[idx] === 1).length;
+    const falseNegatives = predictions.filter((pred, idx) => pred === 0 && labels[idx] === 1).length;
 
     return truePositives / (truePositives + falseNegatives);
   }
@@ -1373,16 +1276,13 @@ export class ModelEvaluator {
     const precision = this.calculatePrecision(predictions, labels);
     const recall = this.calculateRecall(predictions, labels);
 
-    return 2 * (precision * recall) / (precision + recall);
+    return (2 * (precision * recall)) / (precision + recall);
   }
 
   /**
    * 计算混淆矩阵
    */
-  calculateConfusionMatrix(
-    predictions: number[],
-    labels: number[]
-  ): number[][] {
+  calculateConfusionMatrix(predictions: number[], labels: number[]): number[][] {
     const numClasses = Math.max(...labels, ...predictions) + 1;
     const matrix = Array(numClasses)
       .fill(0)
@@ -1398,10 +1298,7 @@ export class ModelEvaluator {
   /**
    * 计算ROC曲线
    */
-  calculateROC(
-    predictions: number[],
-    labels: number[]
-  ): { fpr: number[]; tpr: number[]; auc: number } {
+  calculateROC(predictions: number[], labels: number[]): { fpr: number[]; tpr: number[]; auc: number } {
     const thresholds = Array.from(new Set(predictions)).sort((a, b) => a - b);
     const fpr: number[] = [];
     const tpr: number[] = [];
@@ -1429,7 +1326,7 @@ export class ModelEvaluator {
   private calculateAUC(fpr: number[], tpr: number[]): number {
     let auc = 0;
     for (let i = 1; i < fpr.length; i++) {
-      auc += (fpr[i] - fpr[i - 1]) * (tpr[i] + tpr[i - 1]) / 2;
+      auc += ((fpr[i] - fpr[i - 1]) * (tpr[i] + tpr[i - 1])) / 2;
     }
     return auc;
   }
@@ -1438,9 +1335,7 @@ export class ModelEvaluator {
    * 计算均方误差
    */
   calculateMSE(predictions: number[], labels: number[]): number {
-    const sum = predictions.reduce((acc, pred, idx) => 
-      acc + Math.pow(pred - labels[idx], 2), 0
-    );
+    const sum = predictions.reduce((acc, pred, idx) => acc + Math.pow(pred - labels[idx], 2), 0);
     return sum / predictions.length;
   }
 
@@ -1455,9 +1350,7 @@ export class ModelEvaluator {
    * 计算平均绝对误差
    */
   calculateMAE(predictions: number[], labels: number[]): number {
-    const sum = predictions.reduce((acc, pred, idx) => 
-      acc + Math.abs(pred - labels[idx]), 0
-    );
+    const sum = predictions.reduce((acc, pred, idx) => acc + Math.abs(pred - labels[idx]), 0);
     return sum / predictions.length;
   }
 
@@ -1466,12 +1359,8 @@ export class ModelEvaluator {
    */
   calculateR2(predictions: number[], labels: number[]): number {
     const mean = labels.reduce((sum, val) => sum + val, 0) / labels.length;
-    const ssRes = predictions.reduce((acc, pred, idx) => 
-      acc + Math.pow(labels[idx] - pred, 2), 0
-    );
-    const ssTot = labels.reduce((acc, val) => 
-      acc + Math.pow(val - mean, 2), 0
-    );
+    const ssRes = predictions.reduce((acc, pred, idx) => acc + Math.pow(labels[idx] - pred, 2), 0);
+    const ssTot = labels.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0);
 
     return 1 - ssRes / ssTot;
   }
@@ -1597,7 +1486,7 @@ export class GridSearch {
     let bestParams: any = {};
 
     for (const params of paramCombinations) {
-      console.log('Testing params:', params);
+      console.log("Testing params:", params);
 
       const model = trainFunc(params);
       const score = evalFunc(model, valData, valLabels);
@@ -1688,13 +1577,13 @@ export class RandomSearch {
     const params: any = {};
 
     for (const [key, dist] of Object.entries(paramDistributions)) {
-      if (dist.type === 'uniform') {
+      if (dist.type === "uniform") {
         params[key] = this.sampleUniform(dist.min, dist.max);
-      } else if (dist.type === 'log_uniform') {
+      } else if (dist.type === "log_uniform") {
         params[key] = this.sampleLogUniform(dist.min, dist.max);
-      } else if (dist.type === 'categorical') {
+      } else if (dist.type === "categorical") {
         params[key] = this.sampleCategorical(dist.values);
-      } else if (dist.type === 'normal') {
+      } else if (dist.type === "normal") {
         params[key] = this.sampleNormal(dist.mean, dist.std);
       }
     }
@@ -1885,7 +1774,7 @@ export class ModelDeployer {
     deviceConfig: {
       deviceId: string;
       modelPath: string;
-      optimizationLevel: 'low' | 'medium' | 'high';
+      optimizationLevel: "low" | "medium" | "high";
     }
   ): Promise<void> {
     // 优化模型
@@ -1900,11 +1789,11 @@ export class ModelDeployer {
    */
   private async optimizeModel(model: any, level: string): Promise<any> {
     switch (level) {
-      case 'low':
+      case "low":
         return this.quantizeModel(model, 16);
-      case 'medium':
+      case "medium":
         return this.quantizeModel(model, 8);
-      case 'high':
+      case "high":
         return this.pruneModel(model);
       default:
         return model;
@@ -1946,11 +1835,7 @@ export class InferenceOptimizer {
   /**
    * 批量推理
    */
-  async batchInference(
-    model: any,
-    inputs: number[][],
-    batchSize: number = 32
-  ): Promise<number[][]> {
+  async batchInference(model: any, inputs: number[][], batchSize: number = 32): Promise<number[][]> {
     const results: number[][] = [];
 
     for (let i = 0; i < inputs.length; i += batchSize) {
@@ -1978,11 +1863,7 @@ export class InferenceOptimizer {
   /**
    * 带缓存的推理
    */
-  async cachedInference(
-    modelId: string,
-    input: number[],
-    model: any
-  ): Promise<number[]> {
+  async cachedInference(modelId: string, input: number[], model: any): Promise<number[]> {
     const cacheKey = `${modelId}:${JSON.stringify(input)}`;
 
     if (this.modelCache.has(cacheKey)) {
@@ -2005,13 +1886,8 @@ export class InferenceOptimizer {
   /**
    * 模型并行推理
    */
-  async parallelInference(
-    models: any[],
-    inputs: number[][]
-  ): Promise<number[][][]> {
-    const promises = models.map(model => 
-      this.batchInference(model, inputs)
-    );
+  async parallelInference(models: any[], inputs: number[][]): Promise<number[][][]> {
+    const promises = models.map(model => this.batchInference(model, inputs));
 
     return Promise.all(promises);
   }
@@ -2022,18 +1898,16 @@ export class InferenceOptimizer {
   async ensembleInference(
     models: any[],
     input: number[],
-    method: 'voting' | 'averaging' | 'stacking' = 'averaging'
+    method: "voting" | "averaging" | "stacking" = "averaging"
   ): Promise<number[]> {
-    const predictions = await Promise.all(
-      models.map(model => this.infer(model, [input]))
-    );
+    const predictions = await Promise.all(models.map(model => this.infer(model, [input])));
 
     switch (method) {
-      case 'voting':
+      case "voting":
         return this.voting(predictions);
-      case 'averaging':
+      case "averaging":
         return this.averaging(predictions);
-      case 'stacking':
+      case "stacking":
         return this.stacking(predictions);
       default:
         return predictions[0][0];
@@ -2109,7 +1983,7 @@ export class ModelMonitor {
 
     this.metrics.get(name)!.push({
       value,
-      timestamp: timestamp || Date.now()
+      timestamp: timestamp || Date.now(),
     });
   }
 
@@ -2140,11 +2014,11 @@ export class ModelMonitor {
 
       if (zScore > threshold) {
         newAlerts.push({
-          type: 'ANOMALY',
+          type: "ANOMALY",
           metric: name,
           value: lastValue,
           threshold,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
       }
     }
@@ -2156,11 +2030,7 @@ export class ModelMonitor {
   /**
    * 检查数据漂移
    */
-  checkDataDrift(
-    referenceData: number[][],
-    currentData: number[][],
-    threshold: number = 0.05
-  ): boolean {
+  checkDataDrift(referenceData: number[][], currentData: number[][], threshold: number = 0.05): boolean {
     const drift = this.calculateDrift(referenceData, currentData);
     return drift > threshold;
   }
@@ -2176,10 +2046,7 @@ export class ModelMonitor {
   /**
    * 检查模型性能下降
    */
-  checkPerformanceDegradation(
-    metricName: string,
-    threshold: number = 0.1
-  ): boolean {
+  checkPerformanceDegradation(metricName: string, threshold: number = 0.1): boolean {
     const values = this.metrics.get(metricName);
     if (!values || values.length < 20) return false;
 
@@ -2212,7 +2079,7 @@ export class ModelMonitor {
  * 告警
  */
 export interface Alert {
-  type: 'ANOMALY' | 'DRIFT' | 'DEGRADATION';
+  type: "ANOMALY" | "DRIFT" | "DEGRADATION";
   metric: string;
   value: number;
   threshold: number;
@@ -2230,12 +2097,7 @@ export class ModelUpdater {
   /**
    * 检查是否需要更新
    */
-  shouldUpdate(
-    currentModel: any,
-    newData: number[][],
-    newLabels: number[],
-    threshold: number = 0.95
-  ): boolean {
+  shouldUpdate(currentModel: any, newData: number[][], newLabels: number[], threshold: number = 0.95): boolean {
     const currentAccuracy = this.evaluateModel(currentModel, newData, newLabels);
     return currentAccuracy < threshold;
   }
@@ -2243,11 +2105,7 @@ export class ModelUpdater {
   /**
    * 评估模型
    */
-  private evaluateModel(
-    model: any,
-    data: number[][],
-    labels: number[]
-  ): number {
+  private evaluateModel(model: any, data: number[][], labels: number[]): number {
     // 实现模型评估
     return 0.9;
   }
@@ -2281,11 +2139,7 @@ export class ModelUpdater {
   /**
    * 在线学习
    */
-  async onlineLearning(
-    model: any,
-    dataPoint: number[],
-    label: number
-  ): Promise<void> {
+  async onlineLearning(model: any, dataPoint: number[], label: number): Promise<void> {
     // 实现在线学习
   }
 }
@@ -2313,11 +2167,7 @@ export class OverfittingSolver {
   /**
    * 检测过拟合
    */
-  detectOverfitting(
-    trainLoss: number[],
-    valLoss: number[],
-    threshold: number = 0.1
-  ): boolean {
+  detectOverfitting(trainLoss: number[], valLoss: number[], threshold: number = 0.1): boolean {
     if (trainLoss.length < 10 || valLoss.length < 10) return false;
 
     const recentTrainLoss = trainLoss.slice(-10);
@@ -2333,18 +2183,15 @@ export class OverfittingSolver {
   /**
    * 解决过拟合
    */
-  solveOverfitting(
-    model: any,
-    strategy: 'dropout' | 'regularization' | 'early_stopping' | 'data_augmentation'
-  ): any {
+  solveOverfitting(model: any, strategy: "dropout" | "regularization" | "early_stopping" | "data_augmentation"): any {
     switch (strategy) {
-      case 'dropout':
+      case "dropout":
         return this.addDropout(model);
-      case 'regularization':
+      case "regularization":
         return this.addRegularization(model);
-      case 'early_stopping':
+      case "early_stopping":
         return this.enableEarlyStopping(model);
-      case 'data_augmentation':
+      case "data_augmentation":
         return this.augmentData(model);
       default:
         return model;
@@ -2395,11 +2242,7 @@ export class UnderfittingSolver {
   /**
    * 检测欠拟合
    */
-  detectUnderfitting(
-    trainLoss: number[],
-    valLoss: number[],
-    threshold: number = 0.5
-  ): boolean {
+  detectUnderfitting(trainLoss: number[], valLoss: number[], threshold: number = 0.5): boolean {
     if (trainLoss.length < 10 || valLoss.length < 10) return false;
 
     const recentTrainLoss = trainLoss.slice(-10);
@@ -2416,16 +2259,16 @@ export class UnderfittingSolver {
    */
   solveUnderfitting(
     model: any,
-    strategy: 'increase_complexity' | 'reduce_regularization' | 'feature_engineering' | 'longer_training'
+    strategy: "increase_complexity" | "reduce_regularization" | "feature_engineering" | "longer_training"
   ): any {
     switch (strategy) {
-      case 'increase_complexity':
+      case "increase_complexity":
         return this.increaseComplexity(model);
-      case 'reduce_regularization':
+      case "reduce_regularization":
         return this.reduceRegularization(model);
-      case 'feature_engineering':
+      case "feature_engineering":
         return this.engineerFeatures(model);
-      case 'longer_training':
+      case "longer_training":
         return this.longerTraining(model);
       default:
         return model;
@@ -2489,56 +2332,38 @@ export const bestPractices = {
    * 数据准备
    */
   dataPreparation: [
-    '确保数据质量和多样性',
-    '进行充分的数据探索',
-    '合理划分训练集、验证集和测试集',
-    '使用数据增强提升泛化能力',
-    '处理类别不平衡问题'
+    "确保数据质量和多样性",
+    "进行充分的数据探索",
+    "合理划分训练集、验证集和测试集",
+    "使用数据增强提升泛化能力",
+    "处理类别不平衡问题",
   ],
 
   /**
    * 模型选择
    */
   modelSelection: [
-    '从简单模型开始',
-    '根据任务类型选择合适的模型',
-    '考虑数据规模和特征数量',
-    '进行充分的模型比较',
-    '关注模型的可解释性'
+    "从简单模型开始",
+    "根据任务类型选择合适的模型",
+    "考虑数据规模和特征数量",
+    "进行充分的模型比较",
+    "关注模型的可解释性",
   ],
 
   /**
    * 训练策略
    */
-  trainingStrategy: [
-    '使用合适的优化器',
-    '合理设置学习率',
-    '使用学习率调度',
-    '应用正则化技术',
-    '监控训练过程'
-  ],
+  trainingStrategy: ["使用合适的优化器", "合理设置学习率", "使用学习率调度", "应用正则化技术", "监控训练过程"],
 
   /**
    * 评估验证
    */
-  evaluation: [
-    '使用多种评估指标',
-    '进行交叉验证',
-    '关注泛化能力',
-    '分析错误案例',
-    '进行A/B测试'
-  ],
+  evaluation: ["使用多种评估指标", "进行交叉验证", "关注泛化能力", "分析错误案例", "进行A/B测试"],
 
   /**
    * 部署监控
    */
-  deployment: [
-    '优化推理性能',
-    '监控模型性能',
-    '检测数据漂移',
-    '建立更新机制',
-    '确保模型安全'
-  ]
+  deployment: ["优化推理性能", "监控模型性能", "检测数据漂移", "建立更新机制", "确保模型安全"],
 };
 ```
 
@@ -2553,61 +2378,56 @@ export const recommendedTools = {
    * 深度学习框架
    */
   deepLearning: [
-    'TensorFlow - Google深度学习框架',
-    'PyTorch - Facebook深度学习框架',
-    'Keras - 高级神经网络API',
-    'MXNet - 高效深度学习框架'
+    "TensorFlow - Google深度学习框架",
+    "PyTorch - Facebook深度学习框架",
+    "Keras - 高级神经网络API",
+    "MXNet - 高效深度学习框架",
   ],
 
   /**
    * 机器学习库
    */
   machineLearning: [
-    'scikit-learn - Python机器学习库',
-    'XGBoost - 梯度提升库',
-    'LightGBM - 轻量级梯度提升',
-    'CatBoost - 类别特征友好'
+    "scikit-learn - Python机器学习库",
+    "XGBoost - 梯度提升库",
+    "LightGBM - 轻量级梯度提升",
+    "CatBoost - 类别特征友好",
   ],
 
   /**
    * 数据处理
    */
-  dataProcessing: [
-    'Pandas - 数据分析库',
-    'NumPy - 科学计算库',
-    'Dask - 并行计算库',
-    'Vaex - 大数据处理'
-  ],
+  dataProcessing: ["Pandas - 数据分析库", "NumPy - 科学计算库", "Dask - 并行计算库", "Vaex - 大数据处理"],
 
   /**
    * 可视化
    */
   visualization: [
-    'Matplotlib - 基础可视化',
-    'Seaborn - 统计可视化',
-    'Plotly - 交互式可视化',
-    'TensorBoard - 模型可视化'
+    "Matplotlib - 基础可视化",
+    "Seaborn - 统计可视化",
+    "Plotly - 交互式可视化",
+    "TensorBoard - 模型可视化",
   ],
 
   /**
    * 超参数调优
    */
   hyperparameterTuning: [
-    'Optuna - 超参数优化框架',
-    'Hyperopt - 分布式超参数优化',
-    'Ray Tune - 可扩展超参数调优',
-    'Weights & Biases - 实验跟踪'
+    "Optuna - 超参数优化框架",
+    "Hyperopt - 分布式超参数优化",
+    "Ray Tune - 可扩展超参数调优",
+    "Weights & Biases - 实验跟踪",
   ],
 
   /**
    * 模型部署
    */
   deployment: [
-    'TensorFlow Serving - TensorFlow模型服务',
-    'TorchServe - PyTorch模型服务',
-    'ONNX Runtime - ONNX模型运行时',
-    'MLflow - 机器学习生命周期管理'
-  ]
+    "TensorFlow Serving - TensorFlow模型服务",
+    "TorchServe - PyTorch模型服务",
+    "ONNX Runtime - ONNX模型运行时",
+    "MLflow - 机器学习生命周期管理",
+  ],
 };
 ```
 
@@ -2615,13 +2435,10 @@ export const recommendedTools = {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -2642,8 +2459,6 @@ export const recommendedTools = {
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -2672,8 +2487,6 @@ export const recommendedTools = {
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -2711,7 +2524,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -2727,8 +2540,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -2741,7 +2552,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -2756,9 +2567,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -2766,9 +2577,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -2776,20 +2590,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -2798,6 +2610,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -2813,17 +2626,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -2831,6 +2645,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -2841,6 +2656,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -2849,8 +2665,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -2858,21 +2672,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2881,10 +2697,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2910,16 +2723,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2928,26 +2741,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -2963,7 +2771,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -2995,14 +2803,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -3013,17 +2819,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -3033,17 +2842,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -3053,21 +2865,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

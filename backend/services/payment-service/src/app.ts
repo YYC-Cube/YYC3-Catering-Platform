@@ -36,10 +36,10 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' })); // URL编码解�
 
 // 健康检查路由
 app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'ok', 
+  res.status(200).json({
+    status: 'ok',
     service: process.env.SERVICE_NAME || 'payment-service',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -49,18 +49,18 @@ app.use('/api', paymentRoutes);
 
 // 404错误处理
 app.use((req, res) => {
-  res.status(404).json({ 
-    success: false, 
-    error: 'API端点不存在'
+  res.status(404).json({
+    success: false,
+    error: 'API端点不存在',
   });
 });
 
 // 全局错误处理中间件
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
   logger.error('全局错误', { error: err.message, stack: err.stack });
-  res.status(500).json({ 
-    success: false, 
-    error: process.env.NODE_ENV === 'production' ? '内部服务器错误' : err.message
+  res.status(500).json({
+    success: false,
+    error: process.env.NODE_ENV === 'production' ? '内部服务器错误' : err.message,
   });
 });
 
@@ -77,10 +77,10 @@ const startServer = async () => {
 
     // 启动HTTP服务器
     app.listen(PORT, () => {
-      logger.info(`支付服务启动成功`, { 
+      logger.info(`支付服务启动成功`, {
         service: process.env.SERVICE_NAME || 'payment-service',
         port: PORT,
-        environment: process.env.NODE_ENV || 'development'
+        environment: process.env.NODE_ENV || 'development',
       });
     });
   } catch (error) {

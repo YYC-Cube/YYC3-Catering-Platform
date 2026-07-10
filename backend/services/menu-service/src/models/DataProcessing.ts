@@ -13,7 +13,7 @@ import { DataCollection } from './DataCollection';
 @Table({
   tableName: 'data_processings',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class DataProcessing extends Model<DataProcessing> {
   @PrimaryKey
@@ -51,5 +51,8 @@ export class DataProcessing extends Model<DataProcessing> {
   metadata?: Record<string, any>;
 }
 
-export type DataProcessingAttributes = typeof DataProcessing['prototype'];
-export type DataProcessingCreationAttributes = Omit<DataProcessingAttributes, 'id' | 'processed_data_count' | 'error_message' | 'metadata' | 'createdAt' | 'updatedAt'>;
+export type DataProcessingAttributes = (typeof DataProcessing)['prototype'];
+export type DataProcessingCreationAttributes = Omit<
+  DataProcessingAttributes,
+  'id' | 'processed_data_count' | 'error_message' | 'metadata' | 'createdAt' | 'updatedAt'
+>;

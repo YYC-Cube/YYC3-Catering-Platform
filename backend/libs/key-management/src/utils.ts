@@ -80,13 +80,7 @@ export function isValidKeyLength(length: number, keyType: 'symmetric' | 'asymmet
  * @returns {boolean} 是否有效
  */
 export function isValidKeyPurpose(purpose: string): boolean {
-  const validPurposes = [
-    'jwt_signing',
-    'data_encryption',
-    'data_signing',
-    'ssl_tls',
-    'api_auth',
-  ];
+  const validPurposes = ['jwt_signing', 'data_encryption', 'data_signing', 'ssl_tls', 'api_auth'];
 
   return validPurposes.includes(purpose.toLowerCase());
 }
@@ -140,7 +134,8 @@ export function parseKeyFromStorage(keyData: any): any {
  */
 export function verifyJWT(token: string, secret: string, algorithm: string = 'HS256'): any {
   try {
-    const decoded = crypto.createVerify(algorithm)
+    const decoded = crypto
+      .createVerify(algorithm)
       .update(token.split('.')[0] + '.' + token.split('.')[1])
       .verify(secret, token.split('.')[2], 'base64');
 
@@ -162,7 +157,7 @@ export function generateJWT(
   payload: Record<string, any>,
   secret: string,
   algorithm: string = 'HS256',
-  expiresIn: string = '1h'
+  expiresIn: string = '1h',
 ): string {
   // 计算过期时间
   const now = Math.floor(Date.now() / 1000);
@@ -182,7 +177,8 @@ export function generateJWT(
   const base64Header = Buffer.from(JSON.stringify(header)).toString('base64url');
   const base64Payload = Buffer.from(JSON.stringify(jwtPayload)).toString('base64url');
 
-  const signature = crypto.createHmac(algorithm.replace('HS', 'sha'), secret)
+  const signature = crypto
+    .createHmac(algorithm.replace('HS', 'sha'), secret)
     .update(`${base64Header}.${base64Payload}`)
     .digest('base64url');
 
@@ -227,7 +223,7 @@ export function parseExpiresIn(expiresIn: string): number {
 export function encryptString(
   data: string,
   key: string,
-  algorithm: string = 'aes-256-gcm'
+  algorithm: string = 'aes-256-gcm',
 ): {
   encryptedData: string;
   iv: string;
@@ -266,7 +262,7 @@ export function decryptString(
   key: string,
   iv: string,
   authTag?: string,
-  algorithm: string = 'aes-256-gcm'
+  algorithm: string = 'aes-256-gcm',
 ): string {
   const keyBuffer = Buffer.from(key, 'hex');
   const ivBuffer = Buffer.from(iv, 'hex');
@@ -290,7 +286,10 @@ export function decryptString(
  * @returns {string} 随机字符串
  */
 export function generateRandomString(length: number = 32): string {
-  return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
+  return crypto
+    .randomBytes(Math.ceil(length / 2))
+    .toString('hex')
+    .slice(0, length);
 }
 
 /**

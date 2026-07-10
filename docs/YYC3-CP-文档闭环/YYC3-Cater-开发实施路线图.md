@@ -1,22 +1,22 @@
 # 🔖 YYC³ 餐饮平台开发实施路线图
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
+| 属性         | 内容                        |
+| ------------ | --------------------------- |
 | **文档标题** | YYC³ 餐饮平台开发实施路线图 |
-| **文档版本** | v1.0.0 |
-| **创建时间** | 2025-12-22 |
-| **适用范围** | YYC³餐饮平台项目开发实施 |
-| **文档类型** | 开发实施类 |
+| **文档版本** | v1.0.0                      |
+| **创建时间** | 2025-12-22                  |
+| **适用范围** | YYC³餐饮平台项目开发实施    |
+| **文档类型** | 开发实施类                  |
 
 ---
 
@@ -67,6 +67,7 @@
 - 快速上手开发和维护
 
 功能实现遵循以下原则：
+
 - **用户友好**：界面简洁，操作流畅
 - **性能优化**：响应迅速，体验流畅
 - **安全可靠**：数据安全，系统稳定
@@ -77,22 +78,26 @@
 本功能实现使用以下技术栈：
 
 **前端技术**
+
 - React 18+：组件化开发
 - TypeScript 5.0+：类型安全
 - Ant Design：UI组件库
 - Axios：HTTP客户端
 
 **后端技术**
+
 - Node.js 18+：服务端运行时
 - Express：Web框架
 - TypeScript：类型安全
 - Prisma：ORM框架
 
 **数据库**
+
 - PostgreSQL 15+：关系型数据库
 - Redis 7+：缓存数据库
 
 **工具链**
+
 - ESLint：代码检查
 - Prettier：代码格式化
 - Jest：单元测试
@@ -103,22 +108,26 @@
 开发环境配置要求：
 
 **系统要求**
+
 - 操作系统：macOS/Linux/Windows
 - Node.js：18.0.0或更高版本
 - npm：9.0.0或更高版本
 - Git：2.30.0或更高版本
 
 **数据库**
+
 - PostgreSQL：15.0或更高版本
 - Redis：7.0或更高版本
 
 **开发工具**
+
 - VS Code：推荐IDE
 - Postman：API测试工具
 - DBeaver：数据库管理工具
 
 **环境变量**
 创建`.env`文件，配置以下变量：
+
 ```env
 NODE_ENV=development
 PORT=3000
@@ -169,29 +178,29 @@ JWT_SECRET=your-secret-key
 
 ### 1. 文档闭环完成情况
 
-| 指标 | 数值 | 说明 |
-|------|------|------|
-| **文档总数** | 113个 | 已完成审核 |
-| **架构设计类** | 24个 | 占比21.2% |
-| **开发实施类** | 11个 | 占比9.7% |
-| **总体评分** | A (93分) | 文档质量优秀 |
+| 指标           | 数值     | 说明         |
+| -------------- | -------- | ------------ |
+| **文档总数**   | 113个    | 已完成审核   |
+| **架构设计类** | 24个     | 占比21.2%    |
+| **开发实施类** | 11个     | 占比9.7%     |
+| **总体评分**   | A (93分) | 文档质量优秀 |
 
 ### 2. 项目架构现状
 
-| 模块 | 状态 | 说明 |
-|------|------|------|
-| **前端应用** | ✅ 已创建 | admin-dashboard、customer-app、staff-app |
+| 模块         | 状态      | 说明                                                         |
+| ------------ | --------- | ------------------------------------------------------------ |
+| **前端应用** | ✅ 已创建 | admin-dashboard、customer-app、staff-app                     |
 | **后端服务** | ✅ 已创建 | gateway、delivery-service、api-service、notification-service |
-| **技术栈** | ✅ 已配置 | Vue3 + Node.js + TypeScript + PostgreSQL + Redis |
-| **CI/CD** | ⚠️ 待完善 | 需要配置完整的自动化流程 |
+| **技术栈**   | ✅ 已配置 | Vue3 + Node.js + TypeScript + PostgreSQL + Redis             |
+| **CI/CD**    | ⚠️ 待完善 | 需要配置完整的自动化流程                                     |
 
 ### 3. 核心文档参考
 
-| 文档编号 | 文档名称 | 核心内容 |
-|---------|---------|---------|
-| 01 | 代码架构实现说明书 | 架构原则、质量指标、评估器 |
-| 13 | 全链路智能化转型方案 | 12个月四阶段实施计划 |
-| 14 | 分层闭环开发模型 | 5层闭环架构设计 |
+| 文档编号 | 文档名称             | 核心内容                   |
+| -------- | -------------------- | -------------------------- |
+| 01       | 代码架构实现说明书   | 架构原则、质量指标、评估器 |
+| 13       | 全链路智能化转型方案 | 12个月四阶段实施计划       |
+| 14       | 分层闭环开发模型     | 5层闭环架构设计            |
 
 ---
 
@@ -228,11 +237,13 @@ JWT_SECRET=your-secret-key
    - [ ] 配置消息持久化和重试机制
 
 **验收标准**：
+
 - ✅ 所有服务可独立启动和通信
 - ✅ 数据库连接池性能达标（<100ms响应时间）
 - ✅ 消息队列吞吐量 > 1000条/秒
 
 **参考文档**：
+
 - <mcfile name="01-YYC3-Cater--架构类-代码架构实现说明书.md" path="/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-开发实施/架构类/01-YYC3-Cater--架构类-代码架构实现说明书.md"></mcfile>
 - <mcfile name="14-YYC3-Cater--架构设计类-分层闭环开发模型设计文档.md" path="/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-架构设计/架构类/14-YYC3-Cater--架构设计类-分层闭环开发模型设计文档.md"></mcfile>
 
@@ -263,11 +274,13 @@ JWT_SECRET=your-secret-key
    - [ ] 实现性能指标追踪
 
 **验收标准**：
+
 - ✅ CI/CD流水线自动运行，测试覆盖率 > 80%
 - ✅ 容器化部署成功，服务可正常启动
 - ✅ 监控系统实时采集指标，告警及时响应
 
 **参考文档**：
+
 - <mcfile name="13-YYC3-Cater--架构设计类-全链路智能化转型最终执行方案.md" path="/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-架构设计/架构类/13-YYC3-Cater--架构设计类-全链路智能化转型最终执行方案.md"></mcfile>
 
 ---
@@ -307,11 +320,13 @@ JWT_SECRET=your-secret-key
    - [ ] 实现配送状态追踪
 
 **验收标准**：
+
 - ✅ 核心业务流程可正常运行
 - ✅ API响应时间 < 200ms（95th percentile）
 - ✅ 系统可用性 > 99.9%
 
 **参考文档**：
+
 - <mcfile name="14-YYC3-Cater--架构设计类-分层闭环开发模型设计文档.md" path="/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-架构设计/架构类/14-YYC3-Cater--架构设计类-分层闭环开发模型设计文档.md"></mcfile>
 
 #### 2.2 前端应用开发
@@ -343,6 +358,7 @@ JWT_SECRET=your-secret-key
    - [ ] 实现配送任务管理
 
 **验收标准**：
+
 - ✅ 前端页面加载时间 < 2秒
 - ✅ 交互响应时间 < 100ms
 - ✅ 移动端适配良好
@@ -378,11 +394,13 @@ JWT_SECRET=your-secret-key
    - [ ] 实现数据报表生成
 
 **验收标准**：
+
 - ✅ 数据采集延迟 < 5秒
 - ✅ 数据分析准确率 > 99%
 - ✅ 数据查询响应时间 < 1秒
 
 **参考文档**：
+
 - <mcfile name="14-YYC3-Cater--架构设计类-分层闭环开发模型设计文档.md" path="/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-架构设计/架构类/14-YYC3-Cater--架构设计类-分层闭环开发模型设计文档.md"></mcfile>
 
 #### 3.2 AI能力建设
@@ -412,11 +430,13 @@ JWT_SECRET=your-secret-key
    - [ ] 实现情感分析和意图识别
 
 **验收标准**：
+
 - ✅ 推荐准确率 > 70%
 - ✅ 预测准确率 > 80%
 - ✅ 客服问题解决率 > 90%
 
 **参考文档**：
+
 - <mcfile name="13-YYC3-Cater--架构设计类-全链路智能化转型最终执行方案.md" path="/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-架构设计/架构类/13-YYC3-Cater--架构设计类-全链路智能化转型最终执行方案.md"></mcfile>
 
 ---
@@ -450,11 +470,13 @@ JWT_SECRET=your-secret-key
    - [ ] 实现SDK和示例代码
 
 **验收标准**：
+
 - ✅ 工作流执行成功率 > 99%
 - ✅ 第三方集成可用性 > 99.5%
 - ✅ API响应时间 < 200ms
 
 **参考文档**：
+
 - <mcfile name="14-YYC3-Cater--架构设计类-分层闭环开发模型设计文档.md" path="/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-架构设计/架构类/14-YYC3-Cater--架构设计类-分层闭环开发模型设计文档.md"></mcfile>
 
 #### 4.2 持续优化
@@ -484,6 +506,7 @@ JWT_SECRET=your-secret-key
    - [ ] 实现无障碍访问支持
 
 **验收标准**：
+
 - ✅ 系统响应时间 < 100ms（P95）
 - ✅ 安全漏洞数量 = 0
 - ✅ 用户满意度 > 90%
@@ -492,44 +515,44 @@ JWT_SECRET=your-secret-key
 
 ## 📊 任务优先级矩阵
 
-| 任务 | 优先级 | 预计工期 | 负责人 | 状态 |
-|------|--------|---------|--------|------|
-| 完善微服务架构 | 🔴 最高 | 2周 | 待分配 | ⏳ 待开始 |
-| 数据库架构优化 | 🔴 最高 | 1周 | 待分配 | ⏳ 待开始 |
-| 消息队列集成 | 🔴 最高 | 1周 | 待分配 | ⏳ 待开始 |
-| CI/CD流水线 | 🔴 最高 | 2周 | 待分配 | ⏳ 待开始 |
-| 容器化部署 | 🔴 最高 | 1周 | 待分配 | ⏳ 待开始 |
-| 监控告警系统 | 🔴 最高 | 1周 | 待分配 | ⏳ 待开始 |
-| 用户管理系统 | 🟡 高 | 2周 | 待分配 | ⏳ 待开始 |
-| 订单管理系统 | 🟡 高 | 3周 | 待分配 | ⏳ 待开始 |
-| 菜品管理系统 | 🟡 高 | 2周 | 待分配 | ⏳ 待开始 |
-| 配送管理系统 | 🟡 高 | 3周 | 待分配 | ⏳ 待开始 |
-| 管理后台开发 | 🟡 高 | 4周 | 待分配 | ⏳ 待开始 |
-| 客户应用开发 | 🟡 高 | 4周 | 待分配 | ⏳ 待开始 |
-| 员工应用开发 | 🟡 高 | 3周 | 待分配 | ⏳ 待开始 |
-| 数据采集 | 🟢 中 | 2周 | 待分配 | ⏳ 待开始 |
-| 数据存储 | 🟢 中 | 2周 | 待分配 | ⏳ 待开始 |
-| 数据分析 | 🟢 中 | 3周 | 待分配 | ⏳ 待开始 |
-| 智能推荐系统 | 🟢 中 | 4周 | 待分配 | ⏳ 待开始 |
-| 智能预测分析 | 🟢 中 | 3周 | 待分配 | ⏳ 待开始 |
-| 智能客服系统 | 🟢 中 | 3周 | 待分配 | ⏳ 待开始 |
-| 跨部门协同 | 🟢 中 | 3周 | 待分配 | ⏳ 待开始 |
-| 生态集成 | 🟢 中 | 4周 | 待分配 | ⏳ 待开始 |
-| 开放平台 | 🟢 中 | 3周 | 待分配 | ⏳ 待开始 |
-| 性能优化 | 🟢 中 | 2周 | 待分配 | ⏳ 待开始 |
-| 安全加固 | 🟢 中 | 2周 | 待分配 | ⏳ 待开始 |
-| 用户体验优化 | 🟢 中 | 2周 | 待分配 | ⏳ 待开始 |
+| 任务           | 优先级  | 预计工期 | 负责人 | 状态      |
+| -------------- | ------- | -------- | ------ | --------- |
+| 完善微服务架构 | 🔴 最高 | 2周      | 待分配 | ⏳ 待开始 |
+| 数据库架构优化 | 🔴 最高 | 1周      | 待分配 | ⏳ 待开始 |
+| 消息队列集成   | 🔴 最高 | 1周      | 待分配 | ⏳ 待开始 |
+| CI/CD流水线    | 🔴 最高 | 2周      | 待分配 | ⏳ 待开始 |
+| 容器化部署     | 🔴 最高 | 1周      | 待分配 | ⏳ 待开始 |
+| 监控告警系统   | 🔴 最高 | 1周      | 待分配 | ⏳ 待开始 |
+| 用户管理系统   | 🟡 高   | 2周      | 待分配 | ⏳ 待开始 |
+| 订单管理系统   | 🟡 高   | 3周      | 待分配 | ⏳ 待开始 |
+| 菜品管理系统   | 🟡 高   | 2周      | 待分配 | ⏳ 待开始 |
+| 配送管理系统   | 🟡 高   | 3周      | 待分配 | ⏳ 待开始 |
+| 管理后台开发   | 🟡 高   | 4周      | 待分配 | ⏳ 待开始 |
+| 客户应用开发   | 🟡 高   | 4周      | 待分配 | ⏳ 待开始 |
+| 员工应用开发   | 🟡 高   | 3周      | 待分配 | ⏳ 待开始 |
+| 数据采集       | 🟢 中   | 2周      | 待分配 | ⏳ 待开始 |
+| 数据存储       | 🟢 中   | 2周      | 待分配 | ⏳ 待开始 |
+| 数据分析       | 🟢 中   | 3周      | 待分配 | ⏳ 待开始 |
+| 智能推荐系统   | 🟢 中   | 4周      | 待分配 | ⏳ 待开始 |
+| 智能预测分析   | 🟢 中   | 3周      | 待分配 | ⏳ 待开始 |
+| 智能客服系统   | 🟢 中   | 3周      | 待分配 | ⏳ 待开始 |
+| 跨部门协同     | 🟢 中   | 3周      | 待分配 | ⏳ 待开始 |
+| 生态集成       | 🟢 中   | 4周      | 待分配 | ⏳ 待开始 |
+| 开放平台       | 🟢 中   | 3周      | 待分配 | ⏳ 待开始 |
+| 性能优化       | 🟢 中   | 2周      | 待分配 | ⏳ 待开始 |
+| 安全加固       | 🟢 中   | 2周      | 待分配 | ⏳ 待开始 |
+| 用户体验优化   | 🟢 中   | 2周      | 待分配 | ⏳ 待开始 |
 
 ---
 
 ## 🎯 关键里程碑
 
-| 里程碑 | 时间节点 | 交付物 | 验收标准 |
-|--------|---------|--------|---------|
-| **M1: 基础架构完成** | 第2个月末 | 微服务架构、数据库、消息队列、CI/CD、监控 | 所有服务可独立运行，CI/CD自动化，监控实时采集 |
-| **M2: 核心功能上线** | 第5个月末 | 用户管理、订单管理、菜品管理、配送管理、前端应用 | 核心业务流程可用，API响应时间 < 200ms |
-| **M3: 数据与AI能力上线** | 第8个月末 | 数据采集、存储、分析、智能推荐、预测分析、智能客服 | 数据分析准确率 > 99%，推荐准确率 > 70% |
-| **M4: 协同与生态完成** | 第12个月末 | 跨部门协同、生态集成、开放平台、性能优化、安全加固 | 工作流执行成功率 > 99%，API响应时间 < 200ms |
+| 里程碑                   | 时间节点   | 交付物                                             | 验收标准                                      |
+| ------------------------ | ---------- | -------------------------------------------------- | --------------------------------------------- |
+| **M1: 基础架构完成**     | 第2个月末  | 微服务架构、数据库、消息队列、CI/CD、监控          | 所有服务可独立运行，CI/CD自动化，监控实时采集 |
+| **M2: 核心功能上线**     | 第5个月末  | 用户管理、订单管理、菜品管理、配送管理、前端应用   | 核心业务流程可用，API响应时间 < 200ms         |
+| **M3: 数据与AI能力上线** | 第8个月末  | 数据采集、存储、分析、智能推荐、预测分析、智能客服 | 数据分析准确率 > 99%，推荐准确率 > 70%        |
+| **M4: 协同与生态完成**   | 第12个月末 | 跨部门协同、生态集成、开放平台、性能优化、安全加固 | 工作流执行成功率 > 99%，API响应时间 < 200ms   |
 
 ---
 
@@ -609,10 +632,10 @@ JWT_SECRET=your-secret-key
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -633,8 +656,6 @@ JWT_SECRET=your-secret-key
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -663,8 +684,6 @@ JWT_SECRET=your-secret-key
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -702,7 +721,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -718,8 +737,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -732,7 +749,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -747,9 +764,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -757,9 +774,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -767,20 +787,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -789,6 +807,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -804,17 +823,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -822,6 +842,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -832,6 +853,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -840,8 +862,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -849,21 +869,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -872,10 +894,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -901,16 +920,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -919,26 +938,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -954,7 +968,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -986,14 +1000,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1004,17 +1016,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1024,17 +1039,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1044,19 +1062,20 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
-

@@ -2,15 +2,15 @@
 
 ## 文档信息
 
-| 项目 | 内容 |
-|-----|------|
+| 项目     | 内容              |
+| -------- | ----------------- |
 | 文档编号 | YYC3-AICP-SIA-001 |
-| 文档名称 | 系统集成架构文档 |
-| 版本号 | v1.0.0 |
-| 创建日期 | 2026-01-21 |
-| 最后更新 | 2026-01-21 |
-| 文档状态 | 正式发布 |
-| 作者 | YYC³ |
+| 文档名称 | 系统集成架构文档  |
+| 版本号   | v1.0.0            |
+| 创建日期 | 2026-01-21        |
+| 最后更新 | 2026-01-21        |
+| 文档状态 | 正式发布          |
+| 作者     | YYC³              |
 
 ---
 
@@ -117,34 +117,32 @@ UI层与业务逻辑层的无缝对接基于以下核心设计理念：
 #### 3.2.1 基础API客户端
 
 ```typescript
-import { ApiClient } from './lib/integration/ui-business-integration';
+import { ApiClient } from "./lib/integration/ui-business-integration";
 
-const apiClient = new ApiClient('http://localhost:3000/api');
+const apiClient = new ApiClient("http://localhost:3000/api");
 
 // 设置认证令牌
-apiClient.setToken('your-jwt-token');
+apiClient.setToken("your-jwt-token");
 
 // 设置租户ID
-apiClient.setTenantId('tenant-123');
+apiClient.setTenantId("tenant-123");
 
 // 发送GET请求
-const response = await apiClient.get('/orders');
+const response = await apiClient.get("/orders");
 
 // 发送POST请求
-const response = await apiClient.post('/orders', {
-  customerId: 'customer-123',
-  items: [
-    { productId: 'product-1', quantity: 2 },
-  ],
+const response = await apiClient.post("/orders", {
+  customerId: "customer-123",
+  items: [{ productId: "product-1", quantity: 2 }],
 });
 
 // 发送PUT请求
-const response = await apiClient.put('/orders/123', {
-  status: 'completed',
+const response = await apiClient.put("/orders/123", {
+  status: "completed",
 });
 
 // 发送DELETE请求
-const response = await apiClient.delete('/orders/123');
+const response = await apiClient.delete("/orders/123");
 ```
 
 #### 3.2.2 React Hooks
@@ -221,14 +219,14 @@ function OrderListPaginated() {
 #### 3.2.3 业务服务层
 
 ```typescript
-import { orderService, menuService, userService } from './lib/integration/ui-business-integration';
+import { orderService, menuService, userService } from "./lib/integration/ui-business-integration";
 
 // 订单服务
 async function fetchOrders() {
   const response = await orderService.getOrders({
     page: 1,
     pageSize: 20,
-    status: 'pending',
+    status: "pending",
   });
 
   if (response.success) {
@@ -249,7 +247,7 @@ async function fetchMenus() {
   const response = await menuService.getMenus({
     page: 1,
     pageSize: 20,
-    category: 'main',
+    category: "main",
   });
 
   if (response.success) {
@@ -335,37 +333,37 @@ function OrderItem({ order }) {
 #### 4.2.1 缓存策略
 
 ```typescript
-import { cacheManager, CacheStrategy } from './lib/integration/data-layer-integration';
+import { cacheManager, CacheStrategy } from "./lib/integration/data-layer-integration";
 
 // 内存缓存
-await cacheManager.set('user:123', userData, {
-  key: 'user:123',
+await cacheManager.set("user:123", userData, {
+  key: "user:123",
   strategy: CacheStrategy.MEMORY,
   ttl: 3600000, // 1小时
-  version: '1.0',
+  version: "1.0",
 });
 
-const cachedUser = await cacheManager.get('user:123', CacheStrategy.MEMORY);
+const cachedUser = await cacheManager.get("user:123", CacheStrategy.MEMORY);
 
 // IndexedDB缓存
-await cacheManager.set('orders:page:1', ordersData, {
-  key: 'orders:page:1',
+await cacheManager.set("orders:page:1", ordersData, {
+  key: "orders:page:1",
   strategy: CacheStrategy.INDEXED_DB,
   ttl: 1800000, // 30分钟
-  version: '1.0',
+  version: "1.0",
 });
 
-const cachedOrders = await cacheManager.get('orders:page:1', CacheStrategy.INDEXED_DB);
+const cachedOrders = await cacheManager.get("orders:page:1", CacheStrategy.INDEXED_DB);
 
 // LocalStorage缓存
-await cacheManager.set('theme', 'dark', {
-  key: 'theme',
+await cacheManager.set("theme", "dark", {
+  key: "theme",
   strategy: CacheStrategy.LOCAL_STORAGE,
   ttl: 86400000, // 24小时
-  version: '1.0',
+  version: "1.0",
 });
 
-const cachedTheme = await cacheManager.get('theme', CacheStrategy.LOCAL_STORAGE);
+const cachedTheme = await cacheManager.get("theme", CacheStrategy.LOCAL_STORAGE);
 ```
 
 #### 4.2.2 React Hooks
@@ -494,21 +492,21 @@ function OrderList() {
 ### 4.4 实时数据同步
 
 ```typescript
-import { dataSyncManager } from './lib/integration/data-layer-integration';
+import { dataSyncManager } from "./lib/integration/data-layer-integration";
 
 // 注册数据同步
-dataSyncManager.register('orders', {
-  endpoint: 'ws://localhost:3000/orders',
+dataSyncManager.register("orders", {
+  endpoint: "ws://localhost:3000/orders",
   interval: 5000, // 5秒自动同步
   autoSync: true,
-  conflictResolution: 'server',
+  conflictResolution: "server",
 });
 
 // 连接WebSocket
-const ws = dataSyncManager.connectWebSocket('orders', 'ws://localhost:3000/orders');
+const ws = dataSyncManager.connectWebSocket("orders", "ws://localhost:3000/orders");
 
 // 取消注册
-dataSyncManager.unregister('orders');
+dataSyncManager.unregister("orders");
 ```
 
 ---
@@ -679,40 +677,40 @@ function PlatformAdapterComponent() {
 ### 6.2 事件总线
 
 ```typescript
-import { eventBus } from './lib/integration/cross-dimension-sync';
+import { eventBus } from "./lib/integration/cross-dimension-sync";
 
 // 监听事件
-eventBus.on('data:orders:created', (order) => {
-  console.log('新订单创建:', order);
+eventBus.on("data:orders:created", order => {
+  console.log("新订单创建:", order);
 });
 
-eventBus.on('data:orders:updated', (order) => {
-  console.log('订单更新:', order);
+eventBus.on("data:orders:updated", order => {
+  console.log("订单更新:", order);
 });
 
-eventBus.on('data:orders:deleted', (order) => {
-  console.log('订单删除:', order);
+eventBus.on("data:orders:deleted", order => {
+  console.log("订单删除:", order);
 });
 
 // 发送事件
-eventBus.emit('data:orders:created', orderData);
+eventBus.emit("data:orders:created", orderData);
 
 // 取消监听
-eventBus.off('data:orders:created', handler);
+eventBus.off("data:orders:created", handler);
 ```
 
 ### 6.3 数据同步
 
 ```typescript
-import { crossDimensionDataManager, DataSyncConfig } from './lib/integration/cross-dimension-sync';
+import { crossDimensionDataManager, DataSyncConfig } from "./lib/integration/cross-dimension-sync";
 
 // 注册数据同步
 const config: DataSyncConfig = {
-  entity: 'orders',
-  endpoint: 'http://localhost:3000/api/orders',
+  entity: "orders",
+  endpoint: "http://localhost:3000/api/orders",
   syncInterval: 5000,
   autoSync: true,
-  conflictResolution: 'server',
+  conflictResolution: "server",
   offlineSupport: true,
   realTime: true,
 };
@@ -720,38 +718,36 @@ const config: DataSyncConfig = {
 crossDimensionDataManager.register(config);
 
 // 创建数据
-const order = await crossDimensionDataManager.create('orders', {
-  customerId: 'customer-123',
-  items: [
-    { productId: 'product-1', quantity: 2 },
-  ],
+const order = await crossDimensionDataManager.create("orders", {
+  customerId: "customer-123",
+  items: [{ productId: "product-1", quantity: 2 }],
 });
 
 // 更新数据
-const updatedOrder = await crossDimensionDataManager.update('orders', order.id, {
-  status: 'completed',
+const updatedOrder = await crossDimensionDataManager.update("orders", order.id, {
+  status: "completed",
 });
 
 // 删除数据
-await crossDimensionDataManager.delete('orders', order.id);
+await crossDimensionDataManager.delete("orders", order.id);
 
 // 获取同步状态
-const syncState = crossDimensionDataManager.getSyncState('orders');
+const syncState = crossDimensionDataManager.getSyncState("orders");
 
 // 取消注册
-crossDimensionDataManager.unregister('orders');
+crossDimensionDataManager.unregister("orders");
 ```
 
 ### 6.4 离线队列
 
 ```typescript
-import { offlineQueueManager } from './lib/integration/cross-dimension-sync';
+import { offlineQueueManager } from "./lib/integration/cross-dimension-sync";
 
 // 添加离线操作
 const operationId = offlineQueueManager.add({
   operation: DataOperationType.CREATE,
-  entity: 'orders',
-  entityId: 'pending-123',
+  entity: "orders",
+  entityId: "pending-123",
   data: orderData,
   maxRetries: 3,
 });
@@ -769,23 +765,18 @@ offlineQueueManager.clear();
 ### 6.5 数据冲突
 
 ```typescript
-import { dataConflictResolver } from './lib/integration/cross-dimension-sync';
+import { dataConflictResolver } from "./lib/integration/cross-dimension-sync";
 
 // 检测冲突
 const hasConflict = dataConflictResolver.detectConflict(localData, remoteData);
 
 // 创建冲突
-const conflict = dataConflictResolver.createConflict(
-  'orders',
-  'order-123',
-  localData,
-  remoteData
-);
+const conflict = dataConflictResolver.createConflict("orders", "order-123", localData, remoteData);
 
 // 解决冲突
-dataConflictResolver.resolveConflict(conflict.id, 'local');
-dataConflictResolver.resolveConflict(conflict.id, 'remote');
-dataConflictResolver.resolveConflict(conflict.id, 'merge', mergedData);
+dataConflictResolver.resolveConflict(conflict.id, "local");
+dataConflictResolver.resolveConflict(conflict.id, "remote");
+dataConflictResolver.resolveConflict(conflict.id, "merge", mergedData);
 
 // 获取所有冲突
 const conflicts = dataConflictResolver.getConflicts();

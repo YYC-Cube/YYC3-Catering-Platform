@@ -14,7 +14,7 @@ export enum TableStatus {
   OCCUPIED = 'occupied',
   RESERVED = 'reserved',
   CLEANING = 'cleaning',
-  MAINTENANCE = 'maintenance'
+  MAINTENANCE = 'maintenance',
 }
 
 /**
@@ -26,7 +26,7 @@ export enum TableType {
   PRIVATE_ROOM = 'private_room',
   OUTDOOR = 'outdoor',
   BAR = 'bar',
-  COUNTER = 'counter'
+  COUNTER = 'counter',
 }
 
 /**

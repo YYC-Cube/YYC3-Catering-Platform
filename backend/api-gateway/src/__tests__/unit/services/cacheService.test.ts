@@ -46,8 +46,9 @@ describe('CacheService', () => {
   let cacheService: CacheService;
 
   beforeEach(async () => {
-    const { createCacheClient, createCacheStrategyManager, createCacheKeyGenerator } = await import('@yyc3/redis-cache');
-    
+    const { createCacheClient, createCacheStrategyManager, createCacheKeyGenerator } =
+      await import('@yyc3/redis-cache');
+
     vi.mocked(createCacheClient).mockResolvedValue(mockCacheClient);
     vi.mocked(createCacheStrategyManager).mockReturnValue({});
     vi.mocked(createCacheKeyGenerator).mockReturnValue(mockKeyGenerator);
@@ -162,11 +163,7 @@ describe('CacheService', () => {
 
       await cacheService.set('test-key', testData);
 
-      expect(mockCacheClient.set).toHaveBeenCalledWith(
-        'yyc3:test-key',
-        testData,
-        { ttl: 300 }
-      );
+      expect(mockCacheClient.set).toHaveBeenCalledWith('yyc3:test-key', testData, { ttl: 300 });
     });
 
     it('应该使用自定义TTL', async () => {
@@ -175,11 +172,7 @@ describe('CacheService', () => {
 
       await cacheService.set('test-key', testData, { ttl: 600 });
 
-      expect(mockCacheClient.set).toHaveBeenCalledWith(
-        'yyc3:test-key',
-        testData,
-        { ttl: 600 }
-      );
+      expect(mockCacheClient.set).toHaveBeenCalledWith('yyc3:test-key', testData, { ttl: 600 });
     });
 
     it('应该使用自定义键', async () => {
@@ -188,11 +181,7 @@ describe('CacheService', () => {
 
       await cacheService.set('test-key', testData, { key: 'custom-key' });
 
-      expect(mockCacheClient.set).toHaveBeenCalledWith(
-        'custom-key',
-        testData,
-        { ttl: 300 }
-      );
+      expect(mockCacheClient.set).toHaveBeenCalledWith('custom-key', testData, { ttl: 300 });
     });
 
     it('应该在缓存禁用时不设置缓存', async () => {
@@ -307,11 +296,7 @@ describe('CacheService', () => {
 
       expect(result).toEqual(freshData);
       expect(factory).toHaveBeenCalledOnce();
-      expect(mockCacheClient.set).toHaveBeenCalledWith(
-        'yyc3:test-key',
-        freshData,
-        { ttl: 300 }
-      );
+      expect(mockCacheClient.set).toHaveBeenCalledWith('yyc3:test-key', freshData, { ttl: 300 });
     });
 
     it('应该支持自定义选项', async () => {
@@ -322,11 +307,7 @@ describe('CacheService', () => {
       const factory = vi.fn().mockResolvedValue(freshData);
       await cacheService.getOrSet('test-key', factory, { ttl: 600, tags: ['tag1'] });
 
-      expect(mockCacheClient.set).toHaveBeenCalledWith(
-        'yyc3:test-key',
-        freshData,
-        { ttl: 600 }
-      );
+      expect(mockCacheClient.set).toHaveBeenCalledWith('yyc3:test-key', freshData, { ttl: 600 });
     });
   });
 

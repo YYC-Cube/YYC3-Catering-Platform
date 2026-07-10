@@ -14,14 +14,14 @@
 使用 `Form`、`FormField`、`FormLabel` 和 `FormError` 组件来创建表单。
 
 ```tsx
-import { Form, FormField, FormLabel, FormError } from '@/components/UI'
-import { Input, Button } from '@/components/UI'
+import { Form, FormField, FormLabel, FormError } from "@/components/UI";
+import { Input, Button } from "@/components/UI";
 
 export default function FormBasic() {
   const handleSubmit = (e: Event) => {
-    e.preventDefault()
-    console.log('表单提交')
-  }
+    e.preventDefault();
+    console.log("表单提交");
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -33,7 +33,7 @@ export default function FormBasic() {
       </FormField>
       <Button type="primary">提交</Button>
     </Form>
-  )
+  );
 }
 ```
 
@@ -42,8 +42,8 @@ export default function FormBasic() {
 使用 `layout` 属性来设置表单布局。
 
 ```tsx
-import { Form, FormField, FormLabel } from '@/components/UI'
-import { Input, Button } from '@/components/UI'
+import { Form, FormField, FormLabel } from "@/components/UI";
+import { Input, Button } from "@/components/UI";
 
 export default function FormLayout() {
   return (
@@ -65,7 +65,7 @@ export default function FormLayout() {
         <Button type="primary">搜索</Button>
       </Form>
     </div>
-  )
+  );
 }
 ```
 
@@ -74,56 +74,46 @@ export default function FormLayout() {
 使用 `error` 属性来显示错误信息。
 
 ```tsx
-import { Form, FormField, FormLabel, FormError } from '@/components/UI'
-import { Input, Button } from '@/components/UI'
-import { ref } from 'vue'
+import { Form, FormField, FormLabel, FormError } from "@/components/UI";
+import { Input, Button } from "@/components/UI";
+import { ref } from "vue";
 
 export default function FormValidation() {
   const errors = ref({
-    username: '',
-    password: ''
-  })
+    username: "",
+    password: "",
+  });
 
   const validateForm = () => {
     if (!errors.value.username) {
-      errors.value.username = '用户名不能为空'
+      errors.value.username = "用户名不能为空";
     }
     if (!errors.value.password) {
-      errors.value.password = '密码不能为空'
+      errors.value.password = "密码不能为空";
     }
-  }
+  };
 
   return (
     <Form>
-      <FormField
-        name="username"
-        label="用户名"
-        required
-        error={errors.value.username}
-      >
+      <FormField name="username" label="用户名" required error={errors.value.username}>
         <Input type="text" placeholder="请输入用户名" />
       </FormField>
-      <FormField
-        name="password"
-        label="密码"
-        required
-        error={errors.value.password}
-      >
+      <FormField name="password" label="密码" required error={errors.value.password}>
         <Input type="password" placeholder="请输入密码" />
       </FormField>
       <Button type="primary" onClick={validateForm}>
         提交
       </Button>
     </Form>
-  )
+  );
 }
 ```
 
 ### 组合使用
 
 ```tsx
-import { Form, FormField, FormLabel, FormError } from '@/components/UI'
-import { Input, Button, Select } from '@/components/UI'
+import { Form, FormField, FormLabel, FormError } from "@/components/UI";
+import { Input, Button, Select } from "@/components/UI";
 
 export default function FormCombined() {
   return (
@@ -137,15 +127,15 @@ export default function FormCombined() {
       <FormField name="role" label="角色">
         <Select
           options={[
-            { label: '管理员', value: 'admin' },
-            { label: '用户', value: 'user' }
+            { label: "管理员", value: "admin" },
+            { label: "用户", value: "user" },
           ]}
           placeholder="请选择角色"
         />
       </FormField>
       <Button type="primary">提交</Button>
     </Form>
-  )
+  );
 }
 ```
 
@@ -153,33 +143,33 @@ export default function FormCombined() {
 
 ### Form Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-|------|------|------|--------|--------|
-| layout | 表单布局 | `string` | `vertical` / `horizontal` / `inline` | `vertical` |
-| onSubmit | 提交回调 | `Function` | - | - |
-| className | 自定义类名 | `string` | - | - |
+| 参数      | 说明       | 类型       | 可选值                               | 默认值     |
+| --------- | ---------- | ---------- | ------------------------------------ | ---------- |
+| layout    | 表单布局   | `string`   | `vertical` / `horizontal` / `inline` | `vertical` |
+| onSubmit  | 提交回调   | `Function` | -                                    | -          |
+| className | 自定义类名 | `string`   | -                                    | -          |
 
 ### FormField Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| name | 字段名 | `string` | - |
-| label | 标签文本 | `string` | - |
-| required | 是否必填 | `boolean` | `false` |
-| error | 错误信息 | `string` | - |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型      | 默认值  |
+| --------- | ---------- | --------- | ------- |
+| name      | 字段名     | `string`  | -       |
+| label     | 标签文本   | `string`  | -       |
+| required  | 是否必填   | `boolean` | `false` |
+| error     | 错误信息   | `string`  | -       |
+| className | 自定义类名 | `string`  | -       |
 
 ### FormLabel Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ### FormError Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ## 样式定制
 
@@ -218,14 +208,14 @@ export default function FormCombined() {
 
 ```tsx
 const validate = (values: any) => {
-  const errors: Record<string, string> = {}
-  
+  const errors: Record<string, string> = {};
+
   if (!values.username) {
-    errors.username = '用户名不能为空'
+    errors.username = "用户名不能为空";
   }
-  
-  return errors
-}
+
+  return errors;
+};
 ```
 
 ### 2. 表单提交
@@ -233,20 +223,20 @@ const validate = (values: any) => {
 ```tsx
 const handleSubmit = async (values: any) => {
   try {
-    await api.submit(values)
-    message.success('提交成功')
+    await api.submit(values);
+    message.success("提交成功");
   } catch (error) {
-    message.error('提交失败')
+    message.error("提交失败");
   }
-}
+};
 ```
 
 ### 3. 表单重置
 
 ```tsx
 const resetForm = () => {
-  formRef.value?.reset()
-}
+  formRef.value?.reset();
+};
 ```
 
 ## 常见问题

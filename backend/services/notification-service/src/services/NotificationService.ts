@@ -64,20 +64,27 @@ export class NotificationService {
    */
   private async deliverNotification(
     notification: Notification,
-    preference: UserNotificationPreferenceAttributes | null
+    preference: UserNotificationPreferenceAttributes | null,
   ): Promise<void> {
     // 如果没有用户偏好，使用默认设置
     const shouldSend = (notificationType: NotificationType): boolean => {
       if (!preference) return true;
 
       switch (notificationType) {
-        case NotificationType.SYSTEM: return preference.systemNotifications;
-        case NotificationType.ORDER_STATUS: return preference.orderStatusNotifications;
-        case NotificationType.PAYMENT_STATUS: return preference.paymentNotifications;
-        case NotificationType.PROMOTION: return preference.promotionNotifications;
-        case NotificationType.RESTAURANT: return preference.reservationNotifications;
-        case NotificationType.REVIEW: return preference.reviewNotifications;
-        default: return true;
+        case NotificationType.SYSTEM:
+          return preference.systemNotifications;
+        case NotificationType.ORDER_STATUS:
+          return preference.orderStatusNotifications;
+        case NotificationType.PAYMENT_STATUS:
+          return preference.paymentNotifications;
+        case NotificationType.PROMOTION:
+          return preference.promotionNotifications;
+        case NotificationType.RESTAURANT:
+          return preference.reservationNotifications;
+        case NotificationType.REVIEW:
+          return preference.reviewNotifications;
+        default:
+          return true;
       }
     };
 
@@ -120,7 +127,7 @@ export class NotificationService {
     page: number = 1,
     limit: number = 20,
     type?: NotificationType,
-    isRead?: boolean
+    isRead?: boolean,
   ): Promise<{
     notifications: Notification[];
     total: number;
@@ -209,10 +216,7 @@ export class NotificationService {
    */
   public async markAllAsRead(userId: string): Promise<void> {
     try {
-      await Notification.update(
-        { isRead: true },
-        { where: { userId, isRead: false } }
-      );
+      await Notification.update({ isRead: true }, { where: { userId, isRead: false } });
     } catch (error: any) {
       logger.error('标记所有通知为已读失败:', error);
       throw new Error(`标记所有通知为已读失败: ${error.message}`);
@@ -257,13 +261,13 @@ export class NotificationService {
    */
   public async updateUserNotificationPreference(
     userId: string,
-    preferenceData: Partial<UserNotificationPreferenceAttributes>
+    preferenceData: Partial<UserNotificationPreferenceAttributes>,
   ): Promise<UserNotificationPreference> {
     try {
       const [preference] = await UserNotificationPreference.upsert(
-        { 
-          ...preferenceData, 
-          userId, 
+        {
+          ...preferenceData,
+          userId,
           systemNotifications: preferenceData.systemNotifications ?? true,
           orderStatusNotifications: preferenceData.orderStatusNotifications ?? true,
           paymentNotifications: preferenceData.paymentNotifications ?? true,
@@ -272,9 +276,9 @@ export class NotificationService {
           reservationNotifications: preferenceData.reservationNotifications ?? true,
           emailEnabled: preferenceData.emailEnabled ?? true,
           smsEnabled: preferenceData.smsEnabled ?? true,
-          pushEnabled: preferenceData.pushEnabled ?? true
+          pushEnabled: preferenceData.pushEnabled ?? true,
         },
-        { returning: true }
+        { returning: true },
       );
       return preference;
     } catch (error: any) {

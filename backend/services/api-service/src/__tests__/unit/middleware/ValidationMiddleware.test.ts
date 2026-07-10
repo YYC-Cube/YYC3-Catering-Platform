@@ -24,14 +24,14 @@ describe('ValidationMiddleware', () => {
       const schema = {
         safeParse: vi.fn().mockReturnValue({
           success: true,
-          data: { name: '测试', email: 'test@example.com' }
-        })
+          data: { name: '测试', email: 'test@example.com' },
+        }),
       };
 
       const request = new Request('http://example.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: '测试', email: 'test@example.com' })
+        body: JSON.stringify({ name: '测试', email: 'test@example.com' }),
       });
 
       const result = await validation.validateBody(schema)(request);
@@ -44,17 +44,15 @@ describe('ValidationMiddleware', () => {
         safeParse: vi.fn().mockReturnValue({
           success: false,
           error: {
-            errors: [
-              { path: ['email'], message: '邮箱格式无效' }
-            ]
-          }
-        })
+            errors: [{ path: ['email'], message: '邮箱格式无效' }],
+          },
+        }),
       };
 
       const request = new Request('http://example.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'invalid' })
+        body: JSON.stringify({ email: 'invalid' }),
       });
 
       const result = await validation.validateBody(schema)(request);
@@ -67,7 +65,7 @@ describe('ValidationMiddleware', () => {
       const schema = { safeParse: vi.fn() };
 
       const request = new Request('http://example.com', {
-        method: 'POST'
+        method: 'POST',
       });
 
       const result = await validation.validateBody(schema)(request);
@@ -79,8 +77,8 @@ describe('ValidationMiddleware', () => {
       const schema = {
         safeParse: vi.fn().mockReturnValue({
           success: true,
-          data: { name: '测试' }
-        })
+          data: { name: '测试' },
+        }),
       };
 
       const formData = new URLSearchParams();
@@ -89,7 +87,7 @@ describe('ValidationMiddleware', () => {
       const request = new Request('http://example.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData.toString()
+        body: formData.toString(),
       });
 
       const result = await validation.validateBody(schema)(request);
@@ -100,8 +98,8 @@ describe('ValidationMiddleware', () => {
       const schema = {
         safeParse: vi.fn().mockReturnValue({
           success: true,
-          data: { name: '测试' }
-        })
+          data: { name: '测试' },
+        }),
       };
 
       const formData = new FormData();
@@ -110,7 +108,7 @@ describe('ValidationMiddleware', () => {
       const request = new Request('http://example.com', {
         method: 'POST',
         headers: { 'Content-Type': 'multipart/form-data' },
-        body: formData
+        body: formData,
       });
 
       const result = await validation.validateBody(schema)(request);
@@ -123,8 +121,8 @@ describe('ValidationMiddleware', () => {
       const schema = {
         safeParse: vi.fn().mockReturnValue({
           success: true,
-          data: { page: 1, limit: 20 }
-        })
+          data: { page: 1, limit: 20 },
+        }),
       };
 
       const request = new Request('http://example.com?page=1&limit=20');
@@ -139,11 +137,9 @@ describe('ValidationMiddleware', () => {
         safeParse: vi.fn().mockReturnValue({
           success: false,
           error: {
-            errors: [
-              { path: ['page'], message: '必须是数字' }
-            ]
-          }
-        })
+            errors: [{ path: ['page'], message: '必须是数字' }],
+          },
+        }),
       };
 
       const request = new Request('http://example.com?page=invalid');
@@ -157,8 +153,8 @@ describe('ValidationMiddleware', () => {
       const schema = {
         safeParse: vi.fn().mockReturnValue({
           success: true,
-          data: {}
-        })
+          data: {},
+        }),
       };
 
       const request = new Request('http://example.com');
@@ -173,8 +169,8 @@ describe('ValidationMiddleware', () => {
       const schema = {
         safeParse: vi.fn().mockReturnValue({
           success: true,
-          data: { id: '123' }
-        })
+          data: { id: '123' },
+        }),
       };
 
       const request = new Request('http://example.com');
@@ -190,11 +186,9 @@ describe('ValidationMiddleware', () => {
         safeParse: vi.fn().mockReturnValue({
           success: false,
           error: {
-            errors: [
-              { path: ['id'], message: '必须是UUID' }
-            ]
-          }
-        })
+            errors: [{ path: ['id'], message: '必须是UUID' }],
+          },
+        }),
       };
 
       const request = new Request('http://example.com');
@@ -220,12 +214,12 @@ describe('ValidationMiddleware', () => {
       const schema = {
         safeParse: vi.fn().mockReturnValue({
           success: true,
-          data: { 'x-api-key': 'test-key' }
-        })
+          data: { 'x-api-key': 'test-key' },
+        }),
       };
 
       const request = new Request('http://example.com', {
-        headers: { 'x-api-key': 'test-key' }
+        headers: { 'x-api-key': 'test-key' },
       });
 
       const result = await validation.validateHeaders(schema)(request);
@@ -238,15 +232,13 @@ describe('ValidationMiddleware', () => {
         safeParse: vi.fn().mockReturnValue({
           success: false,
           error: {
-            errors: [
-              { path: ['x-api-key'], message: '格式无效' }
-            ]
-          }
-        })
+            errors: [{ path: ['x-api-key'], message: '格式无效' }],
+          },
+        }),
       };
 
       const request = new Request('http://example.com', {
-        headers: { 'x-api-key': 'invalid' }
+        headers: { 'x-api-key': 'invalid' },
       });
 
       const result = await validation.validateHeaders(schema)(request);
@@ -261,27 +253,27 @@ describe('ValidationMiddleware', () => {
         body: {
           safeParse: vi.fn().mockReturnValue({
             success: true,
-            data: { name: '测试' }
-          })
+            data: { name: '测试' },
+          }),
         },
         query: {
           safeParse: vi.fn().mockReturnValue({
             success: true,
-            data: { page: 1 }
-          })
+            data: { page: 1 },
+          }),
         },
         params: {
           safeParse: vi.fn().mockReturnValue({
             success: true,
-            data: { id: '123' }
-          })
-        }
+            data: { id: '123' },
+          }),
+        },
       };
 
       const request = new Request('http://example.com?page=1', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: '测试' })
+        body: JSON.stringify({ name: '测试' }),
       });
       const params = { id: '123' };
 
@@ -298,24 +290,24 @@ describe('ValidationMiddleware', () => {
           safeParse: vi.fn().mockReturnValue({
             success: false,
             error: {
-              errors: [{ path: ['name'], message: '必填' }]
-            }
-          })
+              errors: [{ path: ['name'], message: '必填' }],
+            },
+          }),
         },
         query: {
           safeParse: vi.fn().mockReturnValue({
             success: false,
             error: {
-              errors: [{ path: ['page'], message: '必填' }]
-            }
-          })
-        }
+              errors: [{ path: ['page'], message: '必填' }],
+            },
+          }),
+        },
       };
 
       const request = new Request('http://example.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
+        body: JSON.stringify({}),
       });
 
       const result = await validation.validate(schema)(request);
@@ -338,8 +330,8 @@ describe('ValidationMiddleware', () => {
         name: '<script>alert("xss")</script>',
         description: '正常描述',
         nested: {
-          value: '<iframe>恶意内容</iframe>'
-        }
+          value: '<iframe>恶意内容</iframe>',
+        },
       };
 
       const result = validation.sanitize(input);
@@ -353,7 +345,7 @@ describe('ValidationMiddleware', () => {
       const input = [
         '<script>alert("xss")</script>',
         '正常文本',
-        { value: '<iframe>恶意内容</iframe>' }
+        { value: '<iframe>恶意内容</iframe>' },
       ];
 
       const result = validation.sanitize(input);
@@ -366,7 +358,7 @@ describe('ValidationMiddleware', () => {
       const input = {
         number: 123,
         boolean: true,
-        null: null
+        null: null,
       };
 
       const result = validation.sanitize(input);
@@ -384,7 +376,7 @@ describe('ValidationMiddleware', () => {
       const options = {
         maxSize: 10 * 1024 * 1024,
         allowedTypes: ['image/jpeg'],
-        allowedExtensions: ['jpg', 'jpeg']
+        allowedExtensions: ['jpg', 'jpeg'],
       };
 
       const result = validation.validateFile(file, options);
@@ -398,7 +390,7 @@ describe('ValidationMiddleware', () => {
       const options = {
         maxSize: 100,
         allowedTypes: ['image/jpeg'],
-        allowedExtensions: ['jpg']
+        allowedExtensions: ['jpg'],
       };
 
       const result = validation.validateFile(file, options);
@@ -411,7 +403,7 @@ describe('ValidationMiddleware', () => {
       const options = {
         maxSize: 10 * 1024 * 1024,
         allowedTypes: ['image/jpeg'],
-        allowedExtensions: ['jpg']
+        allowedExtensions: ['jpg'],
       };
 
       const result = validation.validateFile(file, options);
@@ -424,7 +416,7 @@ describe('ValidationMiddleware', () => {
       const options = {
         maxSize: 10 * 1024 * 1024,
         allowedTypes: [],
-        allowedExtensions: ['jpg', 'png']
+        allowedExtensions: ['jpg', 'png'],
       };
 
       const result = validation.validateFile(file, options);
@@ -495,7 +487,7 @@ describe('ValidationMiddleware', () => {
     it('应该创建验证错误响应', () => {
       const result = {
         success: false,
-        errors: ['字段1: 必填', '字段2: 格式无效']
+        errors: ['字段1: 必填', '字段2: 格式无效'],
       };
 
       const response = validation.createErrorResponse(result);

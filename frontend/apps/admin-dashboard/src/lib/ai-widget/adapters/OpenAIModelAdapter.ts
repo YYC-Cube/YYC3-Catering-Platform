@@ -10,23 +10,20 @@ export class OpenAIModelAdapter extends ModelAdapter {
     this.validateConfig();
 
     try {
-      const response = await fetch(
-        this.config.baseURL || 'https://api.openai.com/v1/chat/completions',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.config.apiKey}`,
-          },
-          body: JSON.stringify({
-            model: this.config.modelName,
-            messages: [{ role: 'user', content: prompt }],
-            max_tokens: this.config.maxTokens || 2000,
-            temperature: this.config.temperature || 0.7,
-            tools: tools ? this.formatTools(tools) : undefined,
-          }),
-        }
-      );
+      const response = await fetch(this.config.baseURL || 'https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.config.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: this.config.modelName,
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: this.config.maxTokens || 2000,
+          temperature: this.config.temperature || 0.7,
+          tools: tools ? this.formatTools(tools) : undefined,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error(`OpenAI API error: ${response.statusText}`);
@@ -54,30 +51,24 @@ export class OpenAIModelAdapter extends ModelAdapter {
     }
   }
 
-  async streamGenerate(
-    prompt: string,
-    onChunk: (chunk: string) => void
-  ): Promise<void> {
+  async streamGenerate(prompt: string, onChunk: (chunk: string) => void): Promise<void> {
     this.validateConfig();
 
     try {
-      const response = await fetch(
-        this.config.baseURL || 'https://api.openai.com/v1/chat/completions',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.config.apiKey}`,
-          },
-          body: JSON.stringify({
-            model: this.config.modelName,
-            messages: [{ role: 'user', content: prompt }],
-            max_tokens: this.config.maxTokens || 2000,
-            temperature: this.config.temperature || 0.7,
-            stream: true,
-          }),
-        }
-      );
+      const response = await fetch(this.config.baseURL || 'https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.config.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: this.config.modelName,
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: this.config.maxTokens || 2000,
+          temperature: this.config.temperature || 0.7,
+          stream: true,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error(`OpenAI API error: ${response.statusText}`);

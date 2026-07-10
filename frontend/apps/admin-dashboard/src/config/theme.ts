@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-import type { Theme, ThemeConfig } from '@/types/theme'
+import type { Theme, ThemeConfig } from '@/types/theme';
 
 export const lightTheme: Theme = {
   id: 'light',
@@ -165,7 +165,7 @@ export const lightTheme: Theme = {
     popover: 1500,
     tooltip: 1600,
   },
-}
+};
 
 export const darkTheme: Theme = {
   id: 'dark',
@@ -322,7 +322,7 @@ export const darkTheme: Theme = {
     popover: 1500,
     tooltip: 1600,
   },
-}
+};
 
 export const themeConfig: ThemeConfig = {
   defaultTheme: 'light',
@@ -331,4 +331,4 @@ export const themeConfig: ThemeConfig = {
   enableSystemTheme: true,
   persistTheme: true,
   themeStorageKey: 'yyc3-theme',
-}
+};

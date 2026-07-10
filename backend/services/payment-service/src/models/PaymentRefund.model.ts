@@ -15,22 +15,22 @@ import sequelize from '../config/database';
 
 // 退款状态枚举
 export enum RefundStatus {
-  PENDING = 'pending',      // 待处理
-  PROCESSING = 'processing',// 处理中
-  COMPLETED = 'completed',  // 已完成
-  FAILED = 'failed',        // 失败
-  CANCELLED = 'cancelled',  // 已取消
+  PENDING = 'pending', // 待处理
+  PROCESSING = 'processing', // 处理中
+  COMPLETED = 'completed', // 已完成
+  FAILED = 'failed', // 失败
+  CANCELLED = 'cancelled', // 已取消
 }
 
 // 退款原因枚举
 export enum RefundReason {
-  USER_REQUEST = 'user_request',   // 用户请求
-  ORDER_CANCELLED = 'order_cancelled',// 订单取消
-  PRODUCT_ISSUE = 'product_issue',  // 商品问题
-  SERVICE_ISSUE = 'service_issue',  // 服务问题
-  DUPLICATE_PAYMENT = 'duplicate_payment',// 重复支付
-  OVERCHARGE = 'overcharge',       // 多收费用
-  SYSTEM_ERROR = 'system_error',   // 系统错误
+  USER_REQUEST = 'user_request', // 用户请求
+  ORDER_CANCELLED = 'order_cancelled', // 订单取消
+  PRODUCT_ISSUE = 'product_issue', // 商品问题
+  SERVICE_ISSUE = 'service_issue', // 服务问题
+  DUPLICATE_PAYMENT = 'duplicate_payment', // 重复支付
+  OVERCHARGE = 'overcharge', // 多收费用
+  SYSTEM_ERROR = 'system_error', // 系统错误
 }
 
 // 退款模型属性接口
@@ -53,10 +53,16 @@ interface PaymentRefundAttributes {
 }
 
 // 退款模型创建属性接口（可选属性）
-interface PaymentRefundCreationAttributes extends Optional<PaymentRefundAttributes, 'id' | 'created_at' | 'updated_at'> {}
+interface PaymentRefundCreationAttributes extends Optional<
+  PaymentRefundAttributes,
+  'id' | 'created_at' | 'updated_at'
+> {}
 
 // 退款模型类
-export class PaymentRefund extends Model<PaymentRefundAttributes, PaymentRefundCreationAttributes> implements PaymentRefundAttributes {
+export class PaymentRefund
+  extends Model<PaymentRefundAttributes, PaymentRefundCreationAttributes>
+  implements PaymentRefundAttributes
+{
   public id!: string;
   public payment_id!: string;
   public order_id!: string;
@@ -178,7 +184,7 @@ PaymentRefund.init(
       { fields: ['status'] },
       { fields: ['reason'] },
     ],
-  }
+  },
 );
 
 export default PaymentRefund;

@@ -44,13 +44,13 @@ export class FaultRecoveryService {
   public async checkServiceHealth(serviceId: string): Promise<ServiceHealth> {
     try {
       console.log(`[FaultRecoveryService] 检测服务健康状态: ${serviceId}`);
-      
+
       // 模拟服务健康检查
       const healthCheckResult = await this.performHealthCheck(serviceId);
-      
+
       // 评估健康状态
       const status = this.assessServiceStatus(healthCheckResult);
-      
+
       const serviceHealth: ServiceHealth = {
         serviceId,
         status,
@@ -58,22 +58,22 @@ export class FaultRecoveryService {
         details: {
           responseTime: healthCheckResult.responseTime,
           errorRate: healthCheckResult.errorRate,
-          lastCheck: new Date()
-        }
+          lastCheck: new Date(),
+        },
       };
-      
+
       // 更新服务健康状态
       this.servicesHealth.set(serviceId, serviceHealth);
-      
+
       // 如果服务不健康，触发故障处理
       if (status === 'unhealthy' || status === 'degraded') {
         await this.handleServiceFault(serviceId, status, healthCheckResult);
       }
-      
+
       return serviceHealth;
     } catch (error) {
       console.error(`[FaultRecoveryService] 检测服务健康状态失败: ${serviceId}`, error);
-      
+
       const serviceHealth: ServiceHealth = {
         serviceId,
         status: 'unhealthy',
@@ -81,13 +81,13 @@ export class FaultRecoveryService {
         details: {
           responseTime: 0,
           errorRate: 100,
-          lastCheck: new Date()
-        }
+          lastCheck: new Date(),
+        },
       };
-      
+
       this.servicesHealth.set(serviceId, serviceHealth);
       await this.handleServiceFault(serviceId, 'unhealthy', { responseTime: 0, errorRate: 100 });
-      
+
       return serviceHealth;
     }
   }
@@ -105,16 +105,16 @@ export class FaultRecoveryService {
       'menu-service': 'http://localhost:3200/health',
       'order-service': 'http://localhost:3201/health',
       'payment-service': 'http://localhost:3202/health',
-      'user-service': 'http://localhost:3203/health'
+      'user-service': 'http://localhost:3203/health',
     };
-    
+
     const url = serviceUrls[serviceId] || `http://localhost:3200/health`;
-    
+
     try {
       const startTime = Date.now();
       await axios.get(url, { timeout: 5000 });
       const responseTime = Date.now() - startTime;
-      
+
       return { responseTime, errorRate: 0 };
     } catch (error) {
       console.error(`[FaultRecoveryService] 服务健康检查失败: ${serviceId}`, error);
@@ -127,7 +127,10 @@ export class FaultRecoveryService {
    * @param healthCheckResult 健康检查结果
    * @returns 服务状态
    */
-  private assessServiceStatus(healthCheckResult: { responseTime: number; errorRate: number }): 'healthy' | 'unhealthy' | 'degraded' {
+  private assessServiceStatus(healthCheckResult: {
+    responseTime: number;
+    errorRate: number;
+  }): 'healthy' | 'unhealthy' | 'degraded' {
     if (healthCheckResult.errorRate === 0 && healthCheckResult.responseTime < 1000) {
       return 'healthy';
     } else if (healthCheckResult.errorRate < 10 && healthCheckResult.responseTime < 3000) {
@@ -147,15 +150,15 @@ export class FaultRecoveryService {
   public async handleServiceFault(
     serviceId: string,
     status: 'unhealthy' | 'degraded',
-    healthCheckResult: { responseTime: number; errorRate: number }
+    healthCheckResult: { responseTime: number; errorRate: number },
   ): Promise<FaultRecoveryResult> {
     try {
       console.log(`[FaultRecoveryService] 处理服务故障: ${serviceId}, 状态: ${status}`);
-      
+
       // 创建故障记录
       const faultId = `fault-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const faultType = status === 'unhealthy' ? 'critical' : 'warning';
-      
+
       const faultRecord: FaultRecord = {
         id: faultId,
         serviceId,
@@ -166,40 +169,40 @@ export class FaultRecoveryService {
         recoveryAttempts: 0,
         recovered: false,
         recoveryAction: '',
-        resolvedAt: null
+        resolvedAt: null,
       };
-      
+
       this.faultRecords.set(faultId, faultRecord);
-      
+
       // 尝试恢复服务
       let recoveryResult = false;
       let recoveryAction = '';
       let attempts = 0;
-      
+
       while (attempts < config.faultRecovery.recoveryAttempts && !recoveryResult) {
         attempts++;
         console.log(`[FaultRecoveryService] 尝试恢复服务: ${serviceId}, 尝试次数: ${attempts}`);
-        
+
         // 根据服务类型执行不同的恢复策略
         recoveryAction = this.selectRecoveryStrategy(serviceId, status);
         recoveryResult = await this.executeRecoveryAction(serviceId, recoveryAction);
-        
+
         // 更新故障记录
         faultRecord.recoveryAttempts = attempts;
         faultRecord.recoveryAction = recoveryAction;
-        
+
         if (!recoveryResult) {
           // 等待一段时间后重试
           await new Promise(resolve => setTimeout(resolve, config.faultRecovery.recoveryTimeout));
         }
       }
-      
+
       // 更新故障记录
       faultRecord.recovered = recoveryResult;
       if (recoveryResult) {
         faultRecord.resolvedAt = new Date();
       }
-      
+
       const result: FaultRecoveryResult = {
         faultId,
         serviceId,
@@ -207,11 +210,13 @@ export class FaultRecoveryService {
         recoveryAttempts: attempts,
         recovered: recoveryResult,
         recoveryAction,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      
-      console.log(`[FaultRecoveryService] 服务故障处理结果: ${serviceId}, 恢复成功: ${recoveryResult}, 尝试次数: ${attempts}`);
-      
+
+      console.log(
+        `[FaultRecoveryService] 服务故障处理结果: ${serviceId}, 恢复成功: ${recoveryResult}, 尝试次数: ${attempts}`,
+      );
+
       return result;
     } catch (error) {
       console.error(`[FaultRecoveryService] 处理服务故障失败: ${serviceId}`, error);
@@ -232,9 +237,9 @@ export class FaultRecoveryService {
       'menu-service': ['restart', 'clear-cache', 'scale-up'],
       'order-service': ['restart', 'retry-connection', 'scale-up'],
       'payment-service': ['restart', 'failover', 'notify-admin'],
-      'user-service': ['restart', 'rebuild-index', 'scale-up']
+      'user-service': ['restart', 'rebuild-index', 'scale-up'],
     };
-    
+
     const strategies = recoveryStrategies[serviceId] || ['restart', 'notify-admin'];
     return strategies[0]; // 默认使用第一个策略
   }
@@ -248,7 +253,7 @@ export class FaultRecoveryService {
   private async executeRecoveryAction(serviceId: string, recoveryAction: string): Promise<boolean> {
     try {
       console.log(`[FaultRecoveryService] 执行恢复操作: ${serviceId}, 操作: ${recoveryAction}`);
-      
+
       // 模拟恢复操作
       switch (recoveryAction) {
         case 'restart':
@@ -420,7 +425,7 @@ export class FaultRecoveryService {
       try {
         // 检测所有服务健康状态
         const serviceIds = ['api-gateway', 'menu-service', 'order-service', 'payment-service', 'user-service'];
-        
+
         for (const serviceId of serviceIds) {
           await this.checkServiceHealth(serviceId);
         }

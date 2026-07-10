@@ -32,11 +32,13 @@ const app = express();
 app.use(helmet());
 
 // CORS中间件
-app.use(cors({
-  origin: '*', // 在生产环境中应该限制具体的域名
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(
+  cors({
+    origin: '*', // 在生产环境中应该限制具体的域名
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }),
+);
 
 // 压缩中间件
 app.use(compression());
@@ -56,8 +58,8 @@ const limiter = rateLimit({
   message: { error: '请求过于频繁，请稍后再试' },
   skip: (req: express.Request) => {
     // 跳过Dashboard和Kitchen路径的限流
-    return req.path.startsWith('/api/dashboard') || req.path.startsWith('/api/kitchen')
-  }
+    return req.path.startsWith('/api/dashboard') || req.path.startsWith('/api/kitchen');
+  },
 });
 app.use(limiter);
 
@@ -102,9 +104,9 @@ app.get('/', (req, res) => {
       ready: 'GET /ready',
       metrics: 'GET /metrics',
       api_docs: 'GET /api-docs',
-      orders: 'GET/POST/PUT /api/orders'
+      orders: 'GET/POST/PUT /api/orders',
     },
-    description: 'YYC³餐饮行业智能化平台 - 智慧后厨服务'
+    description: 'YYC³餐饮行业智能化平台 - 智慧后厨服务',
   });
 });
 
@@ -125,9 +127,9 @@ app.get('/api-docs', (req, res) => {
             status: 'OK',
             timestamp: '2024-10-15T10:00:00.000Z',
             uptime: 3600,
-            environment: 'development'
-          }
-        }
+            environment: 'development',
+          },
+        },
       },
       {
         path: '/ready',
@@ -142,10 +144,10 @@ app.get('/api-docs', (req, res) => {
               database: true,
               redis: true,
               mqtt: true,
-              queues: true
-            }
-          }
-        }
+              queues: true,
+            },
+          },
+        },
       },
       {
         path: '/metrics',
@@ -154,8 +156,8 @@ app.get('/api-docs', (req, res) => {
         response: {
           status: 200,
           contentType: 'text/plain',
-          description: 'Prometheus格式的监控指标'
-        }
+          description: 'Prometheus格式的监控指标',
+        },
       },
       {
         path: '/api/orders/queue',
@@ -167,9 +169,9 @@ app.get('/api-docs', (req, res) => {
             orders: [],
             totalCount: 0,
             currentStatus: 'all',
-            processingTime: 0
-          }
-        }
+            processingTime: 0,
+          },
+        },
       },
       {
         path: '/api/orders',
@@ -184,24 +186,24 @@ app.get('/api-docs', (req, res) => {
               {
                 dishId: 'string',
                 quantity: 1,
-                specialInstructions: 'string'
-              }
+                specialInstructions: 'string',
+              },
             ],
             priority: 'number',
-            estimatedDeliveryTime: 'string'
-          }
+            estimatedDeliveryTime: 'string',
+          },
         },
         response: {
           status: 201,
           body: {
             id: 'string',
             status: 'string',
-            createdAt: 'string'
-          }
-        }
-      }
+            createdAt: 'string',
+          },
+        },
+      },
     ],
-    documentation: '详细的API文档正在开发中'
+    documentation: '详细的API文档正在开发中',
   });
 });
 

@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import { defineComponent, type PropType, computed } from 'vue'
-import { cn } from '@/utils/cn'
+import { defineComponent, type PropType, computed } from 'vue';
+import { cn } from '@/utils/cn';
 
 export const Input = defineComponent({
   name: 'Input',
@@ -97,68 +97,64 @@ export const Input = defineComponent({
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'h-8 px-2 py-1 text-sm'
+          return 'h-8 px-2 py-1 text-sm';
         case 'lg':
-          return 'h-12 px-4 py-3 text-lg'
+          return 'h-12 px-4 py-3 text-lg';
         default:
-          return 'h-10 px-3 py-2 text-base'
+          return 'h-10 px-3 py-2 text-base';
       }
-    })
+    });
 
     const errorClasses = computed(() => {
       if (props.error) {
-        return 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/50'
+        return 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/50';
       }
-      return 'border-neutral-300 focus:border-primary-500 focus:ring-primary-500/50'
-    })
+      return 'border-neutral-300 focus:border-primary-500 focus:ring-primary-500/50';
+    });
 
     const disabledClasses = computed(() => {
       if (props.disabled) {
-        return 'opacity-50 cursor-not-allowed pointer-events-none'
+        return 'opacity-50 cursor-not-allowed pointer-events-none';
       }
-      return ''
-    })
+      return '';
+    });
 
     const handleInput = (event: Event) => {
-      const target = event.target as HTMLInputElement
-      emit('update:modelValue', target.value)
-    }
+      const target = event.target as HTMLInputElement;
+      emit('update:modelValue', target.value);
+    };
 
     const handleFocus = (event: FocusEvent) => {
-      emit('focus', event)
-    }
+      emit('focus', event);
+    };
 
     const handleBlur = (event: FocusEvent) => {
-      emit('blur', event)
-    }
+      emit('blur', event);
+    };
 
     const handleChange = (event: Event) => {
-      emit('change', event)
-    }
+      emit('change', event);
+    };
 
     const handleKeydown = (event: KeyboardEvent) => {
-      emit('keydown', event)
+      emit('keydown', event);
       if (event.key === 'Enter') {
-        emit('enter', event)
+        emit('enter', event);
       }
-    }
+    };
 
     const handleKeyup = (event: KeyboardEvent) => {
-      emit('keyup', event)
-    }
+      emit('keyup', event);
+    };
 
     const handleKeypress = (event: KeyboardEvent) => {
-      emit('keypress', event)
-    }
+      emit('keypress', event);
+    };
 
     return () => (
       <div class="w-full">
         <div class="relative flex items-center">
-          {props.prefix && (
-            <span class="absolute left-3 text-neutral-500 pointer-events-none">
-              {props.prefix}
-            </span>
-          )}
+          {props.prefix && <span class="absolute left-3 text-neutral-500 pointer-events-none">{props.prefix}</span>}
           <input
             type={props.type}
             value={props.modelValue}
@@ -181,7 +177,7 @@ export const Input = defineComponent({
               disabledClasses.value,
               props.prefix ? 'pl-10' : '',
               props.suffix ? 'pr-10' : '',
-              attrs.class as string
+              attrs.class as string,
             )}
             onInput={handleInput}
             onFocus={handleFocus}
@@ -192,19 +188,11 @@ export const Input = defineComponent({
             onKeypress={handleKeypress}
             {...attrs}
           />
-          {props.suffix && (
-            <span class="absolute right-3 text-neutral-500 pointer-events-none">
-              {props.suffix}
-            </span>
-          )}
+          {props.suffix && <span class="absolute right-3 text-neutral-500 pointer-events-none">{props.suffix}</span>}
           {slots.suffix?.()}
         </div>
-        {props.error && props.errorMessage && (
-          <p class="mt-1 text-sm text-danger-600">
-            {props.errorMessage}
-          </p>
-        )}
+        {props.error && props.errorMessage && <p class="mt-1 text-sm text-danger-600">{props.errorMessage}</p>}
       </div>
-    )
+    );
   },
-})
+});

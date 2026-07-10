@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ 系统性能优化运维技巧
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 系统性能优化运维技巧 |
-| **文档类型** | 技巧类文档 |
-| **所属阶段** | 运维运营 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 系统性能优化运维技巧  |
+| **文档类型** | 技巧类文档                 |
+| **所属阶段** | 运维运营                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -144,7 +145,7 @@ export class PerformanceMonitor {
       application: await this.collectApplicationMetrics(),
       database: await this.collectDatabaseMetrics(),
       network: await this.collectNetworkMetrics(),
-      timestamp: new Date()
+      timestamp: new Date(),
     };
   }
 
@@ -156,21 +157,21 @@ export class PerformanceMonitor {
       cpu: {
         usage: await this.getCPUUsage(),
         load: await this.getCPULoad(),
-        cores: await this.getCPUCores()
+        cores: await this.getCPUCores(),
       },
       memory: {
         total: await this.getTotalMemory(),
         used: await this.getUsedMemory(),
         free: await this.getFreeMemory(),
-        usagePercent: await this.getMemoryUsagePercent()
+        usagePercent: await this.getMemoryUsagePercent(),
       },
       disk: {
         total: await this.getTotalDisk(),
         used: await this.getUsedDisk(),
         free: await this.getFreeDisk(),
         usagePercent: await this.getDiskUsagePercent(),
-        iops: await this.getDiskIOPS()
-      }
+        iops: await this.getDiskIOPS(),
+      },
     };
   }
 
@@ -183,7 +184,7 @@ export class PerformanceMonitor {
       responseTime: await this.getResponseTime(),
       errorRate: await this.getErrorRate(),
       activeConnections: await this.getActiveConnections(),
-      queueLength: await this.getQueueLength()
+      queueLength: await this.getQueueLength(),
     };
   }
 }
@@ -205,64 +206,48 @@ export class PerformanceAnalyzer {
     // CPU 瓶颈分析
     if (metrics.system.cpu.usage > 80) {
       bottlenecks.push({
-        type: 'cpu',
+        type: "cpu",
         severity: this.calculateSeverity(metrics.system.cpu.usage),
-        description: 'CPU 使用率过高',
+        description: "CPU 使用率过高",
         value: metrics.system.cpu.usage,
         threshold: 80,
-        recommendations: [
-          '优化 CPU 密集型任务',
-          '增加 CPU 资源',
-          '使用异步处理'
-        ]
+        recommendations: ["优化 CPU 密集型任务", "增加 CPU 资源", "使用异步处理"],
       });
     }
 
     // 内存瓶颈分析
     if (metrics.system.memory.usagePercent > 85) {
       bottlenecks.push({
-        type: 'memory',
+        type: "memory",
         severity: this.calculateSeverity(metrics.system.memory.usagePercent),
-        description: '内存使用率过高',
+        description: "内存使用率过高",
         value: metrics.system.memory.usagePercent,
         threshold: 85,
-        recommendations: [
-          '优化内存使用',
-          '增加内存资源',
-          '启用内存交换'
-        ]
+        recommendations: ["优化内存使用", "增加内存资源", "启用内存交换"],
       });
     }
 
     // 磁盘瓶颈分析
     if (metrics.system.disk.usagePercent > 90) {
       bottlenecks.push({
-        type: 'disk',
+        type: "disk",
         severity: this.calculateSeverity(metrics.system.disk.usagePercent),
-        description: '磁盘使用率过高',
+        description: "磁盘使用率过高",
         value: metrics.system.disk.usagePercent,
         threshold: 90,
-        recommendations: [
-          '清理磁盘空间',
-          '增加磁盘容量',
-          '优化数据存储'
-        ]
+        recommendations: ["清理磁盘空间", "增加磁盘容量", "优化数据存储"],
       });
     }
 
     // 响应时间瓶颈分析
     if (metrics.application.responseTime > 1000) {
       bottlenecks.push({
-        type: 'response_time',
+        type: "response_time",
         severity: this.calculateSeverity(metrics.application.responseTime / 10),
-        description: '响应时间过长',
+        description: "响应时间过长",
         value: metrics.application.responseTime,
         threshold: 1000,
-        recommendations: [
-          '优化数据库查询',
-          '使用缓存',
-          '优化代码逻辑'
-        ]
+        recommendations: ["优化数据库查询", "使用缓存", "优化代码逻辑"],
       });
     }
 
@@ -396,14 +381,12 @@ export function processUsers(users: User[]): ProcessedUser[] {
 
 // ✅ 优化后的实现 - 单次遍历
 export function processUsers(users: User[]): ProcessedUser[] {
-  return users
-    .filter(user => user.active && user.verified)
-    .map(user => ({ ...user, processed: true }));
+  return users.filter(user => user.active && user.verified).map(user => ({ ...user, processed: true }));
 }
 
 // ❌ 不好的实现 - 频繁的字符串拼接
 export function buildQueryString(params: Record<string, string>): string {
-  let query = '';
+  let query = "";
   for (const key in params) {
     query += `${key}=${params[key]}&`;
   }
@@ -414,7 +397,7 @@ export function buildQueryString(params: Record<string, string>): string {
 export function buildQueryString(params: Record<string, string>): string {
   return Object.entries(params)
     .map(([key, value]) => `${key}=${value}`)
-    .join('&');
+    .join("&");
 }
 ```
 
@@ -424,7 +407,7 @@ export function buildQueryString(params: Record<string, string>): string {
 
 ```typescript
 // === concurrent-optimization.ts ===
-import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
 
 /**
  * 并发处理示例
@@ -447,9 +430,7 @@ export async function processItemsConcurrent(items: Item[]): Promise<Result[]> {
   const results: Result[] = [];
 
   for (const chunk of chunks) {
-    const chunkResults = await Promise.all(
-      chunk.map(item => processItem(item))
-    );
+    const chunkResults = await Promise.all(chunk.map(item => processItem(item)));
     results.push(...chunkResults);
   }
 
@@ -462,14 +443,15 @@ export async function processItemsWithWorkers(items: Item[]): Promise<Result[]> 
   const chunkSize = Math.ceil(items.length / numWorkers);
   const chunks = chunkArray(items, chunkSize);
 
-  const workers = chunks.map(chunk => 
-    new Promise<Result[]>((resolve) => {
-      const worker = new Worker(__filename, {
-        workerData: chunk
-      });
-      worker.on('message', resolve);
-      worker.on('error', reject);
-    })
+  const workers = chunks.map(
+    chunk =>
+      new Promise<Result[]>(resolve => {
+        const worker = new Worker(__filename, {
+          workerData: chunk,
+        });
+        worker.on("message", resolve);
+        worker.on("error", reject);
+      })
   );
 
   const results = await Promise.all(workers);
@@ -479,9 +461,7 @@ export async function processItemsWithWorkers(items: Item[]): Promise<Result[]> 
 // Worker 线程逻辑
 if (!isMainThread) {
   const items: Item[] = workerData;
-  const results = await Promise.all(
-    items.map(item => processItem(item))
-  );
+  const results = await Promise.all(items.map(item => processItem(item)));
   parentPort.postMessage(results);
 }
 ```
@@ -501,8 +481,8 @@ if (!isMainThread) {
 SELECT * FROM orders WHERE DATE(created_at) = '2025-01-30';
 
 -- ✅ 优化后的查询 - 使用索引
-SELECT * FROM orders 
-WHERE created_at >= '2025-01-30 00:00:00' 
+SELECT * FROM orders
+WHERE created_at >= '2025-01-30 00:00:00'
   AND created_at < '2025-01-31 00:00:00';
 
 -- ❌ 不好的查询 - SELECT *
@@ -512,7 +492,7 @@ SELECT * FROM users WHERE id = 1;
 SELECT id, name, email FROM users WHERE id = 1;
 
 -- ❌ 不好的查询 - 子查询
-SELECT * FROM orders 
+SELECT * FROM orders
 WHERE user_id IN (SELECT id FROM users WHERE active = 1);
 
 -- ✅ 优化后的查询 - JOIN
@@ -528,7 +508,7 @@ SELECT * FROM orders;
 SELECT * FROM users WHERE id = ?; -- 执行 N 次
 
 -- ✅ 优化后的查询 - 一次查询
-SELECT o.*, u.name, u.email 
+SELECT o.*, u.name, u.email
 FROM orders o
 INNER JOIN users u ON o.user_id = u.id;
 ```
@@ -562,7 +542,7 @@ CREATE FULLTEXT INDEX idx_products_name ON products(name);
 DROP INDEX idx_unused ON table_name;
 
 -- 分析索引使用情况
-SELECT 
+SELECT
   schemaname,
   tablename,
   indexname,
@@ -626,32 +606,32 @@ echo "=== TCP 优化完成 ==="
 
 ```typescript
 // === connection-pool.ts ===
-import { Pool, PoolConfig } from 'pg';
+import { Pool, PoolConfig } from "pg";
 
 /**
  * 数据库连接池配置
  */
 export const dbPoolConfig: PoolConfig = {
   host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT || '5432'),
+  port: parseInt(process.env.DB_PORT || "5432"),
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  
+
   // 连接池大小
   max: 20, // 最大连接数
-  min: 5,  // 最小连接数
-  
+  min: 5, // 最小连接数
+
   // 连接超时
   connectionTimeoutMillis: 10000,
   idleTimeoutMillis: 30000,
-  
+
   // 查询超时
   statement_timeout: 30000,
-  
+
   // 连接验证
   idleInTransactionSessionTimeout: 60000,
-  
+
   // 连接重试
   retries: 3,
 };
@@ -688,24 +668,24 @@ export const httpsAgent = new https.Agent({
 
 ```typescript
 // === cache-optimization.ts ===
-import Redis from 'ioredis';
+import Redis from "ioredis";
 
 /**
  * Redis 缓存配置
  */
 export const redis = new Redis({
   host: process.env.REDIS_HOST,
-  port: parseInt(process.env.REDIS_PORT || '6379'),
+  port: parseInt(process.env.REDIS_PORT || "6379"),
   password: process.env.REDIS_PASSWORD,
-  
+
   // 连接池
   maxRetriesPerRequest: 3,
   enableReadyCheck: true,
-  
+
   // 性能优化
   enableOfflineQueue: false,
   lazyConnect: true,
-  
+
   // 超时配置
   connectTimeout: 10000,
   commandTimeout: 5000,
@@ -720,19 +700,19 @@ export function Cache(ttl: number = 3600) {
 
     descriptor.value = async function (...args: any[]) {
       const cacheKey = `${target.constructor.name}:${propertyKey}:${JSON.stringify(args)}`;
-      
+
       // 尝试从缓存获取
       const cached = await redis.get(cacheKey);
       if (cached) {
         return JSON.parse(cached);
       }
-      
+
       // 执行原方法
       const result = await originalMethod.apply(this, args);
-      
+
       // 存入缓存
       await redis.setex(cacheKey, ttl, JSON.stringify(result));
-      
+
       return result;
     };
 
@@ -744,7 +724,7 @@ export function Cache(ttl: number = 3600) {
 export class UserService {
   @Cache(300) // 缓存 5 分钟
   async getUserById(id: string): Promise<User> {
-    return await db.query('SELECT * FROM users WHERE id = $1', [id]);
+    return await db.query("SELECT * FROM users WHERE id = $1", [id]);
   }
 }
 ```
@@ -755,7 +735,7 @@ export class UserService {
 
 ```typescript
 // === lru-cache.ts ===
-import LRU from 'lru-cache';
+import LRU from "lru-cache";
 
 /**
  * LRU 缓存配置
@@ -780,7 +760,7 @@ export class CacheUtil {
     if (appCached) {
       return appCached as T;
     }
-    
+
     // 再查 Redis 缓存
     const redisCached = await redis.get(key);
     if (redisCached) {
@@ -788,7 +768,7 @@ export class CacheUtil {
       userCache.set(key, data);
       return data;
     }
-    
+
     return null;
   }
 
@@ -798,7 +778,7 @@ export class CacheUtil {
   static async set<T>(key: string, value: T, ttl: number = 3600): Promise<void> {
     // 设置应用缓存
     userCache.set(key, value);
-    
+
     // 设置 Redis 缓存
     await redis.setex(key, ttl, JSON.stringify(value));
   }
@@ -809,7 +789,7 @@ export class CacheUtil {
   static async del(key: string): Promise<void> {
     // 删除应用缓存
     userCache.delete(key);
-    
+
     // 删除 Redis 缓存
     await redis.del(key);
   }
@@ -828,31 +808,37 @@ export class CacheUtil {
 ## 性能优化流程
 
 ### 1. 性能基准测试
+
 - 建立性能基准
 - 记录关键指标
 - 确定优化目标
 
 ### 2. 性能监控
+
 - 实时监控性能指标
 - 收集性能数据
 - 分析性能趋势
 
 ### 3. 瓶颈识别
+
 - 使用性能分析工具
 - 定位性能瓶颈
 - 分析瓶颈原因
 
 ### 4. 优化实施
+
 - 制定优化方案
 - 实施优化措施
 - 验证优化效果
 
 ### 5. 效果评估
+
 - 对比优化前后指标
 - 评估优化收益
 - 总结优化经验
 
 ### 6. 持续优化
+
 - 建立性能监控体系
 - 定期进行性能评估
 - 持续优化改进
@@ -862,29 +848,26 @@ export class CacheUtil {
 
 #### 8.2.1 关键指标
 
-| 指标 | 目标值 | 说明 |
-|------|--------|------|
-| 响应时间 | < 200ms (P95) | 95% 的请求响应时间 |
-| 吞吐量 | > 1000 req/s | 每秒处理请求数 |
-| 错误率 | < 0.1% | 错误请求占比 |
-| CPU 使用率 | < 70% | 平均 CPU 使用率 |
-| 内存使用率 | < 80% | 平均内存使用率 |
-| 磁盘 I/O | < 80% | 磁盘 I/O 使用率 |
-| 网络带宽 | < 70% | 网络带宽使用率 |
-| 数据库查询 | < 100ms | 平均查询时间 |
-| 缓存命中率 | > 90% | 缓存命中比例 |
+| 指标       | 目标值        | 说明               |
+| ---------- | ------------- | ------------------ |
+| 响应时间   | < 200ms (P95) | 95% 的请求响应时间 |
+| 吞吐量     | > 1000 req/s  | 每秒处理请求数     |
+| 错误率     | < 0.1%        | 错误请求占比       |
+| CPU 使用率 | < 70%         | 平均 CPU 使用率    |
+| 内存使用率 | < 80%         | 平均内存使用率     |
+| 磁盘 I/O   | < 80%         | 磁盘 I/O 使用率    |
+| 网络带宽   | < 70%         | 网络带宽使用率     |
+| 数据库查询 | < 100ms       | 平均查询时间       |
+| 缓存命中率 | > 90%         | 缓存命中比例       |
 
 ---
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -905,8 +888,6 @@ export class CacheUtil {
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -935,8 +916,6 @@ export class CacheUtil {
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -974,7 +953,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -990,8 +969,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -1004,7 +981,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1019,9 +996,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1029,9 +1006,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1039,20 +1019,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1061,6 +1039,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1076,17 +1055,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1094,6 +1074,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1104,6 +1085,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1112,8 +1094,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1121,21 +1101,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1144,10 +1126,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1173,16 +1152,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1191,26 +1170,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1226,7 +1200,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1258,14 +1232,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1276,17 +1248,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1296,17 +1271,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1316,21 +1294,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

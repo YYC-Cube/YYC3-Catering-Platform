@@ -13,7 +13,7 @@ export enum UserStatus {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
   SUSPENDED = 'suspended',
-  DELETED = 'deleted'
+  DELETED = 'deleted',
 }
 
 /**
@@ -24,7 +24,7 @@ export enum UserRole {
   RESTAURANT_ADMIN = 'restaurant_admin',
   STAFF = 'staff',
   CUSTOMER = 'customer',
-  DELIVERY = 'delivery'
+  DELIVERY = 'delivery',
 }
 
 /**

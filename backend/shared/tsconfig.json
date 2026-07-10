@@ -17,13 +17,6 @@
     "moduleResolution": "node",
     "composite": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/node_modules/**"
-  ]
+  "include": ["**/*.ts", "**/*.d.ts"],
+  "exclude": ["node_modules", "dist", "**/node_modules/**"]
 }

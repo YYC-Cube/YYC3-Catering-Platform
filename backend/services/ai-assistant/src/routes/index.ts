@@ -28,7 +28,7 @@ const aiAssistantConfig = {
   knowledgeBaseEnabled: true,
   maxConversationHistory: 100,
   responseTimeout: 30000,
-  languageSupport: ['zh-CN', 'en-US']
+  languageSupport: ['zh-CN', 'en-US'],
 };
 
 // 初始化服务和控制器
@@ -43,99 +43,87 @@ const aiRateLimit = rateLimit({
     code: 429,
     message: 'Too many requests to AI assistant',
     timestamp: Date.now(),
-    success: false
-  }
+    success: false,
+  },
 });
 
 // 应用限流到所有AI助手路由
 router.use(aiRateLimit);
 
 // 对话相关路由
-router.post('/message',
-  authenticateToken,
-  controller.sendMessage.bind(controller)
-);
+router.post('/message', authenticateToken, controller.sendMessage.bind(controller));
 
 // 语音相关路由
-router.post('/voice',
+router.post(
+  '/voice',
   authenticateToken,
   AIAssistantController.getUploadMiddleware()[0], // 音频文件上传
-  controller.processVoice.bind(controller)
+  controller.processVoice.bind(controller),
 );
 
-router.post('/voice/generate',
-  authenticateToken,
-  controller.generateVoice.bind(controller)
-);
+router.post('/voice/generate', authenticateToken, controller.generateVoice.bind(controller));
 
 // 图像分析相关路由
-router.post('/image/analyze',
+router.post(
+  '/image/analyze',
   authenticateToken,
   AIAssistantController.getUploadMiddleware()[1], // 图像文件上传
-  controller.analyzeImage.bind(controller)
+  controller.analyzeImage.bind(controller),
 );
 
 // 推荐相关路由
-router.post('/recommendations',
-  authenticateToken,
-  controller.getRecommendations.bind(controller)
-);
+router.post('/recommendations', authenticateToken, controller.getRecommendations.bind(controller));
 
 // 会话管理相关路由
-router.get('/conversation/:sessionId/history',
+router.get('/conversation/:sessionId/history', authenticateToken, controller.getConversationHistory.bind(controller));
+
+router.delete(
+  '/conversation/:sessionId/history',
   authenticateToken,
-  controller.getConversationHistory.bind(controller)
+  controller.clearConversationHistory.bind(controller),
 );
 
-router.delete('/conversation/:sessionId/history',
-  authenticateToken,
-  controller.clearConversationHistory.bind(controller)
-);
-
-router.get('/conversation/:sessionId/stats',
-  authenticateToken,
-  controller.getSessionStats.bind(controller)
-);
+router.get('/conversation/:sessionId/stats', authenticateToken, controller.getSessionStats.bind(controller));
 
 // 系统状态相关路由
-router.get('/status',
-  controller.getStatus.bind(controller)
-);
+router.get('/status', controller.getStatus.bind(controller));
 
-router.put('/config',
-  authenticateToken,
-  controller.updateConfig.bind(controller)
-);
+router.put('/config', authenticateToken, controller.updateConfig.bind(controller));
 
 // 决策支持相关路由
-router.post('/analytics/sales-forecast',
+router.post(
+  '/analytics/sales-forecast',
   authenticateToken,
   validateRequest(aiAssistantSchemas.salesForecast),
-  controller.getSalesForecast.bind(controller)
+  controller.getSalesForecast.bind(controller),
 );
 
-router.post('/analytics/inventory-optimization',
+router.post(
+  '/analytics/inventory-optimization',
   authenticateToken,
   validateRequest(aiAssistantSchemas.inventoryOptimization),
-  controller.getInventoryOptimization.bind(controller)
+  controller.getInventoryOptimization.bind(controller),
 );
 
-router.post('/analytics/customer-behavior',
+router.post(
+  '/analytics/customer-behavior',
   authenticateToken,
   validateRequest(aiAssistantSchemas.customerBehaviorAnalysis),
-  controller.getCustomerBehaviorAnalysis.bind(controller)
+  controller.getCustomerBehaviorAnalysis.bind(controller),
 );
 
-router.post('/analytics/menu-optimization',
+router.post(
+  '/analytics/menu-optimization',
   authenticateToken,
   validateRequest(aiAssistantSchemas.menuOptimization),
-  controller.getMenuOptimization.bind(controller)
+  controller.getMenuOptimization.bind(controller),
 );
 
-router.post('/analytics/operational-efficiency',
+router.post(
+  '/analytics/operational-efficiency',
   authenticateToken,
   validateRequest(aiAssistantSchemas.operationalEfficiency),
-  controller.getOperationalEfficiency.bind(controller)
+  controller.getOperationalEfficiency.bind(controller),
 );
 
 export default router;

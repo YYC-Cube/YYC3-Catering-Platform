@@ -105,9 +105,7 @@ export class HealthCheckService {
 
     logger.debug('开始健康检查', { serviceCount: services.length });
 
-    const checkPromises = services.map(serviceName =>
-      this.checkService(serviceName)
-    );
+    const checkPromises = services.map(serviceName => this.checkService(serviceName));
 
     await Promise.allSettled(checkPromises);
 
@@ -126,9 +124,7 @@ export class HealthCheckService {
       return;
     }
 
-    const checkPromises = instances.map(instance =>
-      this.checkInstance(instance)
-    );
+    const checkPromises = instances.map(instance => this.checkInstance(instance));
 
     await Promise.allSettled(checkPromises);
   }

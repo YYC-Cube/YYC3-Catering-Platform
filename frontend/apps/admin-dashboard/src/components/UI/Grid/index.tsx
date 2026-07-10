@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
 
 export const Grid = defineComponent({
   name: 'Grid',
@@ -37,45 +37,41 @@ export const Grid = defineComponent({
   },
   setup(props, { attrs, slots }) {
     const gridClasses = computed(() => {
-      const classes = ['grid']
+      const classes = ['grid'];
 
-      const gapValue = typeof props.gap === 'number' ? `gap-${props.gap}` : props.gap
-      classes.push(gapValue)
+      const gapValue = typeof props.gap === 'number' ? `gap-${props.gap}` : props.gap;
+      classes.push(gapValue);
 
       const alignClasses = {
         start: 'items-start',
         center: 'items-center',
         end: 'items-end',
         stretch: 'items-stretch',
-      }
-      classes.push(alignClasses[props.align])
+      };
+      classes.push(alignClasses[props.align]);
 
       const justifyClasses = {
         start: 'justify-start',
         center: 'justify-center',
         end: 'justify-end',
         stretch: 'justify-stretch',
-      }
-      classes.push(justifyClasses[props.justify])
+      };
+      classes.push(justifyClasses[props.justify]);
 
       if (typeof props.cols === 'number') {
-        classes.push(`grid-cols-${props.cols}`)
+        classes.push(`grid-cols-${props.cols}`);
       } else {
         Object.entries(props.cols).forEach(([breakpoint, cols]) => {
-          classes.push(`${breakpoint}:grid-cols-${cols}`)
-        })
+          classes.push(`${breakpoint}:grid-cols-${cols}`);
+        });
       }
 
-      return classes.join(' ')
-    })
+      return classes.join(' ');
+    });
 
-    return () => (
-      <div class={cn(gridClasses.value, props.className)}>
-        {slots.default?.()}
-      </div>
-    )
+    return () => <div class={cn(gridClasses.value, props.className)}>{slots.default?.()}</div>;
   },
-})
+});
 
 export const GridItem = defineComponent({
   name: 'GridItem',
@@ -111,43 +107,39 @@ export const GridItem = defineComponent({
   },
   setup(props, { attrs, slots }) {
     const itemClasses = computed(() => {
-      const classes = []
+      const classes = [];
 
       const addSpanClass = (prop: number | Record<string, number>, prefix: string) => {
         if (typeof prop === 'number') {
-          classes.push(`${prefix}-${prop}`)
+          classes.push(`${prefix}-${prop}`);
         } else {
           Object.entries(prop).forEach(([breakpoint, value]) => {
-            classes.push(`${breakpoint}:${prefix}-${value}`)
-          })
+            classes.push(`${breakpoint}:${prefix}-${value}`);
+          });
         }
-      }
+      };
 
       const addPositionClass = (prop: number | Record<string, number> | undefined, prefix: string) => {
-        if (prop === undefined) return
+        if (prop === undefined) return;
         if (typeof prop === 'number') {
-          classes.push(`${prefix}-${prop}`)
+          classes.push(`${prefix}-${prop}`);
         } else {
           Object.entries(prop).forEach(([breakpoint, value]) => {
-            classes.push(`${breakpoint}:${prefix}-${value}`)
-          })
+            classes.push(`${breakpoint}:${prefix}-${value}`);
+          });
         }
-      }
+      };
 
-      addSpanClass(props.colSpan, 'col-span')
-      addSpanClass(props.rowSpan, 'row-span')
-      addPositionClass(props.colStart, 'col-start')
-      addPositionClass(props.colEnd, 'col-end')
-      addPositionClass(props.rowStart, 'row-start')
-      addPositionClass(props.rowEnd, 'row-end')
+      addSpanClass(props.colSpan, 'col-span');
+      addSpanClass(props.rowSpan, 'row-span');
+      addPositionClass(props.colStart, 'col-start');
+      addPositionClass(props.colEnd, 'col-end');
+      addPositionClass(props.rowStart, 'row-start');
+      addPositionClass(props.rowEnd, 'row-end');
 
-      return classes.join(' ')
-    })
+      return classes.join(' ');
+    });
 
-    return () => (
-      <div class={cn(itemClasses.value, props.className)}>
-        {slots.default?.()}
-      </div>
-    )
+    return () => <div class={cn(itemClasses.value, props.className)}>{slots.default?.()}</div>;
   },
-})
+});

@@ -80,12 +80,12 @@ export class MemoryManager extends EventEmitter {
       type: 'short_term',
       content: example,
       metadata: {
-        hasFeedback: example.feedback !== undefined
+        hasFeedback: example.feedback !== undefined,
       },
       created: Date.now(),
       accessed: Date.now(),
       priority: example.feedback ? Math.abs(example.feedback) : 0.5,
-      tags: ['experience', 'learning']
+      tags: ['experience', 'learning'],
     };
 
     return this.storeMemory(memory);
@@ -96,19 +96,19 @@ export class MemoryManager extends EventEmitter {
    */
   public storeMemory(memory: Memory): string {
     const memoryMap = memory.type === 'short_term' ? this.shortTermMemory : this.longTermMemory;
-    
+
     if (memoryMap.has(memory.id)) {
       console.warn(`Memory ${memory.id} already exists, overwriting`);
     }
-    
+
     memoryMap.set(memory.id, memory);
     this.emit('memoryStored', memory);
-    
+
     // 自动清理短期记忆
     if (memory.type === 'short_term') {
       this.cleanupShortTermMemory();
     }
-    
+
     return memory.id;
   }
 
@@ -118,19 +118,17 @@ export class MemoryManager extends EventEmitter {
   public retrieveMemory(query: MemoryQuery): Memory[] {
     const allMemories = [...this.shortTermMemory.values(), ...this.longTermMemory.values()];
     let results = allMemories;
-    
+
     // 类型过滤
     if (query.type) {
       results = results.filter(memory => memory.type === query.type);
     }
-    
+
     // 标签过滤
     if (query.tags && query.tags.length > 0) {
-      results = results.filter(memory => 
-        query.tags?.some(tag => memory.tags.includes(tag))
-      );
+      results = results.filter(memory => query.tags?.some(tag => memory.tags.includes(tag)));
     }
-    
+
     // 时间范围过滤
     if (query.startTime) {
       const startTime = query.startTime;
@@ -140,7 +138,7 @@ export class MemoryManager extends EventEmitter {
       const endTime = query.endTime;
       results = results.filter(memory => memory.created <= endTime);
     }
-    
+
     // 关键词过滤 (简单实现)
     if (query.keywords && query.keywords.length > 0) {
       results = results.filter(memory => {
@@ -148,7 +146,7 @@ export class MemoryManager extends EventEmitter {
         return query.keywords?.some(keyword => contentStr.includes(keyword.toLowerCase()));
       });
     }
-    
+
     // 排序：按访问时间和优先级
     results.sort((a, b) => {
       if (b.accessed !== a.accessed) {
@@ -156,19 +154,19 @@ export class MemoryManager extends EventEmitter {
       }
       return b.priority - a.priority;
     });
-    
+
     // 限制数量
     if (query.limit) {
       results = results.slice(0, query.limit);
     }
-    
+
     // 更新访问时间
     results.forEach(memory => {
       memory.accessed = Date.now();
       const memoryMap = memory.type === 'short_term' ? this.shortTermMemory : this.longTermMemory;
       memoryMap.set(memory.id, memory);
     });
-    
+
     return results;
   }
 
@@ -178,14 +176,14 @@ export class MemoryManager extends EventEmitter {
   private cleanupShortTermMemory(): void {
     const now = Date.now();
     const expiredKeys: string[] = [];
-    
+
     // 找出过期的记忆
     for (const [key, memory] of this.shortTermMemory.entries()) {
       if (now - memory.created > this.SHORT_TERM_THRESHOLD) {
         expiredKeys.push(key);
       }
     }
-    
+
     // 清理过期记忆
     expiredKeys.forEach(key => {
       const memory = this.shortTermMemory.get(key);
@@ -195,7 +193,7 @@ export class MemoryManager extends EventEmitter {
           const longTermMemory: Memory = {
             ...memory,
             id: this.generateId(),
-            type: 'long_term'
+            type: 'long_term',
           };
           this.longTermMemory.set(longTermMemory.id, longTermMemory);
         }
@@ -203,12 +201,12 @@ export class MemoryManager extends EventEmitter {
         this.emit('memoryExpired', memory);
       }
     });
-    
+
     // 限制短期记忆数量
     if (this.shortTermMemory.size > 1000) {
       const memories = Array.from(this.shortTermMemory.values());
       memories.sort((a, b) => a.priority - b.priority);
-      
+
       const toRemove = this.shortTermMemory.size - 1000;
       for (let i = 0; i < toRemove && i < memories.length; i++) {
         const memory = memories[i];
@@ -225,7 +223,7 @@ export class MemoryManager extends EventEmitter {
    */
   public deleteMemory(id: string): boolean {
     let deleted = false;
-    
+
     if (this.shortTermMemory.has(id)) {
       const memory = this.shortTermMemory.get(id)!;
       this.shortTermMemory.delete(id);
@@ -237,7 +235,7 @@ export class MemoryManager extends EventEmitter {
       this.emit('memoryRemoved', memory);
       deleted = true;
     }
-    
+
     return deleted;
   }
 
@@ -248,15 +246,15 @@ export class MemoryManager extends EventEmitter {
     const shortTerm = Array.from(this.shortTermMemory.values());
     const longTerm = Array.from(this.longTermMemory.values());
     const allMemories = [...shortTerm, ...longTerm];
-    
+
     const stats: MemoryStats = {
       total: allMemories.length,
       shortTerm: shortTerm.length,
       longTerm: longTerm.length,
       oldest: allMemories.length > 0 ? Math.min(...allMemories.map(m => m.created)) : 0,
-      newest: allMemories.length > 0 ? Math.max(...allMemories.map(m => m.created)) : 0
+      newest: allMemories.length > 0 ? Math.max(...allMemories.map(m => m.created)) : 0,
     };
-    
+
     return stats;
   }
 
@@ -268,7 +266,7 @@ export class MemoryManager extends EventEmitter {
     // 可以根据需要扩展为更复杂的记忆关联算法
     const source = this.shortTermMemory.get(sourceId) || this.longTermMemory.get(sourceId);
     const target = this.shortTermMemory.get(targetId) || this.longTermMemory.get(targetId);
-    
+
     if (source && target) {
       // 互相添加引用标签
       if (!source.tags.includes(`related_${targetId}`)) {
@@ -277,14 +275,14 @@ export class MemoryManager extends EventEmitter {
       if (!target.tags.includes(`related_${sourceId}`)) {
         target.tags.push(`related_${sourceId}`);
       }
-      
+
       // 更新记忆
       const sourceMap = source.type === 'short_term' ? this.shortTermMemory : this.longTermMemory;
       const targetMap = target.type === 'short_term' ? this.shortTermMemory : this.longTermMemory;
-      
+
       sourceMap.set(sourceId, source);
       targetMap.set(targetId, target);
-      
+
       this.emit('memoriesAssociated', { source, target });
     }
   }

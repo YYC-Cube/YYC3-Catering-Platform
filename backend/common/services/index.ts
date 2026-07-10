@@ -13,16 +13,9 @@ export { Logger, LogLevel } from './services/LoggerService';
 export type {
   CommunicationServiceConfig,
   ServiceRequestConfig,
-  ServiceResponse
+  ServiceResponse,
 } from './services/CommunicationService';
 
-export type {
-  EventBusConfig,
-  EventBusMessage,
-  EventHandler
-} from './services/EventBusService';
+export type { EventBusConfig, EventBusMessage, EventHandler } from './services/EventBusService';
 
-export type {
-  LoggerConfig,
-  LogEntry
-} from './services/LoggerService';
+export type { LoggerConfig, LogEntry } from './services/LoggerService';

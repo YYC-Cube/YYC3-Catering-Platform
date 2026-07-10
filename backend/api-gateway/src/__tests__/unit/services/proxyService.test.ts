@@ -39,12 +39,12 @@ describe('ProxyService', () => {
 
   beforeEach(() => {
     proxyService = new ProxyService();
-    
+
     mockJson = vi.fn();
     mockStatus = vi.fn().mockReturnThis();
     mockSetHeader = vi.fn().mockReturnThis();
     mockSend = vi.fn().mockReturnThis();
-    
+
     mockRequest = {
       method: 'GET',
       path: '/api/test',
@@ -56,7 +56,7 @@ describe('ProxyService', () => {
       body: {},
       query: {},
     };
-    
+
     mockResponse = {
       status: mockStatus,
       setHeader: mockSetHeader,
@@ -75,7 +75,7 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       const mockAxiosResponse = {
         status: 200,
         data: { success: true, data: 'test' },
@@ -84,9 +84,9 @@ describe('ProxyService', () => {
         },
       };
       vi.mocked(axios).mockResolvedValue(mockAxiosResponse);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(mockStatus).toHaveBeenCalledWith(200);
       expect(mockSend).toHaveBeenCalledWith(mockAxiosResponse.data);
     });
@@ -96,10 +96,10 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       mockRequest.method = 'POST';
       mockRequest.body = { name: 'test' };
-      
+
       const mockAxiosResponse = {
         status: 201,
         data: { success: true, id: 1 },
@@ -108,9 +108,9 @@ describe('ProxyService', () => {
         },
       };
       vi.mocked(axios).mockResolvedValue(mockAxiosResponse);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(mockStatus).toHaveBeenCalledWith(201);
       expect(mockSend).toHaveBeenCalledWith(mockAxiosResponse.data);
     });
@@ -120,7 +120,7 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       const mockAxiosResponse = {
         status: 200,
         data: { success: true },
@@ -130,9 +130,9 @@ describe('ProxyService', () => {
         },
       };
       vi.mocked(axios).mockResolvedValue(mockAxiosResponse);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(mockSetHeader).toHaveBeenCalledWith('content-type', 'application/json');
       expect(mockSetHeader).toHaveBeenCalledWith('x-custom-header', 'custom-value');
     });
@@ -140,9 +140,9 @@ describe('ProxyService', () => {
     it('应该在服务实例不可用时返回503', async () => {
       const { serviceRegistry } = await import('../../../config/serviceRegistry');
       vi.mocked(serviceRegistry.getInstance).mockReturnValue(null);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(mockStatus).toHaveBeenCalledWith(503);
       expect(mockJson).toHaveBeenCalledWith({
         success: false,
@@ -155,7 +155,7 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       const error = {
         response: {
           status: 400,
@@ -163,9 +163,9 @@ describe('ProxyService', () => {
         },
       };
       vi.mocked(axios).mockRejectedValue(error);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(mockStatus).toHaveBeenCalledWith(400);
       expect(mockJson).toHaveBeenCalledWith({
         success: false,
@@ -178,14 +178,14 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       const error = {
         request: {},
       };
       vi.mocked(axios).mockRejectedValue(error);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(mockStatus).toHaveBeenCalledWith(504);
       expect(mockJson).toHaveBeenCalledWith({
         success: false,
@@ -198,14 +198,14 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       const error = {
         message: 'Invalid configuration',
       };
       vi.mocked(axios).mockRejectedValue(error);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(mockStatus).toHaveBeenCalledWith(500);
       expect(mockJson).toHaveBeenCalledWith({
         success: false,
@@ -218,22 +218,22 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       mockRequest.query = { page: '1', limit: '10' };
-      
+
       const mockAxiosResponse = {
         status: 200,
         data: { success: true },
         headers: {},
       };
       vi.mocked(axios).mockResolvedValue(mockAxiosResponse);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(axios).toHaveBeenCalledWith(
         expect.objectContaining({
           params: { page: '1', limit: '10' },
-        })
+        }),
       );
     });
 
@@ -242,23 +242,23 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       mockRequest.method = 'POST';
       mockRequest.body = { name: 'test', value: 123 };
-      
+
       const mockAxiosResponse = {
         status: 201,
         data: { success: true },
         headers: {},
       };
       vi.mocked(axios).mockResolvedValue(mockAxiosResponse);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(axios).toHaveBeenCalledWith(
         expect.objectContaining({
           data: { name: 'test', value: 123 },
-        })
+        }),
       );
     });
 
@@ -267,20 +267,20 @@ describe('ProxyService', () => {
       vi.mocked(serviceRegistry.getInstance).mockReturnValue({
         url: 'http://localhost:3001',
       });
-      
+
       const mockAxiosResponse = {
         status: 200,
         data: { success: true },
         headers: {},
       };
       vi.mocked(axios).mockResolvedValue(mockAxiosResponse);
-      
+
       await proxyService.forwardRequest('test-service', '/api/test', mockRequest as Request, mockResponse as Response);
-      
+
       expect(axios).toHaveBeenCalledWith(
         expect.objectContaining({
           timeout: 60000,
-        })
+        }),
       );
     });
   });

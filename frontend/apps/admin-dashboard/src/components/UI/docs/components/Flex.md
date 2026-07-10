@@ -17,8 +17,8 @@
 ### 基础用法
 
 ```tsx
-import { Flex, FlexItem } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Flex, FlexItem } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function FlexBasic() {
   return (
@@ -27,14 +27,14 @@ export default function FlexBasic() {
       <FlexItem>项目2</FlexItem>
       <FlexItem>项目3</FlexItem>
     </Flex>
-  )
+  );
 }
 ```
 
 ### 方向
 
 ```tsx
-import { Flex, FlexItem } from '@/components/UI'
+import { Flex, FlexItem } from "@/components/UI";
 
 export default function FlexDirection() {
   return (
@@ -48,14 +48,14 @@ export default function FlexDirection() {
         <FlexItem>垂直</FlexItem>
       </Flex>
     </div>
-  )
+  );
 }
 ```
 
 ### 换行
 
 ```tsx
-import { Flex, FlexItem } from '@/components/UI'
+import { Flex, FlexItem } from "@/components/UI";
 
 export default function FlexWrap() {
   return (
@@ -76,14 +76,14 @@ export default function FlexWrap() {
         <FlexItem>反向换行</FlexItem>
       </Flex>
     </div>
-  )
+  );
 }
 ```
 
 ### 对齐
 
 ```tsx
-import { Flex, FlexItem } from '@/components/UI'
+import { Flex, FlexItem } from "@/components/UI";
 
 export default function FlexAlign() {
   return (
@@ -109,14 +109,14 @@ export default function FlexAlign() {
         <FlexItem>环绕对齐</FlexItem>
       </Flex>
     </div>
-  )
+  );
 }
 ```
 
 ### 间距
 
 ```tsx
-import { Flex, FlexItem } from '@/components/UI'
+import { Flex, FlexItem } from "@/components/UI";
 
 export default function FlexGap() {
   return (
@@ -125,14 +125,14 @@ export default function FlexGap() {
       <FlexItem>项目2</FlexItem>
       <FlexItem>项目3</FlexItem>
     </Flex>
-  )
+  );
 }
 ```
 
 ### Flex值
 
 ```tsx
-import { Flex, FlexItem } from '@/components/UI'
+import { Flex, FlexItem } from "@/components/UI";
 
 export default function FlexFlex() {
   return (
@@ -141,14 +141,14 @@ export default function FlexFlex() {
       <FlexItem flex={2}>flex:2</FlexItem>
       <FlexItem flex={1}>flex:1</FlexItem>
     </Flex>
-  )
+  );
 }
 ```
 
 ### Grow
 
 ```tsx
-import { Flex, FlexItem } from '@/components/UI'
+import { Flex, FlexItem } from "@/components/UI";
 
 export default function FlexGrow() {
   return (
@@ -157,14 +157,14 @@ export default function FlexGrow() {
       <FlexItem grow={1}>自动</FlexItem>
       <FlexItem grow={0}>固定</FlexItem>
     </Flex>
-  )
+  );
 }
 ```
 
 ### Shrink
 
 ```tsx
-import { Flex, FlexItem } from '@/components/UI'
+import { Flex, FlexItem } from "@/components/UI";
 
 export default function FlexShrink() {
   return (
@@ -173,7 +173,7 @@ export default function FlexShrink() {
       <FlexItem shrink={1}>收缩</FlexItem>
       <FlexItem shrink={0}>不收缩</FlexItem>
     </Flex>
-  )
+  );
 }
 ```
 
@@ -181,24 +181,24 @@ export default function FlexShrink() {
 
 ### Flex Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| direction | 方向 | `string` | `row` / `column` / `row-reverse` / `column-reverse` | `row` |
-| wrap | 换行 | `string` | `nowrap` / `wrap` / `wrap-reverse` | `nowrap` |
-| justify | 水平对齐 | `string` | `start` / `center` / `end` / `space-between` / `space-around` | `start` |
-| align | 垂直对齐 | `string` | `start` / `center` / `end` | `start` |
-| gap | 间距 | `number` | `0` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值                                                        |
+| --------- | ---------- | -------- | ------------------------------------------------------------- | -------- |
+| direction | 方向       | `string` | `row` / `column` / `row-reverse` / `column-reverse`           | `row`    |
+| wrap      | 换行       | `string` | `nowrap` / `wrap` / `wrap-reverse`                            | `nowrap` |
+| justify   | 水平对齐   | `string` | `start` / `center` / `end` / `space-between` / `space-around` | `start`  |
+| align     | 垂直对齐   | `string` | `start` / `center` / `end`                                    | `start`  |
+| gap       | 间距       | `number` | `0`                                                           |
+| className | 自定义类名 | `string` | -                                                             |
 
 ### FlexItem Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| flex | flex值 | `number` | - |
-| grow | flex-grow | `number` | - |
-| shrink | flex-shrink | `number` | - |
-| basis | flex-basis | `string` | - |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明        | 类型     | 默认值 |
+| --------- | ----------- | -------- | ------ |
+| flex      | flex值      | `number` | -      |
+| grow      | flex-grow   | `number` | -      |
+| shrink    | flex-shrink | `number` | -      |
+| basis     | flex-basis  | `string` | -      |
+| className | 自定义类名  | `string` | -      |
 
 ## 样式定制
 

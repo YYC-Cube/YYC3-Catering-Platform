@@ -19,7 +19,9 @@ export class QualityReportRepository {
   private dataDir: string;
   private reportsDir: string;
 
-  constructor(dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据') {
+  constructor(
+    dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据',
+  ) {
     this.logger = new Logger('QualityReportRepository');
     this.dataDir = dataDir;
     this.reportsDir = path.join(dataDir, 'quality-reports');
@@ -106,7 +108,7 @@ export class QualityReportRepository {
 
       // 获取所有报告文件
       const files = await fs.readdir(this.reportsDir);
-      const jsonFiles = files.filter((f) => f.endsWith('.json'));
+      const jsonFiles = files.filter(f => f.endsWith('.json'));
 
       if (jsonFiles.length === 0) {
         return null;
@@ -140,7 +142,7 @@ export class QualityReportRepository {
 
       // 获取所有报告文件
       const files = await fs.readdir(this.reportsDir);
-      const jsonFiles = files.filter((f) => f.endsWith('.json'));
+      const jsonFiles = files.filter(f => f.endsWith('.json'));
 
       // 计算截止日期
       const cutoffDate = new Date();
@@ -182,7 +184,7 @@ export class QualityReportRepository {
 
       // 获取所有报告文件
       const files = await fs.readdir(this.reportsDir);
-      const jsonFiles = files.filter((f) => f.endsWith('.json'));
+      const jsonFiles = files.filter(f => f.endsWith('.json'));
 
       // 读取所有报告并过滤
       const reports: QualityReport[] = [];
@@ -190,7 +192,7 @@ export class QualityReportRepository {
         const reportFile = path.join(this.reportsDir, file);
         const data = await fs.readFile(reportFile, 'utf-8');
         const report = JSON.parse(data) as QualityReport;
-        
+
         if (report.documentId === documentId) {
           reports.push(report);
         }
@@ -217,7 +219,7 @@ export class QualityReportRepository {
 
       // 获取所有报告文件
       const files = await fs.readdir(this.reportsDir);
-      const jsonFiles = files.filter((f) => f.endsWith('.json'));
+      const jsonFiles = files.filter(f => f.endsWith('.json'));
 
       // 读取所有报告
       const reports: QualityReport[] = [];
@@ -251,7 +253,7 @@ export class QualityReportRepository {
 
       // 获取所有报告文件
       const files = await fs.readdir(this.reportsDir);
-      const jsonFiles = files.filter((f) => f.endsWith('.json'));
+      const jsonFiles = files.filter(f => f.endsWith('.json'));
 
       // 过滤日期范围
       const reports: QualityReport[] = [];
@@ -341,7 +343,8 @@ export class QualityReportRepository {
       let trend: 'improving' | 'stable' | 'declining' = 'stable';
       if (reports.length >= 2) {
         const recentAvg = reports.slice(-5).reduce((sum, r) => sum + r.overallScore, 0) / Math.min(5, reports.length);
-        const olderAvg = reports.slice(0, -5).reduce((sum, r) => sum + r.overallScore, 0) / Math.max(1, reports.length - 5);
+        const olderAvg =
+          reports.slice(0, -5).reduce((sum, r) => sum + r.overallScore, 0) / Math.max(1, reports.length - 5);
 
         if (recentAvg > olderAvg + 2) {
           trend = 'improving';

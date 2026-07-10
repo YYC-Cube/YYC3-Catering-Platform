@@ -12,7 +12,7 @@
 ### 基础用法
 
 ```tsx
-import { Divider } from '@/components/UI'
+import { Divider } from "@/components/UI";
 
 export default function DividerBasic() {
   return (
@@ -21,14 +21,14 @@ export default function DividerBasic() {
       <Divider />
       <p>文本2</p>
     </div>
-  )
+  );
 }
 ```
 
 ### 带文字
 
 ```tsx
-import { Divider } from '@/components/UI'
+import { Divider } from "@/components/UI";
 
 export default function DividerWithText() {
   return (
@@ -37,14 +37,14 @@ export default function DividerWithText() {
       <Divider>文字</Divider>
       <p>文本2</p>
     </div>
-  )
+  );
 }
 ```
 
 ### 位置
 
 ```tsx
-import { Divider } from '@/components/UI'
+import { Divider } from "@/components/UI";
 
 export default function DividerPosition() {
   return (
@@ -57,14 +57,14 @@ export default function DividerPosition() {
       <Divider orientation="right">右侧文字</Divider>
       <p>文本4</p>
     </div>
-  )
+  );
 }
 ```
 
 ### 垂直分割线
 
 ```tsx
-import { Divider } from '@/components/UI'
+import { Divider } from "@/components/UI";
 
 export default function DividerVertical() {
   return (
@@ -75,14 +75,14 @@ export default function DividerVertical() {
       <Divider vertical />
       <span>文本3</span>
     </div>
-  )
+  );
 }
 ```
 
 ### 虚线
 
 ```tsx
-import { Divider } from '@/components/UI'
+import { Divider } from "@/components/UI";
 
 export default function DividerDashed() {
   return (
@@ -91,23 +91,23 @@ export default function DividerDashed() {
       <Divider dashed />
       <p>文本2</p>
     </div>
-  )
+  );
 }
 ```
 
 ### 自定义样式
 
 ```tsx
-import { Divider } from '@/components/UI'
+import { Divider } from "@/components/UI";
 
 export default function DividerCustom() {
   return (
     <div>
       <p>文本1</p>
-      <Divider style={{ borderColor: '#667eea', borderWidth: '2px' }} />
+      <Divider style={{ borderColor: "#667eea", borderWidth: "2px" }} />
       <p>文本2</p>
     </div>
-  )
+  );
 }
 ```
 
@@ -115,12 +115,12 @@ export default function DividerCustom() {
 
 ### Divider Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| orientation | 文本位置 | `string` | `left` / `center` / `right` | `center` |
-| dashed | 是否虚线 | `boolean` | `false` |
-| vertical | 是否垂直 | `boolean` | `false` |
-| className | 自定义类名 | `string` | - |
+| 参数        | 说明       | 类型      | 默认值                      |
+| ----------- | ---------- | --------- | --------------------------- | -------- |
+| orientation | 文本位置   | `string`  | `left` / `center` / `right` | `center` |
+| dashed      | 是否虚线   | `boolean` | `false`                     |
+| vertical    | 是否垂直   | `boolean` | `false`                     |
+| className   | 自定义类名 | `string`  | -                           |
 
 ## 样式定制
 

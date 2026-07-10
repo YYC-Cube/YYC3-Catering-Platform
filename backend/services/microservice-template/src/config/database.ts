@@ -35,7 +35,7 @@ if (config.database.url) {
     password: process.env.DATABASE_PASSWORD || '',
     host: process.env.DATABASE_HOST || 'localhost',
     port: Number(process.env.DATABASE_PORT) || 3306,
-    dialect: process.env.DATABASE_DIALECT as any || 'mysql',
+    dialect: (process.env.DATABASE_DIALECT as any) || 'mysql',
     logging: config.database.logging ? (msg) => logger.debug(msg) : false,
     sync: config.database.sync,
     pool: {
@@ -76,8 +76,4 @@ const syncDatabase = async (): Promise<void> => {
   }
 };
 
-export {
-  sequelize,
-  testDatabaseConnection,
-  syncDatabase,
-};
+export { sequelize, testDatabaseConnection, syncDatabase };

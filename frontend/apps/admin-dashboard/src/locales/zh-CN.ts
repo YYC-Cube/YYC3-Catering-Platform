@@ -90,7 +90,7 @@ export default {
     lastMonth: '上月',
     thisYear: '今年',
     lastYear: '去年',
-    custom: '自定义'
+    custom: '自定义',
   },
 
   // 错误信息
@@ -111,7 +111,7 @@ export default {
     loadFailed: '加载失败',
     loginFailed: '登录失败',
     logoutFailed: '退出登录失败',
-    sessionExpired: '会话已过期，请重新登录'
+    sessionExpired: '会话已过期，请重新登录',
   },
 
   // 成功信息
@@ -128,7 +128,7 @@ export default {
     shared: '分享成功',
     loginSuccess: '登录成功',
     logoutSuccess: '退出成功',
-    operationSuccess: '操作成功'
+    operationSuccess: '操作成功',
   },
 
   // 导航
@@ -144,7 +144,7 @@ export default {
     reports: '报表管理',
     settings: '系统设置',
     help: '帮助中心',
-    feedback: '意见反馈'
+    feedback: '意见反馈',
   },
 
   // 仪表板
@@ -162,7 +162,7 @@ export default {
     quickActions: '快捷操作',
     systemStatus: '系统状态',
     weatherInfo: '天气信息',
-    calendarEvents: '日程安排'
+    calendarEvents: '日程安排',
   },
 
   // 菜单管理
@@ -194,7 +194,7 @@ export default {
     categoryName: '分类名称',
     categoryDescription: '分类描述',
     categoryImage: '分类图片',
-    sortOrder: '排序'
+    sortOrder: '排序',
   },
 
   // 订单管理
@@ -234,7 +234,7 @@ export default {
     unpaid: '未支付',
     refunded: '已退款',
     notes: '备注',
-    specialRequests: '特殊要求'
+    specialRequests: '特殊要求',
   },
 
   // 厨房管理
@@ -282,7 +282,7 @@ export default {
     tasksByStatus: '任务状态分布',
     tasksByStation: '工作站任务分布',
     peakHours: '高峰时段',
-    staffPerformance: '员工表现'
+    staffPerformance: '员工表现',
   },
 
   // 数据分析
@@ -331,7 +331,7 @@ export default {
     kitchenEfficiency: '厨房效率',
     salesForecast: '销售预测',
     demandForecast: '需求预测',
-    riskAnalysis: '风险分析'
+    riskAnalysis: '风险分析',
   },
 
   // 客户管理
@@ -359,7 +359,7 @@ export default {
     customerSegmentation: '客户分群',
     retentionRate: '留存率',
     loyaltyPoints: '积分',
-    membershipCard: '会员卡'
+    membershipCard: '会员卡',
   },
 
   // 通知
@@ -406,7 +406,7 @@ export default {
     templateName: '模板名称',
     templateType: '模板类型',
     templateContent: '模板内容',
-    isActive: '是否启用'
+    isActive: '是否启用',
   },
 
   // 设置
@@ -435,7 +435,7 @@ export default {
     syncSettings: '同步设置',
     apiKeys: 'API密钥',
     webhooks: 'Webhooks',
-    thirdParty: '第三方服务'
+    thirdParty: '第三方服务',
   },
 
   // 系统
@@ -463,7 +463,7 @@ export default {
     maintenance: '维护模式',
     updateAvailable: '有更新可用',
     lastBackup: '最后备份',
-    nextBackup: '下次备份'
+    nextBackup: '下次备份',
   },
 
   // 报表
@@ -482,7 +482,7 @@ export default {
     print: '打印',
     share: '分享',
     schedule: '定时生成',
-    customReport: '自定义报表'
+    customReport: '自定义报表',
   },
 
   // 表单验证
@@ -502,7 +502,7 @@ export default {
     date: '请选择有效日期',
     time: '请选择有效时间',
     password: '密码长度至少8位',
-    passwordMatch: '两次输入的密码不一致'
+    passwordMatch: '两次输入的密码不一致',
   },
 
   // 时间相关
@@ -522,7 +522,7 @@ export default {
     until: '直到',
     duration: '持续时间',
     recently: '最近',
-    soon: '很快'
+    soon: '很快',
   },
 
   // 单位
@@ -539,6 +539,6 @@ export default {
     liter: '升',
     milliliter: '毫升',
     centimeter: '厘米',
-    meter: '米'
-  }
-}
+    meter: '米',
+  },
+};

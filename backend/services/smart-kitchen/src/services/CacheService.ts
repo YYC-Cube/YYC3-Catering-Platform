@@ -152,7 +152,7 @@ export class CacheService implements ICacheService {
       if (keys.length === 0) {
         return 0;
       }
-      
+
       const result = await this.redisClient.del(keys);
       return result;
     } catch (error) {
@@ -191,10 +191,10 @@ export class CacheService implements ICacheService {
 
     // 从数据源获取
     const value = await fetcher();
-    
+
     // 缓存数据
     await this.set(key, value, ttl);
-    
+
     return value;
   }
 }

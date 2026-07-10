@@ -7,18 +7,18 @@
  * @created 2025-01-20
  */
 
-import { ref, reactive, computed } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import dayjs from 'dayjs'
-import { 
-  chainAPI, 
-  StoreType, 
-  StoreStatus, 
-  EmployeeStatus, 
+import { ref, reactive, computed } from 'vue';
+import { ElMessage, ElMessageBox } from 'element-plus';
+import dayjs from 'dayjs';
+import {
+  chainAPI,
+  StoreType,
+  StoreStatus,
+  EmployeeStatus,
   InventoryStatus,
-  type Store, 
-  type Employee, 
-  type Inventory, 
+  type Store,
+  type Employee,
+  type Inventory,
   type StoreStats,
   type EmployeePerformance,
   type RevenueComparison,
@@ -33,35 +33,35 @@ import {
   type CheckInventoryRequest,
   type StoreQueryParams,
   type EmployeeQueryParams,
-  type InventoryQueryParams
-} from '@/api/chain'
+  type InventoryQueryParams,
+} from '@/api/chain';
 
 export function useChain() {
-  const loading = ref(false)
-  const activeTab = ref<'stores' | 'employees' | 'inventory' | 'stats'>('stores')
+  const loading = ref(false);
+  const activeTab = ref<'stores' | 'employees' | 'inventory' | 'stats'>('stores');
 
-  const stores = ref<Store[]>([])
-  const employees = ref<Employee[]>([])
-  const inventory = ref<Inventory[]>([])
-  const storeStats = ref<StoreStats[]>([])
-  const employeePerformance = ref<EmployeePerformance[]>([])
-  const revenueComparison = ref<RevenueComparison[]>([])
-  const trendData = ref<TrendData[]>([])
+  const stores = ref<Store[]>([]);
+  const employees = ref<Employee[]>([]);
+  const inventory = ref<Inventory[]>([]);
+  const storeStats = ref<StoreStats[]>([]);
+  const employeePerformance = ref<EmployeePerformance[]>([]);
+  const revenueComparison = ref<RevenueComparison[]>([]);
+  const trendData = ref<TrendData[]>([]);
 
-  const selectedStore = ref<Store | null>(null)
-  const selectedEmployee = ref<Employee | null>(null)
-  const selectedInventory = ref<Inventory | null>(null)
+  const selectedStore = ref<Store | null>(null);
+  const selectedEmployee = ref<Employee | null>(null);
+  const selectedInventory = ref<Inventory | null>(null);
 
-  const showStoreDialog = ref(false)
-  const showEmployeeDialog = ref(false)
-  const showInventoryDialog = ref(false)
-  const showTransferDialog = ref(false)
-  const showRestockDialog = ref(false)
-  const showTransferInventoryDialog = ref(false)
-  const showCheckDialog = ref(false)
+  const showStoreDialog = ref(false);
+  const showEmployeeDialog = ref(false);
+  const showInventoryDialog = ref(false);
+  const showTransferDialog = ref(false);
+  const showRestockDialog = ref(false);
+  const showTransferInventoryDialog = ref(false);
+  const showCheckDialog = ref(false);
 
-  const storeDialogType = ref<'create' | 'edit'>('create')
-  const employeeDialogType = ref<'create' | 'edit'>('create')
+  const storeDialogType = ref<'create' | 'edit'>('create');
+  const employeeDialogType = ref<'create' | 'edit'>('create');
 
   const storeForm = reactive({
     id: 0,
@@ -82,7 +82,7 @@ export function useChain() {
       thursday: { open: '09:00', close: '22:00', enabled: true },
       friday: { open: '09:00', close: '22:00', enabled: true },
       saturday: { open: '09:00', close: '22:00', enabled: true },
-      sunday: { open: '09:00', close: '22:00', enabled: true }
+      sunday: { open: '09:00', close: '22:00', enabled: true },
     },
     area: 100,
     capacity: 100,
@@ -91,8 +91,8 @@ export function useChain() {
     facilities: [] as string[],
     description: '',
     images: [] as string[],
-    openingDate: ''
-  })
+    openingDate: '',
+  });
 
   const employeeForm = reactive({
     id: 0,
@@ -112,14 +112,14 @@ export function useChain() {
     idCard: '',
     bankAccount: '',
     emergencyContact: { name: '', phone: '', relationship: '' },
-    permissions: [] as string[]
-  })
+    permissions: [] as string[],
+  });
 
   const transferForm = reactive({
     targetStoreId: 0,
     reason: '',
-    effectiveDate: ''
-  })
+    effectiveDate: '',
+  });
 
   const restockForm = reactive({
     storeId: 0,
@@ -129,8 +129,8 @@ export function useChain() {
     supplier: { id: 0, name: '', phone: '' },
     batchNumber: '',
     expiryDate: '',
-    remarks: ''
-  })
+    remarks: '',
+  });
 
   const transferInventoryForm = reactive({
     sourceStoreId: 0,
@@ -138,64 +138,64 @@ export function useChain() {
     productId: 0,
     quantity: 0,
     reason: '',
-    effectiveDate: ''
-  })
+    effectiveDate: '',
+  });
 
   const checkForm = reactive({
     storeId: 0,
     checkDate: '',
-    details: [] as { productId: number; actualQuantity: number; difference: number; reason?: string }[]
-  })
+    details: [] as { productId: number; actualQuantity: number; difference: number; reason?: string }[],
+  });
 
   const storePagination = reactive({
     page: 1,
     limit: 20,
-    total: 0
-  })
+    total: 0,
+  });
 
   const employeePagination = reactive({
     page: 1,
     limit: 20,
-    total: 0
-  })
+    total: 0,
+  });
 
   const inventoryPagination = reactive({
     page: 1,
     limit: 20,
-    total: 0
-  })
+    total: 0,
+  });
 
   const storeFilter = reactive({
     search: '',
     status: '' as StoreStatus | '',
     type: '' as StoreType | '',
     city: '',
-    district: ''
-  })
+    district: '',
+  });
 
   const employeeFilter = reactive({
     search: '',
     storeId: 0,
     department: '',
     position: '',
-    status: '' as EmployeeStatus | ''
-  })
+    status: '' as EmployeeStatus | '',
+  });
 
   const inventoryFilter = reactive({
     search: '',
     storeId: 0,
     category: '',
-    status: '' as InventoryStatus | ''
-  })
+    status: '' as InventoryStatus | '',
+  });
 
-  const storesLoading = computed(() => loading.value && activeTab.value === 'stores')
-  const employeesLoading = computed(() => loading.value && activeTab.value === 'employees')
-  const inventoryLoading = computed(() => loading.value && activeTab.value === 'inventory')
-  const statsLoading = computed(() => loading.value && activeTab.value === 'stats')
+  const storesLoading = computed(() => loading.value && activeTab.value === 'stores');
+  const employeesLoading = computed(() => loading.value && activeTab.value === 'employees');
+  const inventoryLoading = computed(() => loading.value && activeTab.value === 'inventory');
+  const statsLoading = computed(() => loading.value && activeTab.value === 'stats');
 
   const loadStores = async () => {
     try {
-      loading.value = true
+      loading.value = true;
       const params: StoreQueryParams = {
         page: storePagination.page,
         limit: storePagination.limit,
@@ -203,27 +203,27 @@ export function useChain() {
         status: storeFilter.status || undefined,
         type: storeFilter.type || undefined,
         city: storeFilter.city || undefined,
-        district: storeFilter.district || undefined
-      }
-      
-      const response = await chainAPI.getStores(params)
+        district: storeFilter.district || undefined,
+      };
+
+      const response = await chainAPI.getStores(params);
       if (response.success && response.data) {
-        stores.value = response.data.items
-        storePagination.total = response.data.pagination.total
+        stores.value = response.data.items;
+        storePagination.total = response.data.pagination.total;
       } else {
-        ElMessage.error(response.message || '加载门店列表失败')
+        ElMessage.error(response.message || '加载门店列表失败');
       }
     } catch (error) {
-      ElMessage.error('加载门店列表失败')
-      console.error('加载门店列表失败:', error)
+      ElMessage.error('加载门店列表失败');
+      console.error('加载门店列表失败:', error);
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   const loadEmployees = async () => {
     try {
-      loading.value = true
+      loading.value = true;
       const params: EmployeeQueryParams = {
         page: employeePagination.page,
         limit: employeePagination.limit,
@@ -231,81 +231,81 @@ export function useChain() {
         storeId: employeeFilter.storeId || undefined,
         department: employeeFilter.department || undefined,
         position: employeeFilter.position || undefined,
-        status: employeeFilter.status || undefined
-      }
-      
-      const response = await chainAPI.getEmployees(params)
+        status: employeeFilter.status || undefined,
+      };
+
+      const response = await chainAPI.getEmployees(params);
       if (response.success && response.data) {
-        employees.value = response.data.items
-        employeePagination.total = response.data.pagination.total
+        employees.value = response.data.items;
+        employeePagination.total = response.data.pagination.total;
       } else {
-        ElMessage.error(response.message || '加载员工列表失败')
+        ElMessage.error(response.message || '加载员工列表失败');
       }
     } catch (error) {
-      ElMessage.error('加载员工列表失败')
-      console.error('加载员工列表失败:', error)
+      ElMessage.error('加载员工列表失败');
+      console.error('加载员工列表失败:', error);
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   const loadInventory = async () => {
     try {
-      loading.value = true
+      loading.value = true;
       const params: InventoryQueryParams = {
         page: inventoryPagination.page,
         limit: inventoryPagination.limit,
         search: inventoryFilter.search || undefined,
         storeId: inventoryFilter.storeId || undefined,
         category: inventoryFilter.category || undefined,
-        status: inventoryFilter.status || undefined
-      }
-      
-      const response = await chainAPI.getInventory(params)
+        status: inventoryFilter.status || undefined,
+      };
+
+      const response = await chainAPI.getInventory(params);
       if (response.success && response.data) {
-        inventory.value = response.data.items
-        inventoryPagination.total = response.data.pagination.total
+        inventory.value = response.data.items;
+        inventoryPagination.total = response.data.pagination.total;
       } else {
-        ElMessage.error(response.message || '加载库存列表失败')
+        ElMessage.error(response.message || '加载库存列表失败');
       }
     } catch (error) {
-      ElMessage.error('加载库存列表失败')
-      console.error('加载库存列表失败:', error)
+      ElMessage.error('加载库存列表失败');
+      console.error('加载库存列表失败:', error);
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   const loadStoreStats = async () => {
     try {
-      const response = await chainAPI.getStoreStatsOverview()
+      const response = await chainAPI.getStoreStatsOverview();
       if (response.success && response.data) {
-        storeStats.value = response.data
+        storeStats.value = response.data;
       } else {
-        ElMessage.error(response.message || '加载门店统计失败')
+        ElMessage.error(response.message || '加载门店统计失败');
       }
     } catch (error) {
-      ElMessage.error('加载门店统计失败')
-      console.error('加载门店统计失败:', error)
+      ElMessage.error('加载门店统计失败');
+      console.error('加载门店统计失败:', error);
     }
-  }
+  };
 
   const loadEmployeePerformance = async () => {
     try {
-      const response = await chainAPI.getEmployeePerformanceOverview()
+      const response = await chainAPI.getEmployeePerformanceOverview();
       if (response.success && response.data) {
-        employeePerformance.value = response.data
+        employeePerformance.value = response.data;
       } else {
-        ElMessage.error(response.message || '加载员工绩效失败')
+        ElMessage.error(response.message || '加载员工绩效失败');
       }
     } catch (error) {
-      ElMessage.error('加载员工绩效失败')
-      console.error('加载员工绩效失败:', error)
+      ElMessage.error('加载员工绩效失败');
+      console.error('加载员工绩效失败:', error);
     }
-  }
+  };
 
   const handleAddStore = () => {
-    storeDialogType.value = 'create'
+    storeDialogType.value = 'create';
     Object.assign(storeForm, {
       id: 0,
       storeCode: '',
@@ -325,7 +325,7 @@ export function useChain() {
         thursday: { open: '09:00', close: '22:00', enabled: true },
         friday: { open: '09:00', close: '22:00', enabled: true },
         saturday: { open: '09:00', close: '22:00', enabled: true },
-        sunday: { open: '09:00', close: '22:00', enabled: true }
+        sunday: { open: '09:00', close: '22:00', enabled: true },
       },
       area: 100,
       capacity: 100,
@@ -334,13 +334,13 @@ export function useChain() {
       facilities: [] as string[],
       description: '',
       images: [] as string[],
-      openingDate: ''
-    })
-    showStoreDialog.value = true
-  }
+      openingDate: '',
+    });
+    showStoreDialog.value = true;
+  };
 
   const handleEditStore = (store: Store) => {
-    storeDialogType.value = 'edit'
+    storeDialogType.value = 'edit';
     Object.assign(storeForm, {
       id: store.id,
       storeCode: store.storeCode,
@@ -361,49 +361,49 @@ export function useChain() {
       facilities: store.facilities || [],
       description: store.description || '',
       images: store.images || [],
-      openingDate: store.openingDate
-    })
-    selectedStore.value = store
-    showStoreDialog.value = true
-  }
+      openingDate: store.openingDate,
+    });
+    selectedStore.value = store;
+    showStoreDialog.value = true;
+  };
 
   const handleDeleteStore = async (store: Store) => {
     try {
       await ElMessageBox.confirm(`确定要删除门店 "${store.name}" 吗？`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
-      })
-      
-      const response = await chainAPI.deleteStore(store.id)
+        type: 'warning',
+      });
+
+      const response = await chainAPI.deleteStore(store.id);
       if (response.success) {
-        ElMessage.success('删除成功')
-        await loadStores()
+        ElMessage.success('删除成功');
+        await loadStores();
       } else {
-        ElMessage.error(response.message || '删除失败')
+        ElMessage.error(response.message || '删除失败');
       }
     } catch (error) {
       if (error !== 'cancel') {
-        ElMessage.error('删除失败')
-        console.error('删除失败:', error)
+        ElMessage.error('删除失败');
+        console.error('删除失败:', error);
       }
     }
-  }
+  };
 
   const handleUpdateStoreStatus = async (store: Store, status: StoreStatus) => {
     try {
-      const response = await chainAPI.updateStoreStatus(store.id, status)
+      const response = await chainAPI.updateStoreStatus(store.id, status);
       if (response.success) {
-        store.status = status
-        ElMessage.success('状态更新成功')
+        store.status = status;
+        ElMessage.success('状态更新成功');
       } else {
-        ElMessage.error(response.message || '状态更新失败')
+        ElMessage.error(response.message || '状态更新失败');
       }
     } catch (error) {
-      ElMessage.error('状态更新失败')
-      console.error('状态更新失败:', error)
+      ElMessage.error('状态更新失败');
+      console.error('状态更新失败:', error);
     }
-  }
+  };
 
   const confirmStore = async () => {
     try {
@@ -427,16 +427,16 @@ export function useChain() {
           facilities: storeForm.facilities,
           description: storeForm.description,
           images: storeForm.images,
-          openingDate: storeForm.openingDate
-        }
-        
-        const response = await chainAPI.createStore(request)
+          openingDate: storeForm.openingDate,
+        };
+
+        const response = await chainAPI.createStore(request);
         if (response.success) {
-          ElMessage.success('创建成功')
-          showStoreDialog.value = false
-          await loadStores()
+          ElMessage.success('创建成功');
+          showStoreDialog.value = false;
+          await loadStores();
         } else {
-          ElMessage.error(response.message || '创建失败')
+          ElMessage.error(response.message || '创建失败');
         }
       } else {
         const request: UpdateStoreRequest = {
@@ -456,26 +456,26 @@ export function useChain() {
           coordinates: storeForm.coordinates,
           facilities: storeForm.facilities,
           description: storeForm.description,
-          images: storeForm.images
-        }
-        
-        const response = await chainAPI.updateStore(storeForm.id, request)
+          images: storeForm.images,
+        };
+
+        const response = await chainAPI.updateStore(storeForm.id, request);
         if (response.success) {
-          ElMessage.success('更新成功')
-          showStoreDialog.value = false
-          await loadStores()
+          ElMessage.success('更新成功');
+          showStoreDialog.value = false;
+          await loadStores();
         } else {
-          ElMessage.error(response.message || '更新失败')
+          ElMessage.error(response.message || '更新失败');
         }
       }
     } catch (error) {
-      ElMessage.error('操作失败')
-      console.error('操作失败:', error)
+      ElMessage.error('操作失败');
+      console.error('操作失败:', error);
     }
-  }
+  };
 
   const handleAddEmployee = () => {
-    employeeDialogType.value = 'create'
+    employeeDialogType.value = 'create';
     Object.assign(employeeForm, {
       id: 0,
       employeeCode: '',
@@ -494,13 +494,13 @@ export function useChain() {
       idCard: '',
       bankAccount: '',
       emergencyContact: { name: '', phone: '', relationship: '' },
-      permissions: [] as string[]
-    })
-    showEmployeeDialog.value = true
-  }
+      permissions: [] as string[],
+    });
+    showEmployeeDialog.value = true;
+  };
 
   const handleEditEmployee = (employee: Employee) => {
-    employeeDialogType.value = 'edit'
+    employeeDialogType.value = 'edit';
     Object.assign(employeeForm, {
       id: employee.id,
       employeeCode: employee.employeeCode,
@@ -519,66 +519,66 @@ export function useChain() {
       idCard: employee.idCard || '',
       bankAccount: employee.bankAccount || '',
       emergencyContact: employee.emergencyContact || { name: '', phone: '', relationship: '' },
-      permissions: employee.permissions
-    })
-    selectedEmployee.value = employee
-    showEmployeeDialog.value = true
-  }
+      permissions: employee.permissions,
+    });
+    selectedEmployee.value = employee;
+    showEmployeeDialog.value = true;
+  };
 
   const handleDeleteEmployee = async (employee: Employee) => {
     try {
       await ElMessageBox.confirm(`确定要删除员工 "${employee.name}" 吗？`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
-      })
-      
-      const response = await chainAPI.deleteEmployee(employee.id)
+        type: 'warning',
+      });
+
+      const response = await chainAPI.deleteEmployee(employee.id);
       if (response.success) {
-        ElMessage.success('删除成功')
-        await loadEmployees()
+        ElMessage.success('删除成功');
+        await loadEmployees();
       } else {
-        ElMessage.error(response.message || '删除失败')
+        ElMessage.error(response.message || '删除失败');
       }
     } catch (error) {
       if (error !== 'cancel') {
-        ElMessage.error('删除失败')
-        console.error('删除失败:', error)
+        ElMessage.error('删除失败');
+        console.error('删除失败:', error);
       }
     }
-  }
+  };
 
   const handleTransferEmployee = (employee: Employee) => {
-    transferForm.targetStoreId = 0
-    transferForm.reason = ''
-    transferForm.effectiveDate = ''
-    selectedEmployee.value = employee
-    showTransferDialog.value = true
-  }
+    transferForm.targetStoreId = 0;
+    transferForm.reason = '';
+    transferForm.effectiveDate = '';
+    selectedEmployee.value = employee;
+    showTransferDialog.value = true;
+  };
 
   const confirmTransfer = async () => {
     try {
-      if (!selectedEmployee.value) return
-      
+      if (!selectedEmployee.value) return;
+
       const request: TransferEmployeeRequest = {
         targetStoreId: transferForm.targetStoreId,
         reason: transferForm.reason,
-        effectiveDate: transferForm.effectiveDate
-      }
-      
-      const response = await chainAPI.transferEmployee(selectedEmployee.value.id, request)
+        effectiveDate: transferForm.effectiveDate,
+      };
+
+      const response = await chainAPI.transferEmployee(selectedEmployee.value.id, request);
       if (response.success) {
-        ElMessage.success('调店成功')
-        showTransferDialog.value = false
-        await loadEmployees()
+        ElMessage.success('调店成功');
+        showTransferDialog.value = false;
+        await loadEmployees();
       } else {
-        ElMessage.error(response.message || '调店失败')
+        ElMessage.error(response.message || '调店失败');
       }
     } catch (error) {
-      ElMessage.error('调店失败')
-      console.error('调店失败:', error)
+      ElMessage.error('调店失败');
+      console.error('调店失败:', error);
     }
-  }
+  };
 
   const confirmEmployee = async () => {
     try {
@@ -600,16 +600,16 @@ export function useChain() {
           idCard: employeeForm.idCard,
           bankAccount: employeeForm.bankAccount,
           emergencyContact: employeeForm.emergencyContact,
-          permissions: employeeForm.permissions
-        }
-        
-        const response = await chainAPI.createEmployee(request)
+          permissions: employeeForm.permissions,
+        };
+
+        const response = await chainAPI.createEmployee(request);
         if (response.success) {
-          ElMessage.success('创建成功')
-          showEmployeeDialog.value = false
-          await loadEmployees()
+          ElMessage.success('创建成功');
+          showEmployeeDialog.value = false;
+          await loadEmployees();
         } else {
-          ElMessage.error(response.message || '创建失败')
+          ElMessage.error(response.message || '创建失败');
         }
       } else {
         const request: UpdateEmployeeRequest = {
@@ -627,36 +627,36 @@ export function useChain() {
           idCard: employeeForm.idCard,
           bankAccount: employeeForm.bankAccount,
           emergencyContact: employeeForm.emergencyContact,
-          permissions: employeeForm.permissions
-        }
-        
-        const response = await chainAPI.updateEmployee(employeeForm.id, request)
+          permissions: employeeForm.permissions,
+        };
+
+        const response = await chainAPI.updateEmployee(employeeForm.id, request);
         if (response.success) {
-          ElMessage.success('更新成功')
-          showEmployeeDialog.value = false
-          await loadEmployees()
+          ElMessage.success('更新成功');
+          showEmployeeDialog.value = false;
+          await loadEmployees();
         } else {
-          ElMessage.error(response.message || '更新失败')
+          ElMessage.error(response.message || '更新失败');
         }
       }
     } catch (error) {
-      ElMessage.error('操作失败')
-      console.error('操作失败:', error)
+      ElMessage.error('操作失败');
+      console.error('操作失败:', error);
     }
-  }
+  };
 
   const handleRestock = (inventoryItem: Inventory) => {
-    restockForm.storeId = inventoryItem.storeId
-    restockForm.productId = inventoryItem.productId
-    restockForm.quantity = 0
-    restockForm.costPrice = 0
-    restockForm.supplier = { id: 0, name: '', phone: '' }
-    restockForm.batchNumber = ''
-    restockForm.expiryDate = ''
-    restockForm.remarks = ''
-    selectedInventory.value = inventoryItem
-    showRestockDialog.value = true
-  }
+    restockForm.storeId = inventoryItem.storeId;
+    restockForm.productId = inventoryItem.productId;
+    restockForm.quantity = 0;
+    restockForm.costPrice = 0;
+    restockForm.supplier = { id: 0, name: '', phone: '' };
+    restockForm.batchNumber = '';
+    restockForm.expiryDate = '';
+    restockForm.remarks = '';
+    selectedInventory.value = inventoryItem;
+    showRestockDialog.value = true;
+  };
 
   const confirmRestock = async () => {
     try {
@@ -668,33 +668,33 @@ export function useChain() {
         supplier: restockForm.supplier,
         batchNumber: restockForm.batchNumber,
         expiryDate: restockForm.expiryDate,
-        remarks: restockForm.remarks
-      }
-      
-      const response = await chainAPI.restockInventory(request)
+        remarks: restockForm.remarks,
+      };
+
+      const response = await chainAPI.restockInventory(request);
       if (response.success) {
-        ElMessage.success('补货成功')
-        showRestockDialog.value = false
-        await loadInventory()
+        ElMessage.success('补货成功');
+        showRestockDialog.value = false;
+        await loadInventory();
       } else {
-        ElMessage.error(response.message || '补货失败')
+        ElMessage.error(response.message || '补货失败');
       }
     } catch (error) {
-      ElMessage.error('补货失败')
-      console.error('补货失败:', error)
+      ElMessage.error('补货失败');
+      console.error('补货失败:', error);
     }
-  }
+  };
 
   const handleTransferInventory = (inventoryItem: Inventory) => {
-    transferInventoryForm.sourceStoreId = inventoryItem.storeId
-    transferInventoryForm.targetStoreId = 0
-    transferInventoryForm.productId = inventoryItem.productId
-    transferInventoryForm.quantity = 0
-    transferInventoryForm.reason = ''
-    transferInventoryForm.effectiveDate = ''
-    selectedInventory.value = inventoryItem
-    showTransferInventoryDialog.value = true
-  }
+    transferInventoryForm.sourceStoreId = inventoryItem.storeId;
+    transferInventoryForm.targetStoreId = 0;
+    transferInventoryForm.productId = inventoryItem.productId;
+    transferInventoryForm.quantity = 0;
+    transferInventoryForm.reason = '';
+    transferInventoryForm.effectiveDate = '';
+    selectedInventory.value = inventoryItem;
+    showTransferInventoryDialog.value = true;
+  };
 
   const confirmTransferInventory = async () => {
     try {
@@ -704,56 +704,56 @@ export function useChain() {
         productId: transferInventoryForm.productId,
         quantity: transferInventoryForm.quantity,
         reason: transferInventoryForm.reason,
-        effectiveDate: transferInventoryForm.effectiveDate
-      }
-      
-      const response = await chainAPI.transferInventory(request)
+        effectiveDate: transferInventoryForm.effectiveDate,
+      };
+
+      const response = await chainAPI.transferInventory(request);
       if (response.success) {
-        ElMessage.success('调拨成功')
-        showTransferInventoryDialog.value = false
-        await loadInventory()
+        ElMessage.success('调拨成功');
+        showTransferInventoryDialog.value = false;
+        await loadInventory();
       } else {
-        ElMessage.error(response.message || '调拨失败')
+        ElMessage.error(response.message || '调拨失败');
       }
     } catch (error) {
-      ElMessage.error('调拨失败')
-      console.error('调拨失败:', error)
+      ElMessage.error('调拨失败');
+      console.error('调拨失败:', error);
     }
-  }
+  };
 
   const handleCheckInventory = (storeId: number) => {
-    checkForm.storeId = storeId
-    checkForm.checkDate = dayjs().format('YYYY-MM-DD')
-    checkForm.details = []
-    showCheckDialog.value = true
-  }
+    checkForm.storeId = storeId;
+    checkForm.checkDate = dayjs().format('YYYY-MM-DD');
+    checkForm.details = [];
+    showCheckDialog.value = true;
+  };
 
   const confirmCheck = async () => {
     try {
       const request: CheckInventoryRequest = {
         storeId: checkForm.storeId,
         checkDate: checkForm.checkDate,
-        details: checkForm.details
-      }
-      
-      const response = await chainAPI.checkInventory(request)
+        details: checkForm.details,
+      };
+
+      const response = await chainAPI.checkInventory(request);
       if (response.success) {
-        ElMessage.success('盘点成功')
-        showCheckDialog.value = false
-        await loadInventory()
+        ElMessage.success('盘点成功');
+        showCheckDialog.value = false;
+        await loadInventory();
       } else {
-        ElMessage.error(response.message || '盘点失败')
+        ElMessage.error(response.message || '盘点失败');
       }
     } catch (error) {
-      ElMessage.error('盘点失败')
-      console.error('盘点失败:', error)
+      ElMessage.error('盘点失败');
+      console.error('盘点失败:', error);
     }
-  }
+  };
 
   const handleStoreSearch = () => {
-    storePagination.page = 1
-    loadStores()
-  }
+    storePagination.page = 1;
+    loadStores();
+  };
 
   const resetStoreFilter = () => {
     Object.assign(storeFilter, {
@@ -761,16 +761,16 @@ export function useChain() {
       status: '' as StoreStatus | '',
       type: '' as StoreType | '',
       city: '',
-      district: ''
-    })
-    storePagination.page = 1
-    loadStores()
-  }
+      district: '',
+    });
+    storePagination.page = 1;
+    loadStores();
+  };
 
   const handleEmployeeSearch = () => {
-    employeePagination.page = 1
-    loadEmployees()
-  }
+    employeePagination.page = 1;
+    loadEmployees();
+  };
 
   const resetEmployeeFilter = () => {
     Object.assign(employeeFilter, {
@@ -778,144 +778,144 @@ export function useChain() {
       storeId: 0,
       department: '',
       position: '',
-      status: '' as EmployeeStatus | ''
-    })
-    employeePagination.page = 1
-    loadEmployees()
-  }
+      status: '' as EmployeeStatus | '',
+    });
+    employeePagination.page = 1;
+    loadEmployees();
+  };
 
   const handleInventorySearch = () => {
-    inventoryPagination.page = 1
-    loadInventory()
-  }
+    inventoryPagination.page = 1;
+    loadInventory();
+  };
 
   const resetInventoryFilter = () => {
     Object.assign(inventoryFilter, {
       search: '',
       storeId: 0,
       category: '',
-      status: '' as InventoryStatus | ''
-    })
-    inventoryPagination.page = 1
-    loadInventory()
-  }
+      status: '' as InventoryStatus | '',
+    });
+    inventoryPagination.page = 1;
+    loadInventory();
+  };
 
   const handleStorePageChange = (page: number) => {
-    storePagination.page = page
-    loadStores()
-  }
+    storePagination.page = page;
+    loadStores();
+  };
 
   const handleStorePageSizeChange = (pageSize: number) => {
-    storePagination.limit = pageSize
-    storePagination.page = 1
-    loadStores()
-  }
+    storePagination.limit = pageSize;
+    storePagination.page = 1;
+    loadStores();
+  };
 
   const handleEmployeePageChange = (page: number) => {
-    employeePagination.page = page
-    loadEmployees()
-  }
+    employeePagination.page = page;
+    loadEmployees();
+  };
 
   const handleEmployeePageSizeChange = (pageSize: number) => {
-    employeePagination.limit = pageSize
-    employeePagination.page = 1
-    loadEmployees()
-  }
+    employeePagination.limit = pageSize;
+    employeePagination.page = 1;
+    loadEmployees();
+  };
 
   const handleInventoryPageChange = (page: number) => {
-    inventoryPagination.page = page
-    loadInventory()
-  }
+    inventoryPagination.page = page;
+    loadInventory();
+  };
 
   const handleInventoryPageSizeChange = (pageSize: number) => {
-    inventoryPagination.limit = pageSize
-    inventoryPagination.page = 1
-    loadInventory()
-  }
+    inventoryPagination.limit = pageSize;
+    inventoryPagination.page = 1;
+    loadInventory();
+  };
 
   const handleTabChange = (tabName: string) => {
-    activeTab.value = tabName as any
+    activeTab.value = tabName as any;
     if (tabName === 'stores') {
-      loadStores()
+      loadStores();
     } else if (tabName === 'employees') {
-      loadEmployees()
+      loadEmployees();
     } else if (tabName === 'inventory') {
-      loadInventory()
+      loadInventory();
     } else if (tabName === 'stats') {
-      loadStoreStats()
-      loadEmployeePerformance()
+      loadStoreStats();
+      loadEmployeePerformance();
     }
-  }
+  };
 
   const formatNumber = (num: number): string => {
-    return num.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  }
+    return num.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
 
   const formatDateTime = (date: string): string => {
-    return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
-  }
+    return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+  };
 
   const getStoreTypeName = (type: StoreType): string => {
     const names: Record<StoreType, string> = {
       [StoreType.DIRECT]: '直营店',
-      [StoreType.FRANCHISE]: '加盟店'
-    }
-    return names[type] || type
-  }
+      [StoreType.FRANCHISE]: '加盟店',
+    };
+    return names[type] || type;
+  };
 
   const getStoreStatusName = (status: StoreStatus): string => {
     const names: Record<StoreStatus, string> = {
       [StoreStatus.OPEN]: '营业中',
       [StoreStatus.CLOSED]: '休息中',
-      [StoreStatus.MAINTENANCE]: '已关闭'
-    }
-    return names[status] || status
-  }
+      [StoreStatus.MAINTENANCE]: '已关闭',
+    };
+    return names[status] || status;
+  };
 
   const getStoreStatusType = (status: StoreStatus): string => {
     const types: Record<StoreStatus, string> = {
       [StoreStatus.OPEN]: 'success',
       [StoreStatus.CLOSED]: 'warning',
-      [StoreStatus.MAINTENANCE]: 'danger'
-    }
-    return types[status] || 'info'
-  }
+      [StoreStatus.MAINTENANCE]: 'danger',
+    };
+    return types[status] || 'info';
+  };
 
   const getEmployeeStatusName = (status: EmployeeStatus): string => {
     const names: Record<EmployeeStatus, string> = {
       [EmployeeStatus.ACTIVE]: '在职',
       [EmployeeStatus.RESIGNED]: '离职',
-      [EmployeeStatus.LEAVE]: '请假'
-    }
-    return names[status] || status
-  }
+      [EmployeeStatus.LEAVE]: '请假',
+    };
+    return names[status] || status;
+  };
 
   const getEmployeeStatusType = (status: EmployeeStatus): string => {
     const types: Record<EmployeeStatus, string> = {
       [EmployeeStatus.ACTIVE]: 'success',
       [EmployeeStatus.RESIGNED]: 'danger',
-      [EmployeeStatus.LEAVE]: 'warning'
-    }
-    return types[status] || 'info'
-  }
+      [EmployeeStatus.LEAVE]: 'warning',
+    };
+    return types[status] || 'info';
+  };
 
   const getInventoryStatusName = (status: InventoryStatus): string => {
     const names: Record<InventoryStatus, string> = {
       [InventoryStatus.NORMAL]: '充足',
       [InventoryStatus.WARNING]: '预警',
-      [InventoryStatus.OUT_OF_STOCK]: '缺货'
-    }
-    return names[status] || status
-  }
+      [InventoryStatus.OUT_OF_STOCK]: '缺货',
+    };
+    return names[status] || status;
+  };
 
   const getInventoryStatusType = (status: InventoryStatus): string => {
     const types: Record<InventoryStatus, string> = {
       [InventoryStatus.NORMAL]: 'success',
       [InventoryStatus.WARNING]: 'warning',
-      [InventoryStatus.OUT_OF_STOCK]: 'danger'
-    }
-    return types[status] || 'info'
-  }
+      [InventoryStatus.OUT_OF_STOCK]: 'danger',
+    };
+    return types[status] || 'info';
+  };
 
   return {
     loading,
@@ -998,6 +998,6 @@ export function useChain() {
     getEmployeeStatusName,
     getEmployeeStatusType,
     getInventoryStatusName,
-    getInventoryStatusType
-  }
+    getInventoryStatusType,
+  };
 }

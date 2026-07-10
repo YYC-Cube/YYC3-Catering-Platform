@@ -23,67 +23,77 @@ const app = new Hono();
 const documentRepository = new DocumentRepository();
 const qualityAssessmentService = new QualityAssessmentService();
 const logger = new Logger('AuditWorkflowAPI');
-const auditWorkflowService = new AuditWorkflowService(
-  documentRepository,
-  qualityAssessmentService,
-  logger
-);
+const auditWorkflowService = new AuditWorkflowService(documentRepository, qualityAssessmentService, logger);
 
 /**
  * 创建审核任务
  * @route POST /api/audit-workflow/tasks
  * @access 私有
  */
-app.post('/tasks', zValidator('json', z.object({
-  documentId: z.string().min(1),
-  type: z.enum(['auto', 'manual', 'scheduled']).optional().default('auto'),
-  priority: z.enum(['low', 'medium', 'high', 'critical']).optional().default('medium'),
-})), async (c) => {
-  try {
-    const { documentId, type, priority } = c.req.valid('json');
-    const task = await auditWorkflowService.createAuditTask(documentId, type, priority);
-    return c.json({ success: true, data: task }, 201);
-  } catch (error) {
-    logger.error('创建审核任务失败', { error });
-    const errorMessage = error instanceof Error ? error.message : '未知错误';
-    return c.json({ success: false, error: errorMessage }, 400);
-  }
-});
+app.post(
+  '/tasks',
+  zValidator(
+    'json',
+    z.object({
+      documentId: z.string().min(1),
+      type: z.enum(['auto', 'manual', 'scheduled']).optional().default('auto'),
+      priority: z.enum(['low', 'medium', 'high', 'critical']).optional().default('medium'),
+    }),
+  ),
+  async c => {
+    try {
+      const { documentId, type, priority } = c.req.valid('json');
+      const task = await auditWorkflowService.createAuditTask(documentId, type, priority);
+      return c.json({ success: true, data: task }, 201);
+    } catch (error) {
+      logger.error('创建审核任务失败', { error });
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      return c.json({ success: false, error: errorMessage }, 400);
+    }
+  },
+);
 
 /**
  * 执行审核任务
  * @route POST /api/audit-workflow/tasks/:taskId/execute
  * @access 私有
  */
-app.post('/tasks/:taskId/execute', zValidator('json', z.object({
-  auditor: z.string().min(1).optional().default('system'),
-})), async (c) => {
-  try {
-    const taskId = c.req.param('taskId');
-    const { auditor } = c.req.valid('json');
-    const report = await auditWorkflowService.executeAuditTask(taskId, auditor);
-    return c.json({ success: true, data: report });
-  } catch (error) {
-    logger.error('执行审核任务失败', { error });
-    const errorMessage = error instanceof Error ? error.message : '未知错误';
-    return c.json({ success: false, error: errorMessage }, 400);
-  }
-});
+app.post(
+  '/tasks/:taskId/execute',
+  zValidator(
+    'json',
+    z.object({
+      auditor: z.string().min(1).optional().default('system'),
+    }),
+  ),
+  async c => {
+    try {
+      const taskId = c.req.param('taskId');
+      const { auditor } = c.req.valid('json');
+      const report = await auditWorkflowService.executeAuditTask(taskId, auditor);
+      return c.json({ success: true, data: report });
+    } catch (error) {
+      logger.error('执行审核任务失败', { error });
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      return c.json({ success: false, error: errorMessage }, 400);
+    }
+  },
+);
 
 /**
  * 获取审核任务
  * @route GET /api/audit-workflow/tasks/:taskId
  * @access 私有
  */
-app.get('/tasks/:taskId', async (c) => {
+app.get('/tasks/:taskId', async c => {
   try {
     const taskId = c.req.param('taskId');
     const task = auditWorkflowService.getTask(taskId);
-    
+
     if (!task) {
       return c.json({ success: false, error: '审核任务不存在' }, 404);
     }
-    
+
     return c.json({ success: true, data: task });
   } catch (error) {
     logger.error('获取审核任务失败', { error });
@@ -97,7 +107,7 @@ app.get('/tasks/:taskId', async (c) => {
  * @route GET /api/audit-workflow/documents/:documentId/tasks
  * @access 私有
  */
-app.get('/documents/:documentId/tasks', async (c) => {
+app.get('/documents/:documentId/tasks', async c => {
   try {
     const documentId = c.req.param('documentId');
     const tasks = auditWorkflowService.getDocumentTasks(documentId);
@@ -114,7 +124,7 @@ app.get('/documents/:documentId/tasks', async (c) => {
  * @route GET /api/audit-workflow/tasks/pending
  * @access 私有
  */
-app.get('/tasks/pending', async (c) => {
+app.get('/tasks/pending', async c => {
   try {
     const tasks = auditWorkflowService.getPendingTasks();
     return c.json({ success: true, data: tasks });
@@ -130,15 +140,15 @@ app.get('/tasks/pending', async (c) => {
  * @route GET /api/audit-workflow/reports/:reportId
  * @access 私有
  */
-app.get('/reports/:reportId', async (c) => {
+app.get('/reports/:reportId', async c => {
   try {
     const reportId = c.req.param('reportId');
     const report = auditWorkflowService.getReport(reportId);
-    
+
     if (!report) {
       return c.json({ success: false, error: '审核报告不存在' }, 404);
     }
-    
+
     return c.json({ success: true, data: report });
   } catch (error) {
     logger.error('获取审核报告失败', { error });
@@ -152,7 +162,7 @@ app.get('/reports/:reportId', async (c) => {
  * @route GET /api/audit-workflow/documents/:documentId/reports
  * @access 私有
  */
-app.get('/documents/:documentId/reports', async (c) => {
+app.get('/documents/:documentId/reports', async c => {
   try {
     const documentId = c.req.param('documentId');
     const reports = auditWorkflowService.getDocumentReports(documentId);
@@ -169,27 +179,34 @@ app.get('/documents/:documentId/reports', async (c) => {
  * @route POST /api/audit-workflow/audit-batch
  * @access 私有
  */
-app.post('/audit-batch', zValidator('json', z.object({
-  documentIds: z.array(z.string().min(1)).min(1),
-  auditor: z.string().min(1).optional().default('system'),
-})), async (c) => {
-  try {
-    const { documentIds, auditor } = c.req.valid('json');
-    const reports = await auditWorkflowService.auditDocuments(documentIds, auditor);
-    return c.json({ success: true, data: Object.fromEntries(reports) });
-  } catch (error) {
-    logger.error('批量审核文档失败', { error });
-    const errorMessage = error instanceof Error ? error.message : '未知错误';
-    return c.json({ success: false, error: errorMessage }, 400);
-  }
-});
+app.post(
+  '/audit-batch',
+  zValidator(
+    'json',
+    z.object({
+      documentIds: z.array(z.string().min(1)).min(1),
+      auditor: z.string().min(1).optional().default('system'),
+    }),
+  ),
+  async c => {
+    try {
+      const { documentIds, auditor } = c.req.valid('json');
+      const reports = await auditWorkflowService.auditDocuments(documentIds, auditor);
+      return c.json({ success: true, data: Object.fromEntries(reports) });
+    } catch (error) {
+      logger.error('批量审核文档失败', { error });
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      return c.json({ success: false, error: errorMessage }, 400);
+    }
+  },
+);
 
 /**
  * 获取所有审核规则
  * @route GET /api/audit-workflow/rules
  * @access 私有
  */
-app.get('/rules', async (c) => {
+app.get('/rules', async c => {
   try {
     const rules = auditWorkflowService.getRules();
     return c.json({ success: true, data: rules });
@@ -205,15 +222,15 @@ app.get('/rules', async (c) => {
  * @route POST /api/audit-workflow/rules/:ruleId/enable
  * @access 私有
  */
-app.post('/rules/:ruleId/enable', async (c) => {
+app.post('/rules/:ruleId/enable', async c => {
   try {
     const ruleId = c.req.param('ruleId');
     const result = auditWorkflowService.enableRule(ruleId);
-    
+
     if (!result) {
       return c.json({ success: false, error: '审核规则不存在' }, 404);
     }
-    
+
     return c.json({ success: true, message: '审核规则已启用' });
   } catch (error) {
     logger.error('启用审核规则失败', { error });
@@ -227,15 +244,15 @@ app.post('/rules/:ruleId/enable', async (c) => {
  * @route POST /api/audit-workflow/rules/:ruleId/disable
  * @access 私有
  */
-app.post('/rules/:ruleId/disable', async (c) => {
+app.post('/rules/:ruleId/disable', async c => {
   try {
     const ruleId = c.req.param('ruleId');
     const result = auditWorkflowService.disableRule(ruleId);
-    
+
     if (!result) {
       return c.json({ success: false, error: '审核规则不存在' }, 404);
     }
-    
+
     return c.json({ success: true, message: '审核规则已禁用' });
   } catch (error) {
     logger.error('禁用审核规则失败', { error });
@@ -249,7 +266,7 @@ app.post('/rules/:ruleId/disable', async (c) => {
  * @route POST /api/audit-workflow/scheduled-audits/start
  * @access 私有
  */
-app.post('/scheduled-audits/start', async (c) => {
+app.post('/scheduled-audits/start', async c => {
   try {
     auditWorkflowService.startScheduledAudits();
     return c.json({ success: true, message: '定时审核已启动' });
@@ -265,7 +282,7 @@ app.post('/scheduled-audits/start', async (c) => {
  * @route POST /api/audit-workflow/scheduled-audits/stop
  * @access 私有
  */
-app.post('/scheduled-audits/stop', async (c) => {
+app.post('/scheduled-audits/stop', async c => {
   try {
     auditWorkflowService.stopScheduledAudits();
     return c.json({ success: true, message: '定时审核已停止' });
@@ -281,7 +298,7 @@ app.post('/scheduled-audits/stop', async (c) => {
  * @route GET /api/audit-workflow/config
  * @access 私有
  */
-app.get('/config', async (c) => {
+app.get('/config', async c => {
   try {
     const config = auditWorkflowService.getConfig();
     return c.json({ success: true, data: config });
@@ -297,35 +314,44 @@ app.get('/config', async (c) => {
  * @route PUT /api/audit-workflow/config
  * @access 私有
  */
-app.put('/config', zValidator('json', z.object({
-  autoAuditEnabled: z.boolean().optional(),
-  auditInterval: z.number().min(1).optional(),
-  auditTimeout: z.number().min(1).optional(),
-  maxConcurrentAudits: z.number().min(1).optional(),
-  notifications: z.object({
-    onAuditFailure: z.boolean().optional(),
-    onAuditSuccess: z.boolean().optional(),
-    emailRecipients: z.array(z.string().email()).optional(),
-  }).optional(),
-})), async (c) => {
-  try {
-    const config = c.req.valid('json');
-    auditWorkflowService.updateConfig(config as Partial<AuditConfig>);
-    const updatedConfig = auditWorkflowService.getConfig();
-    return c.json({ success: true, data: updatedConfig });
-  } catch (error) {
-    logger.error('更新审核配置失败', { error });
-    const errorMessage = error instanceof Error ? error.message : '未知错误';
-    return c.json({ success: false, error: errorMessage }, 500);
-  }
-});
+app.put(
+  '/config',
+  zValidator(
+    'json',
+    z.object({
+      autoAuditEnabled: z.boolean().optional(),
+      auditInterval: z.number().min(1).optional(),
+      auditTimeout: z.number().min(1).optional(),
+      maxConcurrentAudits: z.number().min(1).optional(),
+      notifications: z
+        .object({
+          onAuditFailure: z.boolean().optional(),
+          onAuditSuccess: z.boolean().optional(),
+          emailRecipients: z.array(z.string().email()).optional(),
+        })
+        .optional(),
+    }),
+  ),
+  async c => {
+    try {
+      const config = c.req.valid('json');
+      auditWorkflowService.updateConfig(config as Partial<AuditConfig>);
+      const updatedConfig = auditWorkflowService.getConfig();
+      return c.json({ success: true, data: updatedConfig });
+    } catch (error) {
+      logger.error('更新审核配置失败', { error });
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      return c.json({ success: false, error: errorMessage }, 500);
+    }
+  },
+);
 
 /**
  * 获取审核统计信息
  * @route GET /api/audit-workflow/stats
  * @access 私有
  */
-app.get('/stats', async (c) => {
+app.get('/stats', async c => {
   try {
     const stats = auditWorkflowService.getAuditStats();
     return c.json({ success: true, data: stats });
@@ -341,15 +367,15 @@ app.get('/stats', async (c) => {
  * @route GET /api/audit-workflow/reports/:reportId/export
  * @access 私有
  */
-app.get('/reports/:reportId/export', async (c) => {
+app.get('/reports/:reportId/export', async c => {
   try {
     const reportId = c.req.param('reportId');
     const report = auditWorkflowService.getReport(reportId);
-    
+
     if (!report) {
       return c.json({ success: false, error: '审核报告不存在' }, 404);
     }
-    
+
     // 返回JSON格式的报告
     return c.json({
       success: true,
@@ -370,44 +396,51 @@ app.get('/reports/:reportId/export', async (c) => {
  * @route POST /api/audit-workflow/reports/export-batch
  * @access 私有
  */
-app.post('/reports/export-batch', zValidator('json', z.object({
-  documentIds: z.array(z.string().min(1)).min(1),
-})), async (c) => {
-  try {
-    const { documentIds } = c.req.valid('json');
-    const reports: any[] = [];
-    
-    for (const documentId of documentIds) {
-      const documentReports = auditWorkflowService.getDocumentReports(documentId);
-      reports.push(...documentReports);
+app.post(
+  '/reports/export-batch',
+  zValidator(
+    'json',
+    z.object({
+      documentIds: z.array(z.string().min(1)).min(1),
+    }),
+  ),
+  async c => {
+    try {
+      const { documentIds } = c.req.valid('json');
+      const reports: any[] = [];
+
+      for (const documentId of documentIds) {
+        const documentReports = auditWorkflowService.getDocumentReports(documentId);
+        reports.push(...documentReports);
+      }
+
+      return c.json({
+        success: true,
+        data: {
+          reports,
+          exportTime: new Date().toISOString(),
+          totalReports: reports.length,
+        },
+      });
+    } catch (error) {
+      logger.error('批量导出审核报告失败', { error });
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      return c.json({ success: false, error: errorMessage }, 500);
     }
-    
-    return c.json({
-      success: true,
-      data: {
-        reports,
-        exportTime: new Date().toISOString(),
-        totalReports: reports.length,
-      },
-    });
-  } catch (error) {
-    logger.error('批量导出审核报告失败', { error });
-    const errorMessage = error instanceof Error ? error.message : '未知错误';
-    return c.json({ success: false, error: errorMessage }, 500);
-  }
-});
+  },
+);
 
 /**
  * 获取审核仪表板数据
  * @route GET /api/audit-workflow/dashboard
  * @access 私有
  */
-app.get('/dashboard', async (c) => {
+app.get('/dashboard', async c => {
   try {
     const stats = auditWorkflowService.getAuditStats();
     const pendingTasks = auditWorkflowService.getPendingTasks().slice(0, 10);
     const rules = auditWorkflowService.getRules();
-    
+
     return c.json({
       success: true,
       data: {

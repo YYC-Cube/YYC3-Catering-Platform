@@ -39,7 +39,7 @@ export class DishRepository {
         complexity: 3,
         complexityScore: 7.5,
         requiredEquipment: ['炒锅', '刀具'],
-        restaurantId: 'restaurant-1'
+        restaurantId: 'restaurant-1',
       },
       {
         id: '2',
@@ -49,7 +49,7 @@ export class DishRepository {
         complexity: 2,
         complexityScore: 6.0,
         requiredEquipment: ['炒锅', '刀具'],
-        restaurantId: 'restaurant-1'
+        restaurantId: 'restaurant-1',
       },
       {
         id: '3',
@@ -59,8 +59,8 @@ export class DishRepository {
         complexity: 4,
         complexityScore: 8.0,
         requiredEquipment: ['炒锅', '刀具', '油炸锅'],
-        restaurantId: 'restaurant-1'
-      }
+        restaurantId: 'restaurant-1',
+      },
     ];
   }
 }

@@ -26,7 +26,7 @@ export const rateLimiterMiddleware = rateLimit({
   // 允许的请求头（用于代理环境）
   keyGenerator: ((req: Request) => {
     // 如果使用代理，从X-Forwarded-For头获取真实IP
-    const clientIp = req.headers['x-forwarded-for'] as string || req.ip;
+    const clientIp = (req.headers['x-forwarded-for'] as string) || req.ip;
     return clientIp || 'unknown';
   }) as ValueDeterminingMiddleware<string>,
   // 自定义响应
@@ -35,7 +35,7 @@ export const rateLimiterMiddleware = rateLimit({
     res.status(429).json({
       success: false,
       error: '请求过于频繁，请稍后再试',
-      code: 'TOO_MANY_REQUESTS'
+      code: 'TOO_MANY_REQUESTS',
     });
   },
   // 跳过特定路径（如健康检查）
@@ -45,5 +45,5 @@ export const rateLimiterMiddleware = rateLimit({
   // 包含X-RateLimit-*响应头
   standardHeaders: true,
   // 禁用Legacy响应头
-  legacyHeaders: false
+  legacyHeaders: false,
 });

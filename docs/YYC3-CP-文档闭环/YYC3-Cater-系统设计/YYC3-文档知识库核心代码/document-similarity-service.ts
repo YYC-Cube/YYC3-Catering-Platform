@@ -109,7 +109,7 @@ class DocumentSimilarityService {
   async calculateSimilarity(
     documentId1: string,
     documentId2: string,
-    method: SimilarityMethod = SimilarityMethod.COSINE
+    method: SimilarityMethod = SimilarityMethod.COSINE,
   ): Promise<SimilarityResult> {
     const startTime = Date.now();
 
@@ -153,8 +153,8 @@ class DocumentSimilarityService {
       // 提取匹配和不匹配的关键词
       const keywords1 = this.extractKeywords(doc1.content);
       const keywords2 = this.extractKeywords(doc2.content);
-      const matchedKeywords = keywords1.filter((k) => keywords2.includes(k));
-      const unmatchedKeywords = keywords1.filter((k) => !keywords2.includes(k));
+      const matchedKeywords = keywords1.filter(k => keywords2.includes(k));
+      const unmatchedKeywords = keywords1.filter(k => !keywords2.includes(k));
 
       // 计算计算时间
       const computationTime = Date.now() - startTime;
@@ -189,7 +189,7 @@ class DocumentSimilarityService {
   async calculateBatchSimilarity(
     targetDocumentId: string,
     documentIds: string[],
-    method: SimilarityMethod = SimilarityMethod.COSINE
+    method: SimilarityMethod = SimilarityMethod.COSINE,
   ): Promise<BatchSimilarityResult> {
     const startTime = Date.now();
 
@@ -264,7 +264,7 @@ class DocumentSimilarityService {
     const set1 = new Set(this.tokenize(text1));
     const set2 = new Set(this.tokenize(text2));
 
-    const intersection = new Set([...set1].filter((x) => set2.has(x)));
+    const intersection = new Set([...set1].filter(x => set2.has(x)));
     const union = new Set([...set1, ...set2]);
 
     if (union.size === 0) {
@@ -314,11 +314,7 @@ class DocumentSimilarityService {
         if (text1[i - 1] === text2[j - 1]) {
           dp[i][j] = dp[i - 1][j - 1];
         } else {
-          dp[i][j] = Math.min(
-            dp[i - 1][j] + 1,
-            dp[i][j - 1] + 1,
-            dp[i - 1][j - 1] + 1
-          );
+          dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + 1);
         }
       }
     }
@@ -349,7 +345,7 @@ class DocumentSimilarityService {
     const distance = Math.sqrt(sum);
     const maxDistance = Math.sqrt(
       Object.values(vec1).reduce((sum, val) => sum + val * val, 0) +
-      Object.values(vec2).reduce((sum, val) => sum + val * val, 0)
+        Object.values(vec2).reduce((sum, val) => sum + val * val, 0),
     );
 
     if (maxDistance === 0) {
@@ -404,13 +400,13 @@ class DocumentSimilarityService {
     // 由于这是一个示例，我们使用模拟实现
 
     // 模拟词向量计算延迟
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 300));
 
     // 模拟相似度计算
     const words1 = this.tokenize(text1);
     const words2 = this.tokenize(text2);
 
-    const intersection = words1.filter((w) => words2.includes(w));
+    const intersection = words1.filter(w => words2.includes(w));
     const union = new Set([...words1, ...words2]);
 
     if (union.size === 0) {
@@ -426,10 +422,7 @@ class DocumentSimilarityService {
    * @param vec2 向量2
    * @returns 相似度分数（0-1）
    */
-  private calculateCosineSimilarityFromVectors(
-    vec1: Record<string, number>,
-    vec2: Record<string, number>
-  ): number {
+  private calculateCosineSimilarityFromVectors(vec1: Record<string, number>, vec2: Record<string, number>): number {
     let dotProduct = 0;
     for (const word in vec1) {
       if (word in vec2) {
@@ -475,7 +468,7 @@ class DocumentSimilarityService {
     return text
       .toLowerCase()
       .split(/[\s,，。！？、\n]+/)
-      .filter((word) => word.length > 1);
+      .filter(word => word.length > 1);
   }
 
   /**
@@ -495,7 +488,7 @@ class DocumentSimilarityService {
     return Object.entries(frequency)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 20)
-      .map((entry) => entry[0]);
+      .map(entry => entry[0]);
   }
 
   /**
@@ -525,7 +518,7 @@ class DocumentSimilarityService {
    */
   async getSimilarityStats(
     documentIds: string[],
-    method: SimilarityMethod = SimilarityMethod.COSINE
+    method: SimilarityMethod = SimilarityMethod.COSINE,
   ): Promise<SimilarityStats> {
     const similarities: SimilarityResult[] = [];
 
@@ -543,28 +536,22 @@ class DocumentSimilarityService {
 
     // 计算统计信息
     const avgSimilarity =
-      similarities.length > 0
-        ? similarities.reduce((sum, s) => sum + s.similarityScore, 0) / similarities.length
-        : 0;
+      similarities.length > 0 ? similarities.reduce((sum, s) => sum + s.similarityScore, 0) / similarities.length : 0;
 
     // 相似度分布
     const similarityDistribution = {
-      very_low: similarities.filter((s) => s.similarityLevel === 'very_low').length,
-      low: similarities.filter((s) => s.similarityLevel === 'low').length,
-      medium: similarities.filter((s) => s.similarityLevel === 'medium').length,
-      high: similarities.filter((s) => s.similarityLevel === 'high').length,
-      very_high: similarities.filter((s) => s.similarityLevel === 'very_high').length,
+      very_low: similarities.filter(s => s.similarityLevel === 'very_low').length,
+      low: similarities.filter(s => s.similarityLevel === 'low').length,
+      medium: similarities.filter(s => s.similarityLevel === 'medium').length,
+      high: similarities.filter(s => s.similarityLevel === 'high').length,
+      very_high: similarities.filter(s => s.similarityLevel === 'very_high').length,
     };
 
     // 最相似的文档对
-    const mostSimilarPairs = [...similarities]
-      .sort((a, b) => b.similarityScore - a.similarityScore)
-      .slice(0, 5);
+    const mostSimilarPairs = [...similarities].sort((a, b) => b.similarityScore - a.similarityScore).slice(0, 5);
 
     // 最不相似的文档对
-    const leastSimilarPairs = [...similarities]
-      .sort((a, b) => a.similarityScore - b.similarityScore)
-      .slice(0, 5);
+    const leastSimilarPairs = [...similarities].sort((a, b) => a.similarityScore - b.similarityScore).slice(0, 5);
 
     return {
       totalDocuments: documentIds.length,
@@ -588,19 +575,17 @@ class DocumentSimilarityService {
     documentId: string,
     threshold: number = 0.5,
     limit: number = 10,
-    method: SimilarityMethod = SimilarityMethod.COSINE
+    method: SimilarityMethod = SimilarityMethod.COSINE,
   ): Promise<SimilarityResult[]> {
     // 获取所有文档
     const allDocuments = await documentRepository.findAll();
-    const documentIds = allDocuments.map((doc) => doc.id).filter((id) => id !== documentId);
+    const documentIds = allDocuments.map(doc => doc.id).filter(id => id !== documentId);
 
     // 批量计算相似度
     const batchResult = await this.calculateBatchSimilarity(documentId, documentIds, method);
 
     // 过滤和限制结果
-    return batchResult.similarities
-      .filter((s) => s.similarityScore >= threshold)
-      .slice(0, limit);
+    return batchResult.similarities.filter(s => s.similarityScore >= threshold).slice(0, limit);
   }
 }
 

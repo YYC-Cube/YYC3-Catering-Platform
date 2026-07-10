@@ -130,11 +130,9 @@ export class ContextManager {
       if (tables.length > 0) {
         data.tables = Array.from(tables)
           .slice(0, 2)
-          .map((table) => ({
+          .map(table => ({
             rows: table.querySelectorAll('tr').length,
-            headers: Array.from(table.querySelectorAll('th')).map(
-              (th) => th.textContent?.trim()
-            ),
+            headers: Array.from(table.querySelectorAll('th')).map(th => th.textContent?.trim()),
           }));
       }
 
@@ -143,7 +141,7 @@ export class ContextManager {
       if (statCards.length > 0) {
         data.statistics = Array.from(statCards)
           .slice(0, 4)
-          .map((card) => ({
+          .map(card => ({
             text: card.textContent?.trim().slice(0, 100),
           }));
       }
@@ -151,7 +149,7 @@ export class ContextManager {
       // 提取表单
       const forms = document.querySelectorAll('form');
       if (forms.length > 0) {
-        data.forms = Array.from(forms).map((form) => ({
+        data.forms = Array.from(forms).map(form => ({
           action: form.getAttribute('action'),
           fields: form.querySelectorAll('input, select, textarea').length,
         }));

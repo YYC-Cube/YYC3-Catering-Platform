@@ -20,5 +20,5 @@ export enum AssignmentStatus {
   // 已完成
   COMPLETED = 'completed',
   // 已取消
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }

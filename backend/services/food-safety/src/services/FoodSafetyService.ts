@@ -2,152 +2,147 @@
  * YYC³餐饮行业智能化平台 - 食品安全溯源服务
  */
 
-import { Database } from '@/config/database'
-import { Logger } from '@/utils/Logger'
-import {
-  CreateTraceRecordDto,
-  UpdateTraceRecordDto,
-  SafetyCheckDto,
-  RecallProductDto
-} from '../dto/FoodSafetyDto'
+import { Database } from '@/config/database';
+import { Logger } from '@/utils/Logger';
+import { CreateTraceRecordDto, UpdateTraceRecordDto, SafetyCheckDto, RecallProductDto } from '../dto/FoodSafetyDto';
 
 interface TraceRecord {
-  id: string
-  tenantId: string
-  productId: string
-  productName: string
-  batchNumber: string
-  supplierId?: string
-  supplierName?: string
-  productionDate: Date
-  expiryDate: Date
+  id: string;
+  tenantId: string;
+  productId: string;
+  productName: string;
+  batchNumber: string;
+  supplierId?: string;
+  supplierName?: string;
+  productionDate: Date;
+  expiryDate: Date;
   source: {
-    type: 'farm' | 'factory' | 'market' | 'warehouse'
-    name: string
-    address: string
+    type: 'farm' | 'factory' | 'market' | 'warehouse';
+    name: string;
+    address: string;
     coordinates?: {
-      latitude: number
-      longitude: number
-    }
-  }
+      latitude: number;
+      longitude: number;
+    };
+  };
   transportation: Array<{
-    vehicleNumber: string
-    driverName: string
-    driverPhone: string
-    departureTime: Date
-    arrivalTime: Date
+    vehicleNumber: string;
+    driverName: string;
+    driverPhone: string;
+    departureTime: Date;
+    arrivalTime: Date;
     temperatureRange: {
-      min: number
-      max: number
-    }
+      min: number;
+      max: number;
+    };
     humidityRange: {
-      min: number
-      max: number
-    }
-  }>
+      min: number;
+      max: number;
+    };
+  }>;
   storage: Array<{
-    location: string
-    temperature: number
-    humidity: number
-    entryTime: Date
-    exitTime?: Date
-  }>
+    location: string;
+    temperature: number;
+    humidity: number;
+    entryTime: Date;
+    exitTime?: Date;
+  }>;
   qualityChecks: Array<{
-    type: 'appearance' | 'smell' | 'taste' | 'laboratory'
-    result: 'pass' | 'fail' | 'conditional'
-    checkedBy: string
-    checkedAt: Date
-    notes?: string
-  }>
+    type: 'appearance' | 'smell' | 'taste' | 'laboratory';
+    result: 'pass' | 'fail' | 'conditional';
+    checkedBy: string;
+    checkedAt: Date;
+    notes?: string;
+  }>;
   certificates: Array<{
-    type: 'quality' | 'safety' | 'organic' | 'halal' | 'kosher'
-    certificateNumber: string
-    issuedBy: string
-    issuedAt: Date
-    expiryAt: Date
-    documentUrl?: string
-  }>
-  status: 'in_transit' | 'in_storage' | 'in_use' | 'expired' | 'recalled'
-  metadata: Record<string, any>
-  createdAt: Date
-  updatedAt: Date
-  createdBy: string
-  updatedBy?: string
+    type: 'quality' | 'safety' | 'organic' | 'halal' | 'kosher';
+    certificateNumber: string;
+    issuedBy: string;
+    issuedAt: Date;
+    expiryAt: Date;
+    documentUrl?: string;
+  }>;
+  status: 'in_transit' | 'in_storage' | 'in_use' | 'expired' | 'recalled';
+  metadata: Record<string, any>;
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy: string;
+  updatedBy?: string;
 }
 
 interface SafetyCheck {
-  id: string
-  tenantId: string
-  productId: string
-  productName: string
-  batchNumber?: string
-  checkType: 'microbial' | 'chemical' | 'physical' | 'sensory' | 'allergen'
-  standard: string
+  id: string;
+  tenantId: string;
+  productId: string;
+  productName: string;
+  batchNumber?: string;
+  checkType: 'microbial' | 'chemical' | 'physical' | 'sensory' | 'allergen';
+  standard: string;
   result: {
-    passed: boolean
-    score: number
+    passed: boolean;
+    score: number;
     details: Array<{
-      parameter: string
-      value: number
-      unit: string
-      standard: number
-      result: 'pass' | 'fail'
-    }>
-  }
-  checkedBy: string
-  checkedByName: string
-  checkedAt: Date
-  nextCheckDate?: Date
-  recommendations?: string[]
-  correctiveActions?: string[]
-  status: 'pending' | 'in_progress' | 'completed' | 'failed'
-  metadata: Record<string, any>
-  createdAt: Date
-  updatedAt: Date
+      parameter: string;
+      value: number;
+      unit: string;
+      standard: number;
+      result: 'pass' | 'fail';
+    }>;
+  };
+  checkedBy: string;
+  checkedByName: string;
+  checkedAt: Date;
+  nextCheckDate?: Date;
+  recommendations?: string[];
+  correctiveActions?: string[];
+  status: 'pending' | 'in_progress' | 'completed' | 'failed';
+  metadata: Record<string, any>;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface ProductRecall {
-  id: string
-  tenantId: string
-  productId: string
-  productName: string
-  batchNumber: string
-  reason: string
-  severity: 'low' | 'medium' | 'high' | 'critical'
-  affectedQuantity: number
+  id: string;
+  tenantId: string;
+  productId: string;
+  productName: string;
+  batchNumber: string;
+  reason: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  affectedQuantity: number;
   distributedTo: Array<{
-    storeId: string
-    storeName: string
-    quantity: number
-    contactPerson: string
-    contactPhone: string
-  }>
-  initiatedBy: string
-  initiatedByName: string
-  initiatedAt: Date
-  expectedCompletion: Date
-  actualCompletion?: Date
-  status: 'initiated' | 'in_progress' | 'completed' | 'cancelled'
+    storeId: string;
+    storeName: string;
+    quantity: number;
+    contactPerson: string;
+    contactPhone: string;
+  }>;
+  initiatedBy: string;
+  initiatedByName: string;
+  initiatedAt: Date;
+  expectedCompletion: Date;
+  actualCompletion?: Date;
+  status: 'initiated' | 'in_progress' | 'completed' | 'cancelled';
   publicNotification: {
-    sent: boolean
-    sentAt?: Date
-    channels: string[]
-    message?: string
-  }
-  correctiveActions: string[]
-  preventiveMeasures: string[]
-  metadata: Record<string, any>
-  createdAt: Date
-  updatedAt: Date
+    sent: boolean;
+    sentAt?: Date;
+    channels: string[];
+    message?: string;
+  };
+  correctiveActions: string[];
+  preventiveMeasures: string[];
+  metadata: Record<string, any>;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class FoodSafetyService {
-  private db: Database
-  private logger: Logger
+  private db: Database;
+  private logger: Logger;
 
   constructor() {
-    this.db = Database.getInstance()
-    this.logger = new Logger('FoodSafetyService')
+    this.db = Database.getInstance();
+    this.logger = new Logger('FoodSafetyService');
   }
 
   /**
@@ -156,10 +151,10 @@ export class FoodSafetyService {
   async createTraceRecord(
     tenantId: string,
     createTraceDto: CreateTraceRecordDto,
-    createdBy: string
+    createdBy: string,
   ): Promise<TraceRecord> {
     try {
-      const traceId = this.generateTraceId()
+      const traceId = this.generateTraceId();
 
       const query = `
         INSERT INTO food_trace_records (
@@ -185,7 +180,7 @@ export class FoodSafetyService {
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19
         ) RETURNING *
-      `
+      `;
 
       const values = [
         traceId,
@@ -206,23 +201,23 @@ export class FoodSafetyService {
         JSON.stringify(createTraceDto.metadata || {}),
         new Date(),
         new Date(),
-        createdBy
-      ]
+        createdBy,
+      ];
 
-      const result = await this.db.query(query, values)
-      const traceRecord = this.mapRowToTraceRecord(result.rows[0])
+      const result = await this.db.query(query, values);
+      const traceRecord = this.mapRowToTraceRecord(result.rows[0]);
 
       this.logger.info('Created trace record', {
         tenantId,
         traceId,
         productId: createTraceDto.productId,
-        batchNumber: createTraceDto.batchNumber
-      })
+        batchNumber: createTraceDto.batchNumber,
+      });
 
-      return traceRecord
+      return traceRecord;
     } catch (error) {
-      this.logger.error('Failed to create trace record', { tenantId, error })
-      throw error
+      this.logger.error('Failed to create trace record', { tenantId, error });
+      throw error;
     }
   }
 
@@ -232,59 +227,52 @@ export class FoodSafetyService {
   async getTraceRecords(
     tenantId: string,
     filters: {
-      productId?: string
-      batchNumber?: string
-      startDate?: string
-      endDate?: string
-      page: number
-      pageSize: number
-    }
-  ): Promise<{ records: TraceRecord[], total: number, page: number, pageSize: number }> {
+      productId?: string;
+      batchNumber?: string;
+      startDate?: string;
+      endDate?: string;
+      page: number;
+      pageSize: number;
+    },
+  ): Promise<{ records: TraceRecord[]; total: number; page: number; pageSize: number }> {
     try {
-      const {
-        productId,
-        batchNumber,
-        startDate,
-        endDate,
-        page = 1,
-        pageSize = 20
-      } = filters
+      const { productId, batchNumber, startDate, endDate, page = 1, pageSize = 20 } = filters;
 
-      const offset = (page - 1) * pageSize
-      let whereConditions = ['tenant_id = $1']
-      let params: any[] = [tenantId]
-      let paramIndex = 2
+      const offset = (page - 1) * pageSize;
+      let whereConditions = ['tenant_id = $1'];
+      let params: any[] = [tenantId];
+      let paramIndex = 2;
 
       if (productId) {
-        whereConditions.push(`product_id = $${paramIndex++}`)
-        params.push(productId)
+        whereConditions.push(`product_id = $${paramIndex++}`);
+        params.push(productId);
       }
 
       if (batchNumber) {
-        whereConditions.push(`batch_number = $${paramIndex++}`)
-        params.push(batchNumber)
+        whereConditions.push(`batch_number = $${paramIndex++}`);
+        params.push(batchNumber);
       }
 
       if (startDate) {
-        whereConditions.push(`created_at >= $${paramIndex++}`)
-        params.push(startDate)
+        whereConditions.push(`created_at >= $${paramIndex++}`);
+        params.push(startDate);
       }
 
       if (endDate) {
-        whereConditions.push(`created_at <= $${paramIndex++}`)
-        params.push(endDate)
+        whereConditions.push(`created_at <= $${paramIndex++}`);
+        params.push(endDate);
       }
 
-      const whereClause = whereConditions.join(' AND ')
+      const whereClause = whereConditions.join(' AND ');
 
       // 获取总数
       const countQuery = `
         SELECT COUNT(*) as total
         FROM food_trace_records
         WHERE ${whereClause}
-      `
-      const countResult = await this.db.query(countQuery, params)
-      const total = parseInt(countResult.rows[0].total)
+      `;
+      const countResult = await this.db.query(countQuery, params);
+      const total = parseInt(countResult.rows[0].total);
 
       // 获取记录列表
       const recordsQuery = `
@@ -293,28 +281,28 @@ export class FoodSafetyService {
         WHERE ${whereClause}
         ORDER BY created_at DESC
         LIMIT $${paramIndex++} OFFSET $${paramIndex++}
-      `
-      params.push(pageSize, offset)
+      `;
+      params.push(pageSize, offset);
 
-      const result = await this.db.query(recordsQuery, params)
-      const records = result.rows.map(row => this.mapRowToTraceRecord(row))
+      const result = await this.db.query(recordsQuery, params);
+      const records = result.rows.map(row => this.mapRowToTraceRecord(row));
 
       this.logger.info('Retrieved trace records', {
         tenantId,
         total,
         page,
-        pageSize
-      })
+        pageSize,
+      });
 
       return {
         records,
         total,
         page,
-        pageSize
-      }
+        pageSize,
+      };
     } catch (error) {
-      this.logger.error('Failed to get trace records', { tenantId, error })
-      throw error
+      this.logger.error('Failed to get trace records', { tenantId, error });
+      throw error;
     }
   }
 
@@ -324,34 +312,34 @@ export class FoodSafetyService {
   async traceProductChain(
     tenantId: string,
     productId: string,
-    batchNumber: string
+    batchNumber: string,
   ): Promise<{
     product: {
-      id: string
-      name: string
-      batchNumber: string
-      productionDate: Date
-      expiryDate: Date
-    }
+      id: string;
+      name: string;
+      batchNumber: string;
+      productionDate: Date;
+      expiryDate: Date;
+    };
     chain: Array<{
-      step: string
-      location: string
-      timestamp: Date
-      details: Record<string, any>
-    }>
+      step: string;
+      location: string;
+      timestamp: Date;
+      details: Record<string, any>;
+    }>;
     qualityChecks: Array<{
-      type: string
-      result: string
-      checkedAt: Date
-      details: Record<string, any>
-    }>
+      type: string;
+      result: string;
+      checkedAt: Date;
+      details: Record<string, any>;
+    }>;
     certificates: Array<{
-      type: string
-      certificateNumber: string
-      issuedBy: string
-      issuedAt: Date
-      expiryAt: Date
-    }>
+      type: string;
+      certificateNumber: string;
+      issuedBy: string;
+      issuedAt: Date;
+      expiryAt: Date;
+    }>;
   }> {
     try {
       // 获取基础溯源记录
@@ -360,17 +348,17 @@ export class FoodSafetyService {
         WHERE tenant_id = $1 AND product_id = $2 AND batch_number = $3
         ORDER BY created_at DESC
         LIMIT 1
-      `
-      const result = await this.db.query(query, [tenantId, productId, batchNumber])
+      `;
+      const result = await this.db.query(query, [tenantId, productId, batchNumber]);
 
       if (result.rows.length === 0) {
-        throw new Error('未找到产品的溯源记录')
+        throw new Error('未找到产品的溯源记录');
       }
 
-      const traceRecord = this.mapRowToTraceRecord(result.rows[0])
+      const traceRecord = this.mapRowToTraceRecord(result.rows[0]);
 
       // 构建追溯链路
-      const chain = []
+      const chain = [];
 
       // 添加源头信息
       chain.push({
@@ -380,9 +368,9 @@ export class FoodSafetyService {
         details: {
           type: traceRecord.source.type,
           address: traceRecord.source.address,
-          coordinates: traceRecord.source.coordinates
-        }
-      })
+          coordinates: traceRecord.source.coordinates,
+        },
+      });
 
       // 添加运输信息
       traceRecord.transportation.forEach(trans => {
@@ -395,10 +383,10 @@ export class FoodSafetyService {
             driverPhone: trans.driverPhone,
             arrivalTime: trans.arrivalTime,
             temperatureRange: trans.temperatureRange,
-            humidityRange: trans.humidityRange
-          }
-        })
-      })
+            humidityRange: trans.humidityRange,
+          },
+        });
+      });
 
       // 添加存储信息
       traceRecord.storage.forEach(storage => {
@@ -409,17 +397,17 @@ export class FoodSafetyService {
           details: {
             temperature: storage.temperature,
             humidity: storage.humidity,
-            exitTime: storage.exitTime
-          }
-        })
-      })
+            exitTime: storage.exitTime,
+          },
+        });
+      });
 
       this.logger.info('Traced product chain', {
         tenantId,
         productId,
         batchNumber,
-        chainSteps: chain.length
-      })
+        chainSteps: chain.length,
+      });
 
       return {
         product: {
@@ -427,15 +415,15 @@ export class FoodSafetyService {
           name: traceRecord.productName,
           batchNumber: traceRecord.batchNumber,
           productionDate: traceRecord.productionDate,
-          expiryDate: traceRecord.expiryDate
+          expiryDate: traceRecord.expiryDate,
         },
         chain,
         qualityChecks: traceRecord.qualityChecks,
-        certificates: traceRecord.certificates
-      }
+        certificates: traceRecord.certificates,
+      };
     } catch (error) {
-      this.logger.error('Failed to trace product chain', { tenantId, productId, batchNumber, error })
-      throw error
+      this.logger.error('Failed to trace product chain', { tenantId, productId, batchNumber, error });
+      throw error;
     }
   }
 
@@ -445,10 +433,10 @@ export class FoodSafetyService {
   async performSafetyCheck(
     tenantId: string,
     safetyCheckDto: SafetyCheckDto,
-    inspectedBy: string
+    inspectedBy: string,
   ): Promise<SafetyCheck> {
     try {
-      const checkId = this.generateCheckId()
+      const checkId = this.generateCheckId();
 
       const query = `
         INSERT INTO food_safety_checks (
@@ -473,7 +461,7 @@ export class FoodSafetyService {
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18
         ) RETURNING *
-      `
+      `;
 
       const values = [
         checkId,
@@ -493,19 +481,19 @@ export class FoodSafetyService {
         safetyCheckDto.status || 'completed',
         JSON.stringify(safetyCheckDto.metadata || {}),
         new Date(),
-        new Date()
-      ]
+        new Date(),
+      ];
 
-      const result = await this.db.query(query, values)
-      const safetyCheck = this.mapRowToSafetyCheck(result.rows[0])
+      const result = await this.db.query(query, values);
+      const safetyCheck = this.mapRowToSafetyCheck(result.rows[0]);
 
       this.logger.info('Performed safety check', {
         tenantId,
         checkId,
         productId: safetyCheckDto.productId,
         checkType: safetyCheckDto.checkType,
-        result: safetyCheckDto.result.passed
-      })
+        result: safetyCheckDto.result.passed,
+      });
 
       // 如果检查不通过，创建预警
       if (!safetyCheckDto.result.passed) {
@@ -514,14 +502,14 @@ export class FoodSafetyService {
           safetyCheckDto.productId,
           safetyCheckDto.productName,
           'check_failure',
-          `安全检查不通过: ${safetyCheckDto.checkType}`
-        )
+          `安全检查不通过: ${safetyCheckDto.checkType}`,
+        );
       }
 
-      return safetyCheck
+      return safetyCheck;
     } catch (error) {
-      this.logger.error('Failed to perform safety check', { tenantId, error })
-      throw error
+      this.logger.error('Failed to perform safety check', { tenantId, error });
+      throw error;
     }
   }
 
@@ -531,66 +519,58 @@ export class FoodSafetyService {
   async getSafetyChecks(
     tenantId: string,
     filters: {
-      productId?: string
-      checkType?: string
-      status?: string
-      startDate?: string
-      endDate?: string
-      page: number
-      pageSize: number
-    }
-  ): Promise<{ checks: SafetyCheck[], total: number, page: number, pageSize: number }> {
+      productId?: string;
+      checkType?: string;
+      status?: string;
+      startDate?: string;
+      endDate?: string;
+      page: number;
+      pageSize: number;
+    },
+  ): Promise<{ checks: SafetyCheck[]; total: number; page: number; pageSize: number }> {
     try {
-      const {
-        productId,
-        checkType,
-        status,
-        startDate,
-        endDate,
-        page = 1,
-        pageSize = 20
-      } = filters
+      const { productId, checkType, status, startDate, endDate, page = 1, pageSize = 20 } = filters;
 
-      const offset = (page - 1) * pageSize
-      let whereConditions = ['tenant_id = $1']
-      let params: any[] = [tenantId]
-      let paramIndex = 2
+      const offset = (page - 1) * pageSize;
+      let whereConditions = ['tenant_id = $1'];
+      let params: any[] = [tenantId];
+      let paramIndex = 2;
 
       if (productId) {
-        whereConditions.push(`product_id = $${paramIndex++}`)
-        params.push(productId)
+        whereConditions.push(`product_id = $${paramIndex++}`);
+        params.push(productId);
       }
 
       if (checkType) {
-        whereConditions.push(`check_type = $${paramIndex++}`)
-        params.push(checkType)
+        whereConditions.push(`check_type = $${paramIndex++}`);
+        params.push(checkType);
       }
 
       if (status) {
-        whereConditions.push(`status = $${paramIndex++}`)
-        params.push(status)
+        whereConditions.push(`status = $${paramIndex++}`);
+        params.push(status);
       }
 
       if (startDate) {
-        whereConditions.push(`checked_at >= $${paramIndex++}`)
-        params.push(startDate)
+        whereConditions.push(`checked_at >= $${paramIndex++}`);
+        params.push(startDate);
       }
 
       if (endDate) {
-        whereConditions.push(`checked_at <= $${paramIndex++}`)
-        params.push(endDate)
+        whereConditions.push(`checked_at <= $${paramIndex++}`);
+        params.push(endDate);
       }
 
-      const whereClause = whereConditions.join(' AND ')
+      const whereClause = whereConditions.join(' AND ');
 
       // 获取总数
       const countQuery = `
         SELECT COUNT(*) as total
         FROM food_safety_checks
         WHERE ${whereClause}
-      `
-      const countResult = await this.db.query(countQuery, params)
-      const total = parseInt(countResult.rows[0].total)
+      `;
+      const countResult = await this.db.query(countQuery, params);
+      const total = parseInt(countResult.rows[0].total);
 
       // 获取检查记录
       const checksQuery = `
@@ -599,41 +579,37 @@ export class FoodSafetyService {
         WHERE ${whereClause}
         ORDER BY checked_at DESC
         LIMIT $${paramIndex++} OFFSET $${paramIndex++}
-      `
-      params.push(pageSize, offset)
+      `;
+      params.push(pageSize, offset);
 
-      const result = await this.db.query(checksQuery, params)
-      const checks = result.rows.map(row => this.mapRowToSafetyCheck(row))
+      const result = await this.db.query(checksQuery, params);
+      const checks = result.rows.map(row => this.mapRowToSafetyCheck(row));
 
       this.logger.info('Retrieved safety checks', {
         tenantId,
         total,
         page,
-        pageSize
-      })
+        pageSize,
+      });
 
       return {
         checks,
         total,
         page,
-        pageSize
-      }
+        pageSize,
+      };
     } catch (error) {
-      this.logger.error('Failed to get safety checks', { tenantId, error })
-      throw error
+      this.logger.error('Failed to get safety checks', { tenantId, error });
+      throw error;
     }
   }
 
   /**
    * 产品召回
    */
-  async recallProduct(
-    tenantId: string,
-    recallDto: RecallProductDto,
-    initiatedBy: string
-  ): Promise<ProductRecall> {
+  async recallProduct(tenantId: string, recallDto: RecallProductDto, initiatedBy: string): Promise<ProductRecall> {
     try {
-      const recallId = this.generateRecallId()
+      const recallId = this.generateRecallId();
 
       const query = `
         INSERT INTO food_product_recalls (
@@ -660,7 +636,7 @@ export class FoodSafetyService {
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20
         ) RETURNING *
-      `
+      `;
 
       const values = [
         recallId,
@@ -677,27 +653,29 @@ export class FoodSafetyService {
         new Date(),
         recallDto.expectedCompletion,
         'initiated',
-        JSON.stringify(recallDto.publicNotification || {
-          sent: false,
-          channels: []
-        }),
+        JSON.stringify(
+          recallDto.publicNotification || {
+            sent: false,
+            channels: [],
+          },
+        ),
         JSON.stringify(recallDto.correctiveActions || []),
         JSON.stringify(recallDto.preventiveMeasures || []),
         JSON.stringify(recallDto.metadata || {}),
         new Date(),
-        new Date()
-      ]
+        new Date(),
+      ];
 
-      const result = await this.db.query(query, values)
-      const recall = this.mapRowToRecall(result.rows[0])
+      const result = await this.db.query(query, values);
+      const recall = this.mapRowToRecall(result.rows[0]);
 
       this.logger.info('Initiated product recall', {
         tenantId,
         recallId,
         productId: recallDto.productId,
         batchNumber: recallDto.batchNumber,
-        severity: recallDto.severity
-      })
+        severity: recallDto.severity,
+      });
 
       // 创建高级别预警
       await this.createSafetyAlert(
@@ -706,13 +684,13 @@ export class FoodSafetyService {
         recallDto.productName,
         'product_recall',
         `产品召回: ${recallDto.reason}`,
-        recallDto.severity === 'critical' ? 'critical' : 'high'
-      )
+        recallDto.severity === 'critical' ? 'critical' : 'high',
+      );
 
-      return recall
+      return recall;
     } catch (error) {
-      this.logger.error('Failed to recall product', { tenantId, error })
-      throw error
+      this.logger.error('Failed to recall product', { tenantId, error });
+      throw error;
     }
   }
 
@@ -722,39 +700,39 @@ export class FoodSafetyService {
   async generateTraceQRCode(
     tenantId: string,
     productId: string,
-    batchNumber: string
+    batchNumber: string,
   ): Promise<{
-    qrCodeData: string
-    qrCodeImage: string
-    traceUrl: string
+    qrCodeData: string;
+    qrCodeImage: string;
+    traceUrl: string;
   }> {
     try {
-      const traceUrl = `${process.env.BASE_URL}/trace/${productId}/${batchNumber}`
+      const traceUrl = `${process.env.BASE_URL}/trace/${productId}/${batchNumber}`;
       const qrCodeData = JSON.stringify({
         productId,
         batchNumber,
         tenantId,
         traceUrl,
-        timestamp: new Date().toISOString()
-      })
+        timestamp: new Date().toISOString(),
+      });
 
       // 这里应该使用实际的二维码生成库，比如 qrcode
-      const qrCodeImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==`
+      const qrCodeImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==`;
 
       this.logger.info('Generated trace QR code', {
         tenantId,
         productId,
-        batchNumber
-      })
+        batchNumber,
+      });
 
       return {
         qrCodeData,
         qrCodeImage,
-        traceUrl
-      }
+        traceUrl,
+      };
     } catch (error) {
-      this.logger.error('Failed to generate trace QR code', { tenantId, productId, batchNumber, error })
-      throw error
+      this.logger.error('Failed to generate trace QR code', { tenantId, productId, batchNumber, error });
+      throw error;
     }
   }
 
@@ -762,15 +740,15 @@ export class FoodSafetyService {
    * 私有方法
    */
   private generateTraceId(): string {
-    return `trace_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    return `trace_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
   private generateCheckId(): string {
-    return `check_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    return `check_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
   private generateRecallId(): string {
-    return `recall_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    return `recall_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
   private mapRowToTraceRecord(row: any): TraceRecord {
@@ -794,8 +772,8 @@ export class FoodSafetyService {
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
       createdBy: row.created_by,
-      updatedBy: row.updated_by
-    }
+      updatedBy: row.updated_by,
+    };
   }
 
   private mapRowToSafetyCheck(row: any): SafetyCheck {
@@ -817,8 +795,8 @@ export class FoodSafetyService {
       status: row.status,
       metadata: row.metadata || {},
       createdAt: new Date(row.created_at),
-      updatedAt: new Date(row.updated_at)
-    }
+      updatedAt: new Date(row.updated_at),
+    };
   }
 
   private mapRowToRecall(row: any): ProductRecall {
@@ -843,8 +821,8 @@ export class FoodSafetyService {
       preventiveMeasures: row.preventive_measures || [],
       metadata: row.metadata || {},
       createdAt: new Date(row.created_at),
-      updatedAt: new Date(row.updated_at)
-    }
+      updatedAt: new Date(row.updated_at),
+    };
   }
 
   private async createSafetyAlert(
@@ -853,10 +831,10 @@ export class FoodSafetyService {
     productName: string,
     alertType: string,
     message: string,
-    level: 'low' | 'medium' | 'high' | 'critical' = 'medium'
+    level: 'low' | 'medium' | 'high' | 'critical' = 'medium',
   ): Promise<void> {
     try {
-      const alertId = this.generateAlertId()
+      const alertId = this.generateAlertId();
 
       const query = `
         INSERT INTO food_safety_alerts (
@@ -871,7 +849,7 @@ export class FoodSafetyService {
           created_at,
           updated_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-      `
+      `;
 
       await this.db.query(query, [
         alertId,
@@ -883,22 +861,22 @@ export class FoodSafetyService {
         message,
         'active',
         new Date(),
-        new Date()
-      ])
+        new Date(),
+      ]);
 
       this.logger.info('Created safety alert', {
         tenantId,
         alertId,
         productId,
         alertType,
-        level
-      })
+        level,
+      });
     } catch (error) {
-      this.logger.error('Failed to create safety alert', { tenantId, error })
+      this.logger.error('Failed to create safety alert', { tenantId, error });
     }
   }
 
   private generateAlertId(): string {
-    return `alert_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    return `alert_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 }

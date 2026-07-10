@@ -42,27 +42,27 @@ const orderProcessingTimeHistogram = new Histogram({
 export const prometheusMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const startTime = process.hrtime();
   const route = req.route?.path || req.originalUrl;
-  
+
   activeRequestsGauge.inc();
-  
+
   res.on('finish', () => {
     const duration = process.hrtime(startTime);
     const durationSeconds = duration[0] + duration[1] / 1e9;
-    
+
     httpRequestCounter.inc({
       method: req.method,
       route,
       status_code: res.statusCode.toString(),
     });
-    
+
     httpRequestDurationHistogram.observe(
       { method: req.method, route, status_code: res.statusCode.toString() },
-      durationSeconds
+      durationSeconds,
     );
-    
+
     activeRequestsGauge.dec();
   });
-  
+
   next();
 };
 
@@ -77,18 +77,11 @@ export const metricsHandler = async (req: Request, res: Response) => {
 /**
  * @description 记录订单处理时间的工具函数
  */
-export const recordOrderProcessingTime = (
-  orderType: string,
-  priority: number,
-  startTime: [number, number]
-) => {
+export const recordOrderProcessingTime = (orderType: string, priority: number, startTime: [number, number]) => {
   const duration = process.hrtime(startTime);
   const durationSeconds = duration[0] + duration[1] / 1e9;
-  
-  orderProcessingTimeHistogram.observe(
-    { order_type: orderType, priority: priority.toString() },
-    durationSeconds
-  );
+
+  orderProcessingTimeHistogram.observe({ order_type: orderType, priority: priority.toString() }, durationSeconds);
 };
 
 // 导出指标供其他模块使用

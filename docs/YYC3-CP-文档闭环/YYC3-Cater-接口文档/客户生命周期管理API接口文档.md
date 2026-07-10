@@ -2,13 +2,13 @@
 
 ## 文档信息
 
-| 项目 | 内容 |
-|------|------|
+| 项目     | 内容                                              |
+| -------- | ------------------------------------------------- |
 | 文档名称 | YYC³餐饮行业智能化平台客户生命周期管理API接口文档 |
-| 文档版本 | v1.0.0 |
-| 创建日期 | 2026-01-20 |
-| 最后更新 | 2026-01-20 |
-| 文档状态 | 正式版 |
+| 文档版本 | v1.0.0                                            |
+| 创建日期 | 2026-01-20                                        |
+| 最后更新 | 2026-01-20                                        |
+| 文档状态 | 正式版                                            |
 
 ---
 
@@ -119,10 +119,10 @@ DELETE /api/v1/customers/{id}
 
 ### 2.3 分页参数
 
-| 参数名 | 类型 | 必填 | 说明 |
-|--------|------|------|------|
-| page | number | 否 | 页码，默认1 |
-| size | number | 否 | 每页数量，默认20 |
+| 参数名 | 类型   | 必填 | 说明             |
+| ------ | ------ | ---- | ---------------- |
+| page   | number | 否   | 页码，默认1      |
+| size   | number | 否   | 每页数量，默认20 |
 
 ### 2.4 分页响应
 
@@ -159,9 +159,9 @@ GET /api/v1/customers/{customerId}/lifecycle
 
 #### 3.1.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| customerId | string | path | 是 | 客户ID |
+| 参数名     | 类型   | 位置 | 必填 | 说明   |
+| ---------- | ------ | ---- | ---- | ------ |
+| customerId | string | path | 是   | 客户ID |
 
 #### 3.1.4 响应示例
 
@@ -201,11 +201,11 @@ PUT /api/v1/customers/{customerId}/lifecycle/stage
 
 #### 3.2.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| customerId | string | path | 是 | 客户ID |
-| stage | string | body | 是 | 新阶段 |
-| reason | string | body | 是 | 变更原因 |
+| 参数名     | 类型   | 位置 | 必填 | 说明     |
+| ---------- | ------ | ---- | ---- | -------- |
+| customerId | string | path | 是   | 客户ID   |
+| stage      | string | body | 是   | 新阶段   |
+| reason     | string | body | 是   | 变更原因 |
 
 #### 3.2.4 请求示例
 
@@ -248,11 +248,11 @@ GET /api/v1/customers/{customerId}/lifecycle/history
 
 #### 3.3.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| customerId | string | path | 是 | 客户ID |
-| page | number | query | 否 | 页码 |
-| size | number | query | 否 | 每页数量 |
+| 参数名     | 类型   | 位置  | 必填 | 说明     |
+| ---------- | ------ | ----- | ---- | -------- |
+| customerId | string | path  | 是   | 客户ID   |
+| page       | number | query | 否   | 页码     |
+| size       | number | query | 否   | 每页数量 |
 
 #### 3.3.4 响应示例
 
@@ -304,10 +304,10 @@ GET /api/v1/lifecycle/statistics
 
 #### 3.4.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| startDate | string | query | 否 | 开始日期 |
-| endDate | string | query | 否 | 结束日期 |
+| 参数名    | 类型   | 位置  | 必填 | 说明     |
+| --------- | ------ | ----- | ---- | -------- |
+| startDate | string | query | 否   | 开始日期 |
+| endDate   | string | query | 否   | 结束日期 |
 
 #### 3.4.4 响应示例
 
@@ -373,11 +373,11 @@ GET /api/v1/lifecycle/flow-trend
 
 #### 3.5.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| startDate | string | query | 否 | 开始日期 |
-| endDate | string | query | 否 | 结束日期 |
-| granularity | string | query | 否 | 时间粒度（day/week/month），默认day |
+| 参数名      | 类型   | 位置  | 必填 | 说明                                |
+| ----------- | ------ | ----- | ---- | ----------------------------------- |
+| startDate   | string | query | 否   | 开始日期                            |
+| endDate     | string | query | 否   | 结束日期                            |
+| granularity | string | query | 否   | 时间粒度（day/week/month），默认day |
 
 #### 3.5.4 响应示例
 
@@ -424,11 +424,11 @@ GET /api/v1/lifecycle/retention-trend
 
 #### 3.6.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| startDate | string | query | 否 | 开始日期 |
-| endDate | string | query | 否 | 结束日期 |
-| period | number | query | 否 | 留存周期（天），默认30 |
+| 参数名    | 类型   | 位置  | 必填 | 说明                   |
+| --------- | ------ | ----- | ---- | ---------------------- |
+| startDate | string | query | 否   | 开始日期               |
+| endDate   | string | query | 否   | 结束日期               |
+| period    | number | query | 否   | 留存周期（天），默认30 |
 
 #### 3.6.4 响应示例
 
@@ -471,10 +471,10 @@ GET /api/v1/lifecycle/clv-distribution
 
 #### 3.7.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| startDate | string | query | 否 | 开始日期 |
-| endDate | string | query | 否 | 结束日期 |
+| 参数名    | 类型   | 位置  | 必填 | 说明     |
+| --------- | ------ | ----- | ---- | -------- |
+| startDate | string | query | 否   | 开始日期 |
+| endDate   | string | query | 否   | 结束日期 |
 
 #### 3.7.4 响应示例
 
@@ -510,8 +510,8 @@ GET /api/v1/lifecycle/clv-distribution
         "percentage": 5
       }
     ],
-    "averageCLV": 850.00,
-    "totalCLV": 850000.00
+    "averageCLV": 850.0,
+    "totalCLV": 850000.0
   }
 }
 ```
@@ -530,11 +530,11 @@ GET /api/v1/lifecycle/export
 
 #### 3.8.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| startDate | string | query | 否 | 开始日期 |
-| endDate | string | query | 否 | 结束日期 |
-| format | string | query | 否 | 导出格式（pdf/excel），默认excel |
+| 参数名    | 类型   | 位置  | 必填 | 说明                             |
+| --------- | ------ | ----- | ---- | -------------------------------- |
+| startDate | string | query | 否   | 开始日期                         |
+| endDate   | string | query | 否   | 结束日期                         |
+| format    | string | query | 否   | 导出格式（pdf/excel），默认excel |
 
 #### 3.8.4 响应
 
@@ -609,14 +609,14 @@ GET /api/v1/rfm/scores
 
 #### 4.2.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| customerId | string | query | 否 | 客户ID |
-| customerLevel | string | query | 否 | 客户等级 |
-| minScore | number | query | 否 | 最小RFM评分 |
-| maxScore | number | query | 否 | 最大RFM评分 |
-| page | number | query | 否 | 页码 |
-| size | number | query | 否 | 每页数量 |
+| 参数名        | 类型   | 位置  | 必填 | 说明        |
+| ------------- | ------ | ----- | ---- | ----------- |
+| customerId    | string | query | 否   | 客户ID      |
+| customerLevel | string | query | 否   | 客户等级    |
+| minScore      | number | query | 否   | 最小RFM评分 |
+| maxScore      | number | query | 否   | 最大RFM评分 |
+| page          | number | query | 否   | 页码        |
+| size          | number | query | 否   | 每页数量    |
 
 #### 4.2.4 响应示例
 
@@ -818,17 +818,9 @@ POST /api/v1/churn-predictions/predict
       "customerEmail": "zhangsan@example.com",
       "churnProbability": 0.75,
       "riskLevel": "high",
-      "riskFactors": [
-        "60天未消费",
-        "消费频次下降50%",
-        "满意度评分3.0分"
-      ],
+      "riskFactors": ["60天未消费", "消费频次下降50%", "满意度评分3.0分"],
       "predictedChurnDate": "2026-03-20T00:00:00Z",
-      "recommendations": [
-        "立即联系客户了解情况",
-        "提供专属优惠券",
-        "安排客户回访"
-      ],
+      "recommendations": ["立即联系客户了解情况", "提供专属优惠券", "安排客户回访"],
       "assignedTo": null,
       "status": "pending",
       "createdAt": "2026-01-20T00:00:00Z",
@@ -842,14 +834,9 @@ POST /api/v1/churn-predictions/predict
       "customerEmail": "lisi@example.com",
       "churnProbability": 0.35,
       "riskLevel": "medium",
-      "riskFactors": [
-        "30天未消费"
-      ],
+      "riskFactors": ["30天未消费"],
       "predictedChurnDate": "2026-04-20T00:00:00Z",
-      "recommendations": [
-        "发送关怀短信",
-        "提供会员优惠"
-      ],
+      "recommendations": ["发送关怀短信", "提供会员优惠"],
       "assignedTo": null,
       "status": "pending",
       "createdAt": "2026-01-20T00:00:00Z",
@@ -873,12 +860,12 @@ GET /api/v1/churn-predictions
 
 #### 5.2.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| riskLevel | string | query | 否 | 风险等级（high/medium/low） |
-| status | string | query | 否 | 状态（pending/in_progress/resolved/closed） |
-| page | number | query | 否 | 页码 |
-| size | number | query | 否 | 每页数量 |
+| 参数名    | 类型   | 位置  | 必填 | 说明                                        |
+| --------- | ------ | ----- | ---- | ------------------------------------------- |
+| riskLevel | string | query | 否   | 风险等级（high/medium/low）                 |
+| status    | string | query | 否   | 状态（pending/in_progress/resolved/closed） |
+| page      | number | query | 否   | 页码                                        |
+| size      | number | query | 否   | 每页数量                                    |
 
 #### 5.2.4 响应示例
 
@@ -895,10 +882,7 @@ GET /api/v1/churn-predictions
         "customerPhone": "13800138000",
         "churnProbability": 0.75,
         "riskLevel": "high",
-        "riskFactors": [
-          "60天未消费",
-          "消费频次下降50%"
-        ],
+        "riskFactors": ["60天未消费", "消费频次下降50%"],
         "predictedChurnDate": "2026-03-20T00:00:00Z",
         "assignedTo": "user-001",
         "status": "in_progress",
@@ -926,10 +910,10 @@ PATCH /api/v1/churn-predictions/{alertId}/assign
 
 #### 5.3.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| alertId | string | path | 是 | 预警ID |
-| assignedTo | string | body | 是 | 负责人ID |
+| 参数名     | 类型   | 位置 | 必填 | 说明     |
+| ---------- | ------ | ---- | ---- | -------- |
+| alertId    | string | path | 是   | 预警ID   |
+| assignedTo | string | body | 是   | 负责人ID |
 
 #### 5.3.4 请求示例
 
@@ -968,10 +952,10 @@ PATCH /api/v1/churn-predictions/{alertId}/resolve
 
 #### 5.4.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| alertId | string | path | 是 | 预警ID |
-| resolutionNotes | string | body | 是 | 解决说明 |
+| 参数名          | 类型   | 位置 | 必填 | 说明     |
+| --------------- | ------ | ---- | ---- | -------- |
+| alertId         | string | path | 是   | 预警ID   |
+| resolutionNotes | string | body | 是   | 解决说明 |
 
 #### 5.4.4 请求示例
 
@@ -1010,9 +994,9 @@ PATCH /api/v1/churn-predictions/{alertId}/close
 
 #### 5.5.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| alertId | string | path | 是 | 预警ID |
+| 参数名  | 类型   | 位置 | 必填 | 说明   |
+| ------- | ------ | ---- | ---- | ------ |
+| alertId | string | path | 是   | 预警ID |
 
 #### 5.5.4 响应示例
 
@@ -1086,11 +1070,11 @@ GET /api/v1/churn-predictions/trends
 
 #### 5.7.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| startDate | string | query | 否 | 开始日期 |
-| endDate | string | query | 否 | 结束日期 |
-| granularity | string | query | 否 | 时间粒度（day/week/month），默认day |
+| 参数名      | 类型   | 位置  | 必填 | 说明                                |
+| ----------- | ------ | ----- | ---- | ----------------------------------- |
+| startDate   | string | query | 否   | 开始日期                            |
+| endDate     | string | query | 否   | 结束日期                            |
+| granularity | string | query | 否   | 时间粒度（day/week/month），默认day |
 
 #### 5.7.4 响应示例
 
@@ -1135,11 +1119,11 @@ GET /api/v1/churn-predictions/export
 
 #### 5.8.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| startDate | string | query | 否 | 开始日期 |
-| endDate | string | query | 否 | 结束日期 |
-| format | string | query | 否 | 导出格式（pdf/excel），默认excel |
+| 参数名    | 类型   | 位置  | 必填 | 说明                             |
+| --------- | ------ | ----- | ---- | -------------------------------- |
+| startDate | string | query | 否   | 开始日期                         |
+| endDate   | string | query | 否   | 结束日期                         |
+| format    | string | query | 否   | 导出格式（pdf/excel），默认excel |
 
 #### 5.8.4 响应
 
@@ -1163,13 +1147,13 @@ GET /api/v1/care-reminders
 
 #### 6.1.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| customerId | string | query | 否 | 客户ID |
-| reminderType | string | query | 否 | 提醒类型 |
-| status | string | query | 否 | 状态（pending/sent/failed） |
-| page | number | query | 否 | 页码 |
-| size | number | query | 否 | 每页数量 |
+| 参数名       | 类型   | 位置  | 必填 | 说明                        |
+| ------------ | ------ | ----- | ---- | --------------------------- |
+| customerId   | string | query | 否   | 客户ID                      |
+| reminderType | string | query | 否   | 提醒类型                    |
+| status       | string | query | 否   | 状态（pending/sent/failed） |
+| page         | number | query | 否   | 页码                        |
+| size         | number | query | 否   | 每页数量                    |
 
 #### 6.1.4 响应示例
 
@@ -1217,9 +1201,9 @@ POST /api/v1/care-reminders/{reminderId}/send
 
 #### 6.2.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| reminderId | string | path | 是 | 提醒ID |
+| 参数名     | 类型   | 位置 | 必填 | 说明   |
+| ---------- | ------ | ---- | ---- | ------ |
+| reminderId | string | path | 是   | 提醒ID |
 
 #### 6.2.4 响应示例
 
@@ -1254,10 +1238,10 @@ PATCH /api/v1/care-reminders/{reminderId}/sent
 
 #### 6.3.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| reminderId | string | path | 是 | 提醒ID |
-| result | object | body | 是 | 发送结果 |
+| 参数名     | 类型   | 位置 | 必填 | 说明     |
+| ---------- | ------ | ---- | ---- | -------- |
+| reminderId | string | path | 是   | 提醒ID   |
+| result     | object | body | 是   | 发送结果 |
 
 #### 6.3.4 请求示例
 
@@ -1396,12 +1380,12 @@ PUT /api/v1/care-reminders/rules/{ruleId}
 
 #### 6.6.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| ruleId | string | path | 是 | 规则ID |
-| name | string | body | 否 | 规则名称 |
-| description | string | body | 否 | 规则描述 |
-| enabled | boolean | body | 否 | 是否启用 |
+| 参数名      | 类型    | 位置 | 必填 | 说明     |
+| ----------- | ------- | ---- | ---- | -------- |
+| ruleId      | string  | path | 是   | 规则ID   |
+| name        | string  | body | 否   | 规则名称 |
+| description | string  | body | 否   | 规则描述 |
+| enabled     | boolean | body | 否   | 是否启用 |
 
 #### 6.6.4 响应示例
 
@@ -1432,9 +1416,9 @@ DELETE /api/v1/care-reminders/rules/{ruleId}
 
 #### 6.7.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| ruleId | string | path | 是 | 规则ID |
+| 参数名 | 类型   | 位置 | 必填 | 说明   |
+| ------ | ------ | ---- | ---- | ------ |
+| ruleId | string | path | 是   | 规则ID |
 
 #### 6.7.4 响应示例
 
@@ -1463,12 +1447,12 @@ GET /api/v1/customer-groups
 
 #### 7.1.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| groupType | string | query | 否 | 分群类型 |
-| enabled | boolean | query | 否 | 是否启用 |
-| page | number | query | 否 | 页码 |
-| size | number | query | 否 | 每页数量 |
+| 参数名    | 类型    | 位置  | 必填 | 说明     |
+| --------- | ------- | ----- | ---- | -------- |
+| groupType | string  | query | 否   | 分群类型 |
+| enabled   | boolean | query | 否   | 是否启用 |
+| page      | number  | query | 否   | 页码     |
+| size      | number  | query | 否   | 每页数量 |
 
 #### 7.1.4 响应示例
 
@@ -1567,11 +1551,11 @@ GET /api/v1/customer-groups/{groupId}/members
 
 #### 7.3.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| groupId | string | path | 是 | 分群ID |
-| page | number | query | 否 | 页码 |
-| size | number | query | 否 | 每页数量 |
+| 参数名  | 类型   | 位置  | 必填 | 说明     |
+| ------- | ------ | ----- | ---- | -------- |
+| groupId | string | path  | 是   | 分群ID   |
+| page    | number | query | 否   | 页码     |
+| size    | number | query | 否   | 每页数量 |
 
 #### 7.3.4 响应示例
 
@@ -1613,11 +1597,11 @@ POST /api/v1/customer-groups/{groupId}/members
 
 #### 7.4.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| groupId | string | path | 是 | 分群ID |
-| customerIds | string[] | body | 是 | 客户ID列表 |
-| reason | string | body | 否 | 添加原因 |
+| 参数名      | 类型     | 位置 | 必填 | 说明       |
+| ----------- | -------- | ---- | ---- | ---------- |
+| groupId     | string   | path | 是   | 分群ID     |
+| customerIds | string[] | body | 是   | 客户ID列表 |
+| reason      | string   | body | 否   | 添加原因   |
 
 #### 7.4.4 请求示例
 
@@ -1656,10 +1640,10 @@ DELETE /api/v1/customer-groups/{groupId}/members/{customerId}
 
 #### 7.5.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| groupId | string | path | 是 | 分群ID |
-| customerId | string | path | 是 | 客户ID |
+| 参数名     | 类型   | 位置 | 必填 | 说明   |
+| ---------- | ------ | ---- | ---- | ------ |
+| groupId    | string | path | 是   | 分群ID |
+| customerId | string | path | 是   | 客户ID |
 
 #### 7.5.4 响应示例
 
@@ -1718,11 +1702,11 @@ GET /api/v1/customer-tags
 
 #### 8.1.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| tagType | string | query | 否 | 标签类型 |
-| page | number | query | 否 | 页码 |
-| size | number | query | 否 | 每页数量 |
+| 参数名  | 类型   | 位置  | 必填 | 说明     |
+| ------- | ------ | ----- | ---- | -------- |
+| tagType | string | query | 否   | 标签类型 |
+| page    | number | query | 否   | 页码     |
+| size    | number | query | 否   | 每页数量 |
 
 #### 8.1.4 响应示例
 
@@ -1802,11 +1786,11 @@ POST /api/v1/customers/{customerId}/tags
 
 #### 8.3.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| customerId | string | path | 是 | 客户ID |
-| tagId | string | body | 是 | 标签ID |
-| reason | string | body | 否 | 添加原因 |
+| 参数名     | 类型   | 位置 | 必填 | 说明     |
+| ---------- | ------ | ---- | ---- | -------- |
+| customerId | string | path | 是   | 客户ID   |
+| tagId      | string | body | 是   | 标签ID   |
+| reason     | string | body | 否   | 添加原因 |
 
 #### 8.3.4 请求示例
 
@@ -1848,10 +1832,10 @@ DELETE /api/v1/customers/{customerId}/tags/{tagId}
 
 #### 8.4.3 请求参数
 
-| 参数名 | 类型 | 位置 | 必填 | 说明 |
-|--------|------|------|------|------|
-| customerId | string | path | 是 | 客户ID |
-| tagId | string | path | 是 | 标签ID |
+| 参数名     | 类型   | 位置 | 必填 | 说明   |
+| ---------- | ------ | ---- | ---- | ------ |
+| customerId | string | path | 是   | 客户ID |
+| tagId      | string | path | 是   | 标签ID |
 
 #### 8.4.4 响应示例
 
@@ -1910,31 +1894,31 @@ GET /api/v1/customer-tags/statistics
 
 ### 9.1 通用错误码
 
-| 错误码 | 说明 |
-|--------|------|
-| 200 | 成功 |
-| 400 | 请求参数错误 |
-| 401 | 未授权 |
-| 403 | 禁止访问 |
-| 404 | 资源不存在 |
-| 500 | 服务器内部错误 |
+| 错误码 | 说明           |
+| ------ | -------------- |
+| 200    | 成功           |
+| 400    | 请求参数错误   |
+| 401    | 未授权         |
+| 403    | 禁止访问       |
+| 404    | 资源不存在     |
+| 500    | 服务器内部错误 |
 
 ### 9.2 业务错误码
 
-| 错误码 | 说明 |
-|--------|------|
-| 1001 | 客户不存在 |
-| 1002 | 客户已存在 |
-| 1003 | 客户状态不允许此操作 |
-| 2001 | 分群不存在 |
-| 2002 | 客户已在分群中 |
-| 2003 | 分群类型不允许此操作 |
-| 3001 | 标签不存在 |
-| 3002 | 客户已有此标签 |
-| 4001 | RFM评分计算失败 |
-| 4002 | 流失预测失败 |
-| 5001 | 关怀提醒发送失败 |
-| 5002 | 关怀提醒规则冲突 |
+| 错误码 | 说明                 |
+| ------ | -------------------- |
+| 1001   | 客户不存在           |
+| 1002   | 客户已存在           |
+| 1003   | 客户状态不允许此操作 |
+| 2001   | 分群不存在           |
+| 2002   | 客户已在分群中       |
+| 2003   | 分群类型不允许此操作 |
+| 3001   | 标签不存在           |
+| 3002   | 客户已有此标签       |
+| 4001   | RFM评分计算失败      |
+| 4002   | 流失预测失败         |
+| 5001   | 关怀提醒发送失败     |
+| 5002   | 关怀提醒规则冲突     |
 
 ---
 
@@ -1942,63 +1926,63 @@ GET /api/v1/customer-tags/statistics
 
 ### 10.1 数据类型说明
 
-| 类型 | 说明 |
-|------|------|
-| string | 字符串 |
-| number | 数字 |
-| boolean | 布尔值 |
-| object | 对象 |
-| array | 数组 |
-| date | 日期，格式为ISO 8601 |
+| 类型    | 说明                 |
+| ------- | -------------------- |
+| string  | 字符串               |
+| number  | 数字                 |
+| boolean | 布尔值               |
+| object  | 对象                 |
+| array   | 数组                 |
+| date    | 日期，格式为ISO 8601 |
 
 ### 10.2 枚举值说明
 
 #### 10.2.1 生命周期阶段
 
-| 值 | 说明 |
-|------|------|
+| 值        | 说明     |
+| --------- | -------- |
 | potential | 潜在客户 |
-| new | 新客户 |
-| active | 活跃客户 |
-| loyal | 忠诚客户 |
-| dormant | 休眠客户 |
-| churned | 流失客户 |
+| new       | 新客户   |
+| active    | 活跃客户 |
+| loyal     | 忠诚客户 |
+| dormant   | 休眠客户 |
+| churned   | 流失客户 |
 
 #### 10.2.2 客户等级
 
-| 值 | 说明 |
-|------|------|
+| 值      | 说明         |
+| ------- | ------------ |
 | 超级VIP | RFM评分13-15 |
-| VIP | RFM评分10-12 |
-| 会员 | RFM评分7-9 |
-| 普通 | RFM评分4-6 |
-| 低价值 | RFM评分1-3 |
+| VIP     | RFM评分10-12 |
+| 会员    | RFM评分7-9   |
+| 普通    | RFM评分4-6   |
+| 低价值  | RFM评分1-3   |
 
 #### 10.2.3 风险等级
 
-| 值 | 说明 |
-|------|------|
-| high | 高危（流失概率>=70%） |
+| 值     | 说明                    |
+| ------ | ----------------------- |
+| high   | 高危（流失概率>=70%）   |
 | medium | 中危（流失概率40%-70%） |
-| low | 低危（流失概率<40%） |
+| low    | 低危（流失概率<40%）    |
 
 #### 10.2.4 分群类型
 
-| 值 | 说明 |
-|------|------|
-| manual | 手动分群 |
-| auto | 自动分群 |
-| rfm | RFM分群 |
+| 值        | 说明         |
+| --------- | ------------ |
+| manual    | 手动分群     |
+| auto      | 自动分群     |
+| rfm       | RFM分群      |
 | lifecycle | 生命周期分群 |
 
 #### 10.2.5 标签类型
 
-| 值 | 说明 |
-|------|------|
-| behavior | 行为标签 |
-| preference | 偏好标签 |
-| custom | 自定义标签 |
-| system | 系统标签 |
+| 值         | 说明       |
+| ---------- | ---------- |
+| behavior   | 行为标签   |
+| preference | 偏好标签   |
+| custom     | 自定义标签 |
+| system     | 系统标签   |
 
 ### 10.3 相关文档
 
@@ -2008,13 +1992,13 @@ GET /api/v1/customer-tags/statistics
 
 ### 10.4 版本历史
 
-| 版本 | 日期 | 更新内容 |
-|------|------|----------|
+| 版本   | 日期       | 更新内容 |
+| ------ | ---------- | -------- |
 | v1.0.0 | 2026-01-20 | 初始版本 |
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
 
 export const Card = defineComponent({
   name: 'Card',
@@ -41,44 +41,44 @@ export const Card = defineComponent({
     const shadowClasses = computed(() => {
       switch (props.shadow) {
         case 'none':
-          return ''
+          return '';
         case 'sm':
-          return 'shadow-sm'
+          return 'shadow-sm';
         case 'lg':
-          return 'shadow-lg'
+          return 'shadow-lg';
         case 'xl':
-          return 'shadow-xl'
+          return 'shadow-xl';
         default:
-          return 'shadow-md'
+          return 'shadow-md';
       }
-    })
+    });
 
     const paddingClasses = computed(() => {
       switch (props.padding) {
         case 'none':
-          return 'p-0'
+          return 'p-0';
         case 'sm':
-          return 'p-4'
+          return 'p-4';
         case 'lg':
-          return 'p-8'
+          return 'p-8';
         default:
-          return 'p-6'
+          return 'p-6';
       }
-    })
+    });
 
     const borderedClasses = computed(() => {
       if (props.bordered) {
-        return 'border border-neutral-200'
+        return 'border border-neutral-200';
       }
-      return ''
-    })
+      return '';
+    });
 
     const hoverableClasses = computed(() => {
       if (props.hoverable) {
-        return 'hover:shadow-lg transition-shadow duration-200 cursor-pointer'
+        return 'hover:shadow-lg transition-shadow duration-200 cursor-pointer';
       }
-      return ''
-    })
+      return '';
+    });
 
     return () => (
       <div
@@ -88,23 +88,32 @@ export const Card = defineComponent({
           paddingClasses.value,
           borderedClasses.value,
           hoverableClasses.value,
-          attrs.class as string
+          attrs.class as string,
         )}
       >
         {props.loading ? (
           <div class="flex items-center justify-center h-32">
-            <svg class="animate-spin h-8 w-8 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg
+              class="animate-spin h-8 w-8 text-primary-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
             </svg>
           </div>
         ) : (
           slots.default?.()
         )}
       </div>
-    )
+    );
   },
-})
+});
 
 export const CardHeader = defineComponent({
   name: 'CardHeader',
@@ -117,24 +126,18 @@ export const CardHeader = defineComponent({
   setup(props, { attrs, slots }) {
     const dividerClasses = computed(() => {
       if (props.divider) {
-        return 'border-b border-neutral-200 pb-4 mb-4'
+        return 'border-b border-neutral-200 pb-4 mb-4';
       }
-      return 'mb-4'
-    })
+      return 'mb-4';
+    });
 
     return () => (
-      <div
-        class={cn(
-          'flex items-start justify-between',
-          dividerClasses.value,
-          attrs.class as string
-        )}
-      >
+      <div class={cn('flex items-start justify-between', dividerClasses.value, attrs.class as string)}>
         {slots.default?.()}
       </div>
-    )
+    );
   },
-})
+});
 
 export const CardTitle = defineComponent({
   name: 'CardTitle',
@@ -146,7 +149,7 @@ export const CardTitle = defineComponent({
     },
   },
   setup(props, { attrs, slots }) {
-    const Tag = `h${props.level}` as const
+    const Tag = `h${props.level}` as const;
 
     return () => (
       <Tag
@@ -158,62 +161,35 @@ export const CardTitle = defineComponent({
           props.level === 4 && 'text-base',
           props.level === 5 && 'text-sm',
           props.level === 6 && 'text-xs',
-          attrs.class as string
+          attrs.class as string,
         )}
       >
         {slots.default?.()}
       </Tag>
-    )
+    );
   },
-})
+});
 
 export const CardDescription = defineComponent({
   name: 'CardDescription',
   setup(props, { attrs, slots }) {
-    return () => (
-      <p
-        class={cn(
-          'text-sm text-neutral-600 mt-1',
-          attrs.class as string
-        )}
-      >
-        {slots.default?.()}
-      </p>
-    )
+    return () => <p class={cn('text-sm text-neutral-600 mt-1', attrs.class as string)}>{slots.default?.()}</p>;
   },
-})
+});
 
 export const CardAction = defineComponent({
   name: 'CardAction',
   setup(props, { attrs, slots }) {
-    return () => (
-      <div
-        class={cn(
-          'flex items-center gap-2',
-          attrs.class as string
-        )}
-      >
-        {slots.default?.()}
-      </div>
-    )
+    return () => <div class={cn('flex items-center gap-2', attrs.class as string)}>{slots.default?.()}</div>;
   },
-})
+});
 
 export const CardContent = defineComponent({
   name: 'CardContent',
   setup(props, { attrs, slots }) {
-    return () => (
-      <div
-        class={cn(
-          'flex-1',
-          attrs.class as string
-        )}
-      >
-        {slots.default?.()}
-      </div>
-    )
+    return () => <div class={cn('flex-1', attrs.class as string)}>{slots.default?.()}</div>;
   },
-})
+});
 
 export const CardFooter = defineComponent({
   name: 'CardFooter',
@@ -226,21 +202,15 @@ export const CardFooter = defineComponent({
   setup(props, { attrs, slots }) {
     const dividerClasses = computed(() => {
       if (props.divider) {
-        return 'border-t border-neutral-200 pt-4 mt-4'
+        return 'border-t border-neutral-200 pt-4 mt-4';
       }
-      return 'mt-4'
-    })
+      return 'mt-4';
+    });
 
     return () => (
-      <div
-        class={cn(
-          'flex items-center justify-end gap-2',
-          dividerClasses.value,
-          attrs.class as string
-        )}
-      >
+      <div class={cn('flex items-center justify-end gap-2', dividerClasses.value, attrs.class as string)}>
         {slots.default?.()}
       </div>
-    )
+    );
   },
-})
+});

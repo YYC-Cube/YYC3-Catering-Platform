@@ -15,7 +15,7 @@ export class OrderController {
     try {
       const params: CreateOrderParams = req.body;
       const order = await orderService.createOrder(params);
-      
+
       logger.info(`Order ${order.id} created successfully`);
       res.status(201).json({ success: true, data: order });
     } catch (error: any) {
@@ -28,14 +28,14 @@ export class OrderController {
   async getOrderById(req: Request, res: Response): Promise<void> {
     try {
       const orderId = parseInt(req.params.id, 10);
-      
+
       if (isNaN(orderId)) {
         res.status(400).json({ success: false, error: 'Invalid order ID' });
         return;
       }
 
       const order = await orderService.getOrderById(orderId);
-      
+
       if (!order) {
         res.status(404).json({ success: false, error: 'Order not found' });
         return;
@@ -61,11 +61,11 @@ export class OrderController {
         page: req.query.page ? parseInt(req.query.page as string, 10) : 1,
         limit: req.query.limit ? parseInt(req.query.limit as string, 10) : 10,
         start_date: req.query.start_date ? new Date(req.query.start_date as string) : undefined,
-        end_date: req.query.end_date ? new Date(req.query.end_date as string) : undefined
+        end_date: req.query.end_date ? new Date(req.query.end_date as string) : undefined,
       };
 
       const result = await orderService.getOrders(params);
-      
+
       logger.info(`Retrieved ${result.orders.length} orders out of ${result.total}`);
       res.status(200).json({
         success: true,
@@ -74,8 +74,8 @@ export class OrderController {
           total: result.total,
           page: result.page,
           limit: result.limit,
-          total_pages: Math.ceil(result.total / result.limit)
-        }
+          total_pages: Math.ceil(result.total / result.limit),
+        },
       });
     } catch (error: any) {
       logger.error('Error getting orders:', error);
@@ -88,7 +88,7 @@ export class OrderController {
     try {
       const orderId = parseInt(req.params.id, 10);
       const { status, changed_by, note } = req.body;
-      
+
       if (isNaN(orderId)) {
         res.status(400).json({ success: false, error: 'Invalid order ID' });
         return;
@@ -103,11 +103,11 @@ export class OrderController {
         order_id: orderId,
         status,
         changed_by,
-        note
+        note,
       };
 
       const order = await orderService.updateOrderStatus(params);
-      
+
       if (!order) {
         res.status(404).json({ success: false, error: 'Order not found' });
         return;
@@ -126,7 +126,7 @@ export class OrderController {
     try {
       const orderId = parseInt(req.params.id, 10);
       const { status, transaction_id } = req.body;
-      
+
       if (isNaN(orderId)) {
         res.status(400).json({ success: false, error: 'Invalid order ID' });
         return;
@@ -138,7 +138,7 @@ export class OrderController {
       }
 
       const payment = await orderService.updatePaymentStatus(orderId, status, transaction_id);
-      
+
       if (!payment) {
         res.status(404).json({ success: false, error: 'Payment record not found' });
         return;
@@ -157,7 +157,7 @@ export class OrderController {
     try {
       const orderId = parseInt(req.params.id, 10);
       const { user_id, reason } = req.body;
-      
+
       if (isNaN(orderId)) {
         res.status(400).json({ success: false, error: 'Invalid order ID' });
         return;
@@ -169,7 +169,7 @@ export class OrderController {
       }
 
       const order = await orderService.cancelOrder(orderId, user_id, reason);
-      
+
       if (!order) {
         res.status(404).json({ success: false, error: 'Order not found' });
         return;

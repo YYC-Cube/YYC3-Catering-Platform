@@ -24,15 +24,13 @@ if (!fs.existsSync(logDir)) {
 // 定义日志格式
 const logFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-  winston.format.json()
+  winston.format.json(),
 );
 
 const consoleFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   winston.format.colorize(),
-  winston.format.printf(
-    (info) => `${info.timestamp} [${info.level}] ${info.message}`
-  )
+  winston.format.printf(info => `${info.timestamp} [${info.level}] ${info.message}`),
 );
 
 // 创建日志实例

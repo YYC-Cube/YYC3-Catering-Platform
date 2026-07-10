@@ -34,7 +34,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
 
     // 验证令牌
     const decoded = jwt.verify(token, process.env['JWT_SECRET'] || 'your-secret-key-change-in-production');
-    
+
     // 将解码后的用户信息存储在请求对象中
     (req as any).user = decoded;
 
@@ -42,7 +42,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
     next();
   } catch (error) {
     logger.error('认证失败', { error, url: req.url, method: req.method });
-    
+
     if (error instanceof jwt.JsonWebTokenError) {
       res.status(401).json({
         success: false,

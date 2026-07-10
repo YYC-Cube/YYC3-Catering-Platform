@@ -37,10 +37,10 @@ interface DataProcessingStrategy {
 export class DataCollectionService {
   // 内部数据源集合
   private internalDataSources: Map<string, InternalDataSource> = new Map();
-  
+
   // 外部数据源集合
   private externalDataSources: Map<string, ExternalDataSource> = new Map();
-  
+
   // 数据处理策略集合
   private processingStrategies: Map<string, DataProcessingStrategy> = new Map();
 
@@ -60,16 +60,16 @@ export class DataCollectionService {
         const { period, filters } = params;
         return await MenuItem.findAll({
           where: filters,
-          order: [['created_at', 'DESC']]
+          order: [['created_at', 'DESC']],
         });
-      }
+      },
     });
 
     this.internalDataSources.set('categories', {
       type: 'categories',
       fetchData: async (params: any) => {
         return await Category.findAll();
-      }
+      },
     });
 
     // 注册外部数据源
@@ -83,9 +83,9 @@ export class DataCollectionService {
           date,
           temperature: Math.floor(Math.random() * 35),
           humidity: Math.floor(Math.random() * 100),
-          condition: ['晴', '多云', '阴', '雨'][Math.floor(Math.random() * 4)]
+          condition: ['晴', '多云', '阴', '雨'][Math.floor(Math.random() * 4)],
         };
-      }
+      },
     });
 
     this.externalDataSources.set('competitor_prices', {
@@ -98,13 +98,13 @@ export class DataCollectionService {
           restaurant_id: restaurantId,
           dish_types: dishTypes,
           prices: {
-            '宫保鸡丁': 28,
-            '鱼香肉丝': 26,
-            '回锅肉': 32
+            宫保鸡丁: 28,
+            鱼香肉丝: 26,
+            回锅肉: 32,
           },
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
-      }
+      },
     });
   }
 
@@ -124,7 +124,7 @@ export class DataCollectionService {
           });
         }
         return data;
-      }
+      },
     });
 
     // 数据转换策略
@@ -146,7 +146,7 @@ export class DataCollectionService {
           });
         }
         return data;
-      }
+      },
     });
 
     // 数据标准化策略
@@ -164,7 +164,7 @@ export class DataCollectionService {
           });
         }
         return data;
-      }
+      },
     });
   }
 
@@ -181,7 +181,7 @@ export class DataCollectionService {
       source_name: dataType,
       source_config: JSON.stringify({ period, filters }),
       data_type: dataType,
-      status: 'running'
+      status: 'running',
     });
 
     try {
@@ -198,7 +198,7 @@ export class DataCollectionService {
       await collection.update({
         status: 'completed',
         record_count: Array.isArray(rawData) ? rawData.length : 1,
-        result_info: result
+        result_info: result,
       });
 
       return { success: true, data: rawData, collectionId: collection.id };
@@ -206,7 +206,7 @@ export class DataCollectionService {
       // 更新采集任务状态为失败
       await collection.update({
         status: 'failed',
-        error_message: error instanceof Error ? error.message : String(error)
+        error_message: error instanceof Error ? error.message : String(error),
       });
 
       throw error;
@@ -226,7 +226,7 @@ export class DataCollectionService {
       source_name: source,
       source_config: JSON.stringify(params),
       data_type: source,
-      status: 'running'
+      status: 'running',
     });
 
     try {
@@ -243,7 +243,7 @@ export class DataCollectionService {
       await collection.update({
         status: 'completed',
         record_count: 1,
-        result_info: result
+        result_info: result,
       });
 
       return { success: true, data: rawData, collectionId: collection.id };
@@ -251,7 +251,7 @@ export class DataCollectionService {
       // 更新采集任务状态为失败
       await collection.update({
         status: 'failed',
-        error_message: error instanceof Error ? error.message : String(error)
+        error_message: error instanceof Error ? error.message : String(error),
       });
 
       throw error;
@@ -278,7 +278,7 @@ export class DataCollectionService {
       processing_name: `${processingType}_processing`,
       processing_type: processingType,
       processing_config: JSON.stringify(config),
-      status: 'running'
+      status: 'running',
     });
 
     try {
@@ -290,7 +290,7 @@ export class DataCollectionService {
 
       // 获取原始数据
       const rawData = JSON.parse(collection.result_info || '{}');
-      
+
       // 执行数据处理
       const processedData = await strategy.process(rawData, config);
       const result = JSON.stringify(processedData);
@@ -299,7 +299,7 @@ export class DataCollectionService {
       await processing.update({
         status: 'completed',
         processed_count: Array.isArray(processedData) ? processedData.length : 1,
-        result_info: result
+        result_info: result,
       });
 
       return { success: true, data: processedData, processingId: processing.id };
@@ -307,7 +307,7 @@ export class DataCollectionService {
       // 更新处理任务状态为失败
       await processing.update({
         status: 'failed',
-        error_message: error instanceof Error ? error.message : String(error)
+        error_message: error instanceof Error ? error.message : String(error),
       });
 
       throw error;
@@ -325,9 +325,9 @@ export class DataCollectionService {
     const collection = await DataCollection.findOne({
       where: {
         data_type: dataType,
-        status: 'completed'
+        status: 'completed',
       },
-      order: [['created_at', 'DESC']]
+      order: [['created_at', 'DESC']],
     });
 
     if (!collection) {
@@ -338,9 +338,9 @@ export class DataCollectionService {
     const processing = await DataProcessing.findOne({
       where: {
         collection_id: collection.id,
-        status: 'completed'
+        status: 'completed',
       },
-      order: [['created_at', 'DESC']]
+      order: [['created_at', 'DESC']],
     });
 
     if (processing) {
@@ -389,8 +389,8 @@ export class DataCollectionService {
   async getDishSalesStatistics(startDate: string, endDate: string, categoryId?: number): Promise<any> {
     const whereClause: any = {
       createdAt: {
-        [Op.between]: [new Date(startDate), new Date(endDate)]
-      }
+        [Op.between]: [new Date(startDate), new Date(endDate)],
+      },
     };
 
     if (categoryId) {
@@ -407,13 +407,11 @@ export class DataCollectionService {
         'category_id',
         [sequelize.fn('SUM', sequelize.literal('COALESCE(order_count, 0)')), 'total_orders'],
         [sequelize.fn('SUM', sequelize.literal('COALESCE(order_count, 0) * price')), 'total_revenue'],
-        [sequelize.fn('AVG', sequelize.literal('COALESCE(rating, 0)')), 'avg_rating']
+        [sequelize.fn('AVG', sequelize.literal('COALESCE(rating, 0)')), 'avg_rating'],
       ],
       include: [Category],
       group: ['MenuItem.id', 'category.id'],
-      order: [
-        [sequelize.literal('total_revenue'), 'DESC']
-      ]
+      order: [[sequelize.literal('total_revenue'), 'DESC']],
     });
 
     return statistics;
@@ -440,8 +438,8 @@ export class DataCollectionService {
       `,
       {
         replacements: { startDate, endDate },
-        type: sequelize.QueryTypes.SELECT
-      }
+        type: sequelize.QueryTypes.SELECT,
+      },
     );
   }
 
@@ -455,8 +453,8 @@ export class DataCollectionService {
     return await Recommendation.findAll({
       where: {
         createdAt: {
-          [Op.between]: [new Date(startDate), new Date(endDate)]
-        }
+          [Op.between]: [new Date(startDate), new Date(endDate)],
+        },
       },
       attributes: [
         'recommendation_type',
@@ -464,12 +462,10 @@ export class DataCollectionService {
         [sequelize.fn('SUM', sequelize.literal('COALESCE(click_count, 0)')), 'total_clicks'],
         [sequelize.fn('SUM', sequelize.literal('COALESCE(order_count, 0)')), 'total_orders'],
         [sequelize.literal('SUM(COALESCE(click_count, 0)) / COUNT(id) * 100'), 'click_through_rate'],
-        [sequelize.literal('SUM(COALESCE(order_count, 0)) / COUNT(id) * 100'), 'conversion_rate']
+        [sequelize.literal('SUM(COALESCE(order_count, 0)) / COUNT(id) * 100'), 'conversion_rate'],
       ],
       group: ['recommendation_type'],
-      order: [
-        [sequelize.literal('total_recommendations'), 'DESC']
-      ]
+      order: [[sequelize.literal('total_recommendations'), 'DESC']],
     });
   }
 
@@ -494,8 +490,8 @@ export class DataCollectionService {
       `,
       {
         replacements: { startDate, endDate },
-        type: sequelize.QueryTypes.SELECT
-      }
+        type: sequelize.QueryTypes.SELECT,
+      },
     );
 
     // 按星期几统计销售数据
@@ -512,13 +508,13 @@ export class DataCollectionService {
       `,
       {
         replacements: { startDate, endDate },
-        type: sequelize.QueryTypes.SELECT
-      }
+        type: sequelize.QueryTypes.SELECT,
+      },
     );
 
     return {
       hourly: hourlyStatistics,
-      weekly: weeklyStatistics
+      weekly: weeklyStatistics,
     };
   }
 
@@ -528,7 +524,10 @@ export class DataCollectionService {
    * @param period 时间周期
    * @returns 趋势分析数据
    */
-  async getTrendAnalysis(metric: 'revenue' | 'orders' | 'clicks', period: 'daily' | 'weekly' | 'monthly'): Promise<any> {
+  async getTrendAnalysis(
+    metric: 'revenue' | 'orders' | 'clicks',
+    period: 'daily' | 'weekly' | 'monthly',
+  ): Promise<any> {
     let dateFormat = '%Y-%m-%d';
     let interval = '1 day';
 
@@ -575,8 +574,8 @@ export class DataCollectionService {
     return await Recommendation.findAll({
       where: {
         createdAt: {
-          [Op.between]: [new Date(startDate), new Date(endDate)]
-        }
+          [Op.between]: [new Date(startDate), new Date(endDate)],
+        },
       },
       attributes: [
         'menu_item_id',
@@ -585,13 +584,11 @@ export class DataCollectionService {
         [sequelize.fn('SUM', sequelize.literal('COALESCE(click_count, 0)')), 'total_clicks'],
         [sequelize.fn('SUM', sequelize.literal('COALESCE(order_count, 0)')), 'total_orders'],
         [sequelize.literal('SUM(COALESCE(click_count, 0)) / COUNT(id) * 100'), 'click_through_rate'],
-        [sequelize.literal('SUM(COALESCE(order_count, 0)) / COUNT(id) * 100'), 'conversion_rate']
+        [sequelize.literal('SUM(COALESCE(order_count, 0)) / COUNT(id) * 100'), 'conversion_rate'],
       ],
       include: [MenuItem],
       group: ['menu_item_id', 'recommendation_type', 'menu_item.id'],
-      order: [
-        [sequelize.literal('recommendation_count'), 'DESC']
-      ]
+      order: [[sequelize.literal('recommendation_count'), 'DESC']],
     });
   }
 
@@ -609,14 +606,12 @@ export class DataCollectionService {
         'price',
         'category_id',
         [sequelize.fn('SUM', sequelize.literal('COALESCE(order_count, 0)')), 'total_orders'],
-        [sequelize.fn('SUM', sequelize.literal('COALESCE(order_count, 0) * price')), 'total_revenue']
+        [sequelize.fn('SUM', sequelize.literal('COALESCE(order_count, 0) * price')), 'total_revenue'],
       ],
       include: [Category],
       group: ['MenuItem.id', 'category.id'],
-      order: [
-        [sequelize.literal('total_orders'), 'DESC']
-      ],
-      limit: topCount
+      order: [[sequelize.literal('total_orders'), 'DESC']],
+      limit: topCount,
     });
 
     // 获取热门分类
@@ -633,13 +628,13 @@ export class DataCollectionService {
       `,
       {
         replacements: { limit: topCount },
-        type: sequelize.QueryTypes.SELECT
-      }
+        type: sequelize.QueryTypes.SELECT,
+      },
     );
 
     return {
       popularDishes,
-      popularCategories
+      popularCategories,
     };
   }
 }

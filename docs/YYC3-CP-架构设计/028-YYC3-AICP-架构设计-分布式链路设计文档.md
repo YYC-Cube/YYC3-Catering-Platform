@@ -9,11 +9,11 @@
 @tags: [架构设计],[分布式],[链路追踪]
 ---
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
@@ -28,9 +28,11 @@
 ### 1. 背景与目标
 
 #### 1.1 项目背景
+
 YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五化」理念的智能化应用系统，致力于提供高质量、高可用、高安全的成长守护体系。
 
 #### 1.2 文档目标
+
 - 规范分布式链路设计文档相关的业务标准与技术落地要求
 - 为项目相关人员提供清晰的参考依据
 - 保障相关模块开发、实施、运维的一致性与规范性
@@ -38,6 +40,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 ### 2. 设计原则
 
 #### 2.1 五高原则
+
 - **高可用性**：确保系统7x24小时稳定运行
 - **高性能**：优化响应时间和处理能力
 - **高安全性**：保护用户数据和隐私安全
@@ -45,6 +48,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 - **高可维护性**：便于后续维护和升级
 
 #### 2.2 五标体系
+
 - **标准化**：统一的技术和流程标准
 - **规范化**：严格的开发和管理规范
 - **自动化**：提高开发效率和质量
@@ -52,6 +56,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 - **可视化**：直观的监控和管理界面
 
 #### 2.3 五化架构
+
 - **流程化**：标准化的开发流程
 - **文档化**：完善的文档体系
 - **工具化**：高效的开发工具链
@@ -141,14 +146,14 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 
 ##### 3.2.1 技术选型对比
 
-| 特性 | OpenTelemetry | Jaeger | Zipkin | SkyWalking |
-|------|---------------|--------|--------|------------|
-| 标准化 | ✅ W3C 标准 | ✅ OpenTelemetry | ✅ OpenTelemetry | ❌ 自定义协议 |
-| 语言支持 | ✅ 多语言 | ✅ 多语言 | ✅ 多语言 | ✅ 多语言 |
-| 可扩展性 | ✅ 高 | ✅ 高 | ⚠️ 中 | ✅ 高 |
-| 可视化 | ⚠️ 需集成 | ✅ 内置 | ✅ 内置 | ✅ 内置 |
-| 社区活跃度 | ✅ 高 | ✅ 高 | ⚠️ 中 | ✅ 高 |
-| 学习成本 | ⚠️ 中 | ⚠️ 中 | ✅ 低 | ⚠️ 中 |
+| 特性       | OpenTelemetry | Jaeger           | Zipkin           | SkyWalking    |
+| ---------- | ------------- | ---------------- | ---------------- | ------------- |
+| 标准化     | ✅ W3C 标准   | ✅ OpenTelemetry | ✅ OpenTelemetry | ❌ 自定义协议 |
+| 语言支持   | ✅ 多语言     | ✅ 多语言        | ✅ 多语言        | ✅ 多语言     |
+| 可扩展性   | ✅ 高         | ✅ 高            | ⚠️ 中            | ✅ 高         |
+| 可视化     | ⚠️ 需集成     | ✅ 内置          | ✅ 内置          | ✅ 内置       |
+| 社区活跃度 | ✅ 高         | ✅ 高            | ⚠️ 中            | ✅ 高         |
+| 学习成本   | ⚠️ 中         | ⚠️ 中            | ✅ 低            | ⚠️ 中         |
 
 ##### 3.2.2 选型决策
 
@@ -183,43 +188,35 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 ```typescript
 class SamplingStrategy {
   private readonly DEFAULT_SAMPLING_RATE = 0.1; // 10%
-  private readonly ERROR_SAMPLING_RATE = 1.0;    // 100%
-  private readonly HIGH_PRIORITY_RATE = 0.5;      // 50%
-  private readonly LOW_PRIORITY_RATE = 0.01;      // 1%
-  
+  private readonly ERROR_SAMPLING_RATE = 1.0; // 100%
+  private readonly HIGH_PRIORITY_RATE = 0.5; // 50%
+  private readonly LOW_PRIORITY_RATE = 0.01; // 1%
+
   getSamplingRate(spanContext: SpanContext): number {
     if (spanContext.hasError) {
       return this.ERROR_SAMPLING_RATE;
     }
-    
+
     if (this.isHighPriority(spanContext)) {
       return this.HIGH_PRIORITY_RATE;
     }
-    
+
     if (this.isLowPriority(spanContext)) {
       return this.LOW_PRIORITY_RATE;
     }
-    
+
     return this.DEFAULT_SAMPLING_RATE;
   }
-  
+
   private isHighPriority(spanContext: SpanContext): boolean {
-    const highPriorityServices = [
-      'payment-service',
-      'order-service',
-      'user-auth-service'
-    ];
-    
+    const highPriorityServices = ["payment-service", "order-service", "user-auth-service"];
+
     return highPriorityServices.includes(spanContext.serviceName);
   }
-  
+
   private isLowPriority(spanContext: SpanContext): boolean {
-    const lowPriorityOperations = [
-      'health-check',
-      'metrics-collection',
-      'log-aggregation'
-    ];
-    
+    const lowPriorityOperations = ["health-check", "metrics-collection", "log-aggregation"];
+
     return lowPriorityOperations.includes(spanContext.operationName);
   }
 }
@@ -236,6 +233,7 @@ traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
 ```
 
 格式说明：
+
 - `00`：版本号
 - `4bf92f3577b34da6a3ce929d0e0e4736`：Trace ID（16 字节）
 - `00f067aa0ba902b7`：Span ID（8 字节）
@@ -245,46 +243,43 @@ traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
 
 ```typescript
 class TraceContext {
-  private static readonly TRACE_PARENT_HEADER = 'traceparent';
-  private static readonly TRACE_STATE_HEADER = 'tracestate';
-  
+  private static readonly TRACE_PARENT_HEADER = "traceparent";
+  private static readonly TRACE_STATE_HEADER = "tracestate";
+
   static extract(headers: Record<string, string>): TraceContextData {
     const traceParent = headers[this.TRACE_PARENT_HEADER];
     if (!traceParent) {
       return this.generateNewContext();
     }
-    
-    const parts = traceParent.split('-');
+
+    const parts = traceParent.split("-");
     if (parts.length !== 4) {
       return this.generateNewContext();
     }
-    
+
     return {
       traceId: parts[1],
       spanId: parts[2],
-      traceFlags: parseInt(parts[3], 16)
+      traceFlags: parseInt(parts[3], 16),
     };
   }
-  
+
   static inject(context: TraceContextData): Record<string, string> {
-    const traceParent = [
-      '00',
-      context.traceId,
-      context.spanId,
-      context.traceFlags.toString(16).padStart(2, '0')
-    ].join('-');
-    
+    const traceParent = ["00", context.traceId, context.spanId, context.traceFlags.toString(16).padStart(2, "0")].join(
+      "-"
+    );
+
     return {
       [this.TRACE_PARENT_HEADER]: traceParent,
-      [this.TRACE_STATE_HEADER]: ''
+      [this.TRACE_STATE_HEADER]: "",
     };
   }
-  
+
   private static generateNewContext(): TraceContextData {
     return {
       traceId: generateRandomId(16),
       spanId: generateRandomId(8),
-      traceFlags: 1
+      traceFlags: 1,
     };
   }
 }
@@ -295,47 +290,44 @@ class TraceContext {
 ```typescript
 class TracingClient {
   private tracer: Tracer;
-  
+
   constructor(tracer: Tracer) {
     this.tracer = tracer;
   }
-  
-  async makeRequest(
-    url: string,
-    options: RequestOptions
-  ): Promise<Response> {
-    const span = this.tracer.startSpan('http.request', {
+
+  async makeRequest(url: string, options: RequestOptions): Promise<Response> {
+    const span = this.tracer.startSpan("http.request", {
       attributes: {
-        'http.url': url,
-        'http.method': options.method
-      }
+        "http.url": url,
+        "http.method": options.method,
+      },
     });
-    
+
     try {
       const headers = TraceContext.inject(span.context());
       const response = await fetch(url, {
         ...options,
         headers: {
           ...options.headers,
-          ...headers
-        }
+          ...headers,
+        },
       });
-      
-      span.setAttribute('http.status_code', response.status);
-      
+
+      span.setAttribute("http.status_code", response.status);
+
       if (!response.ok) {
         span.setStatus({
           code: SpanStatusCode.ERROR,
-          message: `HTTP ${response.status}`
+          message: `HTTP ${response.status}`,
         });
       }
-      
+
       return response;
     } catch (error) {
       span.recordException(error as Error);
       span.setStatus({
         code: SpanStatusCode.ERROR,
-        message: (error as Error).message
+        message: (error as Error).message,
       });
       throw error;
     } finally {
@@ -372,44 +364,44 @@ class TracingClient {
 class AutoInstrumentation {
   static setupHttpInstrumentation(tracer: Tracer) {
     const originalFetch = global.fetch;
-    
+
     global.fetch = async (input, init) => {
-      const url = typeof input === 'string' ? input : input.url;
-      const method = init?.method || 'GET';
-      
-      const span = tracer.startSpan('http.request', {
+      const url = typeof input === "string" ? input : input.url;
+      const method = init?.method || "GET";
+
+      const span = tracer.startSpan("http.request", {
         attributes: {
-          'http.url': url,
-          'http.method': method,
-          'http.target': new URL(url).pathname
-        }
+          "http.url": url,
+          "http.method": method,
+          "http.target": new URL(url).pathname,
+        },
       });
-      
+
       try {
         const response = await originalFetch(input, {
           ...init,
           headers: {
             ...init?.headers,
-            ...TraceContext.inject(span.context())
-          }
+            ...TraceContext.inject(span.context()),
+          },
         });
-        
-        span.setAttribute('http.status_code', response.status);
-        span.setAttribute('http.status_text', response.statusText);
-        
+
+        span.setAttribute("http.status_code", response.status);
+        span.setAttribute("http.status_text", response.statusText);
+
         if (!response.ok) {
           span.setStatus({
             code: SpanStatusCode.ERROR,
-            message: `HTTP ${response.status}`
+            message: `HTTP ${response.status}`,
           });
         }
-        
+
         return response;
       } catch (error) {
         span.recordException(error as Error);
         span.setStatus({
           code: SpanStatusCode.ERROR,
-          message: (error as Error).message
+          message: (error as Error).message,
         });
         throw error;
       } finally {
@@ -417,28 +409,28 @@ class AutoInstrumentation {
       }
     };
   }
-  
+
   static setupDatabaseInstrumentation(tracer: Tracer) {
     const originalQuery = Database.prototype.query;
-    
-    Database.prototype.query = function(sql, params) {
-      const span = tracer.startSpan('db.query', {
+
+    Database.prototype.query = function (sql, params) {
+      const span = tracer.startSpan("db.query", {
         attributes: {
-          'db.system': 'postgresql',
-          'db.statement': sql,
-          'db.name': this.databaseName
-        }
+          "db.system": "postgresql",
+          "db.statement": sql,
+          "db.name": this.databaseName,
+        },
       });
-      
+
       try {
         const result = originalQuery.call(this, sql, params);
-        span.setAttribute('db.rows_affected', result.rowCount);
+        span.setAttribute("db.rows_affected", result.rowCount);
         return result;
       } catch (error) {
         span.recordException(error as Error);
         span.setStatus({
           code: SpanStatusCode.ERROR,
-          message: (error as Error).message
+          message: (error as Error).message,
         });
         throw error;
       } finally {
@@ -454,59 +446,59 @@ class AutoInstrumentation {
 ```typescript
 class ManualInstrumentation {
   constructor(private tracer: Tracer) {}
-  
+
   async processOrder(order: Order): Promise<OrderResult> {
-    const span = this.tracer.startSpan('order.process', {
+    const span = this.tracer.startSpan("order.process", {
       attributes: {
-        'order.id': order.id,
-        'order.amount': order.amount,
-        'order.user_id': order.userId
-      }
+        "order.id": order.id,
+        "order.amount": order.amount,
+        "order.user_id": order.userId,
+      },
     });
-    
+
     try {
-      span.addEvent('order.validation.start');
+      span.addEvent("order.validation.start");
       await this.validateOrder(order);
-      span.addEvent('order.validation.end');
-      
-      span.addEvent('inventory.check.start');
+      span.addEvent("order.validation.end");
+
+      span.addEvent("inventory.check.start");
       const inventory = await this.checkInventory(order);
-      span.setAttribute('inventory.available', inventory.available);
-      span.addEvent('inventory.check.end');
-      
-      span.addEvent('payment.process.start');
+      span.setAttribute("inventory.available", inventory.available);
+      span.addEvent("inventory.check.end");
+
+      span.addEvent("payment.process.start");
       const payment = await this.processPayment(order);
-      span.setAttribute('payment.status', payment.status);
-      span.addEvent('payment.process.end');
-      
-      span.addEvent('order.save.start');
+      span.setAttribute("payment.status", payment.status);
+      span.addEvent("payment.process.end");
+
+      span.addEvent("order.save.start");
       const result = await this.saveOrder(order);
-      span.addEvent('order.save.end');
-      
+      span.addEvent("order.save.end");
+
       return result;
     } catch (error) {
       span.recordException(error as Error);
       span.setStatus({
         code: SpanStatusCode.ERROR,
-        message: (error as Error).message
+        message: (error as Error).message,
       });
       throw error;
     } finally {
       span.end();
     }
   }
-  
+
   private async validateOrder(order: Order): Promise<void> {
-    const span = this.tracer.startSpan('order.validate', {
-      parent: this.tracer.getCurrentSpan()
+    const span = this.tracer.startSpan("order.validate", {
+      parent: this.tracer.getCurrentSpan(),
     });
-    
+
     try {
       if (!order.userId) {
-        throw new Error('用户ID不能为空');
+        throw new Error("用户ID不能为空");
       }
       if (order.amount <= 0) {
-        throw new Error('订单金额必须大于0');
+        throw new Error("订单金额必须大于0");
       }
     } finally {
       span.end();
@@ -542,7 +534,7 @@ class BatchSpanProcessor {
   private spans: Span[] = [];
   private readonly MAX_BATCH_SIZE = 100;
   private readonly MAX_BATCH_TIMEOUT = 5000; // 5s
-  
+
   constructor(
     private exporter: SpanExporter,
     private readonly maxBatchSize: number = this.MAX_BATCH_SIZE,
@@ -550,15 +542,15 @@ class BatchSpanProcessor {
   ) {
     this.startFlushTimer();
   }
-  
+
   onEnd(span: ReadableSpan): void {
     this.spans.push(span);
-    
+
     if (this.spans.length >= this.maxBatchSize) {
       this.flush();
     }
   }
-  
+
   private startFlushTimer(): void {
     setInterval(() => {
       if (this.spans.length > 0) {
@@ -566,17 +558,17 @@ class BatchSpanProcessor {
       }
     }, this.maxBatchTimeout);
   }
-  
+
   private async flush(): Promise<void> {
     if (this.spans.length === 0) {
       return;
     }
-    
+
     const batch = this.spans.splice(0);
     try {
       await this.exporter.export(batch);
     } catch (error) {
-      console.error('Failed to export spans:', error);
+      console.error("Failed to export spans:", error);
     }
   }
 }
@@ -702,7 +694,7 @@ groups:
         annotations:
           summary: "错误率过高"
           description: "服务 {{ $labels.service_name }} 错误率超过 5%"
-      
+
       - alert: SlowResponseTime
         expr: |
           histogram_quantile(0.95, rate(span_duration_bucket[5m])) > 3000
@@ -712,7 +704,7 @@ groups:
         annotations:
           summary: "响应时间过长"
           description: "服务 {{ $labels.service_name }} P95 响应时间超过 3s"
-      
+
       - alert: HighLatency
         expr: |
           avg(rate(span_duration_sum[5m]) / rate(span_duration_count[5m])) > 1000
@@ -732,7 +724,7 @@ class TroubleshootingTool {
     private jaegerClient: JaegerClient,
     private alertManager: AlertManager
   ) {}
-  
+
   async troubleshootError(errorId: string): Promise<TroubleshootingReport> {
     const alert = await this.alertManager.getAlert(errorId);
     const traces = await this.jaegerClient.findTraces({
@@ -740,57 +732,45 @@ class TroubleshootingTool {
       operation: alert.labels.operation_name,
       startTime: alert.startsAt,
       endTime: alert.endsAt,
-      lookback: '1h'
+      lookback: "1h",
     });
-    
-    const slowTraces = traces.filter(trace => 
-      trace.duration > 3000 // 3s
+
+    const slowTraces = traces.filter(
+      trace => trace.duration > 3000 // 3s
     );
-    
-    const errorTraces = traces.filter(trace => 
-      trace.spans.some(span => span.status.code === 2)
-    );
-    
+
+    const errorTraces = traces.filter(trace => trace.spans.some(span => span.status.code === 2));
+
     return {
       alert,
       totalTraces: traces.length,
       slowTraces: slowTraces.length,
       errorTraces: errorTraces.length,
-      recommendations: this.generateRecommendations(
-        slowTraces,
-        errorTraces
-      )
+      recommendations: this.generateRecommendations(slowTraces, errorTraces),
     };
   }
-  
-  private generateRecommendations(
-    slowTraces: Trace[],
-    errorTraces: Trace[]
-  ): string[] {
+
+  private generateRecommendations(slowTraces: Trace[], errorTraces: Trace[]): string[] {
     const recommendations: string[] = [];
-    
+
     if (slowTraces.length > 0) {
       const slowestSpan = this.findSlowestSpan(slowTraces);
       recommendations.push(
-        `性能瓶颈在 ${slowestSpan.operationName}，` +
-        `平均耗时 ${Math.round(slowestSpan.duration)}ms`
+        `性能瓶颈在 ${slowestSpan.operationName}，` + `平均耗时 ${Math.round(slowestSpan.duration)}ms`
       );
     }
-    
+
     if (errorTraces.length > 0) {
       const errorSpan = this.findErrorSpan(errorTraces);
-      recommendations.push(
-        `错误发生在 ${errorSpan.operationName}，` +
-        `错误信息: ${errorSpan.status.message}`
-      );
+      recommendations.push(`错误发生在 ${errorSpan.operationName}，` + `错误信息: ${errorSpan.status.message}`);
     }
-    
+
     return recommendations;
   }
-  
+
   private findSlowestSpan(traces: Trace[]): Span {
     let slowest: Span | null = null;
-    
+
     for (const trace of traces) {
       for (const span of trace.spans) {
         if (!slowest || span.duration > slowest.duration) {
@@ -798,10 +778,10 @@ class TroubleshootingTool {
         }
       }
     }
-    
+
     return slowest!;
   }
-  
+
   private findErrorSpan(traces: Trace[]): Span {
     for (const trace of traces) {
       for (const span of trace.spans) {
@@ -810,8 +790,8 @@ class TroubleshootingTool {
         }
       }
     }
-    
-    throw new Error('No error span found');
+
+    throw new Error("No error span found");
   }
 }
 ```
@@ -918,18 +898,18 @@ class TroubleshootingTool {
 
 #### 7.1 术语表
 
-| 术语 | 说明 |
-|------|------|
-| Trace | 一个完整的请求链路 |
-| Span | 链路中的一个操作 |
-| Trace ID | 链路的唯一标识 |
-| Span ID | Span 的唯一标识 |
-| Parent Span ID | 父 Span 的 ID |
-| Context | 上下文信息 |
-| Attribute | Span 的属性 |
-| Event | Span 的事件 |
-| Link | Span 的关联 |
-| Sampling | 采样策略 |
+| 术语           | 说明               |
+| -------------- | ------------------ |
+| Trace          | 一个完整的请求链路 |
+| Span           | 链路中的一个操作   |
+| Trace ID       | 链路的唯一标识     |
+| Span ID        | Span 的唯一标识    |
+| Parent Span ID | 父 Span 的 ID      |
+| Context        | 上下文信息         |
+| Attribute      | Span 的属性        |
+| Event          | Span 的事件        |
+| Link           | Span 的关联        |
+| Sampling       | 采样策略           |
 
 #### 7.2 参考资料
 
@@ -947,7 +927,7 @@ class TroubleshootingTool {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

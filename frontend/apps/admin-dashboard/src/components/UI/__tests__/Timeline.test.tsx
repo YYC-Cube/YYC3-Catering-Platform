@@ -9,226 +9,226 @@
  * @license MIT
  */
 
-import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { Timeline, TimelineItem } from '@/components/UI/Timeline'
+import { describe, it, expect } from 'vitest';
+import { mount } from '@vue/test-utils';
+import { Timeline, TimelineItem } from '@/components/UI/Timeline';
 
 describe('Timeline组件', () => {
   it('应该正确渲染默认时间轴', () => {
     const wrapper = mount(Timeline, {
       slots: {
-        default: '时间轴内容'
-      }
-    })
+        default: '时间轴内容',
+      },
+    });
 
-    expect(wrapper.text()).toContain('时间轴内容')
-  })
+    expect(wrapper.text()).toContain('时间轴内容');
+  });
 
   it('应该正确渲染左侧时间轴', () => {
     const wrapper = mount(Timeline, {
       props: {
-        position: 'left'
+        position: 'left',
       },
       slots: {
-        default: '左侧时间轴'
-      }
-    })
+        default: '左侧时间轴',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('left')
-  })
+    expect(wrapper.classes()).toContain('left');
+  });
 
   it('应该正确渲染右侧时间轴', () => {
     const wrapper = mount(Timeline, {
       props: {
-        position: 'right'
+        position: 'right',
       },
       slots: {
-        default: '右侧时间轴'
-      }
-    })
+        default: '右侧时间轴',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('right')
-  })
+    expect(wrapper.classes()).toContain('right');
+  });
 
   it('应该正确渲染交替时间轴', () => {
     const wrapper = mount(Timeline, {
       props: {
-        position: 'alternate'
+        position: 'alternate',
       },
       slots: {
-        default: '交替时间轴'
-      }
-    })
+        default: '交替时间轴',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('alternate')
-  })
+    expect(wrapper.classes()).toContain('alternate');
+  });
 
   it('应该正确渲染反向时间轴', () => {
     const wrapper = mount(Timeline, {
       props: {
-        reverse: true
+        reverse: true,
       },
       slots: {
-        default: '反向时间轴'
-      }
-    })
+        default: '反向时间轴',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('reverse')
-  })
+    expect(wrapper.classes()).toContain('reverse');
+  });
 
   it('应该正确渲染带边框的时间轴', () => {
     const wrapper = mount(Timeline, {
       props: {
-        bordered: true
+        bordered: true,
       },
       slots: {
-        default: '带边框时间轴'
-      }
-    })
+        default: '带边框时间轴',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('bordered')
-  })
+    expect(wrapper.classes()).toContain('bordered');
+  });
 
   it('应该正确应用自定义类名', () => {
     const wrapper = mount(Timeline, {
       props: {
-        className: 'custom-timeline'
+        className: 'custom-timeline',
       },
       slots: {
-        default: '自定义时间轴'
-      }
-    })
+        default: '自定义时间轴',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('custom-timeline')
-  })
-})
+    expect(wrapper.classes()).toContain('custom-timeline');
+  });
+});
 
 describe('TimelineItem组件', () => {
   it('应该正确渲染时间轴项', () => {
     const wrapper = mount(TimelineItem, {
       slots: {
-        default: '时间轴项内容'
-      }
-    })
+        default: '时间轴项内容',
+      },
+    });
 
-    expect(wrapper.text()).toContain('时间轴项内容')
-  })
+    expect(wrapper.text()).toContain('时间轴项内容');
+  });
 
   it('应该正确渲染时间', () => {
     const wrapper = mount(TimelineItem, {
       props: {
-        time: '2024-01-01'
+        time: '2024-01-01',
       },
       slots: {
-        default: '内容'
-      }
-    })
+        default: '内容',
+      },
+    });
 
-    expect(wrapper.text()).toContain('2024-01-01')
-  })
+    expect(wrapper.text()).toContain('2024-01-01');
+  });
 
   it('应该正确渲染颜色', () => {
     const wrapper = mount(TimelineItem, {
       props: {
-        color: 'primary'
+        color: 'primary',
       },
       slots: {
-        default: '主要颜色'
-      }
-    })
+        default: '主要颜色',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('primary')
-  })
+    expect(wrapper.classes()).toContain('primary');
+  });
 
   it('应该正确渲染成功颜色', () => {
     const wrapper = mount(TimelineItem, {
       props: {
-        color: 'success'
+        color: 'success',
       },
       slots: {
-        default: '成功颜色'
-      }
-    })
+        default: '成功颜色',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('success')
-  })
+    expect(wrapper.classes()).toContain('success');
+  });
 
   it('应该正确渲染警告颜色', () => {
     const wrapper = mount(TimelineItem, {
       props: {
-        color: 'warning'
+        color: 'warning',
       },
       slots: {
-        default: '警告颜色'
-      }
-    })
+        default: '警告颜色',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('warning')
-  })
+    expect(wrapper.classes()).toContain('warning');
+  });
 
   it('应该正确渲染危险颜色', () => {
     const wrapper = mount(TimelineItem, {
       props: {
-        color: 'danger'
+        color: 'danger',
       },
       slots: {
-        default: '危险颜色'
-      }
-    })
+        default: '危险颜色',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('danger')
-  })
+    expect(wrapper.classes()).toContain('danger');
+  });
 
   it('应该正确渲染自定义颜色', () => {
     const wrapper = mount(TimelineItem, {
       props: {
-        color: '#ff0000'
+        color: '#ff0000',
       },
       slots: {
-        default: '自定义颜色'
-      }
-    })
+        default: '自定义颜色',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('custom-color')
-  })
+    expect(wrapper.classes()).toContain('custom-color');
+  });
 
   it('应该正确渲染图标', () => {
     const wrapper = mount(TimelineItem, {
       slots: {
         dot: <span>🔔</span>,
-        default: '带图标'
-      }
-    })
+        default: '带图标',
+      },
+    });
 
-    expect(wrapper.text()).toContain('🔔')
-  })
+    expect(wrapper.text()).toContain('🔔');
+  });
 
   it('应该正确渲染禁用状态', () => {
     const wrapper = mount(TimelineItem, {
       props: {
-        disabled: true
+        disabled: true,
       },
       slots: {
-        default: '禁用项'
-      }
-    })
+        default: '禁用项',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('opacity-50')
-  })
+    expect(wrapper.classes()).toContain('opacity-50');
+  });
 
   it('应该正确应用自定义类名', () => {
     const wrapper = mount(TimelineItem, {
       props: {
-        className: 'custom-item'
+        className: 'custom-item',
       },
       slots: {
-        default: '自定义项'
-      }
-    })
+        default: '自定义项',
+      },
+    });
 
-    expect(wrapper.classes()).toContain('custom-item')
-  })
-})
+    expect(wrapper.classes()).toContain('custom-item');
+  });
+});
 
 describe('Timeline组合使用', () => {
   it('应该正确组合使用Timeline子组件', () => {
@@ -249,13 +249,13 @@ describe('Timeline组合使用', () => {
               上线
             </TimelineItem>
           </>
-        )
-      }
-    })
+        ),
+      },
+    });
 
-    expect(wrapper.text()).toContain('项目启动')
-    expect(wrapper.text()).toContain('开发完成')
-    expect(wrapper.text()).toContain('测试中')
-    expect(wrapper.text()).toContain('上线')
-  })
-})
+    expect(wrapper.text()).toContain('项目启动');
+    expect(wrapper.text()).toContain('开发完成');
+    expect(wrapper.text()).toContain('测试中');
+    expect(wrapper.text()).toContain('上线');
+  });
+});

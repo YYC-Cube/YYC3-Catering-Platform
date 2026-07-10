@@ -109,11 +109,7 @@ export class NotificationAI {
               clickRate: 8,
               conversionRate: 4,
             },
-            recommendations: [
-              '优化邮件主题',
-              '改进内容结构',
-              '添加行动号召',
-            ],
+            recommendations: ['优化邮件主题', '改进内容结构', '添加行动号召'],
             aBTestSuggestions: ['测试不同主题', '测试发送时间'],
           },
         };
@@ -180,18 +176,9 @@ export class NotificationAI {
 
   private async getSpecializedTools(role: string): Promise<AITool[]> {
     const toolsMap: Record<string, AITool[]> = {
-      system_admin: [
-        this.createSystemConfigurationTool(),
-        this.createMonitoringTool(),
-      ],
-      marketing_specialist: [
-        this.createCampaignManagementTool(),
-        this.createContentGenerationTool(),
-      ],
-      product_manager: [
-        this.createFeatureAnnouncementTool(),
-        this.createUserFeedbackTool(),
-      ],
+      system_admin: [this.createSystemConfigurationTool(), this.createMonitoringTool()],
+      marketing_specialist: [this.createCampaignManagementTool(), this.createContentGenerationTool()],
+      product_manager: [this.createFeatureAnnouncementTool(), this.createUserFeedbackTool()],
     };
 
     return toolsMap[role] || [];

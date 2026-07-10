@@ -18,7 +18,7 @@ vi.mock('../../../controllers/order-controller', () => {
     getAvailableDeliveryPersonnel: vi.fn(),
     searchOrders: vi.fn(),
   };
-  
+
   return {
     OrderController: vi.fn().mockImplementation(() => mockOrderController),
     ...mockOrderController,
@@ -44,7 +44,7 @@ describe('Order Routes', () => {
           customerPhone: '13800138000',
           items: [
             { menuItemId: '1', quantity: 2, price: 38 },
-            { menuItemId: '2', quantity: 1, price: 28 }
+            { menuItemId: '2', quantity: 1, price: 28 },
           ],
           totalAmount: 104,
           status: 'pending',
@@ -63,13 +63,13 @@ describe('Order Routes', () => {
           customerPhone: '13800138000',
           items: [
             { menuItemId: '1', quantity: 2 },
-            { menuItemId: '2', quantity: 1 }
+            { menuItemId: '2', quantity: 1 },
           ],
           deliveryInfo: {
             address: '北京市朝阳区xxx',
-            deliveryTime: '2024-01-15T12:00:00Z'
-          }
-        })
+            deliveryTime: '2024-01-15T12:00:00Z',
+          },
+        }),
       });
 
       const response = await orderRoutes['POST /api/v1/orders'](request);
@@ -92,9 +92,9 @@ describe('Order Routes', () => {
           customerId: 'user123',
           items: [],
           deliveryInfo: {
-            address: '北京市朝阳区xxx'
-          }
-        })
+            address: '北京市朝阳区xxx',
+          },
+        }),
       });
 
       const response = await orderRoutes['POST /api/v1/orders'](request);
@@ -110,8 +110,20 @@ describe('Order Routes', () => {
     it('应该成功获取订单列表', async () => {
       const mockOrders = {
         items: [
-          { id: 'order1', orderNumber: 'ORD001', customerId: 'user123', totalAmount: 104, status: 'pending' },
-          { id: 'order2', orderNumber: 'ORD002', customerId: 'user123', totalAmount: 56, status: 'completed' }
+          {
+            id: 'order1',
+            orderNumber: 'ORD001',
+            customerId: 'user123',
+            totalAmount: 104,
+            status: 'pending',
+          },
+          {
+            id: 'order2',
+            orderNumber: 'ORD002',
+            customerId: 'user123',
+            totalAmount: 56,
+            status: 'completed',
+          },
         ],
         total: 2,
         page: 1,
@@ -122,9 +134,12 @@ describe('Order Routes', () => {
       };
       vi.mocked(orderController.getOrders).mockResolvedValue(mockOrders);
 
-      const request = new Request('http://example.com/api/v1/orders?page=1&limit=10&status=pending', {
-        method: 'GET'
-      });
+      const request = new Request(
+        'http://example.com/api/v1/orders?page=1&limit=10&status=pending',
+        {
+          method: 'GET',
+        }
+      );
 
       const response = await orderRoutes['GET /api/v1/orders'](request);
       const data = await response.json();
@@ -140,7 +155,7 @@ describe('Order Routes', () => {
       vi.mocked(orderController.getOrders).mockRejectedValue(mockError);
 
       const request = new Request('http://example.com/api/v1/orders', {
-        method: 'GET'
+        method: 'GET',
       });
 
       const response = await orderRoutes['GET /api/v1/orders'](request);
@@ -161,18 +176,16 @@ describe('Order Routes', () => {
           customerId: 'user123',
           customerName: '张三',
           customerPhone: '13800138000',
-          items: [
-            { menuItemId: '1', quantity: 2, price: 38 }
-          ],
+          items: [{ menuItemId: '1', quantity: 2, price: 38 }],
           totalAmount: 76,
           status: 'pending',
-          createdAt: '2024-01-15T10:00:00Z'
-        }
+          createdAt: '2024-01-15T10:00:00Z',
+        },
       };
       vi.mocked(orderController.getOrderById).mockResolvedValue(mockOrder);
 
       const request = new Request('http://example.com/api/v1/orders/order123', {
-        method: 'GET'
+        method: 'GET',
       });
 
       const response = await orderRoutes['GET /api/v1/orders/:id'](request, { id: 'order123' });
@@ -189,7 +202,7 @@ describe('Order Routes', () => {
       vi.mocked(orderController.getOrderById).mockRejectedValue(mockError);
 
       const request = new Request('http://example.com/api/v1/orders/999', {
-        method: 'GET'
+        method: 'GET',
       });
 
       const response = await orderRoutes['GET /api/v1/orders/:id'](request, { id: '999' });
@@ -208,16 +221,18 @@ describe('Order Routes', () => {
           id: 'order123',
           orderNumber: 'ORD202501150001',
           customerId: 'user123',
-          status: 'pending'
-        }
+          status: 'pending',
+        },
       };
       vi.mocked(orderController.getOrderByNumber).mockResolvedValue(mockOrder);
 
       const request = new Request('http://example.com/api/v1/orders/number/ORD202501150001', {
-        method: 'GET'
+        method: 'GET',
       });
 
-      const response = await orderRoutes['GET /api/v1/orders/number/:orderNumber'](request, { orderNumber: 'ORD202501150001' });
+      const response = await orderRoutes['GET /api/v1/orders/number/:orderNumber'](request, {
+        orderNumber: 'ORD202501150001',
+      });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -234,8 +249,8 @@ describe('Order Routes', () => {
           id: 'order123',
           status: 'confirmed',
           deliveryInfo: {
-            address: '北京市朝阳区新地址'
-          }
+            address: '北京市朝阳区新地址',
+          },
         },
         message: '订单更新成功',
       };
@@ -247,9 +262,9 @@ describe('Order Routes', () => {
         body: JSON.stringify({
           deliveryInfo: {
             address: '北京市朝阳区新地址',
-            deliveryTime: '2024-01-15T13:00:00Z'
-          }
-        })
+            deliveryTime: '2024-01-15T13:00:00Z',
+          },
+        }),
       });
 
       const response = await orderRoutes['PUT /api/v1/orders/:id'](request, { id: 'order123' });
@@ -267,7 +282,7 @@ describe('Order Routes', () => {
       const request = new Request('http://example.com/api/v1/orders/999', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ deliveryInfo: { address: '新地址' } })
+        body: JSON.stringify({ deliveryInfo: { address: '新地址' } }),
       });
 
       const response = await orderRoutes['PUT /api/v1/orders/:id'](request, { id: '999' });
@@ -285,7 +300,7 @@ describe('Order Routes', () => {
         data: {
           id: 'order123',
           status: 'cancelled',
-          reason: '客户请求删除'
+          reason: '客户请求删除',
         },
         message: '订单取消成功',
       };
@@ -295,8 +310,8 @@ describe('Order Routes', () => {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          reason: '客户请求删除'
-        })
+          reason: '客户请求删除',
+        }),
       });
 
       const response = await orderRoutes['DELETE /api/v1/orders/:id'](request, { id: 'order123' });
@@ -305,7 +320,11 @@ describe('Order Routes', () => {
       expect(response.status).toBe(200);
       expect(data.success).toBe(true);
       expect(data.data.status).toBe('cancelled');
-      expect(orderController.cancelOrder).toHaveBeenCalledWith('order123', '客户请求删除', undefined);
+      expect(orderController.cancelOrder).toHaveBeenCalledWith(
+        'order123',
+        '客户请求删除',
+        undefined
+      );
     });
   });
 
@@ -316,7 +335,7 @@ describe('Order Routes', () => {
         data: {
           id: 'order123',
           status: 'preparing',
-          notes: '开始准备'
+          notes: '开始准备',
         },
         message: '订单状态更新成功',
       };
@@ -325,16 +344,22 @@ describe('Order Routes', () => {
       const request = new Request('http://example.com/api/v1/orders/order123/status', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'preparing', notes: '开始准备' })
+        body: JSON.stringify({ status: 'preparing', notes: '开始准备' }),
       });
 
-      const response = await orderRoutes['PATCH /api/v1/orders/:id/status'](request, { id: 'order123' });
+      const response = await orderRoutes['PATCH /api/v1/orders/:id/status'](request, {
+        id: 'order123',
+      });
       const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(data.success).toBe(true);
       expect(data.data.status).toBe('preparing');
-      expect(orderController.updateOrderStatus).toHaveBeenCalledWith('order123', 'preparing', '开始准备');
+      expect(orderController.updateOrderStatus).toHaveBeenCalledWith(
+        'order123',
+        'preparing',
+        '开始准备'
+      );
     });
 
     it('应该处理无效的订单状态', async () => {
@@ -344,10 +369,12 @@ describe('Order Routes', () => {
       const request = new Request('http://example.com/api/v1/orders/order123/status', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'invalid_status' })
+        body: JSON.stringify({ status: 'invalid_status' }),
       });
 
-      const response = await orderRoutes['PATCH /api/v1/orders/:id/status'](request, { id: 'order123' });
+      const response = await orderRoutes['PATCH /api/v1/orders/:id/status'](request, {
+        id: 'order123',
+      });
       const data = await response.json();
 
       expect(response.status).toBe(400);
@@ -361,7 +388,7 @@ describe('Order Routes', () => {
         success: true,
         data: {
           id: 'order123',
-          status: 'cancelled'
+          status: 'cancelled',
         },
         message: '订单取消成功',
       };
@@ -372,11 +399,13 @@ describe('Order Routes', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           reason: '客户取消',
-          refundAmount: 100
-        })
+          refundAmount: 100,
+        }),
       });
 
-      const response = await orderRoutes['POST /api/v1/orders/:id/cancel'](request, { id: 'order123' });
+      const response = await orderRoutes['POST /api/v1/orders/:id/cancel'](request, {
+        id: 'order123',
+      });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -394,10 +423,10 @@ describe('Order Routes', () => {
           paymentResult: {
             success: true,
             transactionId: 'txn123',
-            amount: 100.00,
-            currency: 'CNY'
+            amount: 100.0,
+            currency: 'CNY',
           },
-          paymentStatus: 'paid'
+          paymentStatus: 'paid',
         },
         message: '支付成功',
       };
@@ -409,17 +438,23 @@ describe('Order Routes', () => {
         body: JSON.stringify({
           paymentMethod: 'wechat',
           paymentDetails: {
-            transactionId: 'txn123'
-          }
-        })
+            transactionId: 'txn123',
+          },
+        }),
       });
 
-      const response = await orderRoutes['POST /api/v1/orders/:id/payment'](request, { id: 'order123' });
+      const response = await orderRoutes['POST /api/v1/orders/:id/payment'](request, {
+        id: 'order123',
+      });
       const data = await response.json();
 
       expect(response.status).toBe(200);
       expect(data.success).toBe(true);
-      expect(orderController.processPayment).toHaveBeenCalledWith('order123', 'wechat', expect.any(Object));
+      expect(orderController.processPayment).toHaveBeenCalledWith(
+        'order123',
+        'wechat',
+        expect.any(Object)
+      );
     });
 
     it('应该处理支付失败', async () => {
@@ -428,8 +463,8 @@ describe('Order Routes', () => {
         data: {
           orderId: 'order123',
           paymentResult: {
-            success: false
-          }
+            success: false,
+          },
         },
         message: '支付失败',
       };
@@ -440,11 +475,13 @@ describe('Order Routes', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           paymentMethod: 'wechat',
-          paymentDetails: {}
-        })
+          paymentDetails: {},
+        }),
       });
 
-      const response = await orderRoutes['POST /api/v1/orders/:id/payment'](request, { id: 'order123' });
+      const response = await orderRoutes['POST /api/v1/orders/:id/payment'](request, {
+        id: 'order123',
+      });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -461,7 +498,7 @@ describe('Order Routes', () => {
           deliveryPersonnelId: 'driver1',
           assignedAt: '2024-01-15T10:00:00Z',
           estimatedDeliveryTime: '2024-01-15T10:30:00Z',
-          status: 'assigned'
+          status: 'assigned',
         },
         message: '配送员分配成功',
       };
@@ -471,11 +508,13 @@ describe('Order Routes', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          personnelId: 'driver1'
-        })
+          personnelId: 'driver1',
+        }),
       });
 
-      const response = await orderRoutes['POST /api/v1/orders/:id/assign-delivery'](request, { id: 'order123' });
+      const response = await orderRoutes['POST /api/v1/orders/:id/assign-delivery'](request, {
+        id: 'order123',
+      });
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -488,15 +527,21 @@ describe('Order Routes', () => {
     it('应该成功获取可用配送员列表', async () => {
       const mockPersonnel = [
         { id: 'driver1', name: '张三', status: 'available' },
-        { id: 'driver2', name: '李四', status: 'available' }
+        { id: 'driver2', name: '李四', status: 'available' },
       ];
-      vi.mocked(orderController.getAvailableDeliveryPersonnel).mockResolvedValue(mockPersonnel as any);
+      vi.mocked(orderController.getAvailableDeliveryPersonnel).mockResolvedValue(
+        mockPersonnel as any
+      );
 
-      const request = new Request('http://example.com/api/v1/orders/delivery/personnel/available?restaurantId=rest1', {
-        method: 'GET'
-      });
+      const request = new Request(
+        'http://example.com/api/v1/orders/delivery/personnel/available?restaurantId=rest1',
+        {
+          method: 'GET',
+        }
+      );
 
-      const response = await orderRoutes['GET /api/v1/orders/delivery/personnel/available'](request);
+      const response =
+        await orderRoutes['GET /api/v1/orders/delivery/personnel/available'](request);
       const data = await response.json();
 
       expect(response.status).toBe(200);
@@ -509,17 +554,15 @@ describe('Order Routes', () => {
   describe('GET /api/v1/orders/search', () => {
     it('应该成功搜索订单', async () => {
       const mockSearchResults = {
-        items: [
-          { id: 'order1', orderNumber: 'ORD001', customerId: 'user123', status: 'pending' }
-        ],
+        items: [{ id: 'order1', orderNumber: 'ORD001', customerId: 'user123', status: 'pending' }],
         total: 1,
         page: 1,
-        limit: 10
+        limit: 10,
       };
       vi.mocked(orderController.searchOrders).mockResolvedValue(mockSearchResults);
 
       const request = new Request('http://example.com/api/v1/orders/search?keyword=张三', {
-        method: 'GET'
+        method: 'GET',
       });
 
       const response = await orderRoutes['GET /api/v1/orders/search'](request);
@@ -532,7 +575,7 @@ describe('Order Routes', () => {
 
     it('应该处理搜索关键词为空的情况', async () => {
       const request = new Request('http://example.com/api/v1/orders/search?keyword=', {
-        method: 'GET'
+        method: 'GET',
       });
 
       const response = await orderRoutes['GET /api/v1/orders/search'](request);
@@ -558,14 +601,17 @@ describe('Order Routes', () => {
           delivering: 5,
           completed: 35,
           cancelled: 5,
-          refunded: 0
-        }
+          refunded: 0,
+        },
       };
       vi.mocked(orderController.getOrderStats).mockResolvedValue(mockStats);
 
-      const request = new Request('http://example.com/api/v1/orders/stats?restaurantId=rest1&startDate=2024-01-01&endDate=2024-01-31', {
-        method: 'GET'
-      });
+      const request = new Request(
+        'http://example.com/api/v1/orders/stats?restaurantId=rest1&startDate=2024-01-01&endDate=2024-01-31',
+        {
+          method: 'GET',
+        }
+      );
 
       const response = await orderRoutes['GET /api/v1/orders/stats'](request);
       const data = await response.json();
@@ -582,20 +628,23 @@ describe('Order Routes', () => {
       const mockReport = {
         period: {
           startDate: new Date('2024-01-01'),
-          endDate: new Date('2024-01-31')
+          endDate: new Date('2024-01-31'),
         },
         totalOrders: 100,
         totalRevenue: 10000,
         topMenuItems: [],
         peakHours: [],
         averageOrderValue: 100,
-        customerRetentionRate: 0.8
+        customerRetentionRate: 0.8,
       };
       vi.mocked(orderController.generateSalesReport).mockResolvedValue(mockReport);
 
-      const request = new Request('http://example.com/api/v1/orders/reports/sales?startDate=2024-01-01&endDate=2024-01-31', {
-        method: 'GET'
-      });
+      const request = new Request(
+        'http://example.com/api/v1/orders/reports/sales?startDate=2024-01-01&endDate=2024-01-31',
+        {
+          method: 'GET',
+        }
+      );
 
       const response = await orderRoutes['GET /api/v1/orders/reports/sales'](request);
       const data = await response.json();
@@ -607,9 +656,12 @@ describe('Order Routes', () => {
     });
 
     it('应该处理缺少日期参数的情况', async () => {
-      const request = new Request('http://example.com/api/v1/orders/reports/sales?startDate=2024-01-01', {
-        method: 'GET'
-      });
+      const request = new Request(
+        'http://example.com/api/v1/orders/reports/sales?startDate=2024-01-01',
+        {
+          method: 'GET',
+        }
+      );
 
       const response = await orderRoutes['GET /api/v1/orders/reports/sales'](request);
       const data = await response.json();
@@ -626,7 +678,7 @@ describe('Order Routes', () => {
         success: true,
         data: {
           id: 'order123',
-          status: 'confirmed'
+          status: 'confirmed',
         },
         message: '订单状态更新成功',
       };
@@ -638,8 +690,8 @@ describe('Order Routes', () => {
         body: JSON.stringify({
           orderIds: ['order1', 'order2', 'order3'],
           status: 'confirmed',
-          notes: '批量确认'
-        })
+          notes: '批量确认',
+        }),
       });
 
       const response = await orderRoutes['PATCH /api/v1/orders/batch/status'](request);
@@ -659,7 +711,7 @@ describe('Order Routes', () => {
         message: '订单状态更新成功',
       };
       const mockError = new Error('订单不存在');
-      
+
       vi.mocked(orderController.updateOrderStatus)
         .mockResolvedValueOnce(mockSuccessResult)
         .mockRejectedValueOnce(mockError)
@@ -671,8 +723,8 @@ describe('Order Routes', () => {
         body: JSON.stringify({
           orderIds: ['order1', 'order2', 'order3'],
           status: 'confirmed',
-          notes: '批量确认'
-        })
+          notes: '批量确认',
+        }),
       });
 
       const response = await orderRoutes['PATCH /api/v1/orders/batch/status'](request);
@@ -691,8 +743,8 @@ describe('Order Routes', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           orderIds: [],
-          status: 'confirmed'
-        })
+          status: 'confirmed',
+        }),
       });
 
       const response = await orderRoutes['PATCH /api/v1/orders/batch/status'](request);

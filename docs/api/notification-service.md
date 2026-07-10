@@ -34,6 +34,7 @@
 ### 创建通知
 
 **请求**
+
 - 方法：POST
 - 路径：/api/notifications
 - 认证：需要
@@ -80,6 +81,7 @@
 ### 获取用户通知列表
 
 **请求**
+
 - 方法：GET
 - 路径：/api/notifications
 - 认证：需要
@@ -120,6 +122,7 @@
 ### 获取通知详情
 
 **请求**
+
 - 方法：GET
 - 路径：/api/notifications/:id
 - 认证：需要
@@ -154,6 +157,7 @@
 ### 标记通知为已读
 
 **请求**
+
 - 方法：PUT
 - 路径：/api/notifications/:id/read
 - 认证：需要
@@ -176,6 +180,7 @@
 ### 标记所有通知为已读
 
 **请求**
+
 - 方法：PUT
 - 路径：/api/notifications/read-all
 - 认证：需要
@@ -195,6 +200,7 @@
 ### 获取用户通知偏好
 
 **请求**
+
 - 方法：GET
 - 路径：/api/notifications/preferences
 - 认证：需要
@@ -223,6 +229,7 @@
 ### 更新用户通知偏好
 
 **请求**
+
 - 方法：PUT
 - 路径：/api/notifications/preferences
 - 认证：需要
@@ -267,6 +274,7 @@
 ### 发送测试通知
 
 **请求**
+
 - 方法：POST
 - 路径：/api/notifications/test
 - 认证：需要
@@ -292,25 +300,25 @@
 
 ## 通知类型
 
-| 类型 | 描述 |
-|------|------|
-| order_created | 订单创建 |
-| order_updated | 订单更新 |
+| 类型            | 描述     |
+| --------------- | -------- |
+| order_created   | 订单创建 |
+| order_updated   | 订单更新 |
 | order_cancelled | 订单取消 |
 | order_delivered | 订单送达 |
 | payment_success | 支付成功 |
-| payment_failed | 支付失败 |
-| promotion | 促销活动 |
-| system | 系统通知 |
-| review_request | 评价请求 |
+| payment_failed  | 支付失败 |
+| promotion       | 促销活动 |
+| system          | 系统通知 |
+| review_request  | 评价请求 |
 
 ## 通知渠道
 
-| 渠道 | 描述 |
-|------|------|
-| email | 邮件 |
-| sms | 短信 |
-| push | 推送通知 |
+| 渠道  | 描述     |
+| ----- | -------- |
+| email | 邮件     |
+| sms   | 短信     |
+| push  | 推送通知 |
 
 ## 联系我们
 

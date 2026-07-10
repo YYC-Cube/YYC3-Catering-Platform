@@ -29,21 +29,27 @@ const app = express();
 // 配置中间件
 app.use(helmet());
 app.use(compression());
-app.use(express.json({
-  limit: process.env['REQUEST_BODY_LIMIT'] || '1mb'
-}));
-app.use(express.urlencoded({ 
-  extended: true,
-  limit: process.env['REQUEST_BODY_LIMIT'] || '1mb'
-}));
+app.use(
+  express.json({
+    limit: process.env['REQUEST_BODY_LIMIT'] || '1mb',
+  }),
+);
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: process.env['REQUEST_BODY_LIMIT'] || '1mb',
+  }),
+);
 
 // 配置CORS
 const corsOptions = {
   origin: (process.env['CORS_ORIGIN'] || '*').split(','),
   methods: (process.env['CORS_METHODS'] || 'GET, POST, PUT, DELETE, OPTIONS').split(','),
-  allowedHeaders: (process.env['CORS_ALLOWED_HEADERS'] || 'Origin, X-Requested-With, Content-Type, Accept, Authorization').split(','),
+  allowedHeaders: (
+    process.env['CORS_ALLOWED_HEADERS'] || 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  ).split(','),
   credentials: true,
-  maxAge: parseInt(process.env['CORS_MAX_AGE'] || '86400')
+  maxAge: parseInt(process.env['CORS_MAX_AGE'] || '86400'),
 };
 app.use(cors(corsOptions));
 
@@ -56,7 +62,7 @@ app.get('/health', (_req: Request, res: Response) => {
     success: true,
     status: 'UP',
     timestamp: new Date().toISOString(),
-    service: process.env['SERVICE_NAME'] || 'api-gateway'
+    service: process.env['SERVICE_NAME'] || 'api-gateway',
   });
 });
 
@@ -66,7 +72,7 @@ app.get('/version', (_req: Request, res: Response) => {
     success: true,
     version: process.env['npm_package_version'] || '1.0.0',
     service: process.env['SERVICE_NAME'] || 'api-gateway',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -80,7 +86,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   res.status(500).json({
     success: false,
     error: '服务器内部错误',
-    code: 'INTERNAL_SERVER_ERROR'
+    code: 'INTERNAL_SERVER_ERROR',
   });
 });
 
@@ -90,7 +96,7 @@ app.use('*', (req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     error: '接口不存在',
-    code: 'NOT_FOUND'
+    code: 'NOT_FOUND',
   });
 });
 
@@ -117,7 +123,7 @@ process.on('unhandledRejection', (reason, promise) => {
   logger.error('未处理的Promise拒绝:', { reason, promise });
 });
 
-process.on('uncaughtException', (error) => {
+process.on('uncaughtException', error => {
   logger.error('未捕获的异常:', { error });
   process.exit(1);
 });

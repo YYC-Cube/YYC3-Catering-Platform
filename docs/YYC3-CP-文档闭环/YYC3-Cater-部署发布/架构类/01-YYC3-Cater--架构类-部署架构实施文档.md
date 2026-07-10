@@ -10,28 +10,29 @@
 **@tags**：架构设计,部署,YYC³,容器化
 
 ---
+
 # 🔖 YYC³ 部署架构实施文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 部署架构实施文档 |
-| **文档类型** | 架构类文档 |
-| **所属阶段** | 部署发布 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 部署架构实施文档      |
+| **文档类型** | 架构类文档                 |
+| **所属阶段** | 部署发布                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -57,6 +58,7 @@
 本文档是YYC³餐饮行业智能化平台文档体系的重要组成部分，旨在提供清晰、完整、准确的信息。
 
 通过本文档，读者可以：
+
 - 了解相关概念和背景
 - 掌握核心内容和要点
 - 获得实用的指导和帮助
@@ -145,14 +147,14 @@
 
 ### 1.3 端口规划
 
-| 服务 | 端口 | 说明 |
-|------|------|------|
-| Web 服务 | 3200 | 主应用服务 |
-| API 服务 | 3201 | API 接口服务 |
-| 管理后台 | 3202 | 管理后台服务 |
-| PostgreSQL | 5432 | 数据库服务 |
-| Redis | 6379 | 缓存服务 |
-| MinIO | 9000 | 对象存储服务 |
+| 服务       | 端口 | 说明         |
+| ---------- | ---- | ------------ |
+| Web 服务   | 3200 | 主应用服务   |
+| API 服务   | 3201 | API 接口服务 |
+| 管理后台   | 3202 | 管理后台服务 |
+| PostgreSQL | 5432 | 数据库服务   |
+| Redis      | 6379 | 缓存服务     |
+| MinIO      | 9000 | 对象存储服务 |
 
 ---
 
@@ -374,7 +376,7 @@ CMD ["node", "server.js"]
 ### 3.2 Docker Compose 配置
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   # Web 服务
@@ -508,49 +510,49 @@ spec:
         component: web
     spec:
       containers:
-      - name: web
-        image: registry.example.com/yyc3-cater/web:latest
-        ports:
-        - containerPort: 3200
-          name: http
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-cater-secrets
-              key: database-url
-        - name: REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-cater-secrets
-              key: redis-url
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3200
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 3200
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
+        - name: web
+          image: registry.example.com/yyc3-cater/web:latest
+          ports:
+            - containerPort: 3200
+              name: http
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-cater-secrets
+                  key: database-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-cater-secrets
+                  key: redis-url
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3200
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3200
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
       imagePullSecrets:
-      - name: registry-credentials
+        - name: registry-credentials
 ```
 
 ### 4.2 Service 配置
@@ -567,16 +569,15 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 80
-    targetPort: 3200
-    protocol: TCP
-    name: http
+    - port: 80
+      targetPort: 3200
+      protocol: TCP
+      name: http
   selector:
     app: yyc3-cater
     component: web
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -588,10 +589,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 80
-    targetPort: 3201
-    protocol: TCP
-    name: http
+    - port: 80
+      targetPort: 3201
+      protocol: TCP
+      name: http
   selector:
     app: yyc3-cater
     component: api
@@ -612,20 +613,20 @@ metadata:
     nginx.ingress.kubernetes.io/rate-limit: "100"
 spec:
   tls:
-  - hosts:
-    - api.yyc3-cater.com
-    secretName: yyc3-cater-tls
+    - hosts:
+        - api.yyc3-cater.com
+      secretName: yyc3-cater-tls
   rules:
-  - host: api.yyc3-cater.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: yyc3-cater-api
-            port:
-              number: 80
+    - host: api.yyc3-cater.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: yyc3-cater-api
+                port:
+                  number: 80
 ```
 
 ### 4.4 ConfigMap 配置
@@ -670,54 +671,54 @@ stringData:
 // 环境配置
 export const environments = {
   development: {
-    name: 'development',
-    apiUrl: 'http://localhost:3201',
-    webUrl: 'http://localhost:3200',
-    databaseUrl: 'postgresql://user:password@localhost:5432/yyc3_cater_dev',
-    redisUrl: 'redis://localhost:6379',
+    name: "development",
+    apiUrl: "http://localhost:3201",
+    webUrl: "http://localhost:3200",
+    databaseUrl: "postgresql://user:password@localhost:5432/yyc3_cater_dev",
+    redisUrl: "redis://localhost:6379",
     minio: {
-      endpoint: 'http://localhost:9000',
-      accessKey: 'minioadmin',
-      secretKey: 'minioadmin',
-      bucket: 'yyc3-cater-dev'
+      endpoint: "http://localhost:9000",
+      accessKey: "minioadmin",
+      secretKey: "minioadmin",
+      bucket: "yyc3-cater-dev",
     },
-    logLevel: 'debug'
+    logLevel: "debug",
   },
 
   staging: {
-    name: 'staging',
-    apiUrl: 'https://api-staging.yyc3-cater.com',
-    webUrl: 'https://staging.yyc3-cater.com',
+    name: "staging",
+    apiUrl: "https://api-staging.yyc3-cater.com",
+    webUrl: "https://staging.yyc3-cater.com",
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: process.env.REDIS_URL,
     minio: {
       endpoint: process.env.MINIO_ENDPOINT,
       accessKey: process.env.MINIO_ACCESS_KEY,
       secretKey: process.env.MINIO_SECRET_KEY,
-      bucket: 'yyc3-cater-staging'
+      bucket: "yyc3-cater-staging",
     },
-    logLevel: 'info'
+    logLevel: "info",
   },
 
   production: {
-    name: 'production',
-    apiUrl: 'https://api.yyc3-cater.com',
-    webUrl: 'https://www.yyc3-cater.com',
+    name: "production",
+    apiUrl: "https://api.yyc3-cater.com",
+    webUrl: "https://www.yyc3-cater.com",
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: process.env.REDIS_URL,
     minio: {
       endpoint: process.env.MINIO_ENDPOINT,
       accessKey: process.env.MINIO_ACCESS_KEY,
       secretKey: process.env.MINIO_SECRET_KEY,
-      bucket: 'yyc3-cater-production'
+      bucket: "yyc3-cater-production",
     },
-    logLevel: 'warn'
-  }
+    logLevel: "warn",
+  },
 };
 
 // 获取当前环境配置
 export function getEnvConfig() {
-  const env = process.env.NODE_ENV || 'development';
+  const env = process.env.NODE_ENV || "development";
   return environments[env as keyof typeof environments] || environments.development;
 }
 ```
@@ -778,125 +779,125 @@ global:
 
 alerting:
   alertmanagers:
-  - static_configs:
-    - targets:
-      - alertmanager:9093
+    - static_configs:
+        - targets:
+            - alertmanager:9093
 
 rule_files:
   - "alerts/*.yml"
 
 scrape_configs:
   # 应用监控
-  - job_name: 'yyc3-cater-web'
+  - job_name: "yyc3-cater-web"
     kubernetes_sd_configs:
-    - role: pod
-      namespaces:
-        names:
-        - production
+      - role: pod
+        namespaces:
+          names:
+            - production
     relabel_configs:
-    - source_labels: [__meta_kubernetes_pod_label_app]
-      action: keep
-      regex: yyc3-cater
-    - source_labels: [__meta_kubernetes_pod_label_component]
-      action: keep
-      regex: web
-    - source_labels: [__meta_kubernetes_pod_ip]
-      target_label: __address__
-      replacement: $1:3200
+      - source_labels: [__meta_kubernetes_pod_label_app]
+        action: keep
+        regex: yyc3-cater
+      - source_labels: [__meta_kubernetes_pod_label_component]
+        action: keep
+        regex: web
+      - source_labels: [__meta_kubernetes_pod_ip]
+        target_label: __address__
+        replacement: $1:3200
 
   # 数据库监控
-  - job_name: 'postgres'
+  - job_name: "postgres"
     static_configs:
-    - targets: ['postgres-exporter:9187']
+      - targets: ["postgres-exporter:9187"]
 
   # Redis 监控
-  - job_name: 'redis'
+  - job_name: "redis"
     static_configs:
-    - targets: ['redis-exporter:9121']
+      - targets: ["redis-exporter:9121"]
 
   # Node 监控
-  - job_name: 'node'
+  - job_name: "node"
     static_configs:
-    - targets: ['node-exporter:9100']
+      - targets: ["node-exporter:9100"]
 ```
 
 ### 6.2 告警规则
 
 ```yaml
 groups:
-- name: yyc3-cater-alerts
-  interval: 30s
-  rules:
-  # 应用可用性告警
-  - alert: ApplicationDown
-    expr: up{job="yyc3-cater-web"} == 0
-    for: 1m
-    labels:
-      severity: critical
-    annotations:
-      summary: "应用实例 {{ $labels.instance }} 不可用"
-      description: "应用实例 {{ $labels.instance }} 已经宕机超过 1 分钟"
+  - name: yyc3-cater-alerts
+    interval: 30s
+    rules:
+      # 应用可用性告警
+      - alert: ApplicationDown
+        expr: up{job="yyc3-cater-web"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "应用实例 {{ $labels.instance }} 不可用"
+          description: "应用实例 {{ $labels.instance }} 已经宕机超过 1 分钟"
 
-  # 高错误率告警
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "错误率过高"
-      description: "实例 {{ $labels.instance }} 的 5xx 错误率超过 5%"
+      # 高错误率告警
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "错误率过高"
+          description: "实例 {{ $labels.instance }} 的 5xx 错误率超过 5%"
 
-  # 高内存使用率告警
-  - alert: HighMemoryUsage
-    expr: (container_memory_usage_bytes / container_spec_memory_limit_bytes) > 0.9
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "内存使用率过高"
-      description: "容器 {{ $labels.container }} 的内存使用率超过 90%"
+      # 高内存使用率告警
+      - alert: HighMemoryUsage
+        expr: (container_memory_usage_bytes / container_spec_memory_limit_bytes) > 0.9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "内存使用率过高"
+          description: "容器 {{ $labels.container }} 的内存使用率超过 90%"
 
-  # 高 CPU 使用率告警
-  - alert: HighCPUUsage
-    expr: (rate(container_cpu_usage_seconds_total[5m]) / container_spec_cpu_quota) > 0.9
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "CPU 使用率过高"
-      description: "容器 {{ $labels.container }} 的 CPU 使用率超过 90%"
+      # 高 CPU 使用率告警
+      - alert: HighCPUUsage
+        expr: (rate(container_cpu_usage_seconds_total[5m]) / container_spec_cpu_quota) > 0.9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU 使用率过高"
+          description: "容器 {{ $labels.container }} 的 CPU 使用率超过 90%"
 
-  # 数据库连接数告警
-  - alert: DatabaseConnectionHigh
-    expr: pg_stat_database_numbackends / pg_settings_max_connections > 0.8
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "数据库连接数过高"
-      description: "数据库连接数已超过最大连接数的 80%"
+      # 数据库连接数告警
+      - alert: DatabaseConnectionHigh
+        expr: pg_stat_database_numbackends / pg_settings_max_connections > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "数据库连接数过高"
+          description: "数据库连接数已超过最大连接数的 80%"
 ```
 
 ### 6.3 日志配置
 
 ```typescript
 // Winston 日志配置
-import winston from 'winston';
+import winston from "winston";
 
 const logFormat = winston.format.combine(
-  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.errors({ stack: true }),
   winston.format.splat(),
   winston.format.json()
 );
 
 export const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
+  level: process.env.LOG_LEVEL || "info",
   format: logFormat,
   defaultMeta: {
-    service: 'yyc3-cater',
-    environment: process.env.NODE_ENV || 'development'
+    service: "yyc3-cater",
+    environment: process.env.NODE_ENV || "development",
   },
   transports: [
     // 控制台输出
@@ -910,34 +911,36 @@ export const logger = winston.createLogger({
           }
           return msg;
         })
-      )
+      ),
     }),
 
     // 错误日志
     new winston.transports.File({
-      filename: 'logs/error.log',
-      level: 'error',
+      filename: "logs/error.log",
+      level: "error",
       maxsize: 5242880, // 5MB
-      maxFiles: 5
+      maxFiles: 5,
     }),
 
     // 所有日志
     new winston.transports.File({
-      filename: 'logs/combined.log',
+      filename: "logs/combined.log",
       maxsize: 5242880, // 5MB
-      maxFiles: 5
-    })
-  ]
+      maxFiles: 5,
+    }),
+  ],
 });
 
 // 生产环境添加远程日志
-if (process.env.NODE_ENV === 'production') {
-  logger.add(new winston.transports.Http({
-    host: process.env.LOG_HOST,
-    port: parseInt(process.env.LOG_PORT || '8080'),
-    path: '/logs',
-    ssl: process.env.LOG_SSL === 'true'
-  }));
+if (process.env.NODE_ENV === "production") {
+  logger.add(
+    new winston.transports.Http({
+      host: process.env.LOG_HOST,
+      port: parseInt(process.env.LOG_PORT || "8080"),
+      path: "/logs",
+      ssl: process.env.LOG_SSL === "true",
+    })
+  );
 }
 ```
 
@@ -1021,53 +1024,53 @@ metadata:
   name: postgres-backup
   namespace: production
 spec:
-  schedule: "0 2 * * *"  # 每天凌晨 2 点执行
+  schedule: "0 2 * * *" # 每天凌晨 2 点执行
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: backup
-            image: postgres:15-alpine
-            command:
-            - /bin/sh
-            - -c
-            - |
-              pg_dump ${DATABASE_URL} | gzip > /backup/backup_$(date +%Y%m%d_%H%M%S).sql.gz
-              mc cp /backup/backup_*.sql.gz minio/yyc3-cater-backups/
-              find /backup -name "backup_*.sql.gz" -mtime +30 -delete
-            env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: yyc3-cater-secrets
-                  key: database-url
-            - name: MINIO_ENDPOINT
-              valueFrom:
-                secretKeyRef:
-                  name: yyc3-cater-secrets
-                  key: minio-endpoint
-            - name: MINIO_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: yyc3-cater-secrets
-                  key: minio-access-key
-            - name: MINIO_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: yyc3-cater-secrets
-                  key: minio-secret-key
-            volumeMounts:
             - name: backup
-              mountPath: /backup
-            - name: mc-config
-              mountPath: /root/.mc
+              image: postgres:15-alpine
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  pg_dump ${DATABASE_URL} | gzip > /backup/backup_$(date +%Y%m%d_%H%M%S).sql.gz
+                  mc cp /backup/backup_*.sql.gz minio/yyc3-cater-backups/
+                  find /backup -name "backup_*.sql.gz" -mtime +30 -delete
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: yyc3-cater-secrets
+                      key: database-url
+                - name: MINIO_ENDPOINT
+                  valueFrom:
+                    secretKeyRef:
+                      name: yyc3-cater-secrets
+                      key: minio-endpoint
+                - name: MINIO_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: yyc3-cater-secrets
+                      key: minio-access-key
+                - name: MINIO_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: yyc3-cater-secrets
+                      key: minio-secret-key
+              volumeMounts:
+                - name: backup
+                  mountPath: /backup
+                - name: mc-config
+                  mountPath: /root/.mc
           volumes:
-          - name: backup
-            emptyDir: {}
-          - name: mc-config
-            configMap:
-              name: mc-config
+            - name: backup
+              emptyDir: {}
+            - name: mc-config
+              configMap:
+                name: mc-config
           restartPolicy: OnFailure
 ```
 
@@ -1101,18 +1104,18 @@ spec:
   minReplicas: 3
   maxReplicas: 10
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
 ```
 
 ### 8.2 数据库优化
@@ -1177,26 +1180,26 @@ spec:
     matchLabels:
       app: yyc3-cater
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: production
-    ports:
-    - protocol: TCP
-      port: 3200
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: production
+      ports:
+        - protocol: TCP
+          port: 3200
   egress:
-  - to:
-    - namespaceSelector:
-        matchLabels:
-          name: production
-    ports:
-    - protocol: TCP
-      port: 5432
-    - protocol: TCP
-      port: 6379
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: production
+      ports:
+        - protocol: TCP
+          port: 5432
+        - protocol: TCP
+          port: 6379
 ```
 
 ### 9.2 Pod 安全
@@ -1211,23 +1214,23 @@ spec:
   privileged: false
   allowPrivilegeEscalation: false
   requiredDropCapabilities:
-  - ALL
+    - ALL
   volumes:
-  - 'configMap'
-  - 'emptyDir'
-  - 'projected'
-  - 'secret'
-  - 'downwardAPI'
-  - 'persistentVolumeClaim'
+    - "configMap"
+    - "emptyDir"
+    - "projected"
+    - "secret"
+    - "downwardAPI"
+    - "persistentVolumeClaim"
   hostNetwork: false
   hostIPC: false
   hostPID: false
   runAsUser:
-    rule: 'MustRunAsNonRoot'
+    rule: "MustRunAsNonRoot"
   seLinux:
-    rule: 'RunAsAny'
+    rule: "RunAsAny"
   fsGroup:
-    rule: 'RunAsAny'
+    rule: "RunAsAny"
 ```
 
 ---
@@ -1277,23 +1280,23 @@ echo "部署完成"
 
 ```typescript
 // 健康检查端点
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
 export async function healthCheck(req: Request, res: Response) {
   const checks = {
-    status: 'healthy',
+    status: "healthy",
     timestamp: new Date().toISOString(),
     checks: {
       database: await checkDatabase(),
       redis: await checkRedis(),
-      storage: await checkStorage()
-    }
+      storage: await checkStorage(),
+    },
   };
 
-  const allHealthy = Object.values(checks.checks).every(check => check.status === 'healthy');
+  const allHealthy = Object.values(checks.checks).every(check => check.status === "healthy");
 
   if (!allHealthy) {
-    checks.status = 'unhealthy';
+    checks.status = "unhealthy";
     return res.status(503).json(checks);
   }
 
@@ -1303,27 +1306,27 @@ export async function healthCheck(req: Request, res: Response) {
 async function checkDatabase() {
   try {
     await prisma.$queryRaw`SELECT 1`;
-    return { status: 'healthy', message: 'Database connection OK' };
+    return { status: "healthy", message: "Database connection OK" };
   } catch (error) {
-    return { status: 'unhealthy', message: error.message };
+    return { status: "unhealthy", message: error.message };
   }
 }
 
 async function checkRedis() {
   try {
     await redis.ping();
-    return { status: 'healthy', message: 'Redis connection OK' };
+    return { status: "healthy", message: "Redis connection OK" };
   } catch (error) {
-    return { status: 'unhealthy', message: error.message };
+    return { status: "unhealthy", message: error.message };
   }
 }
 
 async function checkStorage() {
   try {
     // 检查 MinIO 连接
-    return { status: 'healthy', message: 'Storage connection OK' };
+    return { status: "healthy", message: "Storage connection OK" };
   } catch (error) {
-    return { status: 'unhealthy', message: error.message };
+    return { status: "unhealthy", message: error.message };
   }
 }
 ```
@@ -1332,13 +1335,10 @@ async function checkStorage() {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1361,8 +1361,6 @@ async function checkStorage() {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1396,8 +1394,6 @@ async function checkStorage() {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1420,46 +1416,46 @@ async function checkStorage() {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1472,6 +1468,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1481,6 +1478,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1490,6 +1488,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1506,16 +1505,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1525,13 +1525,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1540,6 +1538,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1558,6 +1557,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1573,6 +1573,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1592,28 +1593,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1622,44 +1622,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1673,13 +1671,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1688,18 +1686,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1709,37 +1710,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1748,28 +1752,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1778,21 +1780,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1801,10 +1805,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1830,16 +1831,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1848,26 +1849,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -1876,21 +1872,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1899,10 +1897,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1928,16 +1923,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1946,25 +1941,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

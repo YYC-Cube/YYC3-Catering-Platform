@@ -5,11 +5,7 @@
 
 import { AutonomousAIEngine } from '../ai-widget/AutonomousAIEngine';
 import { AutonomousAIConfig, AITool } from '../ai-widget/types';
-import {
-  IndustryConfiguration,
-  PersonaConfiguration,
-  QuickStartConfig,
-} from './types';
+import { IndustryConfiguration, PersonaConfiguration, QuickStartConfig } from './types';
 
 export class IndustryAdapter {
   private industryConfigs: Map<string, IndustryConfiguration> = new Map();
@@ -77,12 +73,7 @@ export class IndustryAdapter {
       name: '通知系统管理',
       description: '消息推送、用户触达、模板管理、效果分析',
       personas: ['system_admin', 'marketing_specialist', 'product_manager'],
-      capabilities: [
-        'notification_analytics',
-        'template_optimization',
-        'user_segmentation',
-        'engagement_analysis',
-      ],
+      capabilities: ['notification_analytics', 'template_optimization', 'user_segmentation', 'engagement_analysis'],
       tools: [],
       dataSources: [],
       successMetrics: this.getNotificationMetrics(),
@@ -163,7 +154,7 @@ export class IndustryAdapter {
   async createIndustryAI(
     industry: string,
     userPersona: string,
-    config?: Partial<AutonomousAIConfig>
+    config?: Partial<AutonomousAIConfig>,
   ): Promise<AutonomousAIEngine> {
     const industryConfig = this.industryConfigs.get(industry);
     if (!industryConfig) {
@@ -212,7 +203,7 @@ export class IndustryAdapter {
   getSupportedPersonas(industry?: string): PersonaConfiguration[] {
     const personas = Array.from(this.personaConfigs.values());
     if (industry) {
-      return personas.filter((p) => p.industry === industry);
+      return personas.filter(p => p.industry === industry);
     }
     return personas;
   }
@@ -221,11 +212,29 @@ export class IndustryAdapter {
     return {
       strategic: [
         { id: 'goal_achievement_rate', name: '目标达成率', description: '战略目标的完成百分比', target: 85, unit: '%' },
-        { id: 'strategic_initiative_progress', name: '战略计划进展', description: '关键战略计划的推进速度', target: 90, unit: '%' },
+        {
+          id: 'strategic_initiative_progress',
+          name: '战略计划进展',
+          description: '关键战略计划的推进速度',
+          target: 90,
+          unit: '%',
+        },
       ],
       operational: [
-        { id: 'process_optimization_rate', name: '流程优化率', description: '业务流程优化的提升幅度', target: 20, unit: '%' },
-        { id: 'resource_utilization', name: '资源利用率', description: '企业资源的有效利用程度', target: 85, unit: '%' },
+        {
+          id: 'process_optimization_rate',
+          name: '流程优化率',
+          description: '业务流程优化的提升幅度',
+          target: 20,
+          unit: '%',
+        },
+        {
+          id: 'resource_utilization',
+          name: '资源利用率',
+          description: '企业资源的有效利用程度',
+          target: 85,
+          unit: '%',
+        },
       ],
       financial: [
         { id: 'roi_improvement', name: '投资回报率提升', description: 'ROI的年度增长', target: 15, unit: '%' },
@@ -245,7 +254,13 @@ export class IndustryAdapter {
         { id: 'automation_rate', name: '自动化率', description: '运维任务的自动化覆盖度', target: 80, unit: '%' },
       ],
       financial: [
-        { id: 'infrastructure_cost_savings', name: '基础设施成本节约', description: '通过优化节省的基础设施开支', target: 15, unit: '%' },
+        {
+          id: 'infrastructure_cost_savings',
+          name: '基础设施成本节约',
+          description: '通过优化节省的基础设施开支',
+          target: 15,
+          unit: '%',
+        },
       ],
     };
   }
@@ -272,9 +287,7 @@ export class IndustryAdapter {
       operational: [
         { id: 'delivery_rate', name: '送达率', description: '通知成功送达的百分比', target: 98, unit: '%' },
       ],
-      financial: [
-        { id: 'conversion_rate', name: '转化率', description: '通知带来的实际转化', target: 5, unit: '%' },
-      ],
+      financial: [{ id: 'conversion_rate', name: '转化率', description: '通知带来的实际转化', target: 5, unit: '%' }],
     };
   }
 }

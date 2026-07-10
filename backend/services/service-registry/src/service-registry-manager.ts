@@ -150,7 +150,7 @@ export class ServiceRegistryManager {
       count: serviceIds.length,
     });
 
-    const promises = serviceIds.map((id) => this.deregisterService(id));
+    const promises = serviceIds.map(id => this.deregisterService(id));
     await Promise.allSettled(promises);
   }
 

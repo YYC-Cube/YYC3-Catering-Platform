@@ -30,14 +30,22 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: error instanceof Error ? (error instanceof Error ? error.message : "未知错误") : '未知错误',
-        code: 'CREATE_MENU_ITEM_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error:
+            error instanceof Error
+              ? error instanceof Error
+                ? error.message
+                : '未知错误'
+              : '未知错误',
+          code: 'CREATE_MENU_ITEM_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -73,14 +81,17 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'GET_MENU_ITEMS_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'GET_MENU_ITEMS_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -93,14 +104,19 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'GET_MENU_ITEM_ERROR',
-      }), {
-        status: (error instanceof Error ? error.message : "未知错误").includes('不存在') ? 404 : 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'GET_MENU_ITEM_ERROR',
+        }),
+        {
+          status: (error instanceof Error ? error.message : '未知错误').includes('不存在')
+            ? 404
+            : 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -114,14 +130,19 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'UPDATE_MENU_ITEM_ERROR',
-      }), {
-        status: (error instanceof Error ? error.message : "未知错误").includes('不存在') ? 404 : 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'UPDATE_MENU_ITEM_ERROR',
+        }),
+        {
+          status: (error instanceof Error ? error.message : '未知错误').includes('不存在')
+            ? 404
+            : 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -134,14 +155,19 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'DELETE_MENU_ITEM_ERROR',
-      }), {
-        status: (error instanceof Error ? error.message : "未知错误").includes('不存在') ? 404 : 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'DELETE_MENU_ITEM_ERROR',
+        }),
+        {
+          status: (error instanceof Error ? error.message : '未知错误').includes('不存在')
+            ? 404
+            : 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -164,14 +190,17 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'BATCH_UPDATE_STATUS_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'BATCH_UPDATE_STATUS_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -189,8 +218,12 @@ export const menuRoutes = {
 
       const filters = {
         category: url.searchParams.get('category') || undefined,
-        minPrice: url.searchParams.get('minPrice') ? parseFloat(url.searchParams.get('minPrice')) : undefined,
-        maxPrice: url.searchParams.get('maxPrice') ? parseFloat(url.searchParams.get('maxPrice')) : undefined,
+        minPrice: url.searchParams.get('minPrice')
+          ? parseFloat(url.searchParams.get('minPrice'))
+          : undefined,
+        maxPrice: url.searchParams.get('maxPrice')
+          ? parseFloat(url.searchParams.get('maxPrice'))
+          : undefined,
         page: parseInt(url.searchParams.get('page')) || undefined,
         limit: parseInt(url.searchParams.get('limit')) || undefined,
       };
@@ -202,14 +235,17 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'SEARCH_MENU_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'SEARCH_MENU_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -228,14 +264,17 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'GET_RECOMMENDED_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'GET_RECOMMENDED_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -251,14 +290,17 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'GET_POPULAR_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'GET_POPULAR_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -274,14 +316,17 @@ export const menuRoutes = {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'GET_NEW_ITEMS_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'GET_NEW_ITEMS_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -295,22 +340,28 @@ export const menuRoutes = {
 
       const result = await menuController.getCategoryStats(restaurantId);
 
-      return new Response(JSON.stringify({
-        success: true,
-        data: result,
-      }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          data: result,
+        }),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'GET_CATEGORY_STATS_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'GET_CATEGORY_STATS_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 
@@ -318,27 +369,37 @@ export const menuRoutes = {
     try {
       const url = new URL(request.url);
       const itemId = url.searchParams.get('itemId') || undefined;
-      const startDate = url.searchParams.get('startDate') ? new Date(url.searchParams.get('startDate')) : undefined;
-      const endDate = url.searchParams.get('endDate') ? new Date(url.searchParams.get('endDate')) : undefined;
+      const startDate = url.searchParams.get('startDate')
+        ? new Date(url.searchParams.get('startDate'))
+        : undefined;
+      const endDate = url.searchParams.get('endDate')
+        ? new Date(url.searchParams.get('endDate'))
+        : undefined;
 
       const result = await menuController.getMenuItemSalesStats(itemId, startDate, endDate);
 
-      return new Response(JSON.stringify({
-        success: true,
-        data: result,
-      }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          data: result,
+        }),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: (error instanceof Error ? error.message : "未知错误"),
-        code: 'GET_SALES_STATS_ERROR',
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : '未知错误',
+          code: 'GET_SALES_STATS_ERROR',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   },
 };

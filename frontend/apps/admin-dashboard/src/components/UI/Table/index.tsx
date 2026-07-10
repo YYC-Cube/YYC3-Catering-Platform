@@ -8,22 +8,22 @@
  * @license MIT
  */
 
-import { defineComponent, ref, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { ChevronUp, ChevronDown, MoreHorizontal, Check } from 'lucide-vue-next'
-import { Pagination } from '../Pagination'
+import { defineComponent, ref, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { ChevronUp, ChevronDown, MoreHorizontal, Check } from 'lucide-vue-next';
+import { Pagination } from '../Pagination';
 
 export interface TableColumn {
-  key: string
-  title: string
-  dataIndex?: string
-  width?: number | string
-  align?: 'left' | 'center' | 'right'
-  fixed?: 'left' | 'right'
-  sortable?: boolean
-  filterable?: boolean
-  filters?: Array<{ text: string; value: any }>
-  render?: (value: any, record: any, index: number) => any
+  key: string;
+  title: string;
+  dataIndex?: string;
+  width?: number | string;
+  align?: 'left' | 'center' | 'right';
+  fixed?: 'left' | 'right';
+  sortable?: boolean;
+  filterable?: boolean;
+  filters?: Array<{ text: string; value: any }>;
+  render?: (value: any, record: any, index: number) => any;
 }
 
 export const Table = defineComponent({
@@ -68,17 +68,17 @@ export const Table = defineComponent({
     },
     rowSelection: {
       type: Object as PropType<{
-        selectedRowKeys?: string[]
-        onChange?: (selectedRowKeys: string[], selectedRows: any[]) => void
-        type?: 'checkbox' | 'radio'
+        selectedRowKeys?: string[];
+        onChange?: (selectedRowKeys: string[], selectedRows: any[]) => void;
+        type?: 'checkbox' | 'radio';
       }>,
       default: undefined,
     },
     expandable: {
       type: Object as PropType<{
-        expandedRowKeys?: string[]
-        onChange?: (expandedRowKeys: string[]) => void
-        expandedRowRender?: (record: any, index: number) => any
+        expandedRowKeys?: string[];
+        onChange?: (expandedRowKeys: string[]) => void;
+        expandedRowRender?: (record: any, index: number) => any;
       }>,
       default: undefined,
     },
@@ -89,139 +89,137 @@ export const Table = defineComponent({
   },
   emits: ['row-click', 'row-dblclick', 'change', 'sort-change', 'filter-change'],
   setup(props, { emit, slots }) {
-    const sortField = ref<string>()
-    const sortOrder = ref<'asc' | 'desc'>()
-    const selectedRowKeys = ref<string[]>(props.rowSelection?.selectedRowKeys || [])
-    const expandedRowKeys = ref<string[]>(props.expandable?.expandedRowKeys || [])
+    const sortField = ref<string>();
+    const sortOrder = ref<'asc' | 'desc'>();
+    const selectedRowKeys = ref<string[]>(props.rowSelection?.selectedRowKeys || []);
+    const expandedRowKeys = ref<string[]>(props.expandable?.expandedRowKeys || []);
 
     const getRowKey = (record: any, index: number) => {
       if (typeof props.rowKey === 'function') {
-        return props.rowKey(record)
+        return props.rowKey(record);
       }
-      return record[props.rowKey] || index
-    }
+      return record[props.rowKey] || index;
+    };
 
     const getCellValue = (record: any, column: TableColumn) => {
-      const value = column.dataIndex ? record[column.dataIndex] : record[column.key]
-      return column.render ? column.render(value, record, props.data.indexOf(record)) : value
-    }
+      const value = column.dataIndex ? record[column.dataIndex] : record[column.key];
+      return column.render ? column.render(value, record, props.data.indexOf(record)) : value;
+    };
 
     const sizeClasses = computed(() => {
       switch (props.size) {
         case 'sm':
-          return 'text-xs'
+          return 'text-xs';
         case 'lg':
-          return 'text-base'
+          return 'text-base';
         default:
-          return 'text-sm'
+          return 'text-sm';
       }
-    })
+    });
 
     const handleSort = (column: TableColumn) => {
       if (!column.sortable) {
-        return
+        return;
       }
 
       if (sortField.value === column.key) {
-        sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+        sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
       } else {
-        sortField.value = column.key
-        sortOrder.value = 'asc'
+        sortField.value = column.key;
+        sortOrder.value = 'asc';
       }
 
-      emit('sort-change', { field: sortField.value, order: sortOrder.value })
-    }
+      emit('sort-change', { field: sortField.value, order: sortOrder.value });
+    };
 
     const handleRowClick = (record: any, index: number) => {
-      emit('row-click', record, index)
-    }
+      emit('row-click', record, index);
+    };
 
     const handleRowDblclick = (record: any, index: number) => {
-      emit('row-dblclick', record, index)
-    }
+      emit('row-dblclick', record, index);
+    };
 
     const handleSelect = (record: any, selected: boolean) => {
-      const rowKey = getRowKey(record, props.data.indexOf(record))
-      const newSelectedKeys = [...selectedRowKeys.value]
+      const rowKey = getRowKey(record, props.data.indexOf(record));
+      const newSelectedKeys = [...selectedRowKeys.value];
 
       if (selected) {
         if (!newSelectedKeys.includes(rowKey)) {
-          newSelectedKeys.push(rowKey)
+          newSelectedKeys.push(rowKey);
         }
       } else {
-        const index = newSelectedKeys.indexOf(rowKey)
+        const index = newSelectedKeys.indexOf(rowKey);
         if (index > -1) {
-          newSelectedKeys.splice(index, 1)
+          newSelectedKeys.splice(index, 1);
         }
       }
 
-      selectedRowKeys.value = newSelectedKeys
+      selectedRowKeys.value = newSelectedKeys;
 
       if (props.rowSelection?.onChange) {
-        const selectedRows = props.data.filter(row => 
-          newSelectedKeys.includes(getRowKey(row, props.data.indexOf(row)))
-        )
-        props.rowSelection.onChange(newSelectedKeys, selectedRows)
+        const selectedRows = props.data.filter(row =>
+          newSelectedKeys.includes(getRowKey(row, props.data.indexOf(row))),
+        );
+        props.rowSelection.onChange(newSelectedKeys, selectedRows);
       }
-    }
+    };
 
     const handleSelectAll = (selected: boolean) => {
-      const newSelectedKeys = selected
-        ? props.data.map((record, index) => getRowKey(record, index))
-        : []
+      const newSelectedKeys = selected ? props.data.map((record, index) => getRowKey(record, index)) : [];
 
-      selectedRowKeys.value = newSelectedKeys
+      selectedRowKeys.value = newSelectedKeys;
 
       if (props.rowSelection?.onChange) {
-        props.rowSelection.onChange(newSelectedKeys, selected ? [...props.data] : [])
+        props.rowSelection.onChange(newSelectedKeys, selected ? [...props.data] : []);
       }
-    }
+    };
 
     const handleExpand = (record: any, expanded: boolean) => {
-      const rowKey = getRowKey(record, props.data.indexOf(record))
-      const newExpandedKeys = [...expandedRowKeys.value]
+      const rowKey = getRowKey(record, props.data.indexOf(record));
+      const newExpandedKeys = [...expandedRowKeys.value];
 
       if (expanded) {
         if (!newExpandedKeys.includes(rowKey)) {
-          newExpandedKeys.push(rowKey)
+          newExpandedKeys.push(rowKey);
         }
       } else {
-        const index = newExpandedKeys.indexOf(rowKey)
+        const index = newExpandedKeys.indexOf(rowKey);
         if (index > -1) {
-          newExpandedKeys.splice(index, 1)
+          newExpandedKeys.splice(index, 1);
         }
       }
 
-      expandedRowKeys.value = newExpandedKeys
+      expandedRowKeys.value = newExpandedKeys;
 
       if (props.expandable?.onChange) {
-        props.expandable.onChange(newExpandedKeys)
+        props.expandable.onChange(newExpandedKeys);
       }
-    }
+    };
 
     const isRowSelected = (record: any) => {
-      const rowKey = getRowKey(record, props.data.indexOf(record))
-      return selectedRowKeys.value.includes(rowKey)
-    }
+      const rowKey = getRowKey(record, props.data.indexOf(record));
+      return selectedRowKeys.value.includes(rowKey);
+    };
 
     const isRowExpanded = (record: any) => {
-      const rowKey = getRowKey(record, props.data.indexOf(record))
-      return expandedRowKeys.value.includes(rowKey)
-    }
+      const rowKey = getRowKey(record, props.data.indexOf(record));
+      return expandedRowKeys.value.includes(rowKey);
+    };
 
     const isAllSelected = computed(() => {
       if (props.data.length === 0) {
-        return false
+        return false;
       }
-      return props.data.every(record => isRowSelected(record))
-    })
+      return props.data.every(record => isRowSelected(record));
+    });
 
     const isIndeterminate = computed(() => {
       if (isAllSelected.value) {
-        return false
+        return false;
       }
-      return props.data.some(record => isRowSelected(record))
-    })
+      return props.data.some(record => isRowSelected(record));
+    });
 
     return () => (
       <div class="w-full">
@@ -229,9 +227,13 @@ export const Table = defineComponent({
           class={cn(
             'relative w-full overflow-auto',
             props.bordered && 'border border-neutral-200 rounded-lg',
-            sizeClasses.value
+            sizeClasses.value,
           )}
-          style={props.scroll ? { maxHeight: typeof props.scroll.y === 'number' ? `${props.scroll.y}px` : props.scroll.y } : {}}
+          style={
+            props.scroll
+              ? { maxHeight: typeof props.scroll.y === 'number' ? `${props.scroll.y}px` : props.scroll.y }
+              : {}
+          }
         >
           <table class="w-full border-collapse">
             <thead>
@@ -247,10 +249,7 @@ export const Table = defineComponent({
                     />
                   </th>
                 )}
-                {props.expandable && (
-                  <th class="w-12 px-4 py-3 text-left font-semibold text-neutral-700">
-                  </th>
-                )}
+                {props.expandable && <th class="w-12 px-4 py-3 text-left font-semibold text-neutral-700"></th>}
                 {props.columns.map(column => (
                   <th
                     key={column.key}
@@ -258,7 +257,7 @@ export const Table = defineComponent({
                       'px-4 py-3 text-left font-semibold text-neutral-700 whitespace-nowrap',
                       column.align === 'center' && 'text-center',
                       column.align === 'right' && 'text-right',
-                      column.sortable && 'cursor-pointer hover:bg-neutral-100 transition-colors'
+                      column.sortable && 'cursor-pointer hover:bg-neutral-100 transition-colors',
                     )}
                     style={{ width: column.width }}
                     onClick={() => handleSort(column)}
@@ -282,18 +281,40 @@ export const Table = defineComponent({
             <tbody>
               {props.loading ? (
                 <tr>
-                  <td colSpan={props.columns.length + (props.rowSelection ? 1 : 0) + (props.expandable ? 1 : 0)} class="px-4 py-8 text-center">
+                  <td
+                    colSpan={props.columns.length + (props.rowSelection ? 1 : 0) + (props.expandable ? 1 : 0)}
+                    class="px-4 py-8 text-center"
+                  >
                     <div class="flex items-center justify-center">
-                      <svg class="animate-spin h-6 w-6 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        class="animate-spin h-6 w-6 text-primary-600"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          class="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          class="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                     </div>
                   </td>
                 </tr>
               ) : props.data.length === 0 ? (
                 <tr>
-                  <td colSpan={props.columns.length + (props.rowSelection ? 1 : 0) + (props.expandable ? 1 : 0)} class="px-4 py-8 text-center text-neutral-500">
+                  <td
+                    colSpan={props.columns.length + (props.rowSelection ? 1 : 0) + (props.expandable ? 1 : 0)}
+                    class="px-4 py-8 text-center text-neutral-500"
+                  >
                     暂无数据
                   </td>
                 </tr>
@@ -305,7 +326,7 @@ export const Table = defineComponent({
                       'border-b border-neutral-100 transition-colors',
                       props.hoverable && 'hover:bg-neutral-50',
                       props.striped && index % 2 === 0 && 'bg-neutral-50',
-                      isRowSelected(record) && 'bg-primary-50'
+                      isRowSelected(record) && 'bg-primary-50',
                     )}
                     onClick={() => handleRowClick(record, index)}
                     onDblclick={() => handleRowDblclick(record, index)}
@@ -340,7 +361,7 @@ export const Table = defineComponent({
                         class={cn(
                           'px-4 py-3 whitespace-nowrap',
                           column.align === 'center' && 'text-center',
-                          column.align === 'right' && 'text-right'
+                          column.align === 'right' && 'text-right',
                         )}
                       >
                         {getCellValue(record, column)}
@@ -357,13 +378,13 @@ export const Table = defineComponent({
           <div class="mt-2">
             {props.data.map((record, index) => {
               if (!isRowExpanded(record)) {
-                return null
+                return null;
               }
               return (
                 <div key={`expanded-${getRowKey(record, index)}`} class="p-4 bg-neutral-50 rounded-lg">
                   {props.expandable?.expandedRowRender?.(record, index)}
                 </div>
-              )
+              );
             })}
           </div>
         )}
@@ -379,6 +400,6 @@ export const Table = defineComponent({
           </div>
         )}
       </div>
-    )
+    );
   },
-})
+});

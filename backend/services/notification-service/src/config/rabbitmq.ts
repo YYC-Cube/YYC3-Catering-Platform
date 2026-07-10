@@ -25,14 +25,14 @@ export const connectRabbitMQ = async (): Promise<void> => {
     connection = await amqp.connect(url);
     if (connection && typeof connection.createChannel === 'function') {
       channel = await connection.createChannel();
-      
+
       // 创建通知队列
       const queueName = process.env.RABBITMQ_NOTIFICATION_QUEUE || 'notification_queue';
       if (channel && typeof channel.assertQueue === 'function') {
         await channel.assertQueue(queueName, {
           durable: true, // 持久化队列
         });
-        
+
         logger.info('RabbitMQ连接成功');
       }
     }
@@ -65,15 +65,15 @@ export const sendToQueue = async (queueName: string, message: any): Promise<void
     const isSent = channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)), {
       persistent: true, // 持久化消息
     });
-    
+
     if (!isSent) {
       // 如果消息发送失败，将其重新加入队列
-      await new Promise((resolve) => channel?.once('drain', resolve));
+      await new Promise(resolve => channel?.once('drain', resolve));
       channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)), {
         persistent: true,
       });
     }
-    
+
     logger.info('消息发送到队列成功: %s', queueName);
   } catch (error) {
     logger.error('消息发送到队列失败: %s', (error as Error).message);
@@ -106,7 +106,7 @@ export const closeRabbitMQ = async (): Promise<void> => {
 export const consumeQueue = async (queueName: string, callback: (message: any) => Promise<void>): Promise<void> => {
   try {
     const channel = getChannel();
-    await channel.consume(queueName, async (msg) => {
+    await channel.consume(queueName, async msg => {
       if (msg) {
         try {
           const messageContent = JSON.parse(msg.content.toString());
@@ -118,7 +118,7 @@ export const consumeQueue = async (queueName: string, callback: (message: any) =
         }
       }
     });
-    
+
     logger.info('开始消费队列: %s', queueName);
   } catch (error) {
     logger.error('消费队列失败: %s', (error as Error).message);

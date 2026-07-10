@@ -58,7 +58,7 @@ export class PluginSystem extends EventEmitter {
    */
   public async initialize(config: AgentConfig): Promise<void> {
     this.config = config;
-    
+
     // 如果有配置的插件，加载它们
     if (config.plugins && Array.isArray(config.plugins)) {
       await this.loadPlugins(config.plugins);
@@ -92,7 +92,7 @@ export class PluginSystem extends EventEmitter {
     try {
       // 初始化插件
       await plugin.initialize(this.config);
-      
+
       // 注册插件
       this.plugins.set(pluginId, plugin);
 
@@ -111,7 +111,7 @@ export class PluginSystem extends EventEmitter {
       if (plugin.getEvents) {
         const events = plugin.getEvents();
         events.forEach(event => {
-          this.on(event, (data) => {
+          this.on(event, data => {
             this.emit(`${pluginId}:${event}`, data);
           });
         });
@@ -171,14 +171,14 @@ export class PluginSystem extends EventEmitter {
         // 动态导入插件
         const pluginModule = await import(pluginPath);
         let pluginClass = pluginModule.default;
-        
+
         if (!pluginClass) {
           const keys = Object.keys(pluginModule);
           if (keys.length > 0) {
             pluginClass = pluginModule[keys[0]];
           }
         }
-        
+
         if (typeof pluginClass === 'function') {
           const pluginInstance = new pluginClass();
           if (await this.registerPlugin(pluginInstance)) {
@@ -237,8 +237,7 @@ export class PluginSystem extends EventEmitter {
    * 获取启用的插件
    */
   public getEnabledPlugins(): Plugin[] {
-    return Array.from(this.plugins.values())
-      .filter(plugin => plugin.metadata.enabled !== false);
+    return Array.from(this.plugins.values()).filter(plugin => plugin.metadata.enabled !== false);
   }
 
   /**
@@ -246,14 +245,15 @@ export class PluginSystem extends EventEmitter {
    */
   public searchPlugins(query: string): Plugin[] {
     const lowerQuery = query.toLowerCase();
-    return Array.from(this.plugins.values())
-      .filter(plugin => 
+    return Array.from(this.plugins.values()).filter(
+      plugin =>
         plugin.metadata.id.toLowerCase().includes(lowerQuery) ||
         plugin.metadata.name.toLowerCase().includes(lowerQuery) ||
         plugin.metadata.description.toLowerCase().includes(lowerQuery) ||
-        (plugin.metadata.tags && Array.isArray(plugin.metadata.tags) && 
-         plugin.metadata.tags.some((tag: string) => tag.toLowerCase().includes(lowerQuery)))
-      );
+        (plugin.metadata.tags &&
+          Array.isArray(plugin.metadata.tags) &&
+          plugin.metadata.tags.some((tag: string) => tag.toLowerCase().includes(lowerQuery))),
+    );
   }
 
   /**

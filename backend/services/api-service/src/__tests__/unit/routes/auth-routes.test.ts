@@ -18,7 +18,7 @@ vi.mock('../../../config/database');
 vi.mock('../../../middleware/auth');
 vi.mock('bcrypt', () => ({
   compare: vi.fn(),
-  hash: vi.fn()
+  hash: vi.fn(),
 }));
 vi.mock('../../../middleware');
 
@@ -26,11 +26,23 @@ describe('Auth Routes', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(authMiddleware.generateToken).mockReturnValue('mock-jwt-token');
-    vi.mocked(authMiddleware.verifyToken).mockResolvedValue({ success: true, user: { id: 'user123', email: 'test@example.com', role: 'user' } });
+    vi.mocked(authMiddleware.verifyToken).mockResolvedValue({
+      success: true,
+      user: { id: 'user123', email: 'test@example.com', role: 'user' },
+    });
     vi.mocked(middleware.loginRateLimit).mockReturnValue(() => Promise.resolve({ success: true }));
-    vi.mocked(middleware.registerRateLimit).mockReturnValue(() => Promise.resolve({ success: true }));
-    vi.mocked(middleware.sanitize).mockImplementation((input: any) => ({ success: true, data: input }));
-    vi.mocked(middleware.rateLimiter.createResponse).mockReturnValue(new Response(JSON.stringify({ success: false, error: 'Rate limit exceeded' }), { status: 429 }));
+    vi.mocked(middleware.registerRateLimit).mockReturnValue(() =>
+      Promise.resolve({ success: true })
+    );
+    vi.mocked(middleware.sanitize).mockImplementation((input: any) => ({
+      success: true,
+      data: input,
+    }));
+    vi.mocked(middleware.rateLimiter.createResponse).mockReturnValue(
+      new Response(JSON.stringify({ success: false, error: 'Rate limit exceeded' }), {
+        status: 429,
+      })
+    );
   });
 
   describe('login', () => {
@@ -42,12 +54,12 @@ describe('Auth Routes', () => {
         name: 'Test User',
         role: 'user',
         status: 'active',
-        last_login_at: new Date()
+        last_login_at: new Date(),
       };
 
       vi.mocked(dbManager.query).mockResolvedValue({
         rows: [mockUser],
-        rowCount: 1
+        rowCount: 1,
       });
 
       const bcrypt = await import('bcrypt');
@@ -56,7 +68,7 @@ describe('Auth Routes', () => {
       const request = new Request('http://example.com/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'test@example.com', password: 'password123' })
+        body: JSON.stringify({ email: 'test@example.com', password: 'password123' }),
       });
 
       const response = await authRoutes.login(request);
@@ -71,7 +83,7 @@ describe('Auth Routes', () => {
       const request = new Request('http://example.com/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: 'invalid json'
+        body: 'invalid json',
       });
 
       const response = await authRoutes.login(request);
@@ -85,13 +97,13 @@ describe('Auth Routes', () => {
     it('应该处理不存在的用户', async () => {
       vi.mocked(dbManager.query).mockResolvedValue({
         rows: [],
-        rowCount: 0
+        rowCount: 0,
       });
 
       const request = new Request('http://example.com/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'nonexistent@example.com', password: 'password123' })
+        body: JSON.stringify({ email: 'nonexistent@example.com', password: 'password123' }),
       });
 
       const response = await authRoutes.login(request);
@@ -110,18 +122,18 @@ describe('Auth Routes', () => {
         name: 'Test User',
         role: 'user',
         status: 'disabled',
-        last_login_at: new Date()
+        last_login_at: new Date(),
       };
 
       vi.mocked(dbManager.query).mockResolvedValue({
         rows: [mockUser],
-        rowCount: 1
+        rowCount: 1,
       });
 
       const request = new Request('http://example.com/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'test@example.com', password: 'password123' })
+        body: JSON.stringify({ email: 'test@example.com', password: 'password123' }),
       });
 
       const response = await authRoutes.login(request);
@@ -133,12 +145,14 @@ describe('Auth Routes', () => {
     });
 
     it('应该处理限流检查失败', async () => {
-      vi.mocked(middleware.loginRateLimit).mockReturnValue(() => Promise.resolve({ success: false, error: '请求过于频繁' }));
+      vi.mocked(middleware.loginRateLimit).mockReturnValue(() =>
+        Promise.resolve({ success: false, error: '请求过于频繁' })
+      );
 
       const request = new Request('http://example.com/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'test@example.com', password: 'password123' })
+        body: JSON.stringify({ email: 'test@example.com', password: 'password123' }),
       });
 
       const response = await authRoutes.login(request);
@@ -155,12 +169,12 @@ describe('Auth Routes', () => {
         name: 'Test User',
         role: 'user',
         status: 'active',
-        last_login_at: new Date()
+        last_login_at: new Date(),
       };
 
       vi.mocked(dbManager.query).mockResolvedValue({
         rows: [mockUser],
-        rowCount: 1
+        rowCount: 1,
       });
 
       const bcrypt = await import('bcrypt');
@@ -169,7 +183,7 @@ describe('Auth Routes', () => {
       const request = new Request('http://example.com/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'test@example.com', password: 'wrongpassword' })
+        body: JSON.stringify({ email: 'test@example.com', password: 'wrongpassword' }),
       });
 
       const response = await authRoutes.login(request);
@@ -186,7 +200,7 @@ describe('Auth Routes', () => {
       const request = new Request('http://example.com/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'test@example.com', password: 'password123' })
+        body: JSON.stringify({ email: 'test@example.com', password: 'password123' }),
       });
 
       const response = await authRoutes.login(request);
@@ -204,7 +218,7 @@ describe('Auth Routes', () => {
         .mockResolvedValueOnce({ rows: [], rowCount: 0 })
         .mockResolvedValueOnce({
           rows: [{ id: 'user123', created_at: new Date() }],
-          rowCount: 1
+          rowCount: 1,
         });
 
       const request = new Request('http://example.com/api/v1/auth/register', {
@@ -213,8 +227,8 @@ describe('Auth Routes', () => {
         body: JSON.stringify({
           email: 'new@example.com',
           password: 'password123',
-          name: 'Test User'
-        })
+          name: 'Test User',
+        }),
       });
 
       const response = await authRoutes.register(request);
@@ -232,8 +246,8 @@ describe('Auth Routes', () => {
         body: JSON.stringify({
           email: 'invalid-email',
           password: 'password123',
-          name: 'Test User'
-        })
+          name: 'Test User',
+        }),
       });
 
       const response = await authRoutes.register(request);
@@ -251,8 +265,8 @@ describe('Auth Routes', () => {
         body: JSON.stringify({
           email: 'test@example.com',
           password: '123',
-          name: 'Test User'
-        })
+          name: 'Test User',
+        }),
       });
 
       const response = await authRoutes.register(request);
@@ -269,8 +283,8 @@ describe('Auth Routes', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: 'test@example.com',
-          password: 'password123'
-        })
+          password: 'password123',
+        }),
       });
 
       const response = await authRoutes.register(request);
@@ -285,7 +299,7 @@ describe('Auth Routes', () => {
       const request = new Request('http://example.com/api/v1/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: 'invalid json'
+        body: 'invalid json',
       });
 
       const response = await authRoutes.register(request);
@@ -297,7 +311,9 @@ describe('Auth Routes', () => {
     });
 
     it('应该处理限流检查失败', async () => {
-      vi.mocked(middleware.registerRateLimit).mockReturnValue(() => Promise.resolve({ success: false, error: '请求过于频繁' }));
+      vi.mocked(middleware.registerRateLimit).mockReturnValue(() =>
+        Promise.resolve({ success: false, error: '请求过于频繁' })
+      );
 
       const request = new Request('http://example.com/api/v1/auth/register', {
         method: 'POST',
@@ -305,8 +321,8 @@ describe('Auth Routes', () => {
         body: JSON.stringify({
           email: 'test@example.com',
           password: 'password123',
-          name: 'Test User'
-        })
+          name: 'Test User',
+        }),
       });
 
       const response = await authRoutes.register(request);
@@ -324,8 +340,8 @@ describe('Auth Routes', () => {
         body: JSON.stringify({
           email: 'test@example.com',
           password: 'password123',
-          name: 'Test User'
-        })
+          name: 'Test User',
+        }),
       });
 
       const response = await authRoutes.register(request);
@@ -343,7 +359,7 @@ describe('Auth Routes', () => {
       const request = new Request('http://example.com/api/v1/auth/refresh-token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken: 'valid-refresh-token' })
+        body: JSON.stringify({ refreshToken: 'valid-refresh-token' }),
       });
 
       const response = await authRoutes.refreshToken(request);
@@ -358,7 +374,7 @@ describe('Auth Routes', () => {
       const request = new Request('http://example.com/api/v1/auth/refresh-token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: 'invalid json'
+        body: 'invalid json',
       });
 
       const response = await authRoutes.refreshToken(request);
@@ -373,7 +389,7 @@ describe('Auth Routes', () => {
       const request = new Request('http://example.com/api/v1/auth/refresh-token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
+        body: JSON.stringify({}),
       });
 
       const response = await authRoutes.refreshToken(request);
@@ -385,12 +401,15 @@ describe('Auth Routes', () => {
     });
 
     it('应该处理无效的刷新令牌', async () => {
-      vi.mocked(authMiddleware.verifyToken).mockResolvedValue({ success: false, error: '无效的令牌' });
+      vi.mocked(authMiddleware.verifyToken).mockResolvedValue({
+        success: false,
+        error: '无效的令牌',
+      });
 
       const request = new Request('http://example.com/api/v1/auth/refresh-token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken: 'invalid-token' })
+        body: JSON.stringify({ refreshToken: 'invalid-token' }),
       });
 
       const response = await authRoutes.refreshToken(request);
@@ -402,12 +421,14 @@ describe('Auth Routes', () => {
     });
 
     it('应该处理刷新令牌过程中的错误', async () => {
-      vi.mocked(authMiddleware.verifyToken).mockRejectedValue(new Error('Token verification failed'));
+      vi.mocked(authMiddleware.verifyToken).mockRejectedValue(
+        new Error('Token verification failed')
+      );
 
       const request = new Request('http://example.com/api/v1/auth/refresh-token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken: 'valid-token' })
+        body: JSON.stringify({ refreshToken: 'valid-token' }),
       });
 
       const response = await authRoutes.refreshToken(request);
@@ -423,7 +444,7 @@ describe('Auth Routes', () => {
     it('应该成功验证有效的令牌', async () => {
       const request = new Request('http://example.com/api/v1/auth/verify', {
         method: 'GET',
-        headers: { 'Authorization': 'Bearer valid-token' }
+        headers: { Authorization: 'Bearer valid-token' },
       });
 
       const response = await authRoutes.verifyTokenEndpoint(request);
@@ -436,7 +457,7 @@ describe('Auth Routes', () => {
 
     it('应该处理缺少Authorization头的情况', async () => {
       const request = new Request('http://example.com/api/v1/auth/verify', {
-        method: 'GET'
+        method: 'GET',
       });
 
       const response = await authRoutes.verifyTokenEndpoint(request);
@@ -448,11 +469,15 @@ describe('Auth Routes', () => {
     });
 
     it('应该处理无效的令牌', async () => {
-      vi.mocked(authMiddleware.verifyToken).mockResolvedValue({ success: false, error: '无效的令牌', code: 'INVALID_TOKEN' });
+      vi.mocked(authMiddleware.verifyToken).mockResolvedValue({
+        success: false,
+        error: '无效的令牌',
+        code: 'INVALID_TOKEN',
+      });
 
       const request = new Request('http://example.com/api/v1/auth/verify', {
         method: 'GET',
-        headers: { 'Authorization': 'Bearer invalid-token' }
+        headers: { Authorization: 'Bearer invalid-token' },
       });
 
       const response = await authRoutes.verifyTokenEndpoint(request);
@@ -464,11 +489,13 @@ describe('Auth Routes', () => {
     });
 
     it('应该处理验证令牌过程中的错误', async () => {
-      vi.mocked(authMiddleware.verifyToken).mockRejectedValue(new Error('Token verification failed'));
+      vi.mocked(authMiddleware.verifyToken).mockRejectedValue(
+        new Error('Token verification failed')
+      );
 
       const request = new Request('http://example.com/api/v1/auth/verify', {
         method: 'GET',
-        headers: { 'Authorization': 'Bearer valid-token' }
+        headers: { Authorization: 'Bearer valid-token' },
       });
 
       const response = await authRoutes.verifyTokenEndpoint(request);
@@ -484,7 +511,7 @@ describe('Auth Routes', () => {
     it('应该成功登出用户', async () => {
       const request = new Request('http://example.com/api/v1/auth/logout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
 
       const response = await authRoutes.logout(request);

@@ -12,31 +12,25 @@
 ### 基础用法
 
 ```tsx
-import { Pagination } from '@/components/UI'
-import { ref } from 'vue'
+import { Pagination } from "@/components/UI";
+import { ref } from "vue";
 
 export default function PaginationBasic() {
-  const current = ref(1)
+  const current = ref(1);
 
-  return (
-    <Pagination
-      v-model={current.value}
-      total={100}
-      pageSize={10}
-    />
-  )
+  return <Pagination v-model={current.value} total={100} pageSize={10} />;
 }
 ```
 
 ### 更多功能
 
 ```tsx
-import { Pagination } from '@/components/UI'
-import { ref } from 'vue'
+import { Pagination } from "@/components/UI";
+import { ref } from "vue";
 
 export default function PaginationMore() {
-  const current = ref(1)
-  const pageSize = ref(10)
+  const current = ref(1);
+  const pageSize = ref(10);
 
   return (
     <Pagination
@@ -47,44 +41,36 @@ export default function PaginationMore() {
       showSizeChanger
       showQuickJumper
     />
-  )
+  );
 }
 ```
 
 ### 迷你版
 
 ```tsx
-import { Pagination } from '@/components/UI'
-import { ref } from 'vue'
+import { Pagination } from "@/components/UI";
+import { ref } from "vue";
 
 export default function PaginationMini() {
-  const current = ref(1)
+  const current = ref(1);
 
-  return (
-    <Pagination
-      v-model={current.value}
-      total={100}
-      pageSize={10}
-      size="sm"
-      simple
-    />
-  )
+  return <Pagination v-model={current.value} total={100} pageSize={10} size="sm" simple />;
 }
 ```
 
 ### 改变每页数量
 
 ```tsx
-import { Pagination } from '@/components/UI'
-import { ref } from 'vue'
+import { Pagination } from "@/components/UI";
+import { ref } from "vue";
 
 export default function PaginationSizeChanger() {
-  const current = ref(1)
-  const pageSize = ref(10)
+  const current = ref(1);
+  const pageSize = ref(10);
 
   const handlePageSizeChange = (size: number) => {
-    console.log('每页数量:', size)
-  }
+    console.log("每页数量:", size);
+  };
 
   return (
     <Pagination
@@ -94,47 +80,33 @@ export default function PaginationSizeChanger() {
       showSizeChanger
       onPageSizeChange={handlePageSizeChange}
     />
-  )
+  );
 }
 ```
 
 ### 快速跳转
 
 ```tsx
-import { Pagination } from '@/components/UI'
-import { ref } from 'vue'
+import { Pagination } from "@/components/UI";
+import { ref } from "vue";
 
 export default function PaginationQuickJumper() {
-  const current = ref(1)
+  const current = ref(1);
 
-  return (
-    <Pagination
-      v-model={current.value}
-      total={100}
-      pageSize={10}
-      showQuickJumper
-    />
-  )
+  return <Pagination v-model={current.value} total={100} pageSize={10} showQuickJumper />;
 }
 ```
 
 ### 显示总数
 
 ```tsx
-import { Pagination } from '@/components/UI'
-import { ref } from 'vue'
+import { Pagination } from "@/components/UI";
+import { ref } from "vue";
 
 export default function PaginationShowTotal() {
-  const current = ref(1)
+  const current = ref(1);
 
-  return (
-    <Pagination
-      v-model={current.value}
-      total={100}
-      pageSize={10}
-      showTotal
-    />
-  )
+  return <Pagination v-model={current.value} total={100} pageSize={10} showTotal />;
 }
 ```
 
@@ -142,21 +114,21 @@ export default function PaginationShowTotal() {
 
 ### Pagination Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| modelValue | 当前页数 | `number` | `1` |
-| total | 数据总数 | `number` | `0` |
-| pageSize | 每页条数 | `number` | `10` |
-| disabled | 是否禁用 | `boolean` | `false` |
-| size | 尺寸 | `string` | `sm` / `md` / `lg` | `md` |
-| simple | 是否简洁模式 | `boolean` | `false` |
-| showTotal | 是否显示总数 | `boolean` | `false` |
-| showSizeChanger | 是否显示每页条数选择器 | `boolean` | `false` |
-| showQuickJumper | 是否显示快速跳转 | `boolean` | `false` |
-| pageSizeOptions | 每页条数选项 | `number[]` | `[10, 20, 50, 100]` |
-| onChange | 页码变化回调 | `Function` | - |
-| onPageSizeChange | 每页条数变化回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数             | 说明                   | 类型       | 默认值              |
+| ---------------- | ---------------------- | ---------- | ------------------- | ---- |
+| modelValue       | 当前页数               | `number`   | `1`                 |
+| total            | 数据总数               | `number`   | `0`                 |
+| pageSize         | 每页条数               | `number`   | `10`                |
+| disabled         | 是否禁用               | `boolean`  | `false`             |
+| size             | 尺寸                   | `string`   | `sm` / `md` / `lg`  | `md` |
+| simple           | 是否简洁模式           | `boolean`  | `false`             |
+| showTotal        | 是否显示总数           | `boolean`  | `false`             |
+| showSizeChanger  | 是否显示每页条数选择器 | `boolean`  | `false`             |
+| showQuickJumper  | 是否显示快速跳转       | `boolean`  | `false`             |
+| pageSizeOptions  | 每页条数选项           | `number[]` | `[10, 20, 50, 100]` |
+| onChange         | 页码变化回调           | `Function` | -                   |
+| onPageSizeChange | 每页条数变化回调       | `Function` | -                   |
+| className        | 自定义类名             | `string`   | -                   |
 
 ## 样式定制
 
@@ -246,10 +218,7 @@ const pageSize = ref(20)
 ### 3. 自定义总数显示
 
 ```tsx
-<Pagination
-  total={total}
-  showTotal={(total, range) => `${range[0]}-${range[1]} 共 ${total} 条`}
-/>
+<Pagination total={total} showTotal={(total, range) => `${range[0]}-${range[1]} 共 ${total} 条`} />
 ```
 
 ## 常见问题

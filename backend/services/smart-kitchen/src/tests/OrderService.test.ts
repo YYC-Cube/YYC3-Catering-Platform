@@ -9,7 +9,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { OrderService } from '../services/OrderService';
 import { Order, OrderStatus, OrderModel } from '../models/Order';
-  
+
 // 模拟OrderModel模型的静态方法
 vi.spyOn(OrderModel, 'find').mockImplementation(() => {
   return {
@@ -17,7 +17,7 @@ vi.spyOn(OrderModel, 'find').mockImplementation(() => {
     order: vi.fn().mockReturnThis(),
     take: vi.fn().mockReturnThis(),
     skip: vi.fn().mockReturnThis(),
-    relations: vi.fn().mockResolvedValue([])
+    relations: vi.fn().mockResolvedValue([]),
   } as any;
 });
 vi.spyOn(OrderModel, 'count').mockResolvedValue(0);
@@ -82,7 +82,11 @@ describe('OrderService', () => {
 
   beforeEach(() => {
     // 创建新的模拟仓库实例
-    const { mockDishRepository: mdr, mockKitchenResourceRepository: mkcr, mockChefRepository: mcr } = createMockRepositories();
+    const {
+      mockDishRepository: mdr,
+      mockKitchenResourceRepository: mkcr,
+      mockChefRepository: mcr,
+    } = createMockRepositories();
     mockDishRepository = mdr;
     mockKitchenResourceRepository = mkcr;
     mockChefRepository = mcr;
@@ -92,13 +96,13 @@ describe('OrderService', () => {
 
     // 清除所有模拟的调用历史
     vi.clearAllMocks();
-    
+
     // 重新设置OrderModel模型的静态方法模拟
     vi.spyOn(OrderModel, 'find').mockResolvedValue([]);
     vi.spyOn(OrderModel, 'count').mockResolvedValue(0);
     vi.spyOn(OrderModel, 'findOne').mockResolvedValue(null);
     vi.spyOn(OrderModel, 'save').mockResolvedValue(null);
-    
+
     // 设置mockChefRepository默认返回值
     mockChefRepository.findByRestaurant.mockResolvedValue([]);
     mockChefRepository.getAvailableChefs.mockResolvedValue([]);
@@ -109,10 +113,10 @@ describe('OrderService', () => {
       // 设置模拟返回值
       const mockOrders: any[] = [];
       const mockCount = 0;
-      
+
       // 执行测试
       const result = await orderService.getOrderQueue('restaurant-1', OrderStatus.PENDING, 10, 0);
-      
+
       // 验证结果结构
       expect(result).toHaveProperty('orders');
       expect(result).toHaveProperty('totalCount');
@@ -130,9 +134,9 @@ describe('OrderService', () => {
         quantity: 1,
         price: 50,
         cookingTime: 10,
-        complexity: 2
+        complexity: 2,
       };
-      
+
       const mockOrder = {
         id: 'new-order-1',
         restaurantId: 'restaurant-1',
@@ -143,9 +147,9 @@ describe('OrderService', () => {
         priority: 5,
         estimatedCookingTime: 10,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
-      
+
       (mockDishRepository.findById as any).mockResolvedValue(mockDish);
       (mockDishRepository.findByIds as any).mockResolvedValue([mockDish]);
       (OrderModel.save as any).mockResolvedValue(mockOrder);
@@ -155,13 +159,15 @@ describe('OrderService', () => {
         if (options.where.id === 'new-order-1') {
           return Promise.resolve({
             ...mockOrder,
-            dishes: [{ id: 'order-dish-1', dishId: 'dish-1', name: 'Test Dish', quantity: 1, price: 50, cookingTime: 10 }]
+            dishes: [
+              { id: 'order-dish-1', dishId: 'dish-1', name: 'Test Dish', quantity: 1, price: 50, cookingTime: 10 },
+            ],
           });
         }
         return Promise.resolve(null);
       });
       (mockChefRepository.findByRestaurant as any).mockResolvedValue([]);
-      
+
       // 执行测试
       const orderData = {
         restaurantId: 'restaurant-1',
@@ -173,14 +179,14 @@ describe('OrderService', () => {
             name: 'Test Dish',
             quantity: 1,
             price: 50,
-            cookingTime: 10
-          }
+            cookingTime: 10,
+          },
         ],
-        totalAmount: 50
+        totalAmount: 50,
       };
-      
+
       const result = await orderService.createOrder(orderData);
-      
+
       // 验证结果
       expect(result).toEqual(mockOrder);
     });
@@ -189,7 +195,9 @@ describe('OrderService', () => {
   describe('updateOrderStatus', () => {
     it('应该在订单不存在时抛出错误', async () => {
       // 执行测试并验证错误
-      await expect(orderService.updateOrderStatus('non-existent-order', OrderStatus.COMPLETED)).rejects.toThrow('订单不存在');
+      await expect(orderService.updateOrderStatus('non-existent-order', OrderStatus.COMPLETED)).rejects.toThrow(
+        '订单不存在',
+      );
     });
   });
 
@@ -206,19 +214,19 @@ describe('OrderService', () => {
       const vipOrder = {
         customer: { isVip: true },
         totalAmount: 300,
-        createdAt: new Date() // 确保createdAt存在
+        createdAt: new Date(), // 确保createdAt存在
       };
 
       const highAmountOrder = {
         customer: { isVip: false },
         totalAmount: 300,
-        createdAt: new Date() // 确保createdAt存在
+        createdAt: new Date(), // 确保createdAt存在
       };
 
       const regularOrder = {
         customer: { isVip: false },
         totalAmount: 100,
-        createdAt: new Date() // 确保createdAt存在
+        createdAt: new Date(), // 确保createdAt存在
       };
 
       // 执行测试

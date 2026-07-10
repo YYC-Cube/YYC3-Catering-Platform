@@ -35,7 +35,7 @@ const mockCustomers: Customer[] = [
     email: 'zhangsan@example.com',
     status: 'active',
     totalSpent: 1000,
-    points: 500
+    points: 500,
   },
   {
     id: '2',
@@ -44,7 +44,7 @@ const mockCustomers: Customer[] = [
     email: 'lisi@example.com',
     status: 'active',
     totalSpent: 2000,
-    points: 1000
+    points: 1000,
   },
   {
     id: '3',
@@ -53,8 +53,8 @@ const mockCustomers: Customer[] = [
     email: 'wangwu@example.com',
     status: 'inactive',
     totalSpent: 500,
-    points: 250
-  }
+    points: 250,
+  },
 ];
 
 const mockCustomerStatistics: CustomerStatistics = {
@@ -62,7 +62,7 @@ const mockCustomerStatistics: CustomerStatistics = {
   activeCustomers: 80,
   newCustomers: 10,
   avgSpent: 1500,
-  avgOrderCount: 5
+  avgOrderCount: 5,
 };
 
 // 定义模拟的API函数
@@ -127,7 +127,7 @@ describe('Customer API', () => {
         keyword: '张',
         status: 'active',
         page: 1,
-        size: 10
+        size: 10,
       };
       const result = await getCustomers(queryParams);
 
@@ -195,7 +195,7 @@ describe('Customer API', () => {
         email: 'zhaoliu@example.com',
         status: 'active',
         totalSpent: 0,
-        points: 0
+        points: 0,
       };
 
       // 设置模拟返回值

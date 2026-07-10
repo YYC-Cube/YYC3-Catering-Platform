@@ -2,24 +2,24 @@
  * YYC³餐饮行业智能化平台 - 员工端路由配置
  */
 
-import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
 // 路由懒加载
-const Login = () => import('@/views/Login.vue')
-const Dashboard = () => import('@/views/Dashboard.vue')
-const OrderManagement = () => import('@/views/OrderManagement.vue')
-const KitchenDisplay = () => import('@/views/KitchenDisplay.vue')
-const ReservationManagement = () => import('@/views/ReservationManagement.vue')
-const CustomerService = () => import('@/views/CustomerService.vue')
-const Profile = () => import('@/views/Profile.vue')
-const NotFound = () => import('@/views/NotFound.vue')
+const Login = () => import('@/views/Login.vue');
+const Dashboard = () => import('@/views/Dashboard.vue');
+const OrderManagement = () => import('@/views/OrderManagement.vue');
+const KitchenDisplay = () => import('@/views/KitchenDisplay.vue');
+const ReservationManagement = () => import('@/views/ReservationManagement.vue');
+const CustomerService = () => import('@/views/CustomerService.vue');
+const Profile = () => import('@/views/Profile.vue');
+const NotFound = () => import('@/views/NotFound.vue');
 
 // 路由配置
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/dashboard'
+    redirect: '/dashboard',
   },
   {
     path: '/login',
@@ -28,8 +28,8 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '员工登录',
       requiresAuth: false,
-      keepAlive: false
-    }
+      keepAlive: false,
+    },
   },
   {
     path: '/dashboard',
@@ -39,8 +39,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '工作台',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'House'
-    }
+      icon: 'House',
+    },
   },
   {
     path: '/orders',
@@ -50,8 +50,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '订单管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'List'
-    }
+      icon: 'List',
+    },
   },
   {
     path: '/kitchen',
@@ -61,8 +61,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '厨房显示',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'KnifeAndSpoon'
-    }
+      icon: 'KnifeAndSpoon',
+    },
   },
   {
     path: '/reservations',
@@ -72,8 +72,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '预约管理',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Calendar'
-    }
+      icon: 'Calendar',
+    },
   },
   {
     path: '/customer-service',
@@ -83,8 +83,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '客户服务',
       requiresAuth: true,
       keepAlive: true,
-      icon: 'Service'
-    }
+      icon: 'Service',
+    },
   },
   {
     path: '/profile',
@@ -94,8 +94,8 @@ const routes: Array<RouteRecordRaw> = [
       title: '个人中心',
       requiresAuth: true,
       keepAlive: false,
-      icon: 'User'
-    }
+      icon: 'User',
+    },
   },
   {
     path: '/404',
@@ -104,14 +104,14 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '页面不存在',
       requiresAuth: false,
-      keepAlive: false
-    }
+      keepAlive: false,
+    },
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/404'
-  }
-]
+    redirect: '/404',
+  },
+];
 
 // 创建路由实例
 const router = createRouter({
@@ -119,47 +119,47 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
-      return { top: 0 }
+      return { top: 0 };
     }
-  }
-})
+  },
+});
 
 // 全局前置守卫
 router.beforeEach(async (to, from, next) => {
   // 设置页面标题
   if (to.meta?.title) {
-    document.title = `${to.meta.title} - YYC³员工端`
+    document.title = `${to.meta.title} - YYC³员工端`;
   }
 
   // 检查登录状态
-  const token = localStorage.getItem('staff_token')
-  const isAuthenticated = !!token
+  const token = localStorage.getItem('staff_token');
+  const isAuthenticated = !!token;
 
   if (to.meta?.requiresAuth && !isAuthenticated) {
     // 需要登录但未登录，跳转到登录页
     next({
       name: 'Login',
-      query: { redirect: to.fullPath }
-    })
+      query: { redirect: to.fullPath },
+    });
   } else if (to.name === 'Login' && isAuthenticated) {
     // 已登录用户访问登录页，跳转到首页
-    next({ name: 'Dashboard' })
+    next({ name: 'Dashboard' });
   } else {
-    next()
+    next();
   }
-})
+});
 
 // 全局后置钩子
 router.afterEach((to, from) => {
   // 路由切换完成后的处理
-  console.log(`Route changed: ${from.path} -> ${to.path}`)
-})
+  console.log(`Route changed: ${from.path} -> ${to.path}`);
+});
 
 // 路由错误处理
-router.onError((error) => {
-  console.error('Router error:', error)
-})
+router.onError(error => {
+  console.error('Router error:', error);
+});
 
-export default router
+export default router;

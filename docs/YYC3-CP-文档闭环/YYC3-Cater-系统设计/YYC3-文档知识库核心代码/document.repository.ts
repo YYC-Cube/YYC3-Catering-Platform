@@ -20,7 +20,9 @@ export class DocumentRepository {
   private documentsFile: string;
   private documents: Map<string, Document>;
 
-  constructor(dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据') {
+  constructor(
+    dataDir: string = '/Users/yanyu/yyc3-catering-platform/docs/YYC3-Cater-Platform-文档闭环/YYC3-Cater-数据',
+  ) {
     this.logger = new Logger('DocumentRepository');
     this.dataDir = dataDir;
     this.documentsFile = path.join(dataDir, 'documents.json');
@@ -85,7 +87,7 @@ export class DocumentRepository {
       this.logger.info('Saving documents', { count: documents.length });
 
       // 添加到内存
-      documents.forEach((document) => {
+      documents.forEach(document => {
         this.documents.set(document.id, document);
       });
 
@@ -301,7 +303,7 @@ export class DocumentRepository {
       pageSize: number;
       sortBy?: string;
       sortOrder?: 'asc' | 'desc';
-    } = { page: 1, pageSize: 20 }
+    } = { page: 1, pageSize: 20 },
   ): Promise<{ documents: Document[]; total: number }> {
     try {
       this.logger.info('Finding documents', { filters, pagination });
@@ -316,14 +318,10 @@ export class DocumentRepository {
         documents = documents.filter(doc => doc.subcategory === filters.subcategory);
       }
       if (filters.tags && filters.tags.length > 0) {
-        documents = documents.filter(doc =>
-          filters.tags!.some(tag => doc.tags.includes(tag))
-        );
+        documents = documents.filter(doc => filters.tags!.some(tag => doc.tags.includes(tag)));
       }
       if (filters.keywords && filters.keywords.length > 0) {
-        documents = documents.filter(doc =>
-          filters.keywords!.some(keyword => doc.keywords.includes(keyword))
-        );
+        documents = documents.filter(doc => filters.keywords!.some(keyword => doc.keywords.includes(keyword)));
       }
       if (filters.author) {
         documents = documents.filter(doc => doc.author === filters.author);
@@ -339,10 +337,11 @@ export class DocumentRepository {
       }
       if (filters.search) {
         const searchLower = filters.search.toLowerCase();
-        documents = documents.filter(doc =>
-          doc.title.toLowerCase().includes(searchLower) ||
-          doc.content.toLowerCase().includes(searchLower) ||
-          doc.description.toLowerCase().includes(searchLower)
+        documents = documents.filter(
+          doc =>
+            doc.title.toLowerCase().includes(searchLower) ||
+            doc.content.toLowerCase().includes(searchLower) ||
+            doc.description.toLowerCase().includes(searchLower),
         );
       }
 
@@ -366,7 +365,7 @@ export class DocumentRepository {
 
       return {
         documents: paginatedDocuments,
-        total
+        total,
       };
     } catch (error) {
       this.logger.error('Failed to find documents', { filters, pagination, error });
@@ -462,12 +461,14 @@ export class DocumentRepository {
    * @param filters 过滤条件
    * @returns 统计数据
    */
-  async getStatistics(filters: {
-    category?: string;
-    author?: string;
-    startDate?: Date;
-    endDate?: Date;
-  } = {}): Promise<{
+  async getStatistics(
+    filters: {
+      category?: string;
+      author?: string;
+      startDate?: Date;
+      endDate?: Date;
+    } = {},
+  ): Promise<{
     totalDocuments: number;
     publishedDocuments: number;
     draftDocuments: number;
@@ -502,9 +503,10 @@ export class DocumentRepository {
       const draftDocuments = documents.filter(doc => doc.status === DocumentStatus.DRAFT).length;
 
       // 平均质量分数
-      const averageQualityScore = documents.length > 0
-        ? documents.reduce((sum, document) => sum + document.qualityScore, 0) / documents.length
-        : 0;
+      const averageQualityScore =
+        documents.length > 0
+          ? documents.reduce((sum, document) => sum + document.qualityScore, 0) / documents.length
+          : 0;
 
       // 总浏览次数、点赞数、分享数
       const totalViews = documents.reduce((sum, document) => sum + (document.viewCount || 0), 0);
@@ -544,7 +546,7 @@ export class DocumentRepository {
 
       // 加载到内存
       this.documents.clear();
-      documents.forEach((document) => {
+      documents.forEach(document => {
         this.documents.set(document.id, document);
       });
 

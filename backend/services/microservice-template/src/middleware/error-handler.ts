@@ -37,10 +37,10 @@ const errorHandler = (err: Error | unknown, req: Request, res: Response, next: N
       'x-request-id': req.headers['x-request-id'],
     },
   });
-  
+
   // 获取跟踪ID
   const traceId = req.headers['x-request-id'] as string;
-  
+
   // 初始化响应对象
   let response: ApiResponse = {
     code: ErrorCode.INTERNAL_SERVER_ERROR,
@@ -48,12 +48,12 @@ const errorHandler = (err: Error | unknown, req: Request, res: Response, next: N
     timestamp: new Date().toISOString(),
     traceId,
   };
-  
+
   // 处理自定义异常
   if (err instanceof CustomException) {
     response.code = err.code;
     response.message = err.message;
-    
+
     // 开发环境下返回详细信息
     if (process.env.NODE_ENV === 'development') {
       response.data = err.details;
@@ -91,7 +91,7 @@ const errorHandler = (err: Error | unknown, req: Request, res: Response, next: N
       };
     }
   }
-  
+
   // 设置HTTP状态码
   let statusCode: number;
   if (response.code >= 100 && response.code < 600) {
@@ -115,7 +115,7 @@ const errorHandler = (err: Error | unknown, req: Request, res: Response, next: N
         statusCode = 500;
     }
   }
-  
+
   // 发送响应
   res.status(statusCode).json(response);
 };
@@ -131,7 +131,4 @@ const notFoundHandler = (req: Request, res: Response, next: NextFunction): void 
   next(error);
 };
 
-export {
-  errorHandler,
-  notFoundHandler,
-};
+export { errorHandler, notFoundHandler };

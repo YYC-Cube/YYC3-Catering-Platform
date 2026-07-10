@@ -90,7 +90,7 @@ export default {
     lastMonth: 'Last Month',
     thisYear: 'This Year',
     lastYear: 'Last Year',
-    custom: 'Custom'
+    custom: 'Custom',
   },
 
   // Errors
@@ -111,7 +111,7 @@ export default {
     loadFailed: 'Load failed',
     loginFailed: 'Login failed',
     logoutFailed: 'Logout failed',
-    sessionExpired: 'Session expired, please log in again'
+    sessionExpired: 'Session expired, please log in again',
   },
 
   // Success
@@ -128,7 +128,7 @@ export default {
     shared: 'Shared successfully',
     loginSuccess: 'Login successful',
     logoutSuccess: 'Logout successful',
-    operationSuccess: 'Operation successful'
+    operationSuccess: 'Operation successful',
   },
 
   // Navigation
@@ -144,7 +144,7 @@ export default {
     reports: 'Report Management',
     settings: 'System Settings',
     help: 'Help Center',
-    feedback: 'Feedback'
+    feedback: 'Feedback',
   },
 
   // Dashboard
@@ -162,7 +162,7 @@ export default {
     quickActions: 'Quick Actions',
     systemStatus: 'System Status',
     weatherInfo: 'Weather Information',
-    calendarEvents: 'Calendar Events'
+    calendarEvents: 'Calendar Events',
   },
 
   // Menu Management
@@ -194,7 +194,7 @@ export default {
     categoryName: 'Category Name',
     categoryDescription: 'Category Description',
     categoryImage: 'Category Image',
-    sortOrder: 'Sort Order'
+    sortOrder: 'Sort Order',
   },
 
   // Order Management
@@ -234,7 +234,7 @@ export default {
     unpaid: 'Unpaid',
     refunded: 'Refunded',
     notes: 'Notes',
-    specialRequests: 'Special Requests'
+    specialRequests: 'Special Requests',
   },
 
   // Kitchen Management
@@ -282,7 +282,7 @@ export default {
     tasksByStatus: 'Tasks by Status',
     tasksByStation: 'Tasks by Station',
     peakHours: 'Peak Hours',
-    staffPerformance: 'Staff Performance'
+    staffPerformance: 'Staff Performance',
   },
 
   // Data Analytics
@@ -331,7 +331,7 @@ export default {
     kitchenEfficiency: 'Kitchen Efficiency',
     salesForecast: 'Sales Forecast',
     demandForecast: 'Demand Forecast',
-    riskAnalysis: 'Risk Analysis'
+    riskAnalysis: 'Risk Analysis',
   },
 
   // Customer Management
@@ -359,7 +359,7 @@ export default {
     customerSegmentation: 'Customer Segmentation',
     retentionRate: 'Retention Rate',
     loyaltyPoints: 'Loyalty Points',
-    membershipCard: 'Membership Card'
+    membershipCard: 'Membership Card',
   },
 
   // Notifications
@@ -406,7 +406,7 @@ export default {
     templateName: 'Template Name',
     templateType: 'Template Type',
     templateContent: 'Template Content',
-    isActive: 'Active'
+    isActive: 'Active',
   },
 
   // Settings
@@ -435,7 +435,7 @@ export default {
     syncSettings: 'Sync Settings',
     apiKeys: 'API Keys',
     webhooks: 'Webhooks',
-    thirdParty: 'Third-Party Services'
+    thirdParty: 'Third-Party Services',
   },
 
   // System
@@ -463,7 +463,7 @@ export default {
     maintenance: 'Maintenance Mode',
     updateAvailable: 'Update Available',
     lastBackup: 'Last Backup',
-    nextBackup: 'Next Backup'
+    nextBackup: 'Next Backup',
   },
 
   // Reports
@@ -482,7 +482,7 @@ export default {
     print: 'Print',
     share: 'Share',
     schedule: 'Schedule',
-    customReport: 'Custom Report'
+    customReport: 'Custom Report',
   },
 
   // Form Validation
@@ -502,7 +502,7 @@ export default {
     date: 'Please select a valid date',
     time: 'Please select a valid time',
     password: 'Password must be at least 8 characters long',
-    passwordMatch: 'Passwords do not match'
+    passwordMatch: 'Passwords do not match',
   },
 
   // Time Related
@@ -522,7 +522,7 @@ export default {
     until: 'until',
     duration: 'duration',
     recently: 'recently',
-    soon: 'soon'
+    soon: 'soon',
   },
 
   // Units
@@ -539,6 +539,6 @@ export default {
     liter: 'L',
     milliliter: 'mL',
     centimeter: 'cm',
-    meter: 'm'
-  }
-}
+    meter: 'm',
+  },
+};

@@ -105,6 +105,7 @@
 本文档是YYC³餐饮行业智能化平台文档体系的重要组成部分，旨在提供清晰、完整、准确的信息。
 
 通过本文档，读者可以：
+
 - 了解相关概念和背景
 - 掌握核心内容和要点
 - 获得实用的指导和帮助
@@ -159,11 +160,12 @@
 **@tags**：YYC³,文档
 
 ---
+
 # YYC³餐饮行业智能化平台 - 可执行阶段节点文档
 
 > **YYC³（YanYu Cloud Cube）**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***英文***：*All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era*
+> **_英文_**：_All Realms Converge at Cloud Nexus, DeepStack Ignites a New Era_
 
 ---
 
@@ -739,10 +741,10 @@ jobs:
  * @license MIT
  */
 
-import { Router } from 'express';
-import { body, param, validationResult } from 'express-validator';
-import { MenuService } from '../services/menu-service';
-import { validateRequest } from '../middleware/validation';
+import { Router } from "express";
+import { body, param, validationResult } from "express-validator";
+import { MenuService } from "../services/menu-service";
+import { validateRequest } from "../middleware/validation";
 
 const router = Router();
 const menuService = new MenuService();
@@ -751,68 +753,76 @@ const menuService = new MenuService();
  * GET /api/v1/menus
  * @description 获取菜单列表
  */
-router.get('/', [
-  query('page').optional().isInt({ min: 1 }),
-  query('limit').optional().isInt({ min: 1, max: 100 }),
-  query('category').optional().isString(),
-  validateRequest
-], async (req, res) => {
-  try {
-    const { page = 1, limit = 20, category } = req.query;
+router.get(
+  "/",
+  [
+    query("page").optional().isInt({ min: 1 }),
+    query("limit").optional().isInt({ min: 1, max: 100 }),
+    query("category").optional().isString(),
+    validateRequest,
+  ],
+  async (req, res) => {
+    try {
+      const { page = 1, limit = 20, category } = req.query;
 
-    const result = await menuService.getMenus({
-      page: Number(page),
-      limit: Number(limit),
-      category: category as string
-    });
-
-    res.json({
-      success: true,
-      data: result.menus,
-      pagination: {
+      const result = await menuService.getMenus({
         page: Number(page),
         limit: Number(limit),
-        total: result.total,
-        pages: Math.ceil(result.total / Number(limit))
-      }
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
+        category: category as string,
+      });
+
+      res.json({
+        success: true,
+        data: result.menus,
+        pagination: {
+          page: Number(page),
+          limit: Number(limit),
+          total: result.total,
+          pages: Math.ceil(result.total / Number(limit)),
+        },
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
   }
-});
+);
 
 /**
  * POST /api/v1/menus
  * @description 创建新菜品
  */
-router.post('/', [
-  body('name').notEmpty().isLength({ max: 100 }),
-  body('description').optional().isLength({ max: 500 }),
-  body('price').isFloat({ min: 0 }),
-  body('category').isString(),
-  body('image').optional().isURL(),
-  validateRequest
-], async (req, res) => {
-  try {
-    const menuData = req.body;
+router.post(
+  "/",
+  [
+    body("name").notEmpty().isLength({ max: 100 }),
+    body("description").optional().isLength({ max: 500 }),
+    body("price").isFloat({ min: 0 }),
+    body("category").isString(),
+    body("image").optional().isURL(),
+    validateRequest,
+  ],
+  async (req, res) => {
+    try {
+      const menuData = req.body;
 
-    const newMenu = await menuService.createMenu(menuData);
+      const newMenu = await menuService.createMenu(menuData);
 
-    res.status(201).json({
-      success: true,
-      data: newMenu,
-      message: '菜品创建成功'
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: error.message
-    });
+      res.status(201).json({
+        success: true,
+        data: newMenu,
+        message: "菜品创建成功",
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        error: error.message,
+      });
+    }
   }
-});
+);
 
 export default router;
 ```
@@ -897,9 +907,9 @@ export default router;
  * @license MIT
  */
 
-import { OpenAI } from 'openai';
-import { UserProfile } from '../types/user';
-import { MenuItem } from '../types/menu';
+import { OpenAI } from "openai";
+import { UserProfile } from "../types/user";
+import { MenuItem } from "../types/menu";
 
 export class RecommendationEngine {
   private openai: OpenAI;
@@ -907,7 +917,7 @@ export class RecommendationEngine {
 
   constructor() {
     this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
+      apiKey: process.env.OPENAI_API_KEY,
     });
     this.userPreferences = new Map();
   }
@@ -917,10 +927,7 @@ export class RecommendationEngine {
    * @param userId 用户ID
    * @param context 推荐上下文
    */
-  async getRecommendations(
-    userId: string,
-    context: RecommendationContext
-  ): Promise<RecommendationResult[]> {
+  async getRecommendations(userId: string, context: RecommendationContext): Promise<RecommendationResult[]> {
     try {
       // 获取用户画像
       const userProfile = await this.getUserProfile(userId);
@@ -929,17 +936,14 @@ export class RecommendationEngine {
       const candidateItems = await this.getCandidateItems(context);
 
       // 计算推荐分数
-      const recommendations = await this.calculateRecommendationScores(
-        userProfile,
-        candidateItems
-      );
+      const recommendations = await this.calculateRecommendationScores(userProfile, candidateItems);
 
       // 应用多样性算法
       const diversifiedRecommendations = this.diversifyRecommendations(recommendations);
 
       return diversifiedRecommendations.slice(0, 10);
     } catch (error) {
-      console.error('Recommendation engine error:', error);
+      console.error("Recommendation engine error:", error);
       return [];
     }
   }
@@ -954,18 +958,18 @@ export class RecommendationEngine {
     const prompt = this.buildRecommendationPrompt(userProfile, items);
 
     const response = await this.openai.chat.completions.create({
-      model: 'gpt-4',
+      model: "gpt-4",
       messages: [
         {
-          role: 'system',
-          content: '你是一个专业的餐饮推荐专家，请根据用户画像为菜品打分。'
+          role: "system",
+          content: "你是一个专业的餐饮推荐专家，请根据用户画像为菜品打分。",
         },
         {
-          role: 'user',
-          content: prompt
-        }
+          role: "user",
+          content: prompt,
+        },
       ],
-      temperature: 0.3
+      temperature: 0.3,
     });
 
     return this.parseRecommendationResponse(response.choices[0].message.content, items);
@@ -979,17 +983,21 @@ export class RecommendationEngine {
 用户画像：
 - 年龄：${userProfile.age}
 - 性别：${userProfile.gender}
-- 饮食偏好：${userProfile.dietaryPreferences.join(', ')}
+- 饮食偏好：${userProfile.dietaryPreferences.join(", ")}
 - 消费水平：${userProfile.spendingLevel}
 - 历史订单：${userProfile.orderHistory.length}个
 
 候选菜品：
-${items.map(item => `
+${items
+  .map(
+    item => `
 - ${item.name}（${item.category}）
   价格：¥${item.price}
   描述：${item.description}
-  标签：${item.tags.join(', ')}
-`).join('\n')}
+  标签：${item.tags.join(", ")}
+`
+  )
+  .join("\n")}
 
 请为每个菜品打分（0-100分），并解释理由。格式如下：
 菜品名: 分数 - 理由
@@ -999,14 +1007,11 @@ ${items.map(item => `
   /**
    * 更新用户偏好
    */
-  async updateUserPreferences(
-    userId: string,
-    interaction: UserInteraction
-  ): Promise<void> {
+  async updateUserPreferences(userId: string, interaction: UserInteraction): Promise<void> {
     const currentPrefs = this.userPreferences.get(userId) || {
       favoriteCategories: new Map(),
       priceRange: { min: 0, max: 1000 },
-      dietaryRestrictions: []
+      dietaryRestrictions: [],
     };
 
     // 基于用户交互更新偏好
@@ -1017,8 +1022,8 @@ ${items.map(item => `
 }
 
 interface RecommendationContext {
-  mealType?: 'breakfast' | 'lunch' | 'dinner';
-  occasion?: 'casual' | 'business' | 'celebration';
+  mealType?: "breakfast" | "lunch" | "dinner";
+  occasion?: "casual" | "business" | "celebration";
   groupSize?: number;
   budget?: number;
 }
@@ -1208,10 +1213,10 @@ interface RecommendationResult {
  * @license MIT
  */
 
-import { OpenAI } from 'openai';
-import { Anthropic } from '@anthropic-ai/sdk';
-import sharp from 'sharp';
-import ffmpeg from 'fluent-ffmpeg';
+import { OpenAI } from "openai";
+import { Anthropic } from "@anthropic-ai/sdk";
+import sharp from "sharp";
+import ffmpeg from "fluent-ffmpeg";
 
 export class MultimodalAIService {
   private openai: OpenAI;
@@ -1219,10 +1224,10 @@ export class MultimodalAIService {
 
   constructor() {
     this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
+      apiKey: process.env.OPENAI_API_KEY,
     });
     this.anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY
+      apiKey: process.env.ANTHROPIC_API_KEY,
     });
   }
 
@@ -1237,31 +1242,31 @@ export class MultimodalAIService {
 
       // 使用GPT-4V进行图像识别
       const response = await this.openai.chat.completions.create({
-        model: 'gpt-4-vision-preview',
+        model: "gpt-4-vision-preview",
         messages: [
           {
-            role: 'user',
+            role: "user",
             content: [
               {
-                type: 'text',
-                text: '请识别这张图片中的菜品，并分析其营养成分、烹饪方法和可能的口味。'
+                type: "text",
+                text: "请识别这张图片中的菜品，并分析其营养成分、烹饪方法和可能的口味。",
               },
               {
-                type: 'image_url',
+                type: "image_url",
                 image_url: {
-                  url: `data:image/jpeg;base64,${processedImage.toString('base64')}`
-                }
-              }
-            ]
-          }
+                  url: `data:image/jpeg;base64,${processedImage.toString("base64")}`,
+                },
+              },
+            ],
+          },
         ],
-        max_tokens: 500
+        max_tokens: 500,
       });
 
       return this.parseDishRecognition(response.choices[0].message.content);
     } catch (error) {
-      console.error('Dish recognition error:', error);
-      throw new Error('图像识别失败');
+      console.error("Dish recognition error:", error);
+      throw new Error("图像识别失败");
     }
   }
 
@@ -1277,20 +1282,20 @@ export class MultimodalAIService {
       // 使用Whisper进行语音识别
       const transcription = await this.openai.audio.transcriptions.create({
         file: processedAudio,
-        model: 'whisper-1',
-        language: 'zh',
-        response_format: 'verbose_json'
+        model: "whisper-1",
+        language: "zh",
+        response_format: "verbose_json",
       });
 
       return {
         text: transcription.text,
         confidence: this.calculateConfidence(transcription),
         duration: transcription.duration,
-        language: transcription.language
+        language: transcription.language,
       };
     } catch (error) {
-      console.error('Speech to text error:', error);
-      throw new Error('语音识别失败');
+      console.error("Speech to text error:", error);
+      throw new Error("语音识别失败");
     }
   }
 
@@ -1299,23 +1304,20 @@ export class MultimodalAIService {
    * @param text 要合成的文本
    * @param options 合成选项
    */
-  async textToSpeech(
-    text: string,
-    options: TextToSpeechOptions = {}
-  ): Promise<Buffer> {
+  async textToSpeech(text: string, options: TextToSpeechOptions = {}): Promise<Buffer> {
     try {
       const mp3 = await this.openai.audio.speech.create({
-        model: 'tts-1-hd',
-        voice: options.voice || 'alloy',
+        model: "tts-1-hd",
+        voice: options.voice || "alloy",
         input: text,
-        response_format: 'mp3',
-        speed: options.speed || 1.0
+        response_format: "mp3",
+        speed: options.speed || 1.0,
       });
 
       return Buffer.from(await mp3.arrayBuffer());
     } catch (error) {
-      console.error('Text to speech error:', error);
-      throw new Error('语音合成失败');
+      console.error("Text to speech error:", error);
+      throw new Error("语音合成失败");
     }
   }
 
@@ -1324,33 +1326,30 @@ export class MultimodalAIService {
    * @param message 用户消息
    * @param context 对话上下文
    */
-  async intelligentChat(
-    message: string,
-    context: ChatContext = {}
-  ): Promise<ChatResponse> {
+  async intelligentChat(message: string, context: ChatContext = {}): Promise<ChatResponse> {
     try {
       const systemPrompt = this.buildSystemPrompt(context);
 
       const response = await this.anthropic.messages.create({
-        model: 'claude-3-sonnet-20240229',
+        model: "claude-3-sonnet-20240229",
         max_tokens: 1000,
         system: systemPrompt,
         messages: [
           {
-            role: 'user',
-            content: message
-          }
-        ]
+            role: "user",
+            content: message,
+          },
+        ],
       });
 
       return {
-        text: response.content[0].type === 'text' ? response.content[0].text : '',
+        text: response.content[0].type === "text" ? response.content[0].text : "",
         usage: response.usage,
-        model: 'claude-3-sonnet'
+        model: "claude-3-sonnet",
       };
     } catch (error) {
-      console.error('Intelligent chat error:', error);
-      throw new Error('智能对话失败');
+      console.error("Intelligent chat error:", error);
+      throw new Error("智能对话失败");
     }
   }
 
@@ -1365,7 +1364,7 @@ export class MultimodalAIService {
 
 菜品名称：${dishInfo.name}
 描述：${dishInfo.description}
-主要食材：${dishInfo.ingredients?.join(', ')}
+主要食材：${dishInfo.ingredients?.join(", ")}
 
 请提供详细的营养成分分析，包括：
 1. 热量（千卡）
@@ -1380,24 +1379,24 @@ export class MultimodalAIService {
       `;
 
       const response = await this.openai.chat.completions.create({
-        model: 'gpt-4',
+        model: "gpt-4",
         messages: [
           {
-            role: 'system',
-            content: '你是一个专业的营养师，请准确分析菜品的营养成分。'
+            role: "system",
+            content: "你是一个专业的营养师，请准确分析菜品的营养成分。",
           },
           {
-            role: 'user',
-            content: prompt
-          }
+            role: "user",
+            content: prompt,
+          },
         ],
-        temperature: 0.3
+        temperature: 0.3,
       });
 
-      return JSON.parse(response.choices[0].message.content || '{}');
+      return JSON.parse(response.choices[0].message.content || "{}");
     } catch (error) {
-      console.error('Nutrition analysis error:', error);
-      throw new Error('营养分析失败');
+      console.error("Nutrition analysis error:", error);
+      throw new Error("营养分析失败");
     }
   }
 
@@ -1405,10 +1404,7 @@ export class MultimodalAIService {
    * 图像预处理
    */
   private async preprocessImage(imageBuffer: Buffer): Promise<Buffer> {
-    return await sharp(imageBuffer)
-      .resize(512, 512, { fit: 'inside' })
-      .jpeg({ quality: 90 })
-      .toBuffer();
+    return await sharp(imageBuffer).resize(512, 512, { fit: "inside" }).jpeg({ quality: 90 }).toBuffer();
   }
 
   /**
@@ -1418,9 +1414,9 @@ export class MultimodalAIService {
     // 这里需要将音频处理为OpenAI支持的格式
     // 实际实现中可能需要使用临时文件
     const tempFile = `/tmp/audio_${Date.now()}.mp3`;
-    require('fs').writeFileSync(tempFile, audioBuffer);
+    require("fs").writeFileSync(tempFile, audioBuffer);
 
-    return require('fs').createReadStream(tempFile);
+    return require("fs").createReadStream(tempFile);
   }
 }
 
@@ -1754,31 +1750,31 @@ interface ChatResponse {
 
 #### 项目执行KPI
 
-| 指标类别 | KPI名称 | 目标值 | 测量频率 | 数据来源 |
-|---------|---------|--------|----------|----------|
-| **进度指标** | 里程碑完成率 | 100% | 每周 | 项目管理系统 |
-| | 任务按时完成率 | ≥ 95% | 每日 | 任务跟踪工具 |
-| | 迭代周期遵守率 | 100% | 每2周 | Git提交记录 |
-| **质量指标** | 代码质量分数 | ≥ 8.5 | 每次提交 | SonarQube |
-| | 测试覆盖率 | ≥ 90% | 每次构建 | 测试报告 |
-| | Bug密度 | ≤ 0.5/KLOC | 每版本 | Bug跟踪系统 |
-| **性能指标** | API响应时间 | ≤ 200ms | 实时 | 性能监控 |
-| | 系统可用性 | ≥ 99.9% | 实时 | 监控系统 |
-| | 并发用户数 | ≥ 1000 | 实时 | 负载测试 |
-| **效率指标** | 开发效率提升 | ≥ 40% | 每月 | 效率分析 |
-| | 自动化率 | ≥ 80% | 每月 | 自动化统计 |
-| | CI/CD成功率 | ≥ 95% | 每次构建 | CI/CD系统 |
+| 指标类别     | KPI名称        | 目标值     | 测量频率 | 数据来源     |
+| ------------ | -------------- | ---------- | -------- | ------------ |
+| **进度指标** | 里程碑完成率   | 100%       | 每周     | 项目管理系统 |
+|              | 任务按时完成率 | ≥ 95%      | 每日     | 任务跟踪工具 |
+|              | 迭代周期遵守率 | 100%       | 每2周    | Git提交记录  |
+| **质量指标** | 代码质量分数   | ≥ 8.5      | 每次提交 | SonarQube    |
+|              | 测试覆盖率     | ≥ 90%      | 每次构建 | 测试报告     |
+|              | Bug密度        | ≤ 0.5/KLOC | 每版本   | Bug跟踪系统  |
+| **性能指标** | API响应时间    | ≤ 200ms    | 实时     | 性能监控     |
+|              | 系统可用性     | ≥ 99.9%    | 实时     | 监控系统     |
+|              | 并发用户数     | ≥ 1000     | 实时     | 负载测试     |
+| **效率指标** | 开发效率提升   | ≥ 40%      | 每月     | 效率分析     |
+|              | 自动化率       | ≥ 80%      | 每月     | 自动化统计   |
+|              | CI/CD成功率    | ≥ 95%      | 每次构建 | CI/CD系统    |
 
 ### 风险管控
 
 #### 风险识别与应对
 
-| 风险类型 | 风险描述 | 概率 | 影响 | 应对措施 | 负责人 |
-|---------|---------|------|------|----------|--------|
-| **技术风险** | AI集成复杂度超预期 | 中 | 高 | 分阶段实施，降低复杂度 | AI技术负责人 |
-| **进度风险** | 关键人员离职 | 低 | 高 | 知识文档化，交叉培训 | 项目经理 |
-| **质量风险** | 性能不达标 | 中 | 高 | 提前性能测试，及时优化 | 性能团队 |
-| **安全风险** | 数据泄露 | 低 | 极高 | 安全加固，权限控制 | 安全负责人 |
+| 风险类型     | 风险描述           | 概率 | 影响 | 应对措施               | 负责人       |
+| ------------ | ------------------ | ---- | ---- | ---------------------- | ------------ |
+| **技术风险** | AI集成复杂度超预期 | 中   | 高   | 分阶段实施，降低复杂度 | AI技术负责人 |
+| **进度风险** | 关键人员离职       | 低   | 高   | 知识文档化，交叉培训   | 项目经理     |
+| **质量风险** | 性能不达标         | 中   | 高   | 提前性能测试，及时优化 | 性能团队     |
+| **安全风险** | 数据泄露           | 低   | 极高 | 安全加固，权限控制     | 安全负责人   |
 
 ### 执行保障措施
 
@@ -1907,9 +1903,6 @@ interface ChatResponse {
 
 </div>
 
-
-
-
 ## 概述
 
 ### 架构概述
@@ -1931,8 +1924,6 @@ interface ChatResponse {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1966,8 +1957,6 @@ interface ChatResponse {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1990,46 +1979,46 @@ interface ChatResponse {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -2042,6 +2031,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -2051,6 +2041,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -2060,6 +2051,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -2076,16 +2068,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2095,13 +2088,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2110,6 +2101,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2128,6 +2120,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2143,6 +2136,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2162,28 +2156,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2192,44 +2185,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2243,13 +2234,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2258,18 +2249,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2279,37 +2273,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2318,28 +2315,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2348,21 +2343,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2371,10 +2368,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2400,16 +2394,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2418,26 +2412,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -2446,21 +2435,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2469,10 +2460,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2498,16 +2486,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2516,25 +2504,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

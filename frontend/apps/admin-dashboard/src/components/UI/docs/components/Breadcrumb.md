@@ -13,7 +13,7 @@
 ### 基础用法
 
 ```tsx
-import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from '@/components/UI'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from "@/components/UI";
 
 export default function BreadcrumbBasic() {
   return (
@@ -24,14 +24,14 @@ export default function BreadcrumbBasic() {
       <BreadcrumbSeparator />
       <BreadcrumbItem>详情</BreadcrumbItem>
     </Breadcrumb>
-  )
+  );
 }
 ```
 
 ### 自定义分隔符
 
 ```tsx
-import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from '@/components/UI'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from "@/components/UI";
 
 export default function BreadcrumbSeparator() {
   return (
@@ -47,58 +47,54 @@ export default function BreadcrumbSeparator() {
         <BreadcrumbItem>详情</BreadcrumbItem>
       </Breadcrumb>
     </div>
-  )
+  );
 }
 ```
 
 ### 带图标
 
 ```tsx
-import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from '@/components/UI'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from "@/components/UI";
 
 export default function BreadcrumbWithIcon() {
   return (
     <Breadcrumb>
-      <BreadcrumbItem href="/">
-        🏠 首页
-      </BreadcrumbItem>
+      <BreadcrumbItem href="/">🏠 首页</BreadcrumbItem>
       <BreadcrumbSeparator />
-      <BreadcrumbItem href="/products">
-        📦 产品
-      </BreadcrumbItem>
+      <BreadcrumbItem href="/products">📦 产品</BreadcrumbItem>
       <BreadcrumbSeparator />
       <BreadcrumbItem>📄 详情</BreadcrumbItem>
     </Breadcrumb>
-  )
+  );
 }
 ```
 
 ### 可点击
 
 ```tsx
-import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from '@/components/UI'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from "@/components/UI";
 
 export default function BreadcrumbClickable() {
   return (
     <Breadcrumb>
-      <BreadcrumbItem href="/" onClick={() => console.log('首页')}>
+      <BreadcrumbItem href="/" onClick={() => console.log("首页")}>
         首页
       </BreadcrumbItem>
       <BreadcrumbSeparator />
-      <BreadcrumbItem href="/products" onClick={() => console.log('产品')}>
+      <BreadcrumbItem href="/products" onClick={() => console.log("产品")}>
         产品
       </BreadcrumbItem>
       <BreadcrumbSeparator />
       <BreadcrumbItem>详情</BreadcrumbItem>
     </Breadcrumb>
-  )
+  );
 }
 ```
 
 ### 禁用状态
 
 ```tsx
-import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from '@/components/UI'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from "@/components/UI";
 
 export default function BreadcrumbDisabled() {
   return (
@@ -109,7 +105,7 @@ export default function BreadcrumbDisabled() {
       <BreadcrumbSeparator />
       <BreadcrumbItem disabled>详情</BreadcrumbItem>
     </Breadcrumb>
-  )
+  );
 }
 ```
 
@@ -117,25 +113,25 @@ export default function BreadcrumbDisabled() {
 
 ### Breadcrumb Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| separator | 分隔符 | `string` | `/` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| separator | 分隔符     | `string` | `/`    |
+| className | 自定义类名 | `string` | -      |
 
 ### BreadcrumbItem Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| href | 链接地址 | `string` | - |
-| disabled | 是否禁用 | `boolean` | `false` |
-| onClick | 点击回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型       | 默认值  |
+| --------- | ---------- | ---------- | ------- |
+| href      | 链接地址   | `string`   | -       |
+| disabled  | 是否禁用   | `boolean`  | `false` |
+| onClick   | 点击回调   | `Function` | -       |
+| className | 自定义类名 | `string`   | -       |
 
 ### BreadcrumbSeparator Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ## 样式定制
 
@@ -176,43 +172,41 @@ export default function BreadcrumbDisabled() {
 
 ```tsx
 const routes = [
-  { path: '/', name: '首页' },
-  { path: '/products', name: '产品' },
-  { path: '/products/detail', name: '详情' }
-]
+  { path: "/", name: "首页" },
+  { path: "/products", name: "产品" },
+  { path: "/products/detail", name: "详情" },
+];
 
 const breadcrumbItems = computed(() => {
   return routes.map((route, index) => (
     <Fragment key={route.path}>
-      <BreadcrumbItem href={route.path}>
-        {route.name}
-      </BreadcrumbItem>
+      <BreadcrumbItem href={route.path}>{route.name}</BreadcrumbItem>
       {index < routes.length - 1 && <BreadcrumbSeparator />}
     </Fragment>
-  ))
-})
+  ));
+});
 ```
 
 ### 2. 带路由的面包屑
 
 ```tsx
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 const handleClick = (path: string) => {
-  router.push(path)
-}
+  router.push(path);
+};
 
 <Breadcrumb>
-  <BreadcrumbItem href="/" onClick={() => handleClick('/')}>
+  <BreadcrumbItem href="/" onClick={() => handleClick("/")}>
     首页
   </BreadcrumbItem>
   <BreadcrumbSeparator />
-  <BreadcrumbItem href="/products" onClick={() => handleClick('/products')}>
+  <BreadcrumbItem href="/products" onClick={() => handleClick("/products")}>
     产品
   </BreadcrumbItem>
-</Breadcrumb>
+</Breadcrumb>;
 ```
 
 ### 3. 面包屑导航

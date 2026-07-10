@@ -118,7 +118,7 @@ export class QualityMonitorService extends EventEmitter {
       const report = await this.generateQualityReport([document]);
 
       // 发送警报
-      alerts.forEach((alert) => {
+      alerts.forEach(alert => {
         this.emit('quality-alert', alert);
       });
 
@@ -141,12 +141,12 @@ export class QualityMonitorService extends EventEmitter {
       this.logger.info('Getting document reports', { documentId, limit });
 
       const reports = await this.qualityReportRepository.getByDocumentId(documentId);
-      
+
       // 如果指定了limit，则限制返回数量
       if (limit && limit > 0) {
         return reports.slice(0, limit);
       }
-      
+
       return reports;
     } catch (error) {
       this.logger.error('Failed to get document reports', { documentId, limit, error });
@@ -200,9 +200,12 @@ export class QualityMonitorService extends EventEmitter {
       await this.performQualityCheck();
 
       // 设置定时检查
-      this.monitoringInterval = setInterval(async () => {
-        await this.performQualityCheck();
-      }, this.config.checkInterval * 60 * 1000);
+      this.monitoringInterval = setInterval(
+        async () => {
+          await this.performQualityCheck();
+        },
+        this.config.checkInterval * 60 * 1000,
+      );
 
       this.logger.info('Quality monitoring started successfully');
     } catch (error) {
@@ -245,7 +248,7 @@ export class QualityMonitorService extends EventEmitter {
       alerts.push(...trendAlerts);
 
       // 发送警报
-      alerts.forEach((alert) => {
+      alerts.forEach(alert => {
         this.emit('quality-alert', alert);
       });
 
@@ -376,10 +379,10 @@ export class QualityMonitorService extends EventEmitter {
     try {
       this.logger.info('Getting quality trends', { days, category });
 
-      const reports = await this.qualityReportRepository.getRecent(days) as QualityMonitoringReport[];
+      const reports = (await this.qualityReportRepository.getRecent(days)) as QualityMonitoringReport[];
       const trends: QualityTrend[] = [];
 
-      reports.forEach((report) => {
+      reports.forEach(report => {
         const trend: QualityTrend = {
           date: report.date,
           avgScore: report.averageScore,
@@ -412,10 +415,10 @@ export class QualityMonitorService extends EventEmitter {
     try {
       this.logger.info('Getting quality trend', { days });
 
-      const reports = await this.qualityReportRepository.getRecent(days) as QualityMonitoringReport[];
+      const reports = (await this.qualityReportRepository.getRecent(days)) as QualityMonitoringReport[];
       const trends: QualityTrend[] = [];
 
-      reports.forEach((report) => {
+      reports.forEach(report => {
         trends.push({
           date: report.date,
           avgScore: report.averageScore,
@@ -458,14 +461,14 @@ export class QualityMonitorService extends EventEmitter {
         poor: 0,
       };
 
-      documents.forEach((doc) => {
+      documents.forEach(doc => {
         const level = this.getQualityLevel(doc.qualityScore);
         scoreDistribution[level]++;
       });
 
       // 分类统计
       const categoryMap = new Map<string, { count: number; totalScore: number }>();
-      documents.forEach((doc) => {
+      documents.forEach(doc => {
         const category = doc.category;
         const existing = categoryMap.get(category) || { count: 0, totalScore: 0 };
         existing.count++;
@@ -531,7 +534,7 @@ export class QualityMonitorService extends EventEmitter {
 
       // 计算分类分数
       const categoryMap = new Map<string, { count: number; totalScore: number }>();
-      docs.forEach((doc) => {
+      docs.forEach(doc => {
         const category = doc.category;
         const existing = categoryMap.get(category) || { count: 0, totalScore: 0 };
         existing.count++;
@@ -553,7 +556,7 @@ export class QualityMonitorService extends EventEmitter {
         maintainability: 0,
       };
 
-      docs.forEach((doc) => {
+      docs.forEach(doc => {
         dimensionScores.completeness += doc.qualityMetrics.contentCompleteness;
         dimensionScores.accuracy += doc.qualityMetrics.technicalAccuracy;
         dimensionScores.clarity += doc.qualityMetrics.readability;
@@ -561,14 +564,14 @@ export class QualityMonitorService extends EventEmitter {
         dimensionScores.maintainability += doc.qualityMetrics.practicality;
       });
 
-      Object.keys(dimensionScores).forEach((dimension) => {
+      Object.keys(dimensionScores).forEach(dimension => {
         dimensionScores[dimension] /= docs.length;
       });
 
       // 识别问题文档
       const problemDocuments = docs
-        .filter((doc) => doc.qualityScore < this.config.qualityThreshold)
-        .map((doc) => ({
+        .filter(doc => doc.qualityScore < this.config.qualityThreshold)
+        .map(doc => ({
           documentId: doc.id,
           title: doc.title,
           qualityScore: doc.qualityScore,
@@ -633,9 +636,10 @@ export class QualityMonitorService extends EventEmitter {
         case 'quality':
           return await this.generateQualityReport();
         case 'trend':
-          const days = options.startDate && options.endDate
-            ? Math.ceil((options.endDate.getTime() - options.startDate.getTime()) / (1000 * 60 * 60 * 24))
-            : 30;
+          const days =
+            options.startDate && options.endDate
+              ? Math.ceil((options.endDate.getTime() - options.startDate.getTime()) / (1000 * 60 * 60 * 24))
+              : 30;
           return await this.getQualityTrends(days, options.category);
         case 'alert':
           return await this.getAlerts({
@@ -675,19 +679,23 @@ export class QualityMonitorService extends EventEmitter {
         options.startDate && options.endDate
           ? Math.ceil((options.endDate.getTime() - options.startDate.getTime()) / (1000 * 60 * 60 * 24))
           : 30,
-        options.category
+        options.category,
       );
       const alerts = await this.getAlerts({ limit: 100 });
 
       // 根据格式导出
       switch (options.format) {
         case 'json':
-          return JSON.stringify({
-            statistics,
-            trends,
-            alerts,
-            exportDate: new Date().toISOString(),
-          }, null, 2);
+          return JSON.stringify(
+            {
+              statistics,
+              trends,
+              alerts,
+              exportDate: new Date().toISOString(),
+            },
+            null,
+            2,
+          );
 
         case 'csv':
           return this.generateCSVReport(statistics, trends, alerts);
@@ -713,11 +721,7 @@ export class QualityMonitorService extends EventEmitter {
    * @param alerts 警报数据
    * @returns CSV字符串
    */
-  private generateCSVReport(
-    statistics: any,
-    trends: QualityTrend[],
-    alerts: QualityAlert[]
-  ): string {
+  private generateCSVReport(statistics: any, trends: QualityTrend[], alerts: QualityAlert[]): string {
     const lines: string[] = [];
 
     // 添加统计信息
@@ -745,7 +749,7 @@ export class QualityMonitorService extends EventEmitter {
     // 添加趋势数据
     lines.push('=== 质量趋势 ===');
     lines.push('日期,平均分数,文档数');
-    trends.forEach((trend) => {
+    trends.forEach(trend => {
       lines.push(`${trend.date},${trend.avgScore.toFixed(2)},${trend.documentCount}`);
     });
     lines.push('');
@@ -753,9 +757,9 @@ export class QualityMonitorService extends EventEmitter {
     // 添加警报信息
     lines.push('=== 质量警报 ===');
     lines.push('ID,类型,严重程度,文档ID,消息,时间,已确认');
-    alerts.forEach((alert) => {
+    alerts.forEach(alert => {
       lines.push(
-        `${alert.id},${alert.type},${alert.severity},${alert.documentId || 'N/A'},${alert.message},${alert.timestamp.toISOString()},${alert.acknowledged}`
+        `${alert.id},${alert.type},${alert.severity},${alert.documentId || 'N/A'},${alert.message},${alert.timestamp.toISOString()},${alert.acknowledged}`,
       );
     });
 
@@ -767,12 +771,14 @@ export class QualityMonitorService extends EventEmitter {
    * @param params 查询参数
    * @returns 警报列表
    */
-  async getAlerts(params: {
-    type?: string;
-    severity?: string;
-    acknowledged?: boolean;
-    limit?: number;
-  } = {}): Promise<QualityAlert[]> {
+  async getAlerts(
+    params: {
+      type?: string;
+      severity?: string;
+      acknowledged?: boolean;
+      limit?: number;
+    } = {},
+  ): Promise<QualityAlert[]> {
     try {
       this.logger.info('Getting alerts', { params });
 
@@ -783,13 +789,13 @@ export class QualityMonitorService extends EventEmitter {
       let filteredAlerts = allAlerts;
 
       if (params.type) {
-        filteredAlerts = filteredAlerts.filter((a) => a.type === params.type);
+        filteredAlerts = filteredAlerts.filter(a => a.type === params.type);
       }
       if (params.severity) {
-        filteredAlerts = filteredAlerts.filter((a) => a.severity === params.severity);
+        filteredAlerts = filteredAlerts.filter(a => a.severity === params.severity);
       }
       if (params.acknowledged !== undefined) {
-        filteredAlerts = filteredAlerts.filter((a) => a.acknowledged === params.acknowledged);
+        filteredAlerts = filteredAlerts.filter(a => a.acknowledged === params.acknowledged);
       }
 
       // 排序和限制
@@ -870,11 +876,11 @@ export class QualityMonitorService extends EventEmitter {
   private detectStagnation(trends: QualityTrend[]): boolean {
     if (trends.length < 2) return false;
 
-    const recentScores = trends.slice(-this.config.stagnationDays).map((t) => t.avgScore);
+    const recentScores = trends.slice(-this.config.stagnationDays).map(t => t.avgScore);
     const avgScore = recentScores.reduce((sum, score) => sum + score, 0) / recentScores.length;
 
     // 检查所有分数是否在平均值的±5%范围内
-    return recentScores.every((score) => Math.abs(score - avgScore) / avgScore < 0.05);
+    return recentScores.every(score => Math.abs(score - avgScore) / avgScore < 0.05);
   }
 
   /**
@@ -918,7 +924,7 @@ export class QualityMonitorService extends EventEmitter {
       poor: 0,
     };
 
-    documents.forEach((doc) => {
+    documents.forEach(doc => {
       const level = this.getQualityLevel(doc.qualityScore);
       distribution[level]++;
     });
@@ -940,12 +946,12 @@ export class QualityMonitorService extends EventEmitter {
       recommendations.push('整体质量偏低，建议加强文档审核机制');
     }
 
-    const lowCompletenessDocs = documents.filter((doc) => doc.qualityMetrics.contentCompleteness < 60).length;
+    const lowCompletenessDocs = documents.filter(doc => doc.qualityMetrics.contentCompleteness < 60).length;
     if (lowCompletenessDocs > documents.length * 0.2) {
       recommendations.push('大量文档内容不完整，建议补充缺失内容');
     }
 
-    const lowClarityDocs = documents.filter((doc) => doc.qualityMetrics.readability < 60).length;
+    const lowClarityDocs = documents.filter(doc => doc.qualityMetrics.readability < 60).length;
     if (lowClarityDocs > documents.length * 0.2) {
       recommendations.push('大量文档表述不清晰，建议优化语言表达');
     }

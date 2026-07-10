@@ -2,9 +2,9 @@
  * YYC³餐饮行业智能化平台 - 员工端Vite配置
  */
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,10 +13,10 @@ export default defineConfig({
       template: {
         compilerOptions: {
           // 开启组件名保持
-          isCustomElement: (tag) => tag.startsWith('el-')
-        }
-      }
-    })
+          isCustomElement: tag => tag.startsWith('el-'),
+        },
+      },
+    }),
   ],
 
   resolve: {
@@ -28,16 +28,16 @@ export default defineConfig({
       '@utils': resolve(__dirname, 'src/utils'),
       '@api': resolve(__dirname, 'src/api'),
       '@assets': resolve(__dirname, 'src/assets'),
-      '@types': resolve(__dirname, 'src/types')
-    }
+      '@types': resolve(__dirname, 'src/types'),
+    },
   },
 
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/styles/variables.scss";`
-      }
-    }
+        additionalData: `@import "@/styles/variables.scss";`,
+      },
+    },
   },
 
   server: {
@@ -50,14 +50,14 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
-        ws: true
+        ws: true,
       },
       '/ws': {
         target: 'ws://localhost:3000',
         changeOrigin: true,
-        ws: true
-      }
-    }
+        ws: true,
+      },
+    },
   },
 
   build: {
@@ -69,12 +69,12 @@ export default defineConfig({
     terserOptions: {
       compress: {
         drop_console: process.env.NODE_ENV === 'production',
-        drop_debugger: true
-      }
+        drop_debugger: true,
+      },
     },
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html')
+        main: resolve(__dirname, 'index.html'),
       },
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',
@@ -83,31 +83,22 @@ export default defineConfig({
         manualChunks: {
           'element-plus': ['element-plus'],
           'vue-vendor': ['vue', 'vue-router', 'pinia'],
-          'utils': ['axios', 'dayjs', 'lodash-es']
-        }
-      }
+          utils: ['axios', 'dayjs', 'lodash-es'],
+        },
+      },
     },
-    chunkSizeWarningLimit: 800
+    chunkSizeWarningLimit: 800,
   },
 
   optimizeDeps: {
-    include: [
-      'vue',
-      'vue-router',
-      'pinia',
-      'element-plus',
-      '@element-plus/icons-vue',
-      'axios',
-      'dayjs',
-      'lodash-es'
-    ],
-    exclude: ['@iconify/json']
+    include: ['vue', 'vue-router', 'pinia', 'element-plus', '@element-plus/icons-vue', 'axios', 'dayjs', 'lodash-es'],
+    exclude: ['@iconify/json'],
   },
 
   define: {
     __VUE_OPTIONS_API__: true,
     __VUE_PROD_DEVTOOLS__: false,
-    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
   },
 
   preview: {
@@ -118,8 +109,8 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-        secure: false
-      }
-    }
-  }
-})
+        secure: false,
+      },
+    },
+  },
+});

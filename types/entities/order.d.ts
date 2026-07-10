@@ -19,7 +19,7 @@ export enum OrderStatus {
   SERVED = 'served',
   COMPLETED = 'completed',
   CANCELLED = 'cancelled',
-  REFUNDED = 'refunded'
+  REFUNDED = 'refunded',
 }
 
 /**

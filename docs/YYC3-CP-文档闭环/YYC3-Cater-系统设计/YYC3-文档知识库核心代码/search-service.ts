@@ -125,9 +125,7 @@ export class SearchService {
         }
 
         // 计算语义相似度
-        const documentVector = this.computeSemanticVector(
-          document.title + ' ' + document.content
-        );
+        const documentVector = this.computeSemanticVector(document.title + ' ' + document.content);
         const similarity = this.computeCosineSimilarity(queryVector, documentVector);
 
         if (similarity >= (params.threshold || 0.3)) {
@@ -181,7 +179,7 @@ export class SearchService {
       const resultMap = new Map<string, SearchResult>();
 
       // 添加关键词结果
-      keywordResults.forEach((result) => {
+      keywordResults.forEach(result => {
         resultMap.set(result.document.id, {
           ...result,
           score: result.score * 0.6, // 关键词权重60%
@@ -189,7 +187,7 @@ export class SearchService {
       });
 
       // 合并语义结果
-      semanticResults.forEach((result) => {
+      semanticResults.forEach(result => {
         const existing = resultMap.get(result.document.id);
         if (existing) {
           // 如果已存在，合并分数
@@ -223,10 +221,7 @@ export class SearchService {
    * @param params 搜索参数
    * @returns 搜索结果
    */
-  async conceptSearch(
-    concepts: string[],
-    params: Omit<SearchParams, 'query'>
-  ): Promise<SearchResult[]> {
+  async conceptSearch(concepts: string[], params: Omit<SearchParams, 'query'>): Promise<SearchResult[]> {
     try {
       this.logger.info('Performing concept search', { concepts });
 
@@ -243,7 +238,7 @@ export class SearchService {
         }
 
         // 计算概念匹配度
-        const matchedConcepts = document.concepts.filter((c) => concepts.includes(c));
+        const matchedConcepts = document.concepts.filter(c => concepts.includes(c));
         const score = matchedConcepts.length / concepts.length;
 
         if (score > 0) {
@@ -275,17 +270,14 @@ export class SearchService {
    * @param limit 数量限制
    * @returns 推荐文档列表
    */
-  async getRelatedDocuments(
-    documentId: string,
-    limit: number = 5
-  ): Promise<SearchResult[]> {
+  async getRelatedDocuments(documentId: string, limit: number = 5): Promise<SearchResult[]> {
     try {
       this.logger.info('Getting related documents', { documentId, limit });
 
       // 从知识图谱获取相关文档
       const relatedDocIds = await this.knowledgeGraphService.getRelatedDocuments(
         documentId,
-        limit * 2 // 获取更多候选
+        limit * 2, // 获取更多候选
       );
 
       const documents = await this.documentRepository.getByIds(relatedDocIds);
@@ -319,10 +311,7 @@ export class SearchService {
    * @param limit 数量限制
    * @returns 推荐文档列表
    */
-  async recommendRelatedDocuments(
-    documentId: string,
-    limit: number = 5
-  ): Promise<SearchResult[]> {
+  async recommendRelatedDocuments(documentId: string, limit: number = 5): Promise<SearchResult[]> {
     return this.getRelatedDocuments(documentId, limit);
   }
 
@@ -340,14 +329,14 @@ export class SearchService {
       const suggestions = new Set<string>();
 
       // 从标题提取建议
-      documents.forEach((doc) => {
+      documents.forEach(doc => {
         const title = doc.title.toLowerCase();
         const queryLower = query.toLowerCase();
 
         if (title.includes(queryLower)) {
           // 提取包含查询词的短语
           const words = title.split(/\s+/);
-          words.forEach((word) => {
+          words.forEach(word => {
             if (word.includes(queryLower) && word.length > 2) {
               suggestions.add(word);
             }
@@ -356,8 +345,8 @@ export class SearchService {
       });
 
       // 从概念提取建议
-      documents.forEach((doc) => {
-        doc.concepts.forEach((concept) => {
+      documents.forEach(doc => {
+        doc.concepts.forEach(concept => {
           const conceptLower = concept.toLowerCase();
           const queryLower = query.toLowerCase();
 
@@ -369,7 +358,7 @@ export class SearchService {
 
       // 返回最相关的建议
       return Array.from(suggestions)
-        .filter((s) => s.length > 2)
+        .filter(s => s.length > 2)
         .slice(0, limit);
     } catch (error) {
       this.logger.error('Failed to get search suggestions', { query, error });
@@ -398,13 +387,13 @@ export class SearchService {
       const conceptDistribution: Record<string, number> = {};
       let totalQualityScore = 0;
 
-      results.forEach((result) => {
+      results.forEach(result => {
         // 分类分布
         const category = result.document.category;
         categoryDistribution[category] = (categoryDistribution[category] || 0) + 1;
 
         // 概念分布
-        result.matchedConcepts.forEach((concept) => {
+        result.matchedConcepts.forEach(concept => {
           conceptDistribution[concept] = (conceptDistribution[concept] || 0) + 1;
         });
 
@@ -434,7 +423,7 @@ export class SearchService {
     return query
       .toLowerCase()
       .split(/[\s,，、。.!?！?]+/)
-      .filter((term) => term.length > 1);
+      .filter(term => term.length > 1);
   }
 
   /**
@@ -447,7 +436,7 @@ export class SearchService {
     let score = 0;
     const content = (document.title + ' ' + document.content).toLowerCase();
 
-    queryTerms.forEach((term) => {
+    queryTerms.forEach(term => {
       // 标题匹配权重更高
       if (document.title.toLowerCase().includes(term)) {
         score += 2.0;
@@ -456,7 +445,7 @@ export class SearchService {
       const matches = (content.match(new RegExp(term, 'g')) || []).length;
       score += matches * 0.5;
       // 概念匹配
-      if (document.concepts.some((c) => c.toLowerCase().includes(term))) {
+      if (document.concepts.some(c => c.toLowerCase().includes(term))) {
         score += 1.5;
       }
     });
@@ -474,14 +463,12 @@ export class SearchService {
     const words = this.tokenizeQuery(text);
 
     // 简单的词频向量
-    words.forEach((word) => {
+    words.forEach(word => {
       vector.set(word, (vector.get(word) || 0) + 1);
     });
 
     // 归一化
-    const magnitude = Math.sqrt(
-      Array.from(vector.values()).reduce((sum, val) => sum + val * val, 0)
-    );
+    const magnitude = Math.sqrt(Array.from(vector.values()).reduce((sum, val) => sum + val * val, 0));
 
     if (magnitude > 0) {
       vector.forEach((val, key) => {
@@ -498,10 +485,7 @@ export class SearchService {
    * @param vec2 向量2
    * @returns 相似度
    */
-  private computeCosineSimilarity(
-    vec1: Map<string, number>,
-    vec2: Map<string, number>
-  ): number {
+  private computeCosineSimilarity(vec1: Map<string, number>, vec2: Map<string, number>): number {
     let dotProduct = 0;
 
     vec1.forEach((val1, key) => {
@@ -522,12 +506,12 @@ export class SearchService {
     const highlights: string[] = [];
     const content = document.content;
 
-    queryTerms.forEach((term) => {
+    queryTerms.forEach(term => {
       const regex = new RegExp(`.{0,50}${term}.{0,50}`, 'gi');
       const matches = content.match(regex);
 
       if (matches) {
-        matches.slice(0, 2).forEach((match) => {
+        matches.slice(0, 2).forEach(match => {
           highlights.push(match.trim());
         });
       }
@@ -543,9 +527,7 @@ export class SearchService {
    * @returns 匹配的概念列表
    */
   private findMatchedConcepts(document: Document, queryTerms: string[]): string[] {
-    return document.concepts.filter((concept) =>
-      queryTerms.some((term) => concept.toLowerCase().includes(term))
-    );
+    return document.concepts.filter(concept => queryTerms.some(term => concept.toLowerCase().includes(term)));
   }
 
   /**
@@ -553,21 +535,15 @@ export class SearchService {
    * @param results 搜索结果
    * @param query 查询字符串
    */
-  private async enrichWithKnowledgeGraph(
-    results: SearchResult[],
-    query: string
-  ): Promise<void> {
+  private async enrichWithKnowledgeGraph(results: SearchResult[], query: string): Promise<void> {
     try {
       // 为每个结果查找相关文档
       for (const result of results) {
-        const relatedDocs = await this.knowledgeGraphService.getRelatedDocuments(
-          result.document.id,
-          3
-        );
+        const relatedDocs = await this.knowledgeGraphService.getRelatedDocuments(result.document.id, 3);
 
         // 如果相关文档也匹配查询，增加分数
         for (const relatedDocId of relatedDocs) {
-          const relatedDoc = results.find((r) => r.document.id === relatedDocId);
+          const relatedDoc = results.find(r => r.document.id === relatedDocId);
           if (relatedDoc) {
             result.score += 0.2; // 增加知识图谱关联分数
           }
@@ -584,10 +560,7 @@ export class SearchService {
    * @param docId2 文档ID2
    * @returns 相似度分数
    */
-  private async calculateDocumentSimilarity(
-    docId1: string,
-    docId2: string
-  ): Promise<number> {
+  private async calculateDocumentSimilarity(docId1: string, docId2: string): Promise<number> {
     try {
       const doc1 = await this.documentRepository.getById(docId1);
       const doc2 = await this.documentRepository.getById(docId2);
@@ -597,10 +570,8 @@ export class SearchService {
       }
 
       // 计算概念重叠度
-      const commonConcepts = doc1.concepts.filter((c) => doc2.concepts.includes(c));
-      const conceptSimilarity =
-        commonConcepts.length /
-        Math.sqrt(doc1.concepts.length * doc2.concepts.length);
+      const commonConcepts = doc1.concepts.filter(c => doc2.concepts.includes(c));
+      const conceptSimilarity = commonConcepts.length / Math.sqrt(doc1.concepts.length * doc2.concepts.length);
 
       // 计算引用关系
       const citationSimilarity = 0;
@@ -631,10 +602,7 @@ export class SearchService {
    * @param format 导出格式 (json | csv | excel)
    * @returns 导出数据
    */
-  async exportSearchResults(
-    results: SearchResult[],
-    format: 'json' | 'csv' | 'excel' = 'json'
-  ): Promise<string> {
+  async exportSearchResults(results: SearchResult[], format: 'json' | 'csv' | 'excel' = 'json'): Promise<string> {
     try {
       this.logger.info('Exporting search results', { count: results.length, format });
 
@@ -660,7 +628,7 @@ export class SearchService {
    * @returns JSON字符串
    */
   private exportAsJSON(results: SearchResult[]): string {
-    const data = results.map((result) => ({
+    const data = results.map(result => ({
       id: result.document.id,
       title: result.document.title,
       category: result.document.category,
@@ -695,7 +663,7 @@ export class SearchService {
       'Matched Concepts',
     ];
 
-    const rows = results.map((result) => [
+    const rows = results.map(result => [
       result.document.id,
       `"${result.document.title.replace(/"/g, '""')}"`,
       result.document.category,
@@ -708,7 +676,7 @@ export class SearchService {
       `"${result.matchedConcepts.join('; ').replace(/"/g, '""')}"`,
     ]);
 
-    return [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
+    return [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
   }
 
   /**
@@ -727,11 +695,13 @@ export class SearchService {
    * @param limit 数量限制
    * @returns 搜索历史
    */
-  async getSearchHistory(limit: number = 10): Promise<Array<{
-    query: string;
-    timestamp: Date;
-    resultsCount: number;
-  }>> {
+  async getSearchHistory(limit: number = 10): Promise<
+    Array<{
+      query: string;
+      timestamp: Date;
+      resultsCount: number;
+    }>
+  > {
     try {
       this.logger.info('Getting search history', { limit });
 
@@ -764,10 +734,12 @@ export class SearchService {
    * @param limit 数量限制
    * @returns 热门搜索词列表
    */
-  async getTrendingSearches(limit: number = 10): Promise<Array<{
-    query: string;
-    count: number;
-  }>> {
+  async getTrendingSearches(limit: number = 10): Promise<
+    Array<{
+      query: string;
+      count: number;
+    }>
+  > {
     try {
       this.logger.info('Getting trending searches', { limit });
 

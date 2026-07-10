@@ -13,8 +13,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import authService from '../../../services/AuthService';
 
 describe('AuthService', () => {
-  beforeEach(() => {
-  });
+  beforeEach(() => {});
 
   describe('hashPassword', () => {
     it('应该成功加密密码', async () => {

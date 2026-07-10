@@ -181,17 +181,17 @@ admin-dashboard/
 </template>
 
 <script setup lang="ts">
-import { defineProps, withDefaults } from 'vue'
+import { defineProps, withDefaults } from "vue";
 
 interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'tertiary'
-  disabled?: boolean
+  variant?: "primary" | "secondary" | "tertiary";
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
-  variant: 'primary',
+  variant: "primary",
   disabled: false,
-})
+});
 </script>
 
 <style scoped>
@@ -206,36 +206,36 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 ```typescript
 // types/button.ts
 export interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'tertiary'
-  size?: 'sm' | 'md' | 'lg'
-  disabled?: boolean
-  loading?: boolean
-  onClick?: () => void
+  variant?: "primary" | "secondary" | "tertiary";
+  size?: "sm" | "md" | "lg";
+  disabled?: boolean;
+  loading?: boolean;
+  onClick?: () => void;
 }
 
-export type ButtonVariant = ButtonProps['variant']
-export type ButtonSize = ButtonProps['size']
+export type ButtonVariant = ButtonProps["variant"];
+export type ButtonSize = ButtonProps["size"];
 ```
 
 #### 组件测试
 
 ```typescript
 // Button.test.tsx
-import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import Button from './Button.vue'
+import { describe, it, expect } from "vitest";
+import { mount } from "@vue/test-utils";
+import Button from "./Button.vue";
 
-describe('Button', () => {
-  it('应该正确渲染', () => {
-    const wrapper = mount(Button)
-    expect(wrapper.find('.button').exists()).toBe(true)
-  })
+describe("Button", () => {
+  it("应该正确渲染", () => {
+    const wrapper = mount(Button);
+    expect(wrapper.find(".button").exists()).toBe(true);
+  });
 
-  it('应该支持不同的变体', () => {
-    const wrapper = mount(Button, { props: { variant: 'secondary' } })
-    expect(wrapper.find('.button.secondary').exists()).toBe(true)
-  })
-})
+  it("应该支持不同的变体", () => {
+    const wrapper = mount(Button, { props: { variant: "secondary" } });
+    expect(wrapper.find(".button.secondary").exists()).toBe(true);
+  });
+});
 ```
 
 ### 页面组件开发
@@ -264,16 +264,16 @@ describe('Button', () => {
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import YTLayout from '@/components/layout/YTLayout.vue'
-import YTHeader from '@/components/layout/YTHeader.vue'
-import YTSidebar from '@/components/layout/YTSidebar.vue'
+import { ref } from "vue";
+import YTLayout from "@/components/layout/YTLayout.vue";
+import YTHeader from "@/components/layout/YTHeader.vue";
+import YTSidebar from "@/components/layout/YTSidebar.vue";
 
-const pageTitle = ref('页面标题')
+const pageTitle = ref("页面标题");
 const menuItems = ref([
-  { id: '1', label: '菜单项1', path: '/path1' },
-  { id: '2', label: '菜单项2', path: '/path2' },
-])
+  { id: "1", label: "菜单项1", path: "/path1" },
+  { id: "2", label: "菜单项2", path: "/path2" },
+]);
 </script>
 
 <style scoped>
@@ -289,44 +289,44 @@ const menuItems = ref([
 
 ```typescript
 // api/order.ts
-import axios from 'axios'
-import type { Order, CreateOrderRequest, UpdateOrderRequest } from '@/types/order'
+import axios from "axios";
+import type { Order, CreateOrderRequest, UpdateOrderRequest } from "@/types/order";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
-})
+});
 
 export const orderApi = {
   // 获取订单列表
   getOrders: async (params?: any): Promise<Order[]> => {
-    const response = await api.get('/orders', { params })
-    return response.data
+    const response = await api.get("/orders", { params });
+    return response.data;
   },
 
   // 获取订单详情
   getOrderById: async (id: string): Promise<Order> => {
-    const response = await api.get(`/orders/${id}`)
-    return response.data
+    const response = await api.get(`/orders/${id}`);
+    return response.data;
   },
 
   // 创建订单
   createOrder: async (data: CreateOrderRequest): Promise<Order> => {
-    const response = await api.post('/orders', data)
-    return response.data
+    const response = await api.post("/orders", data);
+    return response.data;
   },
 
   // 更新订单
   updateOrder: async (id: string, data: UpdateOrderRequest): Promise<Order> => {
-    const response = await api.put(`/orders/${id}`, data)
-    return response.data
+    const response = await api.put(`/orders/${id}`, data);
+    return response.data;
   },
 
   // 删除订单
   deleteOrder: async (id: string): Promise<void> => {
-    await api.delete(`/orders/${id}`)
+    await api.delete(`/orders/${id}`);
   },
-}
+};
 ```
 
 ### 组合式函数开发
@@ -335,77 +335,77 @@ export const orderApi = {
 
 ```typescript
 // composables/useOrder.ts
-import { ref, computed } from 'vue'
-import { orderApi } from '@/api/order'
-import type { Order } from '@/types/order'
+import { ref, computed } from "vue";
+import { orderApi } from "@/api/order";
+import type { Order } from "@/types/order";
 
 export function useOrder() {
-  const orders = ref<Order[]>([])
-  const loading = ref(false)
-  const error = ref<Error | null>(null)
+  const orders = ref<Order[]>([]);
+  const loading = ref(false);
+  const error = ref<Error | null>(null);
 
   const fetchOrders = async () => {
-    loading.value = true
-    error.value = null
+    loading.value = true;
+    error.value = null;
 
     try {
-      orders.value = await orderApi.getOrders()
+      orders.value = await orderApi.getOrders();
     } catch (e) {
-      error.value = e as Error
+      error.value = e as Error;
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   const createOrder = async (data: any) => {
-    loading.value = true
-    error.value = null
+    loading.value = true;
+    error.value = null;
 
     try {
-      const newOrder = await orderApi.createOrder(data)
-      orders.value.push(newOrder)
-      return newOrder
+      const newOrder = await orderApi.createOrder(data);
+      orders.value.push(newOrder);
+      return newOrder;
     } catch (e) {
-      error.value = e as Error
-      throw e
+      error.value = e as Error;
+      throw e;
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   const updateOrder = async (id: string, data: any) => {
-    loading.value = true
-    error.value = null
+    loading.value = true;
+    error.value = null;
 
     try {
-      const updatedOrder = await orderApi.updateOrder(id, data)
-      const index = orders.value.findIndex(o => o.id === id)
+      const updatedOrder = await orderApi.updateOrder(id, data);
+      const index = orders.value.findIndex(o => o.id === id);
       if (index !== -1) {
-        orders.value[index] = updatedOrder
+        orders.value[index] = updatedOrder;
       }
-      return updatedOrder
+      return updatedOrder;
     } catch (e) {
-      error.value = e as Error
-      throw e
+      error.value = e as Error;
+      throw e;
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   const deleteOrder = async (id: string) => {
-    loading.value = true
-    error.value = null
+    loading.value = true;
+    error.value = null;
 
     try {
-      await orderApi.deleteOrder(id)
-      orders.value = orders.value.filter(o => o.id !== id)
+      await orderApi.deleteOrder(id);
+      orders.value = orders.value.filter(o => o.id !== id);
     } catch (e) {
-      error.value = e as Error
-      throw e
+      error.value = e as Error;
+      throw e;
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   return {
     orders,
@@ -415,7 +415,7 @@ export function useOrder() {
     createOrder,
     updateOrder,
     deleteOrder,
-  }
+  };
 }
 ```
 
@@ -444,26 +444,26 @@ pnpm test --coverage
 #### 测试示例
 
 ```typescript
-import { describe, it, expect, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
-import Button from './Button.vue'
+import { describe, it, expect, beforeEach } from "vitest";
+import { mount } from "@vue/test-utils";
+import Button from "./Button.vue";
 
-describe('Button', () => {
-  let wrapper: any
+describe("Button", () => {
+  let wrapper: any;
 
   beforeEach(() => {
-    wrapper = mount(Button)
-  })
+    wrapper = mount(Button);
+  });
 
-  it('应该正确渲染', () => {
-    expect(wrapper.find('.button').exists()).toBe(true)
-  })
+  it("应该正确渲染", () => {
+    expect(wrapper.find(".button").exists()).toBe(true);
+  });
 
-  it('应该响应点击事件', async () => {
-    await wrapper.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('click')
-  })
-})
+  it("应该响应点击事件", async () => {
+    await wrapper.trigger("click");
+    expect(wrapper.emitted()).toHaveProperty("click");
+  });
+});
 ```
 
 ### 集成测试
@@ -471,30 +471,31 @@ describe('Button', () => {
 #### 测试示例
 
 ```typescript
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
-import AIWidget from '@/components/AIWidget/index.vue'
+import { describe, it, expect, vi } from "vitest";
+import { mount } from "@vue/test-utils";
+import AIWidget from "@/components/AIWidget/index.vue";
 
-describe('AIWidget Integration', () => {
-  it('应该正确处理消息', async () => {
-    const wrapper = mount(AIWidget)
+describe("AIWidget Integration", () => {
+  it("应该正确处理消息", async () => {
+    const wrapper = mount(AIWidget);
 
     global.fetch = vi.fn(() =>
       Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({
-          content: '测试回复',
-          toolCalls: [],
-        }),
+        json: () =>
+          Promise.resolve({
+            content: "测试回复",
+            toolCalls: [],
+          }),
       })
-    ) as any
+    ) as any;
 
-    wrapper.vm.inputMessage = '测试消息'
-    await wrapper.vm.sendMessage()
+    wrapper.vm.inputMessage = "测试消息";
+    await wrapper.vm.sendMessage();
 
-    expect(wrapper.vm.messages).toHaveLength(2)
-  })
-})
+    expect(wrapper.vm.messages).toHaveLength(2);
+  });
+});
 ```
 
 ### 端到端测试
@@ -518,17 +519,17 @@ pnpm test:e2e:debug
 #### 测试示例
 
 ```typescript
-import { test, expect } from '@playwright/test'
+import { test, expect } from "@playwright/test";
 
-test('用户登录流程', async ({ page }) => {
-  await page.goto('http://localhost:3100')
+test("用户登录流程", async ({ page }) => {
+  await page.goto("http://localhost:3100");
 
-  await page.fill('input[name="username"]', 'admin')
-  await page.fill('input[name="password"]', 'password123')
-  await page.click('button[type="submit"]')
+  await page.fill('input[name="username"]', "admin");
+  await page.fill('input[name="password"]', "password123");
+  await page.click('button[type="submit"]');
 
-  await expect(page).toHaveURL(/.*dashboard/)
-})
+  await expect(page).toHaveURL(/.*dashboard/);
+});
 ```
 
 ---
@@ -591,7 +592,7 @@ CMD ["nginx", "-g", "daemon off;"]
 #### docker-compose.yml
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   frontend:
@@ -653,7 +654,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
       - run: pnpm install
       - run: pnpm test
       - run: pnpm build
@@ -685,18 +686,18 @@ jobs:
 ```typescript
 // ✅ 推荐
 interface User {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
-type UserRole = 'admin' | 'user' | 'guest'
+type UserRole = "admin" | "user" | "guest";
 
 function processData<T>(data: T): T {
-  return data
+  return data;
 }
 
 // ❌ 不推荐
-const user: any = {}
+const user: any = {};
 ```
 
 #### Vue 3规范
@@ -709,10 +710,10 @@ const user: any = {}
 ```vue
 <!-- ✅ 推荐 -->
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
+const count = ref(0);
+const doubled = computed(() => count.value * 2);
 </script>
 
 <!-- ❌ 不推荐 -->
@@ -721,9 +722,9 @@ export default {
   data() {
     return {
       count: 0,
-    }
+    };
   },
-}
+};
 </script>
 ```
 
@@ -759,16 +760,16 @@ export default {
 
 ```typescript
 // ✅ 推荐
-import { debounce } from 'lodash-es'
+import { debounce } from "lodash-es";
 
 const debouncedSearch = debounce(async (keyword: string) => {
-  const results = await searchApi(keyword)
-}, 300)
+  const results = await searchApi(keyword);
+}, 300);
 
 // ❌ 不推荐
 const search = async (keyword: string) => {
-  const results = await searchApi(keyword)
-}
+  const results = await searchApi(keyword);
+};
 ```
 
 ### 安全规范
@@ -781,15 +782,15 @@ const search = async (keyword: string) => {
 
 ```typescript
 // ✅ 推荐
-import { z } from 'zod'
+import { z } from "zod";
 
 const UserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
-})
+});
 
 // ❌ 不推荐
-const email = req.body.email
+const email = req.body.email;
 ```
 
 #### 权限控制
@@ -802,11 +803,11 @@ const email = req.body.email
 // ✅ 推荐
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !isAuthenticated()) {
-    next('/login')
+    next("/login");
   } else {
-    next()
+    next();
   }
-})
+});
 ```
 
 ### Git工作流

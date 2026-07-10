@@ -24,28 +24,28 @@ if (!fs.existsSync(logDir)) {
 // 定义日志格式
 const logFormat = format.combine(
   format.timestamp({
-    format: 'YYYY-MM-DD HH:mm:ss.SSS'
+    format: 'YYYY-MM-DD HH:mm:ss.SSS',
   }),
   format.errors({
-    stack: true
+    stack: true,
   }),
   format.splat(),
-  format.json()
+  format.json(),
 );
 
 // 控制台日志格式
 const consoleFormat = format.combine(
   format.timestamp({
-    format: 'YYYY-MM-DD HH:mm:ss.SSS'
+    format: 'YYYY-MM-DD HH:mm:ss.SSS',
   }),
   format.errors({
-    stack: true
+    stack: true,
   }),
   format.colorize(),
   format.splat(),
   format.printf(({ timestamp, level, message, stack }) => {
     return `${timestamp} [${level}] ${message}${stack ? '\n' + stack : ''}`;
-  })
+  }),
 );
 
 // 创建日志实例
@@ -53,12 +53,12 @@ const logger = createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: logFormat,
   defaultMeta: {
-    service: 'menu-service'
+    service: 'menu-service',
   },
   transports: [
     // 控制台输出
     new transports.Console({
-      format: consoleFormat
+      format: consoleFormat,
     }),
     // 错误日志 - 按天滚动
     new transports.DailyRotateFile({
@@ -67,7 +67,7 @@ const logger = createLogger({
       zippedArchive: true,
       maxSize: '20m',
       maxFiles: '14d',
-      level: 'error'
+      level: 'error',
     }),
     // 合并日志 - 按天滚动
     new transports.DailyRotateFile({
@@ -75,9 +75,9 @@ const logger = createLogger({
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
       maxSize: '20m',
-      maxFiles: '14d'
-    })
-  ]
+      maxFiles: '14d',
+    }),
+  ],
 });
 
 export default logger;

@@ -9,11 +9,11 @@
 @tags: [架构设计],[高并发],[限流熔断]
 ---
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
@@ -28,9 +28,11 @@
 ### 1. 背景与目标
 
 #### 1.1 项目背景
+
 YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五化」理念的智能化应用系统，致力于提供高质量、高可用、高安全的成长守护体系。
 
 #### 1.2 文档目标
+
 - 规范高并发限流设计文档相关的业务标准与技术落地要求
 - 为项目相关人员提供清晰的参考依据
 - 保障相关模块开发、实施、运维的一致性与规范性
@@ -38,6 +40,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 ### 2. 设计原则
 
 #### 2.1 五高原则
+
 - **高可用性**：确保系统7x24小时稳定运行
 - **高性能**：优化响应时间和处理能力
 - **高安全性**：保护用户数据和隐私安全
@@ -45,6 +48,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 - **高可维护性**：便于后续维护和升级
 
 #### 2.2 五标体系
+
 - **标准化**：统一的技术和流程标准
 - **规范化**：严格的开发和管理规范
 - **自动化**：提高开发效率和质量
@@ -52,6 +56,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 - **可视化**：直观的监控和管理界面
 
 #### 2.3 五化架构
+
 - **流程化**：标准化的开发流程
 - **文档化**：完善的文档体系
 - **工具化**：高效的开发工具链
@@ -157,10 +162,12 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 **原理**：将时间划分为固定大小的窗口，统计每个窗口内的请求数量。
 
 **优点**：
+
 - 实现简单
 - 内存占用小
 
 **缺点**：
+
 - 边界效应（窗口边界可能出现突发流量）
 - 限流不够平滑
 
@@ -170,31 +177,31 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 class FixedWindowRateLimiter {
   private counters: Map<string, number> = new Map();
   private lastResetTime: Map<string, number> = new Map();
-  
+
   constructor(
     private readonly windowSize: number, // 窗口大小（毫秒）
-    private readonly maxRequests: number  // 最大请求数
+    private readonly maxRequests: number // 最大请求数
   ) {}
-  
+
   allow(key: string): boolean {
     const now = Date.now();
     const lastReset = this.lastResetTime.get(key) || 0;
-    
+
     if (now - lastReset >= this.windowSize) {
       this.counters.set(key, 0);
       this.lastResetTime.set(key, now);
     }
-    
+
     const count = (this.counters.get(key) || 0) + 1;
-    
+
     if (count > this.maxRequests) {
       return false;
     }
-    
+
     this.counters.set(key, count);
     return true;
   }
-  
+
   reset(key: string): void {
     this.counters.delete(key);
     this.lastResetTime.delete(key);
@@ -207,10 +214,12 @@ class FixedWindowRateLimiter {
 **原理**：将时间划分为更小的滑动窗口，统计滑动窗口内的请求数量。
 
 **优点**：
+
 - 限流更平滑
 - 无边界效应
 
 **缺点**：
+
 - 实现较复杂
 - 内存占用较大
 
@@ -219,29 +228,27 @@ class FixedWindowRateLimiter {
 ```typescript
 class SlidingWindowRateLimiter {
   private windows: Map<string, number[]> = new Map();
-  
+
   constructor(
     private readonly windowSize: number, // 窗口大小（毫秒）
-    private readonly maxRequests: number  // 最大请求数
+    private readonly maxRequests: number // 最大请求数
   ) {}
-  
+
   allow(key: string): boolean {
     const now = Date.now();
     const timestamps = this.windows.get(key) || [];
-    
-    const validTimestamps = timestamps.filter(
-      timestamp => now - timestamp < this.windowSize
-    );
-    
+
+    const validTimestamps = timestamps.filter(timestamp => now - timestamp < this.windowSize);
+
     if (validTimestamps.length >= this.maxRequests) {
       return false;
     }
-    
+
     validTimestamps.push(now);
     this.windows.set(key, validTimestamps);
     return true;
   }
-  
+
   reset(key: string): void {
     this.windows.delete(key);
   }
@@ -253,10 +260,12 @@ class SlidingWindowRateLimiter {
 **原理**：请求以恒定速率流出，超出容量的请求被丢弃。
 
 **优点**：
+
 - 平滑流量
 - 防止突发流量
 
 **缺点**：
+
 - 无法应对突发流量
 - 可能丢失请求
 
@@ -265,33 +274,33 @@ class SlidingWindowRateLimiter {
 ```typescript
 class LeakyBucketRateLimiter {
   private buckets: Map<string, Bucket> = new Map();
-  
+
   constructor(
-    private readonly capacity: number,      // 桶容量
-    private readonly leakRate: number       // 漏水速率（请求/秒）
+    private readonly capacity: number, // 桶容量
+    private readonly leakRate: number // 漏水速率（请求/秒）
   ) {}
-  
+
   allow(key: string): boolean {
     const now = Date.now();
     const bucket = this.buckets.get(key) || {
       water: 0,
-      lastLeak: now
+      lastLeak: now,
     };
-    
+
     const timePassed = (now - bucket.lastLeak) / 1000;
     const leaked = Math.min(bucket.water, timePassed * this.leakRate);
     bucket.water -= leaked;
     bucket.lastLeak = now;
-    
+
     if (bucket.water < this.capacity) {
       bucket.water += 1;
       this.buckets.set(key, bucket);
       return true;
     }
-    
+
     return false;
   }
-  
+
   reset(key: string): void {
     this.buckets.delete(key);
   }
@@ -308,10 +317,12 @@ interface Bucket {
 **原理**：以恒定速率向桶中添加令牌，请求需要获取令牌才能通过。
 
 **优点**：
+
 - 可以应对突发流量
 - 限流平滑
 
 **缺点**：
+
 - 实现较复杂
 - 需要维护令牌状态
 
@@ -320,36 +331,33 @@ interface Bucket {
 ```typescript
 class TokenBucketRateLimiter {
   private buckets: Map<string, Bucket> = new Map();
-  
+
   constructor(
-    private readonly capacity: number,      // 桶容量
-    private readonly refillRate: number    // 填充速率（令牌/秒）
+    private readonly capacity: number, // 桶容量
+    private readonly refillRate: number // 填充速率（令牌/秒）
   ) {}
-  
+
   allow(key: string): boolean {
     const now = Date.now();
     const bucket = this.buckets.get(key) || {
       tokens: this.capacity,
-      lastRefill: now
+      lastRefill: now,
     };
-    
+
     const timePassed = (now - bucket.lastRefill) / 1000;
-    const refilled = Math.min(
-      this.capacity - bucket.tokens,
-      timePassed * this.refillRate
-    );
+    const refilled = Math.min(this.capacity - bucket.tokens, timePassed * this.refillRate);
     bucket.tokens += refilled;
     bucket.lastRefill = now;
-    
+
     if (bucket.tokens >= 1) {
       bucket.tokens -= 1;
       this.buckets.set(key, bucket);
       return true;
     }
-    
+
     return false;
   }
-  
+
   reset(key: string): void {
     this.buckets.delete(key);
   }
@@ -381,16 +389,16 @@ class TokenBucketRateLimiter {
 
 ```typescript
 enum CircuitBreakerState {
-  CLOSED = 'CLOSED',
-  OPEN = 'OPEN',
-  HALF_OPEN = 'HALF_OPEN'
+  CLOSED = "CLOSED",
+  OPEN = "OPEN",
+  HALF_OPEN = "HALF_OPEN",
 }
 
 interface CircuitBreakerConfig {
-  failureThreshold: number;      // 失败阈值
-  successThreshold: number;      // 成功阈值（半开状态）
-  timeout: number;               // 超时时间（毫秒）
-  resetTimeout: number;          // 重置超时（毫秒）
+  failureThreshold: number; // 失败阈值
+  successThreshold: number; // 成功阈值（半开状态）
+  timeout: number; // 超时时间（毫秒）
+  resetTimeout: number; // 重置超时（毫秒）
 }
 
 class CircuitBreaker {
@@ -399,16 +407,13 @@ class CircuitBreaker {
   private successCount: number = 0;
   private lastFailureTime: number = 0;
   private nextAttemptTime: number = 0;
-  
+
   constructor(
     private readonly name: string,
     private readonly config: CircuitBreakerConfig
   ) {}
-  
-  async execute<T>(
-    fn: () => Promise<T>,
-    fallback?: () => Promise<T>
-  ): Promise<T> {
+
+  async execute<T>(fn: () => Promise<T>, fallback?: () => Promise<T>): Promise<T> {
     if (this.state === CircuitBreakerState.OPEN) {
       if (Date.now() < this.nextAttemptTime) {
         if (fallback) {
@@ -419,13 +424,10 @@ class CircuitBreaker {
       this.state = CircuitBreakerState.HALF_OPEN;
       this.successCount = 0;
     }
-    
+
     try {
-      const result = await Promise.race([
-        fn(),
-        this.timeoutPromise(this.config.timeout)
-      ]);
-      
+      const result = await Promise.race([fn(), this.timeoutPromise(this.config.timeout)]);
+
       this.onSuccess();
       return result;
     } catch (error) {
@@ -436,7 +438,7 @@ class CircuitBreaker {
       throw error;
     }
   }
-  
+
   private onSuccess(): void {
     if (this.state === CircuitBreakerState.HALF_OPEN) {
       this.successCount++;
@@ -448,29 +450,29 @@ class CircuitBreaker {
       this.failureCount = 0;
     }
   }
-  
+
   private onFailure(): void {
     this.failureCount++;
     this.lastFailureTime = Date.now();
-    
+
     if (this.failureCount >= this.config.failureThreshold) {
       this.state = CircuitBreakerState.OPEN;
       this.nextAttemptTime = Date.now() + this.config.resetTimeout;
     }
   }
-  
+
   private timeoutPromise<T>(timeout: number): Promise<T> {
     return new Promise((_, reject) => {
       setTimeout(() => {
-        reject(new Error('Timeout'));
+        reject(new Error("Timeout"));
       }, timeout);
     });
   }
-  
+
   getState(): CircuitBreakerState {
     return this.state;
   }
-  
+
   reset(): void {
     this.state = CircuitBreakerState.CLOSED;
     this.failureCount = 0;
@@ -501,12 +503,8 @@ class CircuitBreaker {
 ```typescript
 class FallbackStrategy {
   private fallbackCache: Map<string, any> = new Map();
-  
-  async executeWithFallback<T>(
-    key: string,
-    fn: () => Promise<T>,
-    fallback?: () => Promise<T>
-  ): Promise<T> {
+
+  async executeWithFallback<T>(key: string, fn: () => Promise<T>, fallback?: () => Promise<T>): Promise<T> {
     try {
       const result = await fn();
       this.fallbackCache.set(key, result);
@@ -515,34 +513,27 @@ class FallbackStrategy {
       if (fallback) {
         return fallback();
       }
-      
+
       const cached = this.fallbackCache.get(key);
       if (cached) {
         return cached;
       }
-      
+
       throw error;
     }
   }
-  
-  async executeWithDefault<T>(
-    fn: () => Promise<T>,
-    defaultValue: T
-  ): Promise<T> {
+
+  async executeWithDefault<T>(fn: () => Promise<T>, defaultValue: T): Promise<T> {
     try {
       return await fn();
     } catch (error) {
       return defaultValue;
     }
   }
-  
-  async executeWithRetry<T>(
-    fn: () => Promise<T>,
-    maxRetries: number = 3,
-    delay: number = 1000
-  ): Promise<T> {
+
+  async executeWithRetry<T>(fn: () => Promise<T>, maxRetries: number = 3, delay: number = 1000): Promise<T> {
     let lastError: Error | null = null;
-    
+
     for (let i = 0; i < maxRetries; i++) {
       try {
         return await fn();
@@ -553,10 +544,10 @@ class FallbackStrategy {
         }
       }
     }
-    
+
     throw lastError;
   }
-  
+
   private sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -576,28 +567,28 @@ class RedisRateLimiter {
     private readonly windowSize: number,
     private readonly maxRequests: number
   ) {}
-  
+
   async allow(key: string): Promise<boolean> {
     const now = Date.now();
     const windowStart = now - this.windowSize;
-    
+
     const pipeline = this.redis.pipeline();
-    
+
     pipeline.zremrangebyscore(key, 0, windowStart);
     pipeline.zcard(key);
     pipeline.zadd(key, now, `${now}-${Math.random()}`);
     pipeline.pexpire(key, this.windowSize);
-    
+
     const results = await pipeline.exec();
     const count = results![1][1] as number;
-    
+
     if (count >= this.maxRequests) {
       return false;
     }
-    
+
     return true;
   }
-  
+
   async reset(key: string): Promise<void> {
     await this.redis.del(key);
   }
@@ -613,7 +604,7 @@ class RedisTokenBucket {
     private readonly capacity: number,
     private readonly refillRate: number
   ) {}
-  
+
   async allow(key: string): Promise<boolean> {
     const now = Date.now();
     const script = `
@@ -641,12 +632,12 @@ class RedisTokenBucket {
         return 0
       end
     `;
-    
+
     const result = await this.redis.eval(script, {
       keys: [key],
-      arguments: [this.capacity, this.refillRate, now]
+      arguments: [this.capacity, this.refillRate, now],
     });
-    
+
     return result === 1;
   }
 }
@@ -660,27 +651,27 @@ http {
     limit_req_zone $binary_remote_addr zone=ip_limit:10m rate=10r/s;
     limit_req_zone $request_uri zone=uri_limit:10m rate=100r/s;
     limit_conn_zone $binary_remote_addr zone=conn_limit:10m;
-    
+
     server {
         # IP 限流
         limit_req zone=ip_limit burst=20 nodelay;
-        
+
         # URI 限流
         limit_req zone=uri_limit burst=50 nodelay;
-        
+
         # 连接数限流
         limit_conn conn_limit 10;
-        
+
         # 限流响应
         limit_req_status 429;
         limit_conn_status 429;
-        
+
         location /api/ {
             # 自定义限流响应
             limit_req_status 429;
             error_page 429 = @rate_limited;
         }
-        
+
         location @rate_limited {
             default_type application/json;
             return 429 '{"error": "Too Many Requests"}';
@@ -694,46 +685,43 @@ http {
 ```typescript
 class RateLimitMiddleware {
   private limiters: Map<string, RateLimiter> = new Map();
-  
+
   constructor(private readonly config: RateLimitConfig) {}
-  
+
   middleware() {
     return async (req: Request, res: Response, next: NextFunction) => {
       const key = this.generateKey(req);
       const limiter = this.getLimiter(key);
-      
+
       if (!limiter.allow()) {
         return res.status(429).json({
-          error: 'Too Many Requests',
-          retryAfter: limiter.getRetryAfter()
+          error: "Too Many Requests",
+          retryAfter: limiter.getRetryAfter(),
         });
       }
-      
+
       next();
     };
   }
-  
+
   private generateKey(req: Request): string {
     const ip = req.ip;
     const path = req.path;
     const userId = req.user?.id;
-    
+
     if (userId) {
       return `user:${userId}:${path}`;
     }
-    
+
     return `ip:${ip}:${path}`;
   }
-  
+
   private getLimiter(key: string): RateLimiter {
     if (!this.limiters.has(key)) {
-      const limiter = new SlidingWindowRateLimiter(
-        this.config.windowSize,
-        this.config.maxRequests
-      );
+      const limiter = new SlidingWindowRateLimiter(this.config.windowSize, this.config.maxRequests);
       this.limiters.set(key, limiter);
     }
-    
+
     return this.limiters.get(key)!;
   }
 }
@@ -751,32 +739,32 @@ interface RateLimitConfig {
 ```typescript
 class RateLimitMetrics {
   private metrics: Map<string, Metric> = new Map();
-  
+
   record(key: string, allowed: boolean): void {
     const metric = this.metrics.get(key) || {
       total: 0,
       allowed: 0,
-      denied: 0
+      denied: 0,
     };
-    
+
     metric.total++;
     if (allowed) {
       metric.allowed++;
     } else {
       metric.denied++;
     }
-    
+
     this.metrics.set(key, metric);
   }
-  
+
   getMetrics(key: string): Metric | undefined {
     return this.metrics.get(key);
   }
-  
+
   getAllMetrics(): Map<string, Metric> {
     return new Map(this.metrics);
   }
-  
+
   reset(key?: string): void {
     if (key) {
       this.metrics.delete(key);
@@ -799,24 +787,24 @@ interface Metric {
 class CircuitBreakerMetrics {
   private states: Map<string, CircuitBreakerState> = new Map();
   private failureCounts: Map<string, number> = new Map();
-  
+
   recordState(name: string, state: CircuitBreakerState): void {
     this.states.set(name, state);
   }
-  
+
   recordFailure(name: string): void {
     const count = this.failureCounts.get(name) || 0;
     this.failureCounts.set(name, count + 1);
   }
-  
+
   getState(name: string): CircuitBreakerState | undefined {
     return this.states.get(name);
   }
-  
+
   getFailureCount(name: string): number {
     return this.failureCounts.get(name) || 0;
   }
-  
+
   getAllStates(): Map<string, CircuitBreakerState> {
     return new Map(this.states);
   }
@@ -839,7 +827,7 @@ groups:
         annotations:
           summary: "限流拒绝率过高"
           description: "限流拒绝率超过 10%"
-      
+
       - alert: CircuitBreakerOpen
         expr: circuit_breaker_state == 1
         for: 1m
@@ -848,7 +836,7 @@ groups:
         annotations:
           summary: "熔断器打开"
           description: "服务 {{ $labels.service }} 熔断器已打开"
-      
+
       - alert: HighFailureRate
         expr: |
           sum(rate(circuit_breaker_failures_total[5m])) 
@@ -971,16 +959,16 @@ groups:
 
 #### 6.1 术语表
 
-| 术语 | 说明 |
-|------|------|
-| 限流 | 限制请求的速率 |
-| 熔断 | 当服务异常时自动切断请求 |
-| 降级 | 当服务不可用时提供替代方案 |
-| 固定窗口 | 固定时间窗口的限流算法 |
-| 滑动窗口 | 滑动时间窗口的限流算法 |
-| 漏桶 | 基于漏桶的限流算法 |
-| 令牌桶 | 基于令牌桶的限流算法 |
-| 熔断器 | 实现熔断机制的组件 |
+| 术语     | 说明                       |
+| -------- | -------------------------- |
+| 限流     | 限制请求的速率             |
+| 熔断     | 当服务异常时自动切断请求   |
+| 降级     | 当服务不可用时提供替代方案 |
+| 固定窗口 | 固定时间窗口的限流算法     |
+| 滑动窗口 | 滑动时间窗口的限流算法     |
+| 漏桶     | 基于漏桶的限流算法         |
+| 令牌桶   | 基于令牌桶的限流算法       |
+| 熔断器   | 实现熔断机制的组件         |
 
 #### 6.2 参考资料
 
@@ -999,7 +987,7 @@ groups:
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

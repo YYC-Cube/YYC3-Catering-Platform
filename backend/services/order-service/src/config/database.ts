@@ -28,14 +28,14 @@ const sequelize = new Sequelize({
     underscored: true,
     paranoid: true,
     charset: 'utf8mb4',
-    collate: 'utf8mb4_unicode_ci'
+    collate: 'utf8mb4_unicode_ci',
   },
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
-    idle: 10000
-  }
+    idle: 10000,
+  },
 });
 
 // 测试数据库连接
@@ -54,7 +54,7 @@ export const testDatabaseConnection = async (): Promise<boolean> => {
 export const syncDatabase = async (): Promise<boolean> => {
   try {
     await sequelize.sync({
-      alter: process.env.NODE_ENV === 'development'
+      alter: process.env.NODE_ENV === 'development',
     });
     logger.info('Database models synchronized successfully');
     return true;

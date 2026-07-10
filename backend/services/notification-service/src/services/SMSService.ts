@@ -44,11 +44,11 @@ export class SMSService {
       if (!phone) {
         throw new Error('通知对象缺少电话号码');
       }
-      
+
       const smsContent = this.generateSMSContent(notification);
-      
+
       const result = await this.smsClient.sendSMS(phone, smsContent);
-      
+
       if (result.success) {
         logger.info('短信发送成功', { to: phone, notificationId: notification.id, messageId: result.messageId });
       } else {
@@ -68,19 +68,19 @@ export class SMSService {
   private generateSMSContent(notification: Notification): string {
     let prefix = '[YYC³餐饮平台]';
     let content = notification.content;
-    
+
     // 短信内容长度限制（通常为70个汉字或160个英文字符）
     const maxLength = 70;
-    
+
     // 计算总长度
     const totalLength = prefix.length + content.length;
-    
+
     // 如果超过限制，截断内容
     if (totalLength > maxLength) {
       const truncatedLength = maxLength - prefix.length - 3; // 减去省略号的长度
       content = content.substring(0, truncatedLength) + '...';
     }
-    
+
     return `${prefix} ${content}`;
   }
 

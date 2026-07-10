@@ -12,7 +12,7 @@
 ### 基础用法
 
 ```tsx
-import { Avatar } from '@/components/UI'
+import { Avatar } from "@/components/UI";
 
 export default function AvatarBasic() {
   return (
@@ -21,14 +21,14 @@ export default function AvatarBasic() {
       <Avatar src="https://i.pravatar.cc/150?img=2" />
       <Avatar src="https://i.pravatar.cc/150?img=3" />
     </div>
-  )
+  );
 }
 ```
 
 ### 类型
 
 ```tsx
-import { Avatar } from '@/components/UI'
+import { Avatar } from "@/components/UI";
 
 export default function AvatarType() {
   return (
@@ -37,14 +37,14 @@ export default function AvatarType() {
       <Avatar>U</Avatar>
       <Avatar icon="👤" />
     </div>
-  )
+  );
 }
 ```
 
 ### 尺寸
 
 ```tsx
-import { Avatar } from '@/components/UI'
+import { Avatar } from "@/components/UI";
 
 export default function AvatarSize() {
   return (
@@ -54,14 +54,14 @@ export default function AvatarSize() {
       <Avatar size="lg" src="https://i.pravatar.cc/150?img=3" />
       <Avatar size={80} src="https://i.pravatar.cc/150?img=4" />
     </div>
-  )
+  );
 }
 ```
 
 ### 形状
 
 ```tsx
-import { Avatar } from '@/components/UI'
+import { Avatar } from "@/components/UI";
 
 export default function AvatarShape() {
   return (
@@ -69,14 +69,14 @@ export default function AvatarShape() {
       <Avatar shape="circle" src="https://i.pravatar.cc/150?img=1" />
       <Avatar shape="square" src="https://i.pravatar.cc/150?img=2" />
     </div>
-  )
+  );
 }
 ```
 
 ### 带徽标
 
 ```tsx
-import { Avatar, Badge } from '@/components/UI'
+import { Avatar, Badge } from "@/components/UI";
 
 export default function AvatarWithBadge() {
   return (
@@ -88,14 +88,14 @@ export default function AvatarWithBadge() {
         <Avatar src="https://i.pravatar.cc/150?img=2" />
       </Badge>
     </div>
-  )
+  );
 }
 ```
 
 ### 组合
 
 ```tsx
-import { Avatar } from '@/components/UI'
+import { Avatar } from "@/components/UI";
 
 export default function AvatarGroup() {
   return (
@@ -105,7 +105,7 @@ export default function AvatarGroup() {
       <Avatar src="https://i.pravatar.cc/150?img=3" />
       <Avatar>+5</Avatar>
     </div>
-  )
+  );
 }
 ```
 
@@ -113,14 +113,14 @@ export default function AvatarGroup() {
 
 ### Avatar Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| src | 图片地址 | `string` | - |
-| alt | 文本描述 | `string` | - |
-| icon | 图标 | `VNode` | - |
-| size | 尺寸 | `string \| number` | `sm` / `md` / `lg` | `md` |
-| shape | 形状 | `string` | `circle` / `square` | `circle` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型               | 默认值              |
+| --------- | ---------- | ------------------ | ------------------- | -------- |
+| src       | 图片地址   | `string`           | -                   |
+| alt       | 文本描述   | `string`           | -                   |
+| icon      | 图标       | `VNode`            | -                   |
+| size      | 尺寸       | `string \| number` | `sm` / `md` / `lg`  | `md`     |
+| shape     | 形状       | `string`           | `circle` / `square` | `circle` |
+| className | 自定义类名 | `string`           | -                   |
 
 ## 样式定制
 
@@ -154,11 +154,7 @@ export default function AvatarGroup() {
 ### 1. 用户头像
 
 ```tsx
-<Avatar
-  src={user.avatar}
-  alt={user.name}
-  size="md"
-/>
+<Avatar src={user.avatar} alt={user.name} size="md" />
 ```
 
 ### 2. 头像组
@@ -166,15 +162,9 @@ export default function AvatarGroup() {
 ```tsx
 <div class="flex -space-x-2">
   {users.slice(0, 3).map(user => (
-    <Avatar
-      key={user.id}
-      src={user.avatar}
-      size="sm"
-    />
+    <Avatar key={user.id} src={user.avatar} size="sm" />
   ))}
-  {users.length > 3 && (
-    <Avatar size="sm">+{users.length - 3}</Avatar>
-  )}
+  {users.length > 3 && <Avatar size="sm">+{users.length - 3}</Avatar>}
 </div>
 ```
 
@@ -183,9 +173,11 @@ export default function AvatarGroup() {
 ```tsx
 <div class="relative">
   <Avatar src={user.avatar} size="lg" />
-  <span class={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
-    user.online ? 'bg-success-500' : 'bg-neutral-400'
-  }`} />
+  <span
+    class={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
+      user.online ? "bg-success-500" : "bg-neutral-400"
+    }`}
+  />
 </div>
 ```
 

@@ -23,15 +23,15 @@ function createRedisClient() {
     const client = createClient({
       url: `redis://${process.env.REDIS_PASSWORD ? `${process.env.REDIS_PASSWORD}@` : ''}${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || 6379}/${process.env.REDIS_DB || 2}`,
       socket: {
-        reconnectStrategy: (retries) => {
+        reconnectStrategy: retries => {
           const maxRetries = Number(process.env.REDIS_MAX_RECONNECT_ATTEMPTS) || 5;
           const delay = Number(process.env.REDIS_RECONNECT_DELAY) || 3000;
-          
+
           if (retries > maxRetries) {
             logger.error('Redis最大重连尝试次数已达上限，停止重连');
             return new Error('Redis连接失败');
           }
-          
+
           logger.info(`Redis重连尝试 ${retries}，${delay}ms 后重试...`);
           return delay;
         },
@@ -44,7 +44,7 @@ function createRedisClient() {
     });
 
     // 错误事件
-    client.on('error', (error) => {
+    client.on('error', error => {
       logger.error('Redis连接错误:', error);
     });
 

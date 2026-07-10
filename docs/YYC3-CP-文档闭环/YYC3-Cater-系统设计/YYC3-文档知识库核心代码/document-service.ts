@@ -157,7 +157,7 @@ export class DocumentService {
       subcategory?: string;
       tags?: string[];
       keywords?: string[];
-    }
+    },
   ): Promise<Document | null> {
     try {
       this.logger.info('Updating document', { documentId });
@@ -252,7 +252,7 @@ export class DocumentService {
       pageSize: number;
       sortBy?: string;
       sortOrder?: 'asc' | 'desc';
-    } = { page: 1, pageSize: 20 }
+    } = { page: 1, pageSize: 20 },
   ): Promise<{ documents: Document[]; total: number }> {
     try {
       const result = await this.documentRepository.findMany(filters, pagination);
@@ -321,7 +321,7 @@ export class DocumentService {
     version: string,
     content: string,
     changes: string,
-    author: string
+    author: string,
   ): Promise<DocumentVersion> {
     try {
       this.logger.info('Creating document version', { documentId, version });
@@ -384,15 +384,9 @@ export class DocumentService {
    * @param version 版本号
    * @returns 版本详情
    */
-  async getVersion(
-    documentId: string,
-    version: string
-  ): Promise<DocumentVersion | null> {
+  async getVersion(documentId: string, version: string): Promise<DocumentVersion | null> {
     try {
-      const documentVersion = await this.versionRepository.getByDocumentIdAndVersion(
-        documentId,
-        version
-      );
+      const documentVersion = await this.versionRepository.getByDocumentIdAndVersion(documentId, version);
       return documentVersion;
     } catch (error) {
       this.logger.error('Failed to get document version', {
@@ -411,11 +405,7 @@ export class DocumentService {
    * @param author 操作者
    * @returns 恢复后的文档
    */
-  async restoreVersion(
-    documentId: string,
-    version: string,
-    author: string
-  ): Promise<Document | null> {
+  async restoreVersion(documentId: string, version: string, author: string): Promise<Document | null> {
     try {
       this.logger.info('Restoring document version', { documentId, version });
 
@@ -425,10 +415,7 @@ export class DocumentService {
       }
 
       // 获取要恢复的版本
-      const targetVersion = await this.versionRepository.getByDocumentIdAndVersion(
-        documentId,
-        version
-      );
+      const targetVersion = await this.versionRepository.getByDocumentIdAndVersion(documentId, version);
 
       if (!targetVersion) {
         throw new Error(`版本 ${version} 不存在`);
@@ -441,7 +428,7 @@ export class DocumentService {
         currentVersion,
         document.content,
         `恢复前备份 (从版本 ${version} 恢复)`,
-        author
+        author,
       );
 
       // 恢复内容
@@ -579,7 +566,7 @@ export class DocumentService {
       // 提取二级标题作为概念
       const subtitleMatches = content.match(/^##\s+(.+)$/gm);
       if (subtitleMatches) {
-        subtitleMatches.forEach((match) => {
+        subtitleMatches.forEach(match => {
           const subtitle = match.replace(/^##\s+/, '').trim();
           if (subtitle.length > 2 && subtitle.length < 20) {
             concepts.push(subtitle);
@@ -601,10 +588,7 @@ export class DocumentService {
    * @param limit 数量限制
    * @returns 相关文档列表
    */
-  async getRelatedDocuments(
-    documentId: string,
-    limit: number = 10
-  ): Promise<Document[]> {
+  async getRelatedDocuments(documentId: string, limit: number = 10): Promise<Document[]> {
     try {
       const document = await this.documentRepository.findById(documentId);
       if (!document) {
@@ -612,10 +596,7 @@ export class DocumentService {
       }
 
       // 从知识图谱获取相关文档
-      const relatedDocumentIds = await this.graphService.getRelatedDocuments(
-        documentId,
-        limit
-      );
+      const relatedDocumentIds = await this.graphService.getRelatedDocuments(documentId, limit);
 
       // 获取文档详情
       const documents = await this.documentRepository.findByIds(relatedDocumentIds);
@@ -632,12 +613,14 @@ export class DocumentService {
    * @param filters 过滤条件
    * @returns 统计信息
    */
-  async getStatistics(filters: {
-    category?: string;
-    author?: string;
-    startDate?: Date;
-    endDate?: Date;
-  } = {}): Promise<{
+  async getStatistics(
+    filters: {
+      category?: string;
+      author?: string;
+      startDate?: Date;
+      endDate?: Date;
+    } = {},
+  ): Promise<{
     totalDocuments: number;
     publishedDocuments: number;
     draftDocuments: number;

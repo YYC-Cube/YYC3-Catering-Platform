@@ -49,14 +49,14 @@ export const authMiddleware = (req: AuthenticatedRequest, res: Response, next: N
       id: decoded.id,
       email: decoded.email,
       roles: decoded.roles || ['user'],
-      permissions: decoded.permissions || []
+      permissions: decoded.permissions || [],
     };
 
     // 记录认证成功
     logger.debug('User authenticated successfully', {
       userId: req.user.id,
       email: req.user.email,
-      roles: req.user.roles
+      roles: req.user.roles,
     });
 
     next();
@@ -127,7 +127,7 @@ export const jwtUtils = {
   generateToken(payload: any, options?: jwt.SignOptions): string {
     const signOptions: jwt.SignOptions = {
       expiresIn: config.jwt.expiresIn as StringValue,
-      ...options
+      ...options,
     };
     return jwt.sign(payload, config.jwt.secret, signOptions);
   },
@@ -144,5 +144,5 @@ export const jwtUtils = {
    */
   decodeToken(token: string): any {
     return jwt.decode(token);
-  }
+  },
 };

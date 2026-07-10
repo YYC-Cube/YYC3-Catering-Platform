@@ -32,7 +32,7 @@
     - [2. 安装依赖](#2.-安装依赖)
     - [3. 启动开发服务器](#3.-启动开发服务器)
   - [3.3 环境变量配置](#3.3-环境变量配置)
-    - [根目录环境变量 (.env)](#根目录环境变量-(.env))
+    - [根目录环境变量 (.env)](<#根目录环境变量-(.env)>)
 - [4. 代码规范](#4.-代码规范)
   - [4.1 命名规范](#4.1-命名规范)
     - [文件命名](#文件命名)
@@ -109,6 +109,7 @@
 - 快速上手开发和维护
 
 功能实现遵循以下原则：
+
 - **用户友好**：界面简洁，操作流畅
 - **性能优化**：响应迅速，体验流畅
 - **安全可靠**：数据安全，系统稳定
@@ -119,22 +120,26 @@
 本功能实现使用以下技术栈：
 
 **前端技术**
+
 - React 18+：组件化开发
 - TypeScript 5.0+：类型安全
 - Ant Design：UI组件库
 - Axios：HTTP客户端
 
 **后端技术**
+
 - Node.js 18+：服务端运行时
 - Express：Web框架
 - TypeScript：类型安全
 - Prisma：ORM框架
 
 **数据库**
+
 - PostgreSQL 15+：关系型数据库
 - Redis 7+：缓存数据库
 
 **工具链**
+
 - ESLint：代码检查
 - Prettier：代码格式化
 - Jest：单元测试
@@ -145,22 +150,26 @@
 开发环境配置要求：
 
 **系统要求**
+
 - 操作系统：macOS/Linux/Windows
 - Node.js：18.0.0或更高版本
 - npm：9.0.0或更高版本
 - Git：2.30.0或更高版本
 
 **数据库**
+
 - PostgreSQL：15.0或更高版本
 - Redis：7.0或更高版本
 
 **开发工具**
+
 - VS Code：推荐IDE
 - Postman：API测试工具
 - DBeaver：数据库管理工具
 
 **环境变量**
 创建`.env`文件，配置以下变量：
+
 ```env
 NODE_ENV=development
 PORT=3000
@@ -217,6 +226,7 @@ JWT_SECRET=your-secret-key
 **@tags**：YYC³,文档
 
 ---
+
 # YYC³智能餐饮平台 - 技术实现指南
 
 ## 📖 目录
@@ -269,21 +279,21 @@ YYC³智能餐饮平台是一个基于现代化技术栈构建的全场景餐饮
 
 ### 1.2 技术栈
 
-| 分类 | 技术 | 版本 | 用途 |
-|------|------|------|------|
-| **前端框架** | Vue 3 | 3.4.x | 构建响应式用户界面 |
-| **UI组件库** | Element Plus | 2.5.x | 提供丰富的UI组件 |
-| **状态管理** | Pinia | 2.1.x | 管理应用状态 |
-| **路由管理** | Vue Router | 4.2.x | 前端路由控制 |
-| **样式方案** | SCSS | 1.7x | CSS预处理器 |
-| **后端框架** | Express | 4.18.x | Node.js Web框架 |
-| **数据库** | PostgreSQL | 14.x | 关系型数据库 |
-| **ORM** | Prisma | 5.10.x | 数据库访问层 |
-| **API文档** | OpenAPI | 3.1.x | API接口规范 |
-| **容器化** | Docker | 24.x | 应用容器化 |
-| **编排工具** | Docker Compose | 2.24.x | 多容器编排 |
-| **编程语言** | TypeScript | 5.3.x | 类型安全的JavaScript |
-| **包管理器** | Bun | 1.0.x | 现代化包管理工具 |
+| 分类         | 技术           | 版本   | 用途                 |
+| ------------ | -------------- | ------ | -------------------- |
+| **前端框架** | Vue 3          | 3.4.x  | 构建响应式用户界面   |
+| **UI组件库** | Element Plus   | 2.5.x  | 提供丰富的UI组件     |
+| **状态管理** | Pinia          | 2.1.x  | 管理应用状态         |
+| **路由管理** | Vue Router     | 4.2.x  | 前端路由控制         |
+| **样式方案** | SCSS           | 1.7x   | CSS预处理器          |
+| **后端框架** | Express        | 4.18.x | Node.js Web框架      |
+| **数据库**   | PostgreSQL     | 14.x   | 关系型数据库         |
+| **ORM**      | Prisma         | 5.10.x | 数据库访问层         |
+| **API文档**  | OpenAPI        | 3.1.x  | API接口规范          |
+| **容器化**   | Docker         | 24.x   | 应用容器化           |
+| **编排工具** | Docker Compose | 2.24.x | 多容器编排           |
+| **编程语言** | TypeScript     | 5.3.x  | 类型安全的JavaScript |
+| **包管理器** | Bun            | 1.0.x  | 现代化包管理工具     |
 
 ---
 
@@ -445,18 +455,21 @@ CUSTOMER_APP_PORT=3302
 ### 4.1 命名规范
 
 #### 文件命名
+
 - **组件文件**: 使用PascalCase，如 `YTGrid.vue`, `UserManagement.tsx`
 - **服务文件**: 使用camelCase，如 `userService.ts`, `orderService.ts`
 - **工具文件**: 使用camelCase，如 `dateUtils.ts`, `validationUtils.ts`
 - **类型文件**: 使用PascalCase，如 `UserType.ts`, `OrderInterface.ts`
 
 #### 变量命名
+
 - **常量**: 使用UPPER_SNAKE_CASE，如 `MAX_RETRY_COUNT`, `API_BASE_URL`
 - **变量**: 使用camelCase，如 `userName`, `orderItems`
 - **类名**: 使用PascalCase，如 `UserService`, `OrderController`
 - **接口名**: 使用PascalCase，以 `I` 前缀，如 `IUser`, `IOrder`
 
 #### 数据库命名
+
 - **表名**: 使用snake_case，如 `user_roles`, `order_items`
 - **字段名**: 使用snake_case，如 `user_id`, `created_at`
 - **索引名**: 使用 `idx_table_name_field_name` 格式，如 `idx_users_email`
@@ -610,8 +623,8 @@ Closes #123
 <script setup lang="ts">
 // 类型定义
 interface Props {
-  colSpan?: number | Record<string, number>
-  rowSpan?: number | Record<string, number>
+  colSpan?: number | Record<string, number>;
+  rowSpan?: number | Record<string, number>;
   // 其他props...
 }
 
@@ -620,16 +633,16 @@ const props = withDefaults(defineProps<Props>(), {
   colSpan: 1,
   rowSpan: 1,
   // 默认值...
-})
+});
 
 // 计算属性
 const itemClasses = computed(() => [
   // 动态类名
-])
+]);
 
 const itemStyles = computed(() => {
   // 动态样式
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -644,28 +657,28 @@ const itemStyles = computed(() => {
 使用Pinia进行状态管理：
 
 ```typescript
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { defineStore } from "pinia";
+import { ref, computed } from "vue";
 
-export const useUserStore = defineStore('user', () => {
-  const currentUser = ref<User | null>(null)
-  const isAuthenticated = computed(() => !!currentUser.value)
+export const useUserStore = defineStore("user", () => {
+  const currentUser = ref<User | null>(null);
+  const isAuthenticated = computed(() => !!currentUser.value);
 
   function login(user: User) {
-    currentUser.value = user
+    currentUser.value = user;
   }
 
   function logout() {
-    currentUser.value = null
+    currentUser.value = null;
   }
 
   return {
     currentUser,
     isAuthenticated,
     login,
-    logout
-  }
-})
+    logout,
+  };
+});
 ```
 
 ### 6.2 后端开发
@@ -682,9 +695,9 @@ export const useUserStore = defineStore('user', () => {
  * 订单服务接口
  */
 export interface IOrderService {
-  createOrder(orderData: CreateOrderDto): Promise<Order>
-  getOrderById(id: string): Promise<Order | null>
-  updateOrderStatus(id: string, status: OrderStatus): Promise<Order>
+  createOrder(orderData: CreateOrderDto): Promise<Order>;
+  getOrderById(id: string): Promise<Order | null>;
+  updateOrderStatus(id: string, status: OrderStatus): Promise<Order>;
   // 其他方法...
 }
 
@@ -699,7 +712,7 @@ export class OrderService implements IOrderService {
       // 返回结果
     } catch (error) {
       // 错误处理
-      throw new ServiceError('创建订单失败', error)
+      throw new ServiceError("创建订单失败", error);
     }
   }
 
@@ -712,21 +725,21 @@ export class OrderService implements IOrderService {
 使用Express路由：
 
 ```typescript
-import express from 'express'
-import { OrderController } from '../controllers/OrderController'
-import { authenticate } from '../middleware/authMiddleware'
+import express from "express";
+import { OrderController } from "../controllers/OrderController";
+import { authenticate } from "../middleware/authMiddleware";
 
-const router = express.Router()
-const orderController = new OrderController()
+const router = express.Router();
+const orderController = new OrderController();
 
 // 订单相关路由
-router.post('/orders', authenticate, orderController.createOrder)
-router.get('/orders/:id', authenticate, orderController.getOrderById)
-router.put('/orders/:id/status', authenticate, orderController.updateOrderStatus)
+router.post("/orders", authenticate, orderController.createOrder);
+router.get("/orders/:id", authenticate, orderController.getOrderById);
+router.put("/orders/:id/status", authenticate, orderController.updateOrderStatus);
 
 // 其他路由...
 
-export default router
+export default router;
 ```
 
 ### 6.3 数据库开发
@@ -929,13 +942,17 @@ docker-compose down
 ### 9.1 前端问题
 
 #### 问题：组件样式冲突
+
 **解决方案**：
+
 - 使用Vue组件的scoped样式
 - 采用BEM命名规范
 - 避免使用全局样式
 
 #### 问题：页面加载缓慢
+
 **解决方案**：
+
 - 实现代码分割
 - 图片懒加载
 - 使用CDN加速静态资源
@@ -944,13 +961,17 @@ docker-compose down
 ### 9.2 后端问题
 
 #### 问题：数据库连接失败
+
 **解决方案**：
+
 - 检查数据库服务是否运行
 - 验证数据库连接字符串
 - 检查数据库用户权限
 
 #### 问题：API响应缓慢
+
 **解决方案**：
+
 - 优化数据库查询
 - 实现缓存机制
 - 增加服务器资源
@@ -959,13 +980,17 @@ docker-compose down
 ### 9.3 开发环境问题
 
 #### 问题：依赖安装失败
+
 **解决方案**：
+
 - 清除node_modules和包锁文件
 - 使用Bun重新安装依赖
 - 检查网络连接
 
 #### 问题：环境变量无效
+
 **解决方案**：
+
 - 检查.env文件格式
 - 重启开发服务器
 - 验证环境变量是否正确加载
@@ -1041,8 +1066,6 @@ git checkout branch-name
 **更新日期**: 2024-03-15  
 **文档作者**: YYC³团队
 
-
-
 ## 概述
 
 ### 架构概述
@@ -1064,8 +1087,6 @@ git checkout branch-name
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1099,8 +1120,6 @@ git checkout branch-name
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1123,46 +1142,46 @@ git checkout branch-name
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1175,6 +1194,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1184,6 +1204,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1193,6 +1214,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1209,16 +1231,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1228,13 +1251,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1243,6 +1264,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1261,6 +1283,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1276,6 +1299,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1295,28 +1319,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1325,44 +1348,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1376,13 +1397,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1391,18 +1412,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1412,37 +1436,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -1451,28 +1478,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -1481,21 +1506,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1504,10 +1531,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1533,16 +1557,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1551,26 +1575,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -1579,21 +1598,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1602,10 +1623,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1631,16 +1649,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1649,25 +1667,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

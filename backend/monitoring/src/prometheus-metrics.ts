@@ -201,12 +201,7 @@ export class PrometheusMetricsManager {
   /**
    * 记录HTTP请求
    */
-  public recordHttpRequest(
-    method: string,
-    path: string,
-    statusCode: number,
-    duration: number
-  ): void {
+  public recordHttpRequest(method: string, path: string, statusCode: number, duration: number): void {
     const labels = {
       method,
       path: this.normalizePath(path),
@@ -221,12 +216,7 @@ export class PrometheusMetricsManager {
   /**
    * 记录数据库查询
    */
-  public recordDatabaseQuery(
-    operation: string,
-    table: string,
-    duration: number,
-    status: 'success' | 'error'
-  ): void {
+  public recordDatabaseQuery(operation: string, table: string, duration: number, status: 'success' | 'error'): void {
     this.databaseMetrics.counter.inc({ operation, table, status });
     this.databaseMetrics.histogram.observe({ operation, table }, duration);
   }
@@ -242,11 +232,7 @@ export class PrometheusMetricsManager {
   /**
    * 记录订单
    */
-  public recordOrder(
-    status: string,
-    paymentMethod: string,
-    amount: number
-  ): void {
+  public recordOrder(status: string, paymentMethod: string, amount: number): void {
     this.businessMetrics.orderCounter.inc({ status, payment_method: paymentMethod });
     this.businessMetrics.orderAmountHistogram.observe({ status }, amount);
   }
@@ -281,12 +267,7 @@ export class PrometheusMetricsManager {
   /**
    * 创建自定义直方图
    */
-  public createHistogram(
-    name: string,
-    help: string,
-    labelNames?: string[],
-    buckets?: number[]
-  ): Histogram<string> {
+  public createHistogram(name: string, help: string, labelNames?: string[], buckets?: number[]): Histogram<string> {
     const fullName = `${this.config.prefix}_${name}`;
     return new Histogram({
       name: fullName,
@@ -399,12 +380,7 @@ export function prometheusMiddleware(metricsManager: PrometheusMetricsManager) {
 
     res.on('finish', () => {
       const duration = (Date.now() - start) / 1000; // 转换为秒
-      metricsManager.recordHttpRequest(
-        req.method,
-        req.path,
-        res.statusCode,
-        duration
-      );
+      metricsManager.recordHttpRequest(req.method, req.path, res.statusCode, duration);
     });
 
     next();

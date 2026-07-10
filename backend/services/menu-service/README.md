@@ -182,7 +182,7 @@ docker run -d -p 3201:3201 --name menu-service yyc3-menu-service
 ### Docker Compose
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   menu-service:
     build: .

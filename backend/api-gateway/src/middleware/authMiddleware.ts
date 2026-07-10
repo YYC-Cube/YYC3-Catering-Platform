@@ -16,11 +16,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import logger from '../config/logger';
 
 // 公共路由白名单
-const publicRoutes = [
-  '/api/auth/',
-  '/api/health',
-  '/api/docs',
-];
+const publicRoutes = ['/api/auth/', '/api/health', '/api/docs'];
 
 /**
  * 认证中间件

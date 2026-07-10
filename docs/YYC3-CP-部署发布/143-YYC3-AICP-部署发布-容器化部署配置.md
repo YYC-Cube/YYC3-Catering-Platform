@@ -9,11 +9,11 @@
 @tags: [部署发布],[容器化],[Docker]
 ---
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
@@ -28,9 +28,11 @@
 ### 1. 背景与目标
 
 #### 1.1 项目背景
+
 YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五化」理念的智能化应用系统，致力于提供高质量、高可用、高安全的成长守护体系。
 
 #### 1.2 文档目标
+
 - 规范容器化部署配置相关的业务标准与技术落地要求
 - 为项目相关人员提供清晰的参考依据
 - 保障相关模块开发、实施、运维的一致性与规范性
@@ -38,6 +40,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 ### 2. 设计原则
 
 #### 2.1 五高原则
+
 - **高可用性**：确保系统7x24小时稳定运行
 - **高性能**：优化响应时间和处理能力
 - **高安全性**：保护用户数据和隐私安全
@@ -45,6 +48,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 - **高可维护性**：便于后续维护和升级
 
 #### 2.2 五标体系
+
 - **标准化**：统一的技术和流程标准
 - **规范化**：严格的开发和管理规范
 - **自动化**：提高开发效率和质量
@@ -52,6 +56,7 @@ YYC³(YanYuCloudCube)-「智能教育」项目是一个基于「五高五标五�
 - **可视化**：直观的监控和管理界面
 
 #### 2.3 五化架构
+
 - **流程化**：标准化的开发流程
 - **文档化**：完善的文档体系
 - **工具化**：高效的开发工具链
@@ -201,61 +206,61 @@ spec:
         version: v1.0.0
     spec:
       containers:
-      - name: frontend
-        image: registry.example.com/yyc3-catering/frontend:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
-          name: http
-          protocol: TCP
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: API_BASE_URL
-          valueFrom:
-            configMapKeyRef:
-              name: yyc3-catering-config
-              key: api_base_url
-        - name: NEXT_PUBLIC_API_URL
-          valueFrom:
-            configMapKeyRef:
-              name: yyc3-catering-config
-              key: next_public_api_url
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 3000
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
-        volumeMounts:
-        - name: config
-          mountPath: /app/.env.local
-          subPath: .env.local
-          readOnly: true
+        - name: frontend
+          image: registry.example.com/yyc3-catering/frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: yyc3-catering-config
+                  key: api_base_url
+            - name: NEXT_PUBLIC_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: yyc3-catering-config
+                  key: next_public_api_url
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          volumeMounts:
+            - name: config
+              mountPath: /app/.env.local
+              subPath: .env.local
+              readOnly: true
       volumes:
-      - name: config
-        configMap:
-          name: yyc3-catering-config
-          items:
-          - key: frontend_env
-            path: .env.local
+        - name: config
+          configMap:
+            name: yyc3-catering-config
+            items:
+              - key: frontend_env
+                path: .env.local
 ```
 
 ##### 3.2.2 后端 Deployment
@@ -286,59 +291,59 @@ spec:
         version: v1.0.0
     spec:
       containers:
-      - name: backend
-        image: registry.example.com/yyc3-catering/backend:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3100
-          name: http
-          protocol: TCP
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: PORT
-          value: "3100"
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-catering-secrets
-              key: database_url
-        - name: REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-catering-secrets
-              key: redis_url
-        - name: JWT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: yyc3-catering-secrets
-              key: jwt_secret
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "500m"
-          limits:
-            memory: "1Gi"
-            cpu: "1000m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3100
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 3100
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
+        - name: backend
+          image: registry.example.com/yyc3-catering/backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3100
+              name: http
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3100"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-catering-secrets
+                  key: database_url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-catering-secrets
+                  key: redis_url
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: yyc3-catering-secrets
+                  key: jwt_secret
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3100
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3100
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
       volumes:
-      - name: logs
-        emptyDir: {}
+        - name: logs
+          emptyDir: {}
 ```
 
 ##### 3.2.3 Service 配置
@@ -354,10 +359,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 80
-    targetPort: 3000
-    protocol: TCP
-    name: http
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: http
   selector:
     app: yyc3-catering-frontend
 ---
@@ -371,10 +376,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 3100
-    targetPort: 3100
-    protocol: TCP
-    name: http
+    - port: 3100
+      targetPort: 3100
+      protocol: TCP
+      name: http
   selector:
     app: yyc3-catering-backend
 ```
@@ -396,31 +401,31 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
 spec:
   tls:
-  - hosts:
-    - api.yyc3-catering.com
-    - www.yyc3-catering.com
-    secretName: yyc3-catering-tls
+    - hosts:
+        - api.yyc3-catering.com
+        - www.yyc3-catering.com
+      secretName: yyc3-catering-tls
   rules:
-  - host: api.yyc3-catering.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: yyc3-catering-backend-service
-            port:
-              number: 3100
-  - host: www.yyc3-catering.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: yyc3-catering-frontend-service
-            port:
-              number: 80
+    - host: api.yyc3-catering.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: yyc3-catering-backend-service
+                port:
+                  number: 3100
+    - host: www.yyc3-catering.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: yyc3-catering-frontend-service
+                port:
+                  number: 80
 ```
 
 #### 3.3 Helm Charts 配置
@@ -652,49 +657,49 @@ name: Build and Push Docker Images
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    
-    - name: Login to Docker Registry
-      uses: docker/login-action@v2
-      with:
-        registry: registry.example.com
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    
-    - name: Build and push Frontend
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        file: ./docker/frontend/Dockerfile
-        push: true
-        tags: |
-          registry.example.com/yyc3-catering/frontend:latest
-          registry.example.com/yyc3-catering/frontend:${{ github.sha }}
-        cache-from: type=registry,ref=registry.example.com/yyc3-catering/frontend:buildcache
-        cache-to: type=registry,ref=registry.example.com/yyc3-catering/frontend:buildcache,mode=max
-    
-    - name: Build and push Backend
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        file: ./docker/backend/Dockerfile
-        push: true
-        tags: |
-          registry.example.com/yyc3-catering/backend:latest
-          registry.example.com/yyc3-catering/backend:${{ github.sha }}
-        cache-from: type=registry,ref=registry.example.com/yyc3-catering/backend:buildcache
-        cache-to: type=registry,ref=registry.example.com/yyc3-catering/backend:buildcache,mode=max
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Registry
+        uses: docker/login-action@v2
+        with:
+          registry: registry.example.com
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Frontend
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./docker/frontend/Dockerfile
+          push: true
+          tags: |
+            registry.example.com/yyc3-catering/frontend:latest
+            registry.example.com/yyc3-catering/frontend:${{ github.sha }}
+          cache-from: type=registry,ref=registry.example.com/yyc3-catering/frontend:buildcache
+          cache-to: type=registry,ref=registry.example.com/yyc3-catering/frontend:buildcache,mode=max
+
+      - name: Build and push Backend
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./docker/backend/Dockerfile
+          push: true
+          tags: |
+            registry.example.com/yyc3-catering/backend:latest
+            registry.example.com/yyc3-catering/backend:${{ github.sha }}
+          cache-from: type=registry,ref=registry.example.com/yyc3-catering/backend:buildcache
+          cache-to: type=registry,ref=registry.example.com/yyc3-catering/backend:buildcache,mode=max
 ```
 
 #### 3.5 环境变量配置
@@ -786,18 +791,18 @@ spec:
   minReplicas: 2
   maxReplicas: 10
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
 ```
 
 ### 4. 部署流程
@@ -858,9 +863,9 @@ spec:
   selector:
     app: yyc3-catering-backend
   ports:
-  - port: 3100
-    targetPort: 3100
-    name: metrics
+    - port: 3100
+      targetPort: 3100
+      name: metrics
 ```
 
 #### 5.2 日志收集
@@ -912,35 +917,35 @@ metadata:
 spec:
   podSelector: {}
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: ingress-nginx
-    ports:
-    - protocol: TCP
-      port: 3000
-    - protocol: TCP
-      port: 3100
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3000
+        - protocol: TCP
+          port: 3100
   egress:
-  - to:
-    - namespaceSelector:
-        matchLabels:
-          name: yyc3-catering
-    ports:
-    - protocol: TCP
-      port: 5432
-    - protocol: TCP
-      port: 6379
-  - to:
-    - namespaceSelector: {}
-    ports:
-    - protocol: TCP
-      port: 53
-    - protocol: UDP
-      port: 53
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: yyc3-catering
+      ports:
+        - protocol: TCP
+          port: 5432
+        - protocol: TCP
+          port: 6379
+    - to:
+        - namespaceSelector: {}
+      ports:
+        - protocol: TCP
+          port: 53
+        - protocol: UDP
+          port: 53
 ```
 
 #### 6.2 Pod 安全策略
@@ -957,18 +962,18 @@ spec:
     runAsUser: 1001
     fsGroup: 1001
   containers:
-  - name: backend
-    securityContext:
-      allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
-      capabilities:
-        drop:
-        - ALL
+    - name: backend
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+            - ALL
 ```
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

@@ -13,7 +13,7 @@ import { DataProcessing } from './DataProcessing';
 @Table({
   tableName: 'data_collections',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class DataCollection extends Model<DataCollection> {
   @PrimaryKey
@@ -24,42 +24,42 @@ export class DataCollection extends Model<DataCollection> {
   @Column({
     type: DataType.STRING(50),
     allowNull: false,
-    comment: '数据源类型（internal/external）'
+    comment: '数据源类型（internal/external）',
   })
   source_type!: string;
 
   @Column({
     type: DataType.STRING(100),
     allowNull: false,
-    comment: '具体数据源名称'
+    comment: '具体数据源名称',
   })
   source_name!: string;
 
   @Column({
     type: DataType.JSON,
     allowNull: false,
-    comment: '数据源配置参数'
+    comment: '数据源配置参数',
   })
   source_config!: Record<string, any>;
 
   @Column({
     type: DataType.STRING(50),
     allowNull: false,
-    comment: '采集数据类型'
+    comment: '采集数据类型',
   })
   data_type!: string;
 
   @Column({
     type: DataType.STRING(20),
     allowNull: false,
-    comment: '采集频率'
+    comment: '采集频率',
   })
   collection_frequency!: string;
 
   @Column({
     type: DataType.DATE,
     allowNull: true,
-    comment: '上次采集时间'
+    comment: '上次采集时间',
   })
   last_collected_at?: Date;
 
@@ -67,21 +67,21 @@ export class DataCollection extends Model<DataCollection> {
     type: DataType.STRING(20),
     allowNull: false,
     defaultValue: 'pending',
-    comment: '采集状态（pending/running/completed/failed）'
+    comment: '采集状态（pending/running/completed/failed）',
   })
   status!: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
-    comment: '错误信息'
+    comment: '错误信息',
   })
   error_message?: string;
 
   @Column({
     type: DataType.JSON,
     allowNull: true,
-    comment: '元数据'
+    comment: '元数据',
   })
   metadata?: Record<string, any>;
 
@@ -89,5 +89,8 @@ export class DataCollection extends Model<DataCollection> {
   processings!: DataProcessing[];
 }
 
-export type DataCollectionAttributes = typeof DataCollection['prototype'];
-export type DataCollectionCreationAttributes = Omit<DataCollectionAttributes, 'id' | 'last_collected_at' | 'error_message' | 'metadata' | 'createdAt' | 'updatedAt'>;
+export type DataCollectionAttributes = (typeof DataCollection)['prototype'];
+export type DataCollectionCreationAttributes = Omit<
+  DataCollectionAttributes,
+  'id' | 'last_collected_at' | 'error_message' | 'metadata' | 'createdAt' | 'updatedAt'
+>;

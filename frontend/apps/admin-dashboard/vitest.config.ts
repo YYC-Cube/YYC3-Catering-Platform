@@ -1,7 +1,7 @@
-import { defineConfig } from 'vitest/config'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import path from 'path'
+import { defineConfig } from 'vitest/config';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import path from 'path';
 
 export default defineConfig({
   plugins: [vue(), vueJsx()],
@@ -14,7 +14,7 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**/*.{vue,ts,tsx}'],
       exclude: ['src/main.ts', 'src/router/**', 'src/stores/**'],
-      reporter: ['text', 'html']
+      reporter: ['text', 'html'],
     },
     typecheck: {
       tsconfig: {
@@ -25,6 +25,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-    }
-  }
-})
+    },
+  },
+});

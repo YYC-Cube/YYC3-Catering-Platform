@@ -10,9 +10,11 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 性能测试架构文档
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--测试验证
 - 遵循规范：五高五标五化要求
@@ -84,22 +86,22 @@ const DEFAULT_PERFORMANCE_GOALS: PerformanceTestGoals = {
   responseTime: {
     p50: 200,
     p95: 500,
-    p99: 1000
+    p99: 1000,
   },
   throughput: {
     rps: 1000,
-    tps: 500
+    tps: 500,
   },
   concurrency: {
     min: 100,
-    max: 1000
+    max: 1000,
   },
   resourceUtilization: {
     cpu: 70,
     memory: 80,
     disk: 70,
-    network: 80
-  }
+    network: 80,
+  },
 };
 ```
 
@@ -115,17 +117,17 @@ const DEFAULT_PERFORMANCE_GOALS: PerformanceTestGoals = {
  */
 enum PerformanceTestType {
   /** 负载测试 */
-  LOAD = 'load',
+  LOAD = "load",
   /** 压力测试 */
-  STRESS = 'stress',
+  STRESS = "stress",
   /** 容量测试 */
-  VOLUME = 'volume',
+  VOLUME = "volume",
   /** 稳定性测试 */
-  STABILITY = 'stability',
+  STABILITY = "stability",
   /** 尖峰测试 */
-  SPIKE = 'spike',
+  SPIKE = "spike",
   /** 耐久性测试 */
-  ENDURANCE = 'endurance'
+  ENDURANCE = "endurance",
 }
 
 /**
@@ -147,7 +149,7 @@ interface PerformanceTestConfig {
   /** 目标URL */
   targetUrl: string;
   /** 请求方法 */
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method: "GET" | "POST" | "PUT" | "DELETE";
   /** 请求头 */
   headers: Record<string, string>;
   /** 请求体 */
@@ -164,7 +166,7 @@ interface PerformanceTestConfig {
  */
 class PerformanceTestTypeManager {
   private configs: Map<PerformanceTestType, PerformanceTestConfig[]> = new Map();
-  
+
   /**
    * 注册测试配置
    */
@@ -173,76 +175,76 @@ class PerformanceTestTypeManager {
     configs.push(config);
     this.configs.set(config.type, configs);
   }
-  
+
   /**
    * 获取测试配置
    */
   getConfigs(type: PerformanceTestType): PerformanceTestConfig[] {
     return this.configs.get(type) || [];
   }
-  
+
   /**
    * 创建负载测试配置
    */
   static createLoadTestConfig(overrides?: Partial<PerformanceTestConfig>): PerformanceTestConfig {
     return {
       type: PerformanceTestType.LOAD,
-      name: '负载测试',
-      description: '模拟正常负载下的系统性能',
+      name: "负载测试",
+      description: "模拟正常负载下的系统性能",
       duration: 600,
       virtualUsers: 100,
       requestRate: 100,
-      targetUrl: 'http://localhost:3200/api',
-      method: 'GET',
+      targetUrl: "http://localhost:3200/api",
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      ...overrides
+      ...overrides,
     };
   }
-  
+
   /**
    * 创建压力测试配置
    */
   static createStressTestConfig(overrides?: Partial<PerformanceTestConfig>): PerformanceTestConfig {
     return {
       type: PerformanceTestType.STRESS,
-      name: '压力测试',
-      description: '测试系统在极限负载下的表现',
+      name: "压力测试",
+      description: "测试系统在极限负载下的表现",
       duration: 300,
       virtualUsers: 1000,
       requestRate: 1000,
-      targetUrl: 'http://localhost:3200/api',
-      method: 'GET',
+      targetUrl: "http://localhost:3200/api",
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      ...overrides
+      ...overrides,
     };
   }
-  
+
   /**
    * 创建阶梯测试配置
    */
   static createRampUpTestConfig(overrides?: Partial<PerformanceTestConfig>): PerformanceTestConfig {
     return {
       type: PerformanceTestType.LOAD,
-      name: '阶梯测试',
-      description: '逐步增加负载测试系统性能',
+      name: "阶梯测试",
+      description: "逐步增加负载测试系统性能",
       duration: 900,
       virtualUsers: 500,
       requestRate: 500,
-      targetUrl: 'http://localhost:3200/api',
-      method: 'GET',
+      targetUrl: "http://localhost:3200/api",
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       stages: [
         { duration: 300, target: 100 },
         { duration: 300, target: 300 },
-        { duration: 300, target: 500 }
+        { duration: 300, target: 500 },
       ],
-      ...overrides
+      ...overrides,
     };
   }
 }
@@ -278,7 +280,7 @@ interface TestStep {
   /** 请求URL */
   url: string;
   /** 请求方法 */
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method: "GET" | "POST" | "PUT" | "DELETE";
   /** 请求头 */
   headers: Record<string, string>;
   /** 请求体 */
@@ -294,11 +296,11 @@ interface TestStep {
  */
 interface ValidationRule {
   /** 规则类型 */
-  type: 'status' | 'responseTime' | 'content' | 'jsonPath';
+  type: "status" | "responseTime" | "content" | "jsonPath";
   /** 规则值 */
   value: any;
   /** 操作符 */
-  operator: '==' | '!=' | '>' | '<' | '>=' | '<=' | 'contains' | 'matches';
+  operator: "==" | "!=" | ">" | "<" | ">=" | "<=" | "contains" | "matches";
 }
 
 /**
@@ -306,105 +308,101 @@ interface ValidationRule {
  */
 class TestScenarioManager {
   private scenarios: Map<string, TestScenario> = new Map();
-  
+
   /**
    * 添加场景
    */
   addScenario(scenario: TestScenario): void {
     this.scenarios.set(scenario.name, scenario);
   }
-  
+
   /**
    * 获取场景
    */
   getScenario(name: string): TestScenario | undefined {
     return this.scenarios.get(name);
   }
-  
+
   /**
    * 创建用户登录场景
    */
   static createLoginScenario(baseUrl: string): TestScenario {
     return {
-      name: '用户登录',
-      description: '模拟用户登录流程',
+      name: "用户登录",
+      description: "模拟用户登录流程",
       virtualUsers: 100,
       duration: 300,
       thinkTime: 2,
       steps: [
         {
-          name: '访问登录页面',
+          name: "访问登录页面",
           url: `${baseUrl}/login`,
-          method: 'GET',
+          method: "GET",
           headers: {},
           expectedStatus: 200,
-          validations: [
-            { type: 'status', value: 200, operator: '==' }
-          ]
+          validations: [{ type: "status", value: 200, operator: "==" }],
         },
         {
-          name: '提交登录表单',
+          name: "提交登录表单",
           url: `${baseUrl}/api/auth/login`,
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: {
-            email: 'test@example.com',
-            password: 'password123'
+            email: "test@example.com",
+            password: "password123",
           },
           expectedStatus: 200,
           validations: [
-            { type: 'status', value: 200, operator: '==' },
-            { type: 'responseTime', value: 1000, operator: '<=' }
-          ]
-        }
-      ]
+            { type: "status", value: 200, operator: "==" },
+            { type: "responseTime", value: 1000, operator: "<=" },
+          ],
+        },
+      ],
     };
   }
-  
+
   /**
    * 创建订单创建场景
    */
   static createOrderScenario(baseUrl: string): TestScenario {
     return {
-      name: '创建订单',
-      description: '模拟用户创建订单流程',
+      name: "创建订单",
+      description: "模拟用户创建订单流程",
       virtualUsers: 50,
       duration: 600,
       thinkTime: 3,
       steps: [
         {
-          name: '获取商品列表',
+          name: "获取商品列表",
           url: `${baseUrl}/api/products`,
-          method: 'GET',
+          method: "GET",
           headers: {},
           expectedStatus: 200,
-          validations: [
-            { type: 'status', value: 200, operator: '==' }
-          ]
+          validations: [{ type: "status", value: 200, operator: "==" }],
         },
         {
-          name: '创建订单',
+          name: "创建订单",
           url: `${baseUrl}/api/orders`,
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer {{token}}'
+            "Content-Type": "application/json",
+            Authorization: "Bearer {{token}}",
           },
           body: {
             items: [
               { productId: 1, quantity: 2 },
-              { productId: 2, quantity: 1 }
-            ]
+              { productId: 2, quantity: 1 },
+            ],
           },
           expectedStatus: 201,
           validations: [
-            { type: 'status', value: 201, operator: '==' },
-            { type: 'jsonPath', value: '$.id', operator: 'exists' }
-          ]
-        }
-      ]
+            { type: "status", value: 201, operator: "==" },
+            { type: "jsonPath", value: "$.id", operator: "exists" },
+          ],
+        },
+      ],
     };
   }
 }
@@ -422,15 +420,15 @@ class TestScenarioManager {
  */
 enum PerformanceTestTool {
   /** K6 */
-  K6 = 'k6',
+  K6 = "k6",
   /** JMeter */
-  JMETER = 'jmeter',
+  JMETER = "jmeter",
   /** Artillery */
-  ARTILLERY = 'artillery',
+  ARTILLERY = "artillery",
   /** Gatling */
-  GATLING = 'gatling',
+  GATLING = "gatling",
   /** Locust */
-  LOCUST = 'locust'
+  LOCUST = "locust",
 }
 
 /**
@@ -446,9 +444,9 @@ interface ToolFeatures {
   /** 集成CI/CD */
   cicdIntegration: boolean;
   /** 学习曲线 */
-  learningCurve: 'easy' | 'medium' | 'hard';
+  learningCurve: "easy" | "medium" | "hard";
   /** 社区支持 */
-  communitySupport: 'high' | 'medium' | 'low';
+  communitySupport: "high" | "medium" | "low";
 }
 
 /**
@@ -456,81 +454,96 @@ interface ToolFeatures {
  */
 class ToolComparison {
   private static tools: Map<PerformanceTestTool, ToolFeatures> = new Map([
-    [PerformanceTestTool.K6, {
-      languages: ['JavaScript'],
-      distributed: true,
-      realTimeMonitoring: true,
-      cicdIntegration: true,
-      learningCurve: 'easy',
-      communitySupport: 'high'
-    }],
-    [PerformanceTestTool.JMETER, {
-      languages: ['Java', 'Groovy'],
-      distributed: true,
-      realTimeMonitoring: true,
-      cicdIntegration: true,
-      learningCurve: 'medium',
-      communitySupport: 'high'
-    }],
-    [PerformanceTestTool.ARTILLERY, {
-      languages: ['YAML', 'JavaScript'],
-      distributed: true,
-      realTimeMonitoring: true,
-      cicdIntegration: true,
-      learningCurve: 'easy',
-      communitySupport: 'medium'
-    }],
-    [PerformanceTestTool.GATLING, {
-      languages: ['Scala'],
-      distributed: true,
-      realTimeMonitoring: true,
-      cicdIntegration: true,
-      learningCurve: 'hard',
-      communitySupport: 'high'
-    }],
-    [PerformanceTestTool.LOCUST, {
-      languages: ['Python'],
-      distributed: true,
-      realTimeMonitoring: true,
-      cicdIntegration: true,
-      learningCurve: 'medium',
-      communitySupport: 'medium'
-    }]
+    [
+      PerformanceTestTool.K6,
+      {
+        languages: ["JavaScript"],
+        distributed: true,
+        realTimeMonitoring: true,
+        cicdIntegration: true,
+        learningCurve: "easy",
+        communitySupport: "high",
+      },
+    ],
+    [
+      PerformanceTestTool.JMETER,
+      {
+        languages: ["Java", "Groovy"],
+        distributed: true,
+        realTimeMonitoring: true,
+        cicdIntegration: true,
+        learningCurve: "medium",
+        communitySupport: "high",
+      },
+    ],
+    [
+      PerformanceTestTool.ARTILLERY,
+      {
+        languages: ["YAML", "JavaScript"],
+        distributed: true,
+        realTimeMonitoring: true,
+        cicdIntegration: true,
+        learningCurve: "easy",
+        communitySupport: "medium",
+      },
+    ],
+    [
+      PerformanceTestTool.GATLING,
+      {
+        languages: ["Scala"],
+        distributed: true,
+        realTimeMonitoring: true,
+        cicdIntegration: true,
+        learningCurve: "hard",
+        communitySupport: "high",
+      },
+    ],
+    [
+      PerformanceTestTool.LOCUST,
+      {
+        languages: ["Python"],
+        distributed: true,
+        realTimeMonitoring: true,
+        cicdIntegration: true,
+        learningCurve: "medium",
+        communitySupport: "medium",
+      },
+    ],
   ]);
-  
+
   /**
    * 获取工具特性
    */
   static getToolFeatures(tool: PerformanceTestTool): ToolFeatures {
     return this.tools.get(tool)!;
   }
-  
+
   /**
    * 推荐工具
    */
   static recommendTool(requirements: Partial<ToolFeatures>): PerformanceTestTool[] {
     const recommended: PerformanceTestTool[] = [];
-    
+
     for (const [tool, features] of this.tools.entries()) {
       let match = true;
-      
+
       if (requirements.languages && requirements.languages.length > 0) {
         match = match && requirements.languages.some(lang => features.languages.includes(lang));
       }
-      
+
       if (requirements.distributed !== undefined) {
         match = match && features.distributed === requirements.distributed;
       }
-      
+
       if (requirements.cicdIntegration !== undefined) {
         match = match && features.cicdIntegration === requirements.cicdIntegration;
       }
-      
+
       if (match) {
         recommended.push(tool);
       }
     }
-    
+
     return recommended;
   }
 }
@@ -552,9 +565,13 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export let options = {
-  stages: ${config.stages ? JSON.stringify(config.stages) : `[
+  stages: ${
+    config.stages
+      ? JSON.stringify(config.stages)
+      : `[
     { duration: '${config.duration}s', target: ${config.virtualUsers} }
-  ]`},
+  ]`
+  },
   thresholds: {
     http_req_duration: ['p(95)<500', 'p(99)<1000'],
     http_req_failed: ['rate<0.01']
@@ -563,8 +580,12 @@ export let options = {
 
 export default function() {
   let response = http.${config.method.toLowerCase()}('${config.targetUrl}', {
-    headers: ${JSON.stringify(config.headers)}${config.body ? `,
-    body: JSON.stringify(${JSON.stringify(config.body)})` : ''}
+    headers: ${JSON.stringify(config.headers)}${
+      config.body
+        ? `,
+    body: JSON.stringify(${JSON.stringify(config.body)})`
+        : ""
+    }
   });
   
   check(response, {
@@ -576,7 +597,7 @@ export default function() {
 }
     `;
   }
-  
+
   /**
    * 生成阶梯测试脚本
    */
@@ -586,13 +607,15 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export let options = {
-  stages: ${JSON.stringify(config.stages || [
-    { duration: '2m', target: 10 },
-    { duration: '5m', target: 50 },
-    { duration: '2m', target: 100 },
-    { duration: '5m', target: 100 },
-    { duration: '2m', target: 0 }
-  ])},
+  stages: ${JSON.stringify(
+    config.stages || [
+      { duration: "2m", target: 10 },
+      { duration: "5m", target: 50 },
+      { duration: "2m", target: 100 },
+      { duration: "5m", target: 100 },
+      { duration: "2m", target: 0 },
+    ]
+  )},
   thresholds: {
     http_req_duration: ['p(95)<500', 'p(99)<1000'],
     http_req_failed: ['rate<0.01']
@@ -613,25 +636,31 @@ export default function() {
 }
     `;
   }
-  
+
   /**
    * 生成场景测试脚本
    */
   static generateScenarioScript(scenario: TestScenario): string {
-    const steps = scenario.steps.map((step, index) => {
-      return `
+    const steps = scenario.steps
+      .map((step, index) => {
+        return `
   // Step ${index + 1}: ${step.name}
   let response${index} = http.${step.method.toLowerCase()}('${step.url}', {
-    headers: ${JSON.stringify(step.headers)}${step.body ? `,
-    body: JSON.stringify(${JSON.stringify(step.body)})` : ''}
+    headers: ${JSON.stringify(step.headers)}${
+      step.body
+        ? `,
+    body: JSON.stringify(${JSON.stringify(step.body)})`
+        : ""
+    }
   });
   
   check(response${index}, {
     'status is ${step.expectedStatus}': (r) => r.status === ${step.expectedStatus}
   });
       `;
-    }).join('\n');
-    
+      })
+      .join("\n");
+
     return `
 import http from 'k6/http';
 import { check, sleep } from 'k6';
@@ -691,14 +720,18 @@ class JMeterPlanGenerator {
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
           <stringProp name="HTTPSampler.port">3200</stringProp>
-          <stringProp name="HTTPSampler.path">${config.targetUrl.replace('http://localhost:3200', '')}</stringProp>
+          <stringProp name="HTTPSampler.path">${config.targetUrl.replace("http://localhost:3200", "")}</stringProp>
           <stringProp name="HTTPSampler.method">${config.method}</stringProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
-              ${config.body ? `<elementProp name="" elementType="HTTPArgument">
+              ${
+                config.body
+                  ? `<elementProp name="" elementType="HTTPArgument">
                 <stringProp name="Argument.value">${JSON.stringify(config.body)}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>` : ''}
+              </elementProp>`
+                  : ""
+              }
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
@@ -785,94 +818,114 @@ interface PerformanceMetrics {
 class PerformanceMetricsCollector {
   private metrics: PerformanceMetrics[] = [];
   private startTime: number = 0;
-  
+
   /**
    * 开始收集
    */
   start(): void {
     this.startTime = Date.now();
   }
-  
+
   /**
    * 收集指标
    */
   collect(metrics: Partial<PerformanceMetrics>): void {
     this.metrics.push({
       responseTime: metrics.responseTime || {
-        min: 0, max: 0, avg: 0, median: 0, p90: 0, p95: 0, p99: 0
+        min: 0,
+        max: 0,
+        avg: 0,
+        median: 0,
+        p90: 0,
+        p95: 0,
+        p99: 0,
       },
       throughput: metrics.throughput || {
-        rps: 0, tps: 0, bytesPerSecond: 0
+        rps: 0,
+        tps: 0,
+        bytesPerSecond: 0,
       },
       errorRate: metrics.errorRate || {
-        totalRequests: 0, failedRequests: 0, errorRate: 0
+        totalRequests: 0,
+        failedRequests: 0,
+        errorRate: 0,
       },
       resourceUtilization: metrics.resourceUtilization || {
-        cpu: 0, memory: 0, disk: 0, network: 0
-      }
+        cpu: 0,
+        memory: 0,
+        disk: 0,
+        network: 0,
+      },
     });
   }
-  
+
   /**
    * 获取聚合指标
    */
   getAggregatedMetrics(): PerformanceMetrics {
     if (this.metrics.length === 0) {
-      throw new Error('没有收集到指标');
+      throw new Error("没有收集到指标");
     }
-    
+
     const responseTimes = this.metrics.map(m => m.responseTime);
     const throughputs = this.metrics.map(m => m.throughput);
     const errorRates = this.metrics.map(m => m.errorRate);
     const resourceUtilizations = this.metrics.map(m => m.resourceUtilization);
-    
+
     return {
       responseTime: {
         min: Math.min(...responseTimes.map(r => r.min)),
         max: Math.max(...responseTimes.map(r => r.max)),
         avg: this.average(responseTimes.map(r => r.avg)),
         median: this.median(responseTimes.map(r => r.median)),
-        p90: this.percentile(responseTimes.map(r => r.p90), 90),
-        p95: this.percentile(responseTimes.map(r => r.p95), 95),
-        p99: this.percentile(responseTimes.map(r => r.p99), 99)
+        p90: this.percentile(
+          responseTimes.map(r => r.p90),
+          90
+        ),
+        p95: this.percentile(
+          responseTimes.map(r => r.p95),
+          95
+        ),
+        p99: this.percentile(
+          responseTimes.map(r => r.p99),
+          99
+        ),
       },
       throughput: {
         rps: this.average(throughputs.map(t => t.rps)),
         tps: this.average(throughputs.map(t => t.tps)),
-        bytesPerSecond: this.average(throughputs.map(t => t.bytesPerSecond))
+        bytesPerSecond: this.average(throughputs.map(t => t.bytesPerSecond)),
       },
       errorRate: {
         totalRequests: errorRates.reduce((sum, e) => sum + e.totalRequests, 0),
         failedRequests: errorRates.reduce((sum, e) => sum + e.failedRequests, 0),
-        errorRate: this.average(errorRates.map(e => e.errorRate))
+        errorRate: this.average(errorRates.map(e => e.errorRate)),
       },
       resourceUtilization: {
         cpu: this.average(resourceUtilizations.map(r => r.cpu)),
         memory: this.average(resourceUtilizations.map(r => r.memory)),
         disk: this.average(resourceUtilizations.map(r => r.disk)),
-        network: this.average(resourceUtilizations.map(r => r.network))
-      }
+        network: this.average(resourceUtilizations.map(r => r.network)),
+      },
     };
   }
-  
+
   /**
    * 计算平均值
    */
   private average(values: number[]): number {
     return values.reduce((sum, v) => sum + v, 0) / values.length;
   }
-  
+
   /**
    * 计算中位数
    */
   private median(values: number[]): number {
     const sorted = [...values].sort((a, b) => a - b);
     const mid = Math.floor(sorted.length / 2);
-    return sorted.length % 2 === 0 
-      ? (sorted[mid - 1] + sorted[mid]) / 2 
-      : sorted[mid];
+    return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
   }
-  
+
   /**
    * 计算百分位数
    */
@@ -900,91 +953,88 @@ class PerformanceMetricsAnalyzer {
       throughput: this.analyzeThroughput(metrics.throughput, goals.throughput),
       resourceUtilization: this.analyzeResourceUtilization(metrics.resourceUtilization, goals.resourceUtilization),
       errorRate: this.analyzeErrorRate(metrics.errorRate),
-      overall: this.calculateOverallScore(metrics, goals)
+      overall: this.calculateOverallScore(metrics, goals),
     };
   }
-  
+
   /**
    * 分析响应时间
    */
   private static analyzeResponseTime(
-    actual: PerformanceMetrics['responseTime'],
-    expected: PerformanceTestGoals['responseTime']
+    actual: PerformanceMetrics["responseTime"],
+    expected: PerformanceTestGoals["responseTime"]
   ): MetricAnalysis {
     const p95Pass = actual.p95 <= expected.p95;
     const p99Pass = actual.p99 <= expected.p99;
-    
+
     return {
-      status: p95Pass && p99Pass ? 'pass' : 'fail',
+      status: p95Pass && p99Pass ? "pass" : "fail",
       actual: actual.p95,
       expected: expected.p95,
       difference: actual.p95 - expected.p95,
-      recommendations: this.getResponseTimeRecommendations(actual, expected)
+      recommendations: this.getResponseTimeRecommendations(actual, expected),
     };
   }
-  
+
   /**
    * 分析吞吐量
    */
   private static analyzeThroughput(
-    actual: PerformanceMetrics['throughput'],
-    expected: PerformanceTestGoals['throughput']
+    actual: PerformanceMetrics["throughput"],
+    expected: PerformanceTestGoals["throughput"]
   ): MetricAnalysis {
     const pass = actual.rps >= expected.rps;
-    
+
     return {
-      status: pass ? 'pass' : 'fail',
+      status: pass ? "pass" : "fail",
       actual: actual.rps,
       expected: expected.rps,
       difference: actual.rps - expected.rps,
-      recommendations: this.getThroughputRecommendations(actual, expected)
+      recommendations: this.getThroughputRecommendations(actual, expected),
     };
   }
-  
+
   /**
    * 分析资源利用率
    */
   private static analyzeResourceUtilization(
-    actual: PerformanceMetrics['resourceUtilization'],
-    expected: PerformanceTestGoals['resourceUtilization']
+    actual: PerformanceMetrics["resourceUtilization"],
+    expected: PerformanceTestGoals["resourceUtilization"]
   ): MetricAnalysis {
     const cpuPass = actual.cpu <= expected.cpu;
     const memoryPass = actual.memory <= expected.memory;
-    
+
     return {
-      status: cpuPass && memoryPass ? 'pass' : 'fail',
+      status: cpuPass && memoryPass ? "pass" : "fail",
       actual: actual.cpu,
       expected: expected.cpu,
       difference: actual.cpu - expected.cpu,
-      recommendations: this.getResourceUtilizationRecommendations(actual, expected)
+      recommendations: this.getResourceUtilizationRecommendations(actual, expected),
     };
   }
-  
+
   /**
    * 分析错误率
    */
-  private static analyzeErrorRate(errorRate: PerformanceMetrics['errorRate']): MetricAnalysis {
+  private static analyzeErrorRate(errorRate: PerformanceMetrics["errorRate"]): MetricAnalysis {
     const pass = errorRate.errorRate < 0.01;
-    
+
     return {
-      status: pass ? 'pass' : 'fail',
+      status: pass ? "pass" : "fail",
       actual: errorRate.errorRate,
       expected: 0.01,
       difference: errorRate.errorRate - 0.01,
-      recommendations: this.getErrorRateRecommendations(errorRate)
+      recommendations: this.getErrorRateRecommendations(errorRate),
     };
   }
-  
+
   /**
    * 计算总体评分
    */
-  private static calculateOverallScore(
-    metrics: PerformanceMetrics,
-    goals: PerformanceTestGoals
-  ): number {
+  private static calculateOverallScore(metrics: PerformanceMetrics, goals: PerformanceTestGoals): number {
     let score = 0;
     let maxScore = 0;
-    
+
     // 响应时间权重 30%
     maxScore += 30;
     if (metrics.responseTime.p95 <= goals.responseTime.p95) {
@@ -994,7 +1044,7 @@ class PerformanceMetricsAnalyzer {
     } else if (metrics.responseTime.p95 <= goals.responseTime.p95 * 1.5) {
       score += 10;
     }
-    
+
     // 吞吐量权重 30%
     maxScore += 30;
     if (metrics.throughput.rps >= goals.throughput.rps) {
@@ -1004,7 +1054,7 @@ class PerformanceMetricsAnalyzer {
     } else if (metrics.throughput.rps >= goals.throughput.rps * 0.6) {
       score += 10;
     }
-    
+
     // 资源利用率权重 30%
     maxScore += 30;
     if (metrics.resourceUtilization.cpu <= goals.resourceUtilization.cpu) {
@@ -1014,7 +1064,7 @@ class PerformanceMetricsAnalyzer {
     } else if (metrics.resourceUtilization.cpu <= goals.resourceUtilization.cpu * 1.5) {
       score += 10;
     }
-    
+
     // 错误率权重 10%
     maxScore += 10;
     if (metrics.errorRate.errorRate < 0.01) {
@@ -1022,91 +1072,91 @@ class PerformanceMetricsAnalyzer {
     } else if (metrics.errorRate.errorRate < 0.05) {
       score += 5;
     }
-    
+
     return Math.round((score / maxScore) * 100);
   }
-  
+
   /**
    * 获取响应时间优化建议
    */
   private static getResponseTimeRecommendations(
-    actual: PerformanceMetrics['responseTime'],
-    expected: PerformanceTestGoals['responseTime']
+    actual: PerformanceMetrics["responseTime"],
+    expected: PerformanceTestGoals["responseTime"]
   ): string[] {
     const recommendations: string[] = [];
-    
+
     if (actual.p95 > expected.p95) {
-      recommendations.push('优化数据库查询，添加索引');
-      recommendations.push('使用缓存减少数据库访问');
-      recommendations.push('优化API响应，减少不必要的数据传输');
-      recommendations.push('考虑使用CDN加速静态资源');
+      recommendations.push("优化数据库查询，添加索引");
+      recommendations.push("使用缓存减少数据库访问");
+      recommendations.push("优化API响应，减少不必要的数据传输");
+      recommendations.push("考虑使用CDN加速静态资源");
     }
-    
+
     if (actual.p99 > expected.p99) {
-      recommendations.push('识别并优化慢查询');
-      recommendations.push('实施请求限流和熔断机制');
-      recommendations.push('优化异常处理逻辑');
+      recommendations.push("识别并优化慢查询");
+      recommendations.push("实施请求限流和熔断机制");
+      recommendations.push("优化异常处理逻辑");
     }
-    
+
     return recommendations;
   }
-  
+
   /**
    * 获取吞吐量优化建议
    */
   private static getThroughputRecommendations(
-    actual: PerformanceMetrics['throughput'],
-    expected: PerformanceTestGoals['throughput']
+    actual: PerformanceMetrics["throughput"],
+    expected: PerformanceTestGoals["throughput"]
   ): string[] {
     const recommendations: string[] = [];
-    
+
     if (actual.rps < expected.rps) {
-      recommendations.push('增加服务器资源，横向扩展');
-      recommendations.push('优化代码逻辑，减少处理时间');
-      recommendations.push('使用连接池优化数据库连接');
-      recommendations.push('实施异步处理机制');
+      recommendations.push("增加服务器资源，横向扩展");
+      recommendations.push("优化代码逻辑，减少处理时间");
+      recommendations.push("使用连接池优化数据库连接");
+      recommendations.push("实施异步处理机制");
     }
-    
+
     return recommendations;
   }
-  
+
   /**
    * 获取资源利用率优化建议
    */
   private static getResourceUtilizationRecommendations(
-    actual: PerformanceMetrics['resourceUtilization'],
-    expected: PerformanceTestGoals['resourceUtilization']
+    actual: PerformanceMetrics["resourceUtilization"],
+    expected: PerformanceTestGoals["resourceUtilization"]
   ): string[] {
     const recommendations: string[] = [];
-    
+
     if (actual.cpu > expected.cpu) {
-      recommendations.push('优化CPU密集型操作');
-      recommendations.push('使用缓存减少计算');
-      recommendations.push('优化算法复杂度');
+      recommendations.push("优化CPU密集型操作");
+      recommendations.push("使用缓存减少计算");
+      recommendations.push("优化算法复杂度");
     }
-    
+
     if (actual.memory > expected.memory) {
-      recommendations.push('优化内存使用，避免内存泄漏');
-      recommendations.push('使用对象池减少对象创建');
-      recommendations.push('优化数据结构，减少内存占用');
+      recommendations.push("优化内存使用，避免内存泄漏");
+      recommendations.push("使用对象池减少对象创建");
+      recommendations.push("优化数据结构，减少内存占用");
     }
-    
+
     return recommendations;
   }
-  
+
   /**
    * 获取错误率优化建议
    */
-  private static getErrorRateRecommendations(errorRate: PerformanceMetrics['errorRate']): string[] {
+  private static getErrorRateRecommendations(errorRate: PerformanceMetrics["errorRate"]): string[] {
     const recommendations: string[] = [];
-    
+
     if (errorRate.errorRate >= 0.01) {
-      recommendations.push('检查并修复应用错误');
-      recommendations.push('优化异常处理逻辑');
-      recommendations.push('实施重试机制');
-      recommendations.push('增加监控和告警');
+      recommendations.push("检查并修复应用错误");
+      recommendations.push("优化异常处理逻辑");
+      recommendations.push("实施重试机制");
+      recommendations.push("增加监控和告警");
     }
-    
+
     return recommendations;
   }
 }
@@ -1116,7 +1166,7 @@ class PerformanceMetricsAnalyzer {
  */
 interface MetricAnalysis {
   /** 状态 */
-  status: 'pass' | 'fail' | 'warning';
+  status: "pass" | "fail" | "warning";
   /** 实际值 */
   actual: number;
   /** 期望值 */
@@ -1157,7 +1207,7 @@ interface PerformanceAnalysis {
 class PerformanceMonitor {
   private metrics: Map<string, number[]> = new Map();
   private alerts: Alert[] = [];
-  
+
   /**
    * 记录指标
    */
@@ -1166,14 +1216,14 @@ class PerformanceMonitor {
     values.push(value);
     this.metrics.set(name, values);
   }
-  
+
   /**
    * 获取指标
    */
   getMetric(name: string): number[] {
     return this.metrics.get(name) || [];
   }
-  
+
   /**
    * 获取指标统计
    */
@@ -1182,33 +1232,33 @@ class PerformanceMonitor {
     if (values.length === 0) {
       return { min: 0, max: 0, avg: 0, count: 0 };
     }
-    
+
     return {
       min: Math.min(...values),
       max: Math.max(...values),
       avg: values.reduce((sum, v) => sum + v, 0) / values.length,
-      count: values.length
+      count: values.length,
     };
   }
-  
+
   /**
    * 设置告警规则
    */
   setAlert(rule: AlertRule): void {
     // 实现告警规则设置
   }
-  
+
   /**
    * 检查告警
    */
   checkAlerts(): Alert[] {
     const triggeredAlerts: Alert[] = [];
-    
+
     // 实现告警检查逻辑
-    
+
     return triggeredAlerts;
   }
-  
+
   /**
    * 清空指标
    */
@@ -1240,13 +1290,13 @@ interface AlertRule {
   /** 指标名称 */
   metric: string;
   /** 操作符 */
-  operator: '>' | '<' | '>=' | '<=' | '==';
+  operator: ">" | "<" | ">=" | "<=" | "==";
   /** 阈值 */
   threshold: number;
   /** 持续时间（秒） */
   duration: number;
   /** 严重级别 */
-  severity: 'info' | 'warning' | 'critical';
+  severity: "info" | "warning" | "critical";
 }
 
 /**
@@ -1262,7 +1312,7 @@ interface Alert {
   /** 指标值 */
   value: number;
   /** 严重级别 */
-  severity: 'info' | 'warning' | 'critical';
+  severity: "info" | "warning" | "critical";
   /** 消息 */
   message: string;
 }
@@ -1278,11 +1328,11 @@ class PerformanceDashboard {
   private monitor: PerformanceMonitor;
   private updateInterval: number = 5000;
   private intervalId: NodeJS.Timeout | null = null;
-  
+
   constructor(monitor: PerformanceMonitor) {
     this.monitor = monitor;
   }
-  
+
   /**
    * 启动仪表板
    */
@@ -1291,7 +1341,7 @@ class PerformanceDashboard {
       this.updateDashboard();
     }, this.updateInterval);
   }
-  
+
   /**
    * 停止仪表板
    */
@@ -1301,7 +1351,7 @@ class PerformanceDashboard {
       this.intervalId = null;
     }
   }
-  
+
   /**
    * 更新仪表板
    */
@@ -1309,34 +1359,34 @@ class PerformanceDashboard {
     const dashboardData = this.getDashboardData();
     this.renderDashboard(dashboardData);
   }
-  
+
   /**
    * 获取仪表板数据
    */
   private getDashboardData(): DashboardData {
     return {
-      responseTime: this.monitor.getMetricStats('response_time'),
-      throughput: this.monitor.getMetricStats('throughput'),
-      errorRate: this.monitor.getMetricStats('error_rate'),
-      cpuUsage: this.monitor.getMetricStats('cpu_usage'),
-      memoryUsage: this.monitor.getMetricStats('memory_usage'),
-      alerts: this.monitor.checkAlerts()
+      responseTime: this.monitor.getMetricStats("response_time"),
+      throughput: this.monitor.getMetricStats("throughput"),
+      errorRate: this.monitor.getMetricStats("error_rate"),
+      cpuUsage: this.monitor.getMetricStats("cpu_usage"),
+      memoryUsage: this.monitor.getMetricStats("memory_usage"),
+      alerts: this.monitor.checkAlerts(),
     };
   }
-  
+
   /**
    * 渲染仪表板
    */
   private renderDashboard(data: DashboardData): void {
     console.clear();
-    console.log('=== 性能监控仪表板 ===');
+    console.log("=== 性能监控仪表板 ===");
     console.log(`响应时间: ${data.responseTime.avg.toFixed(2)}ms (P95: ${data.responseTime.max.toFixed(2)}ms)`);
     console.log(`吞吐量: ${data.throughput.avg.toFixed(2)} RPS`);
     console.log(`错误率: ${(data.errorRate.avg * 100).toFixed(2)}%`);
     console.log(`CPU使用率: ${data.cpuUsage.avg.toFixed(2)}%`);
     console.log(`内存使用率: ${data.memoryUsage.avg.toFixed(2)}%`);
     console.log(`告警数: ${data.alerts.length}`);
-    console.log('====================');
+    console.log("====================");
   }
 }
 
@@ -1375,143 +1425,143 @@ class PerformanceOptimizationStrategies {
    */
   static databaseOptimizations = [
     {
-      name: '添加索引',
-      description: '为常用查询字段添加索引',
-      impact: 'high',
-      effort: 'medium'
+      name: "添加索引",
+      description: "为常用查询字段添加索引",
+      impact: "high",
+      effort: "medium",
     },
     {
-      name: '优化查询语句',
-      description: '避免SELECT *，只查询需要的字段',
-      impact: 'high',
-      effort: 'low'
+      name: "优化查询语句",
+      description: "避免SELECT *，只查询需要的字段",
+      impact: "high",
+      effort: "low",
     },
     {
-      name: '使用连接池',
-      description: '使用数据库连接池减少连接开销',
-      impact: 'medium',
-      effort: 'low'
+      name: "使用连接池",
+      description: "使用数据库连接池减少连接开销",
+      impact: "medium",
+      effort: "low",
     },
     {
-      name: '批量操作',
-      description: '使用批量插入和更新减少数据库往返',
-      impact: 'high',
-      effort: 'medium'
-    }
+      name: "批量操作",
+      description: "使用批量插入和更新减少数据库往返",
+      impact: "high",
+      effort: "medium",
+    },
   ];
-  
+
   /**
    * 缓存优化策略
    */
   static cacheOptimizations = [
     {
-      name: '使用Redis缓存',
-      description: '使用Redis缓存热点数据',
-      impact: 'high',
-      effort: 'medium'
+      name: "使用Redis缓存",
+      description: "使用Redis缓存热点数据",
+      impact: "high",
+      effort: "medium",
     },
     {
-      name: '实现多级缓存',
-      description: '使用本地缓存+分布式缓存',
-      impact: 'high',
-      effort: 'high'
+      name: "实现多级缓存",
+      description: "使用本地缓存+分布式缓存",
+      impact: "high",
+      effort: "high",
     },
     {
-      name: '缓存预热',
-      description: '系统启动时预加载热点数据',
-      impact: 'medium',
-      effort: 'medium'
+      name: "缓存预热",
+      description: "系统启动时预加载热点数据",
+      impact: "medium",
+      effort: "medium",
     },
     {
-      name: '缓存穿透防护',
-      description: '使用布隆过滤器防止缓存穿透',
-      impact: 'medium',
-      effort: 'medium'
-    }
+      name: "缓存穿透防护",
+      description: "使用布隆过滤器防止缓存穿透",
+      impact: "medium",
+      effort: "medium",
+    },
   ];
-  
+
   /**
    * 前端优化策略
    */
   static frontendOptimizations = [
     {
-      name: '代码分割',
-      description: '使用动态导入实现代码分割',
-      impact: 'high',
-      effort: 'medium'
+      name: "代码分割",
+      description: "使用动态导入实现代码分割",
+      impact: "high",
+      effort: "medium",
     },
     {
-      name: '懒加载',
-      description: '图片和组件懒加载',
-      impact: 'high',
-      effort: 'low'
+      name: "懒加载",
+      description: "图片和组件懒加载",
+      impact: "high",
+      effort: "low",
     },
     {
-      name: '使用CDN',
-      description: '使用CDN加速静态资源',
-      impact: 'high',
-      effort: 'low'
+      name: "使用CDN",
+      description: "使用CDN加速静态资源",
+      impact: "high",
+      effort: "low",
     },
     {
-      name: '压缩资源',
-      description: '压缩JavaScript、CSS和图片',
-      impact: 'medium',
-      effort: 'low'
-    }
+      name: "压缩资源",
+      description: "压缩JavaScript、CSS和图片",
+      impact: "medium",
+      effort: "low",
+    },
   ];
-  
+
   /**
    * 后端优化策略
    */
   static backendOptimizations = [
     {
-      name: '异步处理',
-      description: '使用异步处理提高并发能力',
-      impact: 'high',
-      effort: 'medium'
+      name: "异步处理",
+      description: "使用异步处理提高并发能力",
+      impact: "high",
+      effort: "medium",
     },
     {
-      name: '连接池优化',
-      description: '优化数据库和HTTP连接池配置',
-      impact: 'medium',
-      effort: 'low'
+      name: "连接池优化",
+      description: "优化数据库和HTTP连接池配置",
+      impact: "medium",
+      effort: "low",
     },
     {
-      name: '限流熔断',
-      description: '实施限流和熔断保护系统',
-      impact: 'high',
-      effort: 'medium'
+      name: "限流熔断",
+      description: "实施限流和熔断保护系统",
+      impact: "high",
+      effort: "medium",
     },
     {
-      name: '日志优化',
-      description: '优化日志级别和输出频率',
-      impact: 'low',
-      effort: 'low'
-    }
+      name: "日志优化",
+      description: "优化日志级别和输出频率",
+      impact: "low",
+      effort: "low",
+    },
   ];
-  
+
   /**
    * 根据性能分析推荐优化策略
    */
   static recommendOptimizations(analysis: PerformanceAnalysis): OptimizationRecommendation[] {
     const recommendations: OptimizationRecommendation[] = [];
-    
+
     // 响应时间优化
-    if (analysis.responseTime.status === 'fail') {
+    if (analysis.responseTime.status === "fail") {
       recommendations.push(...this.databaseOptimizations);
       recommendations.push(...this.cacheOptimizations);
     }
-    
+
     // 吞吐量优化
-    if (analysis.throughput.status === 'fail') {
+    if (analysis.throughput.status === "fail") {
       recommendations.push(...this.backendOptimizations);
     }
-    
+
     // 资源利用率优化
-    if (analysis.resourceUtilization.status === 'fail') {
+    if (analysis.resourceUtilization.status === "fail") {
       recommendations.push(...this.backendOptimizations);
     }
-    
+
     return recommendations;
   }
 }
@@ -1525,9 +1575,9 @@ interface OptimizationStrategy {
   /** 策略描述 */
   description: string;
   /** 影响程度 */
-  impact: 'high' | 'medium' | 'low';
+  impact: "high" | "medium" | "low";
   /** 实施难度 */
-  effort: 'high' | 'medium' | 'low';
+  effort: "high" | "medium" | "low";
 }
 
 /**
@@ -1549,73 +1599,72 @@ interface OptimizationRecommendation extends OptimizationStrategy {
  */
 class PerformanceOptimizationPlan {
   private strategies: OptimizationRecommendation[] = [];
-  
+
   /**
    * 添加优化策略
    */
   addStrategy(strategy: OptimizationRecommendation): void {
     this.strategies.push(strategy);
   }
-  
+
   /**
    * 按优先级排序
    */
   sortByPriority(): OptimizationRecommendation[] {
     return [...this.strategies].sort((a, b) => b.priority - a.priority);
   }
-  
+
   /**
    * 按影响和难度排序
    */
   sortByImpactAndEffort(): OptimizationRecommendation[] {
     const impactScore = { high: 3, medium: 2, low: 1 };
     const effortScore = { high: 1, medium: 2, low: 3 };
-    
+
     return [...this.strategies].sort((a, b) => {
       const scoreA = impactScore[a.impact] * effortScore[a.effort];
       const scoreB = impactScore[b.impact] * effortScore[b.effort];
       return scoreB - scoreA;
     });
   }
-  
+
   /**
    * 生成实施计划
    */
   generateImplementationPlan(): ImplementationPlan {
     const sortedStrategies = this.sortByImpactAndEffort();
     const phases: ImplementationPhase[] = [];
-    
+
     // 第一阶段：高影响低难度
     phases.push({
-      name: '第一阶段：快速见效',
-      strategies: sortedStrategies.filter(s => s.impact === 'high' && s.effort === 'low'),
-      duration: '1周',
-      expectedImprovement: '20-30%'
+      name: "第一阶段：快速见效",
+      strategies: sortedStrategies.filter(s => s.impact === "high" && s.effort === "low"),
+      duration: "1周",
+      expectedImprovement: "20-30%",
     });
-    
+
     // 第二阶段：高影响中难度
     phases.push({
-      name: '第二阶段：深度优化',
-      strategies: sortedStrategies.filter(s => s.impact === 'high' && s.effort === 'medium'),
-      duration: '2-3周',
-      expectedImprovement: '30-40%'
+      name: "第二阶段：深度优化",
+      strategies: sortedStrategies.filter(s => s.impact === "high" && s.effort === "medium"),
+      duration: "2-3周",
+      expectedImprovement: "30-40%",
     });
-    
+
     // 第三阶段：中高影响高难度
     phases.push({
-      name: '第三阶段：架构优化',
-      strategies: sortedStrategies.filter(s => 
-        (s.impact === 'high' && s.effort === 'high') ||
-        (s.impact === 'medium' && s.effort === 'high')
+      name: "第三阶段：架构优化",
+      strategies: sortedStrategies.filter(
+        s => (s.impact === "high" && s.effort === "high") || (s.impact === "medium" && s.effort === "high")
       ),
-      duration: '4-6周',
-      expectedImprovement: '40-50%'
+      duration: "4-6周",
+      expectedImprovement: "40-50%",
     });
-    
+
     return {
-      totalDuration: '7-10周',
-      totalExpectedImprovement: '50-70%',
-      phases
+      totalDuration: "7-10周",
+      totalExpectedImprovement: "50-70%",
+      phases,
     };
   }
 }
@@ -1662,52 +1711,42 @@ class PerformanceTestBestPractices {
    * 测试环境要求
    */
   static testEnvironment = {
-    description: '测试环境应该尽可能接近生产环境',
+    description: "测试环境应该尽可能接近生产环境",
     practices: [
-      '使用与生产环境相同的硬件配置',
-      '使用相同的数据量和数据分布',
-      '使用相同的网络配置',
-      '禁用调试和日志输出'
-    ]
+      "使用与生产环境相同的硬件配置",
+      "使用相同的数据量和数据分布",
+      "使用相同的网络配置",
+      "禁用调试和日志输出",
+    ],
   };
-  
+
   /**
    * 测试数据准备
    */
   static testDataPreparation = {
-    description: '准备足够的测试数据以模拟真实场景',
+    description: "准备足够的测试数据以模拟真实场景",
     practices: [
-      '使用生产数据脱敏后的副本',
-      '确保数据分布与生产环境一致',
-      '准备足够的测试数据以支持长时间测试',
-      '定期刷新测试数据'
-    ]
+      "使用生产数据脱敏后的副本",
+      "确保数据分布与生产环境一致",
+      "准备足够的测试数据以支持长时间测试",
+      "定期刷新测试数据",
+    ],
   };
-  
+
   /**
    * 测试执行策略
    */
   static testExecution = {
-    description: '采用科学的测试执行策略',
-    practices: [
-      '从低负载开始逐步增加',
-      '每个负载级别运行足够长的时间',
-      '记录详细的测试日志',
-      '监控系统和应用指标'
-    ]
+    description: "采用科学的测试执行策略",
+    practices: ["从低负载开始逐步增加", "每个负载级别运行足够长的时间", "记录详细的测试日志", "监控系统和应用指标"],
   };
-  
+
   /**
    * 结果分析
    */
   static resultAnalysis = {
-    description: '深入分析测试结果，识别瓶颈',
-    practices: [
-      '分析响应时间分布',
-      '识别慢请求和错误请求',
-      '分析资源利用率',
-      '对比历史数据'
-    ]
+    description: "深入分析测试结果，识别瓶颈",
+    practices: ["分析响应时间分布", "识别慢请求和错误请求", "分析资源利用率", "对比历史数据"],
   };
 }
 ```
@@ -1721,59 +1760,34 @@ class PerformanceTestBestPractices {
 class PerformanceTestChecklist {
   private static items = [
     {
-      category: '测试准备',
-      checks: [
-        '测试环境是否与生产环境一致',
-        '测试数据是否充足且分布合理',
-        '性能目标是否明确',
-        '测试工具是否配置正确'
-      ]
+      category: "测试准备",
+      checks: ["测试环境是否与生产环境一致", "测试数据是否充足且分布合理", "性能目标是否明确", "测试工具是否配置正确"],
     },
     {
-      category: '测试设计',
-      checks: [
-        '测试场景是否覆盖核心业务',
-        '负载模型是否合理',
-        '测试持续时间是否足够',
-        '监控指标是否完整'
-      ]
+      category: "测试设计",
+      checks: ["测试场景是否覆盖核心业务", "负载模型是否合理", "测试持续时间是否足够", "监控指标是否完整"],
     },
     {
-      category: '测试执行',
-      checks: [
-        '是否进行了预热',
-        '是否逐步增加负载',
-        '是否记录了详细日志',
-        '是否监控了系统指标'
-      ]
+      category: "测试执行",
+      checks: ["是否进行了预热", "是否逐步增加负载", "是否记录了详细日志", "是否监控了系统指标"],
     },
     {
-      category: '结果分析',
-      checks: [
-        '是否分析了响应时间分布',
-        '是否识别了性能瓶颈',
-        '是否对比了历史数据',
-        '是否生成了优化建议'
-      ]
+      category: "结果分析",
+      checks: ["是否分析了响应时间分布", "是否识别了性能瓶颈", "是否对比了历史数据", "是否生成了优化建议"],
     },
     {
-      category: '持续优化',
-      checks: [
-        '是否建立了性能基线',
-        '是否定期执行性能测试',
-        '是否跟踪优化效果',
-        '是否更新性能目标'
-      ]
-    }
+      category: "持续优化",
+      checks: ["是否建立了性能基线", "是否定期执行性能测试", "是否跟踪优化效果", "是否更新性能目标"],
+    },
   ];
-  
+
   /**
    * 获取检查清单
    */
   static getChecklist(): typeof PerformanceTestChecklist.items {
     return this.items;
   }
-  
+
   /**
    * 检查完成情况
    */
@@ -1786,11 +1800,11 @@ class PerformanceTestChecklist {
     const completedItems = completed.filter(item => allItems.includes(item));
     const pendingItems = allItems.filter(item => !completed.includes(item));
     const progress = (completedItems.length / allItems.length) * 100;
-    
+
     return {
       completed: completedItems,
       pending: pendingItems,
-      progress
+      progress,
     };
   }
 }
@@ -1818,13 +1832,10 @@ class PerformanceTestChecklist {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1847,8 +1858,6 @@ class PerformanceTestChecklist {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1882,8 +1891,6 @@ class PerformanceTestChecklist {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1906,46 +1913,46 @@ class PerformanceTestChecklist {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1958,6 +1965,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1967,6 +1975,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1976,6 +1985,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1992,16 +2002,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -2011,13 +2022,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -2026,6 +2035,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -2044,6 +2054,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -2059,6 +2070,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -2078,28 +2090,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -2108,44 +2119,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -2159,13 +2168,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -2174,18 +2183,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2195,37 +2207,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2234,28 +2249,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2264,21 +2277,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2287,10 +2302,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2316,16 +2328,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2334,25 +2346,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

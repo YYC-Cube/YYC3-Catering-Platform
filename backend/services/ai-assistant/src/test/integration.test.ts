@@ -23,7 +23,7 @@ const aiAssistant = new AIAssistantService({
   knowledgeBaseEnabled: false,
   maxConversationHistory: 50,
   responseTimeout: 30000,
-  languageSupport: ['zh-CN', 'en-US']
+  languageSupport: ['zh-CN', 'en-US'],
 });
 
 describe('智能客服NLP模块和业务系统集成测试', () => {
@@ -50,12 +50,12 @@ describe('智能客服NLP模块和业务系统集成测试', () => {
   //   expect(result.sessionId).toBe(testSessionId);
   //   expect(result.message).toBeDefined();
   //   expect(result.data).toBeDefined();
-  //   
+  //
   //   // 验证NLP分析结果
   //   expect(result.data?.nlpAnalysis).toBeDefined();
   //   expect(result.data?.nlpAnalysis?.intent).toBeDefined();
   //   expect(result.data?.nlpAnalysis?.confidence).toBeGreaterThan(0);
-  //   
+  //
   //   // 验证业务上下文
   //   expect(result.data?.businessContext).toBeDefined();
   //   expect(result.data?.businessContext?.data).toBeDefined();
@@ -71,8 +71,8 @@ describe('智能客服NLP模块和业务系统集成测试', () => {
       metadata: {
         language: 'zh-CN',
         restaurantId: 'test-restaurant-001',
-        customerId: 'test-customer-001'
-      }
+        customerId: 'test-customer-001',
+      },
     };
 
     const result: AIResponse = await aiAssistant.processTextMessage(request);
@@ -85,14 +85,14 @@ describe('智能客服NLP模块和业务系统集成测试', () => {
     expect(result.sessionId).toBe(testSessionId);
     expect(result.message).toBeDefined();
     expect(result.data).toBeDefined();
-    
+
     // 验证NLP分析结果
     expect(result.data?.nlpAnalysis).toBeDefined();
     expect(result.data?.nlpAnalysis?.intent).toBeDefined();
     expect(result.data?.nlpAnalysis?.confidence).toBeGreaterThan(0);
     expect(result.data?.nlpAnalysis?.entities).toBeDefined();
     expect(Array.isArray(result.data?.nlpAnalysis?.entities)).toBe(true);
-    
+
     // 验证业务上下文
     expect(result.data?.businessContext).toBeDefined();
     expect(result.data?.businessContext?.data).toBeDefined();

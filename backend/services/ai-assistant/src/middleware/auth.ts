@@ -48,7 +48,7 @@ export class AuthenticationMiddleware {
     return jwt.sign(payload, JWT_SECRET, {
       expiresIn: JWT_EXPIRATION,
       issuer: 'yyc3-catering-platform',
-      audience: 'yyc3-api'
+      audience: 'yyc3-api',
     });
   }
 
@@ -60,7 +60,7 @@ export class AuthenticationMiddleware {
     try {
       const decoded = jwt.verify(token, JWT_SECRET, {
         issuer: 'yyc3-catering-platform',
-        audience: 'yyc3-api'
+        audience: 'yyc3-api',
       }) as JWTPayload;
       return decoded;
     } catch (error: any) {
@@ -79,42 +79,42 @@ export class AuthenticationMiddleware {
   public authenticate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const authHeader = req.headers.authorization;
-      
+
       if (!authHeader) {
-        res.status(401).json({ 
-          success: false, 
+        res.status(401).json({
+          success: false,
           error: '未提供认证令牌',
-          code: 'UNAUTHORIZED' 
+          code: 'UNAUTHORIZED',
         });
         return;
       }
 
       const [bearer, token] = authHeader.split(' ');
-      
+
       if (bearer !== 'Bearer' || !token) {
-        res.status(401).json({ 
-          success: false, 
+        res.status(401).json({
+          success: false,
           error: '认证格式无效',
-          code: 'INVALID_AUTH_FORMAT' 
+          code: 'INVALID_AUTH_FORMAT',
         });
         return;
       }
 
       const payload = await this.verifyToken(token);
-      
+
       // 将用户信息添加到请求对象
       (req as any).user = {
         userId: payload.userId,
         role: payload.role,
-        restaurantId: payload.restaurantId
+        restaurantId: payload.restaurantId,
       };
 
       next();
     } catch (error) {
-      res.status(401).json({ 
-        success: false, 
+      res.status(401).json({
+        success: false,
         error: error instanceof Error ? error.message : '认证失败',
-        code: 'AUTHENTICATION_FAILED' 
+        code: 'AUTHENTICATION_FAILED',
       });
       return;
     }
@@ -127,31 +127,31 @@ export class AuthenticationMiddleware {
     return (req: Request, res: Response, next: NextFunction): void => {
       try {
         const user = (req as any).user;
-        
+
         if (!user) {
-          res.status(401).json({ 
-            success: false, 
+          res.status(401).json({
+            success: false,
             error: '未认证',
-            code: 'UNAUTHORIZED' 
+            code: 'UNAUTHORIZED',
           });
           return;
         }
 
         if (!allowedRoles.includes(user.role)) {
-          res.status(403).json({ 
-            success: false, 
+          res.status(403).json({
+            success: false,
             error: '权限不足',
-            code: 'FORBIDDEN' 
+            code: 'FORBIDDEN',
           });
           return;
         }
 
         next();
       } catch (error) {
-        res.status(500).json({ 
-          success: false, 
+        res.status(500).json({
+          success: false,
           error: '授权过程中发生错误',
-          code: 'AUTHORIZATION_ERROR' 
+          code: 'AUTHORIZATION_ERROR',
         });
         return;
       }
@@ -165,12 +165,12 @@ export class AuthenticationMiddleware {
     try {
       const user = (req as any).user;
       const restaurantId = req.params.restaurantId || (req.body as any)?.restaurantId;
-      
+
       if (!user) {
-        res.status(401).json({ 
-          success: false, 
+        res.status(401).json({
+          success: false,
           error: '未认证',
-          code: 'UNAUTHORIZED' 
+          code: 'UNAUTHORIZED',
         });
         return;
       }
@@ -183,20 +183,20 @@ export class AuthenticationMiddleware {
 
       // 餐厅员工只能访问自己的餐厅
       if (user.restaurantId !== restaurantId) {
-        res.status(403).json({ 
-          success: false, 
+        res.status(403).json({
+          success: false,
           error: '无权访问此餐厅',
-          code: 'FORBIDDEN_RESTAURANT_ACCESS' 
+          code: 'FORBIDDEN_RESTAURANT_ACCESS',
         });
         return;
       }
 
       next();
     } catch (error) {
-      res.status(500).json({ 
-        success: false, 
+      res.status(500).json({
+        success: false,
         error: '餐厅权限验证过程中发生错误',
-        code: 'RESTAURANT_AUTH_ERROR' 
+        code: 'RESTAURANT_AUTH_ERROR',
       });
       return;
     }
@@ -209,12 +209,12 @@ export class AuthenticationMiddleware {
     try {
       const userId = req.params.userId;
       const user = (req as any).user;
-      
+
       if (!user) {
-        res.status(401).json({ 
-          success: false, 
+        res.status(401).json({
+          success: false,
           error: '未认证',
-          code: 'UNAUTHORIZED' 
+          code: 'UNAUTHORIZED',
         });
         return;
       }
@@ -227,20 +227,20 @@ export class AuthenticationMiddleware {
 
       // 普通用户只能访问自己的信息
       if (user.userId !== userId) {
-        res.status(403).json({ 
-          success: false, 
+        res.status(403).json({
+          success: false,
           error: '无权访问此用户信息',
-          code: 'FORBIDDEN_USER_ACCESS' 
+          code: 'FORBIDDEN_USER_ACCESS',
         });
         return;
       }
 
       next();
     } catch (error) {
-      res.status(500).json({ 
-        success: false, 
+      res.status(500).json({
+        success: false,
         error: '用户ID验证过程中发生错误',
-        code: 'USER_ID_AUTH_ERROR' 
+        code: 'USER_ID_AUTH_ERROR',
       });
       return;
     }
@@ -252,17 +252,17 @@ export class AuthenticationMiddleware {
   public optionalAuthenticate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const authHeader = req.headers.authorization;
-      
+
       if (authHeader) {
         const [bearer, token] = authHeader.split(' ');
-        
+
         if (bearer === 'Bearer' && token) {
           try {
             const payload = await this.verifyToken(token);
             (req as any).user = {
               userId: payload.userId,
               role: payload.role,
-              restaurantId: payload.restaurantId
+              restaurantId: payload.restaurantId,
             };
           } catch (error) {
             // 可选认证，令牌无效不影响请求
@@ -282,20 +282,18 @@ export class AuthenticationMiddleware {
   public async generateRefreshToken(userId: string): Promise<string> {
     const now = Math.floor(Date.now() / 1000);
     const refreshExpiration = 7 * 24 * 3600; // 7天
-    
+
     const payload = {
       userId,
       type: 'refresh',
       iat: now,
-      exp: now + refreshExpiration
+      exp: now + refreshExpiration,
     };
 
     // 使用Node.js内置crypto模块生成JWT
     const header = Buffer.from(JSON.stringify({ alg: JWT_ALGORITHM, typ: 'JWT' })).toString('base64url');
     const body = Buffer.from(JSON.stringify(payload)).toString('base64url');
-    const signature = createHmac('sha256', JWT_SECRET)
-      .update(`${header}.${body}`)
-      .digest('base64url');
+    const signature = createHmac('sha256', JWT_SECRET).update(`${header}.${body}`).digest('base64url');
 
     return `${header}.${body}.${signature}`;
   }
@@ -311,9 +309,7 @@ export class AuthenticationMiddleware {
       }
 
       // 验证签名
-      const expectedSignature = createHmac('sha256', JWT_SECRET)
-        .update(`${header}.${body}`)
-        .digest('base64url');
+      const expectedSignature = createHmac('sha256', JWT_SECRET).update(`${header}.${body}`).digest('base64url');
 
       if (signature !== expectedSignature) {
         throw new Error('无效的令牌签名');
@@ -333,7 +329,7 @@ export class AuthenticationMiddleware {
       }
 
       return {
-        userId: payload.userId
+        userId: payload.userId,
       };
     } catch (error) {
       throw new Error('无效的刷新令牌');
@@ -393,15 +389,13 @@ export class AuthenticationMiddleware {
       ...data,
       type: 'temporary',
       iat: now,
-      exp: now + expirationSeconds
+      exp: now + expirationSeconds,
     };
 
     // 使用Node.js内置crypto模块生成JWT
     const header = Buffer.from(JSON.stringify({ alg: JWT_ALGORITHM, typ: 'JWT' })).toString('base64url');
     const body = Buffer.from(JSON.stringify(payload)).toString('base64url');
-    const signature = createHmac('sha256', JWT_SECRET)
-      .update(`${header}.${body}`)
-      .digest('base64url');
+    const signature = createHmac('sha256', JWT_SECRET).update(`${header}.${body}`).digest('base64url');
 
     return `${header}.${body}.${signature}`;
   }
@@ -417,9 +411,7 @@ export class AuthenticationMiddleware {
       }
 
       // 验证签名
-      const expectedSignature = createHmac('sha256', JWT_SECRET)
-        .update(`${header}.${body}`)
-        .digest('base64url');
+      const expectedSignature = createHmac('sha256', JWT_SECRET).update(`${header}.${body}`).digest('base64url');
 
       if (signature !== expectedSignature) {
         throw new Error('无效的令牌签名');

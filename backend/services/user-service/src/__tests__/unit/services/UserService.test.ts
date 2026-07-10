@@ -35,7 +35,7 @@ describe('UserService', () => {
         name: 'admin',
         description: '系统管理员',
         permissions: [],
-        status: 'active'
+        status: 'active',
       };
 
       vi.spyOn(Role, 'findOrCreate').mockResolvedValue([mockRole as any, true]);
@@ -55,18 +55,18 @@ describe('UserService', () => {
         password: 'hashedPassword',
         type: UserType.CUSTOMER,
         status: UserStatus.ACTIVE,
-        role_id: '1'
+        role_id: '1',
       };
 
       const mockRole = {
         id: '1',
-        name: 'customer'
+        name: 'customer',
       };
 
       const mockProfile = {
         id: '1',
         user_id: '1',
-        nickname: '用户8000'
+        nickname: '用户8000',
       };
 
       vi.spyOn(User, 'findOne').mockResolvedValue(null);
@@ -78,7 +78,7 @@ describe('UserService', () => {
       const result = await userService.register({
         phone: '13800138000',
         email: 'test@example.com',
-        password: 'password123'
+        password: 'password123',
       });
 
       expect(result).toBeDefined();
@@ -88,32 +88,36 @@ describe('UserService', () => {
     it('应该拒绝已存在的手机号', async () => {
       const mockUser = {
         id: '1',
-        phone: '13800138000'
+        phone: '13800138000',
       };
 
       vi.spyOn(User, 'findOne').mockResolvedValue(mockUser as any);
 
-      await expect(userService.register({
-        phone: '13800138000',
-        password: 'password123'
-      })).rejects.toThrow('该手机号已注册');
+      await expect(
+        userService.register({
+          phone: '13800138000',
+          password: 'password123',
+        }),
+      ).rejects.toThrow('该手机号已注册');
     });
 
     it('应该拒绝已存在的邮箱', async () => {
       const mockUser = {
         id: '1',
-        email: 'test@example.com'
+        email: 'test@example.com',
       };
 
       vi.spyOn(User, 'findOne')
         .mockResolvedValueOnce(null)
         .mockResolvedValueOnce(mockUser as any);
 
-      await expect(userService.register({
-        phone: '13800138001',
-        email: 'test@example.com',
-        password: 'password123'
-      })).rejects.toThrow('该邮箱已注册');
+      await expect(
+        userService.register({
+          phone: '13800138001',
+          email: 'test@example.com',
+          password: 'password123',
+        }),
+      ).rejects.toThrow('该邮箱已注册');
     });
   });
 
@@ -124,13 +128,13 @@ describe('UserService', () => {
         phone: '13800138000',
         password: 'hashedPassword',
         status: UserStatus.ACTIVE,
-        password_error_count: 0
+        password_error_count: 0,
       };
 
       const mockTokens = {
         token: 'jwt-token',
         refreshToken: 'refresh-token',
-        expiresIn: '1h'
+        expiresIn: '1h',
       };
 
       vi.spyOn(User, 'findOne').mockResolvedValue(mockUser as any);
@@ -147,8 +151,7 @@ describe('UserService', () => {
     it('应该拒绝不存在的用户', async () => {
       vi.spyOn(User, 'findOne').mockResolvedValue(null);
 
-      await expect(userService.login('13800138000', 'password123'))
-        .rejects.toThrow('用户名或密码错误');
+      await expect(userService.login('13800138000', 'password123')).rejects.toThrow('用户名或密码错误');
     });
 
     it('应该拒绝被锁定的用户', async () => {
@@ -156,13 +159,12 @@ describe('UserService', () => {
         id: '1',
         phone: '13800138000',
         password: 'hashedPassword',
-        status: UserStatus.LOCKED
+        status: UserStatus.LOCKED,
       };
 
       vi.spyOn(User, 'findOne').mockResolvedValue(mockUser as any);
 
-      await expect(userService.login('13800138000', 'password123'))
-        .rejects.toThrow('用户账号已被锁定或禁用');
+      await expect(userService.login('13800138000', 'password123')).rejects.toThrow('用户账号已被锁定或禁用');
     });
 
     it('应该拒绝错误的密码', async () => {
@@ -171,15 +173,14 @@ describe('UserService', () => {
         phone: '13800138000',
         password: 'hashedPassword',
         status: UserStatus.ACTIVE,
-        password_error_count: 0
+        password_error_count: 0,
       };
 
       vi.spyOn(User, 'findOne').mockResolvedValue(mockUser as any);
       vi.spyOn(authService, 'verifyPassword').mockResolvedValue(false);
       vi.spyOn(User, 'update').mockResolvedValue([1]);
 
-      await expect(userService.login('13800138000', 'wrongpassword'))
-        .rejects.toThrow('用户名或密码错误');
+      await expect(userService.login('13800138000', 'wrongpassword')).rejects.toThrow('用户名或密码错误');
     });
   });
 
@@ -189,7 +190,7 @@ describe('UserService', () => {
         id: '1',
         phone: '13800138000',
         role: { id: '1', name: 'customer', description: '普通用户' },
-        user_profile: { id: '1', nickname: '测试用户' }
+        user_profile: { id: '1', nickname: '测试用户' },
       };
 
       vi.spyOn(User, 'findByPk').mockResolvedValue(mockUser as any);
@@ -215,7 +216,7 @@ describe('UserService', () => {
         id: '1',
         phone: '13800138000',
         role: { id: '1', name: 'customer' },
-        user_profile: { id: '1', nickname: '测试用户' }
+        user_profile: { id: '1', nickname: '测试用户' },
       };
 
       vi.spyOn(User, 'findOne').mockResolvedValue(mockUser as any);
@@ -231,12 +232,12 @@ describe('UserService', () => {
     it('应该成功获取用户列表', async () => {
       const mockUsers = [
         { id: '1', phone: '13800138000' },
-        { id: '2', phone: '13800138001' }
+        { id: '2', phone: '13800138001' },
       ];
 
       vi.spyOn(User, 'findAndCountAll').mockResolvedValue({
         rows: mockUsers as any,
-        count: 2
+        count: 2,
       });
 
       const result = await userService.getUsers({ page: 1, limit: 10 });
@@ -251,7 +252,7 @@ describe('UserService', () => {
 
       vi.spyOn(User, 'findAndCountAll').mockResolvedValue({
         rows: mockUsers as any,
-        count: 1
+        count: 1,
       });
 
       const result = await userService.getUsers({ keyword: '138' });
@@ -265,14 +266,14 @@ describe('UserService', () => {
       const mockUser = {
         id: '1',
         phone: '13800138000',
-        email: 'new@example.com'
+        email: 'new@example.com',
       };
 
       vi.spyOn(User, 'update').mockResolvedValue([1]);
       vi.spyOn(User, 'findByPk').mockResolvedValue(mockUser as any);
 
       const result = await userService.updateUser('1', {
-        email: 'new@example.com'
+        email: 'new@example.com',
       });
 
       expect(result).toBeDefined();
@@ -313,7 +314,7 @@ describe('UserService', () => {
     it('应该成功获取用户地址列表', async () => {
       const mockAddresses = [
         { id: '1', user_id: '1', is_default: true },
-        { id: '2', user_id: '1', is_default: false }
+        { id: '2', user_id: '1', is_default: false },
       ];
 
       vi.spyOn(UserAddress, 'findAll').mockResolvedValue(mockAddresses as any);

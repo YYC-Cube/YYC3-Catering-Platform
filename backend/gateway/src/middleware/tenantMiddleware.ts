@@ -63,7 +63,7 @@ export class TenantMiddleware {
             code: 400,
             message: 'Tenant information is required',
             timestamp: Date.now(),
-            success: false
+            success: false,
           });
         }
 
@@ -73,17 +73,17 @@ export class TenantMiddleware {
             code: 403,
             message: 'Tenant is not active',
             timestamp: Date.now(),
-            success: false
+            success: false,
           });
         }
 
         // 检查订阅限制
-        if (!await this.checkSubscriptionLimits(tenant, req)) {
+        if (!(await this.checkSubscriptionLimits(tenant, req))) {
           return res.status(429).json({
             code: 429,
             message: 'Tenant subscription limits exceeded',
             timestamp: Date.now(),
-            success: false
+            success: false,
           });
         }
 
@@ -96,14 +96,13 @@ export class TenantMiddleware {
         this.logger.debug(`Tenant context set: ${tenant.id} (${tenant.name})`);
 
         next();
-
       } catch (error) {
         this.logger.error('Tenant middleware error:', error);
         return res.status(500).json({
           code: 500,
           message: 'Internal server error',
           timestamp: Date.now(),
-          success: false
+          success: false,
         });
       }
     };
@@ -166,7 +165,7 @@ export class TenantMiddleware {
           subscription_features as features
         FROM tenants
         WHERE id = $1 AND deleted_at IS NULL`,
-        [tenantId]
+        [tenantId],
       );
 
       if (result.rows.length === 0) {
@@ -183,21 +182,20 @@ export class TenantMiddleware {
         limits: row.limits || {
           maxUsers: 100,
           maxOrders: 1000,
-          maxStorage: 1073741824 // 1GB
+          maxStorage: 1073741824, // 1GB
         },
         subscription: {
           plan: row.plan || 'basic',
           expiresAt: row.expiresAt || new Date(),
-          features: row.features || []
+          features: row.features || [],
         },
-        createdAt: new Date()
+        createdAt: new Date(),
       };
 
       // 更新缓存
       this.tenantCache.set(tenantId, tenant);
 
       return tenant;
-
     } catch (error) {
       this.logger.error('Failed to get tenant by ID:', error);
       return null;
@@ -221,7 +219,7 @@ export class TenantMiddleware {
       // 检查用户数量限制
       const userCount = await db.query(
         'SELECT COUNT(*) as count FROM users WHERE tenant_id = $1 AND deleted_at IS NULL',
-        [tenant.id]
+        [tenant.id],
       );
 
       if (userCount.rows[0].count >= tenant.limits.maxUsers) {
@@ -234,7 +232,7 @@ export class TenantMiddleware {
       // 检查订单数量限制
       const orderCount = await db.query(
         'SELECT COUNT(*) as count FROM orders WHERE tenant_id = $1 AND created_at >= $2',
-        [tenant.id, new Date(new Date().setDate(1)).toISOString()] // 本月订单
+        [tenant.id, new Date(new Date().setDate(1)).toISOString()], // 本月订单
       );
 
       if (orderCount.rows[0].count >= tenant.limits.maxOrders) {
@@ -245,7 +243,6 @@ export class TenantMiddleware {
       }
 
       return true;
-
     } catch (error) {
       this.logger.error('Failed to check subscription limits:', error);
       return true; // 出错时允许继续，避免阻塞正常业务
@@ -291,13 +288,9 @@ export class TenantMiddleware {
   private async getTenantIdBySubdomain(subdomain: string): Promise<string | null> {
     try {
       const db = getDatabaseManager();
-      const result = await db.query(
-        'SELECT id FROM tenants WHERE code = $1 AND deleted_at IS NULL',
-        [subdomain]
-      );
+      const result = await db.query('SELECT id FROM tenants WHERE code = $1 AND deleted_at IS NULL', [subdomain]);
 
       return result.rows.length > 0 ? result.rows[0].id : null;
-
     } catch (error) {
       this.logger.error('Failed to get tenant ID by subdomain:', error);
       return null;
@@ -316,7 +309,6 @@ export class TenantMiddleware {
       const payload = JSON.parse(atob(token.split('.')[1]));
 
       return payload.tenantId || null;
-
     } catch (error) {
       this.logger.error('Failed to extract tenant from token:', error);
       return null;
@@ -338,12 +330,10 @@ export class TenantMiddleware {
       '/static',
       '/favicon.ico',
       '/api/v1/dashboard',
-      '/api/v1/kitchen'
+      '/api/v1/kitchen',
     ];
 
-    return publicPaths.some(publicPath =>
-      path === publicPath || path.startsWith(publicPath + '/')
-    );
+    return publicPaths.some(publicPath => path === publicPath || path.startsWith(publicPath + '/'));
   }
 
   /**
@@ -366,7 +356,7 @@ export class TenantMiddleware {
   } {
     return {
       size: this.tenantCache.size,
-      keys: Array.from(this.tenantCache.keys())
+      keys: Array.from(this.tenantCache.keys()),
     };
   }
 }
@@ -384,5 +374,5 @@ export const tenantUtils = {
   getCacheStats: () => {
     const middleware = new TenantMiddleware();
     return middleware.getCacheStats();
-  }
+  },
 };

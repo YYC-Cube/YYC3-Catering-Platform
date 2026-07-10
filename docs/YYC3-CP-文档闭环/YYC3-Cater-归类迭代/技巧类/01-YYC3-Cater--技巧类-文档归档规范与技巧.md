@@ -10,9 +10,11 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 文档归档规范与技巧
 
 ## 文档信息
+
 - 文档类型：技巧类
 - 所属阶段：YYC3-Cater--归类迭代
 - 遵循规范：五高五标五化要求
@@ -87,23 +89,23 @@ const DEFAULT_ARCHIVE_GOALS: ArchiveGoals = {
   organization: {
     classificationCompleteness: 0.95,
     namingConsistency: 1.0,
-    structureClarity: 0.9
+    structureClarity: 0.9,
   },
   accessibility: {
     retrievalEfficiency: 0.9,
     accessSpeed: 0.95,
-    permissionManagement: true
+    permissionManagement: true,
   },
   maintainability: {
     versionControl: true,
     changeTracking: true,
-    backupRecovery: true
+    backupRecovery: true,
   },
   compliance: {
     regulatoryCompliance: true,
     auditTrail: true,
-    dataRetention: true
-  }
+    dataRetention: true,
+  },
 };
 ```
 
@@ -119,15 +121,15 @@ const DEFAULT_ARCHIVE_GOALS: ArchiveGoals = {
  */
 enum ClassificationDimension {
   /** 按阶段分类 */
-  PHASE = 'phase',
+  PHASE = "phase",
   /** 按类型分类 */
-  TYPE = 'type',
+  TYPE = "type",
   /** 按用途分类 */
-  PURPOSE = 'purpose',
+  PURPOSE = "purpose",
   /** 按优先级分类 */
-  PRIORITY = 'priority',
+  PRIORITY = "priority",
   /** 按状态分类 */
-  STATUS = 'status'
+  STATUS = "status",
 }
 
 /**
@@ -135,21 +137,21 @@ enum ClassificationDimension {
  */
 enum DocumentPhase {
   /** 需求规划 */
-  REQUIREMENT = 'requirement',
+  REQUIREMENT = "requirement",
   /** 架构设计 */
-  ARCHITECTURE = 'architecture',
+  ARCHITECTURE = "architecture",
   /** 开发实施 */
-  DEVELOPMENT = 'development',
+  DEVELOPMENT = "development",
   /** 测试验证 */
-  TESTING = 'testing',
+  TESTING = "testing",
   /** 部署发布 */
-  DEPLOYMENT = 'deployment',
+  DEPLOYMENT = "deployment",
   /** 运维运营 */
-  OPERATIONS = 'operations',
+  OPERATIONS = "operations",
   /** 用户指南 */
-  USER_GUIDE = 'user_guide',
+  USER_GUIDE = "user_guide",
   /** 归类迭代 */
-  ARCHIVE = 'archive'
+  ARCHIVE = "archive",
 }
 
 /**
@@ -157,15 +159,15 @@ enum DocumentPhase {
  */
 enum DocumentType {
   /** 架构类 */
-  ARCHITECTURE = 'architecture',
+  ARCHITECTURE = "architecture",
   /** 技巧类 */
-  TECHNIQUE = 'technique',
+  TECHNIQUE = "technique",
   /** 规范类 */
-  STANDARD = 'standard',
+  STANDARD = "standard",
   /** 指南类 */
-  GUIDE = 'guide',
+  GUIDE = "guide",
   /** 报告类 */
-  REPORT = 'report'
+  REPORT = "report",
 }
 
 /**
@@ -173,11 +175,11 @@ enum DocumentType {
  */
 enum DocumentPriority {
   /** 高优先级 */
-  HIGH = 'high',
+  HIGH = "high",
   /** 中优先级 */
-  MEDIUM = 'medium',
+  MEDIUM = "medium",
   /** 低优先级 */
-  LOW = 'low'
+  LOW = "low",
 }
 
 /**
@@ -185,17 +187,17 @@ enum DocumentPriority {
  */
 enum DocumentStatus {
   /** 草稿 */
-  DRAFT = 'draft',
+  DRAFT = "draft",
   /** 审核中 */
-  REVIEW = 'review',
+  REVIEW = "review",
   /** 已批准 */
-  APPROVED = 'approved',
+  APPROVED = "approved",
   /** 已发布 */
-  PUBLISHED = 'published',
+  PUBLISHED = "published",
   /** 已归档 */
-  ARCHIVED = 'archived',
+  ARCHIVED = "archived",
   /** 已废弃 */
-  DEPRECATED = 'deprecated'
+  DEPRECATED = "deprecated",
 }
 
 /**
@@ -223,21 +225,21 @@ interface DocumentTags {
  */
 class ClassificationManager {
   private classifications: Map<string, DocumentTags> = new Map();
-  
+
   /**
    * 添加分类
    */
   addClassification(documentId: string, tags: DocumentTags): void {
     this.classifications.set(documentId, tags);
   }
-  
+
   /**
    * 获取分类
    */
   getClassification(documentId: string): DocumentTags | undefined {
     return this.classifications.get(documentId);
   }
-  
+
   /**
    * 按阶段查询
    */
@@ -250,7 +252,7 @@ class ClassificationManager {
     }
     return results;
   }
-  
+
   /**
    * 按类型查询
    */
@@ -263,7 +265,7 @@ class ClassificationManager {
     }
     return results;
   }
-  
+
   /**
    * 按标签查询
    */
@@ -276,7 +278,7 @@ class ClassificationManager {
     }
     return results;
   }
-  
+
   /**
    * 批量分类
    */
@@ -300,19 +302,19 @@ class ClassificationManager {
  */
 enum ArchiveStep {
   /** 文档准备 */
-  PREPARATION = 'preparation',
+  PREPARATION = "preparation",
   /** 分类标记 */
-  CLASSIFICATION = 'classification',
+  CLASSIFICATION = "classification",
   /** 质量检查 */
-  QUALITY_CHECK = 'quality_check',
+  QUALITY_CHECK = "quality_check",
   /** 审核批准 */
-  APPROVAL = 'approval',
+  APPROVAL = "approval",
   /** 归档存储 */
-  STORAGE = 'storage',
+  STORAGE = "storage",
   /** 索引建立 */
-  INDEXING = 'indexing',
+  INDEXING = "indexing",
   /** 通知更新 */
-  NOTIFICATION = 'notification'
+  NOTIFICATION = "notification",
 }
 
 /**
@@ -330,7 +332,7 @@ interface ArchiveProcess {
   /** 完成时间 */
   endTime?: Date;
   /** 状态 */
-  status: 'pending' | 'in_progress' | 'completed' | 'failed';
+  status: "pending" | "in_progress" | "completed" | "failed";
   /** 错误信息 */
   error?: string;
 }
@@ -340,7 +342,7 @@ interface ArchiveProcess {
  */
 class ArchiveProcessManager {
   private processes: Map<string, ArchiveProcess> = new Map();
-  
+
   /**
    * 创建归档流程
    */
@@ -351,12 +353,12 @@ class ArchiveProcessManager {
       documentId,
       currentStep: ArchiveStep.PREPARATION,
       startTime: new Date(),
-      status: 'pending'
+      status: "pending",
     };
     this.processes.set(processId, process);
     return processId;
   }
-  
+
   /**
    * 更新流程步骤
    */
@@ -364,10 +366,10 @@ class ArchiveProcessManager {
     const process = this.processes.get(processId);
     if (process) {
       process.currentStep = step;
-      process.status = 'in_progress';
+      process.status = "in_progress";
     }
   }
-  
+
   /**
    * 完成流程
    */
@@ -376,21 +378,21 @@ class ArchiveProcessManager {
     if (process) {
       process.currentStep = ArchiveStep.NOTIFICATION;
       process.endTime = new Date();
-      process.status = 'completed';
+      process.status = "completed";
     }
   }
-  
+
   /**
    * 失败流程
    */
   failProcess(processId: string, error: string): void {
     const process = this.processes.get(processId);
     if (process) {
-      process.status = 'failed';
+      process.status = "failed";
       process.error = error;
     }
   }
-  
+
   /**
    * 获取流程状态
    */
@@ -439,34 +441,34 @@ class DocumentQualityChecker {
    * 检查文档完整性
    */
   static checkCompleteness(document: any): QualityCheckItem {
-    const requiredFields = ['title', 'content', 'author', 'version', 'createdAt'];
+    const requiredFields = ["title", "content", "author", "version", "createdAt"];
     const missingFields = requiredFields.filter(field => !document[field]);
-    
+
     return {
-      name: '文档完整性',
-      description: '检查文档是否包含所有必需字段',
+      name: "文档完整性",
+      description: "检查文档是否包含所有必需字段",
       required: true,
       result: missingFields.length === 0,
-      error: missingFields.length > 0 ? `缺少字段: ${missingFields.join(', ')}` : undefined
+      error: missingFields.length > 0 ? `缺少字段: ${missingFields.join(", ")}` : undefined,
     };
   }
-  
+
   /**
    * 检查命名规范
    */
   static checkNamingConvention(filename: string): QualityCheckItem {
     const pattern = /^YYC3-Cater--[分类类型]-[文档名称]\.md$/;
     const valid = pattern.test(filename);
-    
+
     return {
-      name: '命名规范',
-      description: '检查文件名是否符合命名规范',
+      name: "命名规范",
+      description: "检查文件名是否符合命名规范",
       required: true,
       result: valid,
-      error: valid ? undefined : '文件名不符合命名规范'
+      error: valid ? undefined : "文件名不符合命名规范",
     };
   }
-  
+
   /**
    * 检查格式规范
    */
@@ -474,38 +476,34 @@ class DocumentQualityChecker {
     const hasTitle = /^#\s+.+$/.test(content);
     const hasDocumentInfo = /## 文档信息/.test(content);
     const hasCoreContent = /## 核心内容/.test(content);
-    
+
     return {
-      name: '格式规范',
-      description: '检查文档格式是否符合规范',
+      name: "格式规范",
+      description: "检查文档格式是否符合规范",
       required: true,
       result: hasTitle && hasDocumentInfo && hasCoreContent,
-      error: (!hasTitle || !hasDocumentInfo || !hasCoreContent) ? '文档格式不完整' : undefined
+      error: !hasTitle || !hasDocumentInfo || !hasCoreContent ? "文档格式不完整" : undefined,
     };
   }
-  
+
   /**
    * 运行质量检查
    */
-  static runQualityCheck(
-    document: any,
-    filename: string,
-    content: string
-  ): QualityCheckResult {
+  static runQualityCheck(document: any, filename: string, content: string): QualityCheckResult {
     const items: QualityCheckItem[] = [];
-    
+
     items.push(this.checkCompleteness(document));
     items.push(this.checkNamingConvention(filename));
     items.push(this.checkFormat(content));
-    
+
     const passedItems = items.filter(item => item.result === true);
     const overallScore = (passedItems.length / items.length) * 100;
     const passed = overallScore >= 80;
-    
+
     return {
       items,
       overallScore,
-      passed
+      passed,
     };
   }
 }
@@ -541,50 +539,50 @@ interface DocumentVersion {
  */
 class VersionHistory {
   private versions: DocumentVersion[] = [];
-  
+
   /**
    * 添加版本
    */
   addVersion(version: DocumentVersion): void {
     this.versions.push(version);
   }
-  
+
   /**
    * 获取最新版本
    */
   getLatestVersion(): DocumentVersion | undefined {
     return this.versions[this.versions.length - 1];
   }
-  
+
   /**
    * 获取指定版本
    */
   getVersion(version: string): DocumentVersion | undefined {
     return this.versions.find(v => v.version === version);
   }
-  
+
   /**
    * 获取版本列表
    */
   getVersionList(): DocumentVersion[] {
     return [...this.versions];
   }
-  
+
   /**
    * 比较版本
    */
   compareVersions(v1: string, v2: string): number {
-    const parts1 = v1.split('.').map(Number);
-    const parts2 = v2.split('.').map(Number);
-    
+    const parts1 = v1.split(".").map(Number);
+    const parts2 = v2.split(".").map(Number);
+
     for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
       const p1 = parts1[i] || 0;
       const p2 = parts2[i] || 0;
-      
+
       if (p1 > p2) return 1;
       if (p1 < p2) return -1;
     }
-    
+
     return 0;
   }
 }
@@ -598,15 +596,15 @@ class VersionHistory {
  */
 enum ChangeType {
   /** 新增 */
-  ADD = 'add',
+  ADD = "add",
   /** 修改 */
-  MODIFY = 'modify',
+  MODIFY = "modify",
   /** 删除 */
-  DELETE = 'delete',
+  DELETE = "delete",
   /** 移动 */
-  MOVE = 'move',
+  MOVE = "move",
   /** 重命名 */
-  RENAME = 'rename'
+  RENAME = "rename",
 }
 
 /**
@@ -638,42 +636,42 @@ interface DocumentChange {
  */
 class ChangeTracker {
   private changes: DocumentChange[] = [];
-  
+
   /**
    * 记录变更
    */
-  recordChange(change: Omit<DocumentChange, 'changeId' | 'changedAt'>): string {
+  recordChange(change: Omit<DocumentChange, "changeId" | "changedAt">): string {
     const changeId = `change-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const fullChange: DocumentChange = {
       ...change,
       changeId,
-      changedAt: new Date()
+      changedAt: new Date(),
     };
     this.changes.push(fullChange);
     return changeId;
   }
-  
+
   /**
    * 获取文档变更历史
    */
   getDocumentHistory(documentId: string): DocumentChange[] {
     return this.changes.filter(change => change.documentId === documentId);
   }
-  
+
   /**
    * 获取用户变更历史
    */
   getUserHistory(userId: string): DocumentChange[] {
     return this.changes.filter(change => change.changedBy === userId);
   }
-  
+
   /**
    * 获取变更详情
    */
   getChangeDetails(changeId: string): DocumentChange | undefined {
     return this.changes.find(change => change.changeId === changeId);
   }
-  
+
   /**
    * 生成变更报告
    */
@@ -681,12 +679,12 @@ class ChangeTracker {
     const changes = this.getDocumentHistory(documentId).filter(
       change => change.beforeVersion === fromVersion || change.afterVersion === toVersion
     );
-    
+
     let report = `# 文档变更报告\n\n`;
     report += `文档ID: ${documentId}\n`;
     report += `版本范围: ${fromVersion} -> ${toVersion}\n`;
     report += `变更数量: ${changes.length}\n\n`;
-    
+
     changes.forEach((change, index) => {
       report += `${index + 1}. ${change.changeType}: ${change.description}\n`;
       report += `   变更人: ${change.changedBy}\n`;
@@ -694,9 +692,9 @@ class ChangeTracker {
       change.changes.forEach(c => {
         report += `   - ${c}\n`;
       });
-      report += '\n';
+      report += "\n";
     });
-    
+
     return report;
   }
 }
@@ -714,15 +712,15 @@ class ChangeTracker {
  */
 enum ArchiveToolType {
   /** 文档管理系统 */
-  DMS = 'dms',
+  DMS = "dms",
   /** 版本控制系统 */
-  VCS = 'vcs',
+  VCS = "vcs",
   /** 知识库系统 */
-  KB = 'kb',
+  KB = "kb",
   /** 云存储服务 */
-  CLOUD = 'cloud',
+  CLOUD = "cloud",
   /** 备份系统 */
-  BACKUP = 'backup'
+  BACKUP = "backup",
 }
 
 /**
@@ -748,54 +746,66 @@ interface ArchiveTool {
  */
 class ArchiveToolComparison {
   private static tools: Map<string, ArchiveTool> = new Map([
-    ['Git', {
-      name: 'Git',
-      type: ArchiveToolType.VCS,
-      description: '分布式版本控制系统',
-      supportedTypes: [DocumentType.ARCHITECTURE, DocumentType.STANDARD],
-      features: ['版本控制', '分支管理', '协作开发', '变更追踪'],
-      integrations: ['GitHub', 'GitLab', 'Bitbucket']
-    }],
-    ['Confluence', {
-      name: 'Confluence',
-      type: ArchiveToolType.KB,
-      description: '企业级知识库系统',
-      supportedTypes: [DocumentType.GUIDE, DocumentType.REPORT],
-      features: ['文档管理', '协作编辑', '权限控制', '搜索功能'],
-      integrations: ['Jira', 'Slack', 'GitHub']
-    }],
-    ['Notion', {
-      name: 'Notion',
-      type: ArchiveToolType.KB,
-      description: '一体化工作空间',
-      supportedTypes: [DocumentType.GUIDE, DocumentType.STANDARD],
-      features: ['文档编辑', '数据库', '模板', 'API集成'],
-      integrations: ['Slack', 'Google Drive', 'GitHub']
-    }],
-    ['AWS S3', {
-      name: 'AWS S3',
-      type: ArchiveToolType.CLOUD,
-      description: '云存储服务',
-      supportedTypes: [DocumentType.ARCHITECTURE, DocumentType.TECHNIQUE],
-      features: ['对象存储', '高可用性', '安全性', '可扩展性'],
-      integrations: ['AWS Lambda', 'AWS CloudFront', 'AWS IAM']
-    }]
+    [
+      "Git",
+      {
+        name: "Git",
+        type: ArchiveToolType.VCS,
+        description: "分布式版本控制系统",
+        supportedTypes: [DocumentType.ARCHITECTURE, DocumentType.STANDARD],
+        features: ["版本控制", "分支管理", "协作开发", "变更追踪"],
+        integrations: ["GitHub", "GitLab", "Bitbucket"],
+      },
+    ],
+    [
+      "Confluence",
+      {
+        name: "Confluence",
+        type: ArchiveToolType.KB,
+        description: "企业级知识库系统",
+        supportedTypes: [DocumentType.GUIDE, DocumentType.REPORT],
+        features: ["文档管理", "协作编辑", "权限控制", "搜索功能"],
+        integrations: ["Jira", "Slack", "GitHub"],
+      },
+    ],
+    [
+      "Notion",
+      {
+        name: "Notion",
+        type: ArchiveToolType.KB,
+        description: "一体化工作空间",
+        supportedTypes: [DocumentType.GUIDE, DocumentType.STANDARD],
+        features: ["文档编辑", "数据库", "模板", "API集成"],
+        integrations: ["Slack", "Google Drive", "GitHub"],
+      },
+    ],
+    [
+      "AWS S3",
+      {
+        name: "AWS S3",
+        type: ArchiveToolType.CLOUD,
+        description: "云存储服务",
+        supportedTypes: [DocumentType.ARCHITECTURE, DocumentType.TECHNIQUE],
+        features: ["对象存储", "高可用性", "安全性", "可扩展性"],
+        integrations: ["AWS Lambda", "AWS CloudFront", "AWS IAM"],
+      },
+    ],
   ]);
-  
+
   /**
    * 获取工具列表
    */
   static getTools(): ArchiveTool[] {
     return Array.from(this.tools.values());
   }
-  
+
   /**
    * 根据类型获取工具
    */
   static getToolsByType(type: ArchiveToolType): ArchiveTool[] {
     return Array.from(this.tools.values()).filter(tool => tool.type === type);
   }
-  
+
   /**
    * 推荐工具
    */
@@ -805,22 +815,22 @@ class ArchiveToolComparison {
     integrations?: string[];
   }): ArchiveTool[] {
     const tools = Array.from(this.tools.values());
-    
+
     return tools.filter(tool => {
       let match = true;
-      
+
       if (requirements.types && requirements.types.length > 0) {
         match = match && requirements.types.some(type => tool.supportedTypes.includes(type));
       }
-      
+
       if (requirements.features && requirements.features.length > 0) {
         match = match && requirements.features.some(feature => tool.features.includes(feature));
       }
-      
+
       if (requirements.integrations && requirements.integrations.length > 0) {
         match = match && requirements.integrations.some(integration => tool.integrations.includes(integration));
       }
-      
+
       return match;
     });
   }
@@ -861,7 +871,7 @@ class AutoArchiver {
   private classificationManager: ClassificationManager;
   private versionHistory: VersionHistory;
   private changeTracker: ChangeTracker;
-  
+
   constructor(
     config: AutoArchiveConfig,
     classificationManager: ClassificationManager,
@@ -873,34 +883,30 @@ class AutoArchiver {
     this.versionHistory = versionHistory;
     this.changeTracker = changeTracker;
   }
-  
+
   /**
    * 归档文档
    */
   async archiveDocument(document: any, content: string): Promise<string> {
     // 1. 质量检查
-    const qualityResult = DocumentQualityChecker.runQualityCheck(
-      document,
-      document.filename,
-      content
-    );
-    
+    const qualityResult = DocumentQualityChecker.runQualityCheck(document, document.filename, content);
+
     if (!qualityResult.passed) {
       throw new Error(`质量检查未通过: ${qualityResult.overallScore}%`);
     }
-    
+
     // 2. 自动分类
     if (this.config.autoClassify) {
       const tags = this.classifyDocument(document);
       this.classificationManager.addClassification(document.id, tags);
     }
-    
+
     // 3. 版本控制
     if (this.config.autoVersionControl) {
       const version = this.createVersion(document);
       this.versionHistory.addVersion(version);
     }
-    
+
     // 4. 记录变更
     this.changeTracker.recordChange({
       documentId: document.id,
@@ -908,15 +914,15 @@ class AutoArchiver {
       description: `归档文档: ${document.title}`,
       afterVersion: document.version,
       changedBy: document.author,
-      changes: [`文档已归档到 ${this.config.archivePath}`]
+      changes: [`文档已归档到 ${this.config.archivePath}`],
     });
-    
+
     // 5. 存储文档
     const filePath = await this.storeDocument(document, content);
-    
+
     return filePath;
   }
-  
+
   /**
    * 分类文档
    */
@@ -927,24 +933,24 @@ class AutoArchiver {
       type: document.type || DocumentType.STANDARD,
       priority: document.priority || DocumentPriority.MEDIUM,
       status: document.status || DocumentStatus.APPROVED,
-      customTags: document.tags || []
+      customTags: document.tags || [],
     };
   }
-  
+
   /**
    * 创建版本
    */
   private createVersion(document: any): DocumentVersion {
     return {
       version: document.version,
-      description: document.description || '初始版本',
+      description: document.description || "初始版本",
       createdAt: new Date(),
       createdBy: document.author,
       changes: document.changes || [],
-      filePath: `${this.config.archivePath}/${document.filename}`
+      filePath: `${this.config.archivePath}/${document.filename}`,
     };
   }
-  
+
   /**
    * 存储文档
    */
@@ -972,44 +978,44 @@ class ArchiveStrategies {
    * 按时间归档
    */
   static timeBased = {
-    description: '按照文档创建或修改时间进行归档',
-    strategy: '按年/月/日组织文档',
-    example: '/archive/2025/01/30/document.md',
-    advantages: ['时间线清晰', '便于历史追溯', '易于管理'],
-    disadvantages: ['跨时间检索困难', '可能产生空目录']
+    description: "按照文档创建或修改时间进行归档",
+    strategy: "按年/月/日组织文档",
+    example: "/archive/2025/01/30/document.md",
+    advantages: ["时间线清晰", "便于历史追溯", "易于管理"],
+    disadvantages: ["跨时间检索困难", "可能产生空目录"],
   };
-  
+
   /**
    * 按项目归档
    */
   static projectBased = {
-    description: '按照项目或模块进行归档',
-    strategy: '按项目/模块/子模块组织文档',
-    example: '/archive/project/module/document.md',
-    advantages: ['项目关联清晰', '团队协作方便', '权限管理简单'],
-    disadvantages: ['跨项目文档重复', '目录可能过深']
+    description: "按照项目或模块进行归档",
+    strategy: "按项目/模块/子模块组织文档",
+    example: "/archive/project/module/document.md",
+    advantages: ["项目关联清晰", "团队协作方便", "权限管理简单"],
+    disadvantages: ["跨项目文档重复", "目录可能过深"],
   };
-  
+
   /**
    * 按类型归档
    */
   static typeBased = {
-    description: '按照文档类型进行归档',
-    strategy: '按类型/子类型/文档组织文档',
-    example: '/archive/architecture/design/document.md',
-    advantages: ['类型清晰', '检索效率高', '便于标准化'],
-    disadvantages: ['跨类型关联困难', '可能产生重复']
+    description: "按照文档类型进行归档",
+    strategy: "按类型/子类型/文档组织文档",
+    example: "/archive/architecture/design/document.md",
+    advantages: ["类型清晰", "检索效率高", "便于标准化"],
+    disadvantages: ["跨类型关联困难", "可能产生重复"],
   };
-  
+
   /**
    * 混合归档
    */
   static hybrid = {
-    description: '结合多种归档策略',
-    strategy: '按阶段/类型/项目组织文档',
-    example: '/archive/requirement/architecture/project/document.md',
-    advantages: ['灵活性高', '适应性强', '综合优势'],
-    disadvantages: ['复杂度增加', '需要统一规范']
+    description: "结合多种归档策略",
+    strategy: "按阶段/类型/项目组织文档",
+    example: "/archive/requirement/architecture/project/document.md",
+    advantages: ["灵活性高", "适应性强", "综合优势"],
+    disadvantages: ["复杂度增加", "需要统一规范"],
   };
 }
 ```
@@ -1023,64 +1029,64 @@ class ArchiveStrategies {
 class ArchiveChecklist {
   private static items = [
     {
-      category: '文档准备',
+      category: "文档准备",
       checks: [
-        '文档内容是否完整',
-        '文档格式是否符合规范',
-        '文件名是否符合命名规范',
-        '文档信息是否齐全',
-        '是否包含必要的元数据'
-      ]
+        "文档内容是否完整",
+        "文档格式是否符合规范",
+        "文件名是否符合命名规范",
+        "文档信息是否齐全",
+        "是否包含必要的元数据",
+      ],
     },
     {
-      category: '分类标记',
+      category: "分类标记",
       checks: [
-        '是否正确标记文档阶段',
-        '是否正确标记文档类型',
-        '是否正确标记文档优先级',
-        '是否添加了适当的标签',
-        '分类是否准确无误'
-      ]
+        "是否正确标记文档阶段",
+        "是否正确标记文档类型",
+        "是否正确标记文档优先级",
+        "是否添加了适当的标签",
+        "分类是否准确无误",
+      ],
     },
     {
-      category: '质量检查',
+      category: "质量检查",
       checks: [
-        '是否通过了完整性检查',
-        '是否通过了格式检查',
-        '是否通过了命名检查',
-        '质量评分是否达标',
-        '是否修复了所有问题'
-      ]
+        "是否通过了完整性检查",
+        "是否通过了格式检查",
+        "是否通过了命名检查",
+        "质量评分是否达标",
+        "是否修复了所有问题",
+      ],
     },
     {
-      category: '版本控制',
+      category: "版本控制",
       checks: [
-        '是否记录了版本号',
-        '是否记录了版本描述',
-        '是否记录了变更内容',
-        '是否记录了变更人',
-        '是否记录了变更时间'
-      ]
+        "是否记录了版本号",
+        "是否记录了版本描述",
+        "是否记录了变更内容",
+        "是否记录了变更人",
+        "是否记录了变更时间",
+      ],
     },
     {
-      category: '归档存储',
+      category: "归档存储",
       checks: [
-        '是否选择了正确的归档路径',
-        '是否设置了正确的访问权限',
-        '是否创建了必要的索引',
-        '是否进行了备份',
-        '是否通知了相关人员'
-      ]
-    }
+        "是否选择了正确的归档路径",
+        "是否设置了正确的访问权限",
+        "是否创建了必要的索引",
+        "是否进行了备份",
+        "是否通知了相关人员",
+      ],
+    },
   ];
-  
+
   /**
    * 获取检查清单
    */
   static getChecklist(): typeof ArchiveChecklist.items {
     return this.items;
   }
-  
+
   /**
    * 检查完成情况
    */
@@ -1093,11 +1099,11 @@ class ArchiveChecklist {
     const completedItems = completed.filter(item => allItems.includes(item));
     const pendingItems = allItems.filter(item => !completed.includes(item));
     const progress = (completedItems.length / allItems.length) * 100;
-    
+
     return {
       completed: completedItems,
       pending: pendingItems,
-      progress
+      progress,
     };
   }
 }
@@ -1115,13 +1121,13 @@ class ArchiveChecklist {
  */
 enum SecurityLevel {
   /** 公开 */
-  PUBLIC = 'public',
+  PUBLIC = "public",
   /** 内部 */
-  INTERNAL = 'internal',
+  INTERNAL = "internal",
   /** 机密 */
-  CONFIDENTIAL = 'confidential',
+  CONFIDENTIAL = "confidential",
   /** 绝密 */
-  TOP_SECRET = 'top_secret'
+  TOP_SECRET = "top_secret",
 }
 
 /**
@@ -1133,7 +1139,7 @@ interface AccessPermission {
   /** 文档ID */
   documentId: string;
   /** 权限类型 */
-  permission: 'read' | 'write' | 'delete' | 'admin';
+  permission: "read" | "write" | "delete" | "admin";
   /** 安全级别 */
   securityLevel: SecurityLevel;
   /** 授权时间 */
@@ -1147,7 +1153,7 @@ interface AccessPermission {
  */
 class AccessControlManager {
   private permissions: Map<string, AccessPermission[]> = new Map();
-  
+
   /**
    * 授予权限
    */
@@ -1157,26 +1163,22 @@ class AccessControlManager {
     permissions.push(permission);
     this.permissions.set(key, permissions);
   }
-  
+
   /**
    * 检查权限
    */
-  checkPermission(
-    userId: string,
-    documentId: string,
-    permission: 'read' | 'write' | 'delete' | 'admin'
-  ): boolean {
+  checkPermission(userId: string, documentId: string, permission: "read" | "write" | "delete" | "admin"): boolean {
     const key = `${userId}-${documentId}`;
     const permissions = this.permissions.get(key) || [];
-    
+
     return permissions.some(p => {
-      if (p.permission === 'admin') return true;
+      if (p.permission === "admin") return true;
       if (p.permission === permission) return true;
       if (p.expiresAt && p.expiresAt < new Date()) return false;
       return false;
     });
   }
-  
+
   /**
    * 撤销权限
    */
@@ -1184,7 +1186,7 @@ class AccessControlManager {
     const key = `${userId}-${documentId}`;
     this.permissions.delete(key);
   }
-  
+
   /**
    * 获取用户权限
    */
@@ -1210,7 +1212,7 @@ interface AuditLog {
   /** 日志ID */
   logId: string;
   /** 操作类型 */
-  action: 'create' | 'read' | 'update' | 'delete' | 'archive';
+  action: "create" | "read" | "update" | "delete" | "archive";
   /** 操作对象 */
   target: string;
   /** 操作人 */
@@ -1230,21 +1232,21 @@ interface AuditLog {
  */
 class AuditTracker {
   private logs: AuditLog[] = [];
-  
+
   /**
    * 记录审计日志
    */
-  logAction(log: Omit<AuditLog, 'logId' | 'timestamp'>): string {
+  logAction(log: Omit<AuditLog, "logId" | "timestamp">): string {
     const logId = `audit-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const fullLog: AuditLog = {
       ...log,
       logId,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
     this.logs.push(fullLog);
     return logId;
   }
-  
+
   /**
    * 查询审计日志
    */
@@ -1264,42 +1266,45 @@ class AuditTracker {
       return true;
     });
   }
-  
+
   /**
    * 生成审计报告
    */
-  generateAuditReport(filters: {
-    startTime: Date;
-    endTime: Date;
-  }): string {
+  generateAuditReport(filters: { startTime: Date; endTime: Date }): string {
     const logs = this.queryLogs(filters);
-    
+
     let report = `# 审计报告\n\n`;
     report += `时间范围: ${filters.startTime.toLocaleString()} - ${filters.endTime.toLocaleString()}\n`;
     report += `操作总数: ${logs.length}\n\n`;
-    
+
     // 按操作类型统计
-    const actionStats = logs.reduce((acc, log) => {
-      acc[log.action] = (acc[log.action] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    
+    const actionStats = logs.reduce(
+      (acc, log) => {
+        acc[log.action] = (acc[log.action] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
     report += `## 操作统计\n\n`;
     for (const [action, count] of Object.entries(actionStats)) {
       report += `- ${action}: ${count}\n`;
     }
-    
+
     // 按操作人统计
-    const actorStats = logs.reduce((acc, log) => {
-      acc[log.actor] = (acc[log.actor] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    
+    const actorStats = logs.reduce(
+      (acc, log) => {
+        acc[log.actor] = (acc[log.actor] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
     report += `\n## 操作人统计\n\n`;
     for (const [actor, count] of Object.entries(actorStats)) {
       report += `- ${actor}: ${count}\n`;
     }
-    
+
     return report;
   }
 }
@@ -1328,13 +1333,10 @@ class AuditTracker {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1355,8 +1357,6 @@ class AuditTracker {
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -1385,8 +1385,6 @@ class AuditTracker {
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -1424,7 +1422,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -1440,8 +1438,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -1454,7 +1450,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1469,9 +1465,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1479,9 +1475,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1489,20 +1488,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1511,6 +1508,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1526,17 +1524,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1544,6 +1543,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1554,6 +1554,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1562,8 +1563,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1571,21 +1570,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1594,10 +1595,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1623,16 +1621,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1641,26 +1639,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1676,7 +1669,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1708,14 +1701,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1726,17 +1717,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1746,17 +1740,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1766,21 +1763,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

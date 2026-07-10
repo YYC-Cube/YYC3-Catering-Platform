@@ -26,21 +26,25 @@ dotenv.config();
 const app = express();
 
 // 配置中间件
-app.use(cors({
-  origin: config.api.corsOrigin,
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: config.api.corsOrigin,
+    credentials: true,
+  }),
+);
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 配置日志中间件
-app.use(morgan('combined', {
-  stream: {
-    write: (message: string) => logger.info(message.trim()),
-  },
-}));
+app.use(
+  morgan('combined', {
+    stream: {
+      write: (message: string) => logger.info(message.trim()),
+    },
+  }),
+);
 
 // 注册路由
 app.use('/api/v1/user-service', routes);

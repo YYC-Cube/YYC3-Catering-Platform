@@ -19,19 +19,19 @@ const logLevels = {
   http: 3,
   verbose: 4,
   debug: 5,
-  silly: 6
+  silly: 6,
 };
 
 // 创建日志格式化器
 const logFormatter = winston.format.combine(
   winston.format.timestamp({
-    format: 'YYYY-MM-DD HH:mm:ss'
+    format: 'YYYY-MM-DD HH:mm:ss',
   }),
   winston.format.errors({
-    stack: true
+    stack: true,
   }),
   winston.format.json(),
-  winston.format.prettyPrint()
+  winston.format.prettyPrint(),
 );
 
 // 创建控制台传输
@@ -40,21 +40,24 @@ const consoleTransport = new winston.transports.Console({
   format: winston.format.combine(
     winston.format.colorize(),
     winston.format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss'
+      format: 'YYYY-MM-DD HH:mm:ss',
     }),
     winston.format.printf(({ timestamp, level, message, ...meta }) => {
       const metaString = Object.keys(meta).length ? JSON.stringify(meta) : '';
       return `[${timestamp}] ${level}: ${message} ${metaString}`;
-    })
-  )
+    }),
+  ),
 });
 
 // 创建文件传输（仅生产环境）
-const fileTransport = config.app.environment === 'production' ? new winston.transports.File({
-  filename: './logs/error.log',
-  level: 'error',
-  format: logFormatter
-}) : null;
+const fileTransport =
+  config.app.environment === 'production'
+    ? new winston.transports.File({
+        filename: './logs/error.log',
+        level: 'error',
+        format: logFormatter,
+      })
+    : null;
 
 // 创建日志实例
 export const logger = winston.createLogger({
@@ -62,24 +65,21 @@ export const logger = winston.createLogger({
   defaultMeta: {
     service: 'api-gateway',
     version: config.app.version,
-    environment: config.app.environment
+    environment: config.app.environment,
   },
-  transports: [
-    consoleTransport,
-    ...(fileTransport ? [fileTransport] : [])
-  ],
+  transports: [consoleTransport, ...(fileTransport ? [fileTransport] : [])],
   exceptionHandlers: [
     new winston.transports.File({
       filename: './logs/exceptions.log',
-      format: logFormatter
-    })
+      format: logFormatter,
+    }),
   ],
   rejectionHandlers: [
     new winston.transports.File({
       filename: './logs/rejections.log',
-      format: logFormatter
-    })
-  ]
+      format: logFormatter,
+    }),
+  ],
 });
 
 // 导出日志类型

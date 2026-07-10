@@ -28,17 +28,16 @@ export interface UserNotificationPreferenceAttributes {
 }
 
 // 创建用户通知偏好的可选属性接口
-export interface UserNotificationPreferenceCreationAttributes
-  extends Optional<
-    UserNotificationPreferenceAttributes,
-    'id' | 'createdAt' | 'updatedAt'
-  > {}
+export interface UserNotificationPreferenceCreationAttributes extends Optional<
+  UserNotificationPreferenceAttributes,
+  'id' | 'createdAt' | 'updatedAt'
+> {}
 
 // 用户通知偏好模型类
-export class UserNotificationPreference extends Model<
-  UserNotificationPreferenceAttributes,
-  UserNotificationPreferenceCreationAttributes
-> implements UserNotificationPreferenceAttributes {
+export class UserNotificationPreference
+  extends Model<UserNotificationPreferenceAttributes, UserNotificationPreferenceCreationAttributes>
+  implements UserNotificationPreferenceAttributes
+{
   public id!: string;
   public userId!: string;
   public systemNotifications!: boolean;
@@ -151,6 +150,6 @@ export function initUserNotificationPreference(sequelize: Sequelize) {
           name: 'idx_user_notification_preferences_user_id',
         },
       ],
-    }
+    },
   );
 }

@@ -13,7 +13,7 @@ export enum KitchenResourceType {
   GRILL = 'grill',
   FRYER = 'fryer',
   COOKTOP = 'cooktop',
-  STEAMER = 'steamer'
+  STEAMER = 'steamer',
 }
 
 // 厨房资源接口

@@ -2,13 +2,13 @@
 
 ## 文档信息
 
-| 项目 | 内容 |
-|------|------|
+| 项目     | 内容               |
+| -------- | ------------------ |
 | 文档名称 | UI交互体验演示文档 |
-| 版本号 | v1.0.0 |
-| 创建日期 | 2026-01-21 |
-| 作者 | YYC³团队 |
-| 文档状态 | 正式发布 |
+| 版本号   | v1.0.0             |
+| 创建日期 | 2026-01-21         |
+| 作者     | YYC³团队           |
+| 文档状态 | 正式发布           |
 
 ---
 
@@ -45,37 +45,37 @@ YYC³平台的交互设计遵循以下核心原则：
 ```typescript
 interface ButtonInteractionStates {
   normal: {
-    backgroundColor: 'var(--primary-color)';
-    color: '#FFFFFF';
-    transform: 'translateY(0)';
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)';
+    backgroundColor: "var(--primary-color)";
+    color: "#FFFFFF";
+    transform: "translateY(0)";
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)";
   };
   hover: {
-    backgroundColor: 'var(--primary-color)';
-    color: '#FFFFFF';
-    transform: 'translateY(-2px)';
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)';
-    transition: 'all 0.2s ease-out';
+    backgroundColor: "var(--primary-color)";
+    color: "#FFFFFF";
+    transform: "translateY(-2px)";
+    boxShadow: "0 4px 12px rgba(0,0,0,0.15)";
+    transition: "all 0.2s ease-out";
   };
   active: {
-    backgroundColor: 'var(--primary-color)';
-    color: '#FFFFFF';
-    transform: 'translateY(0)';
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)';
-    transition: 'all 0.1s ease-in';
+    backgroundColor: "var(--primary-color)";
+    color: "#FFFFFF";
+    transform: "translateY(0)";
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)";
+    transition: "all 0.1s ease-in";
   };
   disabled: {
-    backgroundColor: '#E5E7EB';
-    color: '#9CA3AF';
-    cursor: 'not-allowed';
+    backgroundColor: "#E5E7EB";
+    color: "#9CA3AF";
+    cursor: "not-allowed";
     opacity: 0.6;
   };
   loading: {
-    backgroundColor: 'var(--primary-color)';
-    color: '#FFFFFF';
-    cursor: 'wait';
+    backgroundColor: "var(--primary-color)";
+    color: "#FFFFFF";
+    cursor: "wait";
     opacity: 0.8;
-    pointerEvents: 'none';
+    pointerEvents: "none";
   };
 }
 ```
@@ -115,22 +115,22 @@ interface ButtonInteractionStates {
 @keyframes buttonHover {
   0% {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   100% {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 }
 
 @keyframes buttonActive {
   0% {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   100% {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
 ```
@@ -144,30 +144,30 @@ interface ButtonInteractionStates {
 ```typescript
 interface InputInteractionStates {
   normal: {
-    borderColor: '#D1D5DB';
-    backgroundColor: '#FFFFFF';
-    boxShadow: 'none';
+    borderColor: "#D1D5DB";
+    backgroundColor: "#FFFFFF";
+    boxShadow: "none";
   };
   focus: {
-    borderColor: 'var(--primary-color)';
-    backgroundColor: '#FFFFFF';
-    boxShadow: '0 0 0 3px rgba(var(--primary-color), 0.1)';
-    transition: 'all 0.2s ease-out';
+    borderColor: "var(--primary-color)";
+    backgroundColor: "#FFFFFF";
+    boxShadow: "0 0 0 3px rgba(var(--primary-color), 0.1)";
+    transition: "all 0.2s ease-out";
   };
   error: {
-    borderColor: '#E74C3C';
-    backgroundColor: '#FEF2F2';
-    animation: 'shake 0.3s ease-in-out';
+    borderColor: "#E74C3C";
+    backgroundColor: "#FEF2F2";
+    animation: "shake 0.3s ease-in-out";
   };
   success: {
-    borderColor: '#27AE60';
-    backgroundColor: '#F0FDF4';
+    borderColor: "#27AE60";
+    backgroundColor: "#F0FDF4";
   };
   disabled: {
-    backgroundColor: '#F3F4F6';
-    borderColor: '#E5E7EB';
-    color: '#9CA3AF';
-    cursor: 'not-allowed';
+    backgroundColor: "#F3F4F6";
+    borderColor: "#E5E7EB";
+    color: "#9CA3AF";
+    cursor: "not-allowed";
   };
 }
 ```
@@ -203,28 +203,36 @@ interface InputInteractionStates {
 
 ```css
 @keyframes shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-5px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(5px);
   }
 }
 
 /* 错误状态应用 */
 .input-error {
-  border-color: #E74C3C;
-  background-color: #FEF2F2;
+  border-color: #e74c3c;
+  background-color: #fef2f2;
   animation: shake 0.3s ease-in-out;
 }
 
 /* 成功状态应用 */
 .input-success {
-  border-color: #27AE60;
-  background-color: #F0FDF4;
+  border-color: #27ae60;
+  background-color: #f0fdf4;
 }
 ```
 
@@ -237,21 +245,21 @@ interface InputInteractionStates {
 ```typescript
 interface TableInteractionStates {
   normal: {
-    backgroundColor: '#FFFFFF';
-    borderColor: '#E5E7EB';
+    backgroundColor: "#FFFFFF";
+    borderColor: "#E5E7EB";
   };
   hover: {
-    backgroundColor: 'rgba(var(--primary-color), 0.05)';
-    cursor: 'pointer';
-    transition: 'all 0.2s ease-out';
+    backgroundColor: "rgba(var(--primary-color), 0.05)";
+    cursor: "pointer";
+    transition: "all 0.2s ease-out";
   };
   selected: {
-    backgroundColor: 'rgba(var(--primary-color), 0.1)';
-    borderLeft: '3px solid var(--primary-color)';
+    backgroundColor: "rgba(var(--primary-color), 0.1)";
+    borderLeft: "3px solid var(--primary-color)";
   };
   loading: {
     opacity: 0.6;
-    pointerEvents: 'none';
+    pointerEvents: "none";
   };
 }
 ```
@@ -310,19 +318,19 @@ interface TableInteractionStates {
 ```typescript
 interface CardInteractionStates {
   normal: {
-    backgroundColor: '#FFFFFF';
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)';
-    borderRadius: '0.5rem';
+    backgroundColor: "#FFFFFF";
+    boxShadow: "0 1px 3px rgba(0,0,0,0.1)";
+    borderRadius: "0.5rem";
   };
   hover: {
-    backgroundColor: '#FFFFFF';
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)';
-    transform: 'translateY(-4px)';
-    transition: 'all 0.3s ease-out';
+    backgroundColor: "#FFFFFF";
+    boxShadow: "0 4px 12px rgba(0,0,0,0.15)";
+    transform: "translateY(-4px)";
+    transition: "all 0.3s ease-out";
   };
   loading: {
     opacity: 0.6;
-    pointerEvents: 'none';
+    pointerEvents: "none";
   };
 }
 ```
@@ -383,20 +391,20 @@ interface CardInteractionStates {
 interface ModalInteractionStates {
   closed: {
     opacity: 0;
-    visibility: 'hidden';
-    transform: 'scale(0.95)';
+    visibility: "hidden";
+    transform: "scale(0.95)";
   };
   opening: {
     opacity: 1;
-    visibility: 'visible';
-    transform: 'scale(1)';
-    transition: 'all 0.2s ease-out';
+    visibility: "visible";
+    transform: "scale(1)";
+    transition: "all 0.2s ease-out";
   };
   closing: {
     opacity: 0;
-    visibility: 'hidden';
-    transform: 'scale(0.95)';
-    transition: 'all 0.2s ease-in';
+    visibility: "hidden";
+    transform: "scale(0.95)";
+    transition: "all 0.2s ease-in";
   };
 }
 ```
@@ -495,17 +503,17 @@ interface ModalInteractionStates {
 interface TagInteractionStates {
   normal: {
     opacity: 1;
-    transform: 'scale(1)';
+    transform: "scale(1)";
   };
   hover: {
     opacity: 0.8;
-    transform: 'scale(1.05)';
-    transition: 'all 0.2s ease-out';
+    transform: "scale(1.05)";
+    transition: "all 0.2s ease-out";
   };
   closing: {
     opacity: 0;
-    transform: 'scale(0)';
-    transition: 'all 0.3s ease-out';
+    transform: "scale(0)";
+    transition: "all 0.3s ease-out";
   };
 }
 ```
@@ -681,12 +689,7 @@ interface TagInteractionStates {
 /* 骨架屏闪烁动画 */
 .skeleton-shimmer {
   animation: shimmer 1.5s ease-in-out infinite;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 25%,
-    #e0e0e0 50%,
-    #f0f0f0 75%
-  );
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
 }
 
@@ -706,14 +709,14 @@ interface TagInteractionStates {
 
 ### 4.1 断点系统
 
-| 断点名称 | 屏幕宽度 | 设备类型 | 布局策略 |
-|---------|---------|---------|---------|
-| xs | 0px - 640px | 手机 | 单列布局，垂直堆叠 |
-| sm | 640px - 768px | 大屏手机 | 单列布局，优化触摸 |
-| md | 768px - 1024px | 平板 | 两列布局，水平排列 |
-| lg | 1024px - 1280px | 小屏笔记本 | 三列布局，充分利用空间 |
-| xl | 1280px - 1536px | 大屏笔记本 | 四列布局，信息密度高 |
-| 2xl | 1536px+ | 桌面显示器 | 四列布局，最大信息密度 |
+| 断点名称 | 屏幕宽度        | 设备类型   | 布局策略               |
+| -------- | --------------- | ---------- | ---------------------- |
+| xs       | 0px - 640px     | 手机       | 单列布局，垂直堆叠     |
+| sm       | 640px - 768px   | 大屏手机   | 单列布局，优化触摸     |
+| md       | 768px - 1024px  | 平板       | 两列布局，水平排列     |
+| lg       | 1024px - 1280px | 小屏笔记本 | 三列布局，充分利用空间 |
+| xl       | 1280px - 1536px | 大屏笔记本 | 四列布局，信息密度高   |
+| 2xl      | 1536px+         | 桌面显示器 | 四列布局，最大信息密度 |
 
 ### 4.2 响应式布局示例
 
@@ -726,11 +729,11 @@ interface TagInteractionStates {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .order-card {
     padding: 1rem;
   }
-  
+
   .order-actions {
     flex-direction: column;
     gap: 0.5rem;
@@ -743,11 +746,11 @@ interface TagInteractionStates {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
-  
+
   .order-card {
     padding: 1.5rem;
   }
-  
+
   .order-actions {
     flex-direction: row;
     gap: 1rem;
@@ -760,11 +763,11 @@ interface TagInteractionStates {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
-  
+
   .order-card {
     padding: 2rem;
   }
-  
+
   .order-actions {
     flex-direction: row;
     gap: 1.5rem;
@@ -850,7 +853,7 @@ interface TagInteractionStates {
   color: white;
   padding: 8px;
   z-index: 100;
-  
+
   &:focus {
     top: 0;
   }
@@ -862,32 +865,32 @@ interface TagInteractionStates {
 ```typescript
 // 快捷键映射
 const keyboardShortcuts: Record<string, string> = {
-  'Ctrl+S': '保存',
-  'Ctrl+F': '搜索',
-  'Ctrl+N': '新建',
-  'Escape': '关闭/取消',
-  'Enter': '确认',
-  'Delete': '删除',
-  'ArrowUp': '上一项',
-  'ArrowDown': '下一项',
-  'ArrowLeft': '返回',
-  'ArrowRight': '前进'
+  "Ctrl+S": "保存",
+  "Ctrl+F": "搜索",
+  "Ctrl+N": "新建",
+  Escape: "关闭/取消",
+  Enter: "确认",
+  Delete: "删除",
+  ArrowUp: "上一项",
+  ArrowDown: "下一项",
+  ArrowLeft: "返回",
+  ArrowRight: "前进",
 };
 
 // 快捷键处理
 useEffect(() => {
   const handleKeyDown = (event: KeyboardEvent) => {
-    const shortcut = `${event.ctrlKey ? 'Ctrl+' : ''}${event.key}`;
+    const shortcut = `${event.ctrlKey ? "Ctrl+" : ""}${event.key}`;
     const action = keyboardShortcuts[shortcut];
-    
+
     if (action) {
       event.preventDefault();
       executeAction(action);
     }
   };
-  
-  window.addEventListener('keydown', handleKeyDown);
-  return () => window.removeEventListener('keydown', handleKeyDown);
+
+  window.addEventListener("keydown", handleKeyDown);
+  return () => window.removeEventListener("keydown", handleKeyDown);
 }, []);
 ```
 
@@ -981,7 +984,9 @@ useEffect(() => {
 .bad-performance {
   left: 0;
   top: 0;
-  transition: left 0.3s, top 0.3s;
+  transition:
+    left 0.3s,
+    top 0.3s;
 }
 
 /* 优化后：使用transform */
@@ -1020,15 +1025,15 @@ interface VirtualScrollProps<T> {
 
 function VirtualScroll<T>({ items, itemHeight, containerHeight, renderItem }: VirtualScrollProps<T>) {
   const [scrollTop, setScrollTop] = useState(0);
-  
+
   const visibleStart = Math.floor(scrollTop / itemHeight);
   const visibleEnd = Math.min(
     visibleStart + Math.ceil(containerHeight / itemHeight) + 1,
     items.length
   );
-  
+
   const visibleItems = items.slice(visibleStart, visibleEnd);
-  
+
   return (
     <div
       style={{ height: containerHeight, overflow: 'auto' }}
@@ -1055,9 +1060,9 @@ function VirtualScroll<T>({ items, itemHeight, containerHeight, renderItem }: Vi
 function LazyImage({ src, alt, placeholder }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
-  
+
   const imgRef = useRef<HTMLImageElement>(null);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -1067,14 +1072,14 @@ function LazyImage({ src, alt, placeholder }: LazyImageProps) {
       },
       { threshold: 0.1 }
     );
-    
+
     if (imgRef.current) {
       observer.observe(imgRef.current);
     }
-    
+
     return () => observer.disconnect();
   }, []);
-  
+
   return (
     <img
       ref={imgRef}

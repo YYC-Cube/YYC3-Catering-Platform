@@ -10,15 +10,17 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 中间件集成架构文档
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--开发实施
 - 遵循规范：五高五标五化要求
@@ -66,10 +68,7 @@ export interface MiddlewareContext {
 /**
  * 中间件函数
  */
-export type MiddlewareFunction = (
-  context: MiddlewareContext,
-  next: () => Promise<void>
-) => Promise<void>;
+export type MiddlewareFunction = (context: MiddlewareContext, next: () => Promise<void>) => Promise<void>;
 
 /**
  * 中间件配置
@@ -142,9 +141,7 @@ export class MiddlewarePipeline {
    * 移除中间件
    */
   remove(middlewareName: string): this {
-    this.middlewares = this.middlewares.filter(
-      m => m.getConfig().name !== middlewareName
-    );
+    this.middlewares = this.middlewares.filter(m => m.getConfig().name !== middlewareName);
     return this;
   }
 
@@ -196,7 +193,7 @@ export class MiddlewarePipeline {
  * @version 1.0.0
  */
 
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 /**
  * JWT配置
@@ -224,9 +221,9 @@ export interface UserPayload {
 export class JWTAuthMiddleware extends BaseMiddleware {
   constructor(private jwtConfig: JWTConfig) {
     super({
-      name: 'JWT_AUTH',
+      name: "JWT_AUTH",
       priority: 100,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -237,16 +234,16 @@ export class JWTAuthMiddleware extends BaseMiddleware {
     const token = this.extractToken(context.request);
 
     if (!token) {
-      this.sendUnauthorized(context.response, 'No token provided');
+      this.sendUnauthorized(context.response, "No token provided");
       return;
     }
 
     try {
       const payload = await this.verifyToken(token);
-      context.state.set('user', payload);
+      context.state.set("user", payload);
       await next();
     } catch (error) {
-      this.sendUnauthorized(context.response, 'Invalid or expired token');
+      this.sendUnauthorized(context.response, "Invalid or expired token");
     }
   }
 
@@ -254,15 +251,15 @@ export class JWTAuthMiddleware extends BaseMiddleware {
    * 提取令牌
    */
   private extractToken(request: Request): string | null {
-    const authHeader = request.headers.get('Authorization');
+    const authHeader = request.headers.get("Authorization");
 
     if (!authHeader) {
       return null;
     }
 
-    const parts = authHeader.split(' ');
+    const parts = authHeader.split(" ");
 
-    if (parts.length !== 2 || parts[0] !== 'Bearer') {
+    if (parts.length !== 2 || parts[0] !== "Bearer") {
       return null;
     }
 
@@ -279,7 +276,7 @@ export class JWTAuthMiddleware extends BaseMiddleware {
         this.jwtConfig.secret,
         {
           issuer: this.jwtConfig.issuer,
-          audience: this.jwtConfig.audience
+          audience: this.jwtConfig.audience,
         },
         (error, decoded) => {
           if (error) {
@@ -297,10 +294,10 @@ export class JWTAuthMiddleware extends BaseMiddleware {
    */
   private sendUnauthorized(response: Response, message: string): void {
     response.status = 401;
-    response.headers.set('Content-Type', 'application/json');
+    response.headers.set("Content-Type", "application/json");
     response.body = JSON.stringify({
-      error: 'Unauthorized',
-      message
+      error: "Unauthorized",
+      message,
     });
   }
 
@@ -311,7 +308,7 @@ export class JWTAuthMiddleware extends BaseMiddleware {
     return jwt.sign(payload, config.secret, {
       expiresIn: config.expiresIn,
       issuer: config.issuer,
-      audience: config.audience
+      audience: config.audience,
     });
   }
 }
@@ -335,9 +332,9 @@ export interface APIKeyConfig {
 export class APIKeyAuthMiddleware extends BaseMiddleware {
   constructor(private config: APIKeyConfig) {
     super({
-      name: 'API_KEY_AUTH',
+      name: "API_KEY_AUTH",
       priority: 95,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -348,16 +345,16 @@ export class APIKeyAuthMiddleware extends BaseMiddleware {
     const apiKey = this.extractAPIKey(context.request);
 
     if (!apiKey) {
-      this.sendUnauthorized(context.response, 'API Key required');
+      this.sendUnauthorized(context.response, "API Key required");
       return;
     }
 
     if (!this.config.validKeys.has(apiKey)) {
-      this.sendUnauthorized(context.response, 'Invalid API Key');
+      this.sendUnauthorized(context.response, "Invalid API Key");
       return;
     }
 
-    context.state.set('apiKey', apiKey);
+    context.state.set("apiKey", apiKey);
     await next();
   }
 
@@ -388,10 +385,10 @@ export class APIKeyAuthMiddleware extends BaseMiddleware {
    */
   private sendUnauthorized(response: Response, message: string): void {
     response.status = 401;
-    response.headers.set('Content-Type', 'application/json');
+    response.headers.set("Content-Type", "application/json");
     response.body = JSON.stringify({
-      error: 'Unauthorized',
-      message
+      error: "Unauthorized",
+      message,
     });
   }
 }
@@ -426,9 +423,9 @@ export interface RoleConfig {
 export class RoleBasedAuthzMiddleware extends BaseMiddleware {
   constructor(private config: RoleConfig) {
     super({
-      name: 'ROLE_BASED_AUTHZ',
+      name: "ROLE_BASED_AUTHZ",
       priority: 90,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -436,17 +433,17 @@ export class RoleBasedAuthzMiddleware extends BaseMiddleware {
    * 执行授权
    */
   async execute(context: MiddlewareContext, next: () => Promise<void>): Promise<void> {
-    const user = context.state.get('user') as UserPayload;
+    const user = context.state.get("user") as UserPayload;
 
     if (!user) {
-      this.sendForbidden(context.response, 'User not authenticated');
+      this.sendForbidden(context.response, "User not authenticated");
       return;
     }
 
     const hasPermission = this.checkPermission(user.role);
 
     if (!hasPermission) {
-      this.sendForbidden(context.response, 'Insufficient permissions');
+      this.sendForbidden(context.response, "Insufficient permissions");
       return;
     }
 
@@ -471,10 +468,10 @@ export class RoleBasedAuthzMiddleware extends BaseMiddleware {
    */
   private sendForbidden(response: Response, message: string): void {
     response.status = 403;
-    response.headers.set('Content-Type', 'application/json');
+    response.headers.set("Content-Type", "application/json");
     response.body = JSON.stringify({
-      error: 'Forbidden',
-      message
+      error: "Forbidden",
+      message,
     });
   }
 }
@@ -497,9 +494,9 @@ export interface PermissionConfig {
 export class PermissionBasedAuthzMiddleware extends BaseMiddleware {
   constructor(private config: PermissionConfig) {
     super({
-      name: 'PERMISSION_BASED_AUTHZ',
+      name: "PERMISSION_BASED_AUTHZ",
       priority: 85,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -507,17 +504,17 @@ export class PermissionBasedAuthzMiddleware extends BaseMiddleware {
    * 执行授权
    */
   async execute(context: MiddlewareContext, next: () => Promise<void>): Promise<void> {
-    const user = context.state.get('user') as UserPayload;
+    const user = context.state.get("user") as UserPayload;
 
     if (!user) {
-      this.sendForbidden(context.response, 'User not authenticated');
+      this.sendForbidden(context.response, "User not authenticated");
       return;
     }
 
     const hasPermission = this.checkPermission(user.permissions);
 
     if (!hasPermission) {
-      this.sendForbidden(context.response, 'Insufficient permissions');
+      this.sendForbidden(context.response, "Insufficient permissions");
       return;
     }
 
@@ -530,14 +527,10 @@ export class PermissionBasedAuthzMiddleware extends BaseMiddleware {
   private checkPermission(userPermissions: string[]): boolean {
     if (this.config.requireAll) {
       // 需要所有权限
-      return this.config.requiredPermissions.every(permission =>
-        userPermissions.includes(permission)
-      );
+      return this.config.requiredPermissions.every(permission => userPermissions.includes(permission));
     } else {
       // 需要任一权限
-      return this.config.requiredPermissions.some(permission =>
-        userPermissions.includes(permission)
-      );
+      return this.config.requiredPermissions.some(permission => userPermissions.includes(permission));
     }
   }
 
@@ -546,10 +539,10 @@ export class PermissionBasedAuthzMiddleware extends BaseMiddleware {
    */
   private sendForbidden(response: Response, message: string): void {
     response.status = 403;
-    response.headers.set('Content-Type', 'application/json');
+    response.headers.set("Content-Type", "application/json");
     response.body = JSON.stringify({
-      error: 'Forbidden',
-      message
+      error: "Forbidden",
+      message,
     });
   }
 }
@@ -574,10 +567,10 @@ export class PermissionBasedAuthzMiddleware extends BaseMiddleware {
  * 日志级别
  */
 export enum LogLevel {
-  DEBUG = 'DEBUG',
-  INFO = 'INFO',
-  WARN = 'WARN',
-  ERROR = 'ERROR'
+  DEBUG = "DEBUG",
+  INFO = "INFO",
+  WARN = "WARN",
+  ERROR = "ERROR",
 }
 
 /**
@@ -585,7 +578,7 @@ export enum LogLevel {
  */
 export interface LoggingConfig {
   level: LogLevel;
-  format: 'JSON' | 'TEXT';
+  format: "JSON" | "TEXT";
   includeHeaders?: boolean;
   includeBody?: boolean;
   maxBodySize?: number;
@@ -614,9 +607,9 @@ export interface LogEntry {
 export class LoggingMiddleware extends BaseMiddleware {
   constructor(private config: LoggingConfig) {
     super({
-      name: 'LOGGING',
+      name: "LOGGING",
       priority: 50,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -645,11 +638,7 @@ export class LoggingMiddleware extends BaseMiddleware {
   /**
    * 创建日志条目
    */
-  private createLogEntry(
-    context: MiddlewareContext,
-    duration: number,
-    error?: any
-  ): LogEntry {
+  private createLogEntry(context: MiddlewareContext, duration: number, error?: any): LogEntry {
     const request = context.request;
     const response = context.response;
 
@@ -659,17 +648,15 @@ export class LoggingMiddleware extends BaseMiddleware {
       method: request.method,
       url: request.url,
       statusCode: response.status,
-      duration
+      duration,
     };
 
     // 添加IP地址
-    const ip = request.headers.get('x-forwarded-for') || 
-               request.headers.get('x-real-ip') ||
-               'unknown';
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
     entry.ip = ip;
 
     // 添加User-Agent
-    entry.userAgent = request.headers.get('user-agent') || undefined;
+    entry.userAgent = request.headers.get("user-agent") || undefined;
 
     // 添加请求头
     if (this.config.includeHeaders) {
@@ -680,9 +667,7 @@ export class LoggingMiddleware extends BaseMiddleware {
     if (this.config.includeBody && request.body) {
       const bodySize = this.config.maxBodySize || 1024;
       const bodyStr = JSON.stringify(request.body);
-      entry.body = bodyStr.length > bodySize 
-        ? bodyStr.substring(0, bodySize) + '...' 
-        : request.body;
+      entry.body = bodyStr.length > bodySize ? bodyStr.substring(0, bodySize) + "..." : request.body;
     }
 
     // 添加错误信息
@@ -710,12 +695,12 @@ export class LoggingMiddleware extends BaseMiddleware {
    * 记录日志
    */
   private log(entry: LogEntry): void {
-    if (this.config.format === 'JSON') {
+    if (this.config.format === "JSON") {
       console.log(JSON.stringify(entry));
     } else {
       const message = `[${entry.timestamp}] ${entry.level} ${entry.method} ${entry.url} ${entry.statusCode} ${entry.duration}ms`;
       console.log(message);
-      
+
       if (entry.error) {
         console.error(entry.error);
       }
@@ -743,11 +728,11 @@ export class LoggingMiddleware extends BaseMiddleware {
  * 错误类型
  */
 export enum ErrorType {
-  VALIDATION_ERROR = 'VALIDATION_ERROR',
-  AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR',
-  AUTHORIZATION_ERROR = 'AUTHORIZATION_ERROR',
-  NOT_FOUND_ERROR = 'NOT_FOUND_ERROR',
-  INTERNAL_ERROR = 'INTERNAL_ERROR'
+  VALIDATION_ERROR = "VALIDATION_ERROR",
+  AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR",
+  AUTHORIZATION_ERROR = "AUTHORIZATION_ERROR",
+  NOT_FOUND_ERROR = "NOT_FOUND_ERROR",
+  INTERNAL_ERROR = "INTERNAL_ERROR",
 }
 
 /**
@@ -761,7 +746,7 @@ export class AppError extends Error {
     public details?: any
   ) {
     super(message);
-    this.name = 'AppError';
+    this.name = "AppError";
   }
 }
 
@@ -785,9 +770,9 @@ export interface ErrorResponse {
 export class ErrorHandlingMiddleware extends BaseMiddleware {
   constructor() {
     super({
-      name: 'ERROR_HANDLING',
+      name: "ERROR_HANDLING",
       priority: 10,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -814,11 +799,7 @@ export class ErrorHandlingMiddleware extends BaseMiddleware {
     if (error instanceof AppError) {
       appError = error;
     } else {
-      appError = new AppError(
-        ErrorType.INTERNAL_ERROR,
-        'An unexpected error occurred',
-        500
-      );
+      appError = new AppError(ErrorType.INTERNAL_ERROR, "An unexpected error occurred", 500);
     }
 
     const errorResponse: ErrorResponse = {
@@ -828,27 +809,27 @@ export class ErrorHandlingMiddleware extends BaseMiddleware {
         statusCode: appError.statusCode,
         details: appError.details,
         timestamp: new Date().toISOString(),
-        path: request.url
-      }
+        path: request.url,
+      },
     };
 
     // 在开发环境包含堆栈跟踪
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       errorResponse.error.details = {
         ...errorResponse.error.details,
-        stack: error.stack
+        stack: error.stack,
       };
     }
 
     response.status = appError.statusCode;
-    response.headers.set('Content-Type', 'application/json');
+    response.headers.set("Content-Type", "application/json");
     response.body = JSON.stringify(errorResponse);
 
     // 记录错误
-    console.error('Error:', {
+    console.error("Error:", {
       type: appError.type,
       message: appError.message,
-      stack: error.stack
+      stack: error.stack,
     });
   }
 
@@ -856,45 +837,28 @@ export class ErrorHandlingMiddleware extends BaseMiddleware {
    * 创建验证错误
    */
   static createValidationError(message: string, details?: any): AppError {
-    return new AppError(
-      ErrorType.VALIDATION_ERROR,
-      message,
-      400,
-      details
-    );
+    return new AppError(ErrorType.VALIDATION_ERROR, message, 400, details);
   }
 
   /**
    * 创建认证错误
    */
-  static createAuthenticationError(message: string = 'Authentication failed'): AppError {
-    return new AppError(
-      ErrorType.AUTHENTICATION_ERROR,
-      message,
-      401
-    );
+  static createAuthenticationError(message: string = "Authentication failed"): AppError {
+    return new AppError(ErrorType.AUTHENTICATION_ERROR, message, 401);
   }
 
   /**
    * 创建授权错误
    */
-  static createAuthorizationError(message: string = 'Authorization failed'): AppError {
-    return new AppError(
-      ErrorType.AUTHORIZATION_ERROR,
-      message,
-      403
-    );
+  static createAuthorizationError(message: string = "Authorization failed"): AppError {
+    return new AppError(ErrorType.AUTHORIZATION_ERROR, message, 403);
   }
 
   /**
    * 创建未找到错误
    */
-  static createNotFoundError(message: string = 'Resource not found'): AppError {
-    return new AppError(
-      ErrorType.NOT_FOUND_ERROR,
-      message,
-      404
-    );
+  static createNotFoundError(message: string = "Resource not found"): AppError {
+    return new AppError(ErrorType.NOT_FOUND_ERROR, message, 404);
   }
 }
 ```
@@ -946,7 +910,7 @@ export class MemoryRateLimitStorage implements RateLimitStorage {
     if (!entry || now > entry.resetTime) {
       const newEntry = {
         count: 1,
-        resetTime: now + windowMs
+        resetTime: now + windowMs,
       };
       this.counters.set(key, newEntry);
       return 1;
@@ -970,9 +934,9 @@ export class RateLimitMiddleware extends BaseMiddleware {
     private storage: RateLimitStorage = new MemoryRateLimitStorage()
   ) {
     super({
-      name: 'RATE_LIMIT',
+      name: "RATE_LIMIT",
       priority: 80,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -984,8 +948,11 @@ export class RateLimitMiddleware extends BaseMiddleware {
     const currentCount = await this.storage.increment(key, this.config.windowMs);
 
     // 添加限流信息到响应头
-    context.response.headers.set('X-RateLimit-Limit', this.config.maxRequests.toString());
-    context.response.headers.set('X-RateLimit-Remaining', Math.max(0, this.config.maxRequests - currentCount).toString());
+    context.response.headers.set("X-RateLimit-Limit", this.config.maxRequests.toString());
+    context.response.headers.set(
+      "X-RateLimit-Remaining",
+      Math.max(0, this.config.maxRequests - currentCount).toString()
+    );
 
     if (currentCount > this.config.maxRequests) {
       this.sendTooManyRequests(context.response);
@@ -1016,9 +983,7 @@ export class RateLimitMiddleware extends BaseMiddleware {
     }
 
     // 默认使用IP地址
-    const ip = request.headers.get('x-forwarded-for') || 
-               request.headers.get('x-real-ip') ||
-               'unknown';
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
     return `rate-limit:${ip}`;
   }
 
@@ -1027,12 +992,12 @@ export class RateLimitMiddleware extends BaseMiddleware {
    */
   private sendTooManyRequests(response: Response): void {
     response.status = 429;
-    response.headers.set('Content-Type', 'application/json');
-    response.headers.set('Retry-After', Math.ceil(this.config.windowMs / 1000).toString());
+    response.headers.set("Content-Type", "application/json");
+    response.headers.set("Retry-After", Math.ceil(this.config.windowMs / 1000).toString());
     response.body = JSON.stringify({
-      error: 'Too Many Requests',
+      error: "Too Many Requests",
       message: `Rate limit exceeded. Please try again later.`,
-      retryAfter: Math.ceil(this.config.windowMs / 1000)
+      retryAfter: Math.ceil(this.config.windowMs / 1000),
     });
   }
 }
@@ -1096,7 +1061,7 @@ export class MemoryCacheStorage implements CacheStorage {
   async set(key: string, value: any, ttl: number): Promise<void> {
     this.cache.set(key, {
       value,
-      expiry: Date.now() + ttl * 1000
+      expiry: Date.now() + ttl * 1000,
     });
   }
 
@@ -1114,9 +1079,9 @@ export class CacheMiddleware extends BaseMiddleware {
     private storage: CacheStorage = new MemoryCacheStorage()
   ) {
     super({
-      name: 'CACHE',
+      name: "CACHE",
       priority: 70,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -1134,7 +1099,7 @@ export class CacheMiddleware extends BaseMiddleware {
     }
 
     // 只缓存GET请求
-    if (request.method !== 'GET') {
+    if (request.method !== "GET") {
       await next();
       return;
     }
@@ -1147,7 +1112,7 @@ export class CacheMiddleware extends BaseMiddleware {
       response.status = cached.status;
       response.headers = new Headers(cached.headers);
       response.body = cached.body;
-      response.headers.set('X-Cache', 'HIT');
+      response.headers.set("X-Cache", "HIT");
       return;
     }
 
@@ -1156,17 +1121,21 @@ export class CacheMiddleware extends BaseMiddleware {
 
     // 缓存成功的GET请求
     if (response.status === 200) {
-      await this.storage.set(key, {
-        status: response.status,
-        headers: Object.fromEntries(response.headers.entries()),
-        body: response.body
-      }, this.config.ttl);
+      await this.storage.set(
+        key,
+        {
+          status: response.status,
+          headers: Object.fromEntries(response.headers.entries()),
+          body: response.body,
+        },
+        this.config.ttl
+      );
 
-      response.headers.set('X-Cache', 'MISS');
+      response.headers.set("X-Cache", "MISS");
 
       // 添加Cache-Control头
       if (this.config.cacheControl) {
-        response.headers.set('Cache-Control', `public, max-age=${this.config.ttl}`);
+        response.headers.set("Cache-Control", `public, max-age=${this.config.ttl}`);
       }
     }
   }
@@ -1218,9 +1187,9 @@ export interface CORSConfig {
 export class CORSMiddleware extends BaseMiddleware {
   constructor(private config: CORSConfig) {
     super({
-      name: 'CORS',
+      name: "CORS",
       priority: 60,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -1231,7 +1200,7 @@ export class CORSMiddleware extends BaseMiddleware {
     const request = context.request;
     const response = context.response;
 
-    const origin = request.headers.get('Origin');
+    const origin = request.headers.get("Origin");
 
     if (!origin) {
       await next();
@@ -1246,33 +1215,33 @@ export class CORSMiddleware extends BaseMiddleware {
     }
 
     // 设置CORS头
-    response.headers.set('Access-Control-Allow-Origin', allowedOrigin);
+    response.headers.set("Access-Control-Allow-Origin", allowedOrigin);
 
     // 设置允许的方法
-    const methods = this.config.methods || ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'];
-    response.headers.set('Access-Control-Allow-Methods', methods.join(', '));
+    const methods = this.config.methods || ["GET", "POST", "PUT", "DELETE", "OPTIONS"];
+    response.headers.set("Access-Control-Allow-Methods", methods.join(", "));
 
     // 设置允许的请求头
-    const allowedHeaders = this.config.allowedHeaders || request.headers.get('Access-Control-Request-Headers') || '*';
-    response.headers.set('Access-Control-Allow-Headers', allowedHeaders);
+    const allowedHeaders = this.config.allowedHeaders || request.headers.get("Access-Control-Request-Headers") || "*";
+    response.headers.set("Access-Control-Allow-Headers", allowedHeaders);
 
     // 设置暴露的响应头
     if (this.config.exposedHeaders) {
-      response.headers.set('Access-Control-Expose-Headers', this.config.exposedHeaders.join(', '));
+      response.headers.set("Access-Control-Expose-Headers", this.config.exposedHeaders.join(", "));
     }
 
     // 设置凭证
     if (this.config.credentials) {
-      response.headers.set('Access-Control-Allow-Credentials', 'true');
+      response.headers.set("Access-Control-Allow-Credentials", "true");
     }
 
     // 设置预检请求缓存时间
     if (this.config.maxAge) {
-      response.headers.set('Access-Control-Max-Age', this.config.maxAge.toString());
+      response.headers.set("Access-Control-Max-Age", this.config.maxAge.toString());
     }
 
     // 处理预检请求
-    if (request.method === 'OPTIONS') {
+    if (request.method === "OPTIONS") {
       response.status = 204;
       return;
     }
@@ -1284,7 +1253,7 @@ export class CORSMiddleware extends BaseMiddleware {
    * 检查origin是否允许
    */
   private isOriginAllowed(origin: string): string | boolean {
-    if (typeof this.config.origin === 'function') {
+    if (typeof this.config.origin === "function") {
       return this.config.origin(origin);
     }
 
@@ -1292,8 +1261,8 @@ export class CORSMiddleware extends BaseMiddleware {
       return this.config.origin.includes(origin) ? origin : false;
     }
 
-    if (this.config.origin === '*') {
-      return '*';
+    if (this.config.origin === "*") {
+      return "*";
     }
 
     return this.config.origin === origin ? origin : false;
@@ -1316,7 +1285,7 @@ export class CORSMiddleware extends BaseMiddleware {
  * @version 1.0.0
  */
 
-import { z } from 'zod';
+import { z } from "zod";
 
 /**
  * 验证配置
@@ -1333,9 +1302,9 @@ export interface ValidationConfig {
 export class ValidationMiddleware extends BaseMiddleware {
   constructor(private config: ValidationConfig) {
     super({
-      name: 'VALIDATION',
+      name: "VALIDATION",
       priority: 75,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -1351,12 +1320,12 @@ export class ValidationMiddleware extends BaseMiddleware {
       try {
         const body = await this.parseBody(request);
         const validated = this.config.body.parse(body);
-        context.state.set('validatedBody', validated);
+        context.state.set("validatedBody", validated);
       } catch (error) {
         if (error instanceof z.ZodError) {
           errors.push({
-            location: 'body',
-            errors: error.errors
+            location: "body",
+            errors: error.errors,
           });
         }
       }
@@ -1368,12 +1337,12 @@ export class ValidationMiddleware extends BaseMiddleware {
         const url = new URL(request.url);
         const query = Object.fromEntries(url.searchParams.entries());
         const validated = this.config.query.parse(query);
-        context.state.set('validatedQuery', validated);
+        context.state.set("validatedQuery", validated);
       } catch (error) {
         if (error instanceof z.ZodError) {
           errors.push({
-            location: 'query',
-            errors: error.errors
+            location: "query",
+            errors: error.errors,
           });
         }
       }
@@ -1384,12 +1353,12 @@ export class ValidationMiddleware extends BaseMiddleware {
       try {
         const params = this.extractParams(request.url);
         const validated = this.config.params.parse(params);
-        context.state.set('validatedParams', validated);
+        context.state.set("validatedParams", validated);
       } catch (error) {
         if (error instanceof z.ZodError) {
           errors.push({
-            location: 'params',
-            errors: error.errors
+            location: "params",
+            errors: error.errors,
           });
         }
       }
@@ -1408,13 +1377,13 @@ export class ValidationMiddleware extends BaseMiddleware {
    * 解析请求体
    */
   private async parseBody(request: Request): Promise<any> {
-    const contentType = request.headers.get('Content-Type') || '';
+    const contentType = request.headers.get("Content-Type") || "";
 
-    if (contentType.includes('application/json')) {
+    if (contentType.includes("application/json")) {
       return await request.json();
     }
 
-    if (contentType.includes('application/x-www-form-urlencoded')) {
+    if (contentType.includes("application/x-www-form-urlencoded")) {
       const formData = await request.formData();
       return Object.fromEntries(formData.entries());
     }
@@ -1427,7 +1396,7 @@ export class ValidationMiddleware extends BaseMiddleware {
    */
   private extractParams(url: string): any {
     // 简化实现，实际应该从路由中提取
-    const parts = url.split('/').filter(Boolean);
+    const parts = url.split("/").filter(Boolean);
     return { parts };
   }
 
@@ -1436,11 +1405,11 @@ export class ValidationMiddleware extends BaseMiddleware {
    */
   private sendValidationError(response: Response, errors: any[]): void {
     response.status = 400;
-    response.headers.set('Content-Type', 'application/json');
+    response.headers.set("Content-Type", "application/json");
     response.body = JSON.stringify({
-      error: 'Validation Error',
-      message: 'Request validation failed',
-      details: errors
+      error: "Validation Error",
+      message: "Request validation failed",
+      details: errors,
     });
   }
 }
@@ -1498,9 +1467,9 @@ export interface PerformanceMonitoringConfig {
 export class PerformanceMonitoringMiddleware extends BaseMiddleware {
   constructor(private config: PerformanceMonitoringConfig) {
     super({
-      name: 'PERFORMANCE_MONITORING',
+      name: "PERFORMANCE_MONITORING",
       priority: 40,
-      enabled: true
+      enabled: true,
     });
   }
 
@@ -1555,7 +1524,7 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
       method: request.method,
       url: request.url,
       statusCode: response.status,
-      duration
+      duration,
     };
 
     // 收集内存使用
@@ -1565,7 +1534,7 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
         rss: memoryUsage.rss,
         heapTotal: memoryUsage.heapTotal,
         heapUsed: memoryUsage.heapUsed,
-        external: memoryUsage.external
+        external: memoryUsage.external,
       };
     }
 
@@ -1574,7 +1543,7 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
       const cpuUsage = process.cpuUsage(startCpuUsage);
       metrics.cpuUsage = {
         user: cpuUsage.user,
-        system: cpuUsage.system
+        system: cpuUsage.system,
       };
     }
 
@@ -1599,7 +1568,7 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
         maxDuration: 0,
         minDuration: 0,
         successRate: 0,
-        errorRate: 0
+        errorRate: 0,
       };
     }
 
@@ -1613,7 +1582,7 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
       maxDuration: Math.max(...durations),
       minDuration: Math.min(...durations),
       successRate: (successCount / metrics.length) * 100,
-      errorRate: (errorCount / metrics.length) * 100
+      errorRate: (errorCount / metrics.length) * 100,
     };
   }
 }
@@ -1623,13 +1592,10 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1652,8 +1618,6 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1687,8 +1651,6 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1711,46 +1673,46 @@ export class PerformanceMonitoringMiddleware extends BaseMiddleware {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1763,6 +1725,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1772,6 +1735,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1781,6 +1745,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1797,16 +1762,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1816,13 +1782,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1831,6 +1795,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1849,6 +1814,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1864,6 +1830,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1883,28 +1850,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1913,44 +1879,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1964,13 +1928,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1979,18 +1943,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2000,37 +1967,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2039,28 +2009,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2069,21 +2037,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2092,10 +2062,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2121,16 +2088,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2139,26 +2106,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 最佳实践
 
@@ -2167,21 +2129,23 @@ logger.error('Database connection failed', { error: error.message });
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2190,10 +2154,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2219,16 +2180,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2237,25 +2198,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

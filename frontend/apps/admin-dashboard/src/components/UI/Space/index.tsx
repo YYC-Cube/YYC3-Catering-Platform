@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
 
 export const Space = defineComponent({
   name: 'Space',
@@ -45,13 +45,13 @@ export const Space = defineComponent({
   },
   setup(props, { attrs, slots }) {
     const spaceClasses = computed(() => {
-      const classes = ['flex']
+      const classes = ['flex'];
 
       const directionClasses = {
         horizontal: 'flex-row',
         vertical: 'flex-col',
-      }
-      classes.push(directionClasses[props.direction])
+      };
+      classes.push(directionClasses[props.direction]);
 
       const alignClasses = {
         start: 'items-start',
@@ -59,8 +59,8 @@ export const Space = defineComponent({
         end: 'items-end',
         baseline: 'items-baseline',
         stretch: 'items-stretch',
-      }
-      classes.push(alignClasses[props.align])
+      };
+      classes.push(alignClasses[props.align]);
 
       const justifyClasses = {
         start: 'justify-start',
@@ -69,58 +69,51 @@ export const Space = defineComponent({
         'space-between': 'justify-between',
         'space-around': 'justify-around',
         'space-evenly': 'justify-evenly',
-      }
-      classes.push(justifyClasses[props.justify])
+      };
+      classes.push(justifyClasses[props.justify]);
 
       if (props.wrap) {
-        classes.push('flex-wrap')
+        classes.push('flex-wrap');
       }
 
-      return classes.join(' ')
-    })
+      return classes.join(' ');
+    });
 
     const gapStyle = computed(() => {
       if (Array.isArray(props.size)) {
-        const [rowGap, colGap] = props.size
-        const rowGapValue = typeof rowGap === 'number' ? `${rowGap}px` : rowGap
-        const colGapValue = typeof colGap === 'number' ? `${colGap}px` : colGap
+        const [rowGap, colGap] = props.size;
+        const rowGapValue = typeof rowGap === 'number' ? `${rowGap}px` : rowGap;
+        const colGapValue = typeof colGap === 'number' ? `${colGap}px` : colGap;
         return {
-          gap: props.direction === 'horizontal' 
-            ? `0 ${colGapValue}` 
-            : `${rowGapValue} 0`,
-        }
+          gap: props.direction === 'horizontal' ? `0 ${colGapValue}` : `${rowGapValue} 0`,
+        };
       }
-      const gapValue = typeof props.size === 'number' ? `${props.size}px` : props.size
+      const gapValue = typeof props.size === 'number' ? `${props.size}px` : props.size;
       return {
         gap: props.direction === 'horizontal' ? `0 ${gapValue}` : `${gapValue} 0`,
-      }
-    })
+      };
+    });
 
     const renderChildren = () => {
-      const children = slots.default?.() || []
-      const result: any[] = []
+      const children = slots.default?.() || [];
+      const result: any[] = [];
 
       children.forEach((child, index) => {
-        result.push(child)
+        result.push(child);
 
         if (props.split && index < children.length - 1) {
-          const splitContent = typeof props.split === 'string' ? props.split : '|'
-          result.push(
-            <span class="text-neutral-300 mx-2">{splitContent}</span>
-          )
+          const splitContent = typeof props.split === 'string' ? props.split : '|';
+          result.push(<span class="text-neutral-300 mx-2">{splitContent}</span>);
         }
-      })
+      });
 
-      return result
-    }
+      return result;
+    };
 
     return () => (
-      <div
-        class={cn(spaceClasses.value, props.className)}
-        style={gapStyle.value}
-      >
+      <div class={cn(spaceClasses.value, props.className)} style={gapStyle.value}>
         {renderChildren()}
       </div>
-    )
+    );
   },
-})
+});

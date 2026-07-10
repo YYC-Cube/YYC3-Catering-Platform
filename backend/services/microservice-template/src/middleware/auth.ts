@@ -48,26 +48,26 @@ export const authenticate = (req: Request, res: Response, next: NextFunction): v
   try {
     // 从请求头获取令牌
     const authHeader = req.header('Authorization');
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       logger.warn('Missing or invalid Authorization header');
       throw new UnauthorizedException('未提供有效的身份验证令牌');
     }
-    
+
     // 提取令牌
     const token = authHeader.replace('Bearer ', '');
-    
+
     try {
       // 验证令牌
       const decoded = jwt.verify(token, config.auth.jwtSecret, { algorithms: ['HS256'] }) as JwtPayload;
-      
+
       // 将用户信息添加到请求对象
       req.user = {
         userId: decoded.userId,
         email: decoded.email,
         role: decoded.role,
       };
-      
+
       next();
     } catch (error: any) {
       if (error.name === 'TokenExpiredError') {
@@ -96,13 +96,15 @@ export const authorize = (...roles: string[]) => {
       if (!req.user) {
         throw new UnauthorizedException('未通过身份验证');
       }
-      
+
       // 检查用户角色是否在允许的角色列表中
       if (!roles.includes(req.user.role)) {
-        logger.warn(`User ${req.user.userId} with role ${req.user.role} tried to access a resource that requires one of: ${roles.join(', ')}`);
+        logger.warn(
+          `User ${req.user.userId} with role ${req.user.role} tried to access a resource that requires one of: ${roles.join(', ')}`
+        );
         throw new ForbiddenException('没有权限访问此资源');
       }
-      
+
       next();
     } catch (error) {
       next(error);
@@ -122,7 +124,7 @@ export const generateToken = (userId: string, email: string, role: string): stri
     email,
     role,
   };
-  
+
   return jwt.sign(payload, config.auth.jwtSecret, {
     expiresIn: config.auth.jwtExpiresIn,
     algorithm: 'HS256',

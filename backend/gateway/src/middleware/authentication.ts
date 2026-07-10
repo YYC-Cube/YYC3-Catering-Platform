@@ -107,7 +107,7 @@ export class AuthenticationMiddleware {
       // 验证JWT令牌
       const secret = await getJwtSecret(this.config);
       const decoded = jwt.verify(token, secret, {
-        algorithms: this.config.jwt.algorithms as jwt.Algorithm[]
+        algorithms: this.config.jwt.algorithms as jwt.Algorithm[],
       }) as any;
 
       // 验证签发者和受众
@@ -131,14 +131,14 @@ export class AuthenticationMiddleware {
         roles: decoded.roles || [],
         permissions: decoded.permissions || [],
         iat: decoded.iat,
-        exp: decoded.exp
+        exp: decoded.exp,
       };
 
       // 添加请求上下文
       req.context = {
         userId: decoded.sub,
         authenticated: true,
-        authTime: Date.now()
+        authTime: Date.now(),
       };
 
       // 记录认证成功
@@ -149,19 +149,19 @@ export class AuthenticationMiddleware {
         email: decoded.email,
         roles: decoded.roles || [],
         path: req.path,
-        method: req.method
+        method: req.method,
       });
 
       next();
     } catch (error) {
       const ip = req.ip || req.socket.remoteAddress || '';
-      
+
       if (error instanceof jwt.TokenExpiredError) {
         logger.warn('Authentication failed: Token expired', {
           ip,
           path: req.path,
           method: req.method,
-          error: error.message
+          error: error.message,
         });
         return this.unauthorized(res, 'Token has expired');
       } else if (error instanceof jwt.JsonWebTokenError) {
@@ -169,7 +169,7 @@ export class AuthenticationMiddleware {
           ip,
           path: req.path,
           method: req.method,
-          error: error.message
+          error: error.message,
         });
         return this.unauthorized(res, 'Invalid token');
       } else {
@@ -178,7 +178,7 @@ export class AuthenticationMiddleware {
           path: req.path,
           method: req.method,
           error: error instanceof Error ? error.message : 'Unknown error',
-          stack: error instanceof Error ? error.stack : undefined
+          stack: error instanceof Error ? error.stack : undefined,
         });
         return this.unauthorized(res, 'Authentication failed');
       }
@@ -196,14 +196,14 @@ export class AuthenticationMiddleware {
           ip,
           path: req.path,
           method: req.method,
-          requiredPermissions: permissions
+          requiredPermissions: permissions,
         });
         return this.unauthorized(res, 'Authentication required');
       }
 
       const userPermissions = req.user.permissions || [];
-      const hasPermission = permissions.every(permission =>
-        userPermissions.includes(permission) || userPermissions.includes('*')
+      const hasPermission = permissions.every(
+        permission => userPermissions.includes(permission) || userPermissions.includes('*'),
       );
 
       if (!hasPermission) {
@@ -215,7 +215,7 @@ export class AuthenticationMiddleware {
           path: req.path,
           method: req.method,
           requiredPermissions: permissions,
-          userPermissions
+          userPermissions,
         });
         return this.forbidden(res, 'Insufficient permissions');
       }
@@ -228,7 +228,7 @@ export class AuthenticationMiddleware {
         email: req.user.email,
         path: req.path,
         method: req.method,
-        checkedPermissions: permissions
+        checkedPermissions: permissions,
       });
 
       next();
@@ -246,15 +246,13 @@ export class AuthenticationMiddleware {
           ip,
           path: req.path,
           method: req.method,
-          requiredRoles: roles
+          requiredRoles: roles,
         });
         return this.unauthorized(res, 'Authentication required');
       }
 
       const userRoles = req.user.roles || [];
-      const hasRole = roles.some(role =>
-        userRoles.includes(role) || userRoles.includes('admin')
-      );
+      const hasRole = roles.some(role => userRoles.includes(role) || userRoles.includes('admin'));
 
       if (!hasRole) {
         const ip = req.ip || req.socket.remoteAddress || '';
@@ -265,7 +263,7 @@ export class AuthenticationMiddleware {
           path: req.path,
           method: req.method,
           requiredRoles: roles,
-          userRoles
+          userRoles,
         });
         return this.forbidden(res, 'Insufficient role privileges');
       }
@@ -278,7 +276,7 @@ export class AuthenticationMiddleware {
         email: req.user.email,
         path: req.path,
         method: req.method,
-        checkedRoles: roles
+        checkedRoles: roles,
       });
 
       next();
@@ -310,7 +308,7 @@ export class AuthenticationMiddleware {
     try {
       const secret = await getJwtSecret(this.config);
       const decoded = jwt.verify(token, secret, {
-        algorithms: this.config.jwt.algorithms as jwt.Algorithm[]
+        algorithms: this.config.jwt.algorithms as jwt.Algorithm[],
       }) as any;
 
       // 验证令牌
@@ -327,13 +325,13 @@ export class AuthenticationMiddleware {
         id: decoded.sub,
         email: decoded.email,
         roles: decoded.roles || [],
-        permissions: decoded.permissions || []
+        permissions: decoded.permissions || [],
       };
 
       req.context = {
         userId: decoded.sub,
         authenticated: true,
-        authTime: Date.now()
+        authTime: Date.now(),
       };
 
       next();
@@ -358,7 +356,7 @@ export class AuthenticationMiddleware {
       try {
         // 创建JWTUtils实例
         const jwtUtils = new JWTUtils(this.config.jwt);
-        
+
         // 验证刷新令牌
         const decoded = await jwtUtils.verifyRefreshToken(refreshToken);
 
@@ -391,10 +389,10 @@ export class AuthenticationMiddleware {
         success: false,
         error: 'Internal server error',
         code: 'INTERNAL_SERVER_ERROR',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
-  };
+  }
 
   /**
    * 检查路径是否需要认证
@@ -418,7 +416,7 @@ export class AuthenticationMiddleware {
       success: false,
       error: message,
       code: 'UNAUTHORIZED',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 
@@ -430,7 +428,7 @@ export class AuthenticationMiddleware {
       success: false,
       error: message,
       code: 'FORBIDDEN',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 }
@@ -469,17 +467,14 @@ export class JWTUtils {
       audience: this.config.audience,
       expiresIn: '2h',
       iat: now,
-      jwtid: this.generateJTI()
+      jwtid: this.generateJTI(),
     });
   }
 
   /**
    * 生成刷新令牌
    */
-  async generateRefreshToken(payload: {
-    sub: string;
-    type: 'refresh';
-  }): Promise<string> {
+  async generateRefreshToken(payload: { sub: string; type: 'refresh' }): Promise<string> {
     // 创建临时配置对象以符合getJwtSecret的参数要求
     const tempConfig = {
       jwt: this.config,
@@ -490,7 +485,7 @@ export class JWTUtils {
       algorithm: this.config.algorithms[0] as jwt.Algorithm,
       issuer: this.config.issuer,
       audience: this.config.audience,
-      expiresIn: '7d'
+      expiresIn: '7d',
     });
   }
 
@@ -508,7 +503,7 @@ export class JWTUtils {
       return jwt.verify(token, secret, {
         algorithms: this.config.algorithms as jwt.Algorithm[],
         issuer: this.config.issuer,
-        audience: this.config.audience
+        audience: this.config.audience,
       });
     } catch (error) {
       throw new Error('Invalid refresh token');

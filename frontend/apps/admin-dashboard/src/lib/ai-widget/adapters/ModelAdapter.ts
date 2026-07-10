@@ -19,10 +19,7 @@ export abstract class ModelAdapter {
   /**
    * 流式生成
    */
-  abstract streamGenerate(
-    prompt: string,
-    onChunk: (chunk: string) => void
-  ): Promise<void>;
+  abstract streamGenerate(prompt: string, onChunk: (chunk: string) => void): Promise<void>;
 
   /**
    * 获取模型信息
@@ -33,7 +30,7 @@ export abstract class ModelAdapter {
    * 格式化工具为模型格式
    */
   protected formatTools(tools: AITool[]): any[] {
-    return tools.map((tool) => ({
+    return tools.map(tool => ({
       type: 'function',
       function: {
         name: tool.name,

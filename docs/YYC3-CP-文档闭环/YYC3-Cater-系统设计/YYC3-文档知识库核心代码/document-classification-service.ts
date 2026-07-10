@@ -135,7 +135,7 @@ class DocumentClassificationService {
 
   constructor() {
     // 初始化默认规则
-    this.defaultRules.forEach((rule) => {
+    this.defaultRules.forEach(rule => {
       this.rules.set(rule.id, rule);
     });
   }
@@ -148,7 +148,7 @@ class DocumentClassificationService {
    */
   async classifyDocument(
     documentId: string,
-    method: 'rule-based' | 'ml-based' | 'hybrid' = 'hybrid'
+    method: 'rule-based' | 'ml-based' | 'hybrid' = 'hybrid',
   ): Promise<ClassificationResult> {
     const startTime = Date.now();
 
@@ -204,7 +204,7 @@ class DocumentClassificationService {
    */
   async classifyBatchDocuments(
     documentIds: string[],
-    method: 'rule-based' | 'ml-based' | 'hybrid' = 'hybrid'
+    method: 'rule-based' | 'ml-based' | 'hybrid' = 'hybrid',
   ): Promise<ClassificationResult[]> {
     const results: ClassificationResult[] = [];
 
@@ -230,7 +230,7 @@ class DocumentClassificationService {
     const usedRules: string[] = [];
 
     // 获取启用的规则
-    const enabledRules = Array.from(this.rules.values()).filter((rule) => rule.enabled);
+    const enabledRules = Array.from(this.rules.values()).filter(rule => rule.enabled);
 
     // 计算每个分类的分数
     for (const rule of enabledRules) {
@@ -306,11 +306,11 @@ class DocumentClassificationService {
     // 由于这是一个示例，我们使用模拟实现
 
     // 模拟ML分类延迟
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await new Promise(resolve => setTimeout(resolve, 200));
 
     // 模拟分类结果
     const categories = ['技术文档', '产品文档', '运营文档', '管理文档', '培训文档'];
-    const scores = categories.map((category) => ({
+    const scores = categories.map(category => ({
       category,
       score: Math.random(),
     }));
@@ -452,7 +452,7 @@ class DocumentClassificationService {
 
     // 统计分类信息
     const totalDocuments = allDocuments.length;
-    const classifiedDocuments = allDocuments.filter((doc) => doc.category && doc.category !== '未分类').length;
+    const classifiedDocuments = allDocuments.filter(doc => doc.category && doc.category !== '未分类').length;
     const unclassifiedDocuments = totalDocuments - classifiedDocuments;
     const coverageRate = totalDocuments > 0 ? classifiedDocuments / totalDocuments : 0;
 
@@ -489,11 +489,13 @@ class DocumentClassificationService {
    * @param documentId 文档ID
    * @returns 分类建议
    */
-  async getClassificationSuggestions(documentId: string): Promise<Array<{
-    category: string;
-    confidence: number;
-    reasons: string[];
-  }>> {
+  async getClassificationSuggestions(documentId: string): Promise<
+    Array<{
+      category: string;
+      confidence: number;
+      reasons: string[];
+    }>
+  > {
     const document = await documentRepository.findById(documentId);
     if (!document) {
       throw new Error('Document not found');
@@ -506,7 +508,7 @@ class DocumentClassificationService {
     }> = [];
 
     // 基于规则生成建议
-    const enabledRules = Array.from(this.rules.values()).filter((rule) => rule.enabled);
+    const enabledRules = Array.from(this.rules.values()).filter(rule => rule.enabled);
 
     for (const rule of enabledRules) {
       const matchedKeywords: string[] = [];

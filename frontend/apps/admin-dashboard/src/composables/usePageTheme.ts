@@ -3,8 +3,8 @@
  * 根据当前路由动态应用对应的主题色
  */
 
-import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 // 菜单主题色映射
 const MENU_THEME_MAP = {
@@ -57,8 +57,8 @@ const MENU_THEME_MAP = {
   '/members': 'var(--color-success)',
   '/marketing': 'var(--color-secondary)',
   '/subscription': 'var(--color-primary)',
-  '/billing': 'var(--color-danger)'
-}
+  '/billing': 'var(--color-danger)',
+};
 
 // 菜单名称映射
 const MENU_NAME_MAP = {
@@ -88,115 +88,115 @@ const MENU_NAME_MAP = {
   '/members': '会员管理',
   '/marketing': '营销管理',
   '/subscription': '订阅管理',
-  '/billing': '使用计费'
-}
+  '/billing': '使用计费',
+};
 
 export function usePageTheme() {
-  const route = useRoute()
-  const currentThemeColor = ref('var(--color-primary)')
-  const currentThemeName = ref('')
+  const route = useRoute();
+  const currentThemeColor = ref('var(--color-primary)');
+  const currentThemeName = ref('');
 
   // 根据路由获取主题色
   const getThemeColor = (path: string): string => {
     // 精确匹配
     if (MENU_THEME_MAP[path as keyof typeof MENU_THEME_MAP]) {
-      return MENU_THEME_MAP[path as keyof typeof MENU_THEME_MAP]
+      return MENU_THEME_MAP[path as keyof typeof MENU_THEME_MAP];
     }
 
     // 模糊匹配 - 查找最匹配的路径
     for (const [key, value] of Object.entries(MENU_THEME_MAP)) {
       if (path.startsWith(key)) {
-        return value
+        return value;
       }
     }
 
-    return 'var(--color-primary)' // 默认主题色
-  }
+    return 'var(--color-primary)'; // 默认主题色
+  };
 
   // 根据路由获取菜单名称
   const getThemeName = (path: string): string => {
     // 精确匹配
     if (MENU_NAME_MAP[path as keyof typeof MENU_NAME_MAP]) {
-      return MENU_NAME_MAP[path as keyof typeof MENU_NAME_MAP]
+      return MENU_NAME_MAP[path as keyof typeof MENU_NAME_MAP];
     }
 
     // 模糊匹配 - 查找最匹配的路径
     for (const [key, value] of Object.entries(MENU_NAME_MAP)) {
       if (path.startsWith(key)) {
-        return value
+        return value;
       }
     }
 
-    return 'YYC³管理后台' // 默认名称
-  }
+    return 'YYC³管理后台'; // 默认名称
+  };
 
   // 应用主题色到页面
   const applyThemeToPage = (color: string) => {
     // 设置CSS变量
-    document.documentElement.style.setProperty('--page-theme-color', color)
+    document.documentElement.style.setProperty('--page-theme-color', color);
 
     // 设置meta标签颜色（移动端地址栏）
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
       // 将CSS颜色值转换为十六进制
-      const hexColor = color.includes('var(--') ? '#4F46E5' : color
-      metaThemeColor.setAttribute('content', hexColor)
+      const hexColor = color.includes('var(--') ? '#4F46E5' : color;
+      metaThemeColor.setAttribute('content', hexColor);
     }
-  }
+  };
 
   // 计算属性
-  const pageThemeColor = computed(() => currentThemeColor.value)
-  const pageThemeName = computed(() => currentThemeName.value)
+  const pageThemeColor = computed(() => currentThemeColor.value);
+  const pageThemeName = computed(() => currentThemeName.value);
 
   // 监听路由变化
   watch(
     () => route.path,
-    (newPath) => {
-      const themeColor = getThemeColor(newPath)
-      const themeName = getThemeName(newPath)
+    newPath => {
+      const themeColor = getThemeColor(newPath);
+      const themeName = getThemeName(newPath);
 
-      currentThemeColor.value = themeColor
-      currentThemeName.value = themeName
+      currentThemeColor.value = themeColor;
+      currentThemeName.value = themeName;
 
-      applyThemeToPage(themeColor)
+      applyThemeToPage(themeColor);
     },
-    { immediate: true }
-  )
+    { immediate: true },
+  );
 
   // 获取当前主题色的RGB值（用于阴影等效果）
   const getThemeColorRgb = (color: string): { r: number; g: number; b: number } => {
     // 如果是CSS变量，返回默认值
     if (color.includes('var(--')) {
-      return { r: 79, g: 70, b: 229 } // --color-primary的RGB值
+      return { r: 79, g: 70, b: 229 }; // --color-primary的RGB值
     }
 
     // 移除#号
-    const hex = color.replace('#', '')
+    const hex = color.replace('#', '');
 
     // 解析RGB值
-    const r = parseInt(hex.substr(0, 2), 16)
-    const g = parseInt(hex.substr(2, 2), 16)
-    const b = parseInt(hex.substr(4, 2), 16)
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
 
-    return { r, g, b }
-  }
+    return { r, g, b };
+  };
 
   // 生成主题色的阴影
   const getThemeShadow = (color: string, intensity: 'light' | 'medium' | 'heavy' = 'medium') => {
-    const rgb = getThemeColorRgb(color)
-    const { r, g, b } = rgb
+    const rgb = getThemeColorRgb(color);
+    const { r, g, b } = rgb;
 
     const shadows = {
       light: `rgba(${r}, ${g}, ${b}, 0.15)`,
       medium: `rgba(${r}, ${g}, ${b}, 0.25)`,
-      heavy: `rgba(${r}, ${g}, ${b}, 0.35)`
-    }
+      heavy: `rgba(${r}, ${g}, ${b}, 0.35)`,
+    };
 
     return {
       color: `rgba(${r}, ${g}, ${b}, 1)`,
-      shadow: shadows[intensity]
-    }
-  }
+      shadow: shadows[intensity],
+    };
+  };
 
   return {
     pageThemeColor,
@@ -207,8 +207,8 @@ export function usePageTheme() {
     getThemeName,
     getThemeColorRgb,
     getThemeShadow,
-    applyThemeToPage
-  }
+    applyThemeToPage,
+  };
 }
 
 // CSS工具类生成器
@@ -250,5 +250,5 @@ export function generateThemeClasses() {
       border-color: var(--page-theme-color) !important;
       box-shadow: 0 0 0 2px var(--page-theme-shadow) !important;
     }
-  `
+  `;
 }

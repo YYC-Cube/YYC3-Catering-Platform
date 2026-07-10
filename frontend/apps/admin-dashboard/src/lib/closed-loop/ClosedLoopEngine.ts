@@ -5,13 +5,7 @@
 
 import { GoalManagementSystem } from './value-creation/GoalManagementSystem';
 import { ValueValidationFramework } from './value-creation/ValueValidationFramework';
-import {
-  ProjectContext,
-  ValueGoals,
-  GoalProgress,
-  ValueValidation,
-  ClosedLoopEffectiveness,
-} from './types';
+import { ProjectContext, ValueGoals, GoalProgress, ValueValidation, ClosedLoopEffectiveness } from './types';
 
 export class ClosedLoopEngine {
   private goalManager: GoalManagementSystem;
@@ -127,10 +121,7 @@ export class ClosedLoopEngine {
     };
 
     validationSummary.overallValidation =
-      (validationSummary.roiScore +
-        validationSummary.userValueScore +
-        validationSummary.strategicValueScore) /
-      3;
+      (validationSummary.roiScore + validationSummary.userValueScore + validationSummary.strategicValueScore) / 3;
 
     return {
       validation,
@@ -186,10 +177,7 @@ export class ClosedLoopEngine {
     const learningVelocity = this.calculateLearningVelocity(recentCycles);
 
     const overallEffectiveness =
-      (cycleEfficiency.throughput +
-        improvementImpact.valueAdded +
-        learningVelocity.knowledgeGrowth) /
-      3;
+      (cycleEfficiency.throughput + improvementImpact.valueAdded + learningVelocity.knowledgeGrowth) / 3;
 
     return {
       cycleEfficiency,
@@ -287,12 +275,7 @@ export class ClosedLoopEngine {
   }
 
   private identifySuccessFactors(validation: any): string[] {
-    return [
-      'AI智能化能力领先行业',
-      '闭环优化系统持续创造价值',
-      '餐饮行业深度定制赢得客户',
-      '技术架构稳定可扩展',
-    ];
+    return ['AI智能化能力领先行业', '闭环优化系统持续创造价值', '餐饮行业深度定制赢得客户', '技术架构稳定可扩展'];
   }
 
   private identifyFailurePoints(validation: any): string[] {
@@ -300,12 +283,7 @@ export class ClosedLoopEngine {
   }
 
   private extractBestPractices(validation: any): string[] {
-    return [
-      '数据驱动的决策流程',
-      '快速迭代的开发模式',
-      '持续的用户反馈收集',
-      'AI辅助的智能优化',
-    ];
+    return ['数据驱动的决策流程', '快速迭代的开发模式', '持续的用户反馈收集', 'AI辅助的智能优化'];
   }
 
   private identifyImprovementAreas(validation: any): string[] {
@@ -341,11 +319,7 @@ export class ClosedLoopEngine {
   }
 
   private defineSuccessCriteria(learnings: any): string[] {
-    return [
-      '移动端用户满意度提升至4.5+',
-      '批量操作效率提升50%',
-      '报表生成时间减少30%',
-    ];
+    return ['移动端用户满意度提升至4.5+', '批量操作效率提升50%', '报表生成时间减少30%'];
   }
 
   private calculateOverallScore(validation: any, learnings: any): number {

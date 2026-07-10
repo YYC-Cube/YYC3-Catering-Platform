@@ -22,7 +22,7 @@ describe('DatabaseManager', () => {
 
     mockClient = {
       query: vi.fn(),
-      release: vi.fn()
+      release: vi.fn(),
     };
 
     mockPool = {
@@ -31,11 +31,11 @@ describe('DatabaseManager', () => {
       end: vi.fn().mockResolvedValue(undefined),
       totalCount: 10,
       idleCount: 5,
-      waitingCount: 0
+      waitingCount: 0,
     };
 
     vi.doMock('pg', () => ({
-      Pool: vi.fn().mockImplementation(() => mockPool)
+      Pool: vi.fn().mockImplementation(() => mockPool),
     }));
   });
 
@@ -177,7 +177,7 @@ describe('DatabaseManager', () => {
 
       expect(Pool).toHaveBeenCalledWith(
         expect.objectContaining({
-          ssl: { rejectUnauthorized: false }
+          ssl: { rejectUnauthorized: false },
         })
       );
 
@@ -193,7 +193,7 @@ describe('DatabaseManager', () => {
 
       expect(Pool).toHaveBeenCalledWith(
         expect.objectContaining({
-          ssl: false
+          ssl: false,
         })
       );
 
@@ -262,9 +262,9 @@ describe('DatabaseManager', () => {
         rows: [
           { id: 1, name: 'test1' },
           { id: 2, name: 'test2' },
-          { id: 3, name: 'test3' }
+          { id: 3, name: 'test3' },
         ],
-        rowCount: 3
+        rowCount: 3,
       };
       mockClient.query.mockResolvedValue(mockResult);
 
@@ -416,7 +416,7 @@ describe('DatabaseManager', () => {
       expect(stats).toEqual({
         totalCount: 10,
         idleCount: 5,
-        waitingCount: 0
+        waitingCount: 0,
       });
     });
 
@@ -468,18 +468,24 @@ describe('DatabaseManager', () => {
     });
 
     it('应该处理连接超时', async () => {
-      mockPool.connect.mockImplementation(() => new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Connection timeout')), 100);
-      }));
+      mockPool.connect.mockImplementation(
+        () =>
+          new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Connection timeout')), 100);
+          })
+      );
 
       await expect(dbManager.createPool()).rejects.toThrow('Connection timeout');
     });
 
     it('应该处理查询超时', async () => {
       await dbManager.createPool();
-      mockClient.query.mockImplementation(() => new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Query timeout')), 100);
-      }));
+      mockClient.query.mockImplementation(
+        () =>
+          new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Query timeout')), 100);
+          })
+      );
 
       await expect(dbManager.query('SELECT * FROM test')).rejects.toThrow('Query timeout');
     });
@@ -491,9 +497,7 @@ describe('DatabaseManager', () => {
         await client.query('INVALID QUERY');
         return { success: true };
       };
-      mockClient.query
-        .mockResolvedValueOnce({})
-        .mockRejectedValueOnce(new Error('Invalid query'));
+      mockClient.query.mockResolvedValueOnce({}).mockRejectedValueOnce(new Error('Invalid query'));
 
       await expect(dbManager.transaction(callback)).rejects.toThrow('Invalid query');
       expect(mockClient.query).toHaveBeenCalledWith('ROLLBACK');
@@ -503,7 +507,9 @@ describe('DatabaseManager', () => {
       await dbManager.createPool();
       mockClient.query.mockResolvedValue({ rows: [], rowCount: 0 });
 
-      const promises = Array(5).fill(null).map(() => dbManager.query('SELECT 1'));
+      const promises = Array(5)
+        .fill(null)
+        .map(() => dbManager.query('SELECT 1'));
       const results = await Promise.all(promises);
 
       results.forEach(result => {
@@ -516,7 +522,9 @@ describe('DatabaseManager', () => {
       const callback = vi.fn().mockResolvedValue({ success: true });
       mockClient.query.mockResolvedValue({});
 
-      const promises = Array(3).fill(null).map(() => dbManager.transaction(callback));
+      const promises = Array(3)
+        .fill(null)
+        .map(() => dbManager.transaction(callback));
       const results = await Promise.all(promises);
 
       results.forEach(result => {

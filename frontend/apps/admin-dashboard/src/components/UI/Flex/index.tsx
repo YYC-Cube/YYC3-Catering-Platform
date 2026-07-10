@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
 
 export const Flex = defineComponent({
   name: 'Flex',
@@ -45,24 +45,24 @@ export const Flex = defineComponent({
   },
   setup(props, { attrs, slots }) {
     const flexClasses = computed(() => {
-      const classes = []
+      const classes = [];
 
-      classes.push(props.inline ? 'inline-flex' : 'flex')
+      classes.push(props.inline ? 'inline-flex' : 'flex');
 
       const directionClasses = {
         row: 'flex-row',
         'row-reverse': 'flex-row-reverse',
         column: 'flex-col',
         'column-reverse': 'flex-col-reverse',
-      }
-      classes.push(directionClasses[props.direction])
+      };
+      classes.push(directionClasses[props.direction]);
 
       const wrapClasses = {
         nowrap: 'flex-nowrap',
         wrap: 'flex-wrap',
         'wrap-reverse': 'flex-wrap-reverse',
-      }
-      classes.push(wrapClasses[props.wrap])
+      };
+      classes.push(wrapClasses[props.wrap]);
 
       const justifyClasses = {
         start: 'justify-start',
@@ -71,8 +71,8 @@ export const Flex = defineComponent({
         'space-between': 'justify-between',
         'space-around': 'justify-around',
         'space-evenly': 'justify-evenly',
-      }
-      classes.push(justifyClasses[props.justify])
+      };
+      classes.push(justifyClasses[props.justify]);
 
       const alignClasses = {
         start: 'items-start',
@@ -80,27 +80,24 @@ export const Flex = defineComponent({
         end: 'items-end',
         stretch: 'items-stretch',
         baseline: 'items-baseline',
-      }
-      classes.push(alignClasses[props.align])
+      };
+      classes.push(alignClasses[props.align]);
 
-      return classes.join(' ')
-    })
+      return classes.join(' ');
+    });
 
     const gapStyle = computed(() => {
-      const gapValue = typeof props.gap === 'number' ? `${props.gap}px` : props.gap
-      return { gap: gapValue }
-    })
+      const gapValue = typeof props.gap === 'number' ? `${props.gap}px` : props.gap;
+      return { gap: gapValue };
+    });
 
     return () => (
-      <div
-        class={cn(flexClasses.value, props.className)}
-        style={gapStyle.value}
-      >
+      <div class={cn(flexClasses.value, props.className)} style={gapStyle.value}>
         {slots.default?.()}
       </div>
-    )
+    );
   },
-})
+});
 
 export const FlexItem = defineComponent({
   name: 'FlexItem',
@@ -136,22 +133,22 @@ export const FlexItem = defineComponent({
   },
   setup(props, { attrs, slots }) {
     const itemStyle = computed(() => {
-      const style: Record<string, string> = {}
+      const style: Record<string, string> = {};
 
       if (props.flex !== undefined) {
-        style.flex = typeof props.flex === 'number' ? `${props.flex}` : props.flex
+        style.flex = typeof props.flex === 'number' ? `${props.flex}` : props.flex;
       }
 
       if (props.grow !== undefined) {
-        style.flexGrow = `${props.grow}`
+        style.flexGrow = `${props.grow}`;
       }
 
       if (props.shrink !== undefined) {
-        style.flexShrink = `${props.shrink}`
+        style.flexShrink = `${props.shrink}`;
       }
 
       if (props.basis !== undefined) {
-        style.flexBasis = typeof props.basis === 'number' ? `${props.basis}px` : props.basis
+        style.flexBasis = typeof props.basis === 'number' ? `${props.basis}px` : props.basis;
       }
 
       if (props.alignSelf !== undefined) {
@@ -161,24 +158,21 @@ export const FlexItem = defineComponent({
           end: 'flex-end',
           stretch: 'stretch',
           baseline: 'baseline',
-        }
-        style.alignSelf = alignSelfClasses[props.alignSelf]
+        };
+        style.alignSelf = alignSelfClasses[props.alignSelf];
       }
 
       if (props.order !== undefined) {
-        style.order = `${props.order}`
+        style.order = `${props.order}`;
       }
 
-      return style
-    })
+      return style;
+    });
 
     return () => (
-      <div
-        class={cn(props.className)}
-        style={itemStyle.value}
-      >
+      <div class={cn(props.className)} style={itemStyle.value}>
         {slots.default?.()}
       </div>
-    )
+    );
   },
-})
+});

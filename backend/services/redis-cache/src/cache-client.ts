@@ -90,7 +90,7 @@ export class RedisCacheClient {
       logger.info('Redis ready');
     });
 
-    this.client.on('error', (error) => {
+    this.client.on('error', error => {
       logger.error('Redis error', { error: error.message });
     });
 
@@ -186,7 +186,7 @@ export class RedisCacheClient {
    */
   async deleteMultiple(keys: string[]): Promise<void> {
     try {
-      const fullKeys = keys.map((key) => this.getKey(key));
+      const fullKeys = keys.map(key => this.getKey(key));
       await this.client.del(...fullKeys);
 
       logger.debug('Multiple caches deleted', { count: keys.length });
@@ -362,9 +362,7 @@ export class RedisCacheClient {
       // 解析命中率
       const keyspaceHits = parseInt(info.match(/keyspace_hits:(\d+)/)?.[1] || '0');
       const keyspaceMisses = parseInt(info.match(/keyspace_misses:(\d+)/)?.[1] || '0');
-      const hitRate = keyspaceHits + keyspaceMisses > 0
-        ? keyspaceHits / (keyspaceHits + keyspaceMisses)
-        : 0;
+      const hitRate = keyspaceHits + keyspaceMisses > 0 ? keyspaceHits / (keyspaceHits + keyspaceMisses) : 0;
 
       return {
         keyCount,

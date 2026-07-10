@@ -51,14 +51,14 @@ export class RabbitMQService {
    * @param onMessageReceived 消息接收回调函数
    */
   public async consumeNotificationQueue(
-    onMessageReceived: (notificationData: NotificationAttributes) => Promise<void>
+    onMessageReceived: (notificationData: NotificationAttributes) => Promise<void>,
   ): Promise<void> {
     try {
       const channel = await getChannel();
       await channel.assertExchange(this.exchangeName, 'direct', { durable: true });
       await channel.assertQueue(this.notificationQueue, { durable: true });
       await channel.bindQueue(this.notificationQueue, this.exchangeName, 'notification');
-      
+
       await channel.consume(this.notificationQueue, async (message: amqp.ConsumeMessage | null) => {
         if (message) {
           try {
@@ -72,7 +72,7 @@ export class RabbitMQService {
           }
         }
       });
-      
+
       logger.info('已开始消费通知消息队列');
     } catch (error: any) {
       logger.error('消费通知消息队列失败:', error);

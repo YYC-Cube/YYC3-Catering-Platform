@@ -87,10 +87,13 @@ export interface RateLimitConfig {
     message: string;
   };
   // 新增：路由级别的限流配置
-  routeSpecific?: Record<string, {
-    maxRequests: number;
-    windowMs: number;
-  }>;
+  routeSpecific?: Record<
+    string,
+    {
+      maxRequests: number;
+      windowMs: number;
+    }
+  >;
 }
 
 // 加密配置

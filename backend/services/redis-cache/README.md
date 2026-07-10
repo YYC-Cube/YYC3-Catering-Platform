@@ -1,20 +1,20 @@
 # 🔖 YYC³ Redis缓存服务
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
+| 属性         | 内容               |
+| ------------ | ------------------ |
 | **服务名称** | YYC³ Redis缓存服务 |
-| **版本** | 1.0.0 |
-| **创建时间** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **许可证** | MIT |
+| **版本**     | 1.0.0              |
+| **创建时间** | 2025-01-30         |
+| **作者**     | YYC³ Team          |
+| **许可证**   | MIT                |
 
 ---
 
@@ -95,25 +95,25 @@ pnpm install
 ### 基础使用
 
 ```typescript
-import { createCacheClient } from '@yyc3/redis-cache';
+import { createCacheClient } from "@yyc3/redis-cache";
 
 // 初始化缓存客户端
 const cacheClient = await createCacheClient({
-  host: 'localhost',
+  host: "localhost",
   port: 6379,
-  password: 'your-password',
+  password: "your-password",
   db: 0,
 });
 
 // 设置缓存
-await cacheClient.set('user:123', { name: '张三', age: 30 }, { ttl: 3600 });
+await cacheClient.set("user:123", { name: "张三", age: 30 }, { ttl: 3600 });
 
 // 获取缓存
-const user = await cacheClient.get('user:123');
+const user = await cacheClient.get("user:123");
 console.log(user); // { name: '张三', age: 30 }
 
 // 删除缓存
-await cacheClient.delete('user:123');
+await cacheClient.delete("user:123");
 
 // 关闭连接
 await cacheClient.disconnect();
@@ -122,21 +122,25 @@ await cacheClient.disconnect();
 ### 使用缓存策略
 
 ```typescript
-import { createCacheClient, createCacheStrategyManager } from '@yyc3/redis-cache';
+import { createCacheClient, createCacheStrategyManager } from "@yyc3/redis-cache";
 
 const cacheClient = await createCacheClient({
-  host: 'localhost',
+  host: "localhost",
   port: 6379,
 });
 
 // 创建TTL策略管理器
-const strategyManager = createCacheStrategyManager(cacheClient, 'ttl');
+const strategyManager = createCacheStrategyManager(cacheClient, "ttl");
 
 // 使用策略获取缓存
-const user = await strategyManager.get('user:123', async () => {
-  // 缓存未命中时，从数据库加载
-  return await database.getUser('123');
-}, { ttl: 3600 });
+const user = await strategyManager.get(
+  "user:123",
+  async () => {
+    // 缓存未命中时，从数据库加载
+    return await database.getUser("123");
+  },
+  { ttl: 3600 }
+);
 
 console.log(user);
 ```
@@ -144,19 +148,19 @@ console.log(user);
 ### 使用装饰器
 
 ```typescript
-import { Cacheable, CacheEvict, createCacheClient, createCacheKeyGenerator } from '@yyc3/redis-cache';
+import { Cacheable, CacheEvict, createCacheClient, createCacheKeyGenerator } from "@yyc3/redis-cache";
 
-const cacheClient = await createCacheClient({ host: 'localhost', port: 6379 });
-const keyGenerator = createCacheKeyGenerator({ prefix: 'yyc3' });
+const cacheClient = await createCacheClient({ host: "localhost", port: 6379 });
+const keyGenerator = createCacheKeyGenerator({ prefix: "yyc3" });
 
 class UserService {
-  @Cacheable(cacheClient, keyGenerator, { ttl: 3600, keyPrefix: 'user' })
+  @Cacheable(cacheClient, keyGenerator, { ttl: 3600, keyPrefix: "user" })
   async getUser(userId: string) {
     // 这个方法的结果会被缓存
     return await database.getUser(userId);
   }
 
-  @CacheEvict(cacheClient, keyGenerator, { keyPrefix: 'user' })
+  @CacheEvict(cacheClient, keyGenerator, { keyPrefix: "user" })
   async updateUser(userId: string, data: any) {
     // 更新用户后，清除相关缓存
     return await database.updateUser(userId, data);
@@ -173,13 +177,13 @@ class UserService {
 #### TTL策略（基于时间的过期）
 
 ```typescript
-const ttlManager = createCacheStrategyManager(cacheClient, 'ttl', {
+const ttlManager = createCacheStrategyManager(cacheClient, "ttl", {
   defaultTTL: 3600, // 默认1小时
   refreshThreshold: 0.2, // TTL剩余20%时自动刷新
 });
 
 // 自动刷新缓存
-const data = await ttlManager.get('key', async () => {
+const data = await ttlManager.get("key", async () => {
   return await fetchData();
 });
 ```
@@ -187,53 +191,53 @@ const data = await ttlManager.get('key', async () => {
 #### LRU策略（最近最少使用）
 
 ```typescript
-const lruManager = createCacheStrategyManager(cacheClient, 'lru', {
+const lruManager = createCacheStrategyManager(cacheClient, "lru", {
   maxSize: 10000, // 最大缓存10000个键
 });
 
 // LRU自动淘汰最久未使用的数据
-await lruManager.set('key', data);
+await lruManager.set("key", data);
 ```
 
 #### LFU策略（最不经常使用）
 
 ```typescript
-const lfuManager = createCacheStrategyManager(cacheClient, 'lfu', {
+const lfuManager = createCacheStrategyManager(cacheClient, "lfu", {
   maxSize: 10000,
 });
 
 // LFU自动淘汰访问频率最低的数据
-await lfuManager.set('key', data);
+await lfuManager.set("key", data);
 ```
 
 #### 标签策略
 
 ```typescript
 // 设置带标签的缓存
-await cacheClient.set('user:123', userData, {
-  tags: ['user', 'profile'],
+await cacheClient.set("user:123", userData, {
+  tags: ["user", "profile"],
 });
 
 // 按标签批量删除
-await cacheClient.deleteByTags(['user']);
+await cacheClient.deleteByTags(["user"]);
 ```
 
 ### 2. 分层缓存
 
 ```typescript
-import { createHierarchicalCacheManager } from '@yyc3/redis-cache';
+import { createHierarchicalCacheManager } from "@yyc3/redis-cache";
 
 const hierarchicalManager = createHierarchicalCacheManager();
 
 // 添加L1缓存（内存）
-hierarchicalManager.addLevel('L1', { strategy: 'lru', maxSize: 1000 }, l1CacheClient);
+hierarchicalManager.addLevel("L1", { strategy: "lru", maxSize: 1000 }, l1CacheClient);
 
 // 添加L2缓存（Redis）
-hierarchicalManager.addLevel('L2', { strategy: 'ttl', defaultTTL: 3600 }, l2CacheClient);
+hierarchicalManager.addLevel("L2", { strategy: "ttl", defaultTTL: 3600 }, l2CacheClient);
 
 // 自动从L1 -> L2 -> 数据库查找
-const data = await hierarchicalManager.get('key', async () => {
-  return await database.get('key');
+const data = await hierarchicalManager.get("key", async () => {
+  return await database.get("key");
 });
 ```
 
@@ -242,9 +246,9 @@ const data = await hierarchicalManager.get('key', async () => {
 ```typescript
 // 预热热门菜品
 const warmupConfig = {
-  keys: ['dish:1', 'dish:2', 'dish:3'],
-  loader: async (key) => {
-    return await database.getDish(key.split(':')[1]);
+  keys: ["dish:1", "dish:2", "dish:3"],
+  loader: async key => {
+    return await database.getDish(key.split(":")[1]);
   },
   concurrency: 5,
 };
@@ -255,49 +259,53 @@ await strategyManager.warmup(warmupConfig);
 ### 4. 分布式锁
 
 ```typescript
-import { createCacheLock, createCacheKeyGenerator } from '@yyc3/redis-cache';
+import { createCacheLock, createCacheKeyGenerator } from "@yyc3/redis-cache";
 
 const lock = createCacheLock(cacheClient, keyGenerator);
 
 // 获取锁
-const acquired = await lock.acquire('update-order:123', 30);
+const acquired = await lock.acquire("update-order:123", 30);
 if (acquired) {
   try {
     // 执行需要加锁的操作
-    await updateOrder('123');
+    await updateOrder("123");
   } finally {
     // 释放锁
-    await lock.release('update-order:123');
+    await lock.release("update-order:123");
   }
 }
 
 // 或者使用withLock自动管理锁
-await lock.withLock('update-order:123', async () => {
-  await updateOrder('123');
-}, 30);
+await lock.withLock(
+  "update-order:123",
+  async () => {
+    await updateOrder("123");
+  },
+  30
+);
 ```
 
 ### 5. 缓存键生成
 
 ```typescript
-import { createCacheKeyGenerator } from '@yyc3/redis-cache';
+import { createCacheKeyGenerator } from "@yyc3/redis-cache";
 
 const keyGenerator = createCacheKeyGenerator({
-  prefix: 'yyc3',
-  separator: ':',
-  version: 'v1',
+  prefix: "yyc3",
+  separator: ":",
+  version: "v1",
 });
 
 // 生成用户缓存键
-const userKey = keyGenerator.user('123', 'profile');
+const userKey = keyGenerator.user("123", "profile");
 // yyc3:user:123:profile:v1
 
 // 生成订单缓存键
-const orderKey = keyGenerator.order('456', 'status');
+const orderKey = keyGenerator.order("456", "status");
 // yyc3:order:456:status:v1
 
 // 生成列表缓存键
-const listKey = keyGenerator.list('dish', { page: 1, size: 10, category: 'hot' });
+const listKey = keyGenerator.list("dish", { page: 1, size: 10, category: "hot" });
 // yyc3:list:dish:abc123:v1
 ```
 
@@ -347,7 +355,7 @@ console.log(metrics);
 
 ```typescript
 const cacheClient = await createCacheClient({
-  host: 'localhost',
+  host: "localhost",
   port: 6379,
   password: process.env.REDIS_PASSWORD, // 使用环境变量
   db: 0,
@@ -363,8 +371,8 @@ const cacheClient = await createCacheClient({
 ```typescript
 // 使用前缀避免键冲突
 const keyGenerator = createCacheKeyGenerator({
-  prefix: 'yyc3', // 项目前缀
-  version: 'v1', // 版本号
+  prefix: "yyc3", // 项目前缀
+  version: "v1", // 版本号
 });
 ```
 
@@ -386,15 +394,15 @@ pnpm test:integration
 ### 测试示例
 
 ```typescript
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { createCacheClient } from '@yyc3/redis-cache';
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { createCacheClient } from "@yyc3/redis-cache";
 
-describe('RedisCacheClient', () => {
+describe("RedisCacheClient", () => {
   let cacheClient;
 
   beforeEach(async () => {
     cacheClient = await createCacheClient({
-      host: 'localhost',
+      host: "localhost",
       port: 6379,
       db: 1, // 使用测试数据库
     });
@@ -405,19 +413,19 @@ describe('RedisCacheClient', () => {
     await cacheClient.disconnect();
   });
 
-  it('应该成功设置和获取缓存', async () => {
-    await cacheClient.set('test:key', 'test-value');
-    const value = await cacheClient.get('test:key');
-    expect(value).toBe('test-value');
+  it("应该成功设置和获取缓存", async () => {
+    await cacheClient.set("test:key", "test-value");
+    const value = await cacheClient.get("test:key");
+    expect(value).toBe("test-value");
   });
 
-  it('应该正确处理TTL过期', async () => {
-    await cacheClient.set('test:key', 'test-value', { ttl: 1 });
-    const value1 = await cacheClient.get('test:key');
-    expect(value1).toBe('test-value');
+  it("应该正确处理TTL过期", async () => {
+    await cacheClient.set("test:key", "test-value", { ttl: 1 });
+    const value1 = await cacheClient.get("test:key");
+    expect(value1).toBe("test-value");
 
     await new Promise(resolve => setTimeout(resolve, 1100));
-    const value2 = await cacheClient.get('test:key');
+    const value2 = await cacheClient.get("test:key");
     expect(value2).toBeNull();
   });
 });
@@ -431,16 +439,16 @@ describe('RedisCacheClient', () => {
 
 ```typescript
 interface RedisConfig {
-  host: string;              // Redis主机地址
-  port: number;              // Redis端口
-  password?: string;         // Redis密码
-  db?: number;               // 数据库编号
-  tls?: any;                 // TLS配置
-  keyPrefix?: string;        // 键前缀
-  defaultTTL?: number;       // 默认TTL（秒）
+  host: string; // Redis主机地址
+  port: number; // Redis端口
+  password?: string; // Redis密码
+  db?: number; // 数据库编号
+  tls?: any; // TLS配置
+  keyPrefix?: string; // 键前缀
+  defaultTTL?: number; // 默认TTL（秒）
   maxRetriesPerRequest?: number; // 最大重试次数
-  lazyConnect?: boolean;     // 是否延迟连接
-  keepAlive?: number;        // 保持连接时间（毫秒）
+  lazyConnect?: boolean; // 是否延迟连接
+  keepAlive?: number; // 保持连接时间（毫秒）
 }
 ```
 
@@ -448,10 +456,10 @@ interface RedisConfig {
 
 ```typescript
 interface CacheStrategyConfig {
-  strategy: CacheStrategy;   // 策略类型
-  maxSize?: number;          // 最大缓存数量
-  maxMemory?: number;        // 最大内存使用（MB）
-  defaultTTL?: number;       // 默认过期时间（秒）
+  strategy: CacheStrategy; // 策略类型
+  maxSize?: number; // 最大缓存数量
+  maxMemory?: number; // 最大内存使用（MB）
+  defaultTTL?: number; // 默认过期时间（秒）
   refreshThreshold?: number; // 刷新阈值（TTL的百分比）
 }
 ```
@@ -467,6 +475,7 @@ interface CacheStrategyConfig {
 **问题**: 无法连接到Redis服务器
 
 **解决方案**:
+
 - 检查Redis服务是否运行: `redis-cli ping`
 - 检查主机地址和端口配置
 - 检查防火墙设置
@@ -477,6 +486,7 @@ interface CacheStrategyConfig {
 **问题**: Redis内存使用过高
 
 **解决方案**:
+
 - 设置合理的`maxMemory`配置
 - 使用LRU或LFU策略自动淘汰
 - 定期清理过期数据
@@ -487,6 +497,7 @@ interface CacheStrategyConfig {
 **问题**: 大量请求查询不存在的数据
 
 **解决方案**:
+
 - 使用布隆过滤器
 - 缓存空值（设置较短的TTL）
 - 使用互斥锁防止缓存击穿
@@ -496,6 +507,7 @@ interface CacheStrategyConfig {
 **问题**: 大量缓存同时失效
 
 **解决方案**:
+
 - 设置随机的TTL偏移量
 - 使用分层缓存
 - 实现缓存预热机制
@@ -514,12 +526,12 @@ interface CacheStrategyConfig {
 
 ### 性能基准
 
-| 操作 | QPS | 延迟 (P99) |
-|------|-----|-----------|
-| SET | 100,000+ | < 1ms |
-| GET | 150,000+ | < 1ms |
-| MGET | 80,000+ | < 2ms |
-| DELETE | 120,000+ | < 1ms |
+| 操作   | QPS      | 延迟 (P99) |
+| ------ | -------- | ---------- |
+| SET    | 100,000+ | < 1ms      |
+| GET    | 150,000+ | < 1ms      |
+| MGET   | 80,000+  | < 2ms      |
+| DELETE | 120,000+ | < 1ms      |
 
 ---
 
@@ -566,7 +578,7 @@ interface CacheStrategyConfig {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

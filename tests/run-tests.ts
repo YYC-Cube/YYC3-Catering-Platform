@@ -7,9 +7,9 @@
  * @version 1.0.0
  */
 
-import { execSync } from 'child_process'
-import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs'
-import { join } from 'path'
+import { execSync } from 'child_process';
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
 
 // 测试配置
 const CONFIG = {
@@ -22,99 +22,99 @@ const CONFIG = {
     'api/members.test.ts',
     'api/menu.test.ts',
     'api/marketing.test.ts',
-    'api/payment.test.ts'
+    'api/payment.test.ts',
   ],
   coverageThreshold: 80,
   timeout: 30000,
-  retries: 2
-}
+  retries: 2,
+};
 
 // 测试报告接口
 interface TestReport {
   summary: {
-    total: number
-    passed: number
-    failed: number
-    skipped: number
-    duration: number
-    successRate: number
-  }
-  suites: TestSuite[]
-  coverage?: CoverageReport
-  timestamp: string
-  environment: string
+    total: number;
+    passed: number;
+    failed: number;
+    skipped: number;
+    duration: number;
+    successRate: number;
+  };
+  suites: TestSuite[];
+  coverage?: CoverageReport;
+  timestamp: string;
+  environment: string;
 }
 
 interface TestSuite {
-  name: string
-  file: string
-  duration: number
+  name: string;
+  file: string;
+  duration: number;
   tests: {
-    passed: number
-    failed: number
-    skipped: number
-    total: number
-  }
-  failures: TestFailure[]
+    passed: number;
+    failed: number;
+    skipped: number;
+    total: number;
+  };
+  failures: TestFailure[];
 }
 
 interface TestFailure {
-  test: string
-  error: string
-  stack?: string
+  test: string;
+  error: string;
+  stack?: string;
 }
 
 interface CoverageReport {
   lines: {
-    total: number
-    covered: number
-    percentage: number
-  }
+    total: number;
+    covered: number;
+    percentage: number;
+  };
   functions: {
-    total: number
-    covered: number
-    percentage: number
-  }
+    total: number;
+    covered: number;
+    percentage: number;
+  };
   branches: {
-    total: number
-    covered: number
-    percentage: number
-  }
+    total: number;
+    covered: number;
+    percentage: number;
+  };
   statements: {
-    total: number
-    covered: number
-    percentage: number
-  }
+    total: number;
+    covered: number;
+    percentage: number;
+  };
 }
 
 /**
  * 确保输出目录存在
  */
 function ensureOutputDirs(): void {
-  const dirs = [CONFIG.outputDir, CONFIG.coverageDir]
+  const dirs = [CONFIG.outputDir, CONFIG.coverageDir];
   dirs.forEach(dir => {
     if (!existsSync(dir)) {
-      mkdirSync(dir, { recursive: true })
+      mkdirSync(dir, { recursive: true });
     }
-  })
+  });
 }
 
 /**
  * 运行单个测试文件
  */
 function runTestFile(testFile: string): TestSuite {
-  console.log(`🧪 运行测试: ${testFile}`)
+  console.log(`🧪 运行测试: ${testFile}`);
 
   try {
     // 运行测试并捕获输出
     const output = execSync(`bun test ${testFile} --reporter=json`, {
       cwd: CONFIG.testDir,
       encoding: 'utf8',
-      timeout: CONFIG.timeout
-    })
+      timeout: CONFIG.timeout,
+    });
 
     // 解析测试结果
-    const testResults = JSON.parse(output)
+    const testResults = JSON.parse(output);
 
     const suite: TestSuite = {
       name: testFile.replace('.test.ts', ''),
@@ -124,10 +124,10 @@ function runTestFile(testFile: string): TestSuite {
         passed: testResults.numPassedTests || 0,
         failed: testResults.numFailedTests || 0,
         skipped: testResults.numPendingTests || 0,
-        total: testResults.numTotalTests || 0
+        total: testResults.numTotalTests || 0,
       },
-      failures: []
-    }
+      failures: [],
+    };
 
     // 处理失败的测试
     if (testResults.testResults) {
@@ -136,21 +136,20 @@ function runTestFile(testFile: string): TestSuite {
           suite.failures.push({
             test: result.title,
             error: result.error?.message || 'Unknown error',
-            stack: result.error?.stack
-          })
+            stack: result.error?.stack,
+          });
         }
-      })
+      });
     }
 
     console.log(
       `✅ ${suite.name}: ${suite.tests.passed}/${suite.tests.total} 通过 ` +
-      `(${(suite.tests.passed / suite.tests.total * 100).toFixed(1)}%)`
-    )
+        `(${((suite.tests.passed / suite.tests.total) * 100).toFixed(1)}%)`,
+    );
 
-    return suite
-
+    return suite;
   } catch (error: any) {
-    console.error(`❌ 测试运行失败: ${testFile}`, error.message)
+    console.error(`❌ 测试运行失败: ${testFile}`, error.message);
 
     // 返回失败的测试套件
     return {
@@ -161,14 +160,16 @@ function runTestFile(testFile: string): TestSuite {
         passed: 0,
         failed: 1,
         skipped: 0,
-        total: 1
+        total: 1,
       },
-      failures: [{
-        test: 'TestRunner',
-        error: error.message,
-        stack: error.stack
-      }]
-    }
+      failures: [
+        {
+          test: 'TestRunner',
+          error: error.message,
+          stack: error.stack,
+        },
+      ],
+    };
   }
 }
 
@@ -176,15 +177,15 @@ function runTestFile(testFile: string): TestSuite {
  * 运行代码覆盖率检查
  */
 function runCoverage(): CoverageReport | null {
-  console.log('📊 运行代码覆盖率检查...')
+  console.log('📊 运行代码覆盖率检查...');
 
   try {
     // 运行测试并生成覆盖率报告
     execSync(`bun test --coverage`, {
       cwd: CONFIG.testDir,
       encoding: 'utf8',
-      timeout: CONFIG.timeout * 2 // 覆盖率检查需要更长时间
-    })
+      timeout: CONFIG.timeout * 2, // 覆盖率检查需要更长时间
+    });
 
     // 这里应该解析实际的覆盖率报告
     // 由于Bun的覆盖率报告格式可能不同，这里提供一个模拟的实现
@@ -192,21 +193,20 @@ function runCoverage(): CoverageReport | null {
       lines: { total: 1000, covered: 850, percentage: 85.0 },
       functions: { total: 120, covered: 100, percentage: 83.3 },
       branches: { total: 80, covered: 65, percentage: 81.3 },
-      statements: { total: 1100, covered: 920, percentage: 83.6 }
-    }
+      statements: { total: 1100, covered: 920, percentage: 83.6 },
+    };
 
     console.log(
       `📊 覆盖率: 行 ${coverage.lines.percentage.toFixed(1)}% | ` +
-      `函数 ${coverage.functions.percentage.toFixed(1)}% | ` +
-      `分支 ${coverage.branches.percentage.toFixed(1)}% | ` +
-      `语句 ${coverage.statements.percentage.toFixed(1)}%`
-    )
+        `函数 ${coverage.functions.percentage.toFixed(1)}% | ` +
+        `分支 ${coverage.branches.percentage.toFixed(1)}% | ` +
+        `语句 ${coverage.statements.percentage.toFixed(1)}%`,
+    );
 
-    return coverage
-
+    return coverage;
   } catch (error: any) {
-    console.warn('⚠️ 覆盖率检查失败:', error.message)
-    return null
+    console.warn('⚠️ 覆盖率检查失败:', error.message);
+    return null;
   }
 }
 
@@ -214,7 +214,7 @@ function runCoverage(): CoverageReport | null {
  * 生成HTML测试报告
  */
 function generateHtmlReport(report: TestReport): void {
-  console.log('📄 生成HTML测试报告...')
+  console.log('📄 生成HTML测试报告...');
 
   const htmlContent = `
 <!DOCTYPE html>
@@ -462,7 +462,9 @@ function generateHtmlReport(report: TestReport): void {
             </div>
         </div>
 
-        ${report.coverage ? `
+        ${
+          report.coverage
+            ? `
         <div class="coverage">
             <h2>📊 代码覆盖率</h2>
             <div class="coverage-grid">
@@ -496,13 +498,17 @@ function generateHtmlReport(report: TestReport): void {
                 </div>
             </div>
         </div>
-        ` : ''}
+        `
+            : ''
+        }
 
         <div class="suites">
             <div class="suites-header">
                 <h2>📋 测试套件详情</h2>
             </div>
-            ${report.suites.map(suite => `
+            ${report.suites
+              .map(
+                suite => `
                 <div class="suite">
                     <div class="suite-header">
                         <div class="suite-name">${suite.name}</div>
@@ -513,18 +519,28 @@ function generateHtmlReport(report: TestReport): void {
                             <span>⏱️ ${(suite.duration / 1000).toFixed(1)}s</span>
                         </div>
                     </div>
-                    ${suite.failures.length > 0 ? `
+                    ${
+                      suite.failures.length > 0
+                        ? `
                         <div class="failures">
-                            ${suite.failures.map(failure => `
+                            ${suite.failures
+                              .map(
+                                failure => `
                                 <div class="failure">
                                     <div class="failure-test">❌ ${failure.test}</div>
                                     <div class="failure-error">${failure.error}</div>
                                 </div>
-                            `).join('')}
+                            `,
+                              )
+                              .join('')}
                         </div>
-                    ` : ''}
+                    `
+                        : ''
+                    }
                 </div>
-            `).join('')}
+            `,
+              )
+              .join('')}
         </div>
 
         <div class="footer">
@@ -532,100 +548,100 @@ function generateHtmlReport(report: TestReport): void {
         </div>
     </div>
 </body>
-</html>`
+</html>`;
 
-  const htmlFilePath = join(CONFIG.outputDir, 'index.html')
-  writeFileSync(htmlFilePath, htmlContent)
-  console.log(`✓ HTML报告已生成: ${htmlFilePath}`)
+  const htmlFilePath = join(CONFIG.outputDir, 'index.html');
+  writeFileSync(htmlFilePath, htmlContent);
+  console.log(`✓ HTML报告已生成: ${htmlFilePath}`);
 }
 
 /**
  * 生成JSON测试报告
  */
 function generateJsonReport(report: TestReport): void {
-  const jsonFilePath = join(CONFIG.outputDir, 'test-report.json')
-  writeFileSync(jsonFilePath, JSON.stringify(report, null, 2))
-  console.log(`✓ JSON报告已生成: ${jsonFilePath}`)
+  const jsonFilePath = join(CONFIG.outputDir, 'test-report.json');
+  writeFileSync(jsonFilePath, JSON.stringify(report, null, 2));
+  console.log(`✓ JSON报告已生成: ${jsonFilePath}`);
 }
 
 /**
  * 检查测试结果
  */
 function checkTestResults(report: TestReport): boolean {
-  const { summary } = report
+  const { summary } = report;
 
   // 检查是否有失败测试
   if (summary.failed > 0) {
-    console.error(`❌ 测试失败: ${summary.failed}/${summary.total}`)
-    return false
+    console.error(`❌ 测试失败: ${summary.failed}/${summary.total}`);
+    return false;
   }
 
   // 检查成功率
   if (summary.successRate < 100) {
-    console.warn(`⚠️ 成功率不为100%: ${summary.successRate.toFixed(1)}%`)
+    console.warn(`⚠️ 成功率不为100%: ${summary.successRate.toFixed(1)}%`);
   }
 
   // 检查覆盖率
   if (report.coverage) {
-    const coverage = report.coverage
+    const coverage = report.coverage;
     const metrics = [
       { name: '行覆盖率', value: coverage.lines.percentage },
       { name: '函数覆盖率', value: coverage.functions.percentage },
       { name: '分支覆盖率', value: coverage.branches.percentage },
-      { name: '语句覆盖率', value: coverage.statements.percentage }
-    ]
+      { name: '语句覆盖率', value: coverage.statements.percentage },
+    ];
 
     metrics.forEach(metric => {
       if (metric.value < CONFIG.coverageThreshold) {
-        console.warn(`⚠️ ${metric.name}低于阈值: ${metric.value.toFixed(1)}% < ${CONFIG.coverageThreshold}%`)
+        console.warn(`⚠️ ${metric.name}低于阈值: ${metric.value.toFixed(1)}% < ${CONFIG.coverageThreshold}%`);
       }
-    })
+    });
   }
 
-  return summary.failed === 0
+  return summary.failed === 0;
 }
 
 /**
  * 主测试运行函数
  */
 function runTests(coverage: boolean = true): TestReport {
-  console.log('🚀 开始运行API测试套件')
-  console.log(`📁 测试目录: ${CONFIG.testDir}`)
-  console.log(`📊 输出目录: ${CONFIG.outputDir}`)
+  console.log('🚀 开始运行API测试套件');
+  console.log(`📁 测试目录: ${CONFIG.testDir}`);
+  console.log(`📊 输出目录: ${CONFIG.outputDir}`);
 
-  ensureOutputDirs()
+  ensureOutputDirs();
 
-  const startTime = Date.now()
-  const suites: TestSuite[] = []
-  let totalPassed = 0
-  let totalFailed = 0
-  let totalSkipped = 0
-  let totalTests = 0
+  const startTime = Date.now();
+  const suites: TestSuite[] = [];
+  let totalPassed = 0;
+  let totalFailed = 0;
+  let totalSkipped = 0;
+  let totalTests = 0;
 
   // 运行所有测试文件
   for (const testFile of CONFIG.testFiles) {
-    const testFilePath = join(CONFIG.testDir, testFile)
+    const testFilePath = join(CONFIG.testDir, testFile);
 
     if (existsSync(testFilePath)) {
-      const suite = runTestFile(testFile)
-      suites.push(suite)
+      const suite = runTestFile(testFile);
+      suites.push(suite);
 
-      totalPassed += suite.tests.passed
-      totalFailed += suite.tests.failed
-      totalSkipped += suite.tests.skipped
-      totalTests += suite.tests.total
+      totalPassed += suite.tests.passed;
+      totalFailed += suite.tests.failed;
+      totalSkipped += suite.tests.skipped;
+      totalTests += suite.tests.total;
     } else {
-      console.warn(`⚠️ 测试文件不存在: ${testFile}`)
+      console.warn(`⚠️ 测试文件不存在: ${testFile}`);
     }
   }
 
   // 运行覆盖率检查
-  let coverageReport: CoverageReport | null = null
+  let coverageReport: CoverageReport | null = null;
   if (coverage) {
-    coverageReport = runCoverage()
+    coverageReport = runCoverage();
   }
 
-  const duration = Date.now() - startTime
+  const duration = Date.now() - startTime;
 
   const reportData: Omit<TestReport, 'coverage'> = {
     summary: {
@@ -634,22 +650,20 @@ function runTests(coverage: boolean = true): TestReport {
       failed: totalFailed,
       skipped: totalSkipped,
       duration,
-      successRate: totalTests > 0 ? (totalPassed / totalTests) * 100 : 0
+      successRate: totalTests > 0 ? (totalPassed / totalTests) * 100 : 0,
     },
     suites,
     timestamp: new Date().toISOString(),
-    environment: process.env['NODE_ENV'] || 'test'
-  }
+    environment: process.env['NODE_ENV'] || 'test',
+  };
 
-  const report: TestReport = coverageReport
-    ? { ...reportData, coverage: coverageReport }
-    : reportData
+  const report: TestReport = coverageReport ? { ...reportData, coverage: coverageReport } : reportData;
 
   // 生成报告文件
-  generateHtmlReport(report)
-  generateJsonReport(report)
+  generateHtmlReport(report);
+  generateJsonReport(report);
 
-  return report
+  return report;
 }
 
 /**
@@ -673,66 +687,65 @@ YYC³餐饮行业智能化平台 - API测试运行器
   bun run tests/run-tests.ts
   bun run tests/run-tests.ts --no-coverage
   bun run tests/run-tests.ts --open
-`)
+`);
 }
 
 /**
  * 主函数
  */
 function main(): void {
-  const args = process.argv.slice(2)
-  const runCoverage = !args.includes('--no-coverage')
-  const openReport = args.includes('--open')
-  const watchMode = args.includes('--watch')
+  const args = process.argv.slice(2);
+  const runCoverage = !args.includes('--no-coverage');
+  const openReport = args.includes('--open');
+  const watchMode = args.includes('--watch');
 
   if (args.includes('--help') || args.includes('-h')) {
-    showHelp()
-    return
+    showHelp();
+    return;
   }
 
   try {
     // 运行测试
-    const report = runTests(runCoverage)
+    const report = runTests(runCoverage);
 
     // 显示总结
-    console.log('\n📊 测试总结:')
-    console.log(`   总测试数: ${report.summary.total}`)
-    console.log(`   ✅ 通过: ${report.summary.passed}`)
-    console.log(`   ❌ 失败: ${report.summary.failed}`)
-    console.log(`   ⏭️ 跳过: ${report.summary.skipped}`)
-    console.log(`   📈 成功率: ${report.summary.successRate.toFixed(1)}%`)
-    console.log(`   ⏱️ 执行时间: ${(report.summary.duration / 1000).toFixed(1)}s`)
+    console.log('\n📊 测试总结:');
+    console.log(`   总测试数: ${report.summary.total}`);
+    console.log(`   ✅ 通过: ${report.summary.passed}`);
+    console.log(`   ❌ 失败: ${report.summary.failed}`);
+    console.log(`   ⏭️ 跳过: ${report.summary.skipped}`);
+    console.log(`   📈 成功率: ${report.summary.successRate.toFixed(1)}%`);
+    console.log(`   ⏱️ 执行时间: ${(report.summary.duration / 1000).toFixed(1)}s`);
 
     if (report.coverage) {
-      console.log('\n📊 代码覆盖率:')
-      console.log(`   行覆盖率: ${report.coverage.lines.percentage.toFixed(1)}%`)
-      console.log(`   函数覆盖率: ${report.coverage.functions.percentage.toFixed(1)}%`)
-      console.log(`   分支覆盖率: ${report.coverage.branches.percentage.toFixed(1)}%`)
-      console.log(`   语句覆盖率: ${report.coverage.statements.percentage.toFixed(1)}%`)
+      console.log('\n📊 代码覆盖率:');
+      console.log(`   行覆盖率: ${report.coverage.lines.percentage.toFixed(1)}%`);
+      console.log(`   函数覆盖率: ${report.coverage.functions.percentage.toFixed(1)}%`);
+      console.log(`   分支覆盖率: ${report.coverage.branches.percentage.toFixed(1)}%`);
+      console.log(`   语句覆盖率: ${report.coverage.statements.percentage.toFixed(1)}%`);
     }
 
     // 检查测试结果
-    const allTestsPassed = checkTestResults(report)
+    const allTestsPassed = checkTestResults(report);
 
     // 自动打开报告
     if (openReport) {
-      const htmlReportPath = join(CONFIG.outputDir, 'index.html')
-      execSync(`open ${htmlReportPath}`)
+      const htmlReportPath = join(CONFIG.outputDir, 'index.html');
+      execSync(`open ${htmlReportPath}`);
     }
 
     // 设置退出码
     if (!allTestsPassed) {
-      console.log('\n❌ 测试未全部通过')
-      process.exit(1)
+      console.log('\n❌ 测试未全部通过');
+      process.exit(1);
     } else {
-      console.log('\n✅ 所有测试通过!')
+      console.log('\n✅ 所有测试通过!');
     }
-
   } catch (error: any) {
-    console.error('❌ 测试运行失败:', error.message)
-    process.exit(1)
+    console.error('❌ 测试运行失败:', error.message);
+    process.exit(1);
   }
 }
 
 // 运行主函数
-main()
+main();

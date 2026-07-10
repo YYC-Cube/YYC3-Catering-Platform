@@ -21,7 +21,7 @@ export class ToolRegistry {
    */
   private registerCoreTools(): void {
     // 注册餐饮业务工具
-    RESTAURANT_TOOLS.forEach((tool) => {
+    RESTAURANT_TOOLS.forEach(tool => {
       this.registerTool(tool);
     });
   }
@@ -83,9 +83,7 @@ export class ToolRegistry {
       const timeout = this.config?.toolTimeout || 30000;
       const result = await Promise.race([
         tool.execute(parameters),
-        new Promise<ToolResult>((_, reject) =>
-          setTimeout(() => reject(new Error('Tool execution timeout')), timeout)
-        ),
+        new Promise<ToolResult>((_, reject) => setTimeout(() => reject(new Error('Tool execution timeout')), timeout)),
       ]);
 
       // 记录使用统计
@@ -104,11 +102,9 @@ export class ToolRegistry {
   /**
    * 批量执行工具（并行）
    */
-  async executeToolsParallel(
-    toolCalls: Array<{ toolName: string; parameters: any }>
-  ): Promise<ToolResult[]> {
+  async executeToolsParallel(toolCalls: Array<{ toolName: string; parameters: any }>): Promise<ToolResult[]> {
     const maxParallel = this.config?.maxParallelTools || 3;
-    const chunks: typeof toolCalls[] = [];
+    const chunks: (typeof toolCalls)[] = [];
 
     // 分批执行
     for (let i = 0; i < toolCalls.length; i += maxParallel) {
@@ -118,9 +114,7 @@ export class ToolRegistry {
     const results: ToolResult[] = [];
     for (const chunk of chunks) {
       const chunkResults = await Promise.all(
-        chunk.map(({ toolName, parameters }) =>
-          this.executeTool(toolName, parameters)
-        )
+        chunk.map(({ toolName, parameters }) => this.executeTool(toolName, parameters)),
       );
       results.push(...chunkResults);
     }
@@ -140,7 +134,7 @@ export class ToolRegistry {
    */
   getToolsByCategory(category: string): AITool[] {
     const toolNames = this.toolGroups.get(category) || [];
-    return toolNames.map((name) => this.tools.get(name)!).filter(Boolean);
+    return toolNames.map(name => this.tools.get(name)!).filter(Boolean);
   }
 
   /**
@@ -161,30 +155,27 @@ export class ToolRegistry {
       return relevantTools
         .sort((a, b) => b.relevance - a.relevance)
         .slice(0, 10)
-        .map((item) => item.tool);
+        .map(item => item.tool);
     }
 
     // 否则只返回高度相关的工具
     return relevantTools
-      .filter((item) => item.relevance > 0.7)
+      .filter(item => item.relevance > 0.7)
       .sort((a, b) => b.relevance - a.relevance)
       .slice(0, 5)
-      .map((item) => item.tool);
+      .map(item => item.tool);
   }
 
   /**
    * 计算工具相关性
    */
-  private async calculateToolRelevance(
-    tool: AITool,
-    context: AIContext
-  ): Promise<number> {
+  private async calculateToolRelevance(tool: AITool, context: AIContext): Promise<number> {
     let relevance = 0;
 
     // 基于对话历史的关键词匹配
     const recentMessages = context.conversationHistory.slice(-3);
     const conversationText = recentMessages
-      .map((msg) => msg.content)
+      .map(msg => msg.content)
       .join(' ')
       .toLowerCase();
 
@@ -192,9 +183,7 @@ export class ToolRegistry {
     const toolText = `${tool.name} ${tool.description}`.toLowerCase();
     const keywords = toolText.split(/\s+/);
 
-    const matchCount = keywords.filter((keyword) =>
-      conversationText.includes(keyword)
-    ).length;
+    const matchCount = keywords.filter(keyword => conversationText.includes(keyword)).length;
 
     relevance += (matchCount / keywords.length) * 0.5;
 
@@ -216,9 +205,7 @@ export class ToolRegistry {
 
     // 基于使用频率（热门工具加分）
     const usageCount = this.toolUsageStats.get(tool.name) || 0;
-    const avgUsage =
-      Array.from(this.toolUsageStats.values()).reduce((a, b) => a + b, 0) /
-      this.toolUsageStats.size;
+    const avgUsage = Array.from(this.toolUsageStats.values()).reduce((a, b) => a + b, 0) / this.toolUsageStats.size;
     if (usageCount > avgUsage) {
       relevance += 0.1;
     }

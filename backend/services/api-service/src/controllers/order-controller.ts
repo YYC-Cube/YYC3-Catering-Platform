@@ -46,10 +46,14 @@ export class OrderController {
       const estimatedReadyTime = this.calculateEstimatedReadyTime(validatedData.items);
 
       // 计算价格明细
-      const priceBreakdown = this.calculatePriceBreakdown(validatedData.items, validatedData.promoCode);
+      const priceBreakdown = this.calculatePriceBreakdown(
+        validatedData.items,
+        validatedData.promoCode
+      );
 
       // 插入订单到数据库
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         INSERT INTO orders (
           id, order_number, customer_id, customer_name, customer_phone,
           restaurant_id, order_type, status, payment_status, payment_method,
@@ -59,27 +63,29 @@ export class OrderController {
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
           $11, $12, $13, $14, $15, $16, $17, $18, $19
         ) RETURNING id, created_at
-      `, [
-        id,
-        orderNumber,
-        validatedData.customerId || null,
-        validatedData.customerName,
-        validatedData.customerPhone,
-        validatedData.restaurantId || null,
-        validatedData.orderType || 'dine_in',
-        'pending',
-        'pending',
-        validatedData.paymentMethod || null,
-        JSON.stringify(validatedData.items),
-        JSON.stringify(priceBreakdown),
-        JSON.stringify(validatedData.deliveryInfo || {}),
-        validatedData.scheduledTime || null,
-        estimatedReadyTime,
-        validatedData.notes || null,
-        validatedData.source || 'web',
-        validatedData.promoCode || null,
-        validatedData.promoDiscount || 0
-      ]);
+      `,
+        [
+          id,
+          orderNumber,
+          validatedData.customerId || null,
+          validatedData.customerName,
+          validatedData.customerPhone,
+          validatedData.restaurantId || null,
+          validatedData.orderType || 'dine_in',
+          'pending',
+          'pending',
+          validatedData.paymentMethod || null,
+          JSON.stringify(validatedData.items),
+          JSON.stringify(priceBreakdown),
+          JSON.stringify(validatedData.deliveryInfo || {}),
+          validatedData.scheduledTime || null,
+          estimatedReadyTime,
+          validatedData.notes || null,
+          validatedData.source || 'web',
+          validatedData.promoCode || null,
+          validatedData.promoDiscount || 0,
+        ]
+      );
 
       const order = {
         id: result.rows[0].id,
@@ -108,7 +114,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 创建订单失败:', error);
-      throw new Error(`创建订单失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`创建订单失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -179,7 +185,9 @@ export class OrderController {
       }
 
       if (search) {
-        conditions.push(`(order_number ILIKE $${paramIndex++} OR customer_name ILIKE $${paramIndex++} OR customer_phone ILIKE $${paramIndex++})`);
+        conditions.push(
+          `(order_number ILIKE $${paramIndex++} OR customer_name ILIKE $${paramIndex++} OR customer_phone ILIKE $${paramIndex++})`
+        );
         params.push(`%${search}%`, `%${search}%`, `%${search}%`);
       }
 
@@ -187,7 +195,14 @@ export class OrderController {
       const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
       // 验证排序字段
-      const allowedSortFields = ['created_at', 'updated_at', 'order_number', 'total_amount', 'status', 'payment_status'];
+      const allowedSortFields = [
+        'created_at',
+        'updated_at',
+        'order_number',
+        'total_amount',
+        'status',
+        'payment_status',
+      ];
       const validSortField = allowedSortFields.includes(sortBy) ? sortBy : 'created_at';
       const validSortOrder = sortOrder === 'asc' ? 'ASC' : 'DESC';
 
@@ -256,7 +271,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 获取订单列表失败:', error);
-      throw new Error(`获取订单列表失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取订单列表失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -271,7 +286,8 @@ export class OrderController {
 
       await dbManager.createPool();
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           id, order_number, customer_id, customer_name, customer_phone,
           restaurant_id, order_type, status, payment_status, payment_method,
@@ -280,7 +296,9 @@ export class OrderController {
           notes, source, promo_code, promo_discount, created_at, updated_at
         FROM orders
         WHERE id = $1
-      `, [id]);
+      `,
+        [id]
+      );
 
       if (result.rows.length === 0) {
         throw new Error('订单不存在');
@@ -320,7 +338,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 获取订单详情失败:', error);
-      throw new Error(`获取订单详情失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取订单详情失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -335,7 +353,8 @@ export class OrderController {
 
       await dbManager.createPool();
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           id, order_number, customer_id, customer_name, customer_phone,
           restaurant_id, order_type, status, payment_status, payment_method,
@@ -344,7 +363,9 @@ export class OrderController {
           notes, source, promo_code, promo_discount, created_at, updated_at
         FROM orders
         WHERE order_number = $1
-      `, [orderNumber]);
+      `,
+        [orderNumber]
+      );
 
       if (result.rows.length === 0) {
         throw new Error('订单不存在');
@@ -386,7 +407,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 根据订单号查询失败:', error);
-      throw new Error(`根据订单号查询失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`根据订单号查询失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -420,7 +441,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 更新订单失败:', error);
-      throw new Error(`更新订单失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`更新订单失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -463,7 +484,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 更新订单状态失败:', error);
-      throw new Error(`更新订单状态失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`更新订单状态失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -508,7 +529,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 取消订单失败:', error);
-      throw new Error(`取消订单失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`取消订单失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -531,7 +552,7 @@ export class OrderController {
       const paymentResult = {
         success: true,
         transactionId: crypto.randomUUID(),
-        amount: 100.00,
+        amount: 100.0,
         currency: 'CNY',
       };
 
@@ -561,7 +582,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 处理支付失败:', error);
-      throw new Error(`处理支付失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`处理支付失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -604,7 +625,7 @@ export class OrderController {
       return stats;
     } catch (error) {
       console.error('❌ 获取订单统计失败:', error);
-      throw new Error(`获取订单统计失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取订单统计失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -634,7 +655,7 @@ export class OrderController {
       return report;
     } catch (error) {
       console.error('❌ 生成销售报告失败:', error);
-      throw new Error(`生成销售报告失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`生成销售报告失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -671,7 +692,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 分配送员失败:', error);
-      throw new Error(`分配配送员失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`分配配送员失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -689,7 +710,7 @@ export class OrderController {
       return personnel;
     } catch (error) {
       console.error('❌ 获取可用配送员失败:', error);
-      throw new Error(`获取可用配送员失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取可用配送员失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -713,7 +734,7 @@ export class OrderController {
       return this.getOrders(searchQuery);
     } catch (error) {
       console.error('❌ 搜索订单失败:', error);
-      throw new Error(`搜索订单失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`搜索订单失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -722,9 +743,10 @@ export class OrderController {
    */
   private generateOrderNumber(): string {
     const date = new Date();
-    const dateStr = date.getFullYear().toString() +
-                   (date.getMonth() + 1).toString().padStart(2, '0') +
-                   date.getDate().toString().padStart(2, '0');
+    const dateStr =
+      date.getFullYear().toString() +
+      (date.getMonth() + 1).toString().padStart(2, '0') +
+      date.getDate().toString().padStart(2, '0');
     const timeStr = Date.now().toString().slice(-6);
     const randomStr = Math.random().toString(36).slice(2, 5).toUpperCase();
     return `YYC${dateStr}${timeStr}${randomStr}`;
@@ -738,7 +760,7 @@ export class OrderController {
     const baseTime = 15; // 基础准备时间(分钟)
     const perItemTime = 3; // 每个菜品额外时间(分钟)
     const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-    const totalMinutes = baseTime + (totalItems * perItemTime);
+    const totalMinutes = baseTime + totalItems * perItemTime;
 
     return new Date(Date.now() + totalMinutes * 60 * 1000);
   }
@@ -747,7 +769,7 @@ export class OrderController {
    * 计算价格明细
    */
   private calculatePriceBreakdown(items: any[], promoCode?: string): any {
-    const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     let discount = 0;
     if (promoCode) {
@@ -780,7 +802,9 @@ export class OrderController {
       await dbManager.createPool();
 
       // 先检查订单是否存在
-      const existingResult = await dbManager.query('SELECT id, status FROM orders WHERE id = $1', [id]);
+      const existingResult = await dbManager.query('SELECT id, status FROM orders WHERE id = $1', [
+        id,
+      ]);
       if (existingResult.rows.length === 0) {
         throw new Error('订单不存在');
       }
@@ -810,7 +834,13 @@ export class OrderController {
       const result = await dbManager.query(updateQuery, queryParams);
 
       // 添加状态变更日志
-      await this.addOrderLog(id, 'status_changed', `订单状态从 ${oldStatus} 变更为 ${status}`, null, '系统');
+      await this.addOrderLog(
+        id,
+        'status_changed',
+        `订单状态从 ${oldStatus} 变更为 ${status}`,
+        null,
+        '系统'
+      );
 
       console.log(`✅ 订单状态更新成功: ${id} -> ${status}`);
 
@@ -826,7 +856,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 更新订单状态失败:', error);
-      throw new Error(`更新订单状态失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`更新订单状态失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -848,18 +878,21 @@ export class OrderController {
 
       await dbManager.createPool();
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         INSERT INTO order_logs (order_id, action, description, operator_id, operator_name, metadata)
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING id, timestamp
-      `, [
-        orderId,
-        action,
-        description,
-        operatorId || null,
-        operatorName || null,
-        JSON.stringify(metadata || {})
-      ]);
+      `,
+        [
+          orderId,
+          action,
+          description,
+          operatorId || null,
+          operatorName || null,
+          JSON.stringify(metadata || {}),
+        ]
+      );
 
       console.log(`✅ 订单日志添加成功: ${orderId} - ${action}`);
 
@@ -876,7 +909,7 @@ export class OrderController {
       };
     } catch (error) {
       console.error('❌ 添加订单日志失败:', error);
-      throw new Error(`添加订单日志失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`添加订单日志失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -912,7 +945,8 @@ export class OrderController {
 
       const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           COUNT(*) as total_orders,
           COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_orders,
@@ -922,7 +956,9 @@ export class OrderController {
           COALESCE(AVG((price_breakdown->>'total')::decimal), 0) as avg_order_value
         FROM orders
         ${whereClause}
-      `, params);
+      `,
+        params
+      );
 
       const stats: OrderStats = {
         totalOrders: parseInt(result.rows[0].total_orders),
@@ -955,7 +991,7 @@ export class OrderController {
       return stats;
     } catch (error) {
       console.error('❌ 获取订单统计失败:', error);
-      throw new Error(`获取订单统计失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取订单统计失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -981,7 +1017,8 @@ export class OrderController {
 
       const whereClause = `WHERE ${conditions.join(' AND ')}`;
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           DATE(created_at) as date,
           COUNT(*) as order_count,
@@ -991,7 +1028,9 @@ export class OrderController {
         ${whereClause}
         GROUP BY DATE(created_at)
         ORDER BY DATE(created_at)
-      `, params);
+      `,
+        params
+      );
 
       const salesReport: OrderSalesReport[] = result.rows.map(row => ({
         date: row.date,
@@ -1005,7 +1044,7 @@ export class OrderController {
       return salesReport;
     } catch (error) {
       console.error('❌ 获取销量报告失败:', error);
-      throw new Error(`获取销量报告失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取销量报告失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 }

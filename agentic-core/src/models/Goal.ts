@@ -7,7 +7,7 @@ export enum GoalType {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   TERTIARY = 'tertiary',
-  URGENT = 'urgent'
+  URGENT = 'urgent',
 }
 
 export enum GoalStatus {
@@ -16,7 +16,7 @@ export enum GoalStatus {
   COMPLETED = 'completed',
   FAILED = 'failed',
   CANCELLED = 'cancelled',
-  PAUSED = 'paused'
+  PAUSED = 'paused',
 }
 
 export interface GoalConfig {

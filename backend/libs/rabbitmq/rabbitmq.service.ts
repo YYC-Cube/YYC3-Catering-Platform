@@ -50,7 +50,7 @@ export class RabbitMQService {
       logger.info('RabbitMQ连接成功');
 
       // 监听连接错误
-      this.connection.on('error', (error) => {
+      this.connection.on('error', error => {
         logger.error('RabbitMQ连接错误', { error });
       });
 
@@ -94,17 +94,12 @@ export class RabbitMQService {
       }
 
       const messageBuffer = Buffer.from(JSON.stringify(message));
-      const result = this.channel.publish(
-        this.exchangeName,
-        routingKey,
-        messageBuffer,
-        {
-          persistent: true,
-          contentType: 'application/json',
-          timestamp: Date.now(),
-          appId: this.serviceName,
-        }
-      );
+      const result = this.channel.publish(this.exchangeName, routingKey, messageBuffer, {
+        persistent: true,
+        contentType: 'application/json',
+        timestamp: Date.now(),
+        appId: this.serviceName,
+      });
 
       if (result) {
         logger.info('消息发送成功', { routingKey, message });
@@ -129,7 +124,7 @@ export class RabbitMQService {
   async subscribe(
     routingKey: string,
     queueName: string,
-    callback: (message: any, ack: () => void, nack: () => void) => void
+    callback: (message: any, ack: () => void, nack: () => void) => void,
   ): Promise<string> {
     try {
       if (!this.channel) {
@@ -155,11 +150,15 @@ export class RabbitMQService {
               logger.info('接收到消息', { routingKey, message });
 
               // 处理消息
-              callback(message, () => {
-                this.channel?.ack(msg!);
-              }, () => {
-                this.channel?.nack(msg!, false, true);
-              });
+              callback(
+                message,
+                () => {
+                  this.channel?.ack(msg!);
+                },
+                () => {
+                  this.channel?.nack(msg!, false, true);
+                },
+              );
             } catch (error) {
               logger.error('处理消息失败', { error });
               this.channel?.nack(msg!, false, true);
@@ -168,7 +167,7 @@ export class RabbitMQService {
         },
         {
           noAck: false,
-        }
+        },
       );
 
       logger.info('订阅消息成功', { routingKey, queueName });
@@ -228,27 +227,27 @@ export enum MessageQueueEvents {
   USER_CREATED = 'user.created',
   USER_UPDATED = 'user.updated',
   USER_DELETED = 'user.deleted',
-  
+
   RESTAURANT_CREATED = 'restaurant.created',
   RESTAURANT_UPDATED = 'restaurant.updated',
   RESTAURANT_DELETED = 'restaurant.deleted',
-  
+
   MENU_ITEM_CREATED = 'menu_item.created',
   MENU_ITEM_UPDATED = 'menu_item.updated',
   MENU_ITEM_DELETED = 'menu_item.deleted',
-  
+
   ORDER_CREATED = 'order.created',
   ORDER_UPDATED = 'order.updated',
   ORDER_CANCELLED = 'order.cancelled',
   ORDER_COMPLETED = 'order.completed',
-  
+
   PAYMENT_SUCCESSFUL = 'payment.successful',
   PAYMENT_FAILED = 'payment.failed',
   PAYMENT_REFUNDED = 'payment.refunded',
-  
+
   NOTIFICATION_SENT = 'notification.sent',
   NOTIFICATION_READ = 'notification.read',
-  
+
   ANALYTICS_RECORDED = 'analytics.recorded',
 }
 

@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-import { defineComponent, ref, computed, watch, onMounted, onUnmounted, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { X, AlertTriangle, Info, CheckCircle, XCircle } from 'lucide-vue-next'
+import { defineComponent, ref, computed, watch, onMounted, onUnmounted, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { X, AlertTriangle, Info, CheckCircle, XCircle } from 'lucide-vue-next';
 
 export const Dialog = defineComponent({
   name: 'Dialog',
@@ -91,92 +91,95 @@ export const Dialog = defineComponent({
   },
   emits: ['update:visible', 'ok', 'cancel', 'afterClose', 'afterOpenChange'],
   setup(props, { emit, slots }) {
-    const dialogRef = ref<HTMLElement>()
+    const dialogRef = ref<HTMLElement>();
 
     const widthStyle = computed(() => {
       if (typeof props.width === 'number') {
-        return { width: `${props.width}px` }
+        return { width: `${props.width}px` };
       }
-      return { width: props.width }
-    })
+      return { width: props.width };
+    });
 
     const iconComponent = computed(() => {
       switch (props.type) {
         case 'success':
-          return CheckCircle
+          return CheckCircle;
         case 'warning':
-          return AlertTriangle
+          return AlertTriangle;
         case 'error':
-          return XCircle
+          return XCircle;
         case 'info':
         default:
-          return Info
+          return Info;
       }
-    })
+    });
 
     const iconColor = computed(() => {
       switch (props.type) {
         case 'success':
-          return 'text-success-600 bg-success-100'
+          return 'text-success-600 bg-success-100';
         case 'warning':
-          return 'text-warning-600 bg-warning-100'
+          return 'text-warning-600 bg-warning-100';
         case 'error':
-          return 'text-danger-600 bg-danger-100'
+          return 'text-danger-600 bg-danger-100';
         case 'info':
         default:
-          return 'text-primary-600 bg-primary-100'
+          return 'text-primary-600 bg-primary-100';
       }
-    })
+    });
 
     const handleMaskClick = () => {
       if (props.maskClosable) {
-        handleClose()
+        handleClose();
       }
-    }
+    };
 
     const handleClose = () => {
-      emit('update:visible', false)
-      emit('cancel')
-      props.afterClose?.()
-      props.afterOpenChange?.(false)
-    }
+      emit('update:visible', false);
+      emit('cancel');
+      props.afterClose?.();
+      props.afterOpenChange?.(false);
+    };
 
     const handleOk = () => {
-      emit('ok')
-    }
+      emit('ok');
+    };
 
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && props.visible && props.keyboard) {
-        handleClose()
+        handleClose();
       }
-    }
+    };
 
     const disableBodyScroll = () => {
-      document.body.style.overflow = 'hidden'
-    }
+      document.body.style.overflow = 'hidden';
+    };
 
     const enableBodyScroll = () => {
-      document.body.style.overflow = ''
-    }
+      document.body.style.overflow = '';
+    };
 
-    watch(() => props.visible, (newVal) => {
-      if (newVal) {
-        disableBodyScroll()
-        props.afterOpenChange?.(true)
-      } else {
-        enableBodyScroll()
-        props.afterOpenChange?.(false)
-      }
-    })
+    watch(
+      () => props.visible,
+      newVal => {
+        if (newVal) {
+          disableBodyScroll();
+          props.afterOpenChange?.(true);
+        } else {
+          enableBodyScroll();
+          props.afterOpenChange?.(false);
+        }
+      },
+    );
 
     onMounted(() => {
-      document.addEventListener('keydown', handleEsc)
-    })
+      document.addEventListener('keydown', handleEsc);
+    });
 
     onUnmounted(() => {
-      document.removeEventListener('keydown', handleEsc)
-      enableBodyScroll()
-    })
+      document.removeEventListener('keydown', handleEsc);
+      enableBodyScroll();
+    });
 
     return () => (
       <div
@@ -194,7 +197,7 @@ export const Dialog = defineComponent({
         <div
           class={cn(
             'relative bg-white rounded-lg shadow-xl max-w-[90vw] flex flex-col',
-            'animate-in fade-in zoom-in-95 duration-200'
+            'animate-in fade-in zoom-in-95 duration-200',
           )}
           style={{ ...widthStyle.value }}
         >
@@ -205,14 +208,8 @@ export const Dialog = defineComponent({
               </div>
             )}
             <div class="flex-1">
-              {props.title && (
-                <div class="text-lg font-semibold text-neutral-900 mb-2">
-                  {props.title}
-                </div>
-              )}
-              <div class="text-sm text-neutral-600">
-                {slots.content ? slots.content() : props.content}
-              </div>
+              {props.title && <div class="text-lg font-semibold text-neutral-900 mb-2">{props.title}</div>}
+              <div class="text-sm text-neutral-600">{slots.content ? slots.content() : props.content}</div>
             </div>
             {props.closable && (
               <button
@@ -242,7 +239,7 @@ export const Dialog = defineComponent({
                 props.type === 'success' && 'bg-success-600 hover:bg-success-700',
                 props.type === 'warning' && 'bg-warning-600 hover:bg-warning-700',
                 props.type === 'error' && 'bg-danger-600 hover:bg-danger-700',
-                props.type === 'info' && 'bg-primary-600 hover:bg-primary-700'
+                props.type === 'info' && 'bg-primary-600 hover:bg-primary-700',
               )}
               onClick={handleOk}
               {...props.okButtonProps}
@@ -252,52 +249,42 @@ export const Dialog = defineComponent({
           </div>
         </div>
       </div>
-    )
+    );
   },
-})
+});
 
 export const DialogHeader = defineComponent({
   name: 'DialogHeader',
   setup(props, { attrs, slots }) {
-    return () => (
-      <div
-        class={cn('flex items-start gap-4 p-6', attrs.class as string)}
-      >
-        {slots.default?.()}
-      </div>
-    )
+    return () => <div class={cn('flex items-start gap-4 p-6', attrs.class as string)}>{slots.default?.()}</div>;
   },
-})
+});
 
 export const DialogTitle = defineComponent({
   name: 'DialogTitle',
   setup(props, { attrs, slots }) {
     return () => (
-      <div class={cn('text-lg font-semibold text-neutral-900 mb-2', attrs.class as string)}>
-        {slots.default?.()}
-      </div>
-    )
+      <div class={cn('text-lg font-semibold text-neutral-900 mb-2', attrs.class as string)}>{slots.default?.()}</div>
+    );
   },
-})
+});
 
 export const DialogContent = defineComponent({
   name: 'DialogContent',
   setup(props, { attrs, slots }) {
-    return () => (
-      <div class={cn('text-sm text-neutral-600', attrs.class as string)}>
-        {slots.default?.()}
-      </div>
-    )
+    return () => <div class={cn('text-sm text-neutral-600', attrs.class as string)}>{slots.default?.()}</div>;
   },
-})
+});
 
 export const DialogFooter = defineComponent({
   name: 'DialogFooter',
   setup(props, { attrs, slots }) {
     return () => (
-      <div class={cn('flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200', attrs.class as string)}>
+      <div
+        class={cn('flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200', attrs.class as string)}
+      >
         {slots.default?.()}
       </div>
-    )
+    );
   },
-})
+});

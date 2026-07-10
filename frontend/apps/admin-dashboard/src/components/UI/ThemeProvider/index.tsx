@@ -8,19 +8,19 @@
  * @license MIT
  */
 
-import { defineComponent, provide, inject, ref, computed, watch, onMounted, type PropType } from 'vue'
-import { themeConfig } from '@/config/theme'
-import type { Theme, ThemeMode } from '@/types/theme'
+import { defineComponent, provide, inject, ref, computed, watch, onMounted, type PropType } from 'vue';
+import { themeConfig } from '@/config/theme';
+import type { Theme, ThemeMode } from '@/types/theme';
 
-const THEME_KEY = Symbol('theme')
+const THEME_KEY = Symbol('theme');
 
 export const useTheme = () => {
-  const theme = inject(THEME_KEY)
+  const theme = inject(THEME_KEY);
   if (!theme) {
-    throw new Error('useTheme must be used within a ThemeProvider')
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
-  return theme
-}
+  return theme;
+};
 
 export const ThemeProvider = defineComponent({
   name: 'ThemeProvider',
@@ -43,85 +43,91 @@ export const ThemeProvider = defineComponent({
     },
   },
   setup(props, { slots }) {
-    const currentThemeId = ref(props.defaultTheme)
-    const themeMode = ref<ThemeMode>('light')
-    const themes = ref<Theme[]>(themeConfig.themes)
+    const currentThemeId = ref(props.defaultTheme);
+    const themeMode = ref<ThemeMode>('light');
+    const themes = ref<Theme[]>(themeConfig.themes);
 
     const currentTheme = computed(() => {
-      return themes.value.find(theme => theme.id === currentThemeId.value) || themes.value[0]
-    })
+      return themes.value.find(theme => theme.id === currentThemeId.value) || themes.value[0];
+    });
 
     const isDark = computed(() => {
-      return themeMode.value === 'dark' || (themeMode.value === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    })
+      return (
+        themeMode.value === 'dark' ||
+        (themeMode.value === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      );
+    });
 
     const setTheme = (themeId: string) => {
-      currentThemeId.value = themeId
-      const theme = themes.value.find(t => t.id === themeId)
+      currentThemeId.value = themeId;
+      const theme = themes.value.find(t => t.id === themeId);
       if (theme) {
-        themeMode.value = theme.mode
+        themeMode.value = theme.mode;
       }
-    }
+    };
 
     const setThemeMode = (mode: ThemeMode) => {
-      themeMode.value = mode
-    }
+      themeMode.value = mode;
+    };
 
     const toggleDarkMode = () => {
       if (themeMode.value === 'dark') {
-        themeMode.value = 'light'
+        themeMode.value = 'light';
       } else {
-        themeMode.value = 'dark'
+        themeMode.value = 'dark';
       }
-    }
+    };
 
     const applyTheme = () => {
-      const root = document.documentElement
-      
+      const root = document.documentElement;
+
       if (isDark.value) {
-        root.classList.add('dark')
+        root.classList.add('dark');
       } else {
-        root.classList.remove('dark')
+        root.classList.remove('dark');
       }
 
       if (props.persistTheme) {
-        localStorage.setItem(themeConfig.themeStorageKey, JSON.stringify({
-          themeId: currentThemeId.value,
-          mode: themeMode.value,
-        }))
+        localStorage.setItem(
+          themeConfig.themeStorageKey,
+          JSON.stringify({
+            themeId: currentThemeId.value,
+            mode: themeMode.value,
+          }),
+        );
       }
-    }
+    };
 
     const loadTheme = () => {
       if (props.persistTheme) {
-        const saved = localStorage.getItem(themeConfig.themeStorageKey)
+        const saved = localStorage.getItem(themeConfig.themeStorageKey);
         if (saved) {
           try {
-            const parsed = JSON.parse(saved)
-            currentThemeId.value = parsed.themeId || props.defaultTheme
-            themeMode.value = parsed.mode || 'light'
+            const parsed = JSON.parse(saved);
+            currentThemeId.value = parsed.themeId || props.defaultTheme;
+            themeMode.value = parsed.mode || 'light';
           } catch (error) {
-            console.error('Failed to load theme:', error)
+            console.error('Failed to load theme:', error);
           }
         }
       }
-    }
+    };
 
-    watch([currentThemeId, themeMode], applyTheme, { immediate: true })
+    watch([currentThemeId, themeMode], applyTheme, { immediate: true });
 
     onMounted(() => {
-      loadTheme()
-      
+      loadTheme();
+
       if (props.enableSystemTheme) {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleChange = () => {
           if (themeMode.value === 'auto') {
-            applyTheme()
+            applyTheme();
           }
-        }
-        mediaQuery.addEventListener('change', handleChange)
+        };
+        mediaQuery.addEventListener('change', handleChange);
       }
-    })
+    });
 
     provide(THEME_KEY, {
       currentTheme,
@@ -132,8 +138,8 @@ export const ThemeProvider = defineComponent({
       setTheme,
       setThemeMode,
       toggleDarkMode,
-    })
+    });
 
-    return () => slots.default?.()
+    return () => slots.default?.();
   },
-})
+});

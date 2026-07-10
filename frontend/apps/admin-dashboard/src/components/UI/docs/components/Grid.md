@@ -11,7 +11,7 @@
 ### 基础用法
 
 ```tsx
-import { Grid, GridRow, GridCol } from '@/components/UI'
+import { Grid, GridRow, GridCol } from "@/components/UI";
 
 export default function GridBasic() {
   return (
@@ -22,14 +22,14 @@ export default function GridBasic() {
         <GridCol span={8}>col-8</GridCol>
       </GridRow>
     </Grid>
-  )
+  );
 }
 ```
 
 ### 间距
 
 ```tsx
-import { Grid, GridRow, GridCol } from '@/components/UI'
+import { Grid, GridRow, GridCol } from "@/components/UI";
 
 export default function GridGutter() {
   return (
@@ -40,14 +40,14 @@ export default function GridGutter() {
         <GridCol span={8}>col-8</GridCol>
       </GridRow>
     </Grid>
-  )
+  );
 }
 ```
 
 ### 对齐
 
 ```tsx
-import { Grid, GridRow, GridCol } from '@/components/UI'
+import { Grid, GridRow, GridCol } from "@/components/UI";
 
 export default function GridAlign() {
   return (
@@ -58,49 +58,57 @@ export default function GridAlign() {
         <GridCol span={8}>居中对齐</GridCol>
       </GridRow>
     </Grid>
-  )
+  );
 }
 ```
 
 ### 偏移
 
 ```tsx
-import { Grid, GridRow, GridCol } from '@/components/UI'
+import { Grid, GridRow, GridCol } from "@/components/UI";
 
 export default function GridOffset() {
   return (
     <Grid>
       <GridRow>
         <GridCol span={6}>col-6</GridCol>
-        <GridCol span={6} offset={6}>col-6 offset-6</GridCol>
-        <GridCol span={6} offset={6}>col-6 offset-6</GridCol>
+        <GridCol span={6} offset={6}>
+          col-6 offset-6
+        </GridCol>
+        <GridCol span={6} offset={6}>
+          col-6 offset-6
+        </GridCol>
       </GridRow>
     </Grid>
-  )
+  );
 }
 ```
 
 ### 推拉
 
 ```tsx
-import { Grid, GridRow, GridCol } from '@/components/UI'
+import { Grid, GridRow, GridCol } from "@/components/UI";
 
 export default function GridPushPull() {
   return (
     <Grid>
       <GridRow>
-        <GridCol span={18} push={6}>col-18 push-6</GridCol>
-        <GridCol span={6} pull={18}>col-6 pull-18</GridCol>
+        <GridCol span={18} push={6}>
+          col-18 push-6
+        </GridCol>
+        <GridCol span={6} pull={18}>
+          col-6 pull-18
+        </GridCol>
       </GridRow>
     </Grid>
-  )
+  );
 }
 ```
 
 ### 响应式
 
 ```tsx
-import { Grid, GridRow, GridCol } from '@/components/UI'
+import { Grid, GridRow, GridCol } from "@/components/UI";
 
 export default function GridResponsive() {
   return (
@@ -126,7 +134,7 @@ export default function GridResponsive() {
         </GridCol>
       </GridRow>
     </Grid>
-  )
+  );
 }
 ```
 
@@ -134,33 +142,33 @@ export default function GridResponsive() {
 
 ### Grid Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值 |
+| --------- | ---------- | -------- | ------ |
+| className | 自定义类名 | `string` | -      |
 
 ### GridRow Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| gutter | 栅格间距 | `number` | `0` |
-| align | 垂直对齐 | `string` | `top` / `middle` / `bottom` | `top` |
-| justify | 水平排列 | `string` | `start` / `center` / `end` / `space-between` / `space-around` | `start` |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明       | 类型     | 默认值                                                        |
+| --------- | ---------- | -------- | ------------------------------------------------------------- | ------- |
+| gutter    | 栅格间距   | `number` | `0`                                                           |
+| align     | 垂直对齐   | `string` | `top` / `middle` / `bottom`                                   | `top`   |
+| justify   | 水平排列   | `string` | `start` / `center` / `end` / `space-between` / `space-around` | `start` |
+| className | 自定义类名 | `string` | -                                                             |
 
 ### GridCol Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| span | 栅格占位格数 | `number` | `24` |
-| offset | 栅格左侧的间隔格数 | `number` | `0` |
-| push | 栅格向右移动格数 | `number` | `0` |
-| pull | 栅格向左移动格数 | `number` | `0` |
-| xs | `<576px` 响应式栅格 | `number` | - |
-| sm | `≥576px` 响应式栅格 | `number` | - |
-| md | `≥768px` 响应式栅格 | `number` | - |
-| lg | `≥992px` 响应式栅格 | `number` | - |
-| xl | `≥1200px` 响应式栅格 | `number` | - |
-| className | 自定义类名 | `string` | - |
+| 参数      | 说明                 | 类型     | 默认值 |
+| --------- | -------------------- | -------- | ------ |
+| span      | 栅格占位格数         | `number` | `24`   |
+| offset    | 栅格左侧的间隔格数   | `number` | `0`    |
+| push      | 栅格向右移动格数     | `number` | `0`    |
+| pull      | 栅格向左移动格数     | `number` | `0`    |
+| xs        | `<576px` 响应式栅格  | `number` | -      |
+| sm        | `≥576px` 响应式栅格  | `number` | -      |
+| md        | `≥768px` 响应式栅格  | `number` | -      |
+| lg        | `≥992px` 响应式栅格  | `number` | -      |
+| xl        | `≥1200px` 响应式栅格 | `number` | -      |
+| className | 自定义类名           | `string` | -      |
 
 ## 样式定制
 

@@ -89,7 +89,7 @@ export class RateLimiterMiddleware {
       res.set({
         'X-RateLimit-Limit': config.maxRequests.toString(),
         'X-RateLimit-Remaining': remaining.toString(),
-        'X-RateLimit-Reset': Math.floor(Date.now() / 1000 + ttl).toString()
+        'X-RateLimit-Reset': Math.floor(Date.now() / 1000 + ttl).toString(),
       });
 
       // 检查是否超过限制
@@ -101,7 +101,7 @@ export class RateLimiterMiddleware {
           limit: config.maxRequests,
           remaining: 0,
           resetTime: Date.now() + ttl * 1000,
-          retryAfter
+          retryAfter,
         });
       }
 
@@ -146,7 +146,7 @@ export class RateLimiterMiddleware {
         // 更新状态
         await this.redis.hmset(key, {
           tokens: tokens.toString(),
-          lastRefill: now.toString()
+          lastRefill: now.toString(),
         });
         await this.redis.expire(key, Math.ceil(config.windowMs / 1000) * 2);
 
@@ -154,7 +154,7 @@ export class RateLimiterMiddleware {
         res.set({
           'X-RateLimit-Limit': config.maxRequests.toString(),
           'X-RateLimit-Remaining': Math.floor(tokens).toString(),
-          'X-RateLimit-Reset': Math.floor(now / 1000 + (config.maxRequests - tokens) / refillRate).toString()
+          'X-RateLimit-Reset': Math.floor(now / 1000 + (config.maxRequests - tokens) / refillRate).toString(),
         });
 
         next();
@@ -167,7 +167,7 @@ export class RateLimiterMiddleware {
           limit: config.maxRequests,
           remaining: 0,
           resetTime: now + retryAfter * 1000,
-          retryAfter
+          retryAfter,
         });
       }
     };
@@ -194,14 +194,14 @@ export class RateLimiterMiddleware {
 
         // 设置最严格的限制信息
         const strictestLimit = results.reduce((min, current) =>
-          current.info ? (current.info.remaining < min.info.remaining ? current : min) : min
+          current.info ? (current.info.remaining < min.info.remaining ? current : min) : min,
         );
 
         if (strictestLimit.info) {
           res.set({
             'X-RateLimit-Limit': strictestLimit.info.limit.toString(),
             'X-RateLimit-Remaining': strictestLimit.info.remaining.toString(),
-            'X-RateLimit-Reset': Math.floor(Date.now() / 1000 + strictestLimit.info.retryAfter).toString()
+            'X-RateLimit-Reset': Math.floor(Date.now() / 1000 + strictestLimit.info.retryAfter).toString(),
           });
         }
 
@@ -248,16 +248,17 @@ export class RateLimiterMiddleware {
         if (currentCount >= config.maxRequests) {
           // 计算最早请求的时间以确定重试时间
           const earliestResult = await this.redis.zrange(key, 0, 0, 'WITHSCORES');
-          const retryAfter = earliestResult.length > 0
-            ? Math.ceil((parseInt(earliestResult[0][1]) + config.windowMs - now) / 1000)
-            : Math.ceil(config.windowMs / 1000);
+          const retryAfter =
+            earliestResult.length > 0
+              ? Math.ceil((parseInt(earliestResult[0][1]) + config.windowMs - now) / 1000)
+              : Math.ceil(config.windowMs / 1000);
 
           res.set('Retry-After', retryAfter.toString());
 
           return this.rateLimitExceeded(res, {
             limit: config.maxRequests,
             windowMs: config.windowMs,
-            retryAfter
+            retryAfter,
           });
         }
 
@@ -265,7 +266,7 @@ export class RateLimiterMiddleware {
         res.set({
           'X-RateLimit-Limit': config.maxRequests.toString(),
           'X-RateLimit-Remaining': remaining.toString(),
-          'X-RateLimit-Reset': Math.floor(now / 1000 + config.windowMs / 1000).toString()
+          'X-RateLimit-Reset': Math.floor(now / 1000 + config.windowMs / 1000).toString(),
         });
 
         next();
@@ -347,8 +348,8 @@ export class RateLimiterMiddleware {
           limit: config.maxRequests,
           remaining: 0,
           resetTime: Date.now() + ttl * 1000,
-          retryAfter: ttl
-        }
+          retryAfter: ttl,
+        },
       };
     }
 
@@ -358,8 +359,8 @@ export class RateLimiterMiddleware {
         limit: config.maxRequests,
         remaining,
         resetTime: Date.now() + ttl * 1000,
-        retryAfter: 0
-      }
+        retryAfter: 0,
+      },
     };
   }
 
@@ -381,9 +382,10 @@ export class RateLimiterMiddleware {
 
     if (currentCount >= config.maxRequests) {
       const earliestResult = await this.redis.zrange(key, 0, 0, 'WITHSCORES');
-      const retryAfter = earliestResult.length > 0
-        ? Math.ceil((parseInt(earliestResult[0][1]) + config.windowMs - now) / 1000)
-        : Math.ceil(config.windowMs / 1000);
+      const retryAfter =
+        earliestResult.length > 0
+          ? Math.ceil((parseInt(earliestResult[0][1]) + config.windowMs - now) / 1000)
+          : Math.ceil(config.windowMs / 1000);
 
       return {
         blocked: true,
@@ -391,8 +393,8 @@ export class RateLimiterMiddleware {
           limit: config.maxRequests,
           remaining: 0,
           resetTime: now + retryAfter * 1000,
-          retryAfter
-        }
+          retryAfter,
+        },
       };
     }
 
@@ -402,8 +404,8 @@ export class RateLimiterMiddleware {
         limit: config.maxRequests,
         remaining: config.maxRequests - currentCount,
         resetTime: now + config.windowMs,
-        retryAfter: 0
-      }
+        retryAfter: 0,
+      },
     };
   }
 
@@ -442,7 +444,7 @@ export class RateLimiterMiddleware {
       // 更新状态
       await this.redis.hmset(key, {
         tokens: tokens.toString(),
-        lastRefill: now.toString()
+        lastRefill: now.toString(),
       });
       await this.redis.expire(key, Math.ceil(config.windowMs / 1000) * 2);
 
@@ -451,9 +453,9 @@ export class RateLimiterMiddleware {
         info: {
           limit: config.maxRequests,
           remaining: Math.floor(tokens),
-          resetTime: now + (config.maxRequests - tokens) / refillRate * 1000,
-          retryAfter: 0
-        }
+          resetTime: now + ((config.maxRequests - tokens) / refillRate) * 1000,
+          retryAfter: 0,
+        },
       };
     } else {
       // 没有令牌可用
@@ -465,8 +467,8 @@ export class RateLimiterMiddleware {
           limit: config.maxRequests,
           remaining: 0,
           resetTime: now + retryAfter * 1000,
-          retryAfter
-        }
+          retryAfter,
+        },
       };
     }
   }
@@ -519,7 +521,7 @@ export class RateLimiterMiddleware {
       if (path.startsWith(routePath)) {
         return {
           ...config,
-          ...config.routeSpecific[routePath]
+          ...config.routeSpecific[routePath],
         };
       }
     }
@@ -543,14 +545,14 @@ export class RateLimiterMiddleware {
       return {
         connectedClients,
         usedMemory,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
     } catch (error) {
       console.error('Failed to get system load:', error);
       return {
         connectedClients: 0,
         usedMemory: 0,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
     }
   }
@@ -591,13 +593,13 @@ export class RateLimiterMiddleware {
       limit: info.limit,
       remaining: info.remaining,
       retryAfter: info.retryAfter,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
 
     // 使用自定义响应配置（如果有）
     const responseConfig = this.config.response || {
       statusCode: 429,
-      message: `Rate limit exceeded. Try again in ${info.retryAfter} seconds.`
+      message: `Rate limit exceeded. Try again in ${info.retryAfter} seconds.`,
     };
 
     res.status(responseConfig.statusCode).json({
@@ -609,9 +611,9 @@ export class RateLimiterMiddleware {
         limit: info.limit,
         remaining: info.remaining,
         resetTime: info.resetTime,
-        retryAfter: info.retryAfter
+        retryAfter: info.retryAfter,
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 }

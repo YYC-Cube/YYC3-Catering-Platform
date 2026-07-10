@@ -8,11 +8,7 @@
       "author": "YYC³",
       "commit_hash": "1954bf8b7deba81647fc0447f76ddd0c8a65b70d",
       "message": "初始版本创建",
-      "changes": [
-        "创建微服务架构设计规范文档",
-        "定义核心架构原则",
-        "设计服务拆分策略"
-      ],
+      "changes": ["创建微服务架构设计规范文档", "定义核心架构原则", "设计服务拆分策略"],
       "metadata": {}
     }
   ],
@@ -25,11 +21,7 @@
       "author": "YYC³",
       "commit_hash": "1954bf8b7deba81647fc0447f76ddd0c8a65b70d",
       "message": "初始版本创建",
-      "changes": [
-        "创建React性能优化技巧文档",
-        "介绍性能优化最佳实践",
-        "提供代码示例"
-      ],
+      "changes": ["创建React性能优化技巧文档", "介绍性能优化最佳实践", "提供代码示例"],
       "metadata": {}
     }
   ],
@@ -42,11 +34,7 @@
       "author": "YYC³",
       "commit_hash": "1954bf8b7deba81647fc0447f76ddd0c8a65b70d",
       "message": "初始版本创建",
-      "changes": [
-        "创建数据库分库分表设计文档",
-        "设计分库分表策略",
-        "定义数据路由规则"
-      ],
+      "changes": ["创建数据库分库分表设计文档", "设计分库分表策略", "定义数据路由规则"],
       "metadata": {}
     }
   ],
@@ -59,11 +47,7 @@
       "author": "YYC³",
       "commit_hash": "1954bf8b7deba81647fc0447f76ddd0c8a65b70d",
       "message": "初始版本创建",
-      "changes": [
-        "创建消息队列架构设计文档",
-        "设计消息队列拓扑",
-        "定义消息处理流程"
-      ],
+      "changes": ["创建消息队列架构设计文档", "设计消息队列拓扑", "定义消息处理流程"],
       "metadata": {}
     }
   ],
@@ -76,11 +60,7 @@
       "author": "YYC³",
       "commit_hash": "1954bf8b7deba81647fc0447f76ddd0c8a65b70d",
       "message": "初始版本创建",
-      "changes": [
-        "创建TypeScript类型定义最佳实践文档",
-        "介绍类型系统使用技巧",
-        "提供代码示例"
-      ],
+      "changes": ["创建TypeScript类型定义最佳实践文档", "介绍类型系统使用技巧", "提供代码示例"],
       "metadata": {}
     }
   ]

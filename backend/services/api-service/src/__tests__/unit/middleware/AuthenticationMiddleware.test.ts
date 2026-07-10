@@ -17,17 +17,19 @@ vi.mock('../../../config/database', () => ({
       const normalizedSql = sql.replace(/\s+/g, ' ').trim();
       if (normalizedSql.includes('SELECT id, email, role, status FROM users')) {
         return Promise.resolve({
-          rows: [{
-            id: params[0],
-            email: 'test@example.com',
-            role: 'user',
-            status: 'active'
-          }]
+          rows: [
+            {
+              id: params[0],
+              email: 'test@example.com',
+              role: 'user',
+              status: 'active',
+            },
+          ],
         });
       }
       return Promise.resolve({ rows: [] });
-    })
-  }
+    }),
+  },
 }));
 
 describe('AuthenticationMiddleware', () => {
@@ -44,7 +46,7 @@ describe('AuthenticationMiddleware', () => {
         userId: 'user123',
         email: 'test@example.com',
         role: 'admin',
-        restaurantId: 'restaurant1'
+        restaurantId: 'restaurant1',
       };
 
       const token = auth.generateToken(payload);
@@ -57,7 +59,7 @@ describe('AuthenticationMiddleware', () => {
       const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user123',
         email: 'test@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       const token = auth.generateToken(payload);
@@ -68,13 +70,13 @@ describe('AuthenticationMiddleware', () => {
       const payload1: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user1',
         email: 'user1@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       const payload2: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user2',
         email: 'user2@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       const token1 = auth.generateToken(payload1);
@@ -89,7 +91,7 @@ describe('AuthenticationMiddleware', () => {
       const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user123',
         email: 'test@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       const token = auth.generateToken(payload);
@@ -117,20 +119,20 @@ describe('AuthenticationMiddleware', () => {
       const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user123',
         email: 'test@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       // 创建一个过期的令牌（通过直接构造payload）
       const header = {
         alg: 'HS256',
-        typ: 'JWT'
+        typ: 'JWT',
       };
 
       const now = Math.floor(Date.now() / 1000);
       const expiredPayload = {
         ...payload,
         iat: now,
-        exp: now - 3600 // 1小时前过期
+        exp: now - 3600, // 1小时前过期
       };
 
       const crypto = require('crypto');
@@ -148,7 +150,8 @@ describe('AuthenticationMiddleware', () => {
         .replace(/\//g, '_')
         .replace(/=/g, '');
 
-      const signature = crypto.createHmac('sha256', jwtSecret)
+      const signature = crypto
+        .createHmac('sha256', jwtSecret)
         .update(`${encodedHeader}.${encodedPayload}`)
         .digest('hex');
 
@@ -169,7 +172,7 @@ describe('AuthenticationMiddleware', () => {
       const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user123',
         email: 'test@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       const token = auth.generateToken(payload);
@@ -185,7 +188,7 @@ describe('AuthenticationMiddleware', () => {
       const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user123',
         email: 'test@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       const token = auth.generateToken(payload);
@@ -200,14 +203,14 @@ describe('AuthenticationMiddleware', () => {
       const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user123',
         email: 'test@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       const token = auth.generateToken(payload);
       const request = new Request('http://example.com', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const result = await auth.authenticate()(request);
@@ -226,8 +229,8 @@ describe('AuthenticationMiddleware', () => {
     it('应该拒绝包含无效令牌的请求', async () => {
       const request = new Request('http://example.com', {
         headers: {
-          'Authorization': 'Bearer invalid.token'
-        }
+          Authorization: 'Bearer invalid.token',
+        },
       });
 
       const result = await auth.authenticate()(request);
@@ -314,14 +317,14 @@ describe('AuthenticationMiddleware', () => {
       const payload: Omit<JWTPayload, 'iat' | 'exp'> = {
         userId: 'user123',
         email: 'test@example.com',
-        role: 'user'
+        role: 'user',
       };
 
       const token = auth.generateToken(payload);
       const request = new Request('http://example.com', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const result = await auth.optionalAuthenticate()(request);
@@ -340,8 +343,8 @@ describe('AuthenticationMiddleware', () => {
     it('应该在令牌验证失败时不返回错误', async () => {
       const request = new Request('http://example.com', {
         headers: {
-          'Authorization': 'Bearer invalid.token'
-        }
+          Authorization: 'Bearer invalid.token',
+        },
       });
 
       const result = await auth.optionalAuthenticate()(request);
@@ -354,7 +357,7 @@ describe('AuthenticationMiddleware', () => {
     it('应该为成功的验证创建成功响应', () => {
       const result = {
         success: true,
-        user: { id: 'user123', role: 'admin' }
+        user: { id: 'user123', role: 'admin' },
       };
 
       const response = auth.createAuthResponse(result);
@@ -365,7 +368,7 @@ describe('AuthenticationMiddleware', () => {
       const result = {
         success: false,
         error: '无效的令牌',
-        code: 'INVALID_TOKEN'
+        code: 'INVALID_TOKEN',
       };
 
       const response = auth.createAuthResponse(result);
@@ -386,7 +389,7 @@ describe('AuthenticationMiddleware', () => {
       const result = {
         success: false,
         error: '权限不足',
-        code: 'INSUFFICIENT_PERMISSIONS'
+        code: 'INSUFFICIENT_PERMISSIONS',
       };
 
       const response = auth.createAuthzResponse(result);

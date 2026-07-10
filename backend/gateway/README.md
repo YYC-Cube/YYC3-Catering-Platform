@@ -1,10 +1,10 @@
 # 🔖 YYC³ API Gateway
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ## 📋 概述
 
@@ -46,16 +46,16 @@ API Gateway (端口: 8080)
 
 ### 核心组件
 
-| 组件 | 说明 |
-|------|------|
-| GatewayApp | 网关主应用类 |
+| 组件                     | 说明           |
+| ------------------------ | -------------- |
+| GatewayApp               | 网关主应用类   |
 | AuthenticationMiddleware | 身份认证中间件 |
-| RateLimiterMiddleware | 请求限流中间件 |
-| CacheMiddleware | 缓存中间件 |
-| CircuitBreakerMiddleware | 熔断器中间件 |
-| MetricsMiddleware | 监控指标中间件 |
-| LoggingMiddleware | 日志记录中间件 |
-| EncryptionMiddleware | 数据加密中间件 |
+| RateLimiterMiddleware    | 请求限流中间件 |
+| CacheMiddleware          | 缓存中间件     |
+| CircuitBreakerMiddleware | 熔断器中间件   |
+| MetricsMiddleware        | 监控指标中间件 |
+| LoggingMiddleware        | 日志记录中间件 |
+| EncryptionMiddleware     | 数据加密中间件 |
 
 ## 🚀 快速开始
 
@@ -124,18 +124,18 @@ pnpm start
 ```typescript
 routes: [
   {
-    path: '/api/v1/users',
-    target: 'http://localhost:3001',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    path: "/api/v1/users",
+    target: "http://localhost:3001",
+    methods: ["GET", "POST", "PUT", "DELETE"],
     timeout: 30000,
     retries: 3,
     authentication: true,
     rateLimit: {
       maxRequests: 50,
-      windowMs: 60000
-    }
-  }
-]
+      windowMs: 60000,
+    },
+  },
+];
 ```
 
 ### 2. 身份认证
@@ -144,16 +144,16 @@ routes: [
 
 ```typescript
 // 客户端请求
-fetch('http://localhost:8080/api/v1/users', {
+fetch("http://localhost:8080/api/v1/users", {
   headers: {
-    'Authorization': 'Bearer <jwt-token>'
-  }
+    Authorization: "Bearer <jwt-token>",
+  },
 });
 
 // 后端服务接收的用户信息
-req.headers['x-user-id']      // 用户ID
-req.headers['x-user-email']   // 用户邮箱
-req.headers['x-user-role']    // 用户角色
+req.headers["x-user-id"]; // 用户ID
+req.headers["x-user-email"]; // 用户邮箱
+req.headers["x-user-role"]; // 用户角色
 ```
 
 ### 3. 请求限流
@@ -199,13 +199,13 @@ req.headers['x-user-role']    // 用户角色
 
 ### Prometheus 指标
 
-| 指标名称 | 类型 | 说明 |
-|---------|------|------|
-| `gateway_requests_total` | Counter | 请求总数 |
+| 指标名称                           | 类型      | 说明         |
+| ---------------------------------- | --------- | ------------ |
+| `gateway_requests_total`           | Counter   | 请求总数     |
 | `gateway_request_duration_seconds` | Histogram | 请求持续时间 |
-| `gateway_errors_total` | Counter | 错误总数 |
-| `gateway_circuit_breaker_state` | Gauge | 熔断器状态 |
-| `gateway_cache_hits_total` | Counter | 缓存命中数 |
+| `gateway_errors_total`             | Counter   | 错误总数     |
+| `gateway_circuit_breaker_state`    | Gauge     | 熔断器状态   |
+| `gateway_cache_hits_total`         | Counter   | 缓存命中数   |
 
 ### Grafana 仪表盘
 
@@ -303,29 +303,29 @@ pnpm typecheck
 
 ### 认证配置
 
-| 配置项 | 说明 | 默认值 |
-|--------|------|--------|
-| `enabled` | 是否启用认证 | true |
-| `jwt.secret` | JWT 密钥 | - |
-| `jwt.algorithms` | JWT 算法 | ['HS256'] |
-| `excludePaths` | 排除路径 | ['/api/v1/health'] |
+| 配置项           | 说明         | 默认值             |
+| ---------------- | ------------ | ------------------ |
+| `enabled`        | 是否启用认证 | true               |
+| `jwt.secret`     | JWT 密钥     | -                  |
+| `jwt.algorithms` | JWT 算法     | ['HS256']          |
+| `excludePaths`   | 排除路径     | ['/api/v1/health'] |
 
 ### 限流配置
 
-| 配置项 | 说明 | 默认值 |
-|--------|------|--------|
-| `enabled` | 是否启用限流 | true |
-| `windowMs` | 时间窗口 | 60000 |
-| `maxRequests` | 最大请求数 | 100 |
-| `strategy` | 限流策略 | 'fixed' |
+| 配置项        | 说明         | 默认值  |
+| ------------- | ------------ | ------- |
+| `enabled`     | 是否启用限流 | true    |
+| `windowMs`    | 时间窗口     | 60000   |
+| `maxRequests` | 最大请求数   | 100     |
+| `strategy`    | 限流策略     | 'fixed' |
 
 ### 缓存配置
 
-| 配置项 | 说明 | 默认值 |
-|--------|------|--------|
-| `enabled` | 是否启用缓存 | true |
-| `type` | 缓存类型 | 'redis' |
-| `ttl` | 缓存过期时间 | 300000 |
+| 配置项    | 说明         | 默认值  |
+| --------- | ------------ | ------- |
+| `enabled` | 是否启用缓存 | true    |
+| `type`    | 缓存类型     | 'redis' |
+| `ttl`     | 缓存过期时间 | 300000  |
 
 ## 🐛 故障排查
 
@@ -334,6 +334,7 @@ pnpm typecheck
 **症状**: 代理请求返回 502 错误
 
 **解决方案**:
+
 1. 检查后端服务是否正常运行
 2. 验证路由配置中的 target 地址是否正确
 3. 查看网关日志获取详细错误信息
@@ -343,6 +344,7 @@ pnpm typecheck
 **症状**: 返回 401 Unauthorized
 
 **解决方案**:
+
 1. 检查 JWT token 是否有效
 2. 验证 JWT_SECRET 配置是否正确
 3. 确认请求路径不在 excludePaths 中
@@ -352,6 +354,7 @@ pnpm typecheck
 **症状**: 返回 429 Too Many Requests
 
 **解决方案**:
+
 1. 调整限流配置的 maxRequests 参数
 2. 将客户端 IP 添加到白名单
 3. 实现指数退避重试机制
@@ -382,7 +385,7 @@ pnpm typecheck
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」

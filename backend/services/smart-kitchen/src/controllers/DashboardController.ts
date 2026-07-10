@@ -67,7 +67,7 @@ export class DashboardController {
 
   constructor(
     private orderService: OrderService,
-    private dishRepository: DishRepository
+    private dishRepository: DishRepository,
   ) {
     this.router = Router();
     this.initializeRoutes();
@@ -80,7 +80,7 @@ export class DashboardController {
     this.router.get('/menu/top', this.getTopDishes.bind(this));
     this.router.get('/customer/flow', this.getCustomerFlow.bind(this));
     this.router.get('/orders/recent', this.getRecentOrders.bind(this));
-    
+
     const exportController = new ExportController(this.orderService, this.dishRepository);
     this.router.post('/export', exportController.exportDashboardData.bind(exportController));
   }
@@ -88,10 +88,10 @@ export class DashboardController {
   async getCoreMetrics(req: Request, res: Response) {
     try {
       const { startDate, endDate, period } = req.query;
-      
+
       const orderQueue = await this.orderService.getOrderQueue('', 'all', 10000, 0);
       const orders = orderQueue.orders;
-      
+
       const totalOrders = orders.length;
       const totalRevenue = orders.reduce((sum: number, o: any) => sum + (o.totalAmount || 0), 0);
       const totalCustomers = new Set(orders.map((o: any) => o.customerId)).size;
@@ -104,14 +104,14 @@ export class DashboardController {
         totalRevenue,
         totalCustomers,
         avgOrderValue: Math.round(avgOrderValue * 100) / 100,
-        completionRate: Math.round(completionRate * 100) / 100
+        completionRate: Math.round(completionRate * 100) / 100,
       };
 
       const response: ApiResponse<CoreMetrics> = {
         success: true,
         data: metrics,
         message: 'Core metrics retrieved successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -121,7 +121,7 @@ export class DashboardController {
         success: false,
         data: null,
         message: 'Failed to retrieve core metrics',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }
@@ -129,12 +129,12 @@ export class DashboardController {
   async getRevenueData(req: Request, res: Response) {
     try {
       const { startDate, endDate, period } = req.query;
-      
+
       const orderQueue = await this.orderService.getOrderQueue('', 'all', 10000, 0);
       const orders = orderQueue.orders;
-      
+
       const revenueMap = new Map<string, { revenue: number; orders: number }>();
-      
+
       orders.forEach((order: any) => {
         const date = new Date(order.createdAt).toISOString().split('T')[0];
         if (!revenueMap.has(date)) {
@@ -144,12 +144,12 @@ export class DashboardController {
         data.revenue += order.totalAmount || 0;
         data.orders += 1;
       });
-      
+
       const revenueData: RevenueData[] = Array.from(revenueMap.entries())
         .map(([date, data]) => ({
           date,
           revenue: Math.round(data.revenue * 100) / 100,
-          orders: data.orders
+          orders: data.orders,
         }))
         .sort((a, b) => a.date.localeCompare(b.date));
 
@@ -157,7 +157,7 @@ export class DashboardController {
         success: true,
         data: revenueData,
         message: 'Revenue data retrieved successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -167,7 +167,7 @@ export class DashboardController {
         success: false,
         data: [],
         message: 'Failed to retrieve revenue data',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }
@@ -175,27 +175,27 @@ export class DashboardController {
   async getOrderDistribution(req: Request, res: Response) {
     try {
       const { startDate, endDate, period } = req.query;
-      
+
       const orderQueue = await this.orderService.getOrderQueue('', 'all', 10000, 0);
       const orders = orderQueue.orders;
-      
+
       const statusCounts = orders.reduce((acc: any, order: any) => {
         acc[order.status] = (acc[order.status] || 0) + 1;
         return acc;
       }, {});
-      
+
       const totalOrders = orders.length;
       const distribution: OrderDistribution[] = Object.entries(statusCounts).map(([status, count]) => ({
         status,
         count: count as number,
-        percentage: totalOrders > 0 ? Math.round((count as number / totalOrders) * 10000) / 100 : 0
+        percentage: totalOrders > 0 ? Math.round(((count as number) / totalOrders) * 10000) / 100 : 0,
       }));
 
       const response: ApiResponse<OrderDistribution[]> = {
         success: true,
         data: distribution,
         message: 'Order distribution retrieved successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -205,7 +205,7 @@ export class DashboardController {
         success: false,
         data: [],
         message: 'Failed to retrieve order distribution',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }
@@ -213,12 +213,12 @@ export class DashboardController {
   async getTopDishes(req: Request, res: Response) {
     try {
       const { startDate, endDate, period } = req.query;
-      
+
       const orderQueue = await this.orderService.getOrderQueue('', 'all', 10000, 0);
       const orders = orderQueue.orders;
-      
+
       const dishSales = new Map<string, { count: number; revenue: number; category: string }>();
-      
+
       orders.forEach((order: any) => {
         order.dishes?.forEach((dish: any) => {
           if (!dishSales.has(dish.name)) {
@@ -229,7 +229,7 @@ export class DashboardController {
           data.revenue += (dish.price || 0) * (dish.quantity || 1);
         });
       });
-      
+
       const topDishes: TopDish[] = Array.from(dishSales.entries())
         .map(([name, data]) => ({
           id: name,
@@ -237,7 +237,7 @@ export class DashboardController {
           category: data.category,
           salesCount: data.count,
           revenue: Math.round(data.revenue * 100) / 100,
-          avgRating: 4.5
+          avgRating: 4.5,
         }))
         .sort((a, b) => b.salesCount - a.salesCount)
         .slice(0, 10);
@@ -246,7 +246,7 @@ export class DashboardController {
         success: true,
         data: topDishes,
         message: 'Top dishes retrieved successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -256,7 +256,7 @@ export class DashboardController {
         success: false,
         data: [],
         message: 'Failed to retrieve top dishes',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }
@@ -264,27 +264,27 @@ export class DashboardController {
   async getCustomerFlow(req: Request, res: Response) {
     try {
       const { startDate, endDate, period } = req.query;
-      
+
       const orderQueue = await this.orderService.getOrderQueue('', 'all', 10000, 0);
       const orders = orderQueue.orders;
-      
+
       const hourlyFlow = new Array(24).fill(0);
-      
+
       orders.forEach((order: any) => {
         const hour = new Date(order.createdAt).getHours();
         hourlyFlow[hour]++;
       });
-      
+
       const customerFlow: CustomerFlow[] = hourlyFlow.map((count, hour) => ({
         hour,
-        count
+        count,
       }));
 
       const response: ApiResponse<CustomerFlow[]> = {
         success: true,
         data: customerFlow,
         message: 'Customer flow retrieved successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -294,7 +294,7 @@ export class DashboardController {
         success: false,
         data: [],
         message: 'Failed to retrieve customer flow',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }
@@ -303,23 +303,23 @@ export class DashboardController {
     try {
       const { limit } = req.query;
       const limitNum = parseInt(limit as string) || 10;
-      
+
       const orderQueue = await this.orderService.getOrderQueue('', 'all', limitNum, 0);
-      
+
       const recentOrders: RecentOrder[] = orderQueue.orders.map((order: any) => ({
         id: order.id,
         customerName: order.customerName || 'Unknown',
         items: order.dishes?.map((d: any) => d.name) || [],
         totalAmount: order.totalAmount || 0,
         status: order.status,
-        createdAt: order.createdAt
+        createdAt: order.createdAt,
       }));
 
       const response: ApiResponse<RecentOrder[]> = {
         success: true,
         data: recentOrders,
         message: 'Recent orders retrieved successfully',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       res.json(response);
@@ -329,7 +329,7 @@ export class DashboardController {
         success: false,
         data: [],
         message: 'Failed to retrieve recent orders',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
   }

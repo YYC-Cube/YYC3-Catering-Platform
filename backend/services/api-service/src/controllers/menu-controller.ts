@@ -38,7 +38,8 @@ export class MenuController {
       const now = new Date();
 
       // 插入数据库
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         INSERT INTO menu_items (
           restaurant_id, category_id, name, description, images, price, original_price,
           spicy_level, prep_time, tags, ingredients, allergens, nutrition, status,
@@ -47,30 +48,32 @@ export class MenuController {
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22
         ) RETURNING id, created_at
-      `, [
-        validatedData.restaurantId,
-        validatedData.categoryId,
-        validatedData.name,
-        validatedData.description || null,
-        JSON.stringify(validatedData.images || []),
-        validatedData.price,
-        validatedData.originalPrice || null,
-        validatedData.spicyLevel || 'none',
-        validatedData.prepTime || 0,
-        JSON.stringify(validatedData.tags || []),
-        JSON.stringify(validatedData.ingredients || []),
-        JSON.stringify(validatedData.allergens || []),
-        JSON.stringify(validatedData.nutrition || {}),
-        validatedData.status || 'available',
-        validatedData.sortOrder || 0,
-        validatedData.isRecommended || false,
-        validatedData.isPopular || false,
-        validatedData.isNew || false,
-        validatedData.isSeasonal || false,
-        validatedData.seasonStart || null,
-        validatedData.seasonEnd || null,
-        validatedData.createdBy || null
-      ]);
+      `,
+        [
+          validatedData.restaurantId,
+          validatedData.categoryId,
+          validatedData.name,
+          validatedData.description || null,
+          JSON.stringify(validatedData.images || []),
+          validatedData.price,
+          validatedData.originalPrice || null,
+          validatedData.spicyLevel || 'none',
+          validatedData.prepTime || 0,
+          JSON.stringify(validatedData.tags || []),
+          JSON.stringify(validatedData.ingredients || []),
+          JSON.stringify(validatedData.allergens || []),
+          JSON.stringify(validatedData.nutrition || {}),
+          validatedData.status || 'available',
+          validatedData.sortOrder || 0,
+          validatedData.isRecommended || false,
+          validatedData.isPopular || false,
+          validatedData.isNew || false,
+          validatedData.isSeasonal || false,
+          validatedData.seasonStart || null,
+          validatedData.seasonEnd || null,
+          validatedData.createdBy || null,
+        ]
+      );
 
       const newMenuItem = {
         id: result.rows[0].id,
@@ -88,7 +91,7 @@ export class MenuController {
       };
     } catch (error) {
       console.error('❌ 创建菜品失败:', error);
-      throw new Error(`创建菜品失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`创建菜品失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -161,7 +164,14 @@ export class MenuController {
       const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
       // 验证排序字段
-      const allowedSortFields = ['sort_order', 'name', 'price', 'rating', 'created_at', 'updated_at'];
+      const allowedSortFields = [
+        'sort_order',
+        'name',
+        'price',
+        'rating',
+        'created_at',
+        'updated_at',
+      ];
       const validSortField = allowedSortFields.includes(sortBy) ? sortBy : 'sort_order';
       const validSortOrder = sortOrder === 'desc' ? 'DESC' : 'ASC';
 
@@ -232,7 +242,10 @@ export class MenuController {
     } catch (error) {
       console.error('❌ 获取菜品列表失败:', error);
       // 检查是否是数据库连接错误
-      if (error instanceof Error && (error.message.includes('ECONNREFUSED') || error.message.includes('database connection'))) {
+      if (
+        error instanceof Error &&
+        (error.message.includes('ECONNREFUSED') || error.message.includes('database connection'))
+      ) {
         // 数据库连接失败，返回模拟数据
         console.log('⚠️  数据库连接失败，返回模拟菜品数据');
         const mockItems = [
@@ -254,7 +267,7 @@ export class MenuController {
               calories: 350,
               protein: 25,
               carbs: 15,
-              fat: 22
+              fat: 22,
             },
             status: 'available',
             sortOrder: 1,
@@ -287,7 +300,7 @@ export class MenuController {
               calories: 280,
               protein: 18,
               carbs: 12,
-              fat: 18
+              fat: 18,
             },
             status: 'available',
             sortOrder: 2,
@@ -301,13 +314,13 @@ export class MenuController {
             reviewCount: 98,
             createdAt: new Date('2024-01-01T12:00:00Z'),
             updatedAt: new Date('2024-01-01T12:00:00Z'),
-          }
+          },
         ];
-        
+
         const { page = 1, limit = 20 } = query;
         const total = mockItems.length;
         const totalPages = Math.ceil(total / limit);
-        
+
         return {
           items: mockItems,
           total,
@@ -318,7 +331,7 @@ export class MenuController {
           hasPrev: page > 1,
         };
       }
-      throw new Error(`获取菜品列表失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取菜品列表失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -334,7 +347,8 @@ export class MenuController {
       // 确保数据库连接池已创建
       await dbManager.createPool();
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           id, restaurant_id, category_id, name, description, images, price, original_price,
           spicy_level, prep_time, tags, ingredients, allergens, nutrition, status,
@@ -342,7 +356,9 @@ export class MenuController {
           season_start, season_end, rating, review_count, created_at, updated_at
         FROM menu_items
         WHERE id = $1
-      `, [id]);
+      `,
+        [id]
+      );
 
       if (result.rows.length === 0) {
         throw new Error('菜品不存在');
@@ -386,7 +402,7 @@ export class MenuController {
       };
     } catch (error) {
       console.error('❌ 获取菜品详情失败:', error);
-      throw new Error(`获取菜品详情失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取菜品详情失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -532,7 +548,7 @@ export class MenuController {
       };
     } catch (error) {
       console.error('❌ 更新菜品失败:', error);
-      throw new Error(`更新菜品失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`更新菜品失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -565,7 +581,7 @@ export class MenuController {
       };
     } catch (error) {
       console.error('❌ 删除菜品失败:', error);
-      throw new Error(`删除菜品失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`删除菜品失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -586,12 +602,15 @@ export class MenuController {
 
       // 构建批量更新查询
       const placeholders = ids.map((_, index) => `$${index + 2}`).join(',');
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         UPDATE menu_items
         SET status = $1, updated_at = NOW()
         WHERE id IN (${placeholders})
         RETURNING id
-      `, [status, ...ids]);
+      `,
+        [status, ...ids]
+      );
 
       const updatedCount = result.rows.length;
 
@@ -607,7 +626,9 @@ export class MenuController {
       };
     } catch (error) {
       console.error('❌ 批量更新菜品状态失败:', error);
-      throw new Error(`批量更新菜品状态失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(
+        `批量更新菜品状态失败: ${error instanceof Error ? error.message : '未知错误'}`
+      );
     }
   }
 
@@ -630,7 +651,8 @@ export class MenuController {
 
       const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           mc.id as category_id,
           mc.name as category_name,
@@ -642,7 +664,9 @@ export class MenuController {
         ${whereClause}
         GROUP BY mc.id, mc.name
         ORDER BY mc.sort_order, mc.name
-      `, params);
+      `,
+        params
+      );
 
       const stats: CategoryStats[] = result.rows.map(row => ({
         categoryId: row.category_id,
@@ -657,7 +681,7 @@ export class MenuController {
       return stats;
     } catch (error) {
       console.error('❌ 获取分类统计失败:', error);
-      throw new Error(`获取分类统计失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取分类统计失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -679,7 +703,7 @@ export class MenuController {
       return stats;
     } catch (error) {
       console.error('❌ 获取销量统计失败:', error);
-      throw new Error(`获取销量统计失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取销量统计失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -706,7 +730,7 @@ export class MenuController {
       return this.getMenuItems(searchQuery);
     } catch (error) {
       console.error('❌ 搜索菜品失败:', error);
-      throw new Error(`搜索菜品失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`搜索菜品失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -728,7 +752,8 @@ export class MenuController {
 
       params.push(limit);
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           id, restaurant_id, category_id, name, description, images, price, original_price,
           spicy_level, prep_time, tags, ingredients, allergens, nutrition, status,
@@ -738,7 +763,9 @@ export class MenuController {
         WHERE ${conditions.join(' AND ')} AND status = 'available'
         ORDER BY sort_order, rating DESC
         LIMIT $${paramIndex}
-      `, params);
+      `,
+        params
+      );
 
       const items = result.rows.map(row => ({
         id: row.id,
@@ -775,7 +802,7 @@ export class MenuController {
       };
     } catch (error) {
       console.error('❌ 获取推荐菜品失败:', error);
-      throw new Error(`获取推荐菜品失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取推荐菜品失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -797,7 +824,8 @@ export class MenuController {
 
       params.push(limit);
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           id, restaurant_id, category_id, name, description, images, price, original_price,
           spicy_level, prep_time, tags, ingredients, allergens, nutrition, status,
@@ -807,7 +835,9 @@ export class MenuController {
         WHERE ${conditions.join(' AND ')} AND status = 'available'
         ORDER BY rating DESC, review_count DESC
         LIMIT $${paramIndex}
-      `, params);
+      `,
+        params
+      );
 
       const items = result.rows.map(row => ({
         id: row.id,
@@ -844,7 +874,7 @@ export class MenuController {
       };
     } catch (error) {
       console.error('❌ 获取热门菜品失败:', error);
-      throw new Error(`获取热门菜品失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取热门菜品失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 
@@ -866,7 +896,8 @@ export class MenuController {
 
       params.push(limit);
 
-      const result = await dbManager.query(`
+      const result = await dbManager.query(
+        `
         SELECT
           id, restaurant_id, category_id, name, description, images, price, original_price,
           spicy_level, prep_time, tags, ingredients, allergens, nutrition, status,
@@ -876,7 +907,9 @@ export class MenuController {
         WHERE ${conditions.join(' AND ')} AND status = 'available'
         ORDER BY created_at DESC
         LIMIT $${paramIndex}
-      `, params);
+      `,
+        params
+      );
 
       const items = result.rows.map(row => ({
         id: row.id,
@@ -913,7 +946,7 @@ export class MenuController {
       };
     } catch (error) {
       console.error('❌ 获取新品菜品失败:', error);
-      throw new Error(`获取新品菜品失败: ${(error instanceof Error ? error.message : "未知错误")}`);
+      throw new Error(`获取新品菜品失败: ${error instanceof Error ? error.message : '未知错误'}`);
     }
   }
 }

@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-import { ref, shallowRef, shallowReactive, computed, watchEffect, onMounted, onUnmounted } from 'vue'
+import { ref, shallowRef, shallowReactive, computed, watchEffect, onMounted, onUnmounted } from 'vue';
 
 /**
  * 使用虚拟滚动
@@ -19,35 +19,31 @@ import { ref, shallowRef, shallowReactive, computed, watchEffect, onMounted, onU
  * @param containerHeight - 容器高度
  * @returns 虚拟滚动相关数据和方法
  */
-export function useVirtualScroll<T>(
-  list: T[],
-  itemHeight: number,
-  containerHeight: number
-) {
-  const scrollTop = ref(0)
-  const visibleCount = Math.ceil(containerHeight / itemHeight) + 2
-  const startIndex = computed(() => Math.max(0, Math.floor(scrollTop.value / itemHeight) - 1))
-  const endIndex = computed(() => Math.min(list.length, startIndex.value + visibleCount))
-  
+export function useVirtualScroll<T>(list: T[], itemHeight: number, containerHeight: number) {
+  const scrollTop = ref(0);
+  const visibleCount = Math.ceil(containerHeight / itemHeight) + 2;
+  const startIndex = computed(() => Math.max(0, Math.floor(scrollTop.value / itemHeight) - 1));
+  const endIndex = computed(() => Math.min(list.length, startIndex.value + visibleCount));
+
   const visibleList = computed(() => {
-    return list.slice(startIndex.value, endIndex.value)
-  })
-  
-  const offsetY = computed(() => startIndex.value * itemHeight)
-  const totalHeight = computed(() => list.length * itemHeight)
-  
+    return list.slice(startIndex.value, endIndex.value);
+  });
+
+  const offsetY = computed(() => startIndex.value * itemHeight);
+  const totalHeight = computed(() => list.length * itemHeight);
+
   const handleScroll = (e: Event) => {
-    scrollTop.value = (e.target as HTMLElement).scrollTop
-  }
-  
+    scrollTop.value = (e.target as HTMLElement).scrollTop;
+  };
+
   return {
     visibleList,
     offsetY,
     totalHeight,
     handleScroll,
     startIndex,
-    endIndex
-  }
+    endIndex,
+  };
 }
 
 /**
@@ -59,18 +55,18 @@ export function useVirtualScroll<T>(
  */
 export function useDebounce<T extends (...args: any[]) => any>(
   fn: T,
-  delay: number = 300
+  delay: number = 300,
 ): (...args: Parameters<T>) => void {
-  let timeoutId: ReturnType<typeof setTimeout> | null = null
-  
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
   return (...args: Parameters<T>) => {
     if (timeoutId) {
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId);
     }
     timeoutId = setTimeout(() => {
-      fn(...args)
-    }, delay)
-  }
+      fn(...args);
+    }, delay);
+  };
 }
 
 /**
@@ -82,17 +78,17 @@ export function useDebounce<T extends (...args: any[]) => any>(
  */
 export function useThrottle<T extends (...args: any[]) => any>(
   fn: T,
-  delay: number = 300
+  delay: number = 300,
 ): (...args: Parameters<T>) => void {
-  let lastTime = 0
-  
+  let lastTime = 0;
+
   return (...args: Parameters<T>) => {
-    const now = Date.now()
+    const now = Date.now();
     if (now - lastTime >= delay) {
-      lastTime = now
-      fn(...args)
+      lastTime = now;
+      fn(...args);
     }
-  }
+  };
 }
 
 /**
@@ -102,34 +98,34 @@ export function useThrottle<T extends (...args: any[]) => any>(
  * @returns 懒加载相关数据和方法
  */
 export function useLazyLoad<T>(loader: () => Promise<T>) {
-  const data = ref<T | null>(null)
-  const loading = ref(false)
-  const error = ref<Error | null>(null)
-  const loaded = ref(false)
-  
+  const data = ref<T | null>(null);
+  const loading = ref(false);
+  const error = ref<Error | null>(null);
+  const loaded = ref(false);
+
   const load = async () => {
-    if (loaded.value || loading.value) return
-    
-    loading.value = true
-    error.value = null
-    
+    if (loaded.value || loading.value) return;
+
+    loading.value = true;
+    error.value = null;
+
     try {
-      data.value = await loader()
-      loaded.value = true
+      data.value = await loader();
+      loaded.value = true;
     } catch (e) {
-      error.value = e as Error
+      error.value = e as Error;
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
-  
+  };
+
   return {
     data,
     loading,
     error,
     loaded,
-    load
-  }
+    load,
+  };
 }
 
 /**
@@ -143,29 +139,29 @@ export function useLazyLoad<T>(loader: () => Promise<T>) {
 export function useIntersectionObserver(
   target: Ref<HTMLElement | null>,
   callback: IntersectionObserverCallback,
-  options: IntersectionObserverInit = {}
+  options: IntersectionObserverInit = {},
 ) {
-  let observer: IntersectionObserver | null = null
-  
+  let observer: IntersectionObserver | null = null;
+
   const stop = () => {
     if (observer) {
-      observer.disconnect()
-      observer = null
+      observer.disconnect();
+      observer = null;
     }
-  }
-  
+  };
+
   onMounted(() => {
     if (target.value) {
-      observer = new IntersectionObserver(callback, options)
-      observer.observe(target.value)
+      observer = new IntersectionObserver(callback, options);
+      observer.observe(target.value);
     }
-  })
-  
+  });
+
   onUnmounted(() => {
-    stop()
-  })
-  
-  return { stop }
+    stop();
+  });
+
+  return { stop };
 }
 
 /**
@@ -175,28 +171,28 @@ export function useIntersectionObserver(
  * @returns 取消动画的函数
  */
 export function useRequestAnimationFrame(callback: () => void) {
-  let rafId: number | null = null
-  
+  let rafId: number | null = null;
+
   const start = () => {
     const animate = () => {
-      callback()
-      rafId = requestAnimationFrame(animate)
-    }
-    rafId = requestAnimationFrame(animate)
-  }
-  
+      callback();
+      rafId = requestAnimationFrame(animate);
+    };
+    rafId = requestAnimationFrame(animate);
+  };
+
   const stop = () => {
     if (rafId !== null) {
-      cancelAnimationFrame(rafId)
-      rafId = null
+      cancelAnimationFrame(rafId);
+      rafId = null;
     }
-  }
-  
+  };
+
   onUnmounted(() => {
-    stop()
-  })
-  
-  return { start, stop }
+    stop();
+  });
+
+  return { start, stop };
 }
 
 /**
@@ -208,21 +204,21 @@ export function useRequestAnimationFrame(callback: () => void) {
  */
 export function useMemoCache<T extends (...args: any[]) => any>(
   fn: T,
-  keyGenerator?: (...args: Parameters<T>) => string
+  keyGenerator?: (...args: Parameters<T>) => string,
 ): T {
-  const cache = new Map<string, ReturnType<T>>()
-  
+  const cache = new Map<string, ReturnType<T>>();
+
   return ((...args: Parameters<T>) => {
-    const key = keyGenerator ? keyGenerator(...args) : JSON.stringify(args)
-    
+    const key = keyGenerator ? keyGenerator(...args) : JSON.stringify(args);
+
     if (cache.has(key)) {
-      return cache.get(key)!
+      return cache.get(key)!;
     }
-    
-    const result = fn(...args)
-    cache.set(key, result)
-    return result
-  }) as T
+
+    const result = fn(...args);
+    cache.set(key, result);
+    return result;
+  }) as T;
 }
 
 /**
@@ -232,41 +228,41 @@ export function useMemoCache<T extends (...args: any[]) => any>(
  * @returns Worker实例
  */
 export function useWebWorker(workerScript: string) {
-  const worker = ref<Worker | null>(null)
-  const loading = ref(false)
-  const error = ref<Error | null>(null)
-  
+  const worker = ref<Worker | null>(null);
+  const loading = ref(false);
+  const error = ref<Error | null>(null);
+
   const init = () => {
     try {
-      const blob = new Blob([workerScript], { type: 'application/javascript' })
-      const url = URL.createObjectURL(blob)
-      worker.value = new Worker(url)
+      const blob = new Blob([workerScript], { type: 'application/javascript' });
+      const url = URL.createObjectURL(blob);
+      worker.value = new Worker(url);
     } catch (e) {
-      error.value = e as Error
+      error.value = e as Error;
     }
-  }
-  
+  };
+
   const terminate = () => {
     if (worker.value) {
-      worker.value.terminate()
-      worker.value = null
+      worker.value.terminate();
+      worker.value = null;
     }
-  }
-  
+  };
+
   onMounted(() => {
-    init()
-  })
-  
+    init();
+  });
+
   onUnmounted(() => {
-    terminate()
-  })
-  
+    terminate();
+  });
+
   return {
     worker,
     loading,
     error,
-    terminate
-  }
+    terminate,
+  };
 }
 
 /**
@@ -276,28 +272,28 @@ export function useWebWorker(workerScript: string) {
  * @returns 性能监控相关数据
  */
 export function usePerformanceMonitor(componentName: string) {
-  const renderTimes = ref<number[]>([])
+  const renderTimes = ref<number[]>([]);
   const averageRenderTime = computed(() => {
-    if (renderTimes.value.length === 0) return 0
-    const sum = renderTimes.value.reduce((a, b) => a + b, 0)
-    return sum / renderTimes.value.length
-  })
-  
+    if (renderTimes.value.length === 0) return 0;
+    const sum = renderTimes.value.reduce((a, b) => a + b, 0);
+    return sum / renderTimes.value.length;
+  });
+
   const measureRender = (fn: () => void) => {
-    const start = performance.now()
-    fn()
-    const end = performance.now()
-    const duration = end - start
-    renderTimes.value.push(duration)
-    
+    const start = performance.now();
+    fn();
+    const end = performance.now();
+    const duration = end - start;
+    renderTimes.value.push(duration);
+
     if (duration > 16) {
-      console.warn(`[Performance] ${componentName} 渲染耗时 ${duration.toFixed(2)}ms`)
+      console.warn(`[Performance] ${componentName} 渲染耗时 ${duration.toFixed(2)}ms`);
     }
-  }
-  
+  };
+
   return {
     renderTimes,
     averageRenderTime,
-    measureRender
-  }
+    measureRender,
+  };
 }

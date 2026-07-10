@@ -41,14 +41,14 @@ export class EmailService {
   public async sendEmail(notification: Notification): Promise<void> {
     try {
       const emailContent = this.generateEmailContent(notification);
-      
+
       const mailOptions: nodemailer.SendMailOptions = {
         from: process.env.EMAIL_FROM || '"YYC³餐饮平台" <noreply@yyc3.com>',
         to: notification.data?.email,
         subject: emailContent.subject,
         html: emailContent.html,
       };
-      
+
       await this.transporter.sendMail(mailOptions);
       logger.info('邮件发送成功', { to: notification.data?.email, notificationId: notification.id });
     } catch (error: any) {
@@ -65,7 +65,7 @@ export class EmailService {
   private generateEmailContent(notification: Notification): { subject: string; html: string } {
     let subject = 'YYC³餐饮平台通知';
     let content = notification.content;
-    
+
     // 根据通知类型定制主题
     switch (notification.type) {
       case NotificationType.SYSTEM:
@@ -89,7 +89,7 @@ export class EmailService {
       default:
         subject = '通知 - YYC³餐饮平台';
     }
-    
+
     // 生成HTML邮件内容
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -104,7 +104,7 @@ export class EmailService {
         </div>
       </div>
     `;
-    
+
     return { subject, html };
   }
 

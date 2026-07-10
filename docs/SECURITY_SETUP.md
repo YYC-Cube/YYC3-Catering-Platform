@@ -19,6 +19,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 ```
 
 Add to your `.env` file:
+
 ```bash
 JWT_SECRET=<generated-secret-here>
 JWT_EXPIRES_IN=24h
@@ -121,6 +122,7 @@ ALIYUN_SECRET_KEY=<your-secret-key>
 **Error**: CORS policy blocking requests
 
 **Solution**: Add your frontend domain to CORS_ORIGIN:
+
 ```bash
 CORS_ORIGIN=https://your-frontend-domain.com
 ```
@@ -130,6 +132,7 @@ CORS_ORIGIN=https://your-frontend-domain.com
 **Error**: SSL required but not configured
 
 **Solution**: Enable SSL in database configuration:
+
 ```bash
 DATABASE_SSL=true
 ```
@@ -222,5 +225,6 @@ Set up alerts for:
 ## Support
 
 For security questions or to report vulnerabilities:
+
 - Email: security@yyc3.red
 - For general support: dev@yyc3.red

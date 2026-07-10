@@ -10,9 +10,11 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 安全测试架构文档
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--测试验证
 - 遵循规范：五高五标五化要求
@@ -82,19 +84,19 @@ const DEFAULT_SECURITY_GOALS: SecurityTestGoals = {
     critical: 0,
     high: 0,
     medium: 5,
-    low: 10
+    low: 10,
   },
   compliance: {
     owaspTop10: true,
     pciDss: true,
     gdpr: true,
-    djb20: true
+    djb20: true,
   },
   securityMetrics: {
     vulnerabilityFixRate: 95,
     meanTimeToFix: 7,
-    securityTestCoverage: 80
-  }
+    securityTestCoverage: 80,
+  },
 };
 ```
 
@@ -110,19 +112,19 @@ const DEFAULT_SECURITY_GOALS: SecurityTestGoals = {
  */
 enum SecurityTestType {
   /** 静态应用安全测试 */
-  SAST = 'sast',
+  SAST = "sast",
   /** 动态应用安全测试 */
-  DAST = 'dast',
+  DAST = "dast",
   /** 交互式应用安全测试 */
-  IAST = 'iast',
+  IAST = "iast",
   /** 软件成分分析 */
-  SCA = 'sca',
+  SCA = "sca",
   /** 渗透测试 */
-  PENETRATION = 'penetration',
+  PENETRATION = "penetration",
   /** 安全代码审查 */
-  CODE_REVIEW = 'code_review',
+  CODE_REVIEW = "code_review",
   /** 配置安全审计 */
-  CONFIG_AUDIT = 'config_audit'
+  CONFIG_AUDIT = "config_audit",
 }
 
 /**
@@ -130,15 +132,15 @@ enum SecurityTestType {
  */
 enum VulnerabilitySeverity {
   /** 严重 */
-  CRITICAL = 'critical',
+  CRITICAL = "critical",
   /** 高危 */
-  HIGH = 'high',
+  HIGH = "high",
   /** 中危 */
-  MEDIUM = 'medium',
+  MEDIUM = "medium",
   /** 低危 */
-  LOW = 'low',
+  LOW = "low",
   /** 信息 */
-  INFO = 'info'
+  INFO = "info",
 }
 
 /**
@@ -159,11 +161,11 @@ interface SecurityTestConfig {
   excludeScope: string[];
   /** 认证信息 */
   authentication?: {
-    type: 'basic' | 'bearer' | 'cookie';
+    type: "basic" | "bearer" | "cookie";
     credentials: Record<string, string>;
   };
   /** 测试深度 */
-  depth: 'shallow' | 'medium' | 'deep';
+  depth: "shallow" | "medium" | "deep";
 }
 
 /**
@@ -171,7 +173,7 @@ interface SecurityTestConfig {
  */
 class SecurityTestTypeManager {
   private configs: Map<SecurityTestType, SecurityTestConfig[]> = new Map();
-  
+
   /**
    * 注册测试配置
    */
@@ -180,59 +182,59 @@ class SecurityTestTypeManager {
     configs.push(config);
     this.configs.set(config.type, configs);
   }
-  
+
   /**
    * 获取测试配置
    */
   getConfigs(type: SecurityTestType): SecurityTestConfig[] {
     return this.configs.get(type) || [];
   }
-  
+
   /**
    * 创建SAST测试配置
    */
   static createSASTConfig(overrides?: Partial<SecurityTestConfig>): SecurityTestConfig {
     return {
       type: SecurityTestType.SAST,
-      name: '静态应用安全测试',
-      description: '在代码层面分析源代码中的安全漏洞',
-      targetUrl: '.',
-      scope: ['src/**/*.ts', 'src/**/*.tsx'],
-      excludeScope: ['node_modules/**', 'dist/**'],
-      depth: 'medium',
-      ...overrides
+      name: "静态应用安全测试",
+      description: "在代码层面分析源代码中的安全漏洞",
+      targetUrl: ".",
+      scope: ["src/**/*.ts", "src/**/*.tsx"],
+      excludeScope: ["node_modules/**", "dist/**"],
+      depth: "medium",
+      ...overrides,
     };
   }
-  
+
   /**
    * 创建DAST测试配置
    */
   static createDASTConfig(overrides?: Partial<SecurityTestConfig>): SecurityTestConfig {
     return {
       type: SecurityTestType.DAST,
-      name: '动态应用安全测试',
-      description: '在运行时分析应用程序的安全漏洞',
-      targetUrl: 'http://localhost:3200',
-      scope: ['/api/**'],
-      excludeScope: ['/api/health', '/api/metrics'],
-      depth: 'medium',
-      ...overrides
+      name: "动态应用安全测试",
+      description: "在运行时分析应用程序的安全漏洞",
+      targetUrl: "http://localhost:3200",
+      scope: ["/api/**"],
+      excludeScope: ["/api/health", "/api/metrics"],
+      depth: "medium",
+      ...overrides,
     };
   }
-  
+
   /**
    * 创建渗透测试配置
    */
   static createPenetrationTestConfig(overrides?: Partial<SecurityTestConfig>): SecurityTestConfig {
     return {
       type: SecurityTestType.PENETRATION,
-      name: '渗透测试',
-      description: '模拟攻击者对系统进行全面的安全测试',
-      targetUrl: 'http://localhost:3200',
-      scope: ['/'],
-      excludeScope: ['/static/**'],
-      depth: 'deep',
-      ...overrides
+      name: "渗透测试",
+      description: "模拟攻击者对系统进行全面的安全测试",
+      targetUrl: "http://localhost:3200",
+      scope: ["/"],
+      excludeScope: ["/static/**"],
+      depth: "deep",
+      ...overrides,
     };
   }
 }
@@ -246,25 +248,25 @@ class SecurityTestTypeManager {
  */
 enum OWASPTop10 {
   /** A01:2021 - 访问控制失效 */
-  BROKEN_ACCESS_CONTROL = 'A01:2021-Broken_Access_Control',
+  BROKEN_ACCESS_CONTROL = "A01:2021-Broken_Access_Control",
   /** A02:2021 - 加密失效 */
-  CRYPTOGRAPHIC_FAILURES = 'A02:2021-Cryptographic_Failures',
+  CRYPTOGRAPHIC_FAILURES = "A02:2021-Cryptographic_Failures",
   /** A03:2021 - 注入 */
-  INJECTION = 'A03:2021-Injection',
+  INJECTION = "A03:2021-Injection",
   /** A04:2021 - 不安全设计 */
-  INSECURE_DESIGN = 'A04:2021-Insecure_Design',
+  INSECURE_DESIGN = "A04:2021-Insecure_Design",
   /** A05:2021 - 安全配置错误 */
-  SECURITY_MISCONFIGURATION = 'A05:2021-Security_Misconfiguration',
+  SECURITY_MISCONFIGURATION = "A05:2021-Security_Misconfiguration",
   /** A06:2021 - 易受攻击和过时的组件 */
-  VULNERABLE_OUTDATED_COMPONENTS = 'A06:2021-Vulnerable_and_Outdated_Components',
+  VULNERABLE_OUTDATED_COMPONENTS = "A06:2021-Vulnerable_and_Outdated_Components",
   /** A07:2021 - 识别和认证失效 */
-  IDENTIFICATION_AUTHENTICATION_FAILURES = 'A07:2021-Identification_and_Authentication_Failures',
+  IDENTIFICATION_AUTHENTICATION_FAILURES = "A07:2021-Identification_and_Authentication_Failures",
   /** A08:2021 - 软件和数据完整性失效 */
-  SOFTWARE_DATA_INTEGRITY_FAILURES = 'A08:2021-Software_and_Data_Integrity_Failures',
+  SOFTWARE_DATA_INTEGRITY_FAILURES = "A08:2021-Software_and_Data_Integrity_Failures",
   /** A09:2021 - 安全日志和监控失效 */
-  SECURITY_LOGGING_MONITORING_FAILURES = 'A09:2021-Security_Logging_and_Monitoring_Failures',
+  SECURITY_LOGGING_MONITORING_FAILURES = "A09:2021-Security_Logging_and_Monitoring_Failures",
   /** A10:2021 - 服务器端请求伪造 (SSRF) */
-  SERVER_SIDE_REQUEST_FORGERY = 'A10:2021-Server-Side_Request_Forgery'
+  SERVER_SIDE_REQUEST_FORGERY = "A10:2021-Server-Side_Request_Forgery",
 }
 
 /**
@@ -290,7 +292,7 @@ interface OWASPTestCase {
  */
 class OWASPTestManager {
   private testCases: Map<OWASPTop10, OWASPTestCase[]> = new Map();
-  
+
   /**
    * 添加测试用例
    */
@@ -299,129 +301,129 @@ class OWASPTestManager {
     cases.push(testCase);
     this.testCases.set(testCase.type, cases);
   }
-  
+
   /**
    * 获取测试用例
    */
   getTestCases(type: OWASPTop10): OWASPTestCase[] {
     return this.testCases.get(type) || [];
   }
-  
+
   /**
    * 创建SQL注入测试用例
    */
   static createSQLInjectionTestCase(baseUrl: string): OWASPTestCase {
     return {
       type: OWASPTop10.INJECTION,
-      name: 'SQL注入测试',
-      description: '测试应用程序是否容易受到SQL注入攻击',
+      name: "SQL注入测试",
+      description: "测试应用程序是否容易受到SQL注入攻击",
       steps: [
         {
-          name: '正常请求',
+          name: "正常请求",
           url: `${baseUrl}/api/users?id=1`,
-          method: 'GET',
+          method: "GET",
           headers: {},
           expectedStatus: 200,
-          validations: []
+          validations: [],
         },
         {
-          name: 'SQL注入测试',
+          name: "SQL注入测试",
           url: `${baseUrl}/api/users?id=1' OR '1'='1`,
-          method: 'GET',
+          method: "GET",
           headers: {},
           expectedStatus: 400,
-          validations: []
+          validations: [],
         },
         {
-          name: '基于时间的SQL注入',
+          name: "基于时间的SQL注入",
           url: `${baseUrl}/api/users?id=1; WAITFOR DELAY '0:0:5'--`,
-          method: 'GET',
+          method: "GET",
           headers: {},
           expectedStatus: 400,
-          validations: []
-        }
+          validations: [],
+        },
       ],
-      expectedResult: '应用程序应该拒绝SQL注入攻击，返回400错误',
-      remediation: '使用参数化查询或ORM框架，避免直接拼接SQL语句'
+      expectedResult: "应用程序应该拒绝SQL注入攻击，返回400错误",
+      remediation: "使用参数化查询或ORM框架，避免直接拼接SQL语句",
     };
   }
-  
+
   /**
    * 创建XSS测试用例
    */
   static createXSSTestCase(baseUrl: string): OWASPTestCase {
     return {
       type: OWASPTop10.INJECTION,
-      name: 'XSS跨站脚本测试',
-      description: '测试应用程序是否容易受到XSS攻击',
+      name: "XSS跨站脚本测试",
+      description: "测试应用程序是否容易受到XSS攻击",
       steps: [
         {
-          name: '存储型XSS测试',
+          name: "存储型XSS测试",
           url: `${baseUrl}/api/comments`,
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: {
-            content: '<script>alert("XSS")</script>'
+            content: '<script>alert("XSS")</script>',
           },
           expectedStatus: 201,
-          validations: []
+          validations: [],
         },
         {
-          name: '反射型XSS测试',
+          name: "反射型XSS测试",
           url: `${baseUrl}/search?q=<script>alert("XSS")</script>`,
-          method: 'GET',
+          method: "GET",
           headers: {},
           expectedStatus: 200,
-          validations: []
-        }
+          validations: [],
+        },
       ],
-      expectedResult: '应用程序应该对用户输入进行转义，防止XSS攻击',
-      remediation: '对所有用户输入进行HTML转义，使用Content Security Policy (CSP)'
+      expectedResult: "应用程序应该对用户输入进行转义，防止XSS攻击",
+      remediation: "对所有用户输入进行HTML转义，使用Content Security Policy (CSP)",
     };
   }
-  
+
   /**
    * 创建CSRF测试用例
    */
   static createCSRFTestCase(baseUrl: string): OWASPTestCase {
     return {
       type: OWASPTop10.BROKEN_ACCESS_CONTROL,
-      name: 'CSRF跨站请求伪造测试',
-      description: '测试应用程序是否容易受到CSRF攻击',
+      name: "CSRF跨站请求伪造测试",
+      description: "测试应用程序是否容易受到CSRF攻击",
       steps: [
         {
-          name: '正常请求',
+          name: "正常请求",
           url: `${baseUrl}/api/transfer`,
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: {
-            to: 'user2',
-            amount: 100
+            to: "user2",
+            amount: 100,
           },
           expectedStatus: 200,
-          validations: []
+          validations: [],
         },
         {
-          name: 'CSRF攻击测试',
+          name: "CSRF攻击测试",
           url: `${baseUrl}/api/transfer`,
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: {
-            to: 'attacker',
-            amount: 1000
+            to: "attacker",
+            amount: 1000,
           },
           expectedStatus: 403,
-          validations: []
-        }
+          validations: [],
+        },
       ],
-      expectedResult: '应用程序应该验证CSRF令牌，防止CSRF攻击',
-      remediation: '实现CSRF令牌验证机制，使用SameSite Cookie属性'
+      expectedResult: "应用程序应该验证CSRF令牌，防止CSRF攻击",
+      remediation: "实现CSRF令牌验证机制，使用SameSite Cookie属性",
     };
   }
 }
@@ -439,17 +441,17 @@ class OWASPTestManager {
  */
 enum SecurityTestTool {
   /** OWASP ZAP */
-  ZAP = 'zap',
+  ZAP = "zap",
   /** Burp Suite */
-  BURP = 'burp',
+  BURP = "burp",
   /** SonarQube */
-  SONARQUBE = 'sonarqube',
+  SONARQUBE = "sonarqube",
   /** Snyk */
-  SNYK = 'snyk',
+  SNYK = "snyk",
   /** Nessus */
-  NESSUS = 'nessus',
+  NESSUS = "nessus",
   /** Semgrep */
-  SEMGREP = 'semgrep'
+  SEMGREP = "semgrep",
 }
 
 /**
@@ -459,13 +461,13 @@ interface ToolFeatures {
   /** 支持的测试类型 */
   testTypes: SecurityTestType[];
   /** 自动化程度 */
-  automation: 'full' | 'partial' | 'manual';
+  automation: "full" | "partial" | "manual";
   /** 集成CI/CD */
   cicdIntegration: boolean;
   /** 学习曲线 */
-  learningCurve: 'easy' | 'medium' | 'hard';
+  learningCurve: "easy" | "medium" | "hard";
   /** 社区支持 */
-  communitySupport: 'high' | 'medium' | 'low';
+  communitySupport: "high" | "medium" | "low";
   /** 开源 */
   openSource: boolean;
 }
@@ -475,93 +477,111 @@ interface ToolFeatures {
  */
 class SecurityToolComparison {
   private static tools: Map<SecurityTestTool, ToolFeatures> = new Map([
-    [SecurityTestTool.ZAP, {
-      testTypes: [SecurityTestType.DAST, SecurityTestType.PENETRATION],
-      automation: 'partial',
-      cicdIntegration: true,
-      learningCurve: 'medium',
-      communitySupport: 'high',
-      openSource: true
-    }],
-    [SecurityTestTool.BURP, {
-      testTypes: [SecurityTestType.DAST, SecurityTestType.PENETRATION],
-      automation: 'partial',
-      cicdIntegration: true,
-      learningCurve: 'medium',
-      communitySupport: 'high',
-      openSource: false
-    }],
-    [SecurityTestTool.SONARQUBE, {
-      testTypes: [SecurityTestType.SAST, SecurityTestType.CODE_REVIEW],
-      automation: 'full',
-      cicdIntegration: true,
-      learningCurve: 'medium',
-      communitySupport: 'high',
-      openSource: true
-    }],
-    [SecurityTestTool.SNYK, {
-      testTypes: [SecurityTestType.SCA, SecurityTestType.SAST],
-      automation: 'full',
-      cicdIntegration: true,
-      learningCurve: 'easy',
-      communitySupport: 'high',
-      openSource: false
-    }],
-    [SecurityTestTool.NESSUS, {
-      testTypes: [SecurityTestType.CONFIG_AUDIT],
-      automation: 'full',
-      cicdIntegration: true,
-      learningCurve: 'medium',
-      communitySupport: 'high',
-      openSource: false
-    }],
-    [SecurityTestTool.SEMGREP, {
-      testTypes: [SecurityTestType.SAST, SecurityTestType.CODE_REVIEW],
-      automation: 'full',
-      cicdIntegration: true,
-      learningCurve: 'easy',
-      communitySupport: 'medium',
-      openSource: true
-    }]
+    [
+      SecurityTestTool.ZAP,
+      {
+        testTypes: [SecurityTestType.DAST, SecurityTestType.PENETRATION],
+        automation: "partial",
+        cicdIntegration: true,
+        learningCurve: "medium",
+        communitySupport: "high",
+        openSource: true,
+      },
+    ],
+    [
+      SecurityTestTool.BURP,
+      {
+        testTypes: [SecurityTestType.DAST, SecurityTestType.PENETRATION],
+        automation: "partial",
+        cicdIntegration: true,
+        learningCurve: "medium",
+        communitySupport: "high",
+        openSource: false,
+      },
+    ],
+    [
+      SecurityTestTool.SONARQUBE,
+      {
+        testTypes: [SecurityTestType.SAST, SecurityTestType.CODE_REVIEW],
+        automation: "full",
+        cicdIntegration: true,
+        learningCurve: "medium",
+        communitySupport: "high",
+        openSource: true,
+      },
+    ],
+    [
+      SecurityTestTool.SNYK,
+      {
+        testTypes: [SecurityTestType.SCA, SecurityTestType.SAST],
+        automation: "full",
+        cicdIntegration: true,
+        learningCurve: "easy",
+        communitySupport: "high",
+        openSource: false,
+      },
+    ],
+    [
+      SecurityTestTool.NESSUS,
+      {
+        testTypes: [SecurityTestType.CONFIG_AUDIT],
+        automation: "full",
+        cicdIntegration: true,
+        learningCurve: "medium",
+        communitySupport: "high",
+        openSource: false,
+      },
+    ],
+    [
+      SecurityTestTool.SEMGREP,
+      {
+        testTypes: [SecurityTestType.SAST, SecurityTestType.CODE_REVIEW],
+        automation: "full",
+        cicdIntegration: true,
+        learningCurve: "easy",
+        communitySupport: "medium",
+        openSource: true,
+      },
+    ],
   ]);
-  
+
   /**
    * 获取工具特性
    */
   static getToolFeatures(tool: SecurityTestTool): ToolFeatures {
     return this.tools.get(tool)!;
   }
-  
+
   /**
    * 推荐工具
    */
   static recommendTools(requirements: Partial<ToolFeatures>): SecurityTestTool[] {
     const recommended: SecurityTestTool[] = [];
-    
+
     for (const [tool, features] of this.tools.entries()) {
       let match = true;
-      
+
       if (requirements.testTypes && requirements.testTypes.length > 0) {
         match = match && requirements.testTypes.some(type => features.testTypes.includes(type));
       }
-      
+
       if (requirements.automation) {
         match = match && features.automation === requirements.automation;
       }
-      
+
       if (requirements.cicdIntegration !== undefined) {
         match = match && features.cicdIntegration === requirements.cicdIntegration;
       }
-      
+
       if (requirements.openSource !== undefined) {
         match = match && features.openSource === requirements.openSource;
       }
-      
+
       if (match) {
         recommended.push(tool);
       }
     }
-    
+
     return recommended;
   }
 }
@@ -591,7 +611,7 @@ class OWASPZAPConfigGenerator {
     "defaultStrength": "Medium",
     "alertThreshold": "Medium"
   },
-  "authentication": ${config.authentication ? JSON.stringify(config.authentication) : 'null'},
+  "authentication": ${config.authentication ? JSON.stringify(config.authentication) : "null"},
   "spider": {
     "maxDepth": 5,
     "maxChildren": 10,
@@ -604,7 +624,7 @@ class OWASPZAPConfigGenerator {
 }
     `;
   }
-  
+
   /**
    * 生成API扫描配置
    */
@@ -669,7 +689,7 @@ sonar.security.hotspot.checkFrequency=0.5
 sonar.qualitygate.wait=true
     `;
   }
-  
+
   /**
    * 生成质量规则配置
    */
@@ -721,19 +741,19 @@ sonar.qualitygate.wait=true
  */
 enum VulnerabilityStatus {
   /** 新发现 */
-  NEW = 'new',
+  NEW = "new",
   /** 已确认 */
-  CONFIRMED = 'confirmed',
+  CONFIRMED = "confirmed",
   /** 修复中 */
-  IN_PROGRESS = 'in_progress',
+  IN_PROGRESS = "in_progress",
   /** 已修复 */
-  FIXED = 'fixed',
+  FIXED = "fixed",
   /** 已验证 */
-  VERIFIED = 'verified',
+  VERIFIED = "verified",
   /** 已关闭 */
-  CLOSED = 'closed',
+  CLOSED = "closed",
   /** 误报 */
-  FALSE_POSITIVE = 'false_positive'
+  FALSE_POSITIVE = "false_positive",
 }
 
 /**
@@ -771,21 +791,21 @@ interface Vulnerability {
  */
 class VulnerabilityManager {
   private vulnerabilities: Map<string, Vulnerability> = new Map();
-  
+
   /**
    * 添加漏洞
    */
   addVulnerability(vulnerability: Vulnerability): void {
     this.vulnerabilities.set(vulnerability.id, vulnerability);
   }
-  
+
   /**
    * 获取漏洞
    */
   getVulnerability(id: string): Vulnerability | undefined {
     return this.vulnerabilities.get(id);
   }
-  
+
   /**
    * 更新漏洞状态
    */
@@ -804,22 +824,22 @@ class VulnerabilityManager {
       }
     }
   }
-  
+
   /**
    * 获取漏洞统计
    */
   getStatistics(): VulnerabilityStatistics {
     const vulnerabilities = Array.from(this.vulnerabilities.values());
-    
+
     return {
       total: vulnerabilities.length,
       bySeverity: this.groupBySeverity(vulnerabilities),
       byStatus: this.groupByStatus(vulnerabilities),
       meanTimeToFix: this.calculateMeanTimeToFix(vulnerabilities),
-      fixRate: this.calculateFixRate(vulnerabilities)
+      fixRate: this.calculateFixRate(vulnerabilities),
     };
   }
-  
+
   /**
    * 按严重程度分组
    */
@@ -829,16 +849,16 @@ class VulnerabilityManager {
       [VulnerabilitySeverity.HIGH]: 0,
       [VulnerabilitySeverity.MEDIUM]: 0,
       [VulnerabilitySeverity.LOW]: 0,
-      [VulnerabilitySeverity.INFO]: 0
+      [VulnerabilitySeverity.INFO]: 0,
     };
-    
+
     vulnerabilities.forEach(v => {
       groups[v.severity]++;
     });
-    
+
     return groups;
   }
-  
+
   /**
    * 按状态分组
    */
@@ -850,41 +870,42 @@ class VulnerabilityManager {
       [VulnerabilityStatus.FIXED]: 0,
       [VulnerabilityStatus.VERIFIED]: 0,
       [VulnerabilityStatus.CLOSED]: 0,
-      [VulnerabilityStatus.FALSE_POSITIVE]: 0
+      [VulnerabilityStatus.FALSE_POSITIVE]: 0,
     };
-    
+
     vulnerabilities.forEach(v => {
       groups[v.status]++;
     });
-    
+
     return groups;
   }
-  
+
   /**
    * 计算平均修复时间
    */
   private calculateMeanTimeToFix(vulnerabilities: Vulnerability[]): number {
     const fixedVulnerabilities = vulnerabilities.filter(v => v.fixedAt);
     if (fixedVulnerabilities.length === 0) return 0;
-    
+
     const totalDays = fixedVulnerabilities.reduce((sum, v) => {
       return sum + (v.fixedAt!.getTime() - v.discoveredAt.getTime()) / (1000 * 60 * 60 * 24);
     }, 0);
-    
+
     return totalDays / fixedVulnerabilities.length;
   }
-  
+
   /**
    * 计算修复率
    */
   private calculateFixRate(vulnerabilities: Vulnerability[]): number {
     const total = vulnerabilities.length;
-    const fixed = vulnerabilities.filter(v => 
-      v.status === VulnerabilityStatus.FIXED || 
-      v.status === VulnerabilityStatus.VERIFIED ||
-      v.status === VulnerabilityStatus.CLOSED
+    const fixed = vulnerabilities.filter(
+      v =>
+        v.status === VulnerabilityStatus.FIXED ||
+        v.status === VulnerabilityStatus.VERIFIED ||
+        v.status === VulnerabilityStatus.CLOSED
     ).length;
-    
+
     return total > 0 ? (fixed / total) * 100 : 0;
   }
 }
@@ -914,35 +935,35 @@ interface VulnerabilityStatistics {
  */
 class VulnerabilityRemediationWorkflow {
   private manager: VulnerabilityManager;
-  
+
   constructor(manager: VulnerabilityManager) {
     this.manager = manager;
   }
-  
+
   /**
    * 开始修复流程
    */
   async startRemediation(vulnerabilityId: string, assignee: string): Promise<void> {
     // 确认漏洞
     this.manager.updateStatus(vulnerabilityId, VulnerabilityStatus.CONFIRMED, assignee);
-    
+
     // 创建修复任务
     await this.createRemediationTask(vulnerabilityId);
-    
+
     // 开始修复
     this.manager.updateStatus(vulnerabilityId, VulnerabilityStatus.IN_PROGRESS, assignee);
   }
-  
+
   /**
    * 完成修复
    */
   async completeFix(vulnerabilityId: string): Promise<void> {
     this.manager.updateStatus(vulnerabilityId, VulnerabilityStatus.FIXED);
-    
+
     // 触发验证测试
     await this.runVerificationTests(vulnerabilityId);
   }
-  
+
   /**
    * 验证修复
    */
@@ -956,14 +977,14 @@ class VulnerabilityRemediationWorkflow {
       this.manager.updateStatus(vulnerabilityId, VulnerabilityStatus.IN_PROGRESS);
     }
   }
-  
+
   /**
    * 创建修复任务
    */
   private async createRemediationTask(vulnerabilityId: string): Promise<void> {
     // 实现创建修复任务的逻辑
   }
-  
+
   /**
    * 运行验证测试
    */
@@ -989,7 +1010,7 @@ interface SecurityEvent {
   /** 事件类型 */
   type: string;
   /** 事件级别 */
-  level: 'info' | 'warning' | 'critical';
+  level: "info" | "warning" | "critical";
   /** 事件描述 */
   description: string;
   /** 发生时间 */
@@ -1010,71 +1031,66 @@ interface SecurityEvent {
 class SecurityMonitor {
   private events: SecurityEvent[] = [];
   private alerts: SecurityAlert[] = [];
-  
+
   /**
    * 记录安全事件
    */
   recordEvent(event: SecurityEvent): void {
     this.events.push(event);
-    
+
     // 检查是否需要告警
     this.checkAlert(event);
   }
-  
+
   /**
    * 获取事件
    */
-  getEvents(filter?: {
-    type?: string;
-    level?: string;
-    startTime?: Date;
-    endTime?: Date;
-  }): SecurityEvent[] {
+  getEvents(filter?: { type?: string; level?: string; startTime?: Date; endTime?: Date }): SecurityEvent[] {
     let filtered = this.events;
-    
+
     if (filter?.type) {
       filtered = filtered.filter(e => e.type === filter.type);
     }
-    
+
     if (filter?.level) {
       filtered = filtered.filter(e => e.level === filter.level);
     }
-    
+
     if (filter?.startTime) {
       filtered = filtered.filter(e => e.timestamp >= filter.startTime!);
     }
-    
+
     if (filter?.endTime) {
       filtered = filtered.filter(e => e.timestamp <= filter.endTime!);
     }
-    
+
     return filtered;
   }
-  
+
   /**
    * 检查告警
    */
   private checkAlert(event: SecurityEvent): void {
     // 实现告警检查逻辑
-    if (event.level === 'critical') {
+    if (event.level === "critical") {
       this.alerts.push({
         id: `alert-${Date.now()}`,
         eventId: event.id,
-        severity: 'critical',
+        severity: "critical",
         message: event.description,
         triggeredAt: event.timestamp,
-        acknowledged: false
+        acknowledged: false,
       });
     }
   }
-  
+
   /**
    * 获取告警
    */
   getAlerts(): SecurityAlert[] {
     return this.alerts;
   }
-  
+
   /**
    * 确认告警
    */
@@ -1095,7 +1111,7 @@ interface SecurityAlert {
   /** 事件ID */
   eventId: string;
   /** 严重程度 */
-  severity: 'info' | 'warning' | 'critical';
+  severity: "info" | "warning" | "critical";
   /** 消息 */
   message: string;
   /** 触发时间 */
@@ -1115,11 +1131,11 @@ class SecurityDashboard {
   private monitor: SecurityMonitor;
   private updateInterval: number = 5000;
   private intervalId: NodeJS.Timeout | null = null;
-  
+
   constructor(monitor: SecurityMonitor) {
     this.monitor = monitor;
   }
-  
+
   /**
    * 启动仪表板
    */
@@ -1128,7 +1144,7 @@ class SecurityDashboard {
       this.updateDashboard();
     }, this.updateInterval);
   }
-  
+
   /**
    * 停止仪表板
    */
@@ -1138,7 +1154,7 @@ class SecurityDashboard {
       this.intervalId = null;
     }
   }
-  
+
   /**
    * 更新仪表板
    */
@@ -1146,64 +1162,64 @@ class SecurityDashboard {
     const dashboardData = this.getDashboardData();
     this.renderDashboard(dashboardData);
   }
-  
+
   /**
    * 获取仪表板数据
    */
   private getDashboardData(): SecurityDashboardData {
     const now = new Date();
     const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
-    
+
     const recentEvents = this.monitor.getEvents({
       startTime: oneHourAgo,
-      endTime: now
+      endTime: now,
     });
-    
+
     return {
       totalEvents: recentEvents.length,
-      criticalEvents: recentEvents.filter(e => e.level === 'critical').length,
-      warningEvents: recentEvents.filter(e => e.level === 'warning').length,
+      criticalEvents: recentEvents.filter(e => e.level === "critical").length,
+      warningEvents: recentEvents.filter(e => e.level === "warning").length,
       activeAlerts: this.monitor.getAlerts().filter(a => !a.acknowledged).length,
       topEventTypes: this.getTopEventTypes(recentEvents, 5),
-      recentEvents: recentEvents.slice(-10)
+      recentEvents: recentEvents.slice(-10),
     };
   }
-  
+
   /**
    * 获取Top事件类型
    */
-  private getTopEventTypes(events: SecurityEvent[], limit: number): Array<{type: string, count: number}> {
+  private getTopEventTypes(events: SecurityEvent[], limit: number): Array<{ type: string; count: number }> {
     const typeCounts: Record<string, number> = {};
-    
+
     events.forEach(event => {
       typeCounts[event.type] = (typeCounts[event.type] || 0) + 1;
     });
-    
+
     return Object.entries(typeCounts)
       .map(([type, count]) => ({ type, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, limit);
   }
-  
+
   /**
    * 渲染仪表板
    */
   private renderDashboard(data: SecurityDashboardData): void {
     console.clear();
-    console.log('=== 安全监控仪表板 ===');
+    console.log("=== 安全监控仪表板 ===");
     console.log(`总事件数: ${data.totalEvents}`);
     console.log(`严重事件: ${data.criticalEvents}`);
     console.log(`警告事件: ${data.warningEvents}`);
     console.log(`活跃告警: ${data.activeAlerts}`);
-    console.log('\nTop 5 事件类型:');
+    console.log("\nTop 5 事件类型:");
     data.topEventTypes.forEach(({ type, count }) => {
       console.log(`  ${type}: ${count}`);
     });
-    console.log('\n最近10个事件:');
+    console.log("\n最近10个事件:");
     data.recentEvents.forEach(event => {
       console.log(`  [${event.level.toUpperCase()}] ${event.type} - ${event.description}`);
     });
-    console.log('====================');
+    console.log("====================");
   }
 }
 
@@ -1220,7 +1236,7 @@ interface SecurityDashboardData {
   /** 活跃告警数 */
   activeAlerts: number;
   /** Top事件类型 */
-  topEventTypes: Array<{type: string, count: number}>;
+  topEventTypes: Array<{ type: string; count: number }>;
   /** 最近事件 */
   recentEvents: SecurityEvent[];
 }
@@ -1238,13 +1254,13 @@ interface SecurityDashboardData {
  */
 enum ComplianceStandard {
   /** OWASP Top 10 */
-  OWASP_TOP_10 = 'owasp_top_10',
+  OWASP_TOP_10 = "owasp_top_10",
   /** PCI DSS */
-  PCI_DSS = 'pci_dss',
+  PCI_DSS = "pci_dss",
   /** GDPR */
-  GDPR = 'gdpr',
+  GDPR = "gdpr",
   /** 等保2.0 */
-  DJB20 = 'djb20'
+  DJB20 = "djb20",
 }
 
 /**
@@ -1276,29 +1292,29 @@ interface ComplianceCheck {
  */
 class ComplianceAuditor {
   private checks: Map<string, ComplianceCheck> = new Map();
-  
+
   /**
    * 添加检查项
    */
   addCheck(check: ComplianceCheck): void {
     this.checks.set(check.id, check);
   }
-  
+
   /**
    * 执行检查
    */
   async executeCheck(checkId: string): Promise<void> {
     const check = this.checks.get(checkId);
     if (!check) return;
-    
+
     // 执行检查逻辑
     const result = await this.runCheckMethod(check.checkMethod);
-    
+
     check.actualResult = result;
     check.passed = result === check.expectedResult;
     check.checkedAt = new Date();
   }
-  
+
   /**
    * 执行所有检查
    */
@@ -1308,7 +1324,7 @@ class ComplianceAuditor {
       await this.executeCheck(check.id);
     }
   }
-  
+
   /**
    * 获取合规性报告
    */
@@ -1316,23 +1332,23 @@ class ComplianceAuditor {
     const checks = Array.from(this.checks.values()).filter(c => c.standard === standard);
     const passed = checks.filter(c => c.passed).length;
     const total = checks.length;
-    
+
     return {
       standard,
       totalChecks: total,
       passedChecks: passed,
       failedChecks: total - passed,
       complianceRate: total > 0 ? (passed / total) * 100 : 0,
-      checks: checks.filter(c => !c.passed)
+      checks: checks.filter(c => !c.passed),
     };
   }
-  
+
   /**
    * 运行检查方法
    */
   private async runCheckMethod(method: string): Promise<string> {
     // 实现检查方法执行逻辑
-    return 'passed';
+    return "passed";
   }
 }
 
@@ -1363,99 +1379,99 @@ interface ComplianceReport {
  */
 class OWASPTop10ComplianceChecker {
   private auditor: ComplianceAuditor;
-  
+
   constructor(auditor: ComplianceAuditor) {
     this.auditor = auditor;
   }
-  
+
   /**
    * 初始化检查项
    */
   initializeChecks(): void {
     const checks: ComplianceCheck[] = [
       {
-        id: 'owasp-001',
+        id: "owasp-001",
         standard: ComplianceStandard.OWASP_TOP_10,
-        name: '访问控制检查',
-        description: '验证应用程序是否实施了适当的访问控制',
-        checkMethod: 'checkAccessControl',
-        expectedResult: 'passed'
+        name: "访问控制检查",
+        description: "验证应用程序是否实施了适当的访问控制",
+        checkMethod: "checkAccessControl",
+        expectedResult: "passed",
       },
       {
-        id: 'owasp-002',
+        id: "owasp-002",
         standard: ComplianceStandard.OWASP_TOP_10,
-        name: '加密检查',
-        description: '验证敏感数据是否正确加密',
-        checkMethod: 'checkEncryption',
-        expectedResult: 'passed'
+        name: "加密检查",
+        description: "验证敏感数据是否正确加密",
+        checkMethod: "checkEncryption",
+        expectedResult: "passed",
       },
       {
-        id: 'owasp-003',
+        id: "owasp-003",
         standard: ComplianceStandard.OWASP_TOP_10,
-        name: '注入攻击防护检查',
-        description: '验证应用程序是否防护注入攻击',
-        checkMethod: 'checkInjectionProtection',
-        expectedResult: 'passed'
+        name: "注入攻击防护检查",
+        description: "验证应用程序是否防护注入攻击",
+        checkMethod: "checkInjectionProtection",
+        expectedResult: "passed",
       },
       {
-        id: 'owasp-004',
+        id: "owasp-004",
         standard: ComplianceStandard.OWASP_TOP_10,
-        name: '安全配置检查',
-        description: '验证应用程序安全配置是否正确',
-        checkMethod: 'checkSecurityConfiguration',
-        expectedResult: 'passed'
+        name: "安全配置检查",
+        description: "验证应用程序安全配置是否正确",
+        checkMethod: "checkSecurityConfiguration",
+        expectedResult: "passed",
       },
       {
-        id: 'owasp-005',
+        id: "owasp-005",
         standard: ComplianceStandard.OWASP_TOP_10,
-        name: '组件安全检查',
-        description: '验证使用的组件是否安全',
-        checkMethod: 'checkComponentSecurity',
-        expectedResult: 'passed'
-      }
+        name: "组件安全检查",
+        description: "验证使用的组件是否安全",
+        checkMethod: "checkComponentSecurity",
+        expectedResult: "passed",
+      },
     ];
-    
+
     checks.forEach(check => this.auditor.addCheck(check));
   }
-  
+
   /**
    * 检查访问控制
    */
   private async checkAccessControl(): Promise<string> {
     // 实现访问控制检查逻辑
-    return 'passed';
+    return "passed";
   }
-  
+
   /**
    * 检查加密
    */
   private async checkEncryption(): Promise<string> {
     // 实现加密检查逻辑
-    return 'passed';
+    return "passed";
   }
-  
+
   /**
    * 检查注入攻击防护
    */
   private async checkInjectionProtection(): Promise<string> {
     // 实现注入攻击防护检查逻辑
-    return 'passed';
+    return "passed";
   }
-  
+
   /**
    * 检查安全配置
    */
   private async checkSecurityConfiguration(): Promise<string> {
     // 实现安全配置检查逻辑
-    return 'passed';
+    return "passed";
   }
-  
+
   /**
    * 检查组件安全
    */
   private async checkComponentSecurity(): Promise<string> {
     // 实现组件安全检查逻辑
-    return 'passed';
+    return "passed";
   }
 }
 ```
@@ -1475,52 +1491,32 @@ class SecurityTestBestPractices {
    * 测试环境要求
    */
   static testEnvironment = {
-    description: '测试环境应该与生产环境隔离',
-    practices: [
-      '使用独立的测试环境',
-      '使用测试数据而非生产数据',
-      '限制测试环境的网络访问',
-      '定期清理测试环境'
-    ]
+    description: "测试环境应该与生产环境隔离",
+    practices: ["使用独立的测试环境", "使用测试数据而非生产数据", "限制测试环境的网络访问", "定期清理测试环境"],
   };
-  
+
   /**
    * 测试执行策略
    */
   static testExecution = {
-    description: '采用分层的安全测试策略',
-    practices: [
-      '在开发阶段进行SAST扫描',
-      '在测试阶段进行DAST扫描',
-      '在生产前进行渗透测试',
-      '定期进行安全审计'
-    ]
+    description: "采用分层的安全测试策略",
+    practices: ["在开发阶段进行SAST扫描", "在测试阶段进行DAST扫描", "在生产前进行渗透测试", "定期进行安全审计"],
   };
-  
+
   /**
    * 漏洞管理
    */
   static vulnerabilityManagement = {
-    description: '建立完善的漏洞管理流程',
-    practices: [
-      '及时记录新发现的漏洞',
-      '按严重程度优先修复漏洞',
-      '验证漏洞修复效果',
-      '跟踪漏洞修复进度'
-    ]
+    description: "建立完善的漏洞管理流程",
+    practices: ["及时记录新发现的漏洞", "按严重程度优先修复漏洞", "验证漏洞修复效果", "跟踪漏洞修复进度"],
   };
-  
+
   /**
    * 持续改进
    */
   static continuousImprovement = {
-    description: '持续改进安全测试流程',
-    practices: [
-      '定期更新测试工具和规则',
-      '分析安全事件和漏洞趋势',
-      '培训开发人员安全意识',
-      '建立安全知识库'
-    ]
+    description: "持续改进安全测试流程",
+    practices: ["定期更新测试工具和规则", "分析安全事件和漏洞趋势", "培训开发人员安全意识", "建立安全知识库"],
   };
 }
 ```
@@ -1534,59 +1530,49 @@ class SecurityTestBestPractices {
 class SecurityTestChecklist {
   private static items = [
     {
-      category: '测试准备',
+      category: "测试准备",
       checks: [
-        '测试环境是否与生产环境隔离',
-        '测试数据是否经过脱敏处理',
-        '测试工具是否正确配置',
-        '测试范围是否明确定义'
-      ]
+        "测试环境是否与生产环境隔离",
+        "测试数据是否经过脱敏处理",
+        "测试工具是否正确配置",
+        "测试范围是否明确定义",
+      ],
     },
     {
-      category: '静态测试',
-      checks: [
-        '是否进行了SAST扫描',
-        '是否进行了依赖项安全扫描',
-        '是否进行了代码安全审查',
-        '是否检查了硬编码的密钥'
-      ]
+      category: "静态测试",
+      checks: ["是否进行了SAST扫描", "是否进行了依赖项安全扫描", "是否进行了代码安全审查", "是否检查了硬编码的密钥"],
     },
     {
-      category: '动态测试',
-      checks: [
-        '是否进行了DAST扫描',
-        '是否进行了渗透测试',
-        '是否测试了OWASP Top 10漏洞',
-        '是否进行了API安全测试'
-      ]
+      category: "动态测试",
+      checks: ["是否进行了DAST扫描", "是否进行了渗透测试", "是否测试了OWASP Top 10漏洞", "是否进行了API安全测试"],
     },
     {
-      category: '合规性检查',
+      category: "合规性检查",
       checks: [
-        '是否进行了OWASP Top 10合规性检查',
-        '是否进行了PCI DSS合规性检查',
-        '是否进行了GDPR合规性检查',
-        '是否进行了等保2.0合规性检查'
-      ]
+        "是否进行了OWASP Top 10合规性检查",
+        "是否进行了PCI DSS合规性检查",
+        "是否进行了GDPR合规性检查",
+        "是否进行了等保2.0合规性检查",
+      ],
     },
     {
-      category: '漏洞管理',
+      category: "漏洞管理",
       checks: [
-        '是否建立了漏洞跟踪系统',
-        '是否按严重程度优先修复漏洞',
-        '是否验证了漏洞修复效果',
-        '是否定期进行安全审计'
-      ]
-    }
+        "是否建立了漏洞跟踪系统",
+        "是否按严重程度优先修复漏洞",
+        "是否验证了漏洞修复效果",
+        "是否定期进行安全审计",
+      ],
+    },
   ];
-  
+
   /**
    * 获取检查清单
    */
   static getChecklist(): typeof SecurityTestChecklist.items {
     return this.items;
   }
-  
+
   /**
    * 检查完成情况
    */
@@ -1599,11 +1585,11 @@ class SecurityTestChecklist {
     const completedItems = completed.filter(item => allItems.includes(item));
     const pendingItems = allItems.filter(item => !completed.includes(item));
     const progress = (completedItems.length / allItems.length) * 100;
-    
+
     return {
       completed: completedItems,
       pending: pendingItems,
-      progress
+      progress,
     };
   }
 }
@@ -1631,13 +1617,10 @@ class SecurityTestChecklist {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1660,8 +1643,6 @@ class SecurityTestChecklist {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1695,8 +1676,6 @@ class SecurityTestChecklist {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1719,46 +1698,46 @@ class SecurityTestChecklist {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1771,6 +1750,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1780,6 +1760,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1789,6 +1770,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1805,16 +1787,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1824,13 +1807,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1839,6 +1820,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1857,6 +1839,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1872,6 +1855,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1891,28 +1875,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1921,44 +1904,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1972,13 +1953,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1987,18 +1968,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -2008,37 +1992,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2047,28 +2034,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2077,21 +2062,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2100,10 +2087,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2129,16 +2113,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2147,25 +2131,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

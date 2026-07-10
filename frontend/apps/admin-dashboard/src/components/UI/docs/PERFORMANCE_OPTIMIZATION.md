@@ -28,28 +28,20 @@ YYC³ UI 组件库提供了多种性能优化技术，帮助您构建高性能�
 ### 使用方法
 
 ```tsx
-import { useVirtualScroll } from '@/components/UI/utils/performance'
-import { List } from '@/components/UI/List'
+import { useVirtualScroll } from "@/components/UI/utils/performance";
+import { List } from "@/components/UI/List";
 
 export default function VirtualScrollList() {
   const list = Array.from({ length: 10000 }, (_, i) => ({
     id: i,
     title: `项目 ${i}`,
-    description: `这是项目 ${i} 的描述`
-  }))
-  
-  const {
-    visibleList,
-    offsetY,
-    totalHeight,
-    handleScroll
-  } = useVirtualScroll(list, 50, 400)
-  
+    description: `这是项目 ${i} 的描述`,
+  }));
+
+  const { visibleList, offsetY, totalHeight, handleScroll } = useVirtualScroll(list, 50, 400);
+
   return (
-    <div
-      class="h-[400px] overflow-auto"
-      onScroll={handleScroll}
-    >
+    <div class="h-[400px] overflow-auto" onScroll={handleScroll}>
       <div style={{ height: totalHeight.value }}>
         <div style={{ transform: `translateY(${offsetY.value}px)` }}>
           {visibleList.value.map(item => (
@@ -60,19 +52,19 @@ export default function VirtualScrollList() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 ```
 
 ### 配置选项
 
 ```typescript
-import { VIRTUAL_SCROLL_CONFIG } from '@/components/UI/utils/performance-config'
+import { VIRTUAL_SCROLL_CONFIG } from "@/components/UI/utils/performance-config";
 
-VIRTUAL_SCROLL_CONFIG.DEFAULT_ITEM_HEIGHT = 50
-VIRTUAL_SCROLL_CONFIG.DEFAULT_CONTAINER_HEIGHT = 400
-VIRTUAL_SCROLL_CONFIG.BUFFER_SIZE = 3
-VIRTUAL_SCROLL_CONFIG.MAX_VISIBLE_ITEMS = 100
+VIRTUAL_SCROLL_CONFIG.DEFAULT_ITEM_HEIGHT = 50;
+VIRTUAL_SCROLL_CONFIG.DEFAULT_CONTAINER_HEIGHT = 400;
+VIRTUAL_SCROLL_CONFIG.BUFFER_SIZE = 3;
+VIRTUAL_SCROLL_CONFIG.MAX_VISIBLE_ITEMS = 100;
 ```
 
 ---
@@ -87,34 +79,31 @@ VIRTUAL_SCROLL_CONFIG.MAX_VISIBLE_ITEMS = 100
 ### 使用方法
 
 ```tsx
-import { useDebounce, useThrottle } from '@/components/UI/utils/performance'
-import { Input } from '@/components/UI/Input'
+import { useDebounce, useThrottle } from "@/components/UI/utils/performance";
+import { Input } from "@/components/UI/Input";
 
 export default function SearchExample() {
-  const [searchValue, setSearchValue] = useState('')
-  
+  const [searchValue, setSearchValue] = useState("");
+
   const handleSearch = useDebounce((value: string) => {
-    console.log('搜索:', value)
-  }, 500)
-  
+    console.log("搜索:", value);
+  }, 500);
+
   const handleScroll = useThrottle(() => {
-    console.log('滚动中...')
-  }, 100)
-  
+    console.log("滚动中...");
+  }, 100);
+
   return (
     <div>
       <Input
         value={searchValue}
-        onChange={(e) => {
-          setSearchValue(e.target.value)
-          handleSearch(e.target.value)
+        onChange={e => {
+          setSearchValue(e.target.value);
+          handleSearch(e.target.value);
         }}
         placeholder="搜索..."
       />
-      <div
-        class="h-[200px] overflow-auto"
-        onScroll={handleScroll}
-      >
+      <div class="h-[200px] overflow-auto" onScroll={handleScroll}>
         {Array.from({ length: 100 }).map((_, i) => (
           <div key={i} class="h-[20px]">
             内容 {i}
@@ -122,22 +111,22 @@ export default function SearchExample() {
         ))}
       </div>
     </div>
-  )
+  );
 }
 ```
 
 ### 配置选项
 
 ```typescript
-import { DEBOUNCE_CONFIG, THROTTLE_CONFIG } from '@/components/UI/utils/performance-config'
+import { DEBOUNCE_CONFIG, THROTTLE_CONFIG } from "@/components/UI/utils/performance-config";
 
-DEBOUNCE_CONFIG.DEFAULT_DELAY = 300
-DEBOUNCE_CONFIG.SEARCH_DELAY = 500
-DEBOUNCE_CONFIG.RESIZE_DELAY = 200
+DEBOUNCE_CONFIG.DEFAULT_DELAY = 300;
+DEBOUNCE_CONFIG.SEARCH_DELAY = 500;
+DEBOUNCE_CONFIG.RESIZE_DELAY = 200;
 
-THROTTLE_CONFIG.DEFAULT_DELAY = 300
-THROTTLE_CONFIG.SCROLL_DELAY = 100
-THROTTLE_CONFIG.RESIZE_DELAY = 200
+THROTTLE_CONFIG.DEFAULT_DELAY = 300;
+THROTTLE_CONFIG.SCROLL_DELAY = 100;
+THROTTLE_CONFIG.RESIZE_DELAY = 200;
 ```
 
 ---
@@ -153,48 +142,46 @@ THROTTLE_CONFIG.RESIZE_DELAY = 200
 ### 使用方法
 
 ```tsx
-import { useLazyLoad, useIntersectionObserver } from '@/components/UI/utils/performance'
-import { ref } from 'vue'
+import { useLazyLoad, useIntersectionObserver } from "@/components/UI/utils/performance";
+import { ref } from "vue";
 
 export default function LazyLoadExample() {
-  const imageRef = ref<HTMLElement | null>(null)
-  const [imageUrl, setImageUrl] = useState('')
-  
+  const imageRef = ref<HTMLElement | null>(null);
+  const [imageUrl, setImageUrl] = useState("");
+
   useIntersectionObserver(
     imageRef,
-    (entries) => {
+    entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          setImageUrl('https://example.com/image.jpg')
+          setImageUrl("https://example.com/image.jpg");
         }
-      })
+      });
     },
     { threshold: 0.1 }
-  )
-  
+  );
+
   return (
     <div ref={imageRef} class="h-[400px]">
       {imageUrl ? (
         <img src={imageUrl} alt="懒加载图片" />
       ) : (
-        <div class="flex items-center justify-center h-full bg-neutral-100">
-          加载中...
-        </div>
+        <div class="flex items-center justify-center h-full bg-neutral-100">加载中...</div>
       )}
     </div>
-  )
+  );
 }
 ```
 
 ### 配置选项
 
 ```typescript
-import { LAZY_LOAD_CONFIG } from '@/components/UI/utils/performance-config'
+import { LAZY_LOAD_CONFIG } from "@/components/UI/utils/performance-config";
 
-LAZY_LOAD_CONFIG.DEFAULT_THRESHOLD = 0.1
-LAZY_LOAD_CONFIG.DEFAULT_ROOT_MARGIN = '0px'
-LAZY_LOAD_CONFIG.IMAGE_LAZY_LOAD = true
-LAZY_LOAD_CONFIG.COMPONENT_LAZY_LOAD = true
+LAZY_LOAD_CONFIG.DEFAULT_THRESHOLD = 0.1;
+LAZY_LOAD_CONFIG.DEFAULT_ROOT_MARGIN = "0px";
+LAZY_LOAD_CONFIG.IMAGE_LAZY_LOAD = true;
+LAZY_LOAD_CONFIG.COMPONENT_LAZY_LOAD = true;
 ```
 
 ---
@@ -210,38 +197,38 @@ LAZY_LOAD_CONFIG.COMPONENT_LAZY_LOAD = true
 ### 使用方法
 
 ```tsx
-import { useMemoCache } from '@/components/UI/utils/performance'
+import { useMemoCache } from "@/components/UI/utils/performance";
 
 const expensiveCalculation = useMemoCache((data: any[]) => {
-  console.log('执行复杂计算...')
+  console.log("执行复杂计算...");
   return data.map(item => ({
     ...item,
-    processed: true
-  }))
-})
+    processed: true,
+  }));
+});
 
 export default function CacheExample({ data }: { data: any[] }) {
-  const processedData = expensiveCalculation(data)
-  
+  const processedData = expensiveCalculation(data);
+
   return (
     <div>
       {processedData.map(item => (
         <div key={item.id}>{item.title}</div>
       ))}
     </div>
-  )
+  );
 }
 ```
 
 ### 配置选项
 
 ```typescript
-import { CACHE_CONFIG } from '@/components/UI/utils/performance-config'
+import { CACHE_CONFIG } from "@/components/UI/utils/performance-config";
 
-CACHE_CONFIG.DEFAULT_MAX_SIZE = 100
-CACHE_CONFIG.DEFAULT_TTL = 60000
-CACHE_CONFIG.ENABLE_MEMORY_CACHE = true
-CACHE_CONFIG.ENABLE_LOCAL_STORAGE_CACHE = true
+CACHE_CONFIG.DEFAULT_MAX_SIZE = 100;
+CACHE_CONFIG.DEFAULT_TTL = 60000;
+CACHE_CONFIG.ENABLE_MEMORY_CACHE = true;
+CACHE_CONFIG.ENABLE_LOCAL_STORAGE_CACHE = true;
 ```
 
 ---
@@ -257,44 +244,41 @@ CACHE_CONFIG.ENABLE_LOCAL_STORAGE_CACHE = true
 ### 使用方法
 
 ```tsx
-import { useRequestAnimationFrame } from '@/components/UI/utils/performance'
+import { useRequestAnimationFrame } from "@/components/UI/utils/performance";
 
 export default function AnimationExample() {
-  const [progress, setProgress] = useState(0)
-  
+  const [progress, setProgress] = useState(0);
+
   const { start, stop } = useRequestAnimationFrame(() => {
     setProgress(prev => {
       if (prev >= 100) {
-        stop()
-        return 100
+        stop();
+        return 100;
       }
-      return prev + 1
-    })
-  })
-  
+      return prev + 1;
+    });
+  });
+
   return (
     <div>
       <button onClick={start}>开始动画</button>
       <div class="w-full h-4 bg-neutral-200 rounded">
-        <div
-          class="h-full bg-primary-600 rounded transition-all"
-          style={{ width: `${progress}%` }}
-        />
+        <div class="h-full bg-primary-600 rounded transition-all" style={{ width: `${progress}%` }} />
       </div>
     </div>
-  )
+  );
 }
 ```
 
 ### 配置选项
 
 ```typescript
-import { ANIMATION_CONFIG } from '@/components/UI/utils/performance-config'
+import { ANIMATION_CONFIG } from "@/components/UI/utils/performance-config";
 
-ANIMATION_CONFIG.DEFAULT_DURATION = 300
-ANIMATION_CONFIG.DEFAULT_EASING = 'ease-in-out'
-ANIMATION_CONFIG.ENABLE_RAF = true
-ANIMATION_CONFIG.DISABLE_ANIMATION_ON_LOW_PERFORMANCE = false
+ANIMATION_CONFIG.DEFAULT_DURATION = 300;
+ANIMATION_CONFIG.DEFAULT_EASING = "ease-in-out";
+ANIMATION_CONFIG.ENABLE_RAF = true;
+ANIMATION_CONFIG.DISABLE_ANIMATION_ON_LOW_PERFORMANCE = false;
 ```
 
 ---
@@ -310,26 +294,26 @@ ANIMATION_CONFIG.DISABLE_ANIMATION_ON_LOW_PERFORMANCE = false
 ### 使用方法
 
 ```tsx
-import { shallowRef, shallowReactive, computed, vMemo } from 'vue'
+import { shallowRef, shallowReactive, computed, vMemo } from "vue";
 
 export default function RenderOptimizationExample() {
-  const data = shallowRef({ count: 0 })
-  const items = shallowReactive([{ id: 1, name: '项目1' }])
-  
-  const doubledCount = computed(() => data.value.count * 2)
-  
+  const data = shallowRef({ count: 0 });
+  const items = shallowReactive([{ id: 1, name: "项目1" }]);
+
+  const doubledCount = computed(() => data.value.count * 2);
+
   return (
     <div>
       <div>计数: {data.value.count}</div>
       <div>双倍: {doubledCount.value}</div>
-      
+
       <div v-memo={[items.length]}>
         {items.map(item => (
           <div key={item.id}>{item.name}</div>
         ))}
       </div>
     </div>
-  )
+  );
 }
 ```
 
@@ -344,13 +328,13 @@ export default function RenderOptimizationExample() {
 ### 配置选项
 
 ```typescript
-import { RENDER_OPTIMIZATION_CONFIG } from '@/components/UI/utils/performance-config'
+import { RENDER_OPTIMIZATION_CONFIG } from "@/components/UI/utils/performance-config";
 
-RENDER_OPTIMIZATION_CONFIG.ENABLE_VUE_MESSENGER = true
-RENDER_OPTIMIZATION_CONFIG.ENABLE_SHALLOW_REF = true
-RENDER_OPTIMIZATION_CONFIG.ENABLE_COMPUTED = true
-RENDER_OPTIMIZATION_CONFIG.ENABLE_V_MEMO = true
-RENDER_OPTIMIZATION_CONFIG.ENABLE_KEY_OPTIMIZATION = true
+RENDER_OPTIMIZATION_CONFIG.ENABLE_VUE_MESSENGER = true;
+RENDER_OPTIMIZATION_CONFIG.ENABLE_SHALLOW_REF = true;
+RENDER_OPTIMIZATION_CONFIG.ENABLE_COMPUTED = true;
+RENDER_OPTIMIZATION_CONFIG.ENABLE_V_MEMO = true;
+RENDER_OPTIMIZATION_CONFIG.ENABLE_KEY_OPTIMIZATION = true;
 ```
 
 ---
@@ -366,33 +350,33 @@ RENDER_OPTIMIZATION_CONFIG.ENABLE_KEY_OPTIMIZATION = true
 ### 使用方法
 
 ```tsx
-import { usePerformanceMonitor } from '@/components/UI/utils/performance'
+import { usePerformanceMonitor } from "@/components/UI/utils/performance";
 
 export default function PerformanceMonitorExample() {
-  const { measureRender, averageRenderTime } = usePerformanceMonitor('MyComponent')
-  
+  const { measureRender, averageRenderTime } = usePerformanceMonitor("MyComponent");
+
   measureRender(() => {
     return (
       <div>
         <h1>我的组件</h1>
         <p>平均渲染时间: {averageRenderTime.value.toFixed(2)}ms</p>
       </div>
-    )
-  })
+    );
+  });
 }
 ```
 
 ### 配置选项
 
 ```typescript
-import { PERFORMANCE_MONITOR_CONFIG } from '@/components/UI/utils/performance-config'
+import { PERFORMANCE_MONITOR_CONFIG } from "@/components/UI/utils/performance-config";
 
-PERFORMANCE_MONITOR_CONFIG.ENABLE_MONITORING = true
-PERFORMANCE_MONITOR_CONFIG.RENDER_TIME_THRESHOLD = 16
-PERFORMANCE_MONITOR_CONFIG.MEMORY_THRESHOLD = 50 * 1024 * 1024
-PERFORMANCE_MONITOR_CONFIG.FPS_THRESHOLD = 30
-PERFORMANCE_MONITOR_CONFIG.ENABLE_CONSOLE_LOG = true
-PERFORMANCE_MONITOR_CONFIG.ENABLE_WARNING = true
+PERFORMANCE_MONITOR_CONFIG.ENABLE_MONITORING = true;
+PERFORMANCE_MONITOR_CONFIG.RENDER_TIME_THRESHOLD = 16;
+PERFORMANCE_MONITOR_CONFIG.MEMORY_THRESHOLD = 50 * 1024 * 1024;
+PERFORMANCE_MONITOR_CONFIG.FPS_THRESHOLD = 30;
+PERFORMANCE_MONITOR_CONFIG.ENABLE_CONSOLE_LOG = true;
+PERFORMANCE_MONITOR_CONFIG.ENABLE_WARNING = true;
 ```
 
 ---
@@ -402,7 +386,7 @@ PERFORMANCE_MONITOR_CONFIG.ENABLE_WARNING = true
 ### 1. 按需加载
 
 ```tsx
-const LazyComponent = defineAsyncComponent(() => import('./LazyComponent'))
+const LazyComponent = defineAsyncComponent(() => import("./LazyComponent"));
 ```
 
 ### 2. 代码分割
@@ -410,25 +394,20 @@ const LazyComponent = defineAsyncComponent(() => import('./LazyComponent'))
 ```tsx
 const routes = [
   {
-    path: '/',
-    component: () => import('./views/Home')
+    path: "/",
+    component: () => import("./views/Home"),
   },
   {
-    path: '/about',
-    component: () => import('./views/About')
-  }
-]
+    path: "/about",
+    component: () => import("./views/About"),
+  },
+];
 ```
 
 ### 3. 图片优化
 
 ```tsx
-<img
-  src="image.webp"
-  loading="lazy"
-  decoding="async"
-  alt="优化图片"
-/>
+<img src="image.webp" loading="lazy" decoding="async" alt="优化图片" />
 ```
 
 ### 4. CSS优化
@@ -449,13 +428,13 @@ const routes = [
 
 ```tsx
 // 批量DOM操作
-const fragment = document.createDocumentFragment()
+const fragment = document.createDocumentFragment();
 items.forEach(item => {
-  const element = document.createElement('div')
-  element.textContent = item
-  fragment.appendChild(element)
-})
-document.body.appendChild(fragment)
+  const element = document.createElement("div");
+  element.textContent = item;
+  fragment.appendChild(element);
+});
+document.body.appendChild(fragment);
 ```
 
 ---

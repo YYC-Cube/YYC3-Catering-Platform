@@ -35,7 +35,7 @@ export const requestLogger = (req: AuthenticatedRequest, res: Response, next: Ne
     ip,
     userAgent: req.headers['user-agent'],
     tenantId: req.headers['x-tenant-id'],
-    userId: req.user?.id
+    userId: req.user?.id,
   });
 
   // 监听响应完成事件
@@ -52,12 +52,12 @@ export const requestLogger = (req: AuthenticatedRequest, res: Response, next: Ne
       responseTime: `${responseTime}ms`,
       tenantId: req.headers['x-tenant-id'],
       userId: req.user?.id,
-      contentLength: res.get('Content-Length')
+      contentLength: res.get('Content-Length'),
     });
   });
 
   // 监听响应错误事件
-  res.on('error', (err) => {
+  res.on('error', err => {
     const responseTime = Date.now() - startTime;
 
     logger.error('Response error', {
@@ -68,7 +68,7 @@ export const requestLogger = (req: AuthenticatedRequest, res: Response, next: Ne
       responseTime: `${responseTime}ms`,
       error: err.message,
       tenantId: req.headers['x-tenant-id'],
-      userId: req.user?.id
+      userId: req.user?.id,
     });
   });
 

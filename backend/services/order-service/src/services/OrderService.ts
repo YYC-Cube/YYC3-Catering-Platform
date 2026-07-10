@@ -68,37 +68,43 @@ export class OrderService {
   async createOrder(params: CreateOrderParams): Promise<Order> {
     try {
       logger.info(`Creating order for user ${params.user_id}`);
-      
+
       // 开始事务
-      const order = await Order.sequelize?.transaction(async (transaction) => {
+      const order = await Order.sequelize?.transaction(async transaction => {
         // 创建订单主记录
-        const newOrder = await Order.create({
-          user_id: params.user_id,
-          restaurant_id: params.restaurant_id,
-          delivery_type: params.delivery_type,
-          delivery_address: params.delivery_address,
-          delivery_phone: params.delivery_phone,
-          delivery_contact: params.delivery_contact,
-          scheduled_time: params.scheduled_time,
-          notes: params.notes,
-          subtotal: params.subtotal,
-          tax: params.tax,
-          delivery_fee: params.delivery_fee,
-          discount: params.discount,
-          total_amount: params.total_amount
-        }, { transaction });
+        const newOrder = await Order.create(
+          {
+            user_id: params.user_id,
+            restaurant_id: params.restaurant_id,
+            delivery_type: params.delivery_type,
+            delivery_address: params.delivery_address,
+            delivery_phone: params.delivery_phone,
+            delivery_contact: params.delivery_contact,
+            scheduled_time: params.scheduled_time,
+            notes: params.notes,
+            subtotal: params.subtotal,
+            tax: params.tax,
+            delivery_fee: params.delivery_fee,
+            discount: params.discount,
+            total_amount: params.total_amount,
+          },
+          { transaction },
+        );
 
         // 创建订单项
         for (const item of params.order_items) {
-          const orderItem = await OrderItem.create({
-            order_id: newOrder.id,
-            menu_item_id: item.menu_item_id,
-            name: item.name,
-            description: item.description,
-            price: item.price,
-            quantity: item.quantity,
-            image_url: item.image_url
-          }, { transaction });
+          const orderItem = await OrderItem.create(
+            {
+              order_id: newOrder.id,
+              menu_item_id: item.menu_item_id,
+              name: item.name,
+              description: item.description,
+              price: item.price,
+              quantity: item.quantity,
+              image_url: item.image_url,
+            },
+            { transaction },
+          );
 
           // 创建订单项选项
           if (item.options && item.options.length > 0) {
@@ -108,26 +114,32 @@ export class OrderService {
                 option_id: option.option_id,
                 name: option.name,
                 price: option.price,
-                quantity: option.quantity
+                quantity: option.quantity,
               })),
-              { transaction }
+              { transaction },
             );
           }
         }
 
         // 创建订单支付记录
-        await OrderPayment.create({
-          order_id: newOrder.id,
-          payment_method: 'wallet', // 默认支付方式
-          amount: params.total_amount
-        }, { transaction });
+        await OrderPayment.create(
+          {
+            order_id: newOrder.id,
+            payment_method: 'wallet', // 默认支付方式
+            amount: params.total_amount,
+          },
+          { transaction },
+        );
 
         // 创建订单状态历史记录
-        await OrderStatusHistory.create({
-          order_id: newOrder.id,
-          status: OrderStatus.PENDING,
-          note: 'Order created'
-        }, { transaction });
+        await OrderStatusHistory.create(
+          {
+            order_id: newOrder.id,
+            status: OrderStatus.PENDING,
+            note: 'Order created',
+          },
+          { transaction },
+        );
 
         return newOrder;
       });
@@ -148,13 +160,13 @@ export class OrderService {
   async getOrderById(orderId: number): Promise<Order | null> {
     try {
       logger.info(`Getting order details for order ${orderId}`);
-      
+
       const order = await Order.findByPk(orderId, {
         include: [
           { model: OrderItem, include: [OrderItemOption] },
           { model: OrderPayment },
-          { model: OrderStatusHistory }
-        ]
+          { model: OrderStatusHistory },
+        ],
       });
 
       if (!order) {
@@ -172,12 +184,12 @@ export class OrderService {
   async updateOrderStatus(params: UpdateOrderStatusParams): Promise<Order | null> {
     try {
       logger.info(`Updating order ${params.order_id} status to ${params.status}`);
-      
+
       // 开始事务
-      const order = await Order.sequelize?.transaction(async (transaction) => {
+      const order = await Order.sequelize?.transaction(async transaction => {
         // 更新订单状态
         const updatedOrder = await Order.findByPk(params.order_id, { transaction });
-        
+
         if (!updatedOrder) {
           throw new Error(`Order ${params.order_id} not found`);
         }
@@ -186,12 +198,15 @@ export class OrderService {
         await updatedOrder.save({ transaction });
 
         // 创建订单状态历史记录
-        await OrderStatusHistory.create({
-          order_id: params.order_id,
-          status: params.status,
-          note: params.note,
-          changed_by: params.changed_by
-        }, { transaction });
+        await OrderStatusHistory.create(
+          {
+            order_id: params.order_id,
+            status: params.status,
+            note: params.note,
+            changed_by: params.changed_by,
+          },
+          { transaction },
+        );
 
         return updatedOrder;
       });
@@ -209,19 +224,23 @@ export class OrderService {
   }
 
   // 更新支付状态
-  async updatePaymentStatus(orderId: number, status: PaymentStatus, transactionId?: string): Promise<OrderPayment | null> {
+  async updatePaymentStatus(
+    orderId: number,
+    status: PaymentStatus,
+    transactionId?: string,
+  ): Promise<OrderPayment | null> {
     try {
       logger.info(`Updating payment status for order ${orderId} to ${status}`);
-      
+
       const payment = await OrderPayment.findOne({ where: { order_id: orderId } });
-      
+
       if (!payment) {
         logger.warn(`Payment record not found for order ${orderId}`);
         return null;
       }
 
       payment.status = status;
-      
+
       if (status === PaymentStatus.PAID) {
         payment.paid_at = new Date();
         if (transactionId) {
@@ -238,7 +257,7 @@ export class OrderService {
         await this.updateOrderStatus({
           order_id: orderId,
           status: OrderStatus.CONFIRMED,
-          note: 'Payment completed, order confirmed'
+          note: 'Payment completed, order confirmed',
         });
       }
 
@@ -254,37 +273,38 @@ export class OrderService {
   async getOrders(params: GetOrdersParams): Promise<{ orders: Order[]; total: number; page: number; limit: number }> {
     try {
       logger.info(`Getting orders with params: ${JSON.stringify(params)}`);
-      
+
       const { page = 1, limit = 10 } = params;
       const offset = (page - 1) * limit;
-      
+
       const whereConditions: any = {};
-      
+
       if (params.user_id) whereConditions.user_id = params.user_id;
       if (params.restaurant_id) whereConditions.restaurant_id = params.restaurant_id;
       if (params.status) whereConditions.status = params.status;
       if (params.delivery_type) whereConditions.delivery_type = params.delivery_type;
       if (params.start_date) whereConditions.created_at = { [Order.sequelize?.Op.gte]: params.start_date };
-      if (params.end_date) whereConditions.created_at = { ...whereConditions.created_at, [Order.sequelize?.Op.lte]: params.end_date };
-      
+      if (params.end_date)
+        whereConditions.created_at = { ...whereConditions.created_at, [Order.sequelize?.Op.lte]: params.end_date };
+
       const { rows: orders, count: total } = await Order.findAndCountAll({
         where: whereConditions,
         include: [
           { model: OrderItem },
-          { model: OrderPayment, where: params.payment_status ? { status: params.payment_status } : {} }
+          { model: OrderPayment, where: params.payment_status ? { status: params.payment_status } : {} },
         ],
         order: [['created_at', 'DESC']],
         offset,
-        limit
+        limit,
       });
 
       logger.info(`Retrieved ${orders.length} orders out of ${total}`);
-      
+
       return {
         orders,
         total,
         page,
-        limit
+        limit,
       };
     } catch (error) {
       logger.error('Error getting orders:', error);
@@ -296,11 +316,11 @@ export class OrderService {
   async cancelOrder(orderId: number, userId: number, reason: string): Promise<Order | null> {
     try {
       logger.info(`Cancelling order ${orderId} by user ${userId}`);
-      
+
       // 开始事务
-      const order = await Order.sequelize?.transaction(async (transaction) => {
+      const order = await Order.sequelize?.transaction(async transaction => {
         const updatedOrder = await Order.findByPk(orderId, { transaction });
-        
+
         if (!updatedOrder) {
           throw new Error(`Order ${orderId} not found`);
         }
@@ -318,12 +338,15 @@ export class OrderService {
         await updatedOrder.save({ transaction });
 
         // 创建订单状态历史记录
-        await OrderStatusHistory.create({
-          order_id: orderId,
-          status: OrderStatus.CANCELLED,
-          note: reason,
-          changed_by: userId
-        }, { transaction });
+        await OrderStatusHistory.create(
+          {
+            order_id: orderId,
+            status: OrderStatus.CANCELLED,
+            note: reason,
+            changed_by: userId,
+          },
+          { transaction },
+        );
 
         // 更新支付状态为已退款（如果已支付）
         const payment = await OrderPayment.findOne({ where: { order_id: orderId }, transaction });

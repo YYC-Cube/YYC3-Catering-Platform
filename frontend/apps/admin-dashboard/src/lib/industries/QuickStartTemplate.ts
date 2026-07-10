@@ -58,10 +58,7 @@ export class QuickStartTemplate {
   /**
    * 集成外部系统
    */
-  async integrateSystem(
-    systemType: string,
-    config: IntegrationConfig[string]
-  ): Promise<IntegrationResult> {
+  async integrateSystem(systemType: string, config: IntegrationConfig[string]): Promise<IntegrationResult> {
     const startTime = Date.now();
 
     try {
@@ -114,9 +111,7 @@ export class QuickStartTemplate {
   /**
    * 批量集成多个系统
    */
-  async integrateSystems(
-    configs: IntegrationConfig
-  ): Promise<Map<string, IntegrationResult>> {
+  async integrateSystems(configs: IntegrationConfig): Promise<Map<string, IntegrationResult>> {
     const results = new Map<string, IntegrationResult>();
 
     for (const [systemType, config] of Object.entries(configs)) {
@@ -184,10 +179,7 @@ export class QuickStartTemplate {
   /**
    * 创建自定义AI配置
    */
-  createCustomConfig(
-    baseConfig: QuickStartConfig,
-    customizations: Partial<AutonomousAIConfig>
-  ): AutonomousAIConfig {
+  createCustomConfig(baseConfig: QuickStartConfig, customizations: Partial<AutonomousAIConfig>): AutonomousAIConfig {
     return {
       apiType: baseConfig.apiType || 'internal',
       modelName: baseConfig.modelName || 'yyc3-custom-assistant',
@@ -221,11 +213,11 @@ export class QuickStartTemplate {
       errors.push('用户角色不能为空');
     }
 
-    if (!this.getSupportedIndustries().find((i) => i.id === config.industry)) {
+    if (!this.getSupportedIndustries().find(i => i.id === config.industry)) {
       errors.push(`不支持的行业: ${config.industry}`);
     }
 
-    if (!this.getSupportedPersonas(config.industry).find((p) => p.personaId === config.userRole)) {
+    if (!this.getSupportedPersonas(config.industry).find(p => p.personaId === config.userRole)) {
       errors.push(`不支持的角色: ${config.userRole}`);
     }
 

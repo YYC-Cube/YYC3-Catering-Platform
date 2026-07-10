@@ -15,7 +15,7 @@
 使用 `variant` 属性来设置徽章的样式。
 
 ```tsx
-import { Badge } from '@/components/UI'
+import { Badge } from "@/components/UI";
 
 export default function BadgeBasic() {
   return (
@@ -26,7 +26,7 @@ export default function BadgeBasic() {
       <Badge variant="warning">警告</Badge>
       <Badge variant="danger">危险</Badge>
     </div>
-  )
+  );
 }
 ```
 
@@ -35,7 +35,7 @@ export default function BadgeBasic() {
 使用 `size` 属性来设置徽章的尺寸。
 
 ```tsx
-import { Badge } from '@/components/UI'
+import { Badge } from "@/components/UI";
 
 export default function BadgeSize() {
   return (
@@ -44,7 +44,7 @@ export default function BadgeSize() {
       <Badge size="md">中型</Badge>
       <Badge size="lg">大型</Badge>
     </div>
-  )
+  );
 }
 ```
 
@@ -53,7 +53,7 @@ export default function BadgeSize() {
 使用 `rounded` 属性来设置徽章的圆角。
 
 ```tsx
-import { Badge } from '@/components/UI'
+import { Badge } from "@/components/UI";
 
 export default function BadgeRounded() {
   return (
@@ -63,7 +63,7 @@ export default function BadgeRounded() {
       <Badge rounded="md">中圆角</Badge>
       <Badge rounded="full">全圆角</Badge>
     </div>
-  )
+  );
 }
 ```
 
@@ -72,16 +72,18 @@ export default function BadgeRounded() {
 使用 `count` 属性来显示数量。
 
 ```tsx
-import { Badge } from '@/components/UI'
+import { Badge } from "@/components/UI";
 
 export default function BadgeCount() {
   return (
     <div class="space-x-2">
       <Badge count={5}>消息</Badge>
       <Badge count={99}>通知</Badge>
-      <Badge count={100} maxCount={99}>消息</Badge>
+      <Badge count={100} maxCount={99}>
+        消息
+      </Badge>
     </div>
-  )
+  );
 }
 ```
 
@@ -90,16 +92,20 @@ export default function BadgeCount() {
 使用 `dot` 属性来显示点状徽章。
 
 ```tsx
-import { Badge } from '@/components/UI'
+import { Badge } from "@/components/UI";
 
 export default function BadgeDot() {
   return (
     <div class="space-x-2">
       <Badge dot>消息</Badge>
-      <Badge dot variant="success">在线</Badge>
-      <Badge dot variant="danger">离线</Badge>
+      <Badge dot variant="success">
+        在线
+      </Badge>
+      <Badge dot variant="danger">
+        离线
+      </Badge>
     </div>
-  )
+  );
 }
 ```
 
@@ -107,20 +113,20 @@ export default function BadgeDot() {
 
 ### Badge Props
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-|------|------|------|--------|--------|
-| variant | 样式类型 | `string` | `default` / `primary` / `success` / `warning` / `danger` | `default` |
-| size | 尺寸 | `string` | `sm` / `md` / `lg` | `md` |
-| rounded | 圆角 | `string` | `none` / `sm` / `md` / `full` | `md` |
-| count | 数量 | `number` | - | - |
-| maxCount | 最大数量 | `number` | - | `99` |
-| dot | 是否显示点状 | `boolean` | - | `false` |
-| className | 自定义类名 | `string` | - | - |
+| 参数      | 说明         | 类型      | 可选值                                                   | 默认值    |
+| --------- | ------------ | --------- | -------------------------------------------------------- | --------- |
+| variant   | 样式类型     | `string`  | `default` / `primary` / `success` / `warning` / `danger` | `default` |
+| size      | 尺寸         | `string`  | `sm` / `md` / `lg`                                       | `md`      |
+| rounded   | 圆角         | `string`  | `none` / `sm` / `md` / `full`                            | `md`      |
+| count     | 数量         | `number`  | -                                                        | -         |
+| maxCount  | 最大数量     | `number`  | -                                                        | `99`      |
+| dot       | 是否显示点状 | `boolean` | -                                                        | `false`   |
+| className | 自定义类名   | `string`  | -                                                        | -         |
 
 ### Badge Slots
 
-| 插槽名 | 说明 |
-|--------|------|
+| 插槽名  | 说明     |
+| ------- | -------- |
 | default | 默认内容 |
 
 ## 样式定制

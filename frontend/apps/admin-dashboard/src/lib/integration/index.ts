@@ -24,10 +24,7 @@ export {
   userService,
 } from './ui-business-integration';
 
-export type {
-  ApiResponse,
-  RequestConfig,
-} from './ui-business-integration';
+export type { ApiResponse, RequestConfig } from './ui-business-integration';
 
 // 数据层与UI层集成
 export {
@@ -43,14 +40,7 @@ export {
   SyncStatus,
 } from './data-layer-integration';
 
-export type {
-  CacheConfig,
-  CacheItem,
-  SyncConfig,
-  AppState,
-  OrderState,
-  MenuState,
-} from './data-layer-integration';
+export type { CacheConfig, CacheItem, SyncConfig, AppState, OrderState, MenuState } from './data-layer-integration';
 
 // 多端适配
 export {
@@ -71,12 +61,7 @@ export {
   createResponsiveStyles,
 } from './multi-platform-adapter';
 
-export type {
-  DeviceInfo,
-  PlatformInfo,
-  ResponsiveConfig,
-  Breakpoint,
-} from './multi-platform-adapter';
+export type { DeviceInfo, PlatformInfo, ResponsiveConfig, Breakpoint } from './multi-platform-adapter';
 
 // 跨维度数据交互与状态同步
 export {
@@ -98,12 +83,7 @@ export {
   DataSourceType,
 } from './cross-dimension-sync';
 
-export type {
-  DataEvent,
-  DataSyncConfig,
-  OfflineOperation,
-  DataConflict,
-} from './cross-dimension-sync';
+export type { DataEvent, DataSyncConfig, OfflineOperation, DataConflict } from './cross-dimension-sync';
 
 /**
  * YYC³系统集成核心类

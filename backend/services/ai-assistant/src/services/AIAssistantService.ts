@@ -10,13 +10,7 @@
  */
 
 import { EventEmitter } from 'events';
-import {
-  AIRequest,
-  AIResponse,
-  ConversationContext,
-  AIMessage,
-  AISession
-} from '../models/AIAssistant';
+import { AIRequest, AIResponse, ConversationContext, AIMessage, AISession } from '../models/AIAssistant';
 import { NLPService } from './NLPService';
 import { businessIntegrationService } from './BusinessIntegrationService';
 
@@ -113,9 +107,9 @@ export class AIAssistantService extends EventEmitter {
           // 注意：BusinessIntegrationService中的方法名为processNLPResult，不是processNLPAnalysis
           const businessResult = await this.businessIntegrationService.processNLPResult(
             nlpResult,
-            request.metadata?.customerId ? parseInt(request.metadata?.customerId) : undefined
+            request.metadata?.customerId ? parseInt(request.metadata?.customerId) : undefined,
           );
-          
+
           // 将业务结果添加到对话上下文
           if (businessResult) {
             context.businessContext = businessResult;
@@ -142,7 +136,7 @@ export class AIAssistantService extends EventEmitter {
         type: 'user',
         content: request.message,
         timestamp: new Date(),
-        metadata: request.metadata
+        metadata: request.metadata,
       });
 
       await this.saveConversationMessage(request.sessionId, {
@@ -154,19 +148,18 @@ export class AIAssistantService extends EventEmitter {
         metadata: {
           provider,
           processingTime: Date.now() - startTime,
-          confidence: processedResponse.confidence
-        }
+          confidence: processedResponse.confidence,
+        },
       });
 
       // 发送响应事件
       this.emit('messageProcessed', {
         sessionId: request.sessionId,
         response: processedResponse,
-        processingTime: Date.now() - startTime
+        processingTime: Date.now() - startTime,
       });
 
       return processedResponse;
-
     } catch (error) {
       console.error('Process text message error:', error);
 
@@ -174,14 +167,11 @@ export class AIAssistantService extends EventEmitter {
         sessionId: request.sessionId,
         message: '抱歉，我现在无法处理您的请求。请稍后再试。',
         confidence: 0,
-        suggestions: [
-          '您可以尝试重新表述您的问题',
-          '或者联系人工客服获得帮助'
-        ],
+        suggestions: ['您可以尝试重新表述您的问题', '或者联系人工客服获得帮助'],
         metadata: {
           error: error instanceof Error ? error.message : 'Unknown error',
-          timestamp: new Date()
-        }
+          timestamp: new Date(),
+        },
       };
     }
   }
@@ -189,11 +179,7 @@ export class AIAssistantService extends EventEmitter {
   /**
    * 处理语音输入
    */
-  async processVoiceInput(
-    audioData: Buffer,
-    sessionId: string,
-    language: string = 'zh-CN'
-  ): Promise<AIResponse> {
+  async processVoiceInput(audioData: Buffer, sessionId: string, language: string = 'zh-CN'): Promise<AIResponse> {
     try {
       if (!this.config.enableVoiceInteraction) {
         throw new Error('Voice interaction is disabled');
@@ -209,12 +195,11 @@ export class AIAssistantService extends EventEmitter {
         metadata: {
           originalFormat: 'voice',
           language,
-          confidence: transcription.confidence
-        }
+          confidence: transcription.confidence,
+        },
       };
 
       return await this.processTextMessage(textRequest);
-
     } catch (error) {
       console.error('Process voice input error:', error);
       throw error;
@@ -228,7 +213,7 @@ export class AIAssistantService extends EventEmitter {
     text: string,
     sessionId: string,
     language: string = 'zh-CN',
-    voice: string = 'female'
+    voice: string = 'female',
   ): Promise<Buffer> {
     try {
       if (!this.config.enableVoiceInteraction) {
@@ -236,7 +221,6 @@ export class AIAssistantService extends EventEmitter {
       }
 
       return await this.voiceService.textToSpeech(text, language, voice);
-
     } catch (error) {
       console.error('Generate voice response error:', error);
       throw error;
@@ -249,7 +233,7 @@ export class AIAssistantService extends EventEmitter {
   async processImageAnalysis(
     imageData: Buffer,
     sessionId: string,
-    analysisType: 'food' | 'menu' | 'general' = 'food'
+    analysisType: 'food' | 'menu' | 'general' = 'food',
   ): Promise<AIResponse> {
     try {
       if (!this.config.enableImageAnalysis) {
@@ -263,7 +247,6 @@ export class AIAssistantService extends EventEmitter {
       const response = await this.generateImageBasedResponse(analysisResult, sessionId);
 
       return response;
-
     } catch (error) {
       console.error('Process image analysis error:', error);
       throw error;
@@ -282,7 +265,7 @@ export class AIAssistantService extends EventEmitter {
       mealTime?: 'breakfast' | 'lunch' | 'dinner';
       partySize?: number;
       budget?: number;
-    }
+    },
   ): Promise<AIResponse> {
     try {
       const recommendations = await this.generateSmartRecommendations(context);
@@ -294,14 +277,13 @@ export class AIAssistantService extends EventEmitter {
         suggestions: recommendations.map(rec => rec.title),
         data: {
           recommendations,
-          type: 'recommendations'
+          type: 'recommendations',
         },
         metadata: {
           timestamp: new Date(),
-          recommendationCount: recommendations.length
-        }
+          recommendationCount: recommendations.length,
+        },
       };
-
     } catch (error) {
       console.error('Get recommendations error:', error);
       throw error;
@@ -347,7 +329,7 @@ export class AIAssistantService extends EventEmitter {
       messageCount: history.length,
       sessionDuration: Date.now() - session.createdAt.getTime(),
       lastActivity: session.lastActivity,
-      averageResponseTime: this.calculateAverageResponseTime(responseMessages)
+      averageResponseTime: this.calculateAverageResponseTime(responseMessages),
     };
   }
 
@@ -374,7 +356,7 @@ export class AIAssistantService extends EventEmitter {
         weather?: boolean;
         events?: boolean;
       };
-    }
+    },
   ): Promise<AIResponse> {
     try {
       // 生成销售预测
@@ -388,12 +370,12 @@ export class AIAssistantService extends EventEmitter {
         data: {
           forecast: forecast.forecast,
           trends: forecast.trends,
-          type: 'sales_forecast'
+          type: 'sales_forecast',
         },
         metadata: {
           timestamp: new Date(),
-          restaurantId: context.restaurantId
-        }
+          restaurantId: context.restaurantId,
+        },
       };
     } catch (error) {
       console.error('Get sales forecast error:', error);
@@ -431,7 +413,7 @@ export class AIAssistantService extends EventEmitter {
         deliveryTime: number;
         reliability: number;
       }>;
-    }
+    },
   ): Promise<AIResponse> {
     try {
       // 生成库存优化建议
@@ -444,12 +426,12 @@ export class AIAssistantService extends EventEmitter {
         suggestions: optimization.recommendations.map(rec => rec.action),
         data: {
           optimization,
-          type: 'inventory_optimization'
+          type: 'inventory_optimization',
         },
         metadata: {
           timestamp: new Date(),
-          restaurantId: context.restaurantId
-        }
+          restaurantId: context.restaurantId,
+        },
       };
     } catch (error) {
       console.error('Get inventory optimization error:', error);
@@ -479,7 +461,7 @@ export class AIAssistantService extends EventEmitter {
         startDate: string;
         endDate: string;
       };
-    }
+    },
   ): Promise<AIResponse> {
     try {
       // 分析客户行为
@@ -492,12 +474,12 @@ export class AIAssistantService extends EventEmitter {
         suggestions: analysis.recommendations,
         data: {
           analysis,
-          type: 'customer_behavior_analysis'
+          type: 'customer_behavior_analysis',
         },
         metadata: {
           timestamp: new Date(),
-          restaurantId: context.restaurantId
-        }
+          restaurantId: context.restaurantId,
+        },
       };
     } catch (error) {
       console.error('Get customer behavior analysis error:', error);
@@ -535,7 +517,7 @@ export class AIAssistantService extends EventEmitter {
       }>;
       season?: string;
       dietaryTrends?: string[];
-    }
+    },
   ): Promise<AIResponse> {
     try {
       // 生成菜单优化建议
@@ -548,12 +530,12 @@ export class AIAssistantService extends EventEmitter {
         suggestions: optimization.recommendations.map(rec => rec.action),
         data: {
           optimization,
-          type: 'menu_optimization'
+          type: 'menu_optimization',
         },
         metadata: {
           timestamp: new Date(),
-          restaurantId: context.restaurantId
-        }
+          restaurantId: context.restaurantId,
+        },
       };
     } catch (error) {
       console.error('Get menu optimization error:', error);
@@ -592,7 +574,7 @@ export class AIAssistantService extends EventEmitter {
         improveCustomerService?: boolean;
         optimizeTableTurnover?: boolean;
       };
-    }
+    },
   ): Promise<AIResponse> {
     try {
       // 生成运营效率优化建议
@@ -605,12 +587,12 @@ export class AIAssistantService extends EventEmitter {
         suggestions: efficiency.recommendations,
         data: {
           efficiency,
-          type: 'operational_efficiency'
+          type: 'operational_efficiency',
         },
         metadata: {
           timestamp: new Date(),
-          restaurantId: context.restaurantId
-        }
+          restaurantId: context.restaurantId,
+        },
       };
     } catch (error) {
       console.error('Get operational efficiency error:', error);
@@ -644,8 +626,8 @@ export class AIAssistantService extends EventEmitter {
       providerStatus: {
         openai: false, // 模拟OpenAI服务不可用
         claude: false, // 模拟Claude服务不可用
-        local: true    // 模拟本地服务可用
-      }
+        local: true, // 模拟本地服务可用
+      },
     };
   }
 
@@ -660,7 +642,7 @@ export class AIAssistantService extends EventEmitter {
         id: sessionId,
         context: {},
         createdAt: new Date(),
-        lastActivity: new Date()
+        lastActivity: new Date(),
       };
       this.activeSessions.set(sessionId, session);
     }
@@ -669,12 +651,9 @@ export class AIAssistantService extends EventEmitter {
     return session;
   }
 
-  private async buildConversationContext(
-    session: AISession,
-    request: AIRequest
-  ): Promise<ConversationContext> {
+  private async buildConversationContext(session: AISession, request: AIRequest): Promise<ConversationContext> {
     const history = await this.getSessionHistory(request.sessionId);
-    
+
     // 进行NLP分析
     const nlpAnalysis = await this.nlpService.processText(request.message);
 
@@ -685,7 +664,7 @@ export class AIAssistantService extends EventEmitter {
       sessionContext: session.context,
       metadata: request.metadata,
       timestamp: new Date(),
-      nlpAnalysis
+      nlpAnalysis,
     };
   }
 
@@ -701,11 +680,11 @@ export class AIAssistantService extends EventEmitter {
 
   private async generateAIResponse(
     context: ConversationContext,
-    provider: 'openai' | 'claude' | 'local'
+    provider: 'openai' | 'claude' | 'local',
   ): Promise<string> {
     // 模拟AI响应，不依赖外部服务
     const nlpAnalysis = await this.nlpService.processText(context.currentMessage);
-    
+
     // 根据意图生成响应
     if (nlpAnalysis.intent === 'order_food') {
       return '您想点什么菜呢？我们有各种美味的菜品供您选择。';
@@ -719,10 +698,7 @@ export class AIAssistantService extends EventEmitter {
     }
   }
 
-  private async postProcessResponse(
-    response: string,
-    context: ConversationContext
-  ): Promise<AIResponse> {
+  private async postProcessResponse(response: string, context: ConversationContext): Promise<AIResponse> {
     // 提取建议和相关信息
     const suggestions = await this.extractSuggestions(response, context);
 
@@ -752,28 +728,22 @@ export class AIAssistantService extends EventEmitter {
       data: Object.keys(data).length > 0 ? data : undefined,
       metadata: {
         timestamp: new Date(),
-        hasKnowledgeBaseData: knowledgeCheck.found
-      }
+        hasKnowledgeBaseData: knowledgeCheck.found,
+      },
     };
   }
 
-  private async analyzeImage(
-    imageData: Buffer,
-    analysisType: 'food' | 'menu' | 'general'
-  ): Promise<any> {
+  private async analyzeImage(imageData: Buffer, analysisType: 'food' | 'menu' | 'general'): Promise<any> {
     // 模拟图像分析服务
     return {
       type: analysisType,
       confidence: 0.85,
       description: '这是一个模拟的图像分析结果',
-      detectedItems: ['item1', 'item2']
+      detectedItems: ['item1', 'item2'],
     };
   }
 
-  private async generateImageBasedResponse(
-    analysisResult: any,
-    sessionId: string
-  ): Promise<AIResponse> {
+  private async generateImageBasedResponse(analysisResult: any, sessionId: string): Promise<AIResponse> {
     const prompt = this.buildImageAnalysisPrompt(analysisResult);
 
     const request: AIRequest = {
@@ -781,20 +751,22 @@ export class AIAssistantService extends EventEmitter {
       message: prompt,
       metadata: {
         originalFormat: 'image',
-        analysisResult
-      }
+        analysisResult,
+      },
     };
 
     return await this.processTextMessage(request);
   }
 
-  private async generateSmartRecommendations(context: any): Promise<Array<{
-    id: string;
-    title: string;
-    description: string;
-    confidence: number;
-    reason: string;
-  }>> {
+  private async generateSmartRecommendations(context: any): Promise<
+    Array<{
+      id: string;
+      title: string;
+      description: string;
+      confidence: number;
+      reason: string;
+    }>
+  > {
     // 基于客户画像、餐厅上下文和历史数据生成推荐
     const recommendations = [];
 
@@ -853,9 +825,7 @@ export class AIAssistantService extends EventEmitter {
       if (response.includes(keyword)) {
         // 提取包含关键词的句子作为建议
         const sentences = response.split(/[。！？.!?]/);
-        const relevantSentences = sentences.filter(sentence =>
-          sentence.includes(keyword)
-        );
+        const relevantSentences = sentences.filter(sentence => sentence.includes(keyword));
         suggestions.push(...relevantSentences);
       }
     });
@@ -918,9 +888,7 @@ export class AIAssistantService extends EventEmitter {
     const responseWords = response.toLowerCase().split(/\s+/);
     const previousWords = previousMessage.toLowerCase().split(/\s+/);
 
-    const commonWords = responseWords.filter(word =>
-      previousWords.includes(word)
-    );
+    const commonWords = responseWords.filter(word => previousWords.includes(word));
 
     return commonWords.length / Math.max(responseWords.length, previousWords.length) > 0.1;
   }
@@ -984,12 +952,12 @@ export class AIAssistantService extends EventEmitter {
     recommendations: string[];
   }> {
     const { historicalData, factors, timeRange } = context;
-    
+
     // 计算预测的日期范围
     let startDate: Date;
     let endDate: Date;
     let days: number;
-    
+
     // 处理两种timeRange格式：数字（天数）或对象（startDate/endDate）
     if (typeof timeRange === 'number') {
       days = timeRange;
@@ -1007,37 +975,39 @@ export class AIAssistantService extends EventEmitter {
       endDate = new Date();
       endDate.setDate(startDate.getDate() + days - 1);
     }
-    
+
     // 基于历史数据计算基准销售额（如果有）
     let baseSales = 5000;
     let baseOrders = 100;
     let baseCustomers = 200;
     let hasHistoricalData = false;
-    
+
     if (historicalData && historicalData.length > 0) {
       hasHistoricalData = true;
       const avgSales = historicalData.reduce((sum: number, day: any) => sum + day.sales, 0) / historicalData.length;
       const avgOrders = historicalData.reduce((sum: number, day: any) => sum + day.orders, 0) / historicalData.length;
       // 支持两种字段名：customerCount（测试中使用）和customers（可能的旧数据）
-      const avgCustomers = historicalData.reduce((sum: number, day: any) => sum + (day.customerCount || day.customers || 0), 0) / historicalData.length;
-      
+      const avgCustomers =
+        historicalData.reduce((sum: number, day: any) => sum + (day.customerCount || day.customers || 0), 0) /
+        historicalData.length;
+
       baseSales = avgSales;
       baseOrders = avgOrders;
       baseCustomers = avgCustomers;
     }
-    
+
     // 初始化趋势和因素影响
     const trends: any[] = [];
     let totalImpact = 0;
-    
+
     // 考虑周末因素
     const weekendImpact = 0.3;
     trends.push({
       type: 'daily',
       description: '周末销售额预计比工作日高30%',
-      impact: weekendImpact
+      impact: weekendImpact,
     });
-    
+
     // 考虑促销活动因素
     if (factors?.promotions) {
       const promotionImpact = 0.15;
@@ -1045,10 +1015,10 @@ export class AIAssistantService extends EventEmitter {
       trends.push({
         type: 'promotion',
         description: '当前促销活动预计提高销售额15%',
-        impact: promotionImpact
+        impact: promotionImpact,
       });
     }
-    
+
     // 考虑节假日因素
     if (factors?.holidays) {
       const holidayImpact = 0.25;
@@ -1056,10 +1026,10 @@ export class AIAssistantService extends EventEmitter {
       trends.push({
         type: 'holiday',
         description: '节假日预计提高销售额25%',
-        impact: holidayImpact
+        impact: holidayImpact,
       });
     }
-    
+
     // 考虑天气因素
     if (factors?.weather) {
       // 这里可以根据实际天气数据进行更精确的预测
@@ -1069,10 +1039,10 @@ export class AIAssistantService extends EventEmitter {
       trends.push({
         type: 'weather',
         description: '天气因素预计影响销售额10%',
-        impact: weatherImpact
+        impact: weatherImpact,
       });
     }
-    
+
     // 考虑事件因素
     if (factors?.events) {
       const eventImpact = 0.2;
@@ -1080,46 +1050,48 @@ export class AIAssistantService extends EventEmitter {
       trends.push({
         type: 'event',
         description: '周边活动预计提高销售额20%',
-        impact: eventImpact
+        impact: eventImpact,
       });
     }
-    
+
     // 生成每日预测
     const forecast = [];
     for (let i = 0; i < days; i++) {
       const date = new Date(startDate);
       date.setDate(startDate.getDate() + i);
       const dayOfWeek = date.getDay();
-      
+
       // 计算日期特定的影响因素
       let dayImpact = totalImpact;
-      
+
       // 周末额外影响
       if (dayOfWeek === 0 || dayOfWeek === 6) {
         dayImpact += weekendImpact;
       }
-      
+
       // 应用影响因素
       const dailySales = baseSales * (1 + dayImpact) * (0.9 + Math.random() * 0.2);
       const salesToOrdersRatio = baseSales / baseOrders;
       const ordersToCustomersRatio = baseOrders / baseCustomers;
-      
+
       forecast.push({
         date: date.toISOString().split('T')[0],
         sales: Math.round(dailySales),
-        orders: Math.round(dailySales / salesToOrdersRatio * (0.95 + Math.random() * 0.1)),
-        customerCount: Math.round(dailySales / salesToOrdersRatio / ordersToCustomersRatio * (0.95 + Math.random() * 0.1)),
-        confidence: hasHistoricalData ? (0.85 + Math.random() * 0.1) : (0.7 + Math.random() * 0.1)
+        orders: Math.round((dailySales / salesToOrdersRatio) * (0.95 + Math.random() * 0.1)),
+        customerCount: Math.round(
+          (dailySales / salesToOrdersRatio / ordersToCustomersRatio) * (0.95 + Math.random() * 0.1),
+        ),
+        confidence: hasHistoricalData ? 0.85 + Math.random() * 0.1 : 0.7 + Math.random() * 0.1,
       });
     }
-    
+
     // 生成建议
     const recommendations: string[] = [];
-    
+
     // 根据预测销售额的高低生成建议
     const avgForecastSales = forecast.reduce((sum: number, day: any) => sum + day.sales, 0) / forecast.length;
     const isHighDemand = avgForecastSales > baseSales * 1.2;
-    
+
     if (isHighDemand) {
       recommendations.push('建议增加库存以应对高需求');
       recommendations.push('考虑增加员工数量以保证服务质量');
@@ -1127,11 +1099,11 @@ export class AIAssistantService extends EventEmitter {
       recommendations.push('考虑推出促销活动以提高销售额');
       recommendations.push('优化库存管理以减少浪费');
     }
-    
+
     // 根据周末影响生成建议
     recommendations.push('建议在周末增加2名服务员');
     recommendations.push('提前准备周末所需的食材和库存');
-    
+
     // 根据工作日表现生成建议
     const weekdaySales = forecast
       .filter((day: any) => {
@@ -1139,34 +1111,34 @@ export class AIAssistantService extends EventEmitter {
         return dayOfWeek >= 1 && dayOfWeek <= 5;
       })
       .reduce((sum: number, day: any) => sum + day.sales, 0);
-    
+
     const weekendSales = forecast
       .filter((day: any) => {
         const dayOfWeek = new Date(day.date).getDay();
         return dayOfWeek === 0 || dayOfWeek === 6;
       })
       .reduce((sum: number, day: any) => sum + day.sales, 0);
-    
+
     if (weekdaySales < weekendSales * 0.5) {
       recommendations.push('考虑在周三推出特价活动以提高mid-week销售额');
     }
-    
+
     // 如果有促销活动
     if (factors?.promotions) {
       recommendations.push('继续监控促销活动的效果并考虑延长或调整');
     }
-    
+
     // 计算整体置信度
     let overallConfidence = 0.75;
     if (hasHistoricalData) {
       overallConfidence = 0.85;
     }
-    
+
     return {
       confidence: overallConfidence,
       forecast,
       trends,
-      recommendations
+      recommendations,
     };
   }
 
@@ -1198,28 +1170,28 @@ export class AIAssistantService extends EventEmitter {
           itemName: '新鲜蔬菜',
           action: '减少20%库存',
           reason: '最近两周的使用率下降了25%',
-          priority: 'high'
+          priority: 'high',
         },
         {
           itemId: 'inv_002',
           itemName: '大米',
           action: '维持当前库存水平',
           reason: '使用量稳定，库存周转率合理',
-          priority: 'medium'
+          priority: 'medium',
         },
         {
           itemId: 'inv_003',
           itemName: '肉类',
           action: '增加15%库存',
           reason: '周末销售预计增长30%',
-          priority: 'high'
-        }
+          priority: 'high',
+        },
       ],
       optimizationMetrics: {
         estimatedWasteReduction: 18.5,
         estimatedCostSavings: 2450,
-        improvedStockTurnover: 1.2
-      }
+        improvedStockTurnover: 1.2,
+      },
     };
   }
 
@@ -1249,44 +1221,44 @@ export class AIAssistantService extends EventEmitter {
         {
           category: 'visit_patterns',
           description: '70%的客户在周末访问',
-          supportingData: { weekendRatio: 0.7 }
+          supportingData: { weekendRatio: 0.7 },
         },
         {
           category: 'spending_behavior',
           description: '回头客的平均消费比新客户高40%',
-          supportingData: { repeatCustomerSpendingPremium: 0.4 }
+          supportingData: { repeatCustomerSpendingPremium: 0.4 },
         },
         {
           category: 'favorite_items',
           description: '招牌菜占总销售额的35%',
-          supportingData: { signatureDishSalesRatio: 0.35 }
-        }
+          supportingData: { signatureDishSalesRatio: 0.35 },
+        },
       ],
       customerSegments: [
         {
           name: '忠实客户',
           characteristics: ['每月访问4次以上', '平均消费100元以上', '有明确的菜单项偏好'],
           size: 120,
-          value: 50000
+          value: 50000,
         },
         {
           name: '偶尔访客',
           characteristics: ['每月访问1-3次', '平均消费60元', '尝试不同菜品'],
           size: 350,
-          value: 75000
+          value: 75000,
         },
         {
           name: '新客户',
           characteristics: ['首次访问', '平均消费50元', '需要引导'],
           size: 200,
-          value: 30000
-        }
+          value: 30000,
+        },
       ],
       recommendations: [
         '为忠实客户提供专属折扣和生日福利',
         '针对偶尔访客发送个性化推荐邮件',
-        '为新客户提供首单优惠以提高回头率'
-      ]
+        '为新客户提供首单优惠以提高回头率',
+      ],
     };
   }
 
@@ -1335,8 +1307,8 @@ export class AIAssistantService extends EventEmitter {
           impact: {
             revenue: 0.05,
             profit: 0.08,
-            customerSatisfaction: -0.01
-          }
+            customerSatisfaction: -0.01,
+          },
         },
         {
           action: '添加2道季节性蔬菜菜品',
@@ -1344,8 +1316,8 @@ export class AIAssistantService extends EventEmitter {
           impact: {
             revenue: 0.03,
             profit: 0.04,
-            customerSatisfaction: 0.06
-          }
+            customerSatisfaction: 0.06,
+          },
         },
         {
           action: '移除3道低销量菜品',
@@ -1353,9 +1325,9 @@ export class AIAssistantService extends EventEmitter {
           impact: {
             revenue: -0.01,
             profit: 0.02,
-            customerSatisfaction: -0.01
-          }
-        }
+            customerSatisfaction: -0.01,
+          },
+        },
       ],
       menuAnalysis: {
         topPerforming: [
@@ -1363,42 +1335,42 @@ export class AIAssistantService extends EventEmitter {
             itemId: 'menu_001',
             name: '招牌红烧肉',
             metric: 'revenue',
-            value: 15000
+            value: 15000,
           },
           {
             itemId: 'menu_002',
             name: '清蒸鱼',
             metric: 'profitMargin',
-            value: 0.65
-          }
+            value: 0.65,
+          },
         ],
         underPerforming: [
           {
             itemId: 'menu_015',
             name: '奶油蘑菇汤',
             metric: 'salesCount',
-            value: 12
+            value: 12,
           },
           {
             itemId: 'menu_018',
             name: '蔬菜沙拉',
             metric: 'profitMargin',
-            value: 0.2
-          }
-        ]
+            value: 0.2,
+          },
+        ],
       },
       trendAnalysis: [
         {
           trend: '健康饮食',
           relevance: 0.85,
-          recommendation: '增加更多低脂、低糖选项'
+          recommendation: '增加更多低脂、低糖选项',
         },
         {
           trend: '本地化食材',
           relevance: 0.75,
-          recommendation: '突出使用本地农场食材的菜品'
-        }
-      ]
+          recommendation: '突出使用本地农场食材的菜品',
+        },
+      ],
     };
   }
 
@@ -1436,19 +1408,19 @@ export class AIAssistantService extends EventEmitter {
         '优化厨房布局以减少菜品准备时间',
         '在周五和周六晚上增加1名厨师',
         '实施餐桌预订系统以提高座位利用率',
-        '培训服务员提高点餐效率'
+        '培训服务员提高点餐效率',
       ],
       efficiencyMetrics: {
         current: {
           tableTurnover: 2.5,
           laborCostRatio: 0.3,
-          orderFulfillmentTime: 25
+          orderFulfillmentTime: 25,
         },
         potentialImprovement: {
           tableTurnover: 3.0,
           laborCostRatio: 0.27,
-          orderFulfillmentTime: 20
-        }
+          orderFulfillmentTime: 20,
+        },
       },
       peakHourAnalysis: [
         {
@@ -1456,23 +1428,23 @@ export class AIAssistantService extends EventEmitter {
           startTime: '18:00',
           endTime: '21:00',
           suggestedStaffing: 8,
-          currentStaffing: 6
+          currentStaffing: 6,
         },
         {
           day: 'Saturday',
           startTime: '12:00',
           endTime: '14:30',
           suggestedStaffing: 7,
-          currentStaffing: 5
+          currentStaffing: 5,
         },
         {
           day: 'Saturday',
           startTime: '18:00',
           endTime: '21:30',
           suggestedStaffing: 9,
-          currentStaffing: 7
-        }
-      ]
+          currentStaffing: 7,
+        },
+      ],
     };
   }
 
@@ -1481,24 +1453,24 @@ export class AIAssistantService extends EventEmitter {
    */
   private formatSalesForecastMessage(forecast: any): string {
     let message = '📊 **未来7天销售预测**\n\n';
-    
+
     // 添加预测摘要
     const totalSales = forecast.forecast.reduce((sum: number, day: any) => sum + day.sales, 0);
     message += `总计预测销售额: ¥${Math.round(totalSales).toLocaleString()}\n`;
     message += `平均每日销售额: ¥${Math.round(totalSales / forecast.forecast.length).toLocaleString()}\n\n`;
-    
+
     // 添加趋势分析
     message += '🔍 **关键趋势**\n';
     forecast.trends.forEach((trend: any) => {
       message += `- ${trend.description} (影响: ${Math.round(trend.impact * 100)}%)\n`;
     });
-    
+
     // 添加建议
     message += '\n💡 **建议**\n';
     forecast.recommendations.forEach((rec: string, index: number) => {
       message += `${index + 1}. ${rec}\n`;
     });
-    
+
     return message;
   }
 
@@ -1507,19 +1479,19 @@ export class AIAssistantService extends EventEmitter {
    */
   private formatInventoryOptimizationMessage(optimization: any): string {
     let message = '📦 **库存优化建议**\n\n';
-    
+
     // 添加优化指标
     message += `预计减少浪费: ${optimization.optimizationMetrics.estimatedWasteReduction}%\n`;
     message += `预计成本节约: ¥${optimization.optimizationMetrics.estimatedCostSavings.toLocaleString()}\n`;
     message += `库存周转率提升: ${optimization.optimizationMetrics.improvedStockTurnover}x\n\n`;
-    
+
     // 添加具体建议
     message += '🔧 **具体行动建议**\n';
     optimization.recommendations.forEach((rec: any) => {
       message += `- [${rec.priority.toUpperCase()}] ${rec.itemName}: ${rec.action}\n`;
       message += `  原因: ${rec.reason}\n`;
     });
-    
+
     return message;
   }
 
@@ -1528,13 +1500,13 @@ export class AIAssistantService extends EventEmitter {
    */
   private formatCustomerBehaviorAnalysisMessage(analysis: any): string {
     let message = '👥 **客户行为分析**\n\n';
-    
+
     // 添加关键洞察
     message += '💡 **关键洞察**\n';
     analysis.insights.forEach((insight: any) => {
       message += `- ${insight.description}\n`;
     });
-    
+
     // 添加客户细分
     message += '\n🎯 **客户细分**\n';
     analysis.customerSegments.forEach((segment: any) => {
@@ -1543,13 +1515,13 @@ export class AIAssistantService extends EventEmitter {
         message += `  • ${char}\n`;
       });
     });
-    
+
     // 添加建议
     message += '\n📋 **营销建议**\n';
     analysis.recommendations.forEach((rec: string, index: number) => {
       message += `${index + 1}. ${rec}\n`;
     });
-    
+
     return message;
   }
 
@@ -1558,7 +1530,7 @@ export class AIAssistantService extends EventEmitter {
    */
   private formatMenuOptimizationMessage(optimization: any): string {
     let message = '🍽️ **菜单优化建议**\n\n';
-    
+
     // 添加推荐
     message += '💡 **优化建议**\n';
     optimization.recommendations.forEach((rec: any, index: number) => {
@@ -1566,19 +1538,19 @@ export class AIAssistantService extends EventEmitter {
       message += `   原因: ${rec.reason}\n`;
       message += `   预期影响: 收入+${Math.round(rec.impact.revenue * 100)}%, 利润+${Math.round(rec.impact.profit * 100)}%\n`;
     });
-    
+
     // 添加菜品分析
     message += '\n🏆 **表现最佳菜品**\n';
     optimization.menuAnalysis.topPerforming.forEach((item: any, index: number) => {
       message += `${index + 1}. ${item.name} (${item.metric}: ${item.metric === 'revenue' ? '¥' : ''}${item.value})\n`;
     });
-    
+
     // 添加趋势分析
     message += '\n📈 **行业趋势分析**\n';
     optimization.trendAnalysis.forEach((trend: any) => {
       message += `- ${trend.trend} (相关性: ${Math.round(trend.relevance * 100)}%): ${trend.recommendation}\n`;
     });
-    
+
     return message;
   }
 
@@ -1587,28 +1559,28 @@ export class AIAssistantService extends EventEmitter {
    */
   private formatOperationalEfficiencyMessage(efficiency: any): string {
     let message = '⚙️ **运营效率优化建议**\n\n';
-    
+
     // 添加效率指标对比
     message += '📊 **效率指标**\n';
     message += `当前餐桌周转率: ${efficiency.efficiencyMetrics.current.tableTurnover}次/天\n`;
     message += `潜在餐桌周转率: ${efficiency.efficiencyMetrics.potentialImprovement.tableTurnover}次/天\n\n`;
-    
+
     message += `当前人工成本比例: ${Math.round(efficiency.efficiencyMetrics.current.laborCostRatio * 100)}%\n`;
     message += `潜在人工成本比例: ${Math.round(efficiency.efficiencyMetrics.potentialImprovement.laborCostRatio * 100)}%\n\n`;
-    
+
     // 添加建议
     message += '💡 **改进建议**\n';
     efficiency.recommendations.forEach((rec: string, index: number) => {
       message += `${index + 1}. ${rec}\n`;
     });
-    
+
     // 添加高峰期分析
     message += '\n⏰ **高峰期人员配置建议**\n';
     efficiency.peakHourAnalysis.forEach((peak: any) => {
       message += `${peak.day} ${peak.startTime}-${peak.endTime}: `;
       message += `当前${peak.currentStaffing}人 → 建议${peak.suggestedStaffing}人\n`;
     });
-    
+
     return message;
   }
 }

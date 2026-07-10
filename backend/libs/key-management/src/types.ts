@@ -37,7 +37,7 @@ export enum KeyType {
   /** 非对称密钥（公钥） */
   PUBLIC = 'public',
   /** 非对称密钥（私钥） */
-  PRIVATE = 'private'
+  PRIVATE = 'private',
 }
 
 export enum KeyPurpose {
@@ -52,7 +52,7 @@ export enum KeyPurpose {
   /** HMAC签名 */
   HMAC_SIGNING = 'hmac_signing',
   /** 其他用途 */
-  OTHER = 'other'
+  OTHER = 'other',
 }
 
 export interface KeyStoreConfig {
@@ -157,11 +157,7 @@ export interface KeyStore {
   /** 删除密钥 */
   deleteKey(keyId: string): Promise<boolean>;
   /** 列出所有密钥 */
-  listKeys(options?: {
-    purpose?: KeyPurpose;
-    type?: KeyType;
-    active?: boolean;
-  }): Promise<Key[]>;
+  listKeys(options?: { purpose?: KeyPurpose; type?: KeyType; active?: boolean }): Promise<Key[]>;
   /** 备份密钥 */
   backupKeys(): Promise<string>;
   /** 恢复密钥 */
@@ -190,7 +186,10 @@ export interface KeyManager {
   /** 轮换密钥 */
   rotateKey(options: KeyRotationOptions): Promise<{ oldKey: Key; newKey: Key }>;
   /** 加密数据 */
-  encrypt(data: string | Buffer, options?: EncryptionOptions): Promise<{
+  encrypt(
+    data: string | Buffer,
+    options?: EncryptionOptions,
+  ): Promise<{
     encryptedData: Buffer;
     iv: Buffer;
     authTag?: Buffer;
@@ -199,10 +198,13 @@ export interface KeyManager {
   /** 解密数据 */
   decrypt(encryptedData: Buffer, options: DecryptionOptions): Promise<Buffer>;
   /** 签名数据 */
-  sign(data: string | Buffer, options?: {
-    keyId?: string;
-    algorithm?: string;
-  }): Promise<{
+  sign(
+    data: string | Buffer,
+    options?: {
+      keyId?: string;
+      algorithm?: string;
+    },
+  ): Promise<{
     signature: Buffer;
     keyId: string;
   }>;
@@ -213,7 +215,7 @@ export interface KeyManager {
     options?: {
       keyId?: string;
       algorithm?: string;
-    }
+    },
   ): Promise<boolean>;
   /** 自动轮换所有需要轮换的密钥 */
   autoRotateKeys(): Promise<void>;

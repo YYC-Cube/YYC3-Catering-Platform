@@ -9,11 +9,11 @@
 @tags: [运维阶段],[安全修复],[实施总结],[测试验证]
 ---
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
@@ -28,14 +28,17 @@
 ### 1. 实施背景
 
 #### 1.1 问题发现
+
 通过 `npm audit` 检测到项目存在91个安全漏洞，涉及多个依赖包，存在潜在的安全风险。
 
 #### 1.2 影响评估
+
 - **严重程度**: 高
 - **影响范围**: 全局依赖包
 - **潜在风险**: 数据泄露、服务中断、权限绕过
 
 #### 1.3 实施目标
+
 - 修复所有已发现的安全漏洞
 - 更新依赖包到安全版本
 - 进行全面的回归测试
@@ -47,16 +50,19 @@
 #### 2.1 依赖安装与更新
 
 **执行命令**:
+
 ```bash
 pnpm install
 ```
 
 **执行结果**:
+
 - ✅ 所有依赖包成功安装
 - ⚠️ peer dependency警告: openai requires zod@^3.23.8 but project uses zod@4.2.1
 - 状态: 已确认，不影响功能
 
 **关键操作**:
+
 1. 更新所有依赖包到最新安全版本
 2. 解决peer dependency冲突
 3. 验证依赖包完整性
@@ -64,16 +70,20 @@ pnpm install
 #### 2.2 代码质量检查
 
 **类型检查**:
+
 ```bash
 pnpm type-check
 ```
+
 - 结果: ✅ 通过
 - 说明: 无TypeScript类型错误
 
 **代码检查**:
+
 ```bash
 pnpm lint
 ```
+
 - 结果: ✅ 通过
 - 修复内容:
   - 更新ESLint配置以忽略测试文件
@@ -83,12 +93,14 @@ pnpm lint
 #### 2.3 测试体系建立
 
 **测试配置文件创建**:
+
 1. `vitest.unit.config.ts` - 单元测试配置
 2. `vitest.integration.config.ts` - 集成测试配置
 3. `vitest.smoke.config.ts` - 烟雾测试配置
 4. `vitest.api-gateway.config.ts` - API网关专用配置
 
 **测试框架迁移**:
+
 - 从Jest迁移到Vitest
 - 替换所有Jest导入为Vitest
 - 更新测试断言和mock API
@@ -96,6 +108,7 @@ pnpm lint
 #### 2.4 单元测试修复
 
 **初始状态**:
+
 - 测试结果: ⚠️ 部分通过 (74.2%)
 - 失败原因:
   - Jest依赖冲突
@@ -126,6 +139,7 @@ pnpm lint
    - 结果: ✅ 测试通过
 
 **最终结果**:
+
 - 测试结果: ✅ 20个测试全部通过
 - 测试覆盖率: 0.5%
 - 测试文件: `kafkaRoutes.test.ts`
@@ -133,6 +147,7 @@ pnpm lint
 #### 2.5 集成测试修复
 
 **初始状态**:
+
 - 测试结果: ❌ 失败
 - 失败原因:
   - Kafka连接错误 (ECONNREFUSED)
@@ -177,6 +192,7 @@ pnpm lint
    - 结果: ✅ 消息接收成功
 
 **最终结果**:
+
 - 测试结果: ✅ 所有测试通过
 - 测试文件:
   - `kafkaService.test.ts` (15 tests)
@@ -185,11 +201,13 @@ pnpm lint
 #### 2.6 烟雾测试
 
 **执行命令**:
+
 ```bash
 pnpm test:smoke
 ```
 
 **测试结果**:
+
 - ✅ 通过 (3个测试)
 - 测试内容:
   - 系统启动测试
@@ -199,11 +217,13 @@ pnpm test:smoke
 #### 2.7 测试覆盖率报告
 
 **执行命令**:
+
 ```bash
 pnpm test:coverage
 ```
 
 **报告结果**:
+
 - ✅ 报告生成成功
 - 报告位置: `/coverage/index.html`
 - 覆盖率数据:
@@ -216,27 +236,27 @@ pnpm test:coverage
 
 #### 3.1 安全漏洞修复
 
-| 漏洞ID | 漏洞名称 | 严重程度 | 修复状态 | 修复日期 |
-|--------|---------|---------|---------|---------|
-| VULN-001 | 全局91个安全漏洞 | 高 | ✅ 已修复 | 2025-12-29 |
+| 漏洞ID   | 漏洞名称         | 严重程度 | 修复状态  | 修复日期   |
+| -------- | ---------------- | -------- | --------- | ---------- |
+| VULN-001 | 全局91个安全漏洞 | 高       | ✅ 已修复 | 2025-12-29 |
 
 #### 3.2 测试验证结果
 
-| 测试类型 | 初始状态 | 最终状态 | 通过率 |
-|---------|---------|---------|--------|
-| 单元测试 | ⚠️ 部分通过 (74.2%) | ✅ 全部通过 | 100% (20/20) |
-| 集成测试 | ❌ 失败 | ✅ 全部通过 | 100% |
-| 烟雾测试 | ✅ 通过 | ✅ 通过 | 100% (3/3) |
-| 测试覆盖率 | ❌ 失败 | ✅ 生成成功 | 0.5% |
+| 测试类型   | 初始状态            | 最终状态    | 通过率       |
+| ---------- | ------------------- | ----------- | ------------ |
+| 单元测试   | ⚠️ 部分通过 (74.2%) | ✅ 全部通过 | 100% (20/20) |
+| 集成测试   | ❌ 失败             | ✅ 全部通过 | 100%         |
+| 烟雾测试   | ✅ 通过             | ✅ 通过     | 100% (3/3)   |
+| 测试覆盖率 | ❌ 失败             | ✅ 生成成功 | 0.5%         |
 
 #### 3.3 代码质量指标
 
-| 指标 | 结果 | 说明 |
-|------|------|------|
-| 类型检查 | ✅ 通过 | 无TypeScript类型错误 |
-| 代码检查 | ✅ 通过 | 符合ESLint规范 |
-| 测试通过率 | ✅ 100% | 所有测试通过 |
-| 代码覆盖率 | ⚠️ 0.5% | 需进一步提高 |
+| 指标       | 结果    | 说明                 |
+| ---------- | ------- | -------------------- |
+| 类型检查   | ✅ 通过 | 无TypeScript类型错误 |
+| 代码检查   | ✅ 通过 | 符合ESLint规范       |
+| 测试通过率 | ✅ 100% | 所有测试通过         |
+| 代码覆盖率 | ⚠️ 0.5% | 需进一步提高         |
 
 ### 4. 关键技术问题与解决方案
 
@@ -246,11 +266,13 @@ pnpm test:coverage
 测试文件中使用了Jest的全局函数和导入，与Vitest环境冲突。
 
 **解决方案**:
+
 1. 替换所有 `@jest/globals` 导入为 `vitest`
 2. 更新mock API调用方式
 3. 调整测试断言方法
 
 **影响文件**:
+
 - `kafkaService.test.ts`
 - `kafkaRoutes.test.ts`
 - `integration.test.ts`
@@ -263,22 +285,24 @@ pnpm test:coverage
 集成测试中Kafka连接失败，错误信息: `ECONNREFUSED`
 
 **解决方案**:
+
 1. 检查docker-compose配置，确认Kafka端口为29092
 2. 启动Kafka服务: `docker-compose up -d kafka zookeeper`
 3. 更新测试配置使用正确的端口
 
 **关键代码**:
+
 ```typescript
 // 更新前
 const kafka = new Kafka({
-  clientId: 'test-client',
-  brokers: ['localhost:9092']
+  clientId: "test-client",
+  brokers: ["localhost:9092"],
 });
 
 // 更新后
 const kafka = new Kafka({
-  clientId: 'test-client',
-  brokers: ['localhost:29092']
+  clientId: "test-client",
+  brokers: ["localhost:29092"],
 });
 ```
 
@@ -288,25 +312,19 @@ const kafka = new Kafka({
 测试消息 "我要一份宫保鸡丁和米饭" 被错误识别为 "other" 意图。
 
 **解决方案**:
+
 1. 分析NLPService.ts中的正则表达式模式
 2. 增强 "order_food" 意图模式，支持更多表达方式
 3. 移除动词要求，支持直接量词表达
 
 **关键代码**:
+
 ```typescript
 // 更新前
-patterns: [
-  /我要.*点.*(\d+).*份.*(.+)/,
-  /我想.*点.*(\d+).*份.*(.+)/
-]
+patterns: [/我要.*点.*(\d+).*份.*(.+)/, /我想.*点.*(\d+).*份.*(.+)/];
 
 // 更新后
-patterns: [
-  /我要.*(\d+).*份.*(.+)/,
-  /我想.*(\d+).*份.*(.+)/,
-  /我要.*份.*(.+)/,
-  /我想.*份.*(.+)/
-]
+patterns: [/我要.*(\d+).*份.*(.+)/, /我想.*(\d+).*份.*(.+)/, /我要.*份.*(.+)/, /我想.*份.*(.+)/];
 ```
 
 #### 4.4 消息订阅超时问题
@@ -315,11 +333,13 @@ patterns: [
 消息订阅测试中，消息未在超时时间内被接收。
 
 **解决方案**:
+
 1. 添加循环等待机制，最多等待10秒
 2. 增加消费者启动等待时间（2秒）
 3. 实现消息接收状态检查
 
 **关键代码**:
+
 ```typescript
 // 等待消息被接收（最多10秒）
 let attempts = 0;
@@ -337,6 +357,7 @@ while (!messageReceived && attempts < maxAttempts) {
 **文件**: `159-YYC3-AICP-运维阶段-安全漏洞修复记录.md`
 
 **更新内容**:
+
 - 添加漏洞修复概览表
 - 详细记录修复措施和结果
 - 添加测试验证结果章节
@@ -348,6 +369,7 @@ while (!messageReceived && attempts < maxAttempts) {
 **文件**: `160-YYC3-AICP-运维阶段-安全漏洞修复实施总结.md`
 
 **更新内容**:
+
 - 完整记录实施过程
 - 详细描述每个修复步骤
 - 记录关键技术问题和解决方案
@@ -498,22 +520,22 @@ pnpm test
 
 #### 8.2 配置文件清单
 
-| 文件 | 用途 | 状态 |
-|------|------|------|
-| `vitest.unit.config.ts` | 单元测试配置 | ✅ 已创建 |
+| 文件                           | 用途         | 状态      |
+| ------------------------------ | ------------ | --------- |
+| `vitest.unit.config.ts`        | 单元测试配置 | ✅ 已创建 |
 | `vitest.integration.config.ts` | 集成测试配置 | ✅ 已创建 |
-| `vitest.smoke.config.ts` | 烟雾测试配置 | ✅ 已创建 |
-| `vitest.api-gateway.config.ts` | API网关配置 | ✅ 已创建 |
-| `.eslintrc.cjs` | ESLint配置 | ✅ 已更新 |
+| `vitest.smoke.config.ts`       | 烟雾测试配置 | ✅ 已创建 |
+| `vitest.api-gateway.config.ts` | API网关配置  | ✅ 已创建 |
+| `.eslintrc.cjs`                | ESLint配置   | ✅ 已更新 |
 
 #### 8.3 测试文件清单
 
-| 文件 | 测试类型 | 状态 |
-|------|---------|------|
-| `kafkaRoutes.test.ts` | 单元测试 | ✅ 通过 |
-| `kafkaService.test.ts` | 集成测试 | ✅ 通过 |
+| 文件                             | 测试类型 | 状态    |
+| -------------------------------- | -------- | ------- |
+| `kafkaRoutes.test.ts`            | 单元测试 | ✅ 通过 |
+| `kafkaService.test.ts`           | 集成测试 | ✅ 通过 |
 | `AI Assistant Integration Tests` | 集成测试 | ✅ 通过 |
-| `Smoke Tests` | 烟雾测试 | ✅ 通过 |
+| `Smoke Tests`                    | 烟雾测试 | ✅ 通过 |
 
 #### 8.4 相关文档
 
@@ -523,10 +545,10 @@ pnpm test
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 **Made with ❤️ by YYC³ Team**
 

@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-import { defineComponent, ref, computed, watch, onMounted, onUnmounted, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { X } from 'lucide-vue-next'
+import { defineComponent, ref, computed, watch, onMounted, onUnmounted, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { X } from 'lucide-vue-next';
 
 export const Drawer = defineComponent({
   name: 'Drawer',
@@ -91,93 +91,93 @@ export const Drawer = defineComponent({
   },
   emits: ['update:visible', 'close', 'afterClose', 'afterOpenChange'],
   setup(props, { emit, slots }) {
-    const drawerRef = ref<HTMLElement>()
-    const contentRef = ref<HTMLElement>()
+    const drawerRef = ref<HTMLElement>();
+    const contentRef = ref<HTMLElement>();
 
     const placementClasses = computed(() => {
       switch (props.placement) {
         case 'top':
-          return 'top-0 left-0 right-0 h-auto max-h-[80vh]'
+          return 'top-0 left-0 right-0 h-auto max-h-[80vh]';
         case 'bottom':
-          return 'bottom-0 left-0 right-0 h-auto max-h-[80vh]'
+          return 'bottom-0 left-0 right-0 h-auto max-h-[80vh]';
         case 'left':
-          return 'left-0 top-0 bottom-0 w-auto max-w-[80vw]'
+          return 'left-0 top-0 bottom-0 w-auto max-w-[80vw]';
         case 'right':
         default:
-          return 'right-0 top-0 bottom-0 w-auto max-w-[80vw]'
+          return 'right-0 top-0 bottom-0 w-auto max-w-[80vw]';
       }
-    })
+    });
 
     const sizeStyle = computed(() => {
-      const style: Record<string, any> = {}
-      
+      const style: Record<string, any> = {};
+
       if (props.placement === 'top' || props.placement === 'bottom') {
         if (props.height !== undefined) {
-          style.height = typeof props.height === 'number' ? `${props.height}px` : props.height
+          style.height = typeof props.height === 'number' ? `${props.height}px` : props.height;
         }
       } else {
         if (props.width !== undefined) {
-          style.width = typeof props.width === 'number' ? `${props.width}px` : props.width
+          style.width = typeof props.width === 'number' ? `${props.width}px` : props.width;
         }
       }
-      
-      return style
-    })
+
+      return style;
+    });
 
     const handleMaskClick = () => {
       if (props.maskClosable) {
-        handleClose()
+        handleClose();
       }
-    }
+    };
 
     const handleClose = () => {
-      emit('update:visible', false)
-      emit('close')
-      props.afterClose?.()
-      props.afterOpenChange?.(false)
-    }
+      emit('update:visible', false);
+      emit('close');
+      props.afterClose?.();
+      props.afterOpenChange?.(false);
+    };
 
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && props.visible && props.keyboard) {
-        handleClose()
+        handleClose();
       }
-    }
+    };
 
     const disableBodyScroll = () => {
-      document.body.style.overflow = 'hidden'
-    }
+      document.body.style.overflow = 'hidden';
+    };
 
     const enableBodyScroll = () => {
-      document.body.style.overflow = ''
-    }
+      document.body.style.overflow = '';
+    };
 
-    watch(() => props.visible, (newVal) => {
-      if (newVal) {
-        disableBodyScroll()
-        props.afterOpenChange?.(true)
-      } else {
-        enableBodyScroll()
-        props.afterOpenChange?.(false)
-      }
-    })
+    watch(
+      () => props.visible,
+      newVal => {
+        if (newVal) {
+          disableBodyScroll();
+          props.afterOpenChange?.(true);
+        } else {
+          enableBodyScroll();
+          props.afterOpenChange?.(false);
+        }
+      },
+    );
 
     onMounted(() => {
-      document.addEventListener('keydown', handleEsc)
-    })
+      document.addEventListener('keydown', handleEsc);
+    });
 
     onUnmounted(() => {
-      document.removeEventListener('keydown', handleEsc)
-      enableBodyScroll()
-    })
+      document.removeEventListener('keydown', handleEsc);
+      enableBodyScroll();
+    });
 
     return () => (
       <div
         v-show={props.visible}
         ref={drawerRef}
-        class={cn(
-          'fixed inset-0 z-50 flex',
-          props.wrapClassName
-        )}
+        class={cn('fixed inset-0 z-50 flex', props.wrapClassName)}
         style={{ zIndex: props.zIndex }}
       >
         {props.mask && (
@@ -195,27 +195,19 @@ export const Drawer = defineComponent({
             props.placement === 'top' && 'rounded-b-lg',
             props.placement === 'bottom' && 'rounded-t-lg',
             props.placement === 'left' && 'rounded-r-lg',
-            props.placement === 'right' && 'rounded-l-lg'
+            props.placement === 'right' && 'rounded-l-lg',
           )}
           style={{ ...sizeStyle.value, ...props.bodyStyle }}
         >
           <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
-            <div class="text-lg font-semibold text-neutral-900">
-              {props.title}
-            </div>
+            <div class="text-lg font-semibold text-neutral-900">{props.title}</div>
             {props.closable && (
-              <button
-                type="button"
-                class="p-2 hover:bg-neutral-100 rounded-lg transition-colors"
-                onClick={handleClose}
-              >
+              <button type="button" class="p-2 hover:bg-neutral-100 rounded-lg transition-colors" onClick={handleClose}>
                 <X size={20} class="text-neutral-600" />
               </button>
             )}
           </div>
-          <div class="flex-1 overflow-auto p-6">
-            {slots.default?.()}
-          </div>
+          <div class="flex-1 overflow-auto p-6">{slots.default?.()}</div>
           {slots.footer && (
             <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200">
               {slots.footer()}
@@ -223,52 +215,46 @@ export const Drawer = defineComponent({
           )}
         </div>
       </div>
-    )
+    );
   },
-})
+});
 
 export const DrawerHeader = defineComponent({
   name: 'DrawerHeader',
   setup(props, { attrs, slots }) {
     return () => (
-      <div
-        class={cn('flex items-center justify-between px-6 py-4 border-b border-neutral-200', attrs.class as string)}
-      >
+      <div class={cn('flex items-center justify-between px-6 py-4 border-b border-neutral-200', attrs.class as string)}>
         {slots.default?.()}
       </div>
-    )
+    );
   },
-})
+});
 
 export const DrawerTitle = defineComponent({
   name: 'DrawerTitle',
   setup(props, { attrs, slots }) {
     return () => (
-      <div class={cn('text-lg font-semibold text-neutral-900', attrs.class as string)}>
-        {slots.default?.()}
-      </div>
-    )
+      <div class={cn('text-lg font-semibold text-neutral-900', attrs.class as string)}>{slots.default?.()}</div>
+    );
   },
-})
+});
 
 export const DrawerContent = defineComponent({
   name: 'DrawerContent',
   setup(props, { attrs, slots }) {
-    return () => (
-      <div class={cn('flex-1 overflow-auto p-6', attrs.class as string)}>
-        {slots.default?.()}
-      </div>
-    )
+    return () => <div class={cn('flex-1 overflow-auto p-6', attrs.class as string)}>{slots.default?.()}</div>;
   },
-})
+});
 
 export const DrawerFooter = defineComponent({
   name: 'DrawerFooter',
   setup(props, { attrs, slots }) {
     return () => (
-      <div class={cn('flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200', attrs.class as string)}>
+      <div
+        class={cn('flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200', attrs.class as string)}
+      >
         {slots.default?.()}
       </div>
-    )
+    );
   },
-})
+});

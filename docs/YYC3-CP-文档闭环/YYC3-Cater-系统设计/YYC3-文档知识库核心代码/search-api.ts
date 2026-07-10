@@ -38,7 +38,7 @@ const searchSchema = z.object({
  * @access 公开
  * @returns {Promise<Response>} 搜索结果
  */
-app.post('/', zValidator('json', searchSchema), async (c) => {
+app.post('/', zValidator('json', searchSchema), async c => {
   try {
     const params = c.req.valid('json');
     logger.info('Search request received', { query: params.query, type: params.type });
@@ -68,10 +68,13 @@ app.post('/', zValidator('json', searchSchema), async (c) => {
     });
   } catch (error) {
     logger.error('Search request failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '搜索失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '搜索失败',
+      },
+      500,
+    );
   }
 });
 
@@ -81,14 +84,17 @@ app.post('/', zValidator('json', searchSchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 搜索建议
  */
-app.get('/suggestions', async (c) => {
+app.get('/suggestions', async c => {
   try {
     const query = c.req.query('q');
     if (!query) {
-      return c.json({
-        success: false,
-        error: '查询参数不能为空',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '查询参数不能为空',
+        },
+        400,
+      );
     }
 
     logger.info('Search suggestions requested', { query });
@@ -104,10 +110,13 @@ app.get('/suggestions', async (c) => {
     });
   } catch (error) {
     logger.error('Search suggestions failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取搜索建议失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取搜索建议失败',
+      },
+      500,
+    );
   }
 });
 
@@ -117,7 +126,7 @@ app.get('/suggestions', async (c) => {
  * @access 需要认证
  * @returns {Promise<Response>} 搜索历史
  */
-app.get('/history', async (c) => {
+app.get('/history', async c => {
   try {
     const limit = parseInt(c.req.query('limit') || '10');
     logger.info('Search history requested', { limit });
@@ -133,10 +142,13 @@ app.get('/history', async (c) => {
     });
   } catch (error) {
     logger.error('Search history failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取搜索历史失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取搜索历史失败',
+      },
+      500,
+    );
   }
 });
 
@@ -146,7 +158,7 @@ app.get('/history', async (c) => {
  * @access 需要认证
  * @returns {Promise<Response>} 操作结果
  */
-app.delete('/history', async (c) => {
+app.delete('/history', async c => {
   try {
     logger.info('Clear search history requested');
 
@@ -158,10 +170,13 @@ app.delete('/history', async (c) => {
     });
   } catch (error) {
     logger.error('Clear search history failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '清除搜索历史失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '清除搜索历史失败',
+      },
+      500,
+    );
   }
 });
 
@@ -171,7 +186,7 @@ app.delete('/history', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 热门搜索词
  */
-app.get('/trending', async (c) => {
+app.get('/trending', async c => {
   try {
     const limit = parseInt(c.req.query('limit') || '10');
     logger.info('Trending searches requested', { limit });
@@ -187,10 +202,13 @@ app.get('/trending', async (c) => {
     });
   } catch (error) {
     logger.error('Trending searches failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取热门搜索词失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取热门搜索词失败',
+      },
+      500,
+    );
   }
 });
 
@@ -200,7 +218,7 @@ app.get('/trending', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 相关文档
  */
-app.get('/related/:documentId', async (c) => {
+app.get('/related/:documentId', async c => {
   try {
     const documentId = c.req.param('documentId');
     const limit = parseInt(c.req.query('limit') || '5');
@@ -218,10 +236,13 @@ app.get('/related/:documentId', async (c) => {
     });
   } catch (error) {
     logger.error('Related documents failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取相关文档失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取相关文档失败',
+      },
+      500,
+    );
   }
 });
 
@@ -231,7 +252,7 @@ app.get('/related/:documentId', async (c) => {
  * @access 需要认证
  * @returns {Promise<Response>} 搜索统计
  */
-app.get('/statistics', async (c) => {
+app.get('/statistics', async c => {
   try {
     const query = c.req.query('query') || '';
     logger.info('Search statistics requested', { query });
@@ -244,10 +265,13 @@ app.get('/statistics', async (c) => {
     });
   } catch (error) {
     logger.error('Search statistics failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取搜索统计失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取搜索统计失败',
+      },
+      500,
+    );
   }
 });
 
@@ -257,7 +281,7 @@ app.get('/statistics', async (c) => {
  * @access 需要认证
  * @returns {Promise<Response>} 导出文件
  */
-app.post('/export', zValidator('json', searchSchema), async (c) => {
+app.post('/export', zValidator('json', searchSchema), async c => {
   try {
     const params = c.req.valid('json');
     const format = c.req.query('format') || 'json';
@@ -288,16 +312,20 @@ app.post('/export', zValidator('json', searchSchema), async (c) => {
     } else {
       // 对于CSV和Excel，返回文件下载
       return c.text(exportData, 200, {
-        'Content-Type': format === 'csv' ? 'text/csv' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Content-Type':
+          format === 'csv' ? 'text/csv' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'Content-Disposition': `attachment; filename="search-results-${Date.now()}.${format}"`,
       });
     }
   } catch (error) {
     logger.error('Export search results failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '导出搜索结果失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '导出搜索结果失败',
+      },
+      500,
+    );
   }
 });
 

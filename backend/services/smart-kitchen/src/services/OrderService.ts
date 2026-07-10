@@ -25,7 +25,7 @@ export class OrderService extends EventEmitter {
   constructor(
     private dishRepository: DishRepository,
     private kitchenResourceRepository: KitchenResourceRepository,
-    private chefRepository: ChefRepository
+    private chefRepository: ChefRepository,
   ) {
     super();
   }
@@ -44,56 +44,60 @@ export class OrderService extends EventEmitter {
     restaurantId: string,
     status?: string,
     limit: number = 50,
-    offset: number = 0
+    offset: number = 0,
   ): Promise<OrderQueue> {
     // 验证输入参数
     // 允许空restaurantId用于Dashboard全局数据查询
     // if (!restaurantId) {
     //   throw new Error('餐厅ID不能为空');
     // }
-    
+
     if (limit <= 0 || limit > 100) {
       limit = 50; // 限制查询数量在1-100之间
     }
-    
+
     if (offset < 0) {
       offset = 0; // 偏移量不能为负数
     }
 
     const cacheKey = `order-queue:${restaurantId || 'all'}:${status || 'all'}:${limit}:${offset}`;
-    
-    return await cacheService.getWithCache<OrderQueue>(cacheKey, async () => {
-      const queryConditions: any = {
-        ...(status && { status: status as OrderStatus })
-      };
 
-      // 如果有restaurantId，添加到查询条件
-      if (restaurantId) {
-        queryConditions.where = { restaurantId };
-      }
+    return await cacheService.getWithCache<OrderQueue>(
+      cacheKey,
+      async () => {
+        const queryConditions: any = {
+          ...(status && { status: status as OrderStatus }),
+        };
 
-      // 并行执行查询，提高性能
-      const [orders, totalCount] = await Promise.all([
-        OrderModel.find({
-          ...queryConditions,
-          order: {
-            createdAt: 'ASC',
-            priority: 'DESC'
-          },
-          take: limit,
-          skip: offset,
-          relations: ['dishes', 'customer', 'assignedChef']
-        }),
-        OrderModel.count(queryConditions)
-      ]);
+        // 如果有restaurantId，添加到查询条件
+        if (restaurantId) {
+          queryConditions.where = { restaurantId };
+        }
 
-      return {
-        orders,
-        totalCount,
-        currentStatus: status || 'all',
-        processingTime: this.calculateAverageProcessingTime(orders)
-      };
-    }, 60); // 缓存60秒
+        // 并行执行查询，提高性能
+        const [orders, totalCount] = await Promise.all([
+          OrderModel.find({
+            ...queryConditions,
+            order: {
+              createdAt: 'ASC',
+              priority: 'DESC',
+            },
+            take: limit,
+            skip: offset,
+            relations: ['dishes', 'customer', 'assignedChef'],
+          }),
+          OrderModel.count(queryConditions),
+        ]);
+
+        return {
+          orders,
+          totalCount,
+          currentStatus: status || 'all',
+          processingTime: this.calculateAverageProcessingTime(orders),
+        };
+      },
+      60,
+    ); // 缓存60秒
   }
 
   /**
@@ -109,16 +113,19 @@ export class OrderService extends EventEmitter {
     if (!orderData || typeof orderData !== 'object') {
       throw new Error('订单数据无效');
     }
-    
+
     if (!orderData.restaurantId) {
       throw new Error('餐厅ID不能为空');
     }
-    
+
     if (!orderData.dishes || !Array.isArray(orderData.dishes) || orderData.dishes.length === 0) {
       throw new Error('订单必须包含至少一道菜品');
     }
-    
-    if (orderData.totalAmount !== undefined && (typeof orderData.totalAmount !== 'number' || orderData.totalAmount < 0)) {
+
+    if (
+      orderData.totalAmount !== undefined &&
+      (typeof orderData.totalAmount !== 'number' || orderData.totalAmount < 0)
+    ) {
       throw new Error('订单金额必须为正数');
     }
 
@@ -128,7 +135,7 @@ export class OrderService extends EventEmitter {
       status: OrderStatus.PENDING,
       createdAt: new Date(),
       updatedAt: new Date(),
-      priority: orderData.priority || 0 // 设置默认优先级
+      priority: orderData.priority || 0, // 设置默认优先级
     });
 
     try {
@@ -136,9 +143,7 @@ export class OrderService extends EventEmitter {
       const cookingTime = await this.estimateCookingTime(order.id);
 
       // 更新订单的预估完成时间
-      order.estimatedCompletionTime = new Date(
-        Date.now() + cookingTime.totalEstimatedMinutes * 60 * 1000
-      );
+      order.estimatedCompletionTime = new Date(Date.now() + cookingTime.totalEstimatedMinutes * 60 * 1000);
 
       await OrderModel.save(order);
 
@@ -158,7 +163,7 @@ export class OrderService extends EventEmitter {
       await OrderModel.save({
         ...order,
         status: OrderStatus.CANCELLED,
-        reason: '订单创建过程中发生错误'
+        reason: '订单创建过程中发生错误',
       });
       throw error;
     }
@@ -173,27 +178,23 @@ export class OrderService extends EventEmitter {
    * @returns Promise<Order> - 更新后的订单对象
    * @throws {Error} 当订单ID无效、订单不存在或状态转换无效时抛出错误
    */
-  async updateOrderStatus(
-    orderId: string,
-    status: OrderStatus,
-    notes?: string
-  ): Promise<Order> {
+  async updateOrderStatus(orderId: string, status: OrderStatus, notes?: string): Promise<Order> {
     // 输入验证
     if (!orderId || typeof orderId !== 'string') {
       throw new Error('订单ID无效');
     }
-    
+
     if (!status || !Object.values(OrderStatus).includes(status)) {
       throw new Error('订单状态无效');
     }
-    
+
     if (notes && typeof notes !== 'string') {
       throw new Error('订单备注必须是字符串');
     }
 
     const order = await OrderModel.findOne({
       where: { id: orderId },
-      relations: ['dishes', 'customer', 'assignedChef']
+      relations: ['dishes', 'customer', 'assignedChef'],
     });
 
     if (!order) {
@@ -223,7 +224,7 @@ export class OrderService extends EventEmitter {
         // 计算实际耗时
         if (order.cookingStartTime) {
           order.actualProcessingTime = Math.ceil(
-            (order.actualCompletionTime.getTime() - order.cookingStartTime.getTime()) / (1000 * 60)
+            (order.actualCompletionTime.getTime() - order.cookingStartTime.getTime()) / (1000 * 60),
           );
         }
         break;
@@ -249,7 +250,7 @@ export class OrderService extends EventEmitter {
     this.emit('orderStatusChanged', {
       order,
       previousStatus,
-      newStatus: status
+      newStatus: status,
     });
 
     // 如果订单完成或取消，释放相关资源（异步执行，不阻塞主流程）
@@ -262,7 +263,7 @@ export class OrderService extends EventEmitter {
 
     return order;
   }
-  
+
   /**
    * @method isValidStatusTransition
    * @description 验证订单状态转换是否有效
@@ -276,9 +277,9 @@ export class OrderService extends EventEmitter {
       [OrderStatus.PENDING]: [OrderStatus.IN_PROGRESS, OrderStatus.CANCELLED],
       [OrderStatus.IN_PROGRESS]: [OrderStatus.COMPLETED, OrderStatus.CANCELLED],
       [OrderStatus.COMPLETED]: [], // 已完成订单不能再转换状态
-      [OrderStatus.CANCELLED]: []   // 已取消订单不能再转换状态
+      [OrderStatus.CANCELLED]: [], // 已取消订单不能再转换状态
     };
-    
+
     return validTransitions[currentStatus]?.includes(newStatus) || false;
   }
 
@@ -289,10 +290,7 @@ export class OrderService extends EventEmitter {
    * @param orders - 待分配的订单ID列表 (必填)
    * @returns Promise<OrderAssignment[]> - 订单分配结果列表
    */
-  async intelligentOrderAssignment(
-    restaurantId: string,
-    orders: string[]
-  ): Promise<OrderAssignment[]> {
+  async intelligentOrderAssignment(restaurantId: string, orders: string[]): Promise<OrderAssignment[]> {
     const assignments: OrderAssignment[] = [];
 
     // 获取可用的厨房资源
@@ -304,7 +302,7 @@ export class OrderService extends EventEmitter {
     for (const orderId of orders) {
       const order = await OrderModel.findOne({
         where: { id: orderId },
-        relations: ['dishes']
+        relations: ['dishes'],
       });
 
       if (!order) {
@@ -327,11 +325,9 @@ export class OrderService extends EventEmitter {
           chefId: bestChef.id,
           chefName: bestChef.name,
           estimatedStartTime: new Date(),
-          estimatedCompletionTime: new Date(
-            Date.now() + orderComplexity.estimatedCookingTime * 60 * 1000
-          ),
+          estimatedCompletionTime: new Date(Date.now() + orderComplexity.estimatedCookingTime * 60 * 1000),
           priority: order.priority,
-          assignedResources: orderComplexity.requiredResources
+          assignedResources: orderComplexity.requiredResources,
         });
 
         // 更新厨师可用性
@@ -357,7 +353,7 @@ export class OrderService extends EventEmitter {
 
     const order = await OrderModel.findOne({
       where: { id: orderId },
-      relations: ['dishes']
+      relations: ['dishes'],
     });
 
     if (!order) {
@@ -375,9 +371,7 @@ export class OrderService extends EventEmitter {
     }> = [];
 
     // 收集所有菜品ID
-    const dishIds = order.dishes
-      .filter(orderDish => orderDish?.dishId)
-      .map(orderDish => orderDish.dishId as string);
+    const dishIds = order.dishes.filter(orderDish => orderDish?.dishId).map(orderDish => orderDish.dishId as string);
 
     // 批量获取菜品信息（性能优化：减少数据库查询次数）
     const dishesMap = new Map();
@@ -406,7 +400,7 @@ export class OrderService extends EventEmitter {
             dishName: dish.name,
             prepTime,
             cookingTime,
-            totalTime
+            totalTime,
           });
         }
       }
@@ -415,7 +409,7 @@ export class OrderService extends EventEmitter {
     // 并行计算厨房负载和厨师技能水平（性能优化：减少等待时间）
     const [kitchenLoad, averageChefSkill] = await Promise.all([
       this.calculateKitchenLoad(order.restaurantId),
-      this.getAverageChefSkill(order.restaurantId)
+      this.getAverageChefSkill(order.restaurantId),
     ]);
 
     // 考虑厨房当前负载
@@ -438,8 +432,8 @@ export class OrderService extends EventEmitter {
       factors: {
         kitchenLoad: loadFactor,
         chefSkill: skillFactor,
-        orderComplexity: order.dishes.length
-      }
+        orderComplexity: order.dishes.length,
+      },
     };
   }
 
@@ -452,7 +446,7 @@ export class OrderService extends EventEmitter {
   async getOrderById(orderId: string): Promise<Order | null> {
     return await OrderModel.findOne({
       where: { id: orderId },
-      relations: ['dishes', 'customer', 'assignedChef', 'restaurant']
+      relations: ['dishes', 'customer', 'assignedChef', 'restaurant'],
     });
   }
 
@@ -469,13 +463,13 @@ export class OrderService extends EventEmitter {
     if (!orderId || typeof orderId !== 'string') {
       throw new Error('订单ID无效');
     }
-    
+
     if (reason && typeof reason !== 'string') {
       throw new Error('取消原因必须是字符串');
     }
 
     const order = await OrderModel.findOne({
-      where: { id: orderId }
+      where: { id: orderId },
     });
 
     if (!order) {
@@ -531,21 +525,19 @@ export class OrderService extends EventEmitter {
     const requiredResources = new Set<string>();
 
     // 收集所有菜品ID
-    const dishIds = order.dishes
-      .filter(orderDish => orderDish?.dishId)
-      .map(orderDish => orderDish.dishId as string);
+    const dishIds = order.dishes.filter(orderDish => orderDish?.dishId).map(orderDish => orderDish.dishId as string);
 
     // 优化：使用缓存减少数据库查询
     const dishesMap = new Map();
     if (dishIds.length > 0) {
       // 尝试从缓存获取菜品信息
       const cachedDishes = await Promise.all(
-        dishIds.map(id => cacheService.get<typeof this.dishRepository.findByIds>('dish:' + id))
+        dishIds.map(id => cacheService.get<typeof this.dishRepository.findByIds>('dish:' + id)),
       );
-      
+
       // 找出需要从数据库获取的菜品ID
       const missingIds = dishIds.filter((id, index) => !cachedDishes[index]);
-      
+
       if (missingIds.length > 0) {
         const dbDishes = await this.dishRepository.findByIds(missingIds);
         dbDishes.forEach(dish => {
@@ -554,7 +546,7 @@ export class OrderService extends EventEmitter {
           cacheService.set('dish:' + dish.id, dish, 3600);
         });
       }
-      
+
       // 合并缓存和数据库结果
       dishIds.forEach((id, index) => {
         if (cachedDishes[index]) {
@@ -583,7 +575,7 @@ export class OrderService extends EventEmitter {
     return {
       complexityScore: totalComplexity,
       estimatedCookingTime: totalTime,
-      requiredResources: Array.from(requiredResources)
+      requiredResources: Array.from(requiredResources),
     };
   }
 
@@ -609,7 +601,8 @@ export class OrderService extends EventEmitter {
 
     // 等待时间优先级（等待越久优先级越高）
     const waitTime = Date.now() - order.createdAt.getTime();
-    if (waitTime > 30 * 60 * 1000) { // 超过30分钟
+    if (waitTime > 30 * 60 * 1000) {
+      // 超过30分钟
       priority += 1;
     }
 
@@ -626,12 +619,12 @@ export class OrderService extends EventEmitter {
    * @returns Promise<ChefEntity | null> - 最适合的厨师或null
    */
   private async findBestChef(
-      availableChefs: ChefEntity[],
-      orderComplexity: { complexityScore: number },
-      orderPriority: number
-    ): Promise<ChefEntity | null> {
-      let bestChef: ChefEntity | null = null;
-      let bestScore = -1;
+    availableChefs: ChefEntity[],
+    orderComplexity: { complexityScore: number },
+    orderPriority: number,
+  ): Promise<ChefEntity | null> {
+    let bestChef: ChefEntity | null = null;
+    let bestScore = -1;
 
     // 优化：使用更高效的匹配算法和参数计算
     for (const chef of availableChefs) {
@@ -642,13 +635,13 @@ export class OrderService extends EventEmitter {
       const complexityScore = Math.max(orderComplexity.complexityScore, 1);
       const skillMatch = Math.min(1, chef.skillLevel / complexityScore);
       // 避免currentOrders或maxOrders为0的情况
-      const workLoadScore = 1 - (chef.currentOrders / Math.max(chef.maxOrders, 1));
+      const workLoadScore = 1 - chef.currentOrders / Math.max(chef.maxOrders, 1);
       const experienceBonus = chef.experienceYears * 0.1;
 
       // 考虑订单优先级的影响
       const priorityBonus = orderPriority * 0.1;
 
-      const totalScore = (skillMatch * 0.4) + (workLoadScore * 0.4) + (experienceBonus * 0.2) + priorityBonus;
+      const totalScore = skillMatch * 0.4 + workLoadScore * 0.4 + experienceBonus * 0.2 + priorityBonus;
 
       if (totalScore > bestScore) {
         bestScore = totalScore;
@@ -672,11 +665,11 @@ export class OrderService extends EventEmitter {
     order.status = OrderStatus.IN_PROGRESS;
     order.cookingStartTime = new Date();
     await OrderModel.save(order);
-    
+
     // 更新厨师工作负载和可用性，保持与releaseKitchenResources方法的一致性
     await this.chefRepository.updateChefWorkload(chef.id, 1);
     await this.chefRepository.updateChefAvailability(chef.id, false);
-    
+
     // 清除相关缓存
     if (order.restaurantId) {
       const cacheKeyPattern = `order-queue:${order.restaurantId}:*`;
@@ -700,7 +693,7 @@ export class OrderService extends EventEmitter {
         await this.chefRepository.updateChefAvailability(chef.id, true);
       }
     }
-    
+
     // 清除相关缓存
     if (order.restaurantId) {
       const cacheKeyPattern = `order-queue:${order.restaurantId}:*`;
@@ -723,14 +716,14 @@ export class OrderService extends EventEmitter {
     const currentOrders = await OrderModel.count({
       where: {
         restaurantId,
-        status: [OrderStatus.PENDING, OrderStatus.IN_PROGRESS]
-      }
+        status: [OrderStatus.PENDING, OrderStatus.IN_PROGRESS],
+      },
     });
 
     return {
       currentOrders,
       capacity: 50, // 假设厨房同时处理50个订单
-      averageProcessingTime: 25 // 平均处理时间（分钟）
+      averageProcessingTime: 25, // 平均处理时间（分钟）
     };
   }
 
@@ -762,7 +755,7 @@ export class OrderService extends EventEmitter {
     if (!Array.isArray(orders) || orders.length === 0) return 0;
 
     const completedOrders = orders.filter(
-      order => order.status === OrderStatus.COMPLETED && order.actualCompletionTime
+      order => order.status === OrderStatus.COMPLETED && order.actualCompletionTime,
     );
 
     if (completedOrders.length === 0) return 0;

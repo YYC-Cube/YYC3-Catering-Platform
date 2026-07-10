@@ -17,7 +17,7 @@ export enum MenuCategory {
   SOUP = 'soup',
   SALAD = 'salad',
   SIDE_DISH = 'side_dish',
-  SPECIAL = 'special'
+  SPECIAL = 'special',
 }
 
 /**
@@ -27,7 +27,7 @@ export enum MenuItemStatus {
   AVAILABLE = 'available',
   OUT_OF_STOCK = 'out_of_stock',
   DISCONTINUED = 'discontinued',
-  SEASONAL = 'seasonal'
+  SEASONAL = 'seasonal',
 }
 
 /**

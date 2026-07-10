@@ -4,13 +4,23 @@
  * @author YYC³
  * @version 1.0.0
  */
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, CreatedAt, UpdatedAt } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  ForeignKey,
+  CreatedAt,
+  UpdatedAt,
+} from 'sequelize-typescript';
 import { Order, OrderStatus } from './Order.model';
 
 @Table({
   tableName: 'order_status_histories',
   timestamps: true,
-  underscored: true
+  underscored: true,
 })
 export class OrderStatusHistory extends Model<OrderStatusHistory> {
   @PrimaryKey
@@ -21,25 +31,25 @@ export class OrderStatusHistory extends Model<OrderStatusHistory> {
   @ForeignKey(() => Order)
   @Column({
     type: DataType.BIGINT,
-    allowNull: false
+    allowNull: false,
   })
   order_id: number;
 
   @Column({
     type: DataType.ENUM(...Object.values(OrderStatus)),
-    allowNull: false
+    allowNull: false,
   })
   status: OrderStatus;
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: true
+    allowNull: true,
   })
   note: string;
 
   @Column({
     type: DataType.BIGINT,
-    allowNull: true
+    allowNull: true,
   })
   changed_by: number;
 

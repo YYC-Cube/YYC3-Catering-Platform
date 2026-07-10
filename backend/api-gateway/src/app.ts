@@ -46,7 +46,7 @@ const cacheMiddleware = createCacheMiddleware({
 });
 
 // 初始化缓存客户端
-cacheMiddleware.initialize().catch((error) => {
+cacheMiddleware.initialize().catch(error => {
   logger.error('缓存中间件初始化失败', { error });
 });
 
@@ -73,12 +73,14 @@ if (!corsOrigin) {
   logger.warn('CORS_ORIGIN not set, defaulting to localhost - this is insecure for production!');
 }
 
-app.use(cors({
-  origin: corsOrigin ? corsOrigin.split(',').map(o => o.trim()) : ['http://localhost:3000', 'http://localhost:5173'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: corsOrigin ? corsOrigin.split(',').map(o => o.trim()) : ['http://localhost:3000', 'http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    credentials: true,
+  }),
+);
 
 // 解析请求体
 app.use(express.json({ limit: '10mb' }));
@@ -125,7 +127,7 @@ app.use((err: Error | unknown, req: express.Request, res: express.Response, next
   const error = err instanceof Error ? err : new Error(String(err));
   logger.error('全局错误: %s', error.message);
   logger.error('错误堆栈: %s', error.stack);
-  
+
   res.status(500).json({
     success: false,
     error: '内部服务器错误',
@@ -160,7 +162,7 @@ const server = app.listen(PORT, async () => {
 });
 
 // 处理未捕获的异常
-process.on('uncaughtException', (err) => {
+process.on('uncaughtException', err => {
   logger.error('未捕获的异常: %s', err.message);
   logger.error('异常堆栈: %s', err.stack);
   process.exit(1);

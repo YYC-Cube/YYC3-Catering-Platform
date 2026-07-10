@@ -61,7 +61,7 @@ app.use((err: Error | unknown, req: express.Request, res: express.Response, next
 });
 
 // 处理未捕获的异常
-process.on('uncaughtException', (err) => {
+process.on('uncaughtException', err => {
   logger.error('未捕获的异常:', err);
   process.exit(1);
 });
@@ -90,13 +90,13 @@ async function shutdown() {
   try {
     // 关闭数据库连接
     await sequelize.close();
-    
+
     // 关闭RabbitMQ连接
     await closeRabbitMQ();
-    
+
     // 关闭Redis连接
     await closeRedis();
-    
+
     logger.info('所有连接已关闭');
     process.exit(0);
   } catch (error) {
@@ -113,13 +113,13 @@ async function initializeService() {
     // 连接数据库
     await testConnection();
     await syncModels();
-    
+
     // 连接RabbitMQ
     await connectRabbitMQ();
-    
+
     // 连接Redis
     connectRedis();
-    
+
     // 启动服务器
     const PORT = process.env.PORT || 3206;
     app.listen(PORT, () => {

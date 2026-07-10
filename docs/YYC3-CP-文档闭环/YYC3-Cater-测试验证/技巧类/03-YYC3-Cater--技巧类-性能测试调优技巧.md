@@ -10,9 +10,11 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 性能测试调优技巧
 
 ## 文档信息
+
 - 文档类型：技巧类
 - 所属阶段：YYC3-Cater--测试验证
 - 遵循规范：五高五标五化要求
@@ -66,7 +68,7 @@ interface PerformanceMetrics {
  */
 class PerformanceMetricsCollector {
   private metrics: PerformanceMetrics[] = [];
-  
+
   /**
    * 收集性能指标
    */
@@ -79,10 +81,10 @@ class PerformanceMetricsCollector {
       cpuUsage: this.getCPUUsage(),
       memoryUsage: this.getMemoryUsage(),
       networkIO: this.getNetworkIO(),
-      diskIO: this.getDiskIO()
+      diskIO: this.getDiskIO(),
     };
   }
-  
+
   /**
    * 测量响应时间
    */
@@ -92,7 +94,7 @@ class PerformanceMetricsCollector {
     const endTime = Date.now();
     return endTime - startTime;
   }
-  
+
   /**
    * 测量吞吐量
    */
@@ -101,7 +103,7 @@ class PerformanceMetricsCollector {
     const duration = this.getDuration();
     return requests / duration;
   }
-  
+
   /**
    * 获取并发用户数
    */
@@ -109,7 +111,7 @@ class PerformanceMetricsCollector {
     // 实现获取并发用户数
     return 0;
   }
-  
+
   /**
    * 计算错误率
    */
@@ -118,7 +120,7 @@ class PerformanceMetricsCollector {
     const failedRequests = this.getFailedRequests();
     return (failedRequests / totalRequests) * 100;
   }
-  
+
   /**
    * 获取CPU使用率
    */
@@ -126,7 +128,7 @@ class PerformanceMetricsCollector {
     // 实现获取CPU使用率
     return 0;
   }
-  
+
   /**
    * 获取内存使用率
    */
@@ -134,7 +136,7 @@ class PerformanceMetricsCollector {
     // 实现获取内存使用率
     return 0;
   }
-  
+
   /**
    * 获取网络I/O
    */
@@ -142,7 +144,7 @@ class PerformanceMetricsCollector {
     // 实现获取网络I/O
     return 0;
   }
-  
+
   /**
    * 获取磁盘I/O
    */
@@ -150,12 +152,20 @@ class PerformanceMetricsCollector {
     // 实现获取磁盘I/O
     return 0;
   }
-  
+
   // 辅助方法
-  private getRequestCount(): number { return 0; }
-  private getDuration(): number { return 1; }
-  private getTotalRequests(): number { return 0; }
-  private getFailedRequests(): number { return 0; }
+  private getRequestCount(): number {
+    return 0;
+  }
+  private getDuration(): number {
+    return 1;
+  }
+  private getTotalRequests(): number {
+    return 0;
+  }
+  private getFailedRequests(): number {
+    return 0;
+  }
 }
 ```
 
@@ -173,11 +183,11 @@ interface PerformanceTestTool {
   /** 工具名称 */
   name: string;
   /** 适用场景 */
-  scenario: 'load' | 'stress' | 'api' | 'frontend';
+  scenario: "load" | "stress" | "api" | "frontend";
   /** 学习曲线 */
-  learningCurve: 'easy' | 'medium' | 'hard';
+  learningCurve: "easy" | "medium" | "hard";
   /** 并发能力 */
-  concurrency: 'low' | 'medium' | 'high';
+  concurrency: "low" | "medium" | "high";
   /** 脚本语言 */
   scriptLanguage: string[];
   /** 优势 */
@@ -192,63 +202,63 @@ interface PerformanceTestTool {
 class PerformanceTestToolRecommender {
   private static tools: PerformanceTestTool[] = [
     {
-      name: 'JMeter',
-      scenario: 'load',
-      learningCurve: 'medium',
-      concurrency: 'high',
-      scriptLanguage: ['Java'],
-      advantages: ['开源免费', '功能强大', '插件丰富', '社区活跃'],
-      disadvantages: ['UI界面复杂', '资源占用高', '脚本编写繁琐']
+      name: "JMeter",
+      scenario: "load",
+      learningCurve: "medium",
+      concurrency: "high",
+      scriptLanguage: ["Java"],
+      advantages: ["开源免费", "功能强大", "插件丰富", "社区活跃"],
+      disadvantages: ["UI界面复杂", "资源占用高", "脚本编写繁琐"],
     },
     {
-      name: 'K6',
-      scenario: 'load',
-      learningCurve: 'easy',
-      concurrency: 'high',
-      scriptLanguage: ['JavaScript'],
-      advantages: ['轻量级', '脚本简单', '支持CI/CD', '性能好'],
-      disadvantages: ['功能相对简单', '插件较少']
+      name: "K6",
+      scenario: "load",
+      learningCurve: "easy",
+      concurrency: "high",
+      scriptLanguage: ["JavaScript"],
+      advantages: ["轻量级", "脚本简单", "支持CI/CD", "性能好"],
+      disadvantages: ["功能相对简单", "插件较少"],
     },
     {
-      name: 'Artillery',
-      scenario: 'api',
-      learningCurve: 'easy',
-      concurrency: 'high',
-      scriptLanguage: ['YAML', 'JavaScript'],
-      advantages: ['配置简单', '支持云服务', '实时报告', '易集成'],
-      disadvantages: ['功能有限', '定制性差']
+      name: "Artillery",
+      scenario: "api",
+      learningCurve: "easy",
+      concurrency: "high",
+      scriptLanguage: ["YAML", "JavaScript"],
+      advantages: ["配置简单", "支持云服务", "实时报告", "易集成"],
+      disadvantages: ["功能有限", "定制性差"],
     },
     {
-      name: 'Lighthouse',
-      scenario: 'frontend',
-      learningCurve: 'easy',
-      concurrency: 'low',
-      scriptLanguage: ['JavaScript'],
-      advantages: ['Google官方', 'Web性能全面', '自动化集成', '报告详细'],
-      disadvantages: ['仅限前端', '不支持高并发']
+      name: "Lighthouse",
+      scenario: "frontend",
+      learningCurve: "easy",
+      concurrency: "low",
+      scriptLanguage: ["JavaScript"],
+      advantages: ["Google官方", "Web性能全面", "自动化集成", "报告详细"],
+      disadvantages: ["仅限前端", "不支持高并发"],
     },
     {
-      name: 'WebPageTest',
-      scenario: 'frontend',
-      learningCurve: 'easy',
-      concurrency: 'low',
+      name: "WebPageTest",
+      scenario: "frontend",
+      learningCurve: "easy",
+      concurrency: "low",
       scriptLanguage: [],
-      advantages: ['多地点测试', '真实浏览器', '详细报告', '免费'],
-      disadvantages: ['需要排队', '测试速度慢']
-    }
+      advantages: ["多地点测试", "真实浏览器", "详细报告", "免费"],
+      disadvantages: ["需要排队", "测试速度慢"],
+    },
   ];
-  
+
   /**
    * 推荐性能测试工具
    */
-  static recommend(scenario: 'load' | 'stress' | 'api' | 'frontend'): PerformanceTestTool[] {
+  static recommend(scenario: "load" | "stress" | "api" | "frontend"): PerformanceTestTool[] {
     return this.tools.filter(tool => tool.scenario === scenario);
   }
 }
 
 // 使用示例
-const loadTestTools = PerformanceTestToolRecommender.recommend('load');
-console.log('负载测试工具:', loadTestTools);
+const loadTestTools = PerformanceTestToolRecommender.recommend("load");
+console.log("负载测试工具:", loadTestTools);
 ```
 
 ### 2.2 K6性能测试
@@ -257,45 +267,45 @@ console.log('负载测试工具:', loadTestTools);
 /**
  * K6性能测试脚本示例
  */
-import http from 'k6/http';
-import { check, sleep } from 'k6';
-import { Rate, Trend } from 'k6/metrics';
+import http from "k6/http";
+import { check, sleep } from "k6";
+import { Rate, Trend } from "k6/metrics";
 
 // 自定义指标
-const errorRate = new Rate('errors');
-const responseTime = new Trend('response_time');
+const errorRate = new Rate("errors");
+const responseTime = new Trend("response_time");
 
 // 测试配置
 export const options = {
   stages: [
-    { duration: '30s', target: 100 },  // 30秒内增加到100用户
-    { duration: '1m', target: 100 },   // 保持100用户1分钟
-    { duration: '30s', target: 200 },  // 30秒内增加到200用户
-    { duration: '1m', target: 200 },   // 保持200用户1分钟
-    { duration: '30s', target: 0 },    // 30秒内减少到0用户
+    { duration: "30s", target: 100 }, // 30秒内增加到100用户
+    { duration: "1m", target: 100 }, // 保持100用户1分钟
+    { duration: "30s", target: 200 }, // 30秒内增加到200用户
+    { duration: "1m", target: 200 }, // 保持200用户1分钟
+    { duration: "30s", target: 0 }, // 30秒内减少到0用户
   ],
   thresholds: {
-    http_req_duration: ['p(95)<500'],  // 95%的请求响应时间小于500ms
-    errors: ['rate<0.01'],              // 错误率小于1%
+    http_req_duration: ["p(95)<500"], // 95%的请求响应时间小于500ms
+    errors: ["rate<0.01"], // 错误率小于1%
   },
 };
 
 // 默认函数
-export default function() {
+export default function () {
   // 发送HTTP请求
-  const response = http.get('https://api.example.com/users');
-  
+  const response = http.get("https://api.example.com/users");
+
   // 检查响应
   const checkResult = check(response, {
-    '状态码是200': (r) => r.status === 200,
-    '响应时间小于500ms': (r) => r.timings.duration < 500,
-    '包含用户数据': (r) => JSON.parse(r.body).data.length > 0,
+    状态码是200: r => r.status === 200,
+    响应时间小于500ms: r => r.timings.duration < 500,
+    包含用户数据: r => JSON.parse(r.body).data.length > 0,
   });
-  
+
   // 记录指标
   errorRate.add(!checkResult);
   responseTime.add(response.timings.duration);
-  
+
   // 等待1-3秒
   sleep(Math.random() * 2 + 1);
 }
@@ -303,14 +313,14 @@ export default function() {
 // 设置函数
 export function setup() {
   // 测试前准备
-  console.log('开始性能测试');
+  console.log("开始性能测试");
   return { startTime: new Date() };
 }
 
 // 拆除函数
 export function teardown(data) {
   // 测试后清理
-  console.log('性能测试结束');
+  console.log("性能测试结束");
 }
 ```
 
@@ -379,53 +389,53 @@ class FrontendPerformanceOptimizer {
    */
   static preloadResources(resources: string[]): void {
     resources.forEach(resource => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
+      const link = document.createElement("link");
+      link.rel = "preload";
       link.href = resource;
       link.as = this.getResourceType(resource);
       document.head.appendChild(link);
     });
   }
-  
+
   /**
    * 获取资源类型
    */
   private static getResourceType(resource: string): string {
-    const extension = resource.split('.').pop();
+    const extension = resource.split(".").pop();
     const typeMap: Record<string, string> = {
-      'js': 'script',
-      'css': 'style',
-      'woff': 'font',
-      'woff2': 'font',
-      'png': 'image',
-      'jpg': 'image',
-      'jpeg': 'image',
-      'gif': 'image',
-      'svg': 'image'
+      js: "script",
+      css: "style",
+      woff: "font",
+      woff2: "font",
+      png: "image",
+      jpg: "image",
+      jpeg: "image",
+      gif: "image",
+      svg: "image",
     };
-    return typeMap[extension || ''] || 'fetch';
+    return typeMap[extension || ""] || "fetch";
   }
-  
+
   /**
    * 图片懒加载
    */
   static lazyLoadImages(): void {
-    const images = document.querySelectorAll('img[data-src]');
-    
+    const images = document.querySelectorAll("img[data-src]");
+
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target as HTMLImageElement;
-          img.src = img.dataset.src || '';
-          img.removeAttribute('data-src');
+          img.src = img.dataset.src || "";
+          img.removeAttribute("data-src");
           observer.unobserve(img);
         }
       });
     });
-    
+
     images.forEach(img => imageObserver.observe(img));
   }
-  
+
   /**
    * 代码分割
    */
@@ -438,49 +448,39 @@ class FrontendPerformanceOptimizer {
       throw error;
     }
   }
-  
+
   /**
    * 防抖函数
    */
-  static debounce<T extends (...args: any[]) => any>(
-    func: T,
-    wait: number
-  ): (...args: Parameters<T>) => void {
+  static debounce<T extends (...args: any[]) => any>(func: T, wait: number): (...args: Parameters<T>) => void {
     let timeout: NodeJS.Timeout | null = null;
-    
-    return function(this: any, ...args: Parameters<T>) {
+
+    return function (this: any, ...args: Parameters<T>) {
       const context = this;
       clearTimeout(timeout as NodeJS.Timeout);
       timeout = setTimeout(() => func.apply(context, args), wait);
     };
   }
-  
+
   /**
    * 节流函数
    */
-  static throttle<T extends (...args: any[]) => any>(
-    func: T,
-    limit: number
-  ): (...args: Parameters<T>) => void {
+  static throttle<T extends (...args: any[]) => any>(func: T, limit: number): (...args: Parameters<T>) => void {
     let inThrottle: boolean = false;
-    
-    return function(this: any, ...args: Parameters<T>) {
+
+    return function (this: any, ...args: Parameters<T>) {
       const context = this;
       if (!inThrottle) {
         func.apply(context, args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+        setTimeout(() => (inThrottle = false), limit);
       }
     };
   }
 }
 
 // 使用示例
-FrontendPerformanceOptimizer.preloadResources([
-  '/styles/main.css',
-  '/scripts/main.js',
-  '/fonts/roboto.woff2'
-]);
+FrontendPerformanceOptimizer.preloadResources(["/styles/main.css", "/scripts/main.js", "/fonts/roboto.woff2"]);
 
 FrontendPerformanceOptimizer.lazyLoadImages();
 ```
@@ -498,7 +498,7 @@ const UserCard = memo(({ user, onUpdate }: {
   onUpdate: (id: string) => void;
 }) => {
   console.log('UserCard渲染:', user.id);
-  
+
   return (
     <div className="user-card">
       <h3>{user.name}</h3>
@@ -517,13 +517,13 @@ const UserList = ({ users }: { users: any[] }) => {
     console.log('排序用户列表');
     return [...users].sort((a, b) => a.name.localeCompare(b.name));
   }, [users]);
-  
+
   // 使用useCallback缓存函数
   const handleUpdate = useCallback((userId: string) => {
     console.log('更新用户:', userId);
     // 更新逻辑
   }, []);
-  
+
   return (
     <div className="user-list">
       {sortedUsers.map(user => (
@@ -542,20 +542,20 @@ const VirtualList = ({ items, itemHeight = 50, containerHeight = 500 }: {
   containerHeight?: number;
 }) => {
   const [scrollTop, setScrollTop] = useState(0);
-  
+
   // 计算可见项目
   const visibleStart = Math.floor(scrollTop / itemHeight);
   const visibleEnd = Math.min(
     visibleStart + Math.ceil(containerHeight / itemHeight),
     items.length
   );
-  
+
   const visibleItems = items.slice(visibleStart, visibleEnd);
-  
+
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     setScrollTop(e.currentTarget.scrollTop);
   };
-  
+
   return (
     <div
       className="virtual-list"
@@ -590,29 +590,25 @@ const VirtualList = ({ items, itemHeight = 50, containerHeight = 500 }: {
 class NetworkRequestOptimizer {
   private static cache = new Map<string, any>();
   private static pendingRequests = new Map<string, Promise<any>>();
-  
+
   /**
    * 带缓存的请求
    */
-  static async fetchWithCache(
-    url: string,
-    options: RequestInit = {},
-    cacheTime: number = 60000
-  ): Promise<any> {
+  static async fetchWithCache(url: string, options: RequestInit = {}, cacheTime: number = 60000): Promise<any> {
     const cacheKey = `${url}:${JSON.stringify(options)}`;
-    
+
     // 检查缓存
     const cached = this.cache.get(cacheKey);
     if (cached && Date.now() - cached.timestamp < cacheTime) {
       return cached.data;
     }
-    
+
     // 检查是否有正在进行的请求
     const pending = this.pendingRequests.get(cacheKey);
     if (pending) {
       return pending;
     }
-    
+
     // 发起新请求
     const request = fetch(url, options)
       .then(response => response.json())
@@ -620,7 +616,7 @@ class NetworkRequestOptimizer {
         // 缓存结果
         this.cache.set(cacheKey, {
           data,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
         this.pendingRequests.delete(cacheKey);
         return data;
@@ -629,22 +625,19 @@ class NetworkRequestOptimizer {
         this.pendingRequests.delete(cacheKey);
         throw error;
       });
-    
+
     this.pendingRequests.set(cacheKey, request);
     return request;
   }
-  
+
   /**
    * 批量请求
    */
-  static async batchFetch(
-    urls: string[],
-    options: RequestInit = {}
-  ): Promise<any[]> {
+  static async batchFetch(urls: string[], options: RequestInit = {}): Promise<any[]> {
     const promises = urls.map(url => fetch(url, options).then(res => res.json()));
     return Promise.all(promises);
   }
-  
+
   /**
    * 请求重试
    */
@@ -655,7 +648,7 @@ class NetworkRequestOptimizer {
     retryDelay: number = 1000
   ): Promise<any> {
     let lastError: Error | null = null;
-    
+
     for (let i = 0; i < maxRetries; i++) {
       try {
         const response = await fetch(url, options);
@@ -670,13 +663,13 @@ class NetworkRequestOptimizer {
         }
       }
     }
-    
+
     throw lastError;
   }
 }
 
 // 使用示例
-NetworkRequestOptimizer.fetchWithCache('https://api.example.com/users');
+NetworkRequestOptimizer.fetchWithCache("https://api.example.com/users");
 ```
 
 ---
@@ -696,50 +689,53 @@ class DatabasePerformanceOptimizer {
   static optimizeQuery(query: string): string {
     // 添加索引提示
     let optimizedQuery = query;
-    
+
     // 移除SELECT *
-    if (optimizedQuery.includes('SELECT *')) {
-      optimizedQuery = optimizedQuery.replace('SELECT *', 'SELECT id, name, email');
+    if (optimizedQuery.includes("SELECT *")) {
+      optimizedQuery = optimizedQuery.replace("SELECT *", "SELECT id, name, email");
     }
-    
+
     // 添加LIMIT
-    if (!optimizedQuery.includes('LIMIT')) {
-      optimizedQuery += ' LIMIT 1000';
+    if (!optimizedQuery.includes("LIMIT")) {
+      optimizedQuery += " LIMIT 1000";
     }
-    
+
     return optimizedQuery;
   }
-  
+
   /**
    * 批量插入优化
    */
-  static async bulkInsert(
-    tableName: string,
-    data: any[],
-    batchSize: number = 1000
-  ): Promise<void> {
+  static async bulkInsert(tableName: string, data: any[], batchSize: number = 1000): Promise<void> {
     for (let i = 0; i < data.length; i += batchSize) {
       const batch = data.slice(i, i + batchSize);
       await this.insertBatch(tableName, batch);
     }
   }
-  
+
   /**
    * 插入批次
    */
   private static async insertBatch(tableName: string, batch: any[]): Promise<void> {
     const columns = Object.keys(batch[0]);
-    const values = batch.map(item => `(${Object.values(item).map(v => `'${v}'`).join(',')})`).join(',');
-    
+    const values = batch
+      .map(
+        item =>
+          `(${Object.values(item)
+            .map(v => `'${v}'`)
+            .join(",")})`
+      )
+      .join(",");
+
     const query = `
-      INSERT INTO ${tableName} (${columns.join(',')})
+      INSERT INTO ${tableName} (${columns.join(",")})
       VALUES ${values}
     `;
-    
+
     // 执行查询
     // await db.query(query);
   }
-  
+
   /**
    * 连接池优化
    */
@@ -755,7 +751,7 @@ class DatabasePerformanceOptimizer {
       min: Math.max(config.min, Math.floor(config.max * 0.2)),
       max: Math.min(config.max, 100),
       acquireTimeoutMillis: Math.min(config.acquireTimeoutMillis, 30000),
-      idleTimeoutMillis: Math.min(config.idleTimeoutMillis, 30000)
+      idleTimeoutMillis: Math.min(config.idleTimeoutMillis, 30000),
     };
   }
 }
@@ -769,7 +765,7 @@ class DatabasePerformanceOptimizer {
  */
 class CacheOptimizer {
   private static cache = new Map<string, { data: any; expires: number }>();
-  
+
   /**
    * 多级缓存
    */
@@ -788,7 +784,7 @@ class CacheOptimizer {
         return memoryCache;
       }
     }
-    
+
     // 2. 尝试从Redis获取
     if (options.redis) {
       const redisCache = await this.getFromRedis(key);
@@ -800,10 +796,10 @@ class CacheOptimizer {
         return redisCache;
       }
     }
-    
+
     // 3. 从数据源获取
     const data = await fetcher();
-    
+
     // 4. 写入缓存
     if (options.memory) {
       this.setToMemory(key, data, options.memory.ttl);
@@ -811,10 +807,10 @@ class CacheOptimizer {
     if (options.redis) {
       await this.setToRedis(key, data, options.redis.ttl);
     }
-    
+
     return data;
   }
-  
+
   /**
    * 从内存缓存获取
    */
@@ -826,17 +822,17 @@ class CacheOptimizer {
     this.cache.delete(key);
     return null;
   }
-  
+
   /**
    * 设置内存缓存
    */
   private static setToMemory<T>(key: string, data: T, ttl: number): void {
     this.cache.set(key, {
       data,
-      expires: Date.now() + ttl
+      expires: Date.now() + ttl,
     });
   }
-  
+
   /**
    * 从Redis获取
    */
@@ -844,14 +840,14 @@ class CacheOptimizer {
     // 实现从Redis获取
     return null;
   }
-  
+
   /**
    * 设置Redis缓存
    */
   private static async setToRedis<T>(key: string, data: T, ttl: number): Promise<void> {
     // 实现设置Redis缓存
   }
-  
+
   /**
    * 缓存预热
    */
@@ -872,12 +868,12 @@ class APIPerformanceOptimizer {
   /**
    * 响应压缩
    */
-  static compressResponse(data: any, compression: 'gzip' | 'br' = 'gzip'): Buffer {
+  static compressResponse(data: any, compression: "gzip" | "br" = "gzip"): Buffer {
     const jsonString = JSON.stringify(data);
     // 实现压缩逻辑
     return Buffer.from(jsonString);
   }
-  
+
   /**
    * 分页优化
    */
@@ -890,7 +886,7 @@ class APIPerformanceOptimizer {
     const offset = (page - 1) * actualPageSize;
     return { offset, limit: actualPageSize };
   }
-  
+
   /**
    * 字段过滤
    */
@@ -905,23 +901,19 @@ class APIPerformanceOptimizer {
       return filtered;
     });
   }
-  
+
   /**
    * 批量API调用
    */
-  static async batchAPI<T>(
-    items: T[],
-    batchSize: number,
-    apiCall: (batch: T[]) => Promise<any>
-  ): Promise<any[]> {
+  static async batchAPI<T>(items: T[], batchSize: number, apiCall: (batch: T[]) => Promise<any>): Promise<any[]> {
     const results: any[] = [];
-    
+
     for (let i = 0; i < items.length; i += batchSize) {
       const batch = items.slice(i, i + batchSize);
       const result = await apiCall(batch);
       results.push(...result);
     }
-    
+
     return results;
   }
 }
@@ -939,7 +931,7 @@ class APIPerformanceOptimizer {
  */
 class PerformanceMonitor {
   private static metrics: Map<string, number[]> = new Map();
-  
+
   /**
    * 记录性能指标
    */
@@ -949,7 +941,7 @@ class PerformanceMonitor {
     }
     this.metrics.get(name)!.push(value);
   }
-  
+
   /**
    * 获取指标统计
    */
@@ -965,34 +957,34 @@ class PerformanceMonitor {
     if (!values || values.length === 0) {
       return null;
     }
-    
+
     const sorted = [...values].sort((a, b) => a - b);
     const len = sorted.length;
-    
+
     return {
       min: sorted[0],
       max: sorted[len - 1],
       avg: sorted.reduce((sum, v) => sum + v, 0) / len,
       p50: sorted[Math.floor(len * 0.5)],
       p95: sorted[Math.floor(len * 0.95)],
-      p99: sorted[Math.floor(len * 0.99)]
+      p99: sorted[Math.floor(len * 0.99)],
     };
   }
-  
+
   /**
    * 清空指标
    */
   static clearMetrics(): void {
     this.metrics.clear();
   }
-  
+
   /**
    * 生成性能报告
    */
   static generateReport(): string {
-    let report = '性能监控报告\n';
-    report += '================\n\n';
-    
+    let report = "性能监控报告\n";
+    report += "================\n\n";
+
     this.metrics.forEach((values, name) => {
       const stats = this.getMetricStats(name);
       if (stats) {
@@ -1005,18 +997,18 @@ class PerformanceMonitor {
         report += `  P99: ${stats.p99}ms\n\n`;
       }
     });
-    
+
     return report;
   }
 }
 
 // 使用示例
-PerformanceMonitor.recordMetric('api_response_time', 150);
-PerformanceMonitor.recordMetric('api_response_time', 200);
-PerformanceMonitor.recordMetric('api_response_time', 180);
+PerformanceMonitor.recordMetric("api_response_time", 150);
+PerformanceMonitor.recordMetric("api_response_time", 200);
+PerformanceMonitor.recordMetric("api_response_time", 180);
 
-const stats = PerformanceMonitor.getMetricStats('api_response_time');
-console.log('性能统计:', stats);
+const stats = PerformanceMonitor.getMetricStats("api_response_time");
+console.log("性能统计:", stats);
 ```
 
 ### 5.2 性能分析
@@ -1035,59 +1027,59 @@ class PerformanceAnalyzer {
   } {
     const bottlenecks: string[] = [];
     const recommendations: string[] = [];
-    
+
     // 分析响应时间
     const avgResponseTime = metrics.reduce((sum, m) => sum + m.responseTime, 0) / metrics.length;
     if (avgResponseTime > 1000) {
-      bottlenecks.push('响应时间过长');
-      recommendations.push('优化数据库查询、添加缓存、使用CDN');
+      bottlenecks.push("响应时间过长");
+      recommendations.push("优化数据库查询、添加缓存、使用CDN");
     }
-    
+
     // 分析错误率
     const avgErrorRate = metrics.reduce((sum, m) => sum + m.errorRate, 0) / metrics.length;
     if (avgErrorRate > 1) {
-      bottlenecks.push('错误率过高');
-      recommendations.push('检查错误日志、优化异常处理、增加重试机制');
+      bottlenecks.push("错误率过高");
+      recommendations.push("检查错误日志、优化异常处理、增加重试机制");
     }
-    
+
     // 分析CPU使用率
     const avgCPUUsage = metrics.reduce((sum, m) => sum + m.cpuUsage, 0) / metrics.length;
     if (avgCPUUsage > 80) {
-      bottlenecks.push('CPU使用率过高');
-      recommendations.push('优化算法、增加服务器、使用负载均衡');
+      bottlenecks.push("CPU使用率过高");
+      recommendations.push("优化算法、增加服务器、使用负载均衡");
     }
-    
+
     // 分析内存使用率
     const avgMemoryUsage = metrics.reduce((sum, m) => sum + m.memoryUsage, 0) / metrics.length;
     if (avgMemoryUsage > 80) {
-      bottlenecks.push('内存使用率过高');
-      recommendations.push('检查内存泄漏、优化数据结构、增加内存');
+      bottlenecks.push("内存使用率过高");
+      recommendations.push("检查内存泄漏、优化数据结构、增加内存");
     }
-    
+
     return { bottlenecks, recommendations };
   }
-  
+
   /**
    * 性能趋势分析
    */
   static analyzeTrend(metrics: PerformanceMetrics[]): {
-    trend: 'improving' | 'degrading' | 'stable';
+    trend: "improving" | "degrading" | "stable";
     changeRate: number;
   } {
     if (metrics.length < 2) {
-      return { trend: 'stable', changeRate: 0 };
+      return { trend: "stable", changeRate: 0 };
     }
-    
+
     const first = metrics[0].responseTime;
     const last = metrics[metrics.length - 1].responseTime;
     const changeRate = ((last - first) / first) * 100;
-    
+
     if (changeRate < -10) {
-      return { trend: 'improving', changeRate };
+      return { trend: "improving", changeRate };
     } else if (changeRate > 10) {
-      return { trend: 'degrading', changeRate };
+      return { trend: "degrading", changeRate };
     } else {
-      return { trend: 'stable', changeRate };
+      return { trend: "stable", changeRate };
     }
   }
 }
@@ -1125,20 +1117,20 @@ class PerformanceTestStrategy {
       scenarios: config.scenarios.map(scenario => ({
         ...scenario,
         // 根据权重分配用户
-        users: Math.floor(config.loadProfile.maxUsers * scenario.weight)
+        users: Math.floor(config.loadProfile.maxUsers * scenario.weight),
       })),
       stages: [
         { duration: config.loadProfile.rampUp, target: config.loadProfile.maxUsers },
         { duration: config.loadProfile.duration, target: config.loadProfile.maxUsers },
-        { duration: config.loadProfile.rampUp, target: 0 }
+        { duration: config.loadProfile.rampUp, target: 0 },
       ],
       thresholds: {
-        http_req_duration: ['p(95)<1000', 'p(99)<2000'],
-        http_req_failed: ['rate<0.01']
-      }
+        http_req_duration: ["p(95)<1000", "p(99)<2000"],
+        http_req_failed: ["rate<0.01"],
+      },
     };
   }
-  
+
   /**
    * 执行性能测试
    */
@@ -1149,7 +1141,7 @@ class PerformanceTestStrategy {
     // 实现测试执行逻辑
     return {
       results: [],
-      summary: {}
+      summary: {},
     };
   }
 }
@@ -1164,53 +1156,53 @@ class PerformanceTestStrategy {
 class PerformanceOptimizationChecklist {
   private static checklist = [
     {
-      category: '前端优化',
+      category: "前端优化",
       items: [
-        '压缩和合并CSS/JS文件',
-        '使用图片懒加载',
-        '启用浏览器缓存',
-        '使用CDN加速',
-        '优化图片大小和格式',
-        '减少HTTP请求数',
-        '使用代码分割',
-        '优化关键渲染路径'
-      ]
+        "压缩和合并CSS/JS文件",
+        "使用图片懒加载",
+        "启用浏览器缓存",
+        "使用CDN加速",
+        "优化图片大小和格式",
+        "减少HTTP请求数",
+        "使用代码分割",
+        "优化关键渲染路径",
+      ],
     },
     {
-      category: '后端优化',
+      category: "后端优化",
       items: [
-        '优化数据库查询',
-        '添加适当的索引',
-        '使用缓存机制',
-        '优化API响应',
-        '使用连接池',
-        '异步处理耗时操作',
-        '优化算法和数据结构',
-        '使用消息队列'
-      ]
+        "优化数据库查询",
+        "添加适当的索引",
+        "使用缓存机制",
+        "优化API响应",
+        "使用连接池",
+        "异步处理耗时操作",
+        "优化算法和数据结构",
+        "使用消息队列",
+      ],
     },
     {
-      category: '服务器优化',
+      category: "服务器优化",
       items: [
-        '配置负载均衡',
-        '启用HTTP/2',
-        '启用Gzip压缩',
-        '优化服务器配置',
-        '使用反向代理',
-        '监控服务器资源',
-        '定期清理日志',
-        '优化网络配置'
-      ]
-    }
+        "配置负载均衡",
+        "启用HTTP/2",
+        "启用Gzip压缩",
+        "优化服务器配置",
+        "使用反向代理",
+        "监控服务器资源",
+        "定期清理日志",
+        "优化网络配置",
+      ],
+    },
   ];
-  
+
   /**
    * 获取检查清单
    */
   static getChecklist(): typeof PerformanceOptimizationChecklist.checklist {
     return this.checklist;
   }
-  
+
   /**
    * 检查优化项
    */
@@ -1223,11 +1215,11 @@ class PerformanceOptimizationChecklist {
     const completedItems = completed.filter(item => allItems.includes(item));
     const pendingItems = allItems.filter(item => !completed.includes(item));
     const progress = (completedItems.length / allItems.length) * 100;
-    
+
     return {
       completed: completedItems,
       pending: pendingItems,
-      progress
+      progress,
     };
   }
 }
@@ -1255,13 +1247,10 @@ class PerformanceOptimizationChecklist {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1282,8 +1271,6 @@ class PerformanceOptimizationChecklist {
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -1312,8 +1299,6 @@ class PerformanceOptimizationChecklist {
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -1351,7 +1336,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -1367,8 +1352,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -1381,7 +1364,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1396,9 +1379,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1406,9 +1389,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1416,20 +1402,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1438,6 +1422,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1453,17 +1438,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1471,6 +1457,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1481,6 +1468,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1489,8 +1477,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1498,21 +1484,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1521,10 +1509,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1550,16 +1535,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1568,26 +1553,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1603,7 +1583,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1635,14 +1615,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1653,17 +1631,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1673,17 +1654,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1693,21 +1677,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

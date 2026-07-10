@@ -3,15 +3,7 @@
  * @description 完整的AI引擎，支持多模型、自主学习、工具执行
  */
 
-import {
-  AutonomousAIConfig,
-  UserMessage,
-  AIResponse,
-  AIContext,
-  AITool,
-  ToolCall,
-  ConversationMessage,
-} from './types';
+import { AutonomousAIConfig, UserMessage, AIResponse, AIContext, AITool, ToolCall, ConversationMessage } from './types';
 import { MemorySystem } from './MemorySystem';
 import { LearningSystem } from './LearningSystem';
 import { ToolRegistry } from './ToolRegistry';
@@ -43,7 +35,7 @@ export class AutonomousAIEngine {
           storage: 'localStorage',
           maxConversations: 1000,
           autoCleanup: true,
-        }
+        },
       );
     }
 
@@ -61,7 +53,7 @@ export class AutonomousAIEngine {
             minConfidence: 0.8,
             maxPatterns: 50,
           },
-        }
+        },
       );
     }
 
@@ -69,10 +61,10 @@ export class AutonomousAIEngine {
     if (this.config.enableToolUse) {
       this.toolRegistry = new ToolRegistry(this.config.toolConfig);
       this.registerCoreTools();
-      
+
       // 注册自定义工具
       if (this.config.customTools) {
-        this.config.customTools.forEach((tool) => {
+        this.config.customTools.forEach(tool => {
           this.toolRegistry.registerTool(tool);
         });
       }
@@ -118,9 +110,7 @@ export class AutonomousAIEngine {
       const context = await this.buildContext(message);
 
       // 2. 选择相关工具
-      const tools = this.config.enableToolUse
-        ? await this.toolRegistry.suggestTools(context)
-        : [];
+      const tools = this.config.enableToolUse ? await this.toolRegistry.suggestTools(context) : [];
 
       // 3. 构建提示词
       const prompt = await this.buildPrompt(message, context, tools);
@@ -138,10 +128,7 @@ export class AutonomousAIEngine {
 
         // 使用工具结果生成最终响应
         const toolResultsPrompt = this.buildToolResultsPrompt(toolResults);
-        const finalResponse = await this.modelAdapter.generate(
-          prompt + '\n\n' + toolResultsPrompt,
-          []
-        );
+        const finalResponse = await this.modelAdapter.generate(prompt + '\n\n' + toolResultsPrompt, []);
         finalContent = finalResponse.content;
       }
 
@@ -195,14 +182,9 @@ export class AutonomousAIEngine {
   /**
    * 流式处理消息
    */
-  async processMessageStream(
-    message: UserMessage,
-    onChunk: (chunk: string) => void
-  ): Promise<void> {
+  async processMessageStream(message: UserMessage, onChunk: (chunk: string) => void): Promise<void> {
     const context = await this.buildContext(message);
-    const tools = this.config.enableToolUse
-      ? await this.toolRegistry.suggestTools(context)
-      : [];
+    const tools = this.config.enableToolUse ? await this.toolRegistry.suggestTools(context) : [];
     const prompt = await this.buildPrompt(message, context, tools);
 
     await this.modelAdapter.streamGenerate(prompt, onChunk);
@@ -229,9 +211,7 @@ export class AutonomousAIEngine {
 
     const pageContext = await this.contextManager.getPageContext();
 
-    const recentInsights = this.config.enableLearning
-      ? await this.learning.getRecentInsights(5)
-      : [];
+    const recentInsights = this.config.enableLearning ? await this.learning.getRecentInsights(5) : [];
 
     return {
       timestamp: new Date(),
@@ -240,9 +220,7 @@ export class AutonomousAIEngine {
       userPreferences,
       businessContext: this.config.businessContext,
       pageContext,
-      availableTools: this.config.enableToolUse
-        ? this.toolRegistry.getAvailableTools()
-        : [],
+      availableTools: this.config.enableToolUse ? this.toolRegistry.getAvailableTools() : [],
       recentInsights,
     };
   }
@@ -250,11 +228,7 @@ export class AutonomousAIEngine {
   /**
    * 构建提示词
    */
-  private async buildPrompt(
-    message: UserMessage,
-    context: AIContext,
-    tools: AITool[]
-  ): Promise<string> {
+  private async buildPrompt(message: UserMessage, context: AIContext, tools: AITool[]): Promise<string> {
     const systemPrompt = this.buildSystemPrompt(context);
     const conversationContext = this.buildConversationContext(context);
     const userPrompt = message.content;
@@ -278,7 +252,7 @@ export class AutonomousAIEngine {
       context.availableTools.length > 0
         ? `
 可用工具：
-${context.availableTools.map((tool) => `- ${tool.name}: ${tool.description}`).join('\n')}
+${context.availableTools.map(tool => `- ${tool.name}: ${tool.description}`).join('\n')}
 `
         : '';
 
@@ -286,7 +260,7 @@ ${context.availableTools.map((tool) => `- ${tool.name}: ${tool.description}`).jo
       context.recentInsights && context.recentInsights.length > 0
         ? `
 最近的洞察：
-${context.recentInsights.map((insight) => `- ${insight.title}: ${insight.description}`).join('\n')}
+${context.recentInsights.map(insight => `- ${insight.title}: ${insight.description}`).join('\n')}
 `
         : '';
 
@@ -311,7 +285,7 @@ ${insightsInfo}
 
     const recentMessages = context.conversationHistory.slice(-5);
     return `对话历史：\n${recentMessages
-      .map((msg) => `${msg.role === 'user' ? '用户' : 'AI'}: ${msg.content}`)
+      .map(msg => `${msg.role === 'user' ? '用户' : 'AI'}: ${msg.content}`)
       .join('\n')}`;
   }
 
@@ -324,10 +298,7 @@ ${insightsInfo}
     for (const call of toolCalls) {
       const startTime = Date.now();
       try {
-        const result = await this.toolRegistry.executeTool(
-          call.function.name,
-          JSON.parse(call.function.arguments)
-        );
+        const result = await this.toolRegistry.executeTool(call.function.name, JSON.parse(call.function.arguments));
 
         results.push({
           id: call.id,
@@ -352,10 +323,7 @@ ${insightsInfo}
 
   private buildToolResultsPrompt(toolResults: ToolCall[]): string {
     return `工具执行结果：\n${toolResults
-      .map(
-        (result) =>
-          `${result.toolName}: ${result.error || JSON.stringify(result.result?.data)}`
-      )
+      .map(result => `${result.toolName}: ${result.error || JSON.stringify(result.result?.data)}`)
       .join('\n')}\n\n请基于以上工具执行结果，为用户提供完整的回答。`;
   }
 
@@ -372,15 +340,9 @@ ${insightsInfo}
   async getStats() {
     return {
       conversationCount: this.conversationHistory.length / 2,
-      memoryItems: this.config.enableMemory
-        ? await this.memory.getMemoryCount()
-        : 0,
-      learningInsights: this.config.enableLearning
-        ? await this.learning.getInsightCount()
-        : 0,
-      availableTools: this.config.enableToolUse
-        ? this.toolRegistry.getAvailableTools().length
-        : 0,
+      memoryItems: this.config.enableMemory ? await this.memory.getMemoryCount() : 0,
+      learningInsights: this.config.enableLearning ? await this.learning.getInsightCount() : 0,
+      availableTools: this.config.enableToolUse ? this.toolRegistry.getAvailableTools().length : 0,
     };
   }
 
@@ -389,7 +351,7 @@ ${insightsInfo}
    */
   updateConfig(newConfig: Partial<AutonomousAIConfig>): void {
     this.config = { ...this.config, ...newConfig };
-    
+
     // 重新初始化受影响的子系统
     if (newConfig.apiType || newConfig.modelName) {
       this.modelAdapter = this.createModelAdapter();

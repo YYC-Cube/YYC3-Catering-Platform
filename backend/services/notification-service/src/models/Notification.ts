@@ -121,12 +121,12 @@ export const initNotificationModel = (sequelize: Sequelize): void => {
       timestamps: true,
       paranoid: true,
       indexes: [
-      { fields: ['userId'], name: 'idx_notifications_user_id' },
-      { fields: ['type'], name: 'idx_notifications_type' },
-      { fields: ['isRead'], name: 'idx_notifications_is_read' },
-      { fields: ['isSent'], name: 'idx_notifications_is_sent' },
-      { fields: ['createdAt'], name: 'idx_notifications_created_at' },
-    ],
-    }
+        { fields: ['userId'], name: 'idx_notifications_user_id' },
+        { fields: ['type'], name: 'idx_notifications_type' },
+        { fields: ['isRead'], name: 'idx_notifications_is_read' },
+        { fields: ['isSent'], name: 'idx_notifications_is_sent' },
+        { fields: ['createdAt'], name: 'idx_notifications_created_at' },
+      ],
+    },
   );
 };

@@ -34,12 +34,12 @@ export class EncryptionMiddleware {
       const keyManager = KeyManagerFactory.createKeyManager({
         storage: {
           type: 'local',
-          path: this.config.keyStorePath || './encryption-keys.json'
+          path: this.config.keyStorePath || './encryption-keys.json',
         },
         defaultExpiration: this.config.keyExpiration || 90 * 24 * 60 * 60 * 1000, // 90天
         autoRotation: this.config.autoRotate || true,
         rotationInterval: this.config.rotationInterval || 30 * 24 * 60 * 60 * 1000, // 30天
-        backupStrategy: this.config.backupStrategy || 'keep_last_7_days'
+        backupStrategy: this.config.backupStrategy || 'keep_last_7_days',
       });
 
       await keyManager.initialize();
@@ -85,10 +85,7 @@ export class EncryptionMiddleware {
 
         // 加密数据
         const jsonBody = JSON.stringify(body);
-        const encrypted = Buffer.concat([
-          cipher.update(jsonBody, 'utf8'),
-          cipher.final()
-        ]);
+        const encrypted = Buffer.concat([cipher.update(jsonBody, 'utf8'), cipher.final()]);
 
         // 获取认证标签
         const authTag = cipher.getAuthTag();
@@ -149,10 +146,7 @@ export class EncryptionMiddleware {
         decipher.setAuthTag(authTag);
 
         // 解密数据
-        const decrypted = Buffer.concat([
-          decipher.update(encryptedData),
-          decipher.final()
-        ]);
+        const decrypted = Buffer.concat([decipher.update(encryptedData), decipher.final()]);
 
         // 解析JSON数据
         const jsonBody = JSON.parse(decrypted.toString('utf8'));
@@ -196,7 +190,7 @@ export class EncryptionMiddleware {
       error: 'Invalid encrypted data',
       code: 'DECRYPTION_FAILED',
       message: 'Failed to decrypt request data',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 }

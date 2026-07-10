@@ -19,7 +19,7 @@ test.describe('登录功能测试', () => {
   test('登录页面应该正常加载', async ({ page }) => {
     // 验证页面标题
     await expect(page).toHaveTitle(/登录/);
-    
+
     // 验证登录表单元素存在
     await expect(page.getByLabel('用户名')).toBeVisible();
     await expect(page.getByLabel('密码')).toBeVisible();
@@ -30,10 +30,10 @@ test.describe('登录功能测试', () => {
     // 输入有效的登录凭证
     await page.getByLabel('用户名').fill('admin');
     await page.getByLabel('密码').fill('password123');
-    
+
     // 点击登录按钮
     await page.getByRole('button', { name: '登录' }).click();
-    
+
     // 验证是否跳转到仪表盘页面
     await expect(page).toHaveURL('/dashboard');
     await expect(page.getByText('工作台')).toBeVisible();
@@ -43,10 +43,10 @@ test.describe('登录功能测试', () => {
     // 输入无效的登录凭证
     await page.getByLabel('用户名').fill('invaliduser');
     await page.getByLabel('密码').fill('invalidpassword');
-    
+
     // 点击登录按钮
     await page.getByRole('button', { name: '登录' }).click();
-    
+
     // 验证错误信息显示
     await expect(page.getByText(/用户名或密码错误/)).toBeVisible();
     // 验证仍然在登录页面
@@ -56,7 +56,7 @@ test.describe('登录功能测试', () => {
   test('空字段登录应该显示验证错误', async ({ page }) => {
     // 不输入任何内容，直接点击登录按钮
     await page.getByRole('button', { name: '登录' }).click();
-    
+
     // 验证表单验证错误显示
     await expect(page.getByText(/请输入用户名/)).toBeVisible();
     await expect(page.getByText(/请输入密码/)).toBeVisible();
@@ -65,7 +65,7 @@ test.describe('登录功能测试', () => {
   test('忘记密码链接应该正常工作', async ({ page }) => {
     // 点击忘记密码链接
     await page.getByRole('link', { name: '忘记密码' }).click();
-    
+
     // 验证是否跳转到忘记密码页面
     await expect(page).toHaveURL(/forgot-password/);
     await expect(page.getByText('忘记密码')).toBeVisible();

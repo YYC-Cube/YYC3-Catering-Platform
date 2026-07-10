@@ -68,7 +68,10 @@ export class TagService {
         where,
         offset,
         limit,
-        order: [['sort_order', 'ASC'], ['id', 'ASC']]
+        order: [
+          ['sort_order', 'ASC'],
+          ['id', 'ASC'],
+        ],
       });
 
       logger.info(`获取标签列表成功，共 ${count} 条记录`);
@@ -159,9 +162,7 @@ export class TagService {
    */
   async batchUpdateSortOrder(sortData: { id: number; sortOrder: number }[]): Promise<number> {
     try {
-      const promises = sortData.map(item =>
-        Tag.update({ sort_order: item.sortOrder }, { where: { id: item.id } })
-      );
+      const promises = sortData.map(item => Tag.update({ sort_order: item.sortOrder }, { where: { id: item.id } }));
 
       const results = await Promise.all(promises);
       const updatedCount = results.reduce((sum, [count]) => sum + count, 0);
@@ -182,7 +183,10 @@ export class TagService {
     try {
       return await Tag.findAll({
         where: { is_active: true },
-        order: [['sort_order', 'ASC'], ['id', 'ASC']]
+        order: [
+          ['sort_order', 'ASC'],
+          ['id', 'ASC'],
+        ],
       });
     } catch (error) {
       logger.error('获取激活标签失败:', error);
@@ -199,7 +203,10 @@ export class TagService {
     try {
       return await Tag.findAll({
         where: { tag_type: tagType, is_active: true },
-        order: [['sort_order', 'ASC'], ['id', 'ASC']]
+        order: [
+          ['sort_order', 'ASC'],
+          ['id', 'ASC'],
+        ],
       });
     } catch (error) {
       logger.error(`获取标签类型 ${tagType} 失败:`, error);

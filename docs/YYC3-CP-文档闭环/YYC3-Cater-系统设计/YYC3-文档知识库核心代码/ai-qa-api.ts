@@ -63,7 +63,7 @@ const getUserSessionsSchema = z.object({
  * @access 公开
  * @returns {Promise<Response>} 会话创建结果
  */
-app.post('/sessions', zValidator('json', createSessionSchema), async (c) => {
+app.post('/sessions', zValidator('json', createSessionSchema), async c => {
   try {
     const { userId } = c.req.valid('json');
 
@@ -73,21 +73,27 @@ app.post('/sessions', zValidator('json', createSessionSchema), async (c) => {
     // 获取会话详情
     const session = aiQAService.getSession(sessionId);
 
-    return c.json({
-      success: true,
-      data: {
-        sessionId,
-        userId: session?.userId,
-        createdAt: session?.createdAt,
-        updatedAt: session?.updatedAt,
+    return c.json(
+      {
+        success: true,
+        data: {
+          sessionId,
+          userId: session?.userId,
+          createdAt: session?.createdAt,
+          updatedAt: session?.updatedAt,
+        },
       },
-    }, 201);
+      201,
+    );
   } catch (error) {
     logger.error('Error creating session:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '创建会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '创建会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -97,7 +103,7 @@ app.post('/sessions', zValidator('json', createSessionSchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 答案结果
  */
-app.post('/questions', zValidator('json', processQuestionSchema), async (c) => {
+app.post('/questions', zValidator('json', processQuestionSchema), async c => {
   try {
     const { question, sessionId } = c.req.valid('json');
 
@@ -110,10 +116,13 @@ app.post('/questions', zValidator('json', processQuestionSchema), async (c) => {
     });
   } catch (error) {
     logger.error('Error processing question:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '处理问题失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '处理问题失败',
+      },
+      500,
+    );
   }
 });
 
@@ -123,7 +132,7 @@ app.post('/questions', zValidator('json', processQuestionSchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 会话详情
  */
-app.get('/sessions/:sessionId', zValidator('param', getSessionSchema), async (c) => {
+app.get('/sessions/:sessionId', zValidator('param', getSessionSchema), async c => {
   try {
     const { sessionId } = c.req.valid('param');
 
@@ -131,10 +140,13 @@ app.get('/sessions/:sessionId', zValidator('param', getSessionSchema), async (c)
     const session = aiQAService.getSession(sessionId);
 
     if (!session) {
-      return c.json({
-        success: false,
-        error: '会话不存在',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '会话不存在',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -143,10 +155,13 @@ app.get('/sessions/:sessionId', zValidator('param', getSessionSchema), async (c)
     });
   } catch (error) {
     logger.error('Error getting session:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -156,7 +171,7 @@ app.get('/sessions/:sessionId', zValidator('param', getSessionSchema), async (c)
  * @access 公开
  * @returns {Promise<Response>} 删除结果
  */
-app.delete('/sessions/:sessionId', zValidator('param', deleteSessionSchema), async (c) => {
+app.delete('/sessions/:sessionId', zValidator('param', deleteSessionSchema), async c => {
   try {
     const { sessionId } = c.req.valid('param');
 
@@ -169,10 +184,13 @@ app.delete('/sessions/:sessionId', zValidator('param', deleteSessionSchema), asy
     });
   } catch (error) {
     logger.error('Error deleting session:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '删除会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '删除会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -182,7 +200,7 @@ app.delete('/sessions/:sessionId', zValidator('param', deleteSessionSchema), asy
  * @access 公开
  * @returns {Promise<Response>} 会话列表
  */
-app.get('/users/:userId/sessions', zValidator('param', getUserSessionsSchema), async (c) => {
+app.get('/users/:userId/sessions', zValidator('param', getUserSessionsSchema), async c => {
   try {
     const { userId } = c.req.valid('param');
 
@@ -196,10 +214,13 @@ app.get('/users/:userId/sessions', zValidator('param', getUserSessionsSchema), a
     });
   } catch (error) {
     logger.error('Error getting user sessions:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取用户会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取用户会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -209,12 +230,10 @@ app.get('/users/:userId/sessions', zValidator('param', getUserSessionsSchema), a
  * @access 私有
  * @returns {Promise<Response>} 清理结果
  */
-app.post('/cleanup', async (c) => {
+app.post('/cleanup', async c => {
   try {
     // 获取最大会话年龄参数（可选）
-    const maxAge = c.req.query('maxAge')
-      ? parseInt(c.req.query('maxAge')!)
-      : 7 * 24 * 60 * 60 * 1000; // 默认7天
+    const maxAge = c.req.query('maxAge') ? parseInt(c.req.query('maxAge')!) : 7 * 24 * 60 * 60 * 1000; // 默认7天
 
     // 清理过期会话
     aiQAService.cleanupExpiredSessions(maxAge);
@@ -225,10 +244,13 @@ app.post('/cleanup', async (c) => {
     });
   } catch (error) {
     logger.error('Error cleaning up sessions:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '清理会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '清理会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -238,21 +260,18 @@ app.post('/cleanup', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 统计信息
  */
-app.get('/stats', async (c) => {
+app.get('/stats', async c => {
   try {
     // 获取所有会话
-    const sessions = Array.from(
-      aiQAService['sessions'].values()
-    );
+    const sessions = Array.from(aiQAService['sessions'].values());
 
     // 计算统计信息
     const stats = {
       totalSessions: sessions.length,
       totalMessages: sessions.reduce((sum, s) => sum + s.messages.length, 0),
       activeSessions: sessions.filter(s => Date.now() - s.updatedAt < 24 * 60 * 60 * 1000).length,
-      avgMessagesPerSession: sessions.length > 0
-        ? sessions.reduce((sum, s) => sum + s.messages.length, 0) / sessions.length
-        : 0,
+      avgMessagesPerSession:
+        sessions.length > 0 ? sessions.reduce((sum, s) => sum + s.messages.length, 0) / sessions.length : 0,
     };
 
     return c.json({
@@ -261,10 +280,13 @@ app.get('/stats', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting stats:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取统计信息失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取统计信息失败',
+      },
+      500,
+    );
   }
 });
 
@@ -274,7 +296,7 @@ app.get('/stats', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 消息列表
  */
-app.get('/sessions/:sessionId/messages', zValidator('param', getSessionSchema), async (c) => {
+app.get('/sessions/:sessionId/messages', zValidator('param', getSessionSchema), async c => {
   try {
     const { sessionId } = c.req.valid('param');
 
@@ -288,10 +310,13 @@ app.get('/sessions/:sessionId/messages', zValidator('param', getSessionSchema), 
     });
   } catch (error) {
     logger.error('Error getting session messages:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取会话消息失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取会话消息失败',
+      },
+      500,
+    );
   }
 });
 
@@ -301,7 +326,7 @@ app.get('/sessions/:sessionId/messages', zValidator('param', getSessionSchema), 
  * @access 公开
  * @returns {Promise<Response>} 会话历史
  */
-app.get('/sessions/:sessionId/history', zValidator('param', getSessionSchema), async (c) => {
+app.get('/sessions/:sessionId/history', zValidator('param', getSessionSchema), async c => {
   try {
     const { sessionId } = c.req.valid('param');
 
@@ -309,10 +334,13 @@ app.get('/sessions/:sessionId/history', zValidator('param', getSessionSchema), a
     const history = aiQAService.getHistory(sessionId);
 
     if (!history) {
-      return c.json({
-        success: false,
-        error: '会话不存在',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '会话不存在',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -321,10 +349,13 @@ app.get('/sessions/:sessionId/history', zValidator('param', getSessionSchema), a
     });
   } catch (error) {
     logger.error('Error getting session history:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取会话历史失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取会话历史失败',
+      },
+      500,
+    );
   }
 });
 
@@ -334,7 +365,7 @@ app.get('/sessions/:sessionId/history', zValidator('param', getSessionSchema), a
  * @access 公开
  * @returns {Promise<Response>} 更新结果
  */
-app.put('/sessions/:sessionId/metadata', zValidator('param', getSessionSchema), async (c) => {
+app.put('/sessions/:sessionId/metadata', zValidator('param', getSessionSchema), async c => {
   try {
     const { sessionId } = c.req.valid('param');
     const metadata = await c.req.json();
@@ -348,10 +379,13 @@ app.put('/sessions/:sessionId/metadata', zValidator('param', getSessionSchema), 
     });
   } catch (error) {
     logger.error('Error updating session metadata:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '更新会话元数据失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '更新会话元数据失败',
+      },
+      500,
+    );
   }
 });
 
@@ -361,7 +395,7 @@ app.put('/sessions/:sessionId/metadata', zValidator('param', getSessionSchema), 
  * @access 公开
  * @returns {Promise<Response>} 清空结果
  */
-app.delete('/sessions/:sessionId/messages', zValidator('param', getSessionSchema), async (c) => {
+app.delete('/sessions/:sessionId/messages', zValidator('param', getSessionSchema), async c => {
   try {
     const { sessionId } = c.req.valid('param');
 
@@ -374,10 +408,13 @@ app.delete('/sessions/:sessionId/messages', zValidator('param', getSessionSchema
     });
   } catch (error) {
     logger.error('Error clearing session messages:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '清空会话消息失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '清空会话消息失败',
+      },
+      500,
+    );
   }
 });
 
@@ -387,7 +424,7 @@ app.delete('/sessions/:sessionId/messages', zValidator('param', getSessionSchema
  * @access 需要管理员权限
  * @returns {Promise<Response>} 所有会话列表
  */
-app.get('/admin/sessions', async (c) => {
+app.get('/admin/sessions', async c => {
   try {
     // 获取所有会话
     const sessions = aiQAService.getAllSessions();
@@ -399,10 +436,13 @@ app.get('/admin/sessions', async (c) => {
     });
   } catch (error) {
     logger.error('Error getting all sessions:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取所有会话失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取所有会话失败',
+      },
+      500,
+    );
   }
 });
 
@@ -412,7 +452,7 @@ app.get('/admin/sessions', async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 统计信息
  */
-app.get('/sessions/:sessionId/stats', zValidator('param', getSessionSchema), async (c) => {
+app.get('/sessions/:sessionId/stats', zValidator('param', getSessionSchema), async c => {
   try {
     const { sessionId } = c.req.valid('param');
 
@@ -420,10 +460,13 @@ app.get('/sessions/:sessionId/stats', zValidator('param', getSessionSchema), asy
     const stats = aiQAService.getSessionStats(sessionId);
 
     if (!stats) {
-      return c.json({
-        success: false,
-        error: '会话不存在',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '会话不存在',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -432,10 +475,13 @@ app.get('/sessions/:sessionId/stats', zValidator('param', getSessionSchema), asy
     });
   } catch (error) {
     logger.error('Error getting session stats:', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取会话统计信息失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取会话统计信息失败',
+      },
+      500,
+    );
   }
 });
 
@@ -445,7 +491,7 @@ app.get('/sessions/:sessionId/stats', zValidator('param', getSessionSchema), asy
  * @access 公开
  * @returns {Promise<Response>} 健康状态
  */
-app.get('/health', async (c) => {
+app.get('/health', async c => {
   return c.json({
     status: 'healthy',
     service: 'AI QA Service',

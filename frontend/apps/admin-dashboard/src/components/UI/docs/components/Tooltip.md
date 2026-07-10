@@ -12,23 +12,23 @@
 ### 基础用法
 
 ```tsx
-import { Tooltip } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Tooltip } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TooltipBasic() {
   return (
     <Tooltip title="提示内容">
       <Button>悬停显示</Button>
     </Tooltip>
-  )
+  );
 }
 ```
 
 ### 位置
 
 ```tsx
-import { Tooltip } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Tooltip } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TooltipPlacement() {
   return (
@@ -46,44 +46,32 @@ export default function TooltipPlacement() {
         <Button>右侧</Button>
       </Tooltip>
     </div>
-  )
+  );
 }
 ```
 
 ### 触发方式
 
 ```tsx
-import { Tooltip } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Tooltip } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TooltipTrigger() {
   return (
     <div class="space-x-2">
-      <Tooltip
-        title="悬停提示"
-        trigger="hover"
-        triggerElement={<Button>悬停</Button>}
-      />
-      <Tooltip
-        title="点击提示"
-        trigger="click"
-        triggerElement={<Button>点击</Button>}
-      />
-      <Tooltip
-        title="聚焦提示"
-        trigger="focus"
-        triggerElement={<Button>聚焦</Button>}
-      />
+      <Tooltip title="悬停提示" trigger="hover" triggerElement={<Button>悬停</Button>} />
+      <Tooltip title="点击提示" trigger="click" triggerElement={<Button>点击</Button>} />
+      <Tooltip title="聚焦提示" trigger="focus" triggerElement={<Button>聚焦</Button>} />
     </div>
-  )
+  );
 }
 ```
 
 ### 禁用
 
 ```tsx
-import { Tooltip } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Tooltip } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TooltipDisabled() {
   return (
@@ -95,96 +83,72 @@ export default function TooltipDisabled() {
         <Button>可用</Button>
       </Tooltip>
     </div>
-  )
+  );
 }
 ```
 
 ### 带箭头
 
 ```tsx
-import { Tooltip } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Tooltip } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TooltipArrow() {
-  return (
-    <Tooltip
-      title="带箭头提示"
-      arrow
-      triggerElement={<Button>带箭头</Button>}
-    />
-  )
+  return <Tooltip title="带箭头提示" arrow triggerElement={<Button>带箭头</Button>} />;
 }
 ```
 
 ### 延迟显示
 
 ```tsx
-import { Tooltip } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Tooltip } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TooltipDelay() {
-  return (
-    <Tooltip
-      title="延迟提示"
-      delay={500}
-      triggerElement={<Button>延迟500ms</Button>}
-    />
-  )
+  return <Tooltip title="延迟提示" delay={500} triggerElement={<Button>延迟500ms</Button>} />;
 }
 ```
 
 ### 富文本
 
 ```tsx
-import { Tooltip } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Tooltip } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TooltipRichText() {
   return (
     <Tooltip
       title={
         <div>
-          <p><strong>加粗文本</strong></p>
-          <p><em>斜体文本</em></p>
+          <p>
+            <strong>加粗文本</strong>
+          </p>
+          <p>
+            <em>斜体文本</em>
+          </p>
         </div>
       }
       triggerElement={<Button>富文本</Button>}
     />
-  )
+  );
 }
 ```
 
 ### 自定义颜色
 
 ```tsx
-import { Tooltip } from '@/components/UI'
-import { Button } from '@/components/UI'
+import { Tooltip } from "@/components/UI";
+import { Button } from "@/components/UI";
 
 export default function TooltipColor() {
   return (
     <div class="space-x-2">
-      <Tooltip
-        title="主要提示"
-        color="primary"
-        triggerElement={<Button>主要</Button>}
-      />
-      <Tooltip
-        title="成功提示"
-        color="success"
-        triggerElement={<Button>成功</Button>}
-      />
-      <Tooltip
-        title="警告提示"
-        color="warning"
-        triggerElement={<Button>警告</Button>}
-      />
-      <Tooltip
-        title="危险提示"
-        color="danger"
-        triggerElement={<Button>危险</Button>}
-      />
+      <Tooltip title="主要提示" color="primary" triggerElement={<Button>主要</Button>} />
+      <Tooltip title="成功提示" color="success" triggerElement={<Button>成功</Button>} />
+      <Tooltip title="警告提示" color="warning" triggerElement={<Button>警告</Button>} />
+      <Tooltip title="危险提示" color="danger" triggerElement={<Button>危险</Button>} />
     </div>
-  )
+  );
 }
 ```
 
@@ -192,17 +156,17 @@ export default function TooltipColor() {
 
 ### Tooltip Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| title | 提示内容 | `string \| VNode` | - |
-| trigger | 触发方式 | `string` | `hover` / `click` / `focus` | `hover` |
-| triggerElement | 触发元素 | `VNode` | - |
-| placement | 位置 | `string` | `top` / `bottom` / `left` / `right` | `top` |
-| disabled | 是否禁用 | `boolean` | `false` |
-| arrow | 是否显示箭头 | `boolean` | `false` |
-| delay | 延迟显示（毫秒） | `number` | - |
-| onVisibleChange | 显示状态变化回调 | `Function` | - |
-| className | 自定义类名 | `string` | - |
+| 参数            | 说明             | 类型              | 默认值                              |
+| --------------- | ---------------- | ----------------- | ----------------------------------- | ------- |
+| title           | 提示内容         | `string \| VNode` | -                                   |
+| trigger         | 触发方式         | `string`          | `hover` / `click` / `focus`         | `hover` |
+| triggerElement  | 触发元素         | `VNode`           | -                                   |
+| placement       | 位置             | `string`          | `top` / `bottom` / `left` / `right` | `top`   |
+| disabled        | 是否禁用         | `boolean`         | `false`                             |
+| arrow           | 是否显示箭头     | `boolean`         | `false`                             |
+| delay           | 延迟显示（毫秒） | `number`          | -                                   |
+| onVisibleChange | 显示状态变化回调 | `Function`        | -                                   |
+| className       | 自定义类名       | `string`          | -                                   |
 
 ## 样式定制
 
@@ -249,11 +213,7 @@ export default function TooltipColor() {
     <Tooltip
       title="用户名长度为4-20个字符"
       placement="right"
-      triggerElement={
-        <span class="absolute right-2 top-1/2 -translate-y-1/2">
-          ❓
-        </span>
-      }
+      triggerElement={<span class="absolute right-2 top-1/2 -translate-y-1/2">❓</span>}
     />
   </div>
 </FormField>
@@ -284,9 +244,7 @@ export default function TooltipColor() {
     <Tooltip
       title="最后活跃时间: 2024-01-01 10:00"
       placement="right"
-      triggerElement={
-        <span class="text-neutral-400 cursor-help">ℹ️</span>
-      }
+      triggerElement={<span class="text-neutral-400 cursor-help">ℹ️</span>}
     />
   </span>
 </div>
@@ -309,9 +267,7 @@ export default function TooltipColor() {
       </div>
     }
     placement="right"
-    triggerElement={
-      <span class="text-primary-500 cursor-help">❓</span>
-    }
+    triggerElement={<span class="text-primary-500 cursor-help">❓</span>}
   />
 </div>
 ```

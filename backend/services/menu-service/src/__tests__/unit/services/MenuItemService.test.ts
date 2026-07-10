@@ -43,7 +43,7 @@ describe('MenuItemService', () => {
         id: 1,
         name: '宫保鸡丁',
         price: 28,
-        stock: 100
+        stock: 100,
       };
 
       vi.spyOn(MenuItem, 'create').mockResolvedValue(mockMenuItem as any);
@@ -55,7 +55,7 @@ describe('MenuItemService', () => {
         name: '宫保鸡丁',
         price: 28,
         stock: 100,
-        category_id: 1
+        category_id: 1,
       });
 
       expect(result).toBeDefined();
@@ -67,12 +67,12 @@ describe('MenuItemService', () => {
     it('应该成功获取菜品列表', async () => {
       const mockMenuItems = [
         { id: 1, name: '宫保鸡丁', price: 28 },
-        { id: 2, name: '麻婆豆腐', price: 18 }
+        { id: 2, name: '麻婆豆腐', price: 18 },
       ];
 
       vi.spyOn(MenuItem, 'findAndCountAll').mockResolvedValue({
         rows: mockMenuItems as any,
-        count: 2
+        count: 2,
       });
 
       const result = await menuItemService.getMenuItems({ page: 1, limit: 10 });
@@ -87,7 +87,7 @@ describe('MenuItemService', () => {
 
       vi.spyOn(MenuItem, 'findAndCountAll').mockResolvedValue({
         rows: mockMenuItems as any,
-        count: 1
+        count: 1,
       });
 
       const result = await menuItemService.getMenuItems({ keyword: '宫保' });
@@ -100,7 +100,7 @@ describe('MenuItemService', () => {
 
       vi.spyOn(MenuItem, 'findAndCountAll').mockResolvedValue({
         rows: mockMenuItems as any,
-        count: 1
+        count: 1,
       });
 
       const result = await menuItemService.getMenuItems({ minPrice: 20, maxPrice: 30 });
@@ -117,7 +117,7 @@ describe('MenuItemService', () => {
         price: 28,
         menuItemOptions: [],
         menuItemImages: [],
-        menuItemTags: []
+        menuItemTags: [],
       };
 
       vi.spyOn(MenuItem, 'findByPk').mockResolvedValue(mockMenuItem as any);
@@ -143,7 +143,7 @@ describe('MenuItemService', () => {
         id: 1,
         name: '宫保鸡丁',
         price: 28,
-        update: vi.fn().mockResolvedValue(undefined)
+        update: vi.fn().mockResolvedValue(undefined),
       };
 
       vi.spyOn(MenuItem, 'findByPk').mockResolvedValue(mockMenuItem as any);
@@ -156,7 +156,7 @@ describe('MenuItemService', () => {
 
       const result = await menuItemService.updateMenuItem(1, {
         name: '新宫保鸡丁',
-        price: 30
+        price: 30,
       });
 
       expect(result).toBeDefined();
@@ -167,7 +167,7 @@ describe('MenuItemService', () => {
       vi.spyOn(MenuItem, 'findByPk').mockResolvedValue(null);
 
       const result = await menuItemService.updateMenuItem(999, {
-        name: '新名称'
+        name: '新名称',
       });
 
       expect(result).toBeNull();
@@ -179,7 +179,7 @@ describe('MenuItemService', () => {
       const mockMenuItem = {
         id: 1,
         name: '宫保鸡丁',
-        destroy: vi.fn().mockResolvedValue(undefined)
+        destroy: vi.fn().mockResolvedValue(undefined),
       };
 
       vi.spyOn(MenuItem, 'findByPk').mockResolvedValue(mockMenuItem as any);
@@ -207,7 +207,7 @@ describe('MenuItemService', () => {
         id: 1,
         name: '宫保鸡丁',
         is_active: true,
-        update: vi.fn().mockResolvedValue(undefined)
+        update: vi.fn().mockResolvedValue(undefined),
       };
 
       vi.spyOn(MenuItem, 'findByPk').mockResolvedValue(mockMenuItem as any);
@@ -230,7 +230,7 @@ describe('MenuItemService', () => {
         id: 1,
         name: '宫保鸡丁',
         stock: 100,
-        update: vi.fn().mockResolvedValue(undefined)
+        update: vi.fn().mockResolvedValue(undefined),
       };
 
       vi.spyOn(MenuItem, 'findByPk').mockResolvedValue(mockMenuItem as any);
@@ -253,7 +253,7 @@ describe('MenuItemService', () => {
         id: 1,
         name: '宫保鸡丁',
         sales: 100,
-        save: vi.fn().mockResolvedValue(undefined)
+        save: vi.fn().mockResolvedValue(undefined),
       };
 
       vi.spyOn(MenuItem, 'findByPk').mockResolvedValue(mockMenuItem as any);
@@ -279,7 +279,7 @@ describe('MenuItemService', () => {
         id: 1,
         menu_item_id: 1,
         dynamic_price: 25,
-        price_type: 'time_based'
+        price_type: 'time_based',
       };
 
       vi.spyOn(DynamicPrice, 'create').mockResolvedValue(mockDynamicPrice as any);
@@ -289,7 +289,7 @@ describe('MenuItemService', () => {
         dynamic_price: 25,
         price_type: 'time_based',
         rule_config: {},
-        is_active: true
+        is_active: true,
       });
 
       expect(result).toBeDefined();
@@ -301,7 +301,7 @@ describe('MenuItemService', () => {
     it('应该成功获取菜品动态价格规则', async () => {
       const mockDynamicPrices = [
         { id: 1, menu_item_id: 1, dynamic_price: 25 },
-        { id: 2, menu_item_id: 1, dynamic_price: 20 }
+        { id: 2, menu_item_id: 1, dynamic_price: 20 },
       ];
 
       vi.spyOn(DynamicPrice, 'findAll').mockResolvedValue(mockDynamicPrices as any);
@@ -318,7 +318,7 @@ describe('MenuItemService', () => {
         id: 1,
         menu_item_id: 1,
         dynamic_price: 25,
-        rule_config: {}
+        rule_config: {},
       };
 
       vi.spyOn(DynamicPrice, 'findAll').mockResolvedValue([mockDynamicPrice as any]);
@@ -335,13 +335,13 @@ describe('MenuItemService', () => {
         id: 1,
         menu_item_id: 1,
         dynamic_price: 25,
-        update: vi.fn().mockResolvedValue(undefined)
+        update: vi.fn().mockResolvedValue(undefined),
       };
 
       vi.spyOn(DynamicPrice, 'findByPk').mockResolvedValue(mockDynamicPrice as any);
 
       const result = await menuItemService.updateDynamicPrice(1, {
-        dynamic_price: 30
+        dynamic_price: 30,
       });
 
       expect(result).toBeDefined();
@@ -351,7 +351,7 @@ describe('MenuItemService', () => {
       vi.spyOn(DynamicPrice, 'findByPk').mockResolvedValue(null);
 
       const result = await menuItemService.updateDynamicPrice(999, {
-        dynamic_price: 30
+        dynamic_price: 30,
       });
 
       expect(result).toBeNull();
@@ -363,7 +363,7 @@ describe('MenuItemService', () => {
       const mockDynamicPrice = {
         id: 1,
         menu_item_id: 1,
-        destroy: vi.fn().mockResolvedValue(undefined)
+        destroy: vi.fn().mockResolvedValue(undefined),
       };
 
       vi.spyOn(DynamicPrice, 'findByPk').mockResolvedValue(mockDynamicPrice as any);
@@ -388,7 +388,7 @@ describe('MenuItemService', () => {
         id: 1,
         user_id: 1,
         menu_item_id: 1,
-        score: 85
+        score: 85,
       };
 
       vi.spyOn(Recommendation, 'create').mockResolvedValue(mockRecommendation as any);
@@ -398,7 +398,7 @@ describe('MenuItemService', () => {
         menu_item_id: 1,
         recommendation_type: 'personalized',
         score: 85,
-        rank: 1
+        rank: 1,
       });
 
       expect(result).toBeDefined();
@@ -410,7 +410,7 @@ describe('MenuItemService', () => {
     it('应该成功获取用户推荐列表', async () => {
       const mockRecommendations = [
         { id: 1, user_id: 1, menu_item_id: 1, score: 85 },
-        { id: 2, user_id: 1, menu_item_id: 2, score: 80 }
+        { id: 2, user_id: 1, menu_item_id: 2, score: 80 },
       ];
 
       vi.spyOn(Recommendation, 'findAll').mockResolvedValue(mockRecommendations as any);
@@ -423,9 +423,7 @@ describe('MenuItemService', () => {
 
   describe('getRecommendationsByMenuItemId', () => {
     it('应该成功获取菜品推荐情况', async () => {
-      const mockRecommendations = [
-        { id: 1, user_id: 1, menu_item_id: 1, score: 85 }
-      ];
+      const mockRecommendations = [{ id: 1, user_id: 1, menu_item_id: 1, score: 85 }];
 
       vi.spyOn(Recommendation, 'findAll').mockResolvedValue(mockRecommendations as any);
 
@@ -443,13 +441,13 @@ describe('MenuItemService', () => {
         menu_item_id: 1,
         click_count: 0,
         order_count: 0,
-        update: vi.fn().mockResolvedValue(undefined)
+        update: vi.fn().mockResolvedValue(undefined),
       };
 
       vi.spyOn(Recommendation, 'findByPk').mockResolvedValue(mockRecommendation as any);
 
       const result = await menuItemService.updateRecommendationUsage(1, {
-        click_count: 1
+        click_count: 1,
       });
 
       expect(result).toBeDefined();
@@ -460,7 +458,7 @@ describe('MenuItemService', () => {
       vi.spyOn(Recommendation, 'findByPk').mockResolvedValue(null);
 
       const result = await menuItemService.updateRecommendationUsage(999, {
-        click_count: 1
+        click_count: 1,
       });
 
       expect(result).toBeNull();
@@ -471,12 +469,12 @@ describe('MenuItemService', () => {
     it('应该成功生成智能推荐', async () => {
       const mockMenuItems = [
         { id: 1, name: '宫保鸡丁', is_active: true },
-        { id: 2, name: '麻婆豆腐', is_active: true }
+        { id: 2, name: '麻婆豆腐', is_active: true },
       ];
 
       const mockRecommendedMenuItems = [
         { id: 1, name: '宫保鸡丁', menuItemOptions: [], menuItemImages: [], menuItemTags: [] },
-        { id: 2, name: '麻婆豆腐', menuItemOptions: [], menuItemImages: [], menuItemTags: [] }
+        { id: 2, name: '麻婆豆腐', menuItemOptions: [], menuItemImages: [], menuItemTags: [] },
       ];
 
       vi.spyOn(MenuItem, 'findAll').mockResolvedValueOnce(mockMenuItems as any);
@@ -492,9 +490,7 @@ describe('MenuItemService', () => {
 
   describe('trainRecommendationModel', () => {
     it('应该成功训练推荐模型', async () => {
-      const trainingData = [
-        { orderCount: 10, clickCount: 20, browsingCount: 30 }
-      ];
+      const trainingData = [{ orderCount: 10, clickCount: 20, browsingCount: 30 }];
 
       const result = await menuItemService.trainRecommendationModel(trainingData);
 
@@ -506,7 +502,7 @@ describe('MenuItemService', () => {
   describe('updateUserProfile', () => {
     it('应该成功更新用户画像', async () => {
       const result = await menuItemService.updateUserProfile(1, {
-        preferences: { 1: 5 }
+        preferences: { 1: 5 },
       });
 
       expect(result.success).toBe(true);

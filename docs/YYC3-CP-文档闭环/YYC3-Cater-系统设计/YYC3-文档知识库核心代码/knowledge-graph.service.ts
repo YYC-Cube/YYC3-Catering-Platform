@@ -10,15 +10,7 @@
  */
 
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Document,
-  KnowledgeGraph,
-  DocumentNode,
-  ConceptNode,
-  GraphEdge,
-  EdgeType,
-  Concept,
-} from './document.types';
+import { Document, KnowledgeGraph, DocumentNode, ConceptNode, GraphEdge, EdgeType, Concept } from './document.types';
 import { GraphRepository } from './graph.repository';
 import { ConceptRepository } from './concept.repository';
 import { Logger } from './logger';
@@ -43,10 +35,10 @@ export class KnowledgeGraphService {
       this.logger.info('Initializing knowledge graph service');
       await this.graphRepository.initialize?.();
       await this.conceptRepository.initialize?.();
-      
+
       // 加载当前图谱
       this.currentGraph = await this.graphRepository.getLatest();
-      
+
       this.logger.info('Knowledge graph service initialized successfully');
     } catch (error) {
       this.logger.error('Failed to initialize knowledge graph service', { error });
@@ -131,16 +123,14 @@ export class KnowledgeGraphService {
       const documentNode = graph.documentNodes.find(node => node.documentId === documentId);
       if (documentNode) {
         // 移除相关边
-        graph.edges = graph.edges.filter(edge => 
-          edge.source !== documentNode.id && edge.target !== documentNode.id
-        );
-        
+        graph.edges = graph.edges.filter(edge => edge.source !== documentNode.id && edge.target !== documentNode.id);
+
         // 移除文档节点
         graph.documentNodes = graph.documentNodes.filter(node => node.id !== documentNode.id);
-        
+
         // 更新统计
         this.updateGraphStatistics(graph);
-        
+
         // 保存图谱
         await this.graphRepository.update(graph.id, graph);
         this.currentGraph = graph;
@@ -386,7 +376,7 @@ export class KnowledgeGraphService {
 
           if (neighborId && !visited.has(neighborId)) {
             visited.add(neighborId);
-            
+
             const documentNode = graph.documentNodes.find(node => node.id === neighborId);
             if (documentNode) {
               neighbors.push(documentNode);
@@ -427,9 +417,7 @@ export class KnowledgeGraphService {
 
       // BFS查找最短路径
       const visited = new Set<string>([from]);
-      const queue: { id: string; path: (DocumentNode | ConceptNode)[] }[] = [
-        { id: from, path: [] },
-      ];
+      const queue: { id: string; path: (DocumentNode | ConceptNode)[] }[] = [{ id: from, path: [] }];
 
       while (queue.length > 0) {
         const { id, path } = queue.shift()!;
@@ -605,7 +593,7 @@ export class KnowledgeGraphService {
       this.logger.info('Deleting graph', { version });
 
       await this.graphRepository.delete(version);
-      
+
       if (this.currentGraph?.id === version) {
         this.currentGraph = null;
       }
@@ -708,21 +696,19 @@ export class KnowledgeGraphService {
       if (options.filter) {
         if (options.filter.minQuality !== undefined) {
           const minQuality = options.filter.minQuality;
-          nodes = nodes.filter(node => 
-            node.type === 'concept' || (node.type === 'document' && (node as any).qualityScore >= minQuality)
+          nodes = nodes.filter(
+            node => node.type === 'concept' || (node.type === 'document' && (node as any).qualityScore >= minQuality),
           );
         }
         if (options.filter.categories && options.filter.categories.length > 0) {
-          nodes = nodes.filter(node => 
-            options.filter!.categories!.includes(node.category)
-          );
+          nodes = nodes.filter(node => options.filter!.categories!.includes(node.category));
         }
       }
 
       // 限制节点数量
       if (options.maxNodes && options.maxNodes > 0) {
         nodes = nodes.slice(0, options.maxNodes);
-        
+
         // 只保留与这些节点相关的边
         const nodeIds = new Set(nodes.map(n => n.id));
         edges = edges.filter(edge => nodeIds.has(edge.source) && nodeIds.has(edge.target));
@@ -751,10 +737,7 @@ export class KnowledgeGraphService {
    * @param documentNode 文档节点（可选）
    * @param document 文档
    */
-  private async updateGraphWithDocument(
-    documentNode: DocumentNode | null,
-    document: Document
-  ): Promise<void> {
+  private async updateGraphWithDocument(documentNode: DocumentNode | null, document: Document): Promise<void> {
     const graph = await this.getCurrentGraph();
     if (!graph) {
       // 创建新图谱
@@ -801,9 +784,7 @@ export class KnowledgeGraphService {
       // 创建文档-概念边
       const documentNodeId = document.graphNodeId || documentNode?.id;
       if (documentNodeId) {
-        const existingEdge = graph.edges.find(
-          edge => edge.source === documentNodeId && edge.target === conceptNode.id
-        );
+        const existingEdge = graph.edges.find(edge => edge.source === documentNodeId && edge.target === conceptNode.id);
         if (!existingEdge) {
           const edge: GraphEdge = {
             id: uuidv4(),
@@ -836,17 +817,17 @@ export class KnowledgeGraphService {
   private updateGraphStatistics(graph: KnowledgeGraph): void {
     graph.totalNodes = graph.documentNodes.length + graph.conceptNodes.length;
     graph.totalEdges = graph.edges.length;
-    
+
     // 计算图密度
     const maxEdges = (graph.totalNodes * (graph.totalNodes - 1)) / 2;
     graph.density = maxEdges > 0 ? graph.totalEdges / maxEdges : 0;
-    
+
     // 计算平均度数
     const totalDegree = graph.edges.reduce((sum, edge) => {
       return sum + 2; // 每条边贡献2个度数
     }, 0);
     graph.avgDegree = graph.totalNodes > 0 ? totalDegree / graph.totalNodes : 0;
-    
+
     graph.updatedAt = new Date();
   }
 
@@ -861,9 +842,9 @@ export class KnowledgeGraphService {
     xml += '  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n';
     xml += '  xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns\n';
     xml += '  http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">\n';
-    
+
     xml += '  <graph id="G" edgedefault="undirected">\n';
-    
+
     // 添加节点
     for (const node of graph.documentNodes) {
       xml += `    <node id="${node.id}">\n`;
@@ -871,22 +852,22 @@ export class KnowledgeGraphService {
       xml += `      <data key="title">${node.properties.title}</data>\n`;
       xml += `    </node>\n`;
     }
-    
+
     for (const node of graph.conceptNodes) {
       xml += `    <node id="${node.id}">\n`;
       xml += `      <data key="type">concept</data>\n`;
       xml += `      <data key="name">${node.properties.name}</data>\n`;
       xml += `    </node>\n`;
     }
-    
+
     // 添加边
     for (const edge of graph.edges) {
       xml += `    <edge id="${edge.id}" source="${edge.source}" target="${edge.target}"/>\n`;
     }
-    
+
     xml += '  </graph>\n';
     xml += '</graphml>';
-    
+
     return xml;
   }
 
@@ -899,7 +880,7 @@ export class KnowledgeGraphService {
     let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
     xml += '<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2">\n';
     xml += '  <graph mode="static" defaultedgetype="undirected">\n';
-    
+
     xml += '    <nodes>\n';
     for (const node of graph.documentNodes) {
       xml += `      <node id="${node.id}" label="${node.properties.title}">\n`;
@@ -916,16 +897,16 @@ export class KnowledgeGraphService {
       xml += `      </node>\n`;
     }
     xml += '    </nodes>\n';
-    
+
     xml += '    <edges>\n';
     for (const edge of graph.edges) {
       xml += `      <edge id="${edge.id}" source="${edge.source}" target="${edge.target}"/>\n`;
     }
     xml += '    </edges>\n';
-    
+
     xml += '  </graph>\n';
     xml += '</gexf>';
-    
+
     return xml;
   }
 }

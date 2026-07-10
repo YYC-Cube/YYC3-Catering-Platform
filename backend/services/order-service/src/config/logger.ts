@@ -17,22 +17,22 @@ const logDir = path.join(__dirname, '../../logs');
 // 日志格式配置
 const logFormat = winston.format.combine(
   winston.format.timestamp({
-    format: 'YYYY-MM-DD HH:mm:ss'
+    format: 'YYYY-MM-DD HH:mm:ss',
   }),
   winston.format.errors({
-    stack: true
+    stack: true,
   }),
   winston.format.splat(),
-  winston.format.json()
+  winston.format.json(),
 );
 
 // 控制台日志格式
 const consoleFormat = winston.format.combine(
   winston.format.timestamp({
-    format: 'YYYY-MM-DD HH:mm:ss'
+    format: 'YYYY-MM-DD HH:mm:ss',
   }),
   winston.format.colorize(),
-  winston.format.simple()
+  winston.format.simple(),
 );
 
 // 创建日志记录器
@@ -47,7 +47,7 @@ const logger = winston.createLogger({
       zippedArchive: true,
       maxSize: process.env.LOG_FILE_MAX_SIZE || '20m',
       maxFiles: process.env.LOG_FILE_MAX_DAYS || '14d',
-      level: 'info'
+      level: 'info',
     }),
     // 错误日志文件
     new winston.transports.DailyRotateFile({
@@ -56,8 +56,8 @@ const logger = winston.createLogger({
       zippedArchive: true,
       maxSize: process.env.LOG_FILE_MAX_SIZE || '20m',
       maxFiles: process.env.LOG_FILE_MAX_DAYS || '14d',
-      level: 'error'
-    })
+      level: 'error',
+    }),
   ],
   exceptionHandlers: [
     new winston.transports.DailyRotateFile({
@@ -65,16 +65,18 @@ const logger = winston.createLogger({
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
       maxSize: process.env.LOG_FILE_MAX_SIZE || '20m',
-      maxFiles: process.env.LOG_FILE_MAX_DAYS || '14d'
-    })
-  ]
+      maxFiles: process.env.LOG_FILE_MAX_DAYS || '14d',
+    }),
+  ],
 });
 
 // 在开发环境下添加控制台输出
 if (process.env.NODE_ENV === 'development') {
-  logger.add(new winston.transports.Console({
-    format: consoleFormat
-  }));
+  logger.add(
+    new winston.transports.Console({
+      format: consoleFormat,
+    }),
+  );
 }
 
 export default logger;

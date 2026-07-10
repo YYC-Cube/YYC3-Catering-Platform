@@ -161,7 +161,7 @@ export class CollaborationService {
       this.logger.info('User leaving collaboration session', { documentId, userId });
 
       const sessions = this.sessions.get(documentId) || [];
-      const filteredSessions = sessions.filter((s) => s.userId !== userId);
+      const filteredSessions = sessions.filter(s => s.userId !== userId);
 
       if (filteredSessions.length !== sessions.length) {
         this.sessions.set(documentId, filteredSessions);
@@ -181,7 +181,7 @@ export class CollaborationService {
   async getActiveSessions(documentId: string): Promise<CollaborationSession[]> {
     try {
       const sessions = this.sessions.get(documentId) || [];
-      return sessions.filter((s) => s.lastActiveAt > new Date(Date.now() - 5 * 60 * 1000)); // 5分钟内活跃
+      return sessions.filter(s => s.lastActiveAt > new Date(Date.now() - 5 * 60 * 1000)); // 5分钟内活跃
     } catch (error) {
       this.logger.error('Failed to get active sessions', { error, documentId });
       throw error;
@@ -191,14 +191,10 @@ export class CollaborationService {
   /**
    * 更新光标位置
    */
-  async updateCursor(
-    documentId: string,
-    userId: string,
-    cursor: CollaborationSession['cursor']
-  ): Promise<void> {
+  async updateCursor(documentId: string, userId: string, cursor: CollaborationSession['cursor']): Promise<void> {
     try {
       const sessions = this.sessions.get(documentId) || [];
-      const session = sessions.find((s) => s.userId === userId);
+      const session = sessions.find(s => s.userId === userId);
 
       if (session) {
         session.cursor = cursor;
@@ -214,7 +210,9 @@ export class CollaborationService {
   /**
    * 应用编辑操作
    */
-  async applyEditOperation(operation: Omit<DocumentEditOperation, 'id' | 'timestamp' | 'applied'>): Promise<DocumentEditOperation> {
+  async applyEditOperation(
+    operation: Omit<DocumentEditOperation, 'id' | 'timestamp' | 'applied'>,
+  ): Promise<DocumentEditOperation> {
     try {
       this.logger.info('Applying edit operation', {
         documentId: operation.documentId,
@@ -249,8 +247,7 @@ export class CollaborationService {
         case 'delete':
           if (operation.length) {
             newContent =
-              newContent.substring(0, operation.position) +
-              newContent.substring(operation.position + operation.length);
+              newContent.substring(0, operation.position) + newContent.substring(operation.position + operation.length);
           }
           break;
         case 'replace':
@@ -298,9 +295,7 @@ export class CollaborationService {
   async getEditHistory(documentId: string, limit: number = 50, offset: number = 0): Promise<DocumentEditOperation[]> {
     try {
       const operations = this.operations.get(documentId) || [];
-      return operations
-        .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
-        .slice(offset, offset + limit);
+      return operations.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(offset, offset + limit);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       this.logger.error('Failed to get edit history', { error: errorMessage, documentId });
@@ -316,7 +311,7 @@ export class CollaborationService {
     userId: string,
     userName: string,
     position: number,
-    content: string
+    content: string,
   ): Promise<DocumentComment> {
     try {
       this.logger.info('Adding comment', { documentId, userId, position });
@@ -356,13 +351,13 @@ export class CollaborationService {
     commentId: string,
     userId: string,
     userName: string,
-    content: string
+    content: string,
   ): Promise<DocumentCommentReply> {
     try {
       this.logger.info('Replying to comment', { documentId, commentId, userId });
 
       const comments = this.comments.get(documentId) || [];
-      const comment = comments.find((c) => c.id === commentId);
+      const comment = comments.find(c => c.id === commentId);
 
       if (!comment) {
         throw new Error('评论不存在');
@@ -398,7 +393,7 @@ export class CollaborationService {
       this.logger.info('Resolving comment', { documentId, commentId, resolved });
 
       const comments = this.comments.get(documentId) || [];
-      const comment = comments.find((c) => c.id === commentId);
+      const comment = comments.find(c => c.id === commentId);
 
       if (!comment) {
         throw new Error('评论不存在');
@@ -421,7 +416,7 @@ export class CollaborationService {
   async getComments(documentId: string, includeResolved: boolean = false): Promise<DocumentComment[]> {
     try {
       const comments = this.comments.get(documentId) || [];
-      return includeResolved ? comments : comments.filter((c) => !c.resolved);
+      return includeResolved ? comments : comments.filter(c => !c.resolved);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       this.logger.error('Failed to get comments', { error: errorMessage, documentId });
@@ -437,7 +432,7 @@ export class CollaborationService {
       this.logger.info('Deleting comment', { documentId, commentId });
 
       const comments = this.comments.get(documentId) || [];
-      const filteredComments = comments.filter((c) => c.id !== commentId);
+      const filteredComments = comments.filter(c => c.id !== commentId);
 
       if (filteredComments.length !== comments.length) {
         this.comments.set(documentId, filteredComments);
@@ -463,7 +458,7 @@ export class CollaborationService {
       let cleanedCount = 0;
 
       for (const [documentId, sessions] of this.sessions.entries()) {
-        const activeSessions = sessions.filter((s) => s.lastActiveAt > cutoffTime);
+        const activeSessions = sessions.filter(s => s.lastActiveAt > cutoffTime);
         if (activeSessions.length !== sessions.length) {
           this.sessions.set(documentId, activeSessions);
           cleanedCount += sessions.length - activeSessions.length;

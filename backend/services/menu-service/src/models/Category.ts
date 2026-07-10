@@ -16,7 +16,7 @@ import { MenuItem } from './MenuItem';
 @Table({
   tableName: 'categories',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class Category extends Model<Category> {
   @PrimaryKey

@@ -53,8 +53,8 @@
 **1. 微服务入口文件补全**
 
 ```markdown
-📁 backend/services/*/src/index.ts
-📁 backend/services/*/src/app.ts
+📁 backend/services/_/src/index.ts
+📁 backend/services/_/src/app.ts
 🔧 任务: 为每个微服务创建完整的入口文件和应用启动文件
 📈 预期: 实现所有服务的独立启动能力
 ⏱️ 工期: 1周
@@ -63,8 +63,8 @@
 **2. 数据库连接与中间件补全**
 
 ```markdown
-📁 backend/gateway/src/middleware/*.ts
-📁 backend/services/*/src/middleware/*.ts
+📁 backend/gateway/src/middleware/_.ts
+📁 backend/services/_/src/middleware/\*.ts
 🔧 任务: 实现认证、授权、日志、错误处理中间件
 📈 预期: 完整的请求处理链路
 ⏱️ 工期: 1周
@@ -73,8 +73,8 @@
 **3. API路由完善**
 
 ```markdown
-📁 backend/gateway/src/routes/*.ts
-📁 backend/services/*/src/routes/*.ts
+📁 backend/gateway/src/routes/_.ts
+📁 backend/services/_/src/routes/\*.ts
 🔧 任务: 实现所有API接口的路由配置
 📈 预期: 完整的RESTful API体系
 ⏱️ 工期: 1周
@@ -83,8 +83,8 @@
 **4. 前端业务组件补全**
 
 ```markdown
-📁 frontend/apps/*/src/views/**/*.vue
-📁 frontend/apps/*/src/components/**/*.vue
+📁 frontend/apps/_/src/views/\*\*/_.vue
+📁 frontend/apps/_/src/components/\*\*/_.vue
 🔧 任务: 实现所有业务页面的Vue组件
 📈 预期: 完整的用户界面
 ⏱️ 工期: 1周
@@ -266,7 +266,7 @@
 - [ ] backend/gateway/src/routes/health.ts
 - [ ] backend/gateway/src/routes/auth.ts
 - [ ] backend/gateway/src/routes/upload.ts
-- [ ] backend/services/*/src/routes/index.ts
+- [ ] backend/services/\*/src/routes/index.ts
 - [ ] API文档配置 (Swagger)
 - [ ] 路由权限配置
 

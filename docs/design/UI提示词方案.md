@@ -164,42 +164,47 @@ C. 状态指示器：
 function calculateOptimalPosition() {
   // 1. 检测屏幕活跃区域
   const activeElements = detectActiveUIElements(); // 获取当前焦点元素、鼠标位置等
-  
+
   // 2. 计算避让区域
   const avoidZones = activeElements.map(el => {
     return {
       x: el.x - 20, // 向外扩展20px安全边距
       y: el.y - 20,
       width: el.width + 40,
-      height: el.height + 40
+      height: el.height + 40,
     };
   });
-  
+
   // 3. 候选位置评分
   const positions = [
-    'bottom-right', 'bottom-left', 'top-right', 'top-left',
-    'right-center', 'left-center', 'center-bottom'
+    "bottom-right",
+    "bottom-left",
+    "top-right",
+    "top-left",
+    "right-center",
+    "left-center",
+    "center-bottom",
   ];
-  
+
   const scores = positions.map(pos => {
     let score = 100;
-    
+
     // 扣分项：遮挡重要内容
     avoidZones.forEach(zone => {
       if (isOverlapping(zone, getRect(pos))) {
         score -= 30;
       }
     });
-    
+
     // 加分项：靠近触发源
     if (isNearTriggerSource(pos)) score += 15;
-    
+
     // 加分项：符合操作习惯（右下角优先）
-    if (pos === 'bottom-right') score += 10;
-    
+    if (pos === "bottom-right") score += 10;
+
     return { position: pos, score };
   });
-  
+
   // 4. 选择最佳位置
   return scores.sort((a, b) => b.score - a.score)[0].position;
 }

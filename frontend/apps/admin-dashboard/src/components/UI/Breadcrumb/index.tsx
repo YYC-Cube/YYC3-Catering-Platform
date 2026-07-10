@@ -8,14 +8,14 @@
  * @license MIT
  */
 
-import { defineComponent, computed, type PropType } from 'vue'
-import { cn } from '@/utils/cn'
-import { ChevronRight, Slash, MoreHorizontal } from 'lucide-vue-next'
+import { defineComponent, computed, type PropType } from 'vue';
+import { cn } from '@/utils/cn';
+import { ChevronRight, Slash, MoreHorizontal } from 'lucide-vue-next';
 
 export interface BreadcrumbItem {
-  label: string
-  path?: string
-  disabled?: boolean
+  label: string;
+  path?: string;
+  disabled?: boolean;
 }
 
 export const Breadcrumb = defineComponent({
@@ -52,59 +52,45 @@ export const Breadcrumb = defineComponent({
     const separatorIcon = computed(() => {
       switch (props.separator) {
         case 'slash':
-          return Slash
+          return Slash;
         case 'arrow':
-          return ChevronRight
+          return ChevronRight;
         case 'chevron':
         default:
-          return ChevronRight
+          return ChevronRight;
       }
-    })
+    });
 
     const separatorClasses = computed(() => {
-      return cn(
-        'text-neutral-400 mx-2',
-        props.separator === 'slash' && 'text-neutral-300',
-        props.separatorClass
-      )
-    })
+      return cn('text-neutral-400 mx-2', props.separator === 'slash' && 'text-neutral-300', props.separatorClass);
+    });
 
     const itemClasses = computed(() => {
-      return cn(
-        'text-sm transition-colors hover:text-primary-600 cursor-pointer',
-        props.itemClass
-      )
-    })
+      return cn('text-sm transition-colors hover:text-primary-600 cursor-pointer', props.itemClass);
+    });
 
     const activeClasses = computed(() => {
-      return cn(
-        'text-neutral-900 font-medium cursor-default',
-        props.activeClass
-      )
-    })
+      return cn('text-neutral-900 font-medium cursor-default', props.activeClass);
+    });
 
     const displayItems = computed(() => {
       if (!props.maxItems || props.items.length <= props.maxItems) {
-        return props.items
+        return props.items;
       }
 
-      const items = [...props.items]
-      const lastItem = items.pop()
-      const firstItem = items.shift()
+      const items = [...props.items];
+      const lastItem = items.pop();
+      const firstItem = items.shift();
 
-      return [
-        firstItem,
-        { label: '...', disabled: true },
-        lastItem,
-      ].filter(Boolean) as BreadcrumbItem[]
-    })
+      return [firstItem, { label: '...', disabled: true }, lastItem].filter(Boolean) as BreadcrumbItem[];
+    });
 
     const handleClick = (item: BreadcrumbItem, index: number) => {
       if (item.disabled || index === displayItems.value.length - 1) {
-        return
+        return;
       }
-      emit('click', item, index)
-    }
+      emit('click', item, index);
+    };
 
     return () => (
       <nav aria-label="breadcrumb" class="flex items-center">
@@ -119,7 +105,7 @@ export const Breadcrumb = defineComponent({
               <span
                 class={cn(
                   index === displayItems.value.length - 1 ? activeClasses.value : itemClasses.value,
-                  item.disabled && 'opacity-50 cursor-not-allowed'
+                  item.disabled && 'opacity-50 cursor-not-allowed',
                 )}
                 onClick={() => handleClick(item, index)}
               >
@@ -129,9 +115,9 @@ export const Breadcrumb = defineComponent({
           ))}
         </ol>
       </nav>
-    )
+    );
   },
-})
+});
 
 export const BreadcrumbItem = defineComponent({
   name: 'BreadcrumbItem',
@@ -157,9 +143,9 @@ export const BreadcrumbItem = defineComponent({
   setup(props, { emit, attrs }) {
     const handleClick = () => {
       if (!props.disabled && !props.active) {
-        emit('click')
+        emit('click');
       }
-    }
+    };
 
     return () => (
       <li class="flex items-center">
@@ -168,16 +154,16 @@ export const BreadcrumbItem = defineComponent({
             'text-sm transition-colors',
             props.active ? 'text-neutral-900 font-medium cursor-default' : 'hover:text-primary-600 cursor-pointer',
             props.disabled && 'opacity-50 cursor-not-allowed',
-            attrs.class as string
+            attrs.class as string,
           )}
           onClick={handleClick}
         >
           {props.label}
         </span>
       </li>
-    )
+    );
   },
-})
+});
 
 export const BreadcrumbSeparator = defineComponent({
   name: 'BreadcrumbSeparator',
@@ -191,14 +177,14 @@ export const BreadcrumbSeparator = defineComponent({
     const separatorIcon = computed(() => {
       switch (props.separator) {
         case 'slash':
-          return Slash
+          return Slash;
         case 'arrow':
-          return ChevronRight
+          return ChevronRight;
         case 'chevron':
         default:
-          return ChevronRight
+          return ChevronRight;
       }
-    })
+    });
 
     return () => (
       <li class="flex items-center">
@@ -206,9 +192,9 @@ export const BreadcrumbSeparator = defineComponent({
           <separatorIcon.value size={16} />
         </span>
       </li>
-    )
+    );
   },
-})
+});
 
 export const BreadcrumbEllipsis = defineComponent({
   name: 'BreadcrumbEllipsis',
@@ -219,6 +205,6 @@ export const BreadcrumbEllipsis = defineComponent({
           <MoreHorizontal size={16} />
         </span>
       </li>
-    )
+    );
   },
-})
+});

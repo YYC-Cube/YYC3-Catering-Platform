@@ -20,7 +20,7 @@ export enum ErrorCode {
   CONFLICT = 409,
   INTERNAL_SERVER_ERROR = 500,
   SERVICE_UNAVAILABLE = 503,
-  
+
   // 业务错误码
   INVALID_PARAMETER = 1001,
   VALIDATION_ERROR = 1002,
@@ -28,7 +28,7 @@ export enum ErrorCode {
   RESOURCE_ALREADY_EXISTS = 1004,
   OPERATION_FAILED = 1005,
   BUSINESS_RULE_VIOLATION = 1006,
-  
+
   // 认证授权错误码
   INVALID_CREDENTIALS = 2001,
   EXPIRED_TOKEN = 2002,
@@ -36,13 +36,13 @@ export enum ErrorCode {
   INSUFFICIENT_PERMISSIONS = 2004,
   ACCOUNT_LOCKED = 2005,
   ACCOUNT_DISABLED = 2006,
-  
+
   // 数据库错误码
   DATABASE_ERROR = 3001,
   DATABASE_CONNECTION_ERROR = 3002,
   DATABASE_OPERATION_FAILED = 3003,
   DUPLICATE_KEY_ERROR = 3004,
-  
+
   // 文件错误码
   FILE_UPLOAD_ERROR = 4001,
   FILE_SIZE_EXCEEDED = 4002,
@@ -64,7 +64,7 @@ export const ErrorMessage: Record<ErrorCode, string> = {
   [ErrorCode.CONFLICT]: '资源冲突',
   [ErrorCode.INTERNAL_SERVER_ERROR]: '服务器内部错误',
   [ErrorCode.SERVICE_UNAVAILABLE]: '服务暂时不可用',
-  
+
   // 业务错误码
   [ErrorCode.INVALID_PARAMETER]: '无效的参数',
   [ErrorCode.VALIDATION_ERROR]: '参数验证失败',
@@ -72,7 +72,7 @@ export const ErrorMessage: Record<ErrorCode, string> = {
   [ErrorCode.RESOURCE_ALREADY_EXISTS]: '资源已存在',
   [ErrorCode.OPERATION_FAILED]: '操作失败',
   [ErrorCode.BUSINESS_RULE_VIOLATION]: '违反业务规则',
-  
+
   // 认证授权错误码
   [ErrorCode.INVALID_CREDENTIALS]: '无效的凭证',
   [ErrorCode.EXPIRED_TOKEN]: '令牌已过期',
@@ -80,13 +80,13 @@ export const ErrorMessage: Record<ErrorCode, string> = {
   [ErrorCode.INSUFFICIENT_PERMISSIONS]: '权限不足',
   [ErrorCode.ACCOUNT_LOCKED]: '账户已锁定',
   [ErrorCode.ACCOUNT_DISABLED]: '账户已禁用',
-  
+
   // 数据库错误码
   [ErrorCode.DATABASE_ERROR]: '数据库错误',
   [ErrorCode.DATABASE_CONNECTION_ERROR]: '数据库连接错误',
   [ErrorCode.DATABASE_OPERATION_FAILED]: '数据库操作失败',
   [ErrorCode.DUPLICATE_KEY_ERROR]: '唯一键冲突',
-  
+
   // 文件错误码
   [ErrorCode.FILE_UPLOAD_ERROR]: '文件上传失败',
   [ErrorCode.FILE_SIZE_EXCEEDED]: '文件大小超出限制',
@@ -102,17 +102,17 @@ export interface CustomError extends Error {
    * 错误码
    */
   code: ErrorCode;
-  
+
   /**
    * 错误消息
    */
   message: string;
-  
+
   /**
    * 详细信息
    */
   details?: any;
-  
+
   /**
    * 时间戳
    */

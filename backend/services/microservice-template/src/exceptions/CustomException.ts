@@ -17,17 +17,17 @@ export class CustomException extends Error implements CustomError {
    * 错误码
    */
   public code: ErrorCode;
-  
+
   /**
    * 详细信息
    */
   public details?: any;
-  
+
   /**
    * 时间戳
    */
   public timestamp: string;
-  
+
   /**
    * 构造函数
    * @param code 错误码
@@ -41,11 +41,11 @@ export class CustomException extends Error implements CustomError {
     this.message = message || ErrorMessage[code];
     this.details = details;
     this.timestamp = new Date().toISOString();
-    
+
     // 捕获堆栈信息
     Error.captureStackTrace(this, this.constructor);
   }
-  
+
   /**
    * 转换为JSON对象
    */

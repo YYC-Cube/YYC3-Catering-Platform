@@ -85,15 +85,15 @@ export class DatabasePool {
     const pool = new Pool(config);
 
     // 监听连接池事件
-    pool.on('connect', (client) => {
+    pool.on('connect', client => {
       logger.debug('New client connected to database pool');
     });
 
-    pool.on('remove', (client) => {
+    pool.on('remove', client => {
       logger.debug('Client removed from database pool');
     });
 
-    pool.on('error', (err) => {
+    pool.on('error', err => {
       logger.error('Unexpected error on idle client', err);
     });
 
@@ -130,10 +130,7 @@ export class DatabasePool {
   /**
    * 执行查询
    */
-  public async query<T = any>(
-    text: string,
-    params?: any[]
-  ): Promise<QueryResult<T>> {
+  public async query<T = any>(text: string, params?: any[]): Promise<QueryResult<T>> {
     const start = Date.now();
     try {
       const result = await this.pool.query<T>(text, params);
@@ -165,9 +162,7 @@ export class DatabasePool {
   /**
    * 执行事务
    */
-  public async transaction<T>(
-    callback: (client: any) => Promise<T>
-  ): Promise<T> {
+  public async transaction<T>(callback: (client: any) => Promise<T>): Promise<T> {
     const client = await this.getClient();
     try {
       await client.query('BEGIN');

@@ -10,9 +10,11 @@
 **@tags**：YYC³,文档
 
 ---
+
 # AI专项测试架构文档
 
 ## 文档信息
+
 - 文档类型：架构类
 - 所属阶段：YYC3-Cater--测试验证
 - 遵循规范：五高五标五化要求
@@ -88,22 +90,22 @@ const DEFAULT_AI_TEST_GOALS: AITestGoals = {
     accuracy: 0.95,
     precision: 0.93,
     recall: 0.92,
-    f1Score: 0.925
+    f1Score: 0.925,
   },
   performance: {
     inferenceLatency: 100,
     throughput: 1000,
-    resourceUsage: 80
+    resourceUsage: 80,
   },
   security: {
     adversarialDefenseRate: 0.9,
     dataPrivacy: true,
-    robustness: 0.85
+    robustness: 0.85,
   },
   fairness: {
     biasDetection: true,
-    fairnessMetrics: 0.9
-  }
+    fairnessMetrics: 0.9,
+  },
 };
 ```
 
@@ -119,21 +121,21 @@ const DEFAULT_AI_TEST_GOALS: AITestGoals = {
  */
 enum AITestType {
   /** 功能测试 */
-  FUNCTIONAL = 'functional',
+  FUNCTIONAL = "functional",
   /** 性能测试 */
-  PERFORMANCE = 'performance',
+  PERFORMANCE = "performance",
   /** 安全测试 */
-  SECURITY = 'security',
+  SECURITY = "security",
   /** 鲁棒性测试 */
-  ROBUSTNESS = 'robustness',
+  ROBUSTNESS = "robustness",
   /** 公平性测试 */
-  FAIRNESS = 'fairness',
+  FAIRNESS = "fairness",
   /** 可解释性测试 */
-  EXPLAINABILITY = 'explainability',
+  EXPLAINABILITY = "explainability",
   /** 回归测试 */
-  REGRESSION = 'regression',
+  REGRESSION = "regression",
   /** 对抗测试 */
-  ADVERSARIAL = 'adversarial'
+  ADVERSARIAL = "adversarial",
 }
 
 /**
@@ -141,17 +143,17 @@ enum AITestType {
  */
 enum AIModelType {
   /** 机器学习模型 */
-  ML = 'ml',
+  ML = "ml",
   /** 深度学习模型 */
-  DL = 'dl',
+  DL = "dl",
   /** 自然语言处理模型 */
-  NLP = 'nlp',
+  NLP = "nlp",
   /** 计算机视觉模型 */
-  CV = 'cv',
+  CV = "cv",
   /** 推荐系统 */
-  RECOMMENDATION = 'recommendation',
+  RECOMMENDATION = "recommendation",
   /** 强化学习 */
-  RL = 'rl'
+  RL = "rl",
 }
 
 /**
@@ -181,7 +183,7 @@ interface AITestConfig {
  */
 class AITestTypeManager {
   private configs: Map<AITestType, AITestConfig[]> = new Map();
-  
+
   /**
    * 注册测试配置
    */
@@ -190,14 +192,14 @@ class AITestTypeManager {
     configs.push(config);
     this.configs.set(config.type, configs);
   }
-  
+
   /**
    * 获取测试配置
    */
   getConfigs(type: AITestType): AITestConfig[] {
     return this.configs.get(type) || [];
   }
-  
+
   /**
    * 创建功能测试配置
    */
@@ -205,20 +207,20 @@ class AITestTypeManager {
     return {
       type: AITestType.FUNCTIONAL,
       modelType: AIModelType.NLP,
-      name: 'AI功能测试',
-      description: '测试AI模型的基本功能是否正常',
-      testDataset: 'test-data.json',
-      metrics: ['accuracy', 'precision', 'recall', 'f1'],
+      name: "AI功能测试",
+      description: "测试AI模型的基本功能是否正常",
+      testDataset: "test-data.json",
+      metrics: ["accuracy", "precision", "recall", "f1"],
       thresholds: {
         accuracy: 0.9,
         precision: 0.85,
         recall: 0.85,
-        f1: 0.85
+        f1: 0.85,
       },
-      ...overrides
+      ...overrides,
     };
   }
-  
+
   /**
    * 创建性能测试配置
    */
@@ -226,19 +228,19 @@ class AITestTypeManager {
     return {
       type: AITestType.PERFORMANCE,
       modelType: AIModelType.DL,
-      name: 'AI性能测试',
-      description: '测试AI模型的推理性能',
-      testDataset: 'performance-data.json',
-      metrics: ['latency', 'throughput', 'memory'],
+      name: "AI性能测试",
+      description: "测试AI模型的推理性能",
+      testDataset: "performance-data.json",
+      metrics: ["latency", "throughput", "memory"],
       thresholds: {
         latency: 100,
         throughput: 1000,
-        memory: 512
+        memory: 512,
       },
-      ...overrides
+      ...overrides,
     };
   }
-  
+
   /**
    * 创建对抗测试配置
    */
@@ -246,15 +248,15 @@ class AITestTypeManager {
     return {
       type: AITestType.ADVERSARIAL,
       modelType: AIModelType.CV,
-      name: 'AI对抗测试',
-      description: '测试AI模型对对抗攻击的防御能力',
-      testDataset: 'adversarial-data.json',
-      metrics: ['defense_rate', 'robustness'],
+      name: "AI对抗测试",
+      description: "测试AI模型对对抗攻击的防御能力",
+      testDataset: "adversarial-data.json",
+      metrics: ["defense_rate", "robustness"],
       thresholds: {
         defense_rate: 0.85,
-        robustness: 0.8
+        robustness: 0.8,
       },
-      ...overrides
+      ...overrides,
     };
   }
 }
@@ -292,7 +294,7 @@ class ModelQualityTester {
     const correct = predictions.filter((p, i) => p === labels[i]).length;
     return correct / predictions.length;
   }
-  
+
   /**
    * 计算精确率
    */
@@ -301,7 +303,7 @@ class ModelQualityTester {
     const falsePositive = predictions.filter((p, i) => p === 1 && labels[i] === 0).length;
     return truePositive / (truePositive + falsePositive);
   }
-  
+
   /**
    * 计算召回率
    */
@@ -310,23 +312,23 @@ class ModelQualityTester {
     const falseNegative = predictions.filter((p, i) => p === 0 && labels[i] === 1).length;
     return truePositive / (truePositive + falseNegative);
   }
-  
+
   /**
    * 计算F1分数
    */
   static calculateF1Score(precision: number, recall: number): number {
-    return 2 * (precision * recall) / (precision + recall);
+    return (2 * (precision * recall)) / (precision + recall);
   }
-  
+
   /**
    * 计算混淆矩阵
    */
   static calculateConfusionMatrix(predictions: number[], labels: number[]): number[][] {
     const matrix = [
       [0, 0], // TN, FP
-      [0, 0]  // FN, TP
+      [0, 0], // FN, TP
     ];
-    
+
     predictions.forEach((p, i) => {
       const l = labels[i];
       if (p === 0 && l === 0) matrix[0][0]++;
@@ -334,30 +336,27 @@ class ModelQualityTester {
       else if (p === 0 && l === 1) matrix[1][0]++;
       else if (p === 1 && l === 1) matrix[1][1]++;
     });
-    
+
     return matrix;
   }
-  
+
   /**
    * 运行质量测试
    */
-  static runQualityTest(
-    predictions: number[],
-    labels: number[]
-  ): ModelQualityMetrics {
+  static runQualityTest(predictions: number[], labels: number[]): ModelQualityMetrics {
     const accuracy = this.calculateAccuracy(predictions, labels);
     const precision = this.calculatePrecision(predictions, labels);
     const recall = this.calculateRecall(predictions, labels);
     const f1Score = this.calculateF1Score(precision, recall);
     const confusionMatrix = this.calculateConfusionMatrix(predictions, labels);
-    
+
     return {
       accuracy,
       precision,
       recall,
       f1Score,
       aucRoc: 0, // 需要额外计算
-      confusionMatrix
+      confusionMatrix,
     };
   }
 }
@@ -375,19 +374,19 @@ class ModelQualityTester {
  */
 enum AITestTool {
   /** TensorFlow Model Analysis */
-  TFMA = 'tfma',
+  TFMA = "tfma",
   /** MLflow */
-  MLFLOW = 'mlflow',
+  MLFLOW = "mlflow",
   /** Fairlearn */
-  FAIRLEARN = 'fairlearn',
+  FAIRLEARN = "fairlearn",
   /** SHAP */
-  SHAP = 'shap',
+  SHAP = "shap",
   /** LIME */
-  LIME = 'lime',
+  LIME = "lime",
   /** Adversarial Robustness Toolbox */
-  ART = 'art',
+  ART = "art",
   /** PyTorch Captum */
-  CAPTUM = 'captum'
+  CAPTUM = "captum",
 }
 
 /**
@@ -399,13 +398,13 @@ interface AIToolFeatures {
   /** 支持的模型类型 */
   modelTypes: AIModelType[];
   /** 编程语言 */
-  language: 'python' | 'typescript' | 'java';
+  language: "python" | "typescript" | "java";
   /** 易用性 */
-  easeOfUse: 'easy' | 'medium' | 'hard';
+  easeOfUse: "easy" | "medium" | "hard";
   /** 社区支持 */
-  communitySupport: 'high' | 'medium' | 'low';
+  communitySupport: "high" | "medium" | "low";
   /** 文档质量 */
-  documentation: 'excellent' | 'good' | 'fair';
+  documentation: "excellent" | "good" | "fair";
 }
 
 /**
@@ -413,97 +412,118 @@ interface AIToolFeatures {
  */
 class AIToolComparison {
   private static tools: Map<AITestTool, AIToolFeatures> = new Map([
-    [AITestTool.TFMA, {
-      testTypes: [AITestType.FUNCTIONAL, AITestType.FAIRNESS],
-      modelTypes: [AIModelType.ML, AIModelType.DL],
-      language: 'python',
-      easeOfUse: 'medium',
-      communitySupport: 'high',
-      documentation: 'excellent'
-    }],
-    [AITestTool.MLFLOW, {
-      testTypes: [AITestType.FUNCTIONAL, AITestType.REGRESSION],
-      modelTypes: [AIModelType.ML, AIModelType.DL, AIModelType.NLP, AIModelType.CV],
-      language: 'python',
-      easeOfUse: 'easy',
-      communitySupport: 'high',
-      documentation: 'excellent'
-    }],
-    [AITestTool.FAIRLEARN, {
-      testTypes: [AITestType.FAIRNESS],
-      modelTypes: [AIModelType.ML, AIModelType.DL],
-      language: 'python',
-      easeOfUse: 'easy',
-      communitySupport: 'medium',
-      documentation: 'good'
-    }],
-    [AITestTool.SHAP, {
-      testTypes: [AITestType.EXPLAINABILITY],
-      modelTypes: [AIModelType.ML, AIModelType.DL],
-      language: 'python',
-      easeOfUse: 'medium',
-      communitySupport: 'high',
-      documentation: 'excellent'
-    }],
-    [AITestTool.LIME, {
-      testTypes: [AITestType.EXPLAINABILITY],
-      modelTypes: [AIModelType.ML, AIModelType.DL],
-      language: 'python',
-      easeOfUse: 'easy',
-      communitySupport: 'high',
-      documentation: 'good'
-    }],
-    [AITestTool.ART, {
-      testTypes: [AITestType.ADVERSARIAL, AITestType.ROBUSTNESS],
-      modelTypes: [AIModelType.DL, AIModelType.CV],
-      language: 'python',
-      easeOfUse: 'medium',
-      communitySupport: 'medium',
-      documentation: 'good'
-    }],
-    [AITestTool.CAPTUM, {
-      testTypes: [AITestType.EXPLAINABILITY],
-      modelTypes: [AIModelType.DL],
-      language: 'python',
-      easeOfUse: 'medium',
-      communitySupport: 'high',
-      documentation: 'excellent'
-    }]
+    [
+      AITestTool.TFMA,
+      {
+        testTypes: [AITestType.FUNCTIONAL, AITestType.FAIRNESS],
+        modelTypes: [AIModelType.ML, AIModelType.DL],
+        language: "python",
+        easeOfUse: "medium",
+        communitySupport: "high",
+        documentation: "excellent",
+      },
+    ],
+    [
+      AITestTool.MLFLOW,
+      {
+        testTypes: [AITestType.FUNCTIONAL, AITestType.REGRESSION],
+        modelTypes: [AIModelType.ML, AIModelType.DL, AIModelType.NLP, AIModelType.CV],
+        language: "python",
+        easeOfUse: "easy",
+        communitySupport: "high",
+        documentation: "excellent",
+      },
+    ],
+    [
+      AITestTool.FAIRLEARN,
+      {
+        testTypes: [AITestType.FAIRNESS],
+        modelTypes: [AIModelType.ML, AIModelType.DL],
+        language: "python",
+        easeOfUse: "easy",
+        communitySupport: "medium",
+        documentation: "good",
+      },
+    ],
+    [
+      AITestTool.SHAP,
+      {
+        testTypes: [AITestType.EXPLAINABILITY],
+        modelTypes: [AIModelType.ML, AIModelType.DL],
+        language: "python",
+        easeOfUse: "medium",
+        communitySupport: "high",
+        documentation: "excellent",
+      },
+    ],
+    [
+      AITestTool.LIME,
+      {
+        testTypes: [AITestType.EXPLAINABILITY],
+        modelTypes: [AIModelType.ML, AIModelType.DL],
+        language: "python",
+        easeOfUse: "easy",
+        communitySupport: "high",
+        documentation: "good",
+      },
+    ],
+    [
+      AITestTool.ART,
+      {
+        testTypes: [AITestType.ADVERSARIAL, AITestType.ROBUSTNESS],
+        modelTypes: [AIModelType.DL, AIModelType.CV],
+        language: "python",
+        easeOfUse: "medium",
+        communitySupport: "medium",
+        documentation: "good",
+      },
+    ],
+    [
+      AITestTool.CAPTUM,
+      {
+        testTypes: [AITestType.EXPLAINABILITY],
+        modelTypes: [AIModelType.DL],
+        language: "python",
+        easeOfUse: "medium",
+        communitySupport: "high",
+        documentation: "excellent",
+      },
+    ],
   ]);
-  
+
   /**
    * 获取工具特性
    */
   static getToolFeatures(tool: AITestTool): AIToolFeatures {
     return this.tools.get(tool)!;
   }
-  
+
   /**
    * 推荐工具
    */
   static recommendTools(requirements: Partial<AIToolFeatures>): AITestTool[] {
     const recommended: AITestTool[] = [];
-    
+
     for (const [tool, features] of this.tools.entries()) {
       let match = true;
-      
+
       if (requirements.testTypes && requirements.testTypes.length > 0) {
         match = match && requirements.testTypes.some(type => features.testTypes.includes(type));
       }
-      
+
       if (requirements.modelTypes && requirements.modelTypes.length > 0) {
         match = match && requirements.modelTypes.some(type => features.modelTypes.includes(type));
       }
-      
+
       if (requirements.language) {
         match = match && features.language === requirements.language;
       }
-      
+
       if (match) {
         recommended.push(tool);
       }
     }
-    
+
     return recommended;
   }
 }
@@ -518,12 +538,12 @@ class AIToolComparison {
 class MLflowIntegration {
   private trackingUri: string;
   private experimentName: string;
-  
+
   constructor(trackingUri: string, experimentName: string) {
     this.trackingUri = trackingUri;
     this.experimentName = experimentName;
   }
-  
+
   /**
    * 记录模型指标
    */
@@ -531,7 +551,7 @@ class MLflowIntegration {
     // 实现记录指标到MLflow的逻辑
     console.log(`Logging metrics for run ${runId}:`, metrics);
   }
-  
+
   /**
    * 记录模型参数
    */
@@ -539,7 +559,7 @@ class MLflowIntegration {
     // 实现记录参数到MLflow的逻辑
     console.log(`Logging params for run ${runId}:`, params);
   }
-  
+
   /**
    * 记录模型
    */
@@ -547,14 +567,14 @@ class MLflowIntegration {
     // 实现记录模型到MLflow的逻辑
     console.log(`Logging model ${modelPath} for run ${runId}`);
   }
-  
+
   /**
    * 获取最佳模型
    */
-  async getBestModel(metric: string, direction: 'max' | 'min'): Promise<string> {
+  async getBestModel(metric: string, direction: "max" | "min"): Promise<string> {
     // 实现获取最佳模型的逻辑
     console.log(`Getting best model by ${metric} (${direction})`);
-    return 'best-model-path';
+    return "best-model-path";
   }
 }
 ```
@@ -567,35 +587,35 @@ class MLflowIntegration {
  */
 class SHAPExplainer {
   private model: any;
-  
+
   constructor(model: any) {
     this.model = model;
   }
-  
+
   /**
    * 计算SHAP值
    */
   async computeShapValues(data: any[]): Promise<number[][]> {
     // 实现计算SHAP值的逻辑
-    console.log('Computing SHAP values for data:', data.length);
+    console.log("Computing SHAP values for data:", data.length);
     return [];
   }
-  
+
   /**
    * 生成解释报告
    */
   async generateExplanationReport(data: any[], shapValues: number[][]): Promise<string> {
     // 实现生成解释报告的逻辑
-    console.log('Generating explanation report');
-    return 'explanation-report.html';
+    console.log("Generating explanation report");
+    return "explanation-report.html";
   }
-  
+
   /**
    * 可视化SHAP值
    */
   async visualizeShapValues(shapValues: number[][]): Promise<void> {
     // 实现可视化SHAP值的逻辑
-    console.log('Visualizing SHAP values');
+    console.log("Visualizing SHAP values");
   }
 }
 ```
@@ -637,10 +657,10 @@ class DataQualityChecker {
     const missingFields = data.reduce((sum, row) => {
       return sum + Object.values(row).filter(v => v === null || v === undefined).length;
     }, 0);
-    
+
     return (totalFields - missingFields) / totalFields;
   }
-  
+
   /**
    * 检查数据唯一性
    */
@@ -648,7 +668,7 @@ class DataQualityChecker {
     const uniqueValues = new Set(data.map(row => row[key]));
     return uniqueValues.size / data.length;
   }
-  
+
   /**
    * 检查数据有效性
    */
@@ -656,7 +676,7 @@ class DataQualityChecker {
     // 实现数据有效性检查逻辑
     return 1.0;
   }
-  
+
   /**
    * 检查数据一致性
    */
@@ -664,7 +684,7 @@ class DataQualityChecker {
     // 实现数据一致性检查逻辑
     return 1.0;
   }
-  
+
   /**
    * 检查数据时效性
    */
@@ -674,27 +694,30 @@ class DataQualityChecker {
       const date = new Date(row[dateField]).getTime();
       return now - date > maxAge;
     }).length;
-    
+
     return (data.length - outdated) / data.length;
   }
-  
+
   /**
    * 检查数据偏差
    */
   static checkBias(data: any[], sensitiveAttribute: string): number {
-    const groups = data.reduce((acc, row) => {
-      const group = row[sensitiveAttribute];
-      acc[group] = (acc[group] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    
+    const groups = data.reduce(
+      (acc, row) => {
+        const group = row[sensitiveAttribute];
+        acc[group] = (acc[group] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
     const counts = Object.values(groups);
     const max = Math.max(...counts);
     const min = Math.min(...counts);
-    
+
     return 1 - (max - min) / max;
   }
-  
+
   /**
    * 运行数据质量检查
    */
@@ -706,19 +729,19 @@ class DataQualityChecker {
     sensitiveAttribute?: string
   ): DataQualityMetrics {
     const completeness = this.checkCompleteness(data);
-    const uniqueness = this.checkUniqueness(data, 'id');
+    const uniqueness = this.checkUniqueness(data, "id");
     const validity = schema ? this.checkValidity(data, schema) : 1.0;
     const consistency = this.checkConsistency(data);
     const timeliness = dateField && maxAge ? this.checkTimeliness(data, dateField, maxAge) : 1.0;
     const bias = sensitiveAttribute ? this.checkBias(data, sensitiveAttribute) : 1.0;
-    
+
     return {
       completeness,
       uniqueness,
       validity,
       consistency,
       timeliness,
-      bias
+      bias,
     };
   }
 }
@@ -736,7 +759,7 @@ interface DatasetInfo {
   /** 数据集名称 */
   name: string;
   /** 数据集类型 */
-  type: 'training' | 'validation' | 'test';
+  type: "training" | "validation" | "test";
   /** 数据集大小 */
   size: number;
   /** 数据集路径 */
@@ -752,21 +775,21 @@ interface DatasetInfo {
  */
 class DatasetManager {
   private datasets: Map<string, DatasetInfo> = new Map();
-  
+
   /**
    * 注册数据集
    */
   registerDataset(dataset: DatasetInfo): void {
     this.datasets.set(dataset.id, dataset);
   }
-  
+
   /**
    * 获取数据集
    */
   getDataset(id: string): DatasetInfo | undefined {
     return this.datasets.get(id);
   }
-  
+
   /**
    * 加载数据集
    */
@@ -775,16 +798,20 @@ class DatasetManager {
     if (!dataset) {
       throw new Error(`Dataset ${id} not found`);
     }
-    
+
     // 实现加载数据集的逻辑
     console.log(`Loading dataset ${id} from ${dataset.path}`);
     return [];
   }
-  
+
   /**
    * 分割数据集
    */
-  splitDataset(id: string, trainRatio: number, valRatio: number): {
+  splitDataset(
+    id: string,
+    trainRatio: number,
+    valRatio: number
+  ): {
     train: string;
     validation: string;
     test: string;
@@ -793,19 +820,19 @@ class DatasetManager {
     if (!dataset) {
       throw new Error(`Dataset ${id} not found`);
     }
-    
+
     // 实现数据集分割逻辑
     const trainId = `${id}-train`;
     const valId = `${id}-validation`;
     const testId = `${id}-test`;
-    
+
     return {
       train: trainId,
       validation: valId,
-      test: testId
+      test: testId,
     };
   }
-  
+
   /**
    * 更新数据质量指标
    */
@@ -852,50 +879,47 @@ interface InferencePerformanceMetrics {
  */
 class InferencePerformanceTester {
   private model: any;
-  
+
   constructor(model: any) {
     this.model = model;
   }
-  
+
   /**
    * 运行性能测试
    */
-  async runPerformanceTest(
-    testData: any[],
-    iterations: number = 100
-  ): Promise<InferencePerformanceMetrics> {
+  async runPerformanceTest(testData: any[], iterations: number = 100): Promise<InferencePerformanceMetrics> {
     const latencies: number[] = [];
     const startTime = Date.now();
-    
+
     for (let i = 0; i < iterations; i++) {
       const data = testData[i % testData.length];
       const start = Date.now();
-      
+
       // 执行推理
       await this.model.predict(data);
-      
+
       const end = Date.now();
       latencies.push(end - start);
     }
-    
+
     const endTime = Date.now();
     const totalTime = (endTime - startTime) / 1000; // 秒
-    
+
     // 计算延迟百分位数
     const sortedLatencies = latencies.sort((a, b) => a - b);
     const avgLatency = latencies.reduce((sum, l) => sum + l, 0) / latencies.length;
     const p50Latency = sortedLatencies[Math.floor(latencies.length * 0.5)];
     const p95Latency = sortedLatencies[Math.floor(latencies.length * 0.95)];
     const p99Latency = sortedLatencies[Math.floor(latencies.length * 0.99)];
-    
+
     // 计算吞吐量
     const throughput = iterations / totalTime;
-    
+
     // 获取资源使用情况
     const cpuUsage = this.getCPUUsage();
     const memoryUsage = this.getMemoryUsage();
     const gpuUsage = this.getGPUUsage();
-    
+
     return {
       avgLatency,
       p50Latency,
@@ -904,10 +928,10 @@ class InferencePerformanceTester {
       throughput,
       cpuUsage,
       memoryUsage,
-      gpuUsage
+      gpuUsage,
     };
   }
-  
+
   /**
    * 获取CPU使用率
    */
@@ -915,7 +939,7 @@ class InferencePerformanceTester {
     // 实现获取CPU使用率的逻辑
     return 50;
   }
-  
+
   /**
    * 获取内存使用量
    */
@@ -923,7 +947,7 @@ class InferencePerformanceTester {
     // 实现获取内存使用量的逻辑
     return 512;
   }
-  
+
   /**
    * 获取GPU使用率
    */
@@ -956,21 +980,21 @@ interface PerformanceBenchmark {
  */
 class PerformanceBenchmarkManager {
   private benchmarks: Map<string, PerformanceBenchmark> = new Map();
-  
+
   /**
    * 添加基准
    */
   addBenchmark(benchmark: PerformanceBenchmark): void {
     this.benchmarks.set(benchmark.name, benchmark);
   }
-  
+
   /**
    * 获取基准
    */
   getBenchmark(name: string): PerformanceBenchmark | undefined {
     return this.benchmarks.get(name);
   }
-  
+
   /**
    * 比较性能
    */
@@ -986,15 +1010,15 @@ class PerformanceBenchmarkManager {
     const latencyChange = ((current.avgLatency - baseline.avgLatency) / baseline.avgLatency) * 100;
     const throughputChange = ((current.throughput - baseline.throughput) / baseline.throughput) * 100;
     const resourceChange = ((current.cpuUsage - baseline.cpuUsage) / baseline.cpuUsage) * 100;
-    
+
     // 判断是否回归
     const regression = latencyChange > 10 || throughputChange < -10 || resourceChange > 10;
-    
+
     return {
       latencyChange,
       throughputChange,
       resourceChange,
-      regression
+      regression,
     };
   }
 }
@@ -1012,13 +1036,13 @@ class PerformanceBenchmarkManager {
  */
 enum AdversarialAttackType {
   /** FGSM */
-  FGSM = 'fgsm',
+  FGSM = "fgsm",
   /** PGD */
-  PGD = 'pgd',
+  PGD = "pgd",
   /** C&W */
-  CW = 'cw',
+  CW = "cw",
   /** DeepFool */
-  DEEPFOOL = 'deepfool'
+  DEEPFOOL = "deepfool",
 }
 
 /**
@@ -1042,50 +1066,43 @@ interface AdversarialAttackResult {
  */
 class AdversarialAttackTester {
   private model: any;
-  
+
   constructor(model: any) {
     this.model = model;
   }
-  
+
   /**
    * 运行FGSM攻击
    */
-  async runFGSMAttack(
-    data: any[],
-    epsilon: number = 0.01
-  ): Promise<AdversarialAttackResult> {
+  async runFGSMAttack(data: any[], epsilon: number = 0.01): Promise<AdversarialAttackResult> {
     // 实现FGSM攻击逻辑
     console.log(`Running FGSM attack with epsilon ${epsilon}`);
-    
+
     return {
       attackType: AdversarialAttackType.FGSM,
       originalPrediction: 0,
       adversarialPrediction: 1,
       successRate: 0.1,
-      perturbationSize: epsilon
+      perturbationSize: epsilon,
     };
   }
-  
+
   /**
    * 运行PGD攻击
    */
-  async runPGDAttack(
-    data: any[],
-    epsilon: number = 0.01,
-    iterations: number = 10
-  ): Promise<AdversarialAttackResult> {
+  async runPGDAttack(data: any[], epsilon: number = 0.01, iterations: number = 10): Promise<AdversarialAttackResult> {
     // 实现PGD攻击逻辑
     console.log(`Running PGD attack with epsilon ${epsilon} and ${iterations} iterations`);
-    
+
     return {
       attackType: AdversarialAttackType.PGD,
       originalPrediction: 0,
       adversarialPrediction: 1,
       successRate: 0.15,
-      perturbationSize: epsilon
+      perturbationSize: epsilon,
     };
   }
-  
+
   /**
    * 评估模型鲁棒性
    */
@@ -1094,10 +1111,10 @@ class AdversarialAttackTester {
     attackTypes: AdversarialAttackType[]
   ): Promise<Record<AdversarialAttackType, number>> {
     const robustnessScores: Record<AdversarialAttackType, number> = {} as any;
-    
+
     for (const attackType of attackTypes) {
       let result: AdversarialAttackResult;
-      
+
       switch (attackType) {
         case AdversarialAttackType.FGSM:
           result = await this.runFGSMAttack(testData);
@@ -1111,14 +1128,14 @@ class AdversarialAttackTester {
             originalPrediction: 0,
             adversarialPrediction: 0,
             successRate: 0,
-            perturbationSize: 0
+            perturbationSize: 0,
           };
       }
-      
+
       // 鲁棒性得分 = 1 - 攻击成功率
       robustnessScores[attackType] = 1 - result.successRate;
     }
-    
+
     return robustnessScores;
   }
 }
@@ -1132,11 +1149,11 @@ class AdversarialAttackTester {
  */
 enum PrivacyAttackType {
   /** 成员推断 */
-  MEMBERSHIP_INFERENCE = 'membership_inference',
+  MEMBERSHIP_INFERENCE = "membership_inference",
   /** 模型反演 */
-  MODEL_INVERSION = 'model_inversion',
+  MODEL_INVERSION = "model_inversion",
   /** 属性推断 */
-  ATTRIBUTE_INFERENCE = 'attribute_inference'
+  ATTRIBUTE_INFERENCE = "attribute_inference",
 }
 
 /**
@@ -1148,7 +1165,7 @@ interface PrivacyTestResult {
   /** 攻击成功率 */
   successRate: number;
   /** 隐私风险等级 */
-  riskLevel: 'low' | 'medium' | 'high';
+  riskLevel: "low" | "medium" | "high";
 }
 
 /**
@@ -1156,64 +1173,53 @@ interface PrivacyTestResult {
  */
 class PrivacyProtectionTester {
   private model: any;
-  
+
   constructor(model: any) {
     this.model = model;
   }
-  
+
   /**
    * 运行成员推断攻击
    */
-  async runMembershipInferenceAttack(
-    trainingData: any[],
-    testData: any[]
-  ): Promise<PrivacyTestResult> {
+  async runMembershipInferenceAttack(trainingData: any[], testData: any[]): Promise<PrivacyTestResult> {
     // 实现成员推断攻击逻辑
-    console.log('Running membership inference attack');
-    
+    console.log("Running membership inference attack");
+
     return {
       attackType: PrivacyAttackType.MEMBERSHIP_INFERENCE,
       successRate: 0.05,
-      riskLevel: 'low'
+      riskLevel: "low",
     };
   }
-  
+
   /**
    * 运行模型反演攻击
    */
-  async runModelInversionAttack(
-    targetOutput: any
-  ): Promise<PrivacyTestResult> {
+  async runModelInversionAttack(targetOutput: any): Promise<PrivacyTestResult> {
     // 实现模型反演攻击逻辑
-    console.log('Running model inversion attack');
-    
+    console.log("Running model inversion attack");
+
     return {
       attackType: PrivacyAttackType.MODEL_INVERSION,
       successRate: 0.03,
-      riskLevel: 'low'
+      riskLevel: "low",
     };
   }
-  
+
   /**
    * 评估隐私保护
    */
-  async evaluatePrivacyProtection(
-    trainingData: any[],
-    testData: any[]
-  ): Promise<PrivacyTestResult[]> {
+  async evaluatePrivacyProtection(trainingData: any[], testData: any[]): Promise<PrivacyTestResult[]> {
     const results: PrivacyTestResult[] = [];
-    
+
     // 成员推断攻击
-    const membershipResult = await this.runMembershipInferenceAttack(
-      trainingData,
-      testData
-    );
+    const membershipResult = await this.runMembershipInferenceAttack(trainingData, testData);
     results.push(membershipResult);
-    
+
     // 模型反演攻击
     const inversionResult = await this.runModelInversionAttack(testData[0]);
     results.push(inversionResult);
-    
+
     return results;
   }
 }
@@ -1249,83 +1255,64 @@ class FairnessTester {
   /**
    * 计算统计均等
    */
-  static calculateStatisticalParity(
-    predictions: number[],
-    sensitiveAttribute: number[]
-  ): number {
+  static calculateStatisticalParity(predictions: number[], sensitiveAttribute: number[]): number {
     const groups = [0, 1];
     const rates = groups.map(group => {
       const groupPredictions = predictions.filter((_, i) => sensitiveAttribute[i] === group);
       return groupPredictions.filter(p => p === 1).length / groupPredictions.length;
     });
-    
+
     return Math.abs(rates[0] - rates[1]);
   }
-  
+
   /**
    * 计算机会均等
    */
-  static calculateEqualOpportunity(
-    predictions: number[],
-    labels: number[],
-    sensitiveAttribute: number[]
-  ): number {
+  static calculateEqualOpportunity(predictions: number[], labels: number[], sensitiveAttribute: number[]): number {
     const groups = [0, 1];
     const tprRates = groups.map(group => {
-      const groupIndices = predictions
-        .map((_, i) => i)
-        .filter(i => sensitiveAttribute[i] === group);
-      
+      const groupIndices = predictions.map((_, i) => i).filter(i => sensitiveAttribute[i] === group);
+
       const truePositive = groupIndices.filter(i => predictions[i] === 1 && labels[i] === 1).length;
       const actualPositive = groupIndices.filter(i => labels[i] === 1).length;
-      
+
       return truePositive / actualPositive;
     });
-    
+
     return Math.abs(tprRates[0] - tprRates[1]);
   }
-  
+
   /**
    * 计算预测均等
    */
-  static calculatePredictiveEquality(
-    predictions: number[],
-    labels: number[],
-    sensitiveAttribute: number[]
-  ): number {
+  static calculatePredictiveEquality(predictions: number[], labels: number[], sensitiveAttribute: number[]): number {
     const groups = [0, 1];
     const fprRates = groups.map(group => {
-      const groupIndices = predictions
-        .map((_, i) => i)
-        .filter(i => sensitiveAttribute[i] === group);
-      
+      const groupIndices = predictions.map((_, i) => i).filter(i => sensitiveAttribute[i] === group);
+
       const falsePositive = groupIndices.filter(i => predictions[i] === 1 && labels[i] === 0).length;
       const actualNegative = groupIndices.filter(i => labels[i] === 0).length;
-      
+
       return falsePositive / actualNegative;
     });
-    
+
     return Math.abs(fprRates[0] - fprRates[1]);
   }
-  
+
   /**
    * 运行公平性测试
    */
-  static runFairnessTest(
-    predictions: number[],
-    labels: number[],
-    sensitiveAttribute: number[]
-  ): FairnessMetrics {
+  static runFairnessTest(predictions: number[], labels: number[], sensitiveAttribute: number[]): FairnessMetrics {
     const statisticalParity = this.calculateStatisticalParity(predictions, sensitiveAttribute);
     const equalOpportunity = this.calculateEqualOpportunity(predictions, labels, sensitiveAttribute);
     const predictiveEquality = this.calculatePredictiveEquality(predictions, labels, sensitiveAttribute);
-    
+
     return {
       statisticalParity,
       equalOpportunity,
       predictiveEquality,
       equalizedOdds: 0, // 需要额外计算
-      calibration: 0 // 需要额外计算
+      calibration: 0, // 需要额外计算
     };
   }
 }
@@ -1342,7 +1329,7 @@ interface BiasDetectionResult {
   biases: Array<{
     type: string;
     description: string;
-    severity: 'low' | 'medium' | 'high';
+    severity: "low" | "medium" | "high";
     affectedGroups: string[];
   }>;
   /** 整体偏差得分 */
@@ -1356,85 +1343,75 @@ class BiasDetector {
   /**
    * 检测数据偏差
    */
-  static detectDataBias(
-    data: any[],
-    sensitiveAttributes: string[]
-  ): BiasDetectionResult {
+  static detectDataBias(data: any[], sensitiveAttributes: string[]): BiasDetectionResult {
     const biases: any[] = [];
-    
+
     for (const attribute of sensitiveAttributes) {
-      const distribution = data.reduce((acc, row) => {
-        const value = row[attribute];
-        acc[value] = (acc[value] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
-      
+      const distribution = data.reduce(
+        (acc, row) => {
+          const value = row[attribute];
+          acc[value] = (acc[value] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
+
       const counts = Object.values(distribution);
       const max = Math.max(...counts);
       const min = Math.min(...counts);
       const imbalance = (max - min) / max;
-      
+
       if (imbalance > 0.3) {
         biases.push({
-          type: 'data_imbalance',
+          type: "data_imbalance",
           description: `数据在属性 ${attribute} 上分布不均衡`,
-          severity: imbalance > 0.5 ? 'high' : 'medium',
-          affectedGroups: Object.keys(distribution)
+          severity: imbalance > 0.5 ? "high" : "medium",
+          affectedGroups: Object.keys(distribution),
         });
       }
     }
-    
-    const overallBiasScore = biases.length > 0 
-      ? biases.reduce((sum, b) => sum + (b.severity === 'high' ? 1 : 0.5), 0) / biases.length
-      : 0;
-    
+
+    const overallBiasScore =
+      biases.length > 0 ? biases.reduce((sum, b) => sum + (b.severity === "high" ? 1 : 0.5), 0) / biases.length : 0;
+
     return {
       biases,
-      overallBiasScore
+      overallBiasScore,
     };
   }
-  
+
   /**
    * 检测模型偏差
    */
-  static detectModelBias(
-    predictions: number[],
-    labels: number[],
-    sensitiveAttribute: number[]
-  ): BiasDetectionResult {
-    const fairnessMetrics = FairnessTester.runFairnessTest(
-      predictions,
-      labels,
-      sensitiveAttribute
-    );
-    
+  static detectModelBias(predictions: number[], labels: number[], sensitiveAttribute: number[]): BiasDetectionResult {
+    const fairnessMetrics = FairnessTester.runFairnessTest(predictions, labels, sensitiveAttribute);
+
     const biases: any[] = [];
-    
+
     if (fairnessMetrics.statisticalParity > 0.1) {
       biases.push({
-        type: 'statistical_parity_violation',
-        description: '统计均等偏差',
-        severity: fairnessMetrics.statisticalParity > 0.2 ? 'high' : 'medium',
-        affectedGroups: ['0', '1']
+        type: "statistical_parity_violation",
+        description: "统计均等偏差",
+        severity: fairnessMetrics.statisticalParity > 0.2 ? "high" : "medium",
+        affectedGroups: ["0", "1"],
       });
     }
-    
+
     if (fairnessMetrics.equalOpportunity > 0.1) {
       biases.push({
-        type: 'equal_opportunity_violation',
-        description: '机会均等偏差',
-        severity: fairnessMetrics.equalOpportunity > 0.2 ? 'high' : 'medium',
-        affectedGroups: ['0', '1']
+        type: "equal_opportunity_violation",
+        description: "机会均等偏差",
+        severity: fairnessMetrics.equalOpportunity > 0.2 ? "high" : "medium",
+        affectedGroups: ["0", "1"],
       });
     }
-    
-    const overallBiasScore = biases.length > 0 
-      ? biases.reduce((sum, b) => sum + (b.severity === 'high' ? 1 : 0.5), 0) / biases.length
-      : 0;
-    
+
+    const overallBiasScore =
+      biases.length > 0 ? biases.reduce((sum, b) => sum + (b.severity === "high" ? 1 : 0.5), 0) / biases.length : 0;
+
     return {
       biases,
-      overallBiasScore
+      overallBiasScore,
     };
   }
 }
@@ -1455,56 +1432,32 @@ class AITestBestPractices {
    * 数据质量要求
    */
   static dataQuality = {
-    description: '确保训练和测试数据的质量',
-    practices: [
-      '进行数据质量检查',
-      '确保数据代表性',
-      '检测和缓解数据偏差',
-      '保护数据隐私',
-      '维护数据版本'
-    ]
+    description: "确保训练和测试数据的质量",
+    practices: ["进行数据质量检查", "确保数据代表性", "检测和缓解数据偏差", "保护数据隐私", "维护数据版本"],
   };
-  
+
   /**
    * 模型评估
    */
   static modelEvaluation = {
-    description: '全面评估模型性能',
-    practices: [
-      '使用多个评估指标',
-      '在独立测试集上评估',
-      '进行交叉验证',
-      '分析模型错误',
-      '监控模型性能变化'
-    ]
+    description: "全面评估模型性能",
+    practices: ["使用多个评估指标", "在独立测试集上评估", "进行交叉验证", "分析模型错误", "监控模型性能变化"],
   };
-  
+
   /**
    * 安全性测试
    */
   static securityTesting = {
-    description: '测试模型的安全性和鲁棒性',
-    practices: [
-      '进行对抗攻击测试',
-      '测试隐私保护',
-      '评估模型鲁棒性',
-      '实施安全防护措施',
-      '建立安全监控'
-    ]
+    description: "测试模型的安全性和鲁棒性",
+    practices: ["进行对抗攻击测试", "测试隐私保护", "评估模型鲁棒性", "实施安全防护措施", "建立安全监控"],
   };
-  
+
   /**
    * 公平性测试
    */
   static fairnessTesting = {
-    description: '确保模型的公平性',
-    practices: [
-      '检测数据偏差',
-      '评估模型公平性',
-      '实施公平性缓解措施',
-      '持续监控公平性指标',
-      '建立公平性审计机制'
-    ]
+    description: "确保模型的公平性",
+    practices: ["检测数据偏差", "评估模型公平性", "实施公平性缓解措施", "持续监控公平性指标", "建立公平性审计机制"],
   };
 }
 ```
@@ -1518,64 +1471,64 @@ class AITestBestPractices {
 class AITestChecklist {
   private static items = [
     {
-      category: '数据质量',
+      category: "数据质量",
       checks: [
-        '是否进行了数据质量检查',
-        '是否检测了数据偏差',
-        '是否保护了数据隐私',
-        '是否维护了数据版本',
-        '是否验证了数据代表性'
-      ]
+        "是否进行了数据质量检查",
+        "是否检测了数据偏差",
+        "是否保护了数据隐私",
+        "是否维护了数据版本",
+        "是否验证了数据代表性",
+      ],
     },
     {
-      category: '模型评估',
+      category: "模型评估",
       checks: [
-        '是否使用了多个评估指标',
-        '是否在独立测试集上评估',
-        '是否进行了交叉验证',
-        '是否分析了模型错误',
-        '是否建立了性能基线'
-      ]
+        "是否使用了多个评估指标",
+        "是否在独立测试集上评估",
+        "是否进行了交叉验证",
+        "是否分析了模型错误",
+        "是否建立了性能基线",
+      ],
     },
     {
-      category: '性能测试',
+      category: "性能测试",
       checks: [
-        '是否测试了推理延迟',
-        '是否测试了吞吐量',
-        '是否监控了资源使用',
-        '是否进行了性能基准测试',
-        '是否检测了性能回归'
-      ]
+        "是否测试了推理延迟",
+        "是否测试了吞吐量",
+        "是否监控了资源使用",
+        "是否进行了性能基准测试",
+        "是否检测了性能回归",
+      ],
     },
     {
-      category: '安全测试',
+      category: "安全测试",
       checks: [
-        '是否进行了对抗攻击测试',
-        '是否测试了隐私保护',
-        '是否评估了模型鲁棒性',
-        '是否实施了安全防护',
-        '是否建立了安全监控'
-      ]
+        "是否进行了对抗攻击测试",
+        "是否测试了隐私保护",
+        "是否评估了模型鲁棒性",
+        "是否实施了安全防护",
+        "是否建立了安全监控",
+      ],
     },
     {
-      category: '公平性测试',
+      category: "公平性测试",
       checks: [
-        '是否检测了数据偏差',
-        '是否评估了模型公平性',
-        '是否实施了公平性缓解',
-        '是否监控了公平性指标',
-        '是否建立了公平性审计'
-      ]
-    }
+        "是否检测了数据偏差",
+        "是否评估了模型公平性",
+        "是否实施了公平性缓解",
+        "是否监控了公平性指标",
+        "是否建立了公平性审计",
+      ],
+    },
   ];
-  
+
   /**
    * 获取检查清单
    */
   static getChecklist(): typeof AITestChecklist.items {
     return this.items;
   }
-  
+
   /**
    * 检查完成情况
    */
@@ -1588,11 +1541,11 @@ class AITestChecklist {
     const completedItems = completed.filter(item => allItems.includes(item));
     const pendingItems = allItems.filter(item => !completed.includes(item));
     const progress = (completedItems.length / allItems.length) * 100;
-    
+
     return {
       completed: completedItems,
       pending: pendingItems,
-      progress
+      progress,
     };
   }
 }
@@ -1621,13 +1574,10 @@ class AITestChecklist {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1650,8 +1600,6 @@ class AITestChecklist {
 - **依赖倒置**：依赖抽象而非具体实现
 - **接口隔离**：使用细粒度的接口
 - **迪米特法则**：最少知识原则
-
-
 
 ## 架构设计
 
@@ -1685,8 +1633,6 @@ class AITestChecklist {
 - **缓存**：Redis
 - **消息队列**：RabbitMQ / Kafka
 
-
-
 ## 技术实现
 
 ### 技术实现
@@ -1709,46 +1655,46 @@ class AITestChecklist {
 #### 关键实现
 
 1. **服务层实现**
+
 ```typescript
 class UserService {
   async createUser(data: CreateUserDto): Promise<User> {
     // 验证输入
     this.validateUserData(data);
-    
+
     // 加密密码
     const hashedPassword = await this.hashPassword(data.password);
-    
+
     // 创建用户
     const user = await this.userRepository.create({
       ...data,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     return user;
   }
 }
 ```
 
 2. **中间件实现**
+
 ```typescript
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  const token = req.headers.authorization?.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ error: '未授权访问' });
+    return res.status(401).json({ error: "未授权访问" });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ error: '令牌无效' });
+    return res.status(401).json({ error: "令牌无效" });
   }
 };
 ```
-
-
 
 ## 部署方案
 
@@ -1761,6 +1707,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 #### 部署步骤
 
 1. **环境准备**
+
 ```bash
 # 安装Docker
 curl -fsSL https://get.docker.com | sh
@@ -1770,6 +1717,7 @@ curl -fsSL https://get.docker.com | sh
 ```
 
 2. **构建镜像**
+
 ```bash
 # 构建应用镜像
 docker build -t yyc3-app:latest .
@@ -1779,6 +1727,7 @@ docker push registry.example.com/yyc3-app:latest
 ```
 
 3. **部署到Kubernetes**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1795,16 +1744,17 @@ spec:
         app: yyc3-app
     spec:
       containers:
-      - name: app
-        image: registry.example.com/yyc3-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: app
+          image: registry.example.com/yyc3-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ```
 
 4. **配置服务**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -1814,13 +1764,11 @@ spec:
   selector:
     app: yyc3-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
-
-
 
 ## 性能优化
 
@@ -1829,6 +1777,7 @@ spec:
 #### 前端优化
 
 1. **代码分割**
+
 ```typescript
 // 路由级别代码分割
 const Home = lazy(() => import('./pages/Home'));
@@ -1847,6 +1796,7 @@ function App() {
 ```
 
 2. **缓存策略**
+
 ```typescript
 // React.memo 避免不必要的重渲染
 const MemoizedComponent = React.memo(({ data }) => {
@@ -1862,6 +1812,7 @@ const expensiveValue = useMemo(() => {
 #### 后端优化
 
 1. **数据库优化**
+
 ```typescript
 // 使用索引
 CREATE INDEX idx_user_email ON users(email);
@@ -1881,28 +1832,27 @@ const users = await prisma.user.findMany({
 ```
 
 2. **缓存策略**
+
 ```typescript
 // Redis缓存
 async function getUser(id: string): Promise<User> {
   const cacheKey = `user:${id}`;
-  
+
   // 尝试从缓存获取
   const cached = await redis.get(cacheKey);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // 从数据库获取
   const user = await prisma.user.findUnique({ where: { id } });
-  
+
   // 写入缓存
   await redis.setex(cacheKey, 3600, JSON.stringify(user));
-  
+
   return user;
 }
 ```
-
-
 
 ## 安全考虑
 
@@ -1911,44 +1861,42 @@ async function getUser(id: string): Promise<User> {
 #### 认证与授权
 
 1. **JWT认证**
+
 ```typescript
 // 生成JWT令牌
-const token = jwt.sign(
-  { userId: user.id, role: user.role },
-  process.env.JWT_SECRET,
-  { expiresIn: '24h' }
-);
+const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
 // 验证JWT令牌
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 2. **RBAC授权**
+
 ```typescript
 // 角色权限检查
 function checkPermission(user: User, resource: string, action: string): boolean {
   const permissions = rolePermissions[user.role];
-  return permissions.some(p => 
-    p.resource === resource && p.actions.includes(action)
-  );
+  return permissions.some(p => p.resource === resource && p.actions.includes(action));
 }
 ```
 
 #### 数据保护
 
 1. **输入验证**
+
 ```typescript
 // 使用Zod进行输入验证
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).regex(/[A-Z]/),
-  name: z.string().min(2)
+  name: z.string().min(2),
 });
 
 const validated = createUserSchema.parse(input);
 ```
 
 2. **数据加密**
+
 ```typescript
 // 使用bcrypt加密密码
 const hashedPassword = await bcrypt.hash(password, 10);
@@ -1962,13 +1910,13 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```typescript
 // Express安全头配置
 app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGINS?.split(","),
+    credentials: true,
+  })
+);
 ```
-
-
 
 ## 监控告警
 
@@ -1977,18 +1925,21 @@ app.use(cors({
 #### 监控指标
 
 1. **系统指标**
+
 - CPU使用率
 - 内存使用率
 - 磁盘使用率
 - 网络I/O
 
 2. **应用指标**
+
 - 请求量(RPS)
 - 响应时间
 - 错误率
 - 并发用户数
 
 3. **业务指标**
+
 - 用户注册数
 - 订单创建数
 - 支付成功率
@@ -1998,37 +1949,40 @@ app.use(cors({
 
 ```typescript
 // Prometheus指标收集
-import { Counter, Histogram, Gauge } from 'prom-client';
+import { Counter, Histogram, Gauge } from "prom-client";
 
 const requestCounter = new Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status']
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
 });
 
 const responseTime = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'HTTP request duration in seconds',
-  labelNames: ['method', 'route']
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route"],
 });
 
 // 使用中间件记录指标
 app.use((req, res, next) => {
   const start = Date.now();
-  
-  res.on('finish', () => {
+
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
     requestCounter.inc({
       method: req.method,
       route: req.route?.path || req.path,
-      status: res.statusCode
+      status: res.statusCode,
     });
-    responseTime.observe({
-      method: req.method,
-      route: req.route?.path || req.path
-    }, duration);
+    responseTime.observe(
+      {
+        method: req.method,
+        route: req.route?.path || req.path,
+      },
+      duration
+    );
   });
-  
+
   next();
 });
 ```
@@ -2037,28 +1991,26 @@ app.use((req, res, next) => {
 
 ```yaml
 groups:
-- name: api_alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "API错误率过高"
-      description: "5分钟内错误率超过5%"
-  
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "API响应时间过长"
-      description: "95%分位响应时间超过1秒"
+  - name: api_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API错误率过高"
+          description: "5分钟内错误率超过5%"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, http_request_duration_seconds) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API响应时间过长"
+          description: "95%分位响应时间超过1秒"
 ```
-
-
 
 ## 最佳实践
 
@@ -2067,21 +2019,23 @@ groups:
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -2090,10 +2044,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -2119,16 +2070,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -2137,25 +2088,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
 
 ## 相关文档
 

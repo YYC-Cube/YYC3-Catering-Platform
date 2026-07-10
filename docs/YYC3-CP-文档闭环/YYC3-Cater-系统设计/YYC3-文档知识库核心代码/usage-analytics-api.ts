@@ -41,7 +41,7 @@ const accessEventSchema = z.object({
  * @access 公开
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/events', zValidator('json', accessEventSchema), async (c) => {
+app.post('/events', zValidator('json', accessEventSchema), async c => {
   try {
     const event = c.req.valid('json');
     logger.info('Record access event requested', { event });
@@ -54,10 +54,13 @@ app.post('/events', zValidator('json', accessEventSchema), async (c) => {
     });
   } catch (error) {
     logger.error('Record access event failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '记录访问事件失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '记录访问事件失败',
+      },
+      500,
+    );
   }
 });
 
@@ -67,16 +70,19 @@ app.post('/events', zValidator('json', accessEventSchema), async (c) => {
  * @access 公开
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/events/batch', async (c) => {
+app.post('/events/batch', async c => {
   try {
     const body = await c.req.json();
     const { events } = body;
 
     if (!Array.isArray(events) || events.length === 0) {
-      return c.json({
-        success: false,
-        error: '事件列表不能为空',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '事件列表不能为空',
+        },
+        400,
+      );
     }
 
     logger.info('Batch record access events requested', { count: events.length });
@@ -101,10 +107,13 @@ app.post('/events/batch', async (c) => {
     });
   } catch (error) {
     logger.error('Batch record access events failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '批量记录访问事件失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '批量记录访问事件失败',
+      },
+      500,
+    );
   }
 });
 
@@ -114,7 +123,7 @@ app.post('/events/batch', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 文档使用统计
  */
-app.get('/documents/:documentId/stats', async (c) => {
+app.get('/documents/:documentId/stats', async c => {
   try {
     const documentId = c.req.param('documentId');
     logger.info('Get document usage stats requested', { documentId });
@@ -122,10 +131,13 @@ app.get('/documents/:documentId/stats', async (c) => {
     const stats = await usageAnalyticsService.getDocumentUsageStats(documentId);
 
     if (!stats) {
-      return c.json({
-        success: false,
-        error: '文档不存在或暂无统计数据',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '文档不存在或暂无统计数据',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -134,10 +146,13 @@ app.get('/documents/:documentId/stats', async (c) => {
     });
   } catch (error) {
     logger.error('Get document usage stats failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取文档使用统计失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取文档使用统计失败',
+      },
+      500,
+    );
   }
 });
 
@@ -147,7 +162,7 @@ app.get('/documents/:documentId/stats', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 访问历史
  */
-app.get('/documents/:documentId/history', async (c) => {
+app.get('/documents/:documentId/history', async c => {
   try {
     const documentId = c.req.param('documentId');
     const limit = parseInt(c.req.query('limit') || '50');
@@ -167,10 +182,13 @@ app.get('/documents/:documentId/history', async (c) => {
     });
   } catch (error) {
     logger.error('Get document access history failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取文档访问历史失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取文档访问历史失败',
+      },
+      500,
+    );
   }
 });
 
@@ -180,7 +198,7 @@ app.get('/documents/:documentId/history', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 用户使用统计
  */
-app.get('/users/:userId/stats', async (c) => {
+app.get('/users/:userId/stats', async c => {
   try {
     const userId = c.req.param('userId');
     logger.info('Get user usage stats requested', { userId });
@@ -188,10 +206,13 @@ app.get('/users/:userId/stats', async (c) => {
     const stats = await usageAnalyticsService.getUserUsageStats(userId);
 
     if (!stats) {
-      return c.json({
-        success: false,
-        error: '用户不存在或暂无统计数据',
-      }, 404);
+      return c.json(
+        {
+          success: false,
+          error: '用户不存在或暂无统计数据',
+        },
+        404,
+      );
     }
 
     return c.json({
@@ -200,10 +221,13 @@ app.get('/users/:userId/stats', async (c) => {
     });
   } catch (error) {
     logger.error('Get user usage stats failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取用户使用统计失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取用户使用统计失败',
+      },
+      500,
+    );
   }
 });
 
@@ -213,7 +237,7 @@ app.get('/users/:userId/stats', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 访问历史
  */
-app.get('/users/:userId/history', async (c) => {
+app.get('/users/:userId/history', async c => {
   try {
     const userId = c.req.param('userId');
     const limit = parseInt(c.req.query('limit') || '50');
@@ -233,10 +257,13 @@ app.get('/users/:userId/history', async (c) => {
     });
   } catch (error) {
     logger.error('Get user access history failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取用户访问历史失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取用户访问历史失败',
+      },
+      500,
+    );
   }
 });
 
@@ -246,7 +273,7 @@ app.get('/users/:userId/history', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 系统使用统计
  */
-app.get('/system/stats', async (c) => {
+app.get('/system/stats', async c => {
   try {
     logger.info('Get system usage stats requested');
 
@@ -258,10 +285,13 @@ app.get('/system/stats', async (c) => {
     });
   } catch (error) {
     logger.error('Get system usage stats failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取系统使用统计失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取系统使用统计失败',
+      },
+      500,
+    );
   }
 });
 
@@ -271,7 +301,7 @@ app.get('/system/stats', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 使用趋势
  */
-app.get('/system/trends', async (c) => {
+app.get('/system/trends', async c => {
   try {
     const days = parseInt(c.req.query('days') || '30');
 
@@ -288,10 +318,13 @@ app.get('/system/trends', async (c) => {
     });
   } catch (error) {
     logger.error('Get usage trends failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取使用趋势失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取使用趋势失败',
+      },
+      500,
+    );
   }
 });
 
@@ -301,7 +334,7 @@ app.get('/system/trends', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 导出文件
  */
-app.get('/export', async (c) => {
+app.get('/export', async c => {
   try {
     const format = c.req.query('format') || 'json';
     const startDate = c.req.query('startDate');
@@ -328,10 +361,13 @@ app.get('/export', async (c) => {
     }
   } catch (error) {
     logger.error('Export usage report failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '导出使用报告失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '导出使用报告失败',
+      },
+      500,
+    );
   }
 });
 
@@ -341,7 +377,7 @@ app.get('/export', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/cleanup', async (c) => {
+app.post('/cleanup', async c => {
   try {
     const body = await c.req.json();
     const { retentionDays = 90 } = body;
@@ -356,10 +392,13 @@ app.post('/cleanup', async (c) => {
     });
   } catch (error) {
     logger.error('Cleanup old data failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '清理旧数据失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '清理旧数据失败',
+      },
+      500,
+    );
   }
 });
 
@@ -369,7 +408,7 @@ app.post('/cleanup', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 仪表板数据
  */
-app.get('/dashboard', async (c) => {
+app.get('/dashboard', async c => {
   try {
     logger.info('Get dashboard data requested');
 
@@ -395,10 +434,13 @@ app.get('/dashboard', async (c) => {
     });
   } catch (error) {
     logger.error('Get dashboard data failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取仪表板数据失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取仪表板数据失败',
+      },
+      500,
+    );
   }
 });
 

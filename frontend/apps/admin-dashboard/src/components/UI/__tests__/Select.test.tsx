@@ -9,185 +9,185 @@
  * @license MIT
  */
 
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { Select } from '@/components/UI/Select'
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+import { Select } from '@/components/UI/Select';
 
 describe('Select组件', () => {
   const options = [
     { label: '选项一', value: 'option1' },
     { label: '选项二', value: 'option2' },
     { label: '选项三', value: 'option3' },
-  ]
+  ];
 
   it('应该正确渲染默认选择器', () => {
     const wrapper = mount(Select, {
       props: {
         options,
-        placeholder: '请选择'
-      }
-    })
+        placeholder: '请选择',
+      },
+    });
 
-    expect(wrapper.text()).toContain('请选择')
-  })
+    expect(wrapper.text()).toContain('请选择');
+  });
 
   it('应该正确绑定v-model', async () => {
     const wrapper = mount(Select, {
       props: {
         modelValue: 'option1',
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    expect(wrapper.text()).toContain('选项一')
-  })
+    expect(wrapper.text()).toContain('选项一');
+  });
 
   it('应该正确渲染禁用状态', () => {
     const wrapper = mount(Select, {
       props: {
         disabled: true,
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    const select = wrapper.find('button')
-    expect(select.attributes('disabled')).toBeDefined()
-  })
+    const select = wrapper.find('button');
+    expect(select.attributes('disabled')).toBeDefined();
+  });
 
   it('应该正确渲染只读状态', () => {
     const wrapper = mount(Select, {
       props: {
         readonly: true,
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    const select = wrapper.find('button')
-    expect(select.attributes('readonly')).toBeDefined()
-  })
+    const select = wrapper.find('button');
+    expect(select.attributes('readonly')).toBeDefined();
+  });
 
   it('应该正确渲染可清空', () => {
     const wrapper = mount(Select, {
       props: {
         modelValue: 'option1',
         options,
-        clearable: true
-      }
-    })
+        clearable: true,
+      },
+    });
 
-    expect(wrapper.find('.cursor-pointer').exists()).toBe(true)
-  })
+    expect(wrapper.find('.cursor-pointer').exists()).toBe(true);
+  });
 
   it('应该正确渲染多选模式', () => {
     const wrapper = mount(Select, {
       props: {
         multiple: true,
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    expect(wrapper.classes()).toContain('multiple')
-  })
+    expect(wrapper.classes()).toContain('multiple');
+  });
 
   it('应该正确渲染可搜索', () => {
     const wrapper = mount(Select, {
       props: {
         searchable: true,
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    expect(wrapper.find('input[type="text"]').exists()).toBe(true)
-  })
+    expect(wrapper.find('input[type="text"]').exists()).toBe(true);
+  });
 
   it('应该正确渲染加载状态', () => {
     const wrapper = mount(Select, {
       props: {
         loading: true,
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    expect(wrapper.find('.animate-spin').exists()).toBe(true)
-  })
+    expect(wrapper.find('.animate-spin').exists()).toBe(true);
+  });
 
   it('应该正确渲染小型选择器', () => {
     const wrapper = mount(Select, {
       props: {
         size: 'sm',
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    expect(wrapper.classes()).toContain('h-8')
-  })
+    expect(wrapper.classes()).toContain('h-8');
+  });
 
   it('应该正确渲染大型选择器', () => {
     const wrapper = mount(Select, {
       props: {
         size: 'lg',
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    expect(wrapper.classes()).toContain('h-12')
-  })
+    expect(wrapper.classes()).toContain('h-12');
+  });
 
   it('应该正确触发update:modelValue事件', async () => {
     const wrapper = mount(Select, {
       props: {
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    const select = wrapper.find('button')
-    await select.trigger('click')
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-  })
+    const select = wrapper.find('button');
+    await select.trigger('click');
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+  });
 
   it('应该正确触发change事件', async () => {
-    const onChange = vi.fn()
+    const onChange = vi.fn();
     const wrapper = mount(Select, {
       props: {
         options,
-        onChange
-      }
-    })
+        onChange,
+      },
+    });
 
-    const select = wrapper.find('button')
-    await select.trigger('click')
-    expect(onChange).toHaveBeenCalled()
-  })
+    const select = wrapper.find('button');
+    await select.trigger('click');
+    expect(onChange).toHaveBeenCalled();
+  });
 
   it('应该正确触发clear事件', async () => {
-    const onClear = vi.fn()
+    const onClear = vi.fn();
     const wrapper = mount(Select, {
       props: {
         modelValue: 'option1',
         options,
         clearable: true,
-        onClear
-      }
-    })
+        onClear,
+      },
+    });
 
-    const clearButton = wrapper.find('.cursor-pointer')
-    await clearButton.trigger('click')
-    expect(onClear).toHaveBeenCalled()
-  })
+    const clearButton = wrapper.find('.cursor-pointer');
+    await clearButton.trigger('click');
+    expect(onClear).toHaveBeenCalled();
+  });
 
   it('应该正确触发visible-change事件', async () => {
-    const onVisibleChange = vi.fn()
+    const onVisibleChange = vi.fn();
     const wrapper = mount(Select, {
       props: {
         options,
-        onVisibleChange
-      }
-    })
+        onVisibleChange,
+      },
+    });
 
-    const select = wrapper.find('button')
-    await select.trigger('click')
-    expect(onVisibleChange).toHaveBeenCalledWith(true)
-  })
+    const select = wrapper.find('button');
+    await select.trigger('click');
+    expect(onVisibleChange).toHaveBeenCalledWith(true);
+  });
 
   it('应该正确渲染分组选项', () => {
     const groupedOptions = [
@@ -197,7 +197,7 @@ describe('Select组件', () => {
         children: [
           { label: '选项一', value: 'option1' },
           { label: '选项二', value: 'option2' },
-        ]
+        ],
       },
       {
         label: '分组二',
@@ -205,28 +205,28 @@ describe('Select组件', () => {
         children: [
           { label: '选项三', value: 'option3' },
           { label: '选项四', value: 'option4' },
-        ]
+        ],
       },
-    ]
+    ];
 
     const wrapper = mount(Select, {
       props: {
-        options: groupedOptions
-      }
-    })
+        options: groupedOptions,
+      },
+    });
 
-    expect(wrapper.text()).toContain('分组一')
-    expect(wrapper.text()).toContain('分组二')
-  })
+    expect(wrapper.text()).toContain('分组一');
+    expect(wrapper.text()).toContain('分组二');
+  });
 
   it('应该正确应用自定义类名', () => {
     const wrapper = mount(Select, {
       props: {
         className: 'custom-select',
-        options
-      }
-    })
+        options,
+      },
+    });
 
-    expect(wrapper.classes()).toContain('custom-select')
-  })
-})
+    expect(wrapper.classes()).toContain('custom-select');
+  });
+});

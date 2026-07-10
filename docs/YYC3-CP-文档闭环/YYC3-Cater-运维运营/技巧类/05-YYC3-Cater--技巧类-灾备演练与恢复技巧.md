@@ -10,28 +10,29 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 🔖 YYC³ 灾备演练与恢复技巧
 
-> ***YanYuCloudCube***
+> **_YanYuCloudCube_**
 > **标语**：言启象限 | 语枢未来
-> ***Words Initiate Quadrants, Language Serves as Core for the Future***
+> **_Words Initiate Quadrants, Language Serves as Core for the Future_**
 > **标语**：万象归元于云枢 | 深栈智启新纪元
-> ***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
 ## 📋 文档信息
 
-| 属性 | 内容 |
-|------|------|
-| **文档标题** | YYC³ 灾备演练与恢复技巧 |
-| **文档类型** | 技巧类文档 |
-| **所属阶段** | 运维运营 |
+| 属性         | 内容                       |
+| ------------ | -------------------------- |
+| **文档标题** | YYC³ 灾备演练与恢复技巧    |
+| **文档类型** | 技巧类文档                 |
+| **所属阶段** | 运维运营                   |
 | **遵循规范** | YYC³ 团队标准化规范 v1.0.0 |
-| **版本号** | v1.0.0 |
-| **创建日期** | 2025-01-30 |
-| **作者** | YYC³ Team |
-| **更新日期** | 2025-01-30 |
+| **版本号**   | v1.0.0                     |
+| **创建日期** | 2025-01-30                 |
+| **作者**     | YYC³ Team                  |
+| **更新日期** | 2025-01-30                 |
 
 ---
 
@@ -135,7 +136,7 @@
 export interface DrillPlan {
   planId: string;
   name: string;
-  type: 'desktop' | 'simulation' | 'full' | 'surprise';
+  type: "desktop" | "simulation" | "full" | "surprise";
   schedule: DrillSchedule;
   scope: DrillScope;
   objectives: string[];
@@ -164,12 +165,12 @@ export interface DrillScope {
 
 ### 2.2 演练频率
 
-| 演练类型 | 频率 | 持续时间 | 参与人员 |
-|---------|------|---------|---------|
-| 桌面演练 | 每季度 | 2-4小时 | 全员 |
-| 模拟演练 | 每半年 | 1-2天 | 核心团队 |
-| 全面演练 | 每年 | 3-5天 | 全员 |
-| 突发演练 | 不定期 | 1-2天 | 核心团队 |
+| 演练类型 | 频率   | 持续时间 | 参与人员 |
+| -------- | ------ | -------- | -------- |
+| 桌面演练 | 每季度 | 2-4小时  | 全员     |
+| 模拟演练 | 每半年 | 1-2天    | 核心团队 |
+| 全面演练 | 每年   | 3-5天    | 全员     |
+| 突发演练 | 不定期 | 1-2天    | 核心团队 |
 
 ---
 
@@ -187,32 +188,18 @@ export class DrillScenarios {
    */
   datacenterFailure(): DrillScenario {
     return {
-      id: 'dc-failure-001',
-      name: '主数据中心故障',
-      description: '主数据中心因电力故障完全不可用',
-      severity: 'critical',
+      id: "dc-failure-001",
+      name: "主数据中心故障",
+      description: "主数据中心因电力故障完全不可用",
+      severity: "critical",
       impact: {
-        affectedSystems: ['all'],
-        estimatedDowntime: '4-8 hours',
-        businessImpact: 'high'
+        affectedSystems: ["all"],
+        estimatedDowntime: "4-8 hours",
+        businessImpact: "high",
       },
-      triggers: [
-        '模拟电力中断',
-        '断开网络连接',
-        '关闭主数据中心'
-      ],
-      recoverySteps: [
-        '激活灾备数据中心',
-        '切换 DNS 记录',
-        '验证服务可用性',
-        '同步数据差异'
-      ],
-      successCriteria: [
-        'RTO < 4 hours',
-        'RPO < 15 minutes',
-        '数据完整性 100%',
-        '服务可用性 > 99.9%'
-      ]
+      triggers: ["模拟电力中断", "断开网络连接", "关闭主数据中心"],
+      recoverySteps: ["激活灾备数据中心", "切换 DNS 记录", "验证服务可用性", "同步数据差异"],
+      successCriteria: ["RTO < 4 hours", "RPO < 15 minutes", "数据完整性 100%", "服务可用性 > 99.9%"],
     };
   }
 
@@ -221,32 +208,18 @@ export class DrillScenarios {
    */
   databaseFailure(): DrillScenario {
     return {
-      id: 'db-failure-001',
-      name: '主数据库故障',
-      description: '主数据库因硬件故障无法访问',
-      severity: 'critical',
+      id: "db-failure-001",
+      name: "主数据库故障",
+      description: "主数据库因硬件故障无法访问",
+      severity: "critical",
       impact: {
-        affectedSystems: ['order-service', 'user-service'],
-        estimatedDowntime: '1-2 hours',
-        businessImpact: 'high'
+        affectedSystems: ["order-service", "user-service"],
+        estimatedDowntime: "1-2 hours",
+        businessImpact: "high",
       },
-      triggers: [
-        '停止主数据库服务',
-        '模拟磁盘故障',
-        '断开数据库连接'
-      ],
-      recoverySteps: [
-        '切换到备用数据库',
-        '验证数据同步',
-        '恢复应用连接',
-        '监控数据库性能'
-      ],
-      successCriteria: [
-        'RTO < 30 minutes',
-        'RPO < 5 minutes',
-        '零数据丢失',
-        '连接成功率 > 99%'
-      ]
+      triggers: ["停止主数据库服务", "模拟磁盘故障", "断开数据库连接"],
+      recoverySteps: ["切换到备用数据库", "验证数据同步", "恢复应用连接", "监控数据库性能"],
+      successCriteria: ["RTO < 30 minutes", "RPO < 5 minutes", "零数据丢失", "连接成功率 > 99%"],
     };
   }
 
@@ -255,32 +228,18 @@ export class DrillScenarios {
    */
   cyberAttack(): DrillScenario {
     return {
-      id: 'cyber-attack-001',
-      name: 'DDoS 攻击',
-      description: '遭受大规模 DDoS 攻击',
-      severity: 'high',
+      id: "cyber-attack-001",
+      name: "DDoS 攻击",
+      description: "遭受大规模 DDoS 攻击",
+      severity: "high",
       impact: {
-        affectedSystems: ['web-gateway', 'api-gateway'],
-        estimatedDowntime: '2-4 hours',
-        businessImpact: 'medium'
+        affectedSystems: ["web-gateway", "api-gateway"],
+        estimatedDowntime: "2-4 hours",
+        businessImpact: "medium",
       },
-      triggers: [
-        '模拟大量请求',
-        '触发流量阈值',
-        '激活防御机制'
-      ],
-      recoverySteps: [
-        '启用 CDN 防护',
-        '配置流量清洗',
-        '启用限流策略',
-        '监控攻击流量'
-      ],
-      successCriteria: [
-        '正常流量恢复',
-        '攻击流量阻断',
-        '服务可用性 > 95%',
-        '响应时间 < 500ms'
-      ]
+      triggers: ["模拟大量请求", "触发流量阈值", "激活防御机制"],
+      recoverySteps: ["启用 CDN 防护", "配置流量清洗", "启用限流策略", "监控攻击流量"],
+      successCriteria: ["正常流量恢复", "攻击流量阻断", "服务可用性 > 95%", "响应时间 < 500ms"],
     };
   }
 
@@ -289,32 +248,18 @@ export class DrillScenarios {
    */
   dataCorruption(): DrillScenario {
     return {
-      id: 'data-corruption-001',
-      name: '数据损坏',
-      description: '关键数据表被意外损坏',
-      severity: 'critical',
+      id: "data-corruption-001",
+      name: "数据损坏",
+      description: "关键数据表被意外损坏",
+      severity: "critical",
       impact: {
-        affectedSystems: ['order-service'],
-        estimatedDowntime: '2-3 hours',
-        businessImpact: 'high'
+        affectedSystems: ["order-service"],
+        estimatedDowntime: "2-3 hours",
+        businessImpact: "high",
       },
-      triggers: [
-        '模拟数据损坏',
-        '触发数据校验',
-        '检测数据异常'
-      ],
-      recoverySteps: [
-        '停止受影响服务',
-        '从备份恢复数据',
-        '验证数据完整性',
-        '恢复服务运行'
-      ],
-      successCriteria: [
-        '数据完整性 100%',
-        'RTO < 2 hours',
-        '零数据丢失',
-        '业务功能正常'
-      ]
+      triggers: ["模拟数据损坏", "触发数据校验", "检测数据异常"],
+      recoverySteps: ["停止受影响服务", "从备份恢复数据", "验证数据完整性", "恢复服务运行"],
+      successCriteria: ["数据完整性 100%", "RTO < 2 hours", "零数据丢失", "业务功能正常"],
     };
   }
 }
@@ -377,17 +322,17 @@ export class DrillExecutor {
     const result: DrillResult = {
       planId: plan.planId,
       startTime: new Date(),
-      status: 'running',
-      steps: []
+      status: "running",
+      steps: [],
     };
 
     try {
       // 1. 启动演练
       await this.startDrill(plan);
       result.steps.push({
-        step: 'start',
-        status: 'completed',
-        timestamp: new Date()
+        step: "start",
+        status: "completed",
+        timestamp: new Date(),
       });
 
       // 2. 执行场景
@@ -403,17 +348,16 @@ export class DrillExecutor {
       // 4. 完成演练
       await this.completeDrill(plan);
       result.steps.push({
-        step: 'complete',
-        status: 'completed',
-        timestamp: new Date()
+        step: "complete",
+        status: "completed",
+        timestamp: new Date(),
       });
 
-      result.status = 'completed';
+      result.status = "completed";
       result.endTime = new Date();
       result.success = this.evaluateSuccess(plan, result);
-
     } catch (error) {
-      result.status = 'failed';
+      result.status = "failed";
       result.error = error.message;
       await this.abortDrill(plan);
     }
@@ -427,8 +371,8 @@ export class DrillExecutor {
   private async executeScenario(scenario: DrillScenario): Promise<DrillStep> {
     const step: DrillStep = {
       step: scenario.name,
-      status: 'running',
-      timestamp: new Date()
+      status: "running",
+      timestamp: new Date(),
     };
 
     try {
@@ -449,9 +393,9 @@ export class DrillExecutor {
       const validation = await this.validateRecovery(scenario);
       step.validation = validation;
 
-      step.status = 'completed';
+      step.status = "completed";
     } catch (error) {
-      step.status = 'failed';
+      step.status = "failed";
       step.error = error.message;
     }
 
@@ -478,7 +422,7 @@ export class DisasterRecovery {
     const result: RecoveryResult = {
       incidentId: incident.id,
       startTime: new Date(),
-      status: 'running'
+      status: "running",
     };
 
     try {
@@ -488,15 +432,15 @@ export class DisasterRecovery {
 
       // 2. 激活灾备系统
       await this.activateDisasterRecovery();
-      result.steps.push({ step: 'activate_dr', status: 'completed' });
+      result.steps.push({ step: "activate_dr", status: "completed" });
 
       // 3. 切换服务
       await this.switchServices(impact.affectedServices);
-      result.steps.push({ step: 'switch_services', status: 'completed' });
+      result.steps.push({ step: "switch_services", status: "completed" });
 
       // 4. 恢复数据
       await this.restoreData(impact.affectedData);
-      result.steps.push({ step: 'restore_data', status: 'completed' });
+      result.steps.push({ step: "restore_data", status: "completed" });
 
       // 5. 验证恢复
       const validation = await this.validateRecovery();
@@ -504,14 +448,13 @@ export class DisasterRecovery {
 
       // 6. 更新 DNS
       await this.updateDNS();
-      result.steps.push({ step: 'update_dns', status: 'completed' });
+      result.steps.push({ step: "update_dns", status: "completed" });
 
-      result.status = 'completed';
+      result.status = "completed";
       result.endTime = new Date();
       result.rto = this.calculateRTO(result.startTime, result.endTime);
-
     } catch (error) {
-      result.status = 'failed';
+      result.status = "failed";
       result.error = error.message;
       await this.rollbackRecovery();
     }
@@ -542,13 +485,13 @@ export class DisasterRecovery {
   private async switchServices(services: string[]): Promise<void> {
     for (const service of services) {
       // 停止主服务
-      await this.stopService(service, 'primary');
+      await this.stopService(service, "primary");
 
       // 启动灾备服务
-      await this.startService(service, 'backup');
+      await this.startService(service, "backup");
 
       // 验证服务状态
-      await this.verifyService(service, 'backup');
+      await this.verifyService(service, "backup");
     }
   }
 
@@ -634,7 +577,7 @@ export class RecoveryValidator {
   async validateRecovery(): Promise<ValidationResult> {
     const result: ValidationResult = {
       timestamp: new Date(),
-      checks: []
+      checks: [],
     };
 
     // 1. 服务可用性检查
@@ -656,7 +599,7 @@ export class RecoveryValidator {
     result.checks.push(await this.checkMonitoring());
 
     result.overallStatus = this.calculateOverallStatus(result.checks);
-    result.success = result.overallStatus === 'passed';
+    result.success = result.overallStatus === "passed";
 
     return result;
   }
@@ -665,7 +608,7 @@ export class RecoveryValidator {
    * 检查服务可用性
    */
   private async checkServiceAvailability(): Promise<ValidationCheck> {
-    const services = ['api-gateway', 'order-service', 'user-service'];
+    const services = ["api-gateway", "order-service", "user-service"];
     const results: ServiceCheck[] = [];
 
     for (const service of services) {
@@ -673,14 +616,14 @@ export class RecoveryValidator {
       results.push({
         service,
         available,
-        responseTime: await this.measureResponseTime(service)
+        responseTime: await this.measureResponseTime(service),
       });
     }
 
     return {
-      name: 'service_availability',
-      status: results.every(r => r.available) ? 'passed' : 'failed',
-      details: results
+      name: "service_availability",
+      status: results.every(r => r.available) ? "passed" : "failed",
+      details: results,
     };
   }
 
@@ -688,7 +631,7 @@ export class RecoveryValidator {
    * 检查数据完整性
    */
   private async checkDataIntegrity(): Promise<ValidationCheck> {
-    const tables = ['users', 'orders', 'products'];
+    const tables = ["users", "orders", "products"];
     const results: DataCheck[] = [];
 
     for (const table of tables) {
@@ -700,14 +643,14 @@ export class RecoveryValidator {
         table,
         checksum,
         expected,
-        match
+        match,
       });
     }
 
     return {
-      name: 'data_integrity',
-      status: results.every(r => r.match) ? 'passed' : 'failed',
-      details: results
+      name: "data_integrity",
+      status: results.every(r => r.match) ? "passed" : "failed",
+      details: results,
     };
   }
 }
@@ -733,7 +676,7 @@ export class DrillEvaluator {
       timestamp: new Date(),
       metrics: {},
       findings: [],
-      recommendations: []
+      recommendations: [],
     };
 
     // 1. RTO 评估
@@ -775,11 +718,11 @@ export class DrillEvaluator {
     const score = Math.max(0, 100 - (actualRTO / targetRTO) * 100);
 
     return {
-      name: 'RTO',
+      name: "RTO",
       actual: actualRTO,
       target: targetRTO,
       score,
-      status: actualRTO <= targetRTO ? 'passed' : 'failed'
+      status: actualRTO <= targetRTO ? "passed" : "failed",
     };
   }
 }
@@ -799,19 +742,19 @@ export class ImprovementPlan {
     const improvement: Improvement = {
       drillId: evaluation.drillId,
       timestamp: new Date(),
-      actions: []
+      actions: [],
     };
 
     // 根据评估结果生成改进措施
     for (const finding of evaluation.findings) {
-      if (finding.severity === 'high' || finding.severity === 'critical') {
+      if (finding.severity === "high" || finding.severity === "critical") {
         improvement.actions.push({
           id: `action-${improvement.actions.length + 1}`,
           description: finding.description,
           priority: finding.severity,
           assignee: this.assignAction(finding),
           dueDate: this.calculateDueDate(finding.severity),
-          status: 'pending'
+          status: "pending",
         });
       }
     }
@@ -833,36 +776,42 @@ export class ImprovementPlan {
 ## 灾备最佳实践
 
 ### 1. 演练规划
+
 - 制定详细的演练计划
 - 明确演练目标和成功标准
 - 准备多种演练场景
 - 定期更新演练计划
 
 ### 2. 团队准备
+
 - 定期进行培训
 - 明确角色和职责
 - 建立沟通机制
 - 准备应急预案
 
 ### 3. 环境准备
+
 - 维护独立的演练环境
 - 定期更新演练数据
 - 确保环境一致性
 - 配置监控和日志
 
 ### 4. 演练执行
+
 - 严格按照计划执行
 - 实时记录演练过程
 - 及时处理异常情况
 - 保持沟通畅通
 
 ### 5. 结果评估
+
 - 全面评估演练结果
 - 分析问题和根因
 - 生成详细报告
 - 制定改进计划
 
 ### 6. 持续改进
+
 - 跟踪改进措施
 - 定期复查效果
 - 更新灾备计划
@@ -873,13 +822,10 @@ export class ImprovementPlan {
 
 ## 📄 文档标尾 (Footer)
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in the cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -900,8 +846,6 @@ export class ImprovementPlan {
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -930,8 +874,6 @@ export class ImprovementPlan {
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -969,7 +911,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -985,8 +927,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -999,7 +939,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1014,9 +954,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1024,9 +964,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1034,20 +977,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1056,6 +997,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1071,17 +1013,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1089,6 +1032,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1099,6 +1043,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1107,8 +1052,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1116,21 +1059,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1139,10 +1084,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1168,16 +1110,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1186,26 +1128,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1221,7 +1158,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1253,14 +1190,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1271,17 +1206,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -1291,17 +1229,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -1311,21 +1252,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

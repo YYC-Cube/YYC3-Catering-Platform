@@ -34,7 +34,7 @@ const monitoringConfigSchema = z.object({
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/start', async (c) => {
+app.post('/start', async c => {
   try {
     logger.info('Start quality monitoring requested');
 
@@ -46,10 +46,13 @@ app.post('/start', async (c) => {
     });
   } catch (error) {
     logger.error('Start quality monitoring failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '启动质量监控失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '启动质量监控失败',
+      },
+      500,
+    );
   }
 });
 
@@ -59,7 +62,7 @@ app.post('/start', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/stop', async (c) => {
+app.post('/stop', async c => {
   try {
     logger.info('Stop quality monitoring requested');
 
@@ -71,10 +74,13 @@ app.post('/stop', async (c) => {
     });
   } catch (error) {
     logger.error('Stop quality monitoring failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '停止质量监控失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '停止质量监控失败',
+      },
+      500,
+    );
   }
 });
 
@@ -84,7 +90,7 @@ app.post('/stop', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 监控配置
  */
-app.get('/config', async (c) => {
+app.get('/config', async c => {
   try {
     logger.info('Get monitoring config requested');
 
@@ -96,10 +102,13 @@ app.get('/config', async (c) => {
     });
   } catch (error) {
     logger.error('Get monitoring config failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取监控配置失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取监控配置失败',
+      },
+      500,
+    );
   }
 });
 
@@ -109,7 +118,7 @@ app.get('/config', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.put('/config', zValidator('json', monitoringConfigSchema), async (c) => {
+app.put('/config', zValidator('json', monitoringConfigSchema), async c => {
   try {
     const config = c.req.valid('json');
     logger.info('Update monitoring config requested', { config });
@@ -123,10 +132,13 @@ app.put('/config', zValidator('json', monitoringConfigSchema), async (c) => {
     });
   } catch (error) {
     logger.error('Update monitoring config failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '更新监控配置失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '更新监控配置失败',
+      },
+      500,
+    );
   }
 });
 
@@ -136,7 +148,7 @@ app.put('/config', zValidator('json', monitoringConfigSchema), async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 质量警报列表
  */
-app.get('/alerts', async (c) => {
+app.get('/alerts', async c => {
   try {
     const acknowledged = c.req.query('acknowledged') === 'true';
     const severity = c.req.query('severity') as QualityAlert['severity'] | undefined;
@@ -161,10 +173,13 @@ app.get('/alerts', async (c) => {
     });
   } catch (error) {
     logger.error('Get quality alerts failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取质量警报失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取质量警报失败',
+      },
+      500,
+    );
   }
 });
 
@@ -174,7 +189,7 @@ app.get('/alerts', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.put('/alerts/:alertId/acknowledge', async (c) => {
+app.put('/alerts/:alertId/acknowledge', async c => {
   try {
     const alertId = c.req.param('alertId');
     logger.info('Acknowledge alert requested', { alertId });
@@ -187,10 +202,13 @@ app.put('/alerts/:alertId/acknowledge', async (c) => {
     });
   } catch (error) {
     logger.error('Acknowledge alert failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '确认警报失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '确认警报失败',
+      },
+      500,
+    );
   }
 });
 
@@ -200,16 +218,19 @@ app.put('/alerts/:alertId/acknowledge', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.put('/alerts/bulk-acknowledge', async (c) => {
+app.put('/alerts/bulk-acknowledge', async c => {
   try {
     const body = await c.req.json();
     const { alertIds } = body;
 
     if (!Array.isArray(alertIds) || alertIds.length === 0) {
-      return c.json({
-        success: false,
-        error: '警报ID列表不能为空',
-      }, 400);
+      return c.json(
+        {
+          success: false,
+          error: '警报ID列表不能为空',
+        },
+        400,
+      );
     }
 
     logger.info('Bulk acknowledge alerts requested', { alertIds });
@@ -222,10 +243,13 @@ app.put('/alerts/bulk-acknowledge', async (c) => {
     });
   } catch (error) {
     logger.error('Bulk acknowledge alerts failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '批量确认警报失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '批量确认警报失败',
+      },
+      500,
+    );
   }
 });
 
@@ -235,7 +259,7 @@ app.put('/alerts/bulk-acknowledge', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 质量趋势
  */
-app.get('/trends', async (c) => {
+app.get('/trends', async c => {
   try {
     const days = parseInt(c.req.query('days') || '30');
     const category = c.req.query('category');
@@ -253,10 +277,13 @@ app.get('/trends', async (c) => {
     });
   } catch (error) {
     logger.error('Get quality trends failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取质量趋势失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取质量趋势失败',
+      },
+      500,
+    );
   }
 });
 
@@ -266,7 +293,7 @@ app.get('/trends', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 质量统计
  */
-app.get('/statistics', async (c) => {
+app.get('/statistics', async c => {
   try {
     logger.info('Get quality statistics requested');
 
@@ -278,10 +305,13 @@ app.get('/statistics', async (c) => {
     });
   } catch (error) {
     logger.error('Get quality statistics failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取质量统计失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取质量统计失败',
+      },
+      500,
+    );
   }
 });
 
@@ -291,7 +321,7 @@ app.get('/statistics', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 操作结果
  */
-app.post('/check', async (c) => {
+app.post('/check', async c => {
   try {
     const body = await c.req.json();
     const { documentId } = body;
@@ -316,10 +346,13 @@ app.post('/check', async (c) => {
     }
   } catch (error) {
     logger.error('Manual quality check failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '执行质量检查失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '执行质量检查失败',
+      },
+      500,
+    );
   }
 });
 
@@ -329,7 +362,7 @@ app.post('/check', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 质量报告
  */
-app.get('/reports/:documentId', async (c) => {
+app.get('/reports/:documentId', async c => {
   try {
     const documentId = c.req.param('documentId');
     const limit = parseInt(c.req.query('limit') || '10');
@@ -347,10 +380,13 @@ app.get('/reports/:documentId', async (c) => {
     });
   } catch (error) {
     logger.error('Get document quality reports failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取质量报告失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取质量报告失败',
+      },
+      500,
+    );
   }
 });
 
@@ -360,7 +396,7 @@ app.get('/reports/:documentId', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 监控状态
  */
-app.get('/status', async (c) => {
+app.get('/status', async c => {
   try {
     logger.info('Get monitoring status requested');
 
@@ -372,10 +408,13 @@ app.get('/status', async (c) => {
     });
   } catch (error) {
     logger.error('Get monitoring status failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '获取监控状态失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '获取监控状态失败',
+      },
+      500,
+    );
   }
 });
 
@@ -385,7 +424,7 @@ app.get('/status', async (c) => {
  * @access 需要管理员权限
  * @returns {Promise<Response>} 导出文件
  */
-app.get('/export', async (c) => {
+app.get('/export', async c => {
   try {
     const format = c.req.query('format') || 'json';
     const startDate = c.req.query('startDate');
@@ -406,16 +445,20 @@ app.get('/export', async (c) => {
       });
     } else {
       return c.text(exportData, 200, {
-        'Content-Type': format === 'csv' ? 'text/csv' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Content-Type':
+          format === 'csv' ? 'text/csv' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'Content-Disposition': `attachment; filename="quality-report-${Date.now()}.${format}"`,
       });
     }
   } catch (error) {
     logger.error('Export quality report failed', { error });
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : '导出质量报告失败',
-    }, 500);
+    return c.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : '导出质量报告失败',
+      },
+      500,
+    );
   }
 });
 

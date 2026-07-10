@@ -16,7 +16,7 @@ import { MenuItem } from './MenuItem';
 @Table({
   tableName: 'menu_item_images',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class MenuItemImage extends Model<MenuItemImage> {
   @PrimaryKey

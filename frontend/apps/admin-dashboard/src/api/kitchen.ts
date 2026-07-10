@@ -31,7 +31,7 @@ import type {
   HygieneType,
   SafetyType,
   SafetySeverity,
-  SafetyStatus
+  SafetyStatus,
 } from '@/types/kitchen';
 
 const API_BASE_URL = import.meta.env?.VITE_API_BASE_URL || 'http://localhost:3000/api/v1';
@@ -45,27 +45,27 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use(
-  (config) => {
+  config => {
     const token = localStorage.getItem('auth_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
+  error => {
     return Promise.reject(error);
-  }
+  },
 );
 
 apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (error.response?.status === 401) {
       localStorage.removeItem('auth_token');
       window.location.href = '/login';
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export interface KitchenResponse<T> {
@@ -129,7 +129,9 @@ export class KitchenAPI {
     }
   }
 
-  async getEquipment(params?: EquipmentQueryParams): Promise<KitchenResponse<{ items: KitchenEquipment[]; pagination: any }>> {
+  async getEquipment(
+    params?: EquipmentQueryParams,
+  ): Promise<KitchenResponse<{ items: KitchenEquipment[]; pagination: any }>> {
     try {
       const queryString = new URLSearchParams();
       if (params?.page) queryString.set('page', params.page.toString());
@@ -140,7 +142,9 @@ export class KitchenAPI {
       if (params?.sortBy) queryString.set('sortBy', params.sortBy);
       if (params?.sortOrder) queryString.set('sortOrder', params.sortOrder);
 
-      const endpoint = queryString.toString() ? `${this.baseUrl}/equipment?${queryString}` : `${this.baseUrl}/equipment`;
+      const endpoint = queryString.toString()
+        ? `${this.baseUrl}/equipment?${queryString}`
+        : `${this.baseUrl}/equipment`;
       const response = await apiClient.get<KitchenResponse<{ items: KitchenEquipment[]; pagination: any }>>(endpoint);
       return response.data;
     } catch (error: any) {
@@ -148,7 +152,7 @@ export class KitchenAPI {
       return {
         success: false,
         data: { items: [], pagination: { page: 1, limit: 20, total: 0, totalPages: 0 } },
-        message: '获取设备列表失败'
+        message: '获取设备列表失败',
       };
     }
   }
@@ -165,7 +169,10 @@ export class KitchenAPI {
 
   async updateEquipment(id: string, equipment: Partial<KitchenEquipment>): Promise<KitchenResponse<KitchenEquipment>> {
     try {
-      const response = await apiClient.put<KitchenResponse<KitchenEquipment>>(`${this.baseUrl}/equipment/${id}`, equipment);
+      const response = await apiClient.put<KitchenResponse<KitchenEquipment>>(
+        `${this.baseUrl}/equipment/${id}`,
+        equipment,
+      );
       return response.data;
     } catch (error: any) {
       console.error('更新设备失败:', error);
@@ -183,7 +190,9 @@ export class KitchenAPI {
     }
   }
 
-  async getEmployees(params?: EmployeeQueryParams): Promise<KitchenResponse<{ items: KitchenEmployee[]; pagination: any }>> {
+  async getEmployees(
+    params?: EmployeeQueryParams,
+  ): Promise<KitchenResponse<{ items: KitchenEmployee[]; pagination: any }>> {
     try {
       const queryString = new URLSearchParams();
       if (params?.page) queryString.set('page', params.page.toString());
@@ -194,7 +203,9 @@ export class KitchenAPI {
       if (params?.sortBy) queryString.set('sortBy', params.sortBy);
       if (params?.sortOrder) queryString.set('sortOrder', params.sortOrder);
 
-      const endpoint = queryString.toString() ? `${this.baseUrl}/employees?${queryString}` : `${this.baseUrl}/employees`;
+      const endpoint = queryString.toString()
+        ? `${this.baseUrl}/employees?${queryString}`
+        : `${this.baseUrl}/employees`;
       const response = await apiClient.get<KitchenResponse<{ items: KitchenEmployee[]; pagination: any }>>(endpoint);
       return response.data;
     } catch (error: any) {
@@ -202,7 +213,7 @@ export class KitchenAPI {
       return {
         success: false,
         data: { items: [], pagination: { page: 1, limit: 20, total: 0, totalPages: 0 } },
-        message: '获取员工列表失败'
+        message: '获取员工列表失败',
       };
     }
   }
@@ -219,7 +230,10 @@ export class KitchenAPI {
 
   async updateEmployee(id: string, employee: Partial<KitchenEmployee>): Promise<KitchenResponse<KitchenEmployee>> {
     try {
-      const response = await apiClient.put<KitchenResponse<KitchenEmployee>>(`${this.baseUrl}/employees/${id}`, employee);
+      const response = await apiClient.put<KitchenResponse<KitchenEmployee>>(
+        `${this.baseUrl}/employees/${id}`,
+        employee,
+      );
       return response.data;
     } catch (error: any) {
       console.error('更新员工失败:', error);
@@ -239,7 +253,10 @@ export class KitchenAPI {
 
   async updateEmployeeStatus(id: string, status: EmployeeStatus): Promise<KitchenResponse<KitchenEmployee>> {
     try {
-      const response = await apiClient.patch<KitchenResponse<KitchenEmployee>>(`${this.baseUrl}/employees/${id}/status`, { status });
+      const response = await apiClient.patch<KitchenResponse<KitchenEmployee>>(
+        `${this.baseUrl}/employees/${id}/status`,
+        { status },
+      );
       return response.data;
     } catch (error: any) {
       console.error('更新员工状态失败:', error);
@@ -267,7 +284,7 @@ export class KitchenAPI {
       return {
         success: false,
         data: { items: [], pagination: { page: 1, limit: 20, total: 0, totalPages: 0 } },
-        message: '获取任务列表失败'
+        message: '获取任务列表失败',
       };
     }
   }
@@ -304,7 +321,9 @@ export class KitchenAPI {
 
   async updateTaskStatus(id: string, status: TaskStatus): Promise<KitchenResponse<KitchenTask>> {
     try {
-      const response = await apiClient.patch<KitchenResponse<KitchenTask>>(`${this.baseUrl}/tasks/${id}/status`, { status });
+      const response = await apiClient.patch<KitchenResponse<KitchenTask>>(`${this.baseUrl}/tasks/${id}/status`, {
+        status,
+      });
       return response.data;
     } catch (error: any) {
       console.error('更新任务状态失败:', error);
@@ -314,7 +333,9 @@ export class KitchenAPI {
 
   async assignTask(taskId: string, employeeId: string): Promise<KitchenResponse<KitchenTask>> {
     try {
-      const response = await apiClient.patch<KitchenResponse<KitchenTask>>(`${this.baseUrl}/tasks/${taskId}/assign`, { employeeId });
+      const response = await apiClient.patch<KitchenResponse<KitchenTask>>(`${this.baseUrl}/tasks/${taskId}/assign`, {
+        employeeId,
+      });
       return response.data;
     } catch (error: any) {
       console.error('分配任务失败:', error);
@@ -322,7 +343,9 @@ export class KitchenAPI {
     }
   }
 
-  async getInventory(params?: InventoryQueryParams): Promise<KitchenResponse<{ items: KitchenInventory[]; pagination: any }>> {
+  async getInventory(
+    params?: InventoryQueryParams,
+  ): Promise<KitchenResponse<{ items: KitchenInventory[]; pagination: any }>> {
     try {
       const queryString = new URLSearchParams();
       if (params?.page) queryString.set('page', params.page.toString());
@@ -333,7 +356,9 @@ export class KitchenAPI {
       if (params?.sortBy) queryString.set('sortBy', params.sortBy);
       if (params?.sortOrder) queryString.set('sortOrder', params.sortOrder);
 
-      const endpoint = queryString.toString() ? `${this.baseUrl}/inventory?${queryString}` : `${this.baseUrl}/inventory`;
+      const endpoint = queryString.toString()
+        ? `${this.baseUrl}/inventory?${queryString}`
+        : `${this.baseUrl}/inventory`;
       const response = await apiClient.get<KitchenResponse<{ items: KitchenInventory[]; pagination: any }>>(endpoint);
       return response.data;
     } catch (error: any) {
@@ -341,7 +366,7 @@ export class KitchenAPI {
       return {
         success: false,
         data: { items: [], pagination: { page: 1, limit: 20, total: 0, totalPages: 0 } },
-        message: '获取库存列表失败'
+        message: '获取库存列表失败',
       };
     }
   }
@@ -378,7 +403,10 @@ export class KitchenAPI {
 
   async restockInventory(id: string, quantity: number): Promise<KitchenResponse<KitchenInventory>> {
     try {
-      const response = await apiClient.post<KitchenResponse<KitchenInventory>>(`${this.baseUrl}/inventory/${id}/restock`, { quantity });
+      const response = await apiClient.post<KitchenResponse<KitchenInventory>>(
+        `${this.baseUrl}/inventory/${id}/restock`,
+        { quantity },
+      );
       return response.data;
     } catch (error: any) {
       console.error('补货失败:', error);
@@ -386,7 +414,9 @@ export class KitchenAPI {
     }
   }
 
-  async getHygieneRecords(params?: PaginationParams & { type?: HygieneType }): Promise<KitchenResponse<{ items: HygieneRecord[]; pagination: any }>> {
+  async getHygieneRecords(
+    params?: PaginationParams & { type?: HygieneType },
+  ): Promise<KitchenResponse<{ items: HygieneRecord[]; pagination: any }>> {
     try {
       const queryString = new URLSearchParams();
       if (params?.page) queryString.set('page', params.page.toString());
@@ -401,7 +431,7 @@ export class KitchenAPI {
       return {
         success: false,
         data: { items: [], pagination: { page: 1, limit: 20, total: 0, totalPages: 0 } },
-        message: '获取卫生记录失败'
+        message: '获取卫生记录失败',
       };
     }
   }
@@ -426,7 +456,9 @@ export class KitchenAPI {
     }
   }
 
-  async getSafetyRecords(params?: PaginationParams & { type?: SafetyType; severity?: SafetySeverity; status?: SafetyStatus }): Promise<KitchenResponse<{ items: SafetyRecord[]; pagination: any }>> {
+  async getSafetyRecords(
+    params?: PaginationParams & { type?: SafetyType; severity?: SafetySeverity; status?: SafetyStatus },
+  ): Promise<KitchenResponse<{ items: SafetyRecord[]; pagination: any }>> {
     try {
       const queryString = new URLSearchParams();
       if (params?.page) queryString.set('page', params.page.toString());
@@ -443,7 +475,7 @@ export class KitchenAPI {
       return {
         success: false,
         data: { items: [], pagination: { page: 1, limit: 20, total: 0, totalPages: 0 } },
-        message: '获取安全记录失败'
+        message: '获取安全记录失败',
       };
     }
   }
@@ -470,7 +502,9 @@ export class KitchenAPI {
 
   async updateSafetyRecordStatus(id: string, status: SafetyStatus): Promise<KitchenResponse<SafetyRecord>> {
     try {
-      const response = await apiClient.patch<KitchenResponse<SafetyRecord>>(`${this.baseUrl}/safety/${id}/status`, { status });
+      const response = await apiClient.patch<KitchenResponse<SafetyRecord>>(`${this.baseUrl}/safety/${id}/status`, {
+        status,
+      });
       return response.data;
     } catch (error: any) {
       console.error('更新安全记录状态失败:', error);
@@ -487,7 +521,7 @@ export class KitchenAPI {
       return {
         success: false,
         data: [],
-        message: '获取显示配置失败'
+        message: '获取显示配置失败',
       };
     }
   }

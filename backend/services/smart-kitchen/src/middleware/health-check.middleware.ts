@@ -33,13 +33,13 @@ export const healthCheckHandler = (req: Request, res: Response) => {
   const checks = {
     api: true,
     database: true, // 这里可以添加实际的数据库连接检查
-    redis: true,    // 这里可以添加实际的Redis连接检查
-    mqtt: true,     // 这里可以添加实际的MQTT连接检查
+    redis: true, // 这里可以添加实际的Redis连接检查
+    mqtt: true, // 这里可以添加实际的MQTT连接检查
   };
 
   // 检查是否所有组件都健康
   const allChecksPassed = Object.values(checks).every(check => check);
-  
+
   if (allChecksPassed) {
     return res.status(200).json({
       ...healthStatus,
@@ -61,13 +61,13 @@ export const readinessCheckHandler = (req: Request, res: Response) => {
   // 就绪检查应该确保所有依赖的服务都已启动并可用
   const checks = {
     database: true, // 这里可以添加实际的数据库连接检查
-    redis: true,    // 这里可以添加实际的Redis连接检查
-    mqtt: true,     // 这里可以添加实际的MQTT连接检查
-    queues: true,   // 这里可以添加实际的队列服务检查
+    redis: true, // 这里可以添加实际的Redis连接检查
+    mqtt: true, // 这里可以添加实际的MQTT连接检查
+    queues: true, // 这里可以添加实际的队列服务检查
   };
 
   const allChecksPassed = Object.values(checks).every(check => check);
-  
+
   if (allChecksPassed) {
     return res.status(200).json({
       status: 'READY',

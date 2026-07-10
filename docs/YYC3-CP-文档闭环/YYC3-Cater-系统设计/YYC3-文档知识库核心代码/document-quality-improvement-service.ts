@@ -227,10 +227,7 @@ class DocumentQualityImprovementService {
    * @param assessor 评估者（可选）
    * @returns 质量评估结果列表
    */
-  async assessBatchDocumentQuality(
-    documentIds: string[],
-    assessor?: string
-  ): Promise<QualityAssessment[]> {
+  async assessBatchDocumentQuality(documentIds: string[], assessor?: string): Promise<QualityAssessment[]> {
     const assessments: QualityAssessment[] = [];
 
     for (const documentId of documentIds) {
@@ -252,7 +249,7 @@ class DocumentQualityImprovementService {
    */
   async getImprovementSuggestions(documentId: string): Promise<ImprovementSuggestion[]> {
     const suggestions = this.improvementSuggestions.get(documentId) || [];
-    return suggestions.filter((s) => s.status !== 'dismissed');
+    return suggestions.filter(s => s.status !== 'dismissed');
   }
 
   /**
@@ -263,10 +260,10 @@ class DocumentQualityImprovementService {
    */
   async updateSuggestionStatus(
     suggestionId: string,
-    status: ImprovementSuggestion['status']
+    status: ImprovementSuggestion['status'],
   ): Promise<ImprovementSuggestion | null> {
     for (const suggestions of this.improvementSuggestions.values()) {
-      const suggestion = suggestions.find((s) => s.id === suggestionId);
+      const suggestion = suggestions.find(s => s.id === suggestionId);
       if (suggestion) {
         suggestion.status = status;
         logger.info(`Updated suggestion ${suggestionId} status to ${status}`);
@@ -309,8 +306,7 @@ class DocumentQualityImprovementService {
         };
 
         existing.averageScore =
-          (existing.averageScore * existing.documentCount + assessment.overallScore) /
-          (existing.documentCount + 1);
+          (existing.averageScore * existing.documentCount + assessment.overallScore) / (existing.documentCount + 1);
         existing.documentCount += 1;
         existing.gradeDistribution[assessment.grade] += 1;
 
@@ -330,7 +326,7 @@ class DocumentQualityImprovementService {
    */
   async generateQualityReport(
     type: 'daily' | 'weekly' | 'monthly',
-    period: { start: Date; end: Date }
+    period: { start: Date; end: Date },
   ): Promise<QualityReport> {
     // 获取周期内的所有评估
     const assessmentsInPeriod: QualityAssessment[] = [];
@@ -344,7 +340,7 @@ class DocumentQualityImprovementService {
     }
 
     // 计算总体统计
-    const totalDocuments = new Set(assessmentsInPeriod.map((a) => a.documentId)).size;
+    const totalDocuments = new Set(assessmentsInPeriod.map(a => a.documentId)).size;
     const averageScore =
       assessmentsInPeriod.length > 0
         ? assessmentsInPeriod.reduce((sum, a) => sum + a.overallScore, 0) / assessmentsInPeriod.length
@@ -367,9 +363,7 @@ class DocumentQualityImprovementService {
     let degradedDocuments = 0;
 
     for (const [documentId, assessments] of this.qualityHistory.entries()) {
-      const periodAssessments = assessments.filter(
-        (a) => a.assessedAt >= period.start && a.assessedAt <= period.end
-      );
+      const periodAssessments = assessments.filter(a => a.assessedAt >= period.start && a.assessedAt <= period.end);
 
       if (periodAssessments.length >= 2) {
         const firstScore = periodAssessments[0].overallScore;
@@ -426,7 +420,9 @@ class DocumentQualityImprovementService {
       generatedAt: new Date(),
     };
 
-    logger.info(`Generated ${type} quality report for period ${period.start.toISOString()} to ${period.end.toISOString()}`);
+    logger.info(
+      `Generated ${type} quality report for period ${period.start.toISOString()} to ${period.end.toISOString()}`,
+    );
 
     return report;
   }
@@ -619,10 +615,7 @@ class DocumentQualityImprovementService {
     if (doc.content) {
       // 计算平均句子长度
       const sentences = doc.content.split(/[。！？.!?]+/).filter((s: string) => s.trim().length > 0);
-      const avgSentenceLength =
-        sentences.length > 0
-          ? doc.content.length / sentences.length
-          : 0;
+      const avgSentenceLength = sentences.length > 0 ? doc.content.length / sentences.length : 0;
 
       if (avgSentenceLength > 100) {
         suggestions.push('建议缩短句子长度以提高可读性');
@@ -742,7 +735,7 @@ class DocumentQualityImprovementService {
     if (doc.category && doc.content) {
       const categoryKeywords = this.getCategoryKeywords(doc.category);
       const contentLower = doc.content.toLowerCase();
-      const matchedKeywords = categoryKeywords.filter((kw) => contentLower.includes(kw));
+      const matchedKeywords = categoryKeywords.filter(kw => contentLower.includes(kw));
 
       if (matchedKeywords.length === 0) {
         suggestions.push('文档内容可能与分类不匹配');
@@ -825,37 +818,37 @@ class DocumentQualityImprovementService {
   private generateImprovementSteps(dimension: QualityDimension, issue: string): string[] {
     const stepMap: Record<QualityDimension, Record<string, string[]>> = {
       [QualityDimension.CONTENT_COMPLETENESS]: {
-        '文档缺少标题': ['添加文档标题', '确保标题描述文档内容'],
-        '文档内容过短': ['补充文档内容', '添加详细说明和示例'],
-        '文档缺少分类': ['选择合适的文档分类', '确保分类准确反映文档内容'],
-        '文档缺少标签': ['添加相关标签', '使用关键词作为标签'],
+        文档缺少标题: ['添加文档标题', '确保标题描述文档内容'],
+        文档内容过短: ['补充文档内容', '添加详细说明和示例'],
+        文档缺少分类: ['选择合适的文档分类', '确保分类准确反映文档内容'],
+        文档缺少标签: ['添加相关标签', '使用关键词作为标签'],
       },
       [QualityDimension.STRUCTURE_CLARITY]: {
-        '建议使用标题': ['使用 # ## ### 等标题标记', '按层级组织内容'],
-        '建议使用列表': ['使用 - 或数字列表', '组织要点信息'],
+        建议使用标题: ['使用 # ## ### 等标题标记', '按层级组织内容'],
+        建议使用列表: ['使用 - 或数字列表', '组织要点信息'],
       },
       [QualityDimension.LANGUAGE_ACCURACY]: {
-        '发现拼写错误': ['使用拼写检查工具', '逐句检查并修正'],
-        '发现语法问题': ['使用语法检查工具', '参考语法规则修正'],
+        发现拼写错误: ['使用拼写检查工具', '逐句检查并修正'],
+        发现语法问题: ['使用语法检查工具', '参考语法规则修正'],
       },
       [QualityDimension.FORMAT_CONSISTENCY]: {
-        '标题层级不连续': ['按顺序使用标题层级', '避免跳级使用'],
+        标题层级不连续: ['按顺序使用标题层级', '避免跳级使用'],
       },
       [QualityDimension.READABILITY]: {
-        '建议缩短句子': ['拆分长句', '使用简单句式'],
-        '建议拆分段落': ['将长段落分成多个短段落', '每段控制在200-300字'],
+        建议缩短句子: ['拆分长句', '使用简单句式'],
+        建议拆分段落: ['将长段落分成多个短段落', '每段控制在200-300字'],
       },
       [QualityDimension.MAINTAINABILITY]: {
-        '文档缺少创建时间': ['添加文档创建时间', '使用标准格式'],
-        '文档缺少更新时间': ['添加文档更新时间', '每次更新时更新时间'],
-        '文档缺少作者信息': ['添加作者信息', '包含作者姓名和联系方式'],
+        文档缺少创建时间: ['添加文档创建时间', '使用标准格式'],
+        文档缺少更新时间: ['添加文档更新时间', '每次更新时更新时间'],
+        文档缺少作者信息: ['添加作者信息', '包含作者姓名和联系方式'],
       },
       [QualityDimension.TIMELINESS]: {
-        '文档已超过1年未更新': ['检查文档内容是否过时', '更新过时信息'],
-        '文档已超过6个月未更新': ['检查文档是否需要更新', '添加最新信息'],
+        文档已超过1年未更新: ['检查文档内容是否过时', '更新过时信息'],
+        文档已超过6个月未更新: ['检查文档是否需要更新', '添加最新信息'],
       },
       [QualityDimension.RELEVANCE]: {
-        '文档内容可能与分类不匹配': ['检查文档分类是否准确', '调整分类或内容'],
+        文档内容可能与分类不匹配: ['检查文档分类是否准确', '调整分类或内容'],
       },
     };
 
@@ -872,7 +865,7 @@ class DocumentQualityImprovementService {
   private generateRecommendations(
     averageScore: number,
     gradeDistribution: Record<QualityGrade, number>,
-    topIssues: Array<{ issue: string; count: number; percentage: number }>
+    topIssues: Array<{ issue: string; count: number; percentage: number }>,
   ): string[] {
     const recommendations: string[] = [];
 
@@ -896,7 +889,12 @@ class DocumentQualityImprovementService {
 
     // 基于主要问题的建议
     if (topIssues.length > 0) {
-      recommendations.push(`主要问题集中在：${topIssues.slice(0, 3).map((i) => i.issue).join('、')}`);
+      recommendations.push(
+        `主要问题集中在：${topIssues
+          .slice(0, 3)
+          .map(i => i.issue)
+          .join('、')}`,
+      );
     }
 
     return recommendations;
@@ -909,7 +907,7 @@ class DocumentQualityImprovementService {
    */
   private detectMisspellings(text: string): string[] {
     // 简化实现，实际应该使用拼写检查库
-    const commonMisspellings = ['teh', 'adn', 'don\'t', 'can\'t', 'won\'t', 'should', 'because'];
+    const commonMisspellings = ['teh', 'adn', "don't", "can't", "won't", 'should', 'because'];
     const found: string[] = [];
 
     for (const misspelling of commonMisspellings) {
@@ -962,7 +960,7 @@ class DocumentQualityImprovementService {
     ];
 
     for (const variants of termVariants) {
-      const foundVariants = variants.filter((variant) => text.includes(variant));
+      const foundVariants = variants.filter(variant => text.includes(variant));
       if (foundVariants.length > 1) {
         inconsistentTerms.push(`术语不一致：${foundVariants.join('、')}`);
       }
@@ -978,10 +976,10 @@ class DocumentQualityImprovementService {
    */
   private getCategoryKeywords(category: string): string[] {
     const keywordMap: Record<string, string[]> = {
-      '技术文档': ['技术', '开发', '代码', 'API', '架构'],
-      '产品文档': ['产品', '功能', '需求', '用户', '体验'],
-      '运营文档': ['运营', '推广', '营销', '活动', '数据'],
-      '管理文档': ['管理', '流程', '制度', '规范', '标准'],
+      技术文档: ['技术', '开发', '代码', 'API', '架构'],
+      产品文档: ['产品', '功能', '需求', '用户', '体验'],
+      运营文档: ['运营', '推广', '营销', '活动', '数据'],
+      管理文档: ['管理', '流程', '制度', '规范', '标准'],
     };
 
     return keywordMap[category] || [];
@@ -1007,8 +1005,7 @@ class DocumentQualityImprovementService {
       };
     }
 
-    const averageScore =
-      allAssessments.reduce((sum, a) => sum + a.overallScore, 0) / allAssessments.length;
+    const averageScore = allAssessments.reduce((sum, a) => sum + a.overallScore, 0) / allAssessments.length;
 
     const gradeDistribution: Record<QualityGrade, number> = {
       [QualityGrade.EXCELLENT]: 0,
@@ -1024,7 +1021,7 @@ class DocumentQualityImprovementService {
 
     const lastAssessmentDate = allAssessments.reduce(
       (max, a) => (a.assessedAt > max ? a.assessedAt : max),
-      allAssessments[0].assessedAt
+      allAssessments[0].assessedAt,
     );
 
     return {

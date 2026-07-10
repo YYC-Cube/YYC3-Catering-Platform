@@ -90,11 +90,7 @@ export class CacheStrategyManager {
    * @param options 缓存选项
    * @returns 缓存值
    */
-  async get<T>(
-    key: string,
-    loader?: () => Promise<T>,
-    options?: CacheOptions
-  ): Promise<T | null> {
+  async get<T>(key: string, loader?: () => Promise<T>, options?: CacheOptions): Promise<T | null> {
     try {
       // 尝试从缓存获取
       const cached = await this.cacheClient.get<T>(key);
@@ -110,7 +106,7 @@ export class CacheStrategyManager {
 
           if (ttl > 0 && ttl < defaultTTL * this.config.refreshThreshold) {
             // 异步刷新缓存
-            this.refreshCache(key, loader, options).catch((error) => {
+            this.refreshCache(key, loader, options).catch(error => {
               logger.error('Failed to refresh cache', { key, error: error.message });
             });
           }
@@ -201,11 +197,7 @@ export class CacheStrategyManager {
    * @param loader 加载函数
    * @param options 缓存选项
    */
-  private async refreshCache<T>(
-    key: string,
-    loader?: () => Promise<T>,
-    options?: CacheOptions
-  ): Promise<void> {
+  private async refreshCache<T>(key: string, loader?: () => Promise<T>, options?: CacheOptions): Promise<void> {
     if (!loader) {
       return;
     }
@@ -292,12 +284,12 @@ export class CacheStrategyManager {
 
       // 淘汰最旧的10%
       const evictCount = Math.ceil(accessTimes.length * 0.1);
-      const keysToEvict = accessTimes.slice(0, evictCount).map((item) => item.key);
+      const keysToEvict = accessTimes.slice(0, evictCount).map(item => item.key);
 
       await this.cacheClient.deleteMultiple(keysToEvict);
 
       // 清理访问记录
-      await client.del(...keysToEvict.map((key) => `access:${key}`));
+      await client.del(...keysToEvict.map(key => `access:${key}`));
 
       this.stats.evictions += evictCount;
       logger.info('Cache evicted by LRU', { count: evictCount });
@@ -319,7 +311,7 @@ export class CacheStrategyManager {
 
     for (const chunk of chunks) {
       await Promise.all(
-        chunk.map(async (key) => {
+        chunk.map(async key => {
           try {
             const data = await loader(key);
             await this.set(key, data);
@@ -327,7 +319,7 @@ export class CacheStrategyManager {
           } catch (error) {
             logger.error('Failed to warm up cache', { key, error: error.message });
           }
-        })
+        }),
       );
     }
 
@@ -409,11 +401,7 @@ export class HierarchicalCacheManager {
    * @param config 缓存配置
    * @param cacheClient 缓存客户端
    */
-  addLevel(
-    name: string,
-    config: CacheStrategyConfig,
-    cacheClient: RedisCacheClient
-  ): void {
+  addLevel(name: string, config: CacheStrategyConfig, cacheClient: RedisCacheClient): void {
     const manager = new CacheStrategyManager(cacheClient, config);
     this.levels.set(name, manager);
     logger.info('Cache level added', { name, strategy: config.strategy });
@@ -453,9 +441,7 @@ export class HierarchicalCacheManager {
    * @param value 值
    */
   async set(key: string, value: any): Promise<void> {
-    const promises = Array.from(this.levels.values()).map((manager) =>
-      manager.set(key, value)
-    );
+    const promises = Array.from(this.levels.values()).map(manager => manager.set(key, value));
     await Promise.all(promises);
   }
 
@@ -464,9 +450,7 @@ export class HierarchicalCacheManager {
    * @param key 键
    */
   async delete(key: string): Promise<void> {
-    const promises = Array.from(this.levels.values()).map((manager) =>
-      manager.delete(key)
-    );
+    const promises = Array.from(this.levels.values()).map(manager => manager.delete(key));
     await Promise.all(promises);
   }
 
@@ -476,11 +460,7 @@ export class HierarchicalCacheManager {
    * @param value 值
    * @param currentLevel 当前层级
    */
-  private async promoteToHigherLevels(
-    key: string,
-    value: any,
-    currentLevel: string
-  ): Promise<void> {
+  private async promoteToHigherLevels(key: string, value: any, currentLevel: string): Promise<void> {
     const levelNames = Array.from(this.levels.keys());
     const currentIndex = levelNames.indexOf(currentLevel);
 
@@ -515,7 +495,7 @@ export class HierarchicalCacheManager {
    * 清空所有层级
    */
   async flushAll(): Promise<void> {
-    const promises = Array.from(this.levels.values()).map(async (manager) => {
+    const promises = Array.from(this.levels.values()).map(async manager => {
       const client = manager['cacheClient'];
       await client.flushAll();
     });

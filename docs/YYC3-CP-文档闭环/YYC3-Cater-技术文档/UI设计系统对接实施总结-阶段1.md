@@ -13,15 +13,15 @@
 
 ### ✅ 已完成的所有任务
 
-| 任务 | 状态 | 完成时间 |
-|------|------|----------|
+| 任务                                                   | 状态      | 完成时间   |
+| ------------------------------------------------------ | --------- | ---------- |
 | 升级依赖（Vite、Tailwind CSS、TypeScript、Radix UI等） | ✅ 已完成 | 2026-01-21 |
-| 配置Tailwind CSS 4.1.12 | ✅ 已完成 | 2026-01-21 |
-| 配置TypeScript | ✅ 已完成 | 2026-01-21 |
-| 配置Vite | ✅ 已完成 | 2026-01-21 |
-| 创建基础组件结构 | ✅ 已完成 | 2026-01-21 |
-| 创建主题系统 | ✅ 已完成 | 2026-01-21 |
-| 创建工具函数 | ✅ 已完成 | 2026-01-21 |
+| 配置Tailwind CSS 4.1.12                                | ✅ 已完成 | 2026-01-21 |
+| 配置TypeScript                                         | ✅ 已完成 | 2026-01-21 |
+| 配置Vite                                               | ✅ 已完成 | 2026-01-21 |
+| 创建基础组件结构                                       | ✅ 已完成 | 2026-01-21 |
+| 创建主题系统                                           | ✅ 已完成 | 2026-01-21 |
+| 创建工具函数                                           | ✅ 已完成 | 2026-01-21 |
 
 ---
 
@@ -29,17 +29,17 @@
 
 ### 核心依赖更新
 
-| 包名 | 旧版本 | 新版本 | 更新类型 |
-|------|--------|--------|----------|
-| tailwindcss | 未安装 | 4.1.18 | 新增 |
-| postcss | 未安装 | 8.5.6 | 新增 |
-| autoprefixer | 未安装 | 10.4.23 | 新增 |
-| radix-vue | 未安装 | 1.9.17 | 新增 |
-| lucide-vue-next | 未安装 | 0.562.0 | 新增 |
-| clsx | 未安装 | 2.1.1 | 新增 |
-| tailwind-merge | 未安装 | 3.4.0 | 新增 |
-| recharts | 未安装 | 3.6.0 | 新增 |
-| class-variance-authority | 未安装 | 0.7.1 | 新增 |
+| 包名                     | 旧版本 | 新版本  | 更新类型 |
+| ------------------------ | ------ | ------- | -------- |
+| tailwindcss              | 未安装 | 4.1.18  | 新增     |
+| postcss                  | 未安装 | 8.5.6   | 新增     |
+| autoprefixer             | 未安装 | 10.4.23 | 新增     |
+| radix-vue                | 未安装 | 1.9.17  | 新增     |
+| lucide-vue-next          | 未安装 | 0.562.0 | 新增     |
+| clsx                     | 未安装 | 2.1.1   | 新增     |
+| tailwind-merge           | 未安装 | 3.4.0   | 新增     |
+| recharts                 | 未安装 | 3.6.0   | 新增     |
+| class-variance-authority | 未安装 | 0.7.1   | 新增     |
 
 ### 依赖说明
 
@@ -58,6 +58,7 @@
 **文件**: `tailwind.config.ts`
 
 **主要配置**:
+
 - 完整的颜色系统（primary、secondary、success、warning、danger、neutral）
 - 字体系统（Inter、JetBrains Mono）
 - 字体大小（xs到9xl）
@@ -68,6 +69,7 @@
 - 深色模式支持（class模式）
 
 **关键特性**:
+
 ```typescript
 colors: {
   primary: { 50: '#f0f9ff', ..., 950: '#082f49' },
@@ -84,13 +86,14 @@ colors: {
 **文件**: `postcss.config.js`
 
 **主要配置**:
+
 ```javascript
 export default {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
   },
-}
+};
 ```
 
 ### 3. Vite配置更新
@@ -98,6 +101,7 @@ export default {
 **文件**: `vite.config.ts`
 
 **更新内容**:
+
 - 添加PostCSS配置支持
 - 保持现有的别名配置
 - 保持现有的构建优化配置
@@ -111,6 +115,7 @@ export default {
 **文件**: `src/types/theme.ts`
 
 **主要类型**:
+
 - `ThemeMode`: 'light' | 'dark' | 'auto'
 - `ColorScheme`: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'neutral'
 - `ThemeColors`: 完整的颜色系统
@@ -126,20 +131,22 @@ export default {
 **文件**: `src/config/theme.ts`
 
 **主要配置**:
+
 - `lightTheme`: 浅色主题
 - `darkTheme`: 深色主题
 - `themeConfig`: 主题系统配置
 
 **关键特性**:
+
 ```typescript
 export const themeConfig: ThemeConfig = {
-  defaultTheme: 'light',
+  defaultTheme: "light",
   themes: [lightTheme, darkTheme],
   enableDarkMode: true,
   enableSystemTheme: true,
   persistTheme: true,
-  themeStorageKey: 'yyc3-theme',
-}
+  themeStorageKey: "yyc3-theme",
+};
 ```
 
 ### ThemeProvider组件
@@ -147,6 +154,7 @@ export const themeConfig: ThemeConfig = {
 **文件**: `src/components/UI/ThemeProvider/index.tsx`
 
 **主要功能**:
+
 - 提供主题上下文
 - 支持主题切换
 - 支持深色模式
@@ -154,6 +162,7 @@ export const themeConfig: ThemeConfig = {
 - 持久化主题设置
 
 **使用示例**:
+
 ```vue
 <template>
   <ThemeProvider>
@@ -162,9 +171,9 @@ export const themeConfig: ThemeConfig = {
 </template>
 
 <script setup lang="ts">
-import { useTheme } from '@/components/UI/ThemeProvider'
+import { useTheme } from "@/components/UI/ThemeProvider";
 
-const theme = useTheme()
+const theme = useTheme();
 </script>
 ```
 
@@ -173,12 +182,14 @@ const theme = useTheme()
 **文件**: `src/components/UI/DarkModeToggle/index.tsx`
 
 **主要功能**:
+
 - 深色模式切换按钮
 - 支持三种模式：浅色、深色、自动
 - 支持不同尺寸（sm、md、lg）
 - 可选显示标签
 
 **使用示例**:
+
 ```vue
 <template>
   <DarkModeToggle size="md" :showLabel="true" />
@@ -194,6 +205,7 @@ const theme = useTheme()
 **文件**: `src/components/UI/Button/index.tsx`
 
 **主要特性**:
+
 - 8种变体（primary、secondary、success、warning、danger、ghost、outline、link）
 - 5种尺寸（xs、sm、md、lg、xl）
 - 支持全宽模式
@@ -202,11 +214,10 @@ const theme = useTheme()
 - 支持不同类型（button、submit、reset）
 
 **使用示例**:
+
 ```vue
 <template>
-  <Button variant="primary" size="md" :loading="false" @click="handleClick">
-    点击我
-  </Button>
+  <Button variant="primary" size="md" :loading="false" @click="handleClick"> 点击我 </Button>
 </template>
 ```
 
@@ -215,6 +226,7 @@ const theme = useTheme()
 **文件**: `src/components/UI/index.ts`
 
 **导出的组件**:
+
 - Button
 - Input
 - Card
@@ -314,6 +326,7 @@ const theme = useTheme()
 ### 主要工具函数
 
 #### 1. 样式工具
+
 - `cn()`: 合并Tailwind CSS类名
 - `addClass()`: 添加CSS类
 - `removeClass()`: 移除CSS类
@@ -321,6 +334,7 @@ const theme = useTheme()
 - `hasClass()`: 检查CSS类
 
 #### 2. 日期时间工具
+
 - `formatDate()`: 格式化日期
 - `formatDateRelative()`: 相对日期格式化
 - `formatDuration()`: 格式化持续时间
@@ -341,6 +355,7 @@ const theme = useTheme()
 - `endOfYear()`: 获取一年的结束
 
 #### 3. 数字格式化工具
+
 - `formatNumber()`: 格式化数字
 - `formatCurrency()`: 格式化货币
 - `formatBytes()`: 格式化字节
@@ -349,6 +364,7 @@ const theme = useTheme()
 - `formatRatio()`: 格式化比例
 
 #### 4. 字符串工具
+
 - `capitalize()`: 首字母大写
 - `camelCase()`: 驼峰命名
 - `kebabCase()`: 短横线命名
@@ -357,6 +373,7 @@ const theme = useTheme()
 - `slugify()`: 生成URL友好的字符串
 
 #### 5. 数组工具
+
 - `unique()`: 去重
 - `shuffle()`: 随机打乱
 - `groupBy()`: 分组
@@ -367,6 +384,7 @@ const theme = useTheme()
 - `unzip()`: 解压
 
 #### 6. 数学工具
+
 - `sum()`: 求和
 - `average()`: 平均值
 - `min()`: 最小值
@@ -379,10 +397,12 @@ const theme = useTheme()
 - `lerp()`: 线性插值
 
 #### 7. 防抖节流工具
+
 - `debounce()`: 防抖
 - `throttle()`: 节流
 
 #### 8. 存储工具
+
 - `getLocalStorage()`: 获取本地存储
 - `setLocalStorage()`: 设置本地存储
 - `removeLocalStorage()`: 移除本地存储
@@ -398,6 +418,7 @@ const theme = useTheme()
 - `clearAllCookies()`: 清空所有Cookie
 
 #### 9. 验证工具
+
 - `isValidEmail()`: 验证邮箱
 - `isValidPhone()`: 验证手机号
 - `isValidURL()`: 验证URL
@@ -405,26 +426,31 @@ const theme = useTheme()
 - `isValidUUID()`: 验证UUID
 
 #### 10. 掩码工具
+
 - `maskEmail()`: 邮箱掩码
 - `maskPhone()`: 手机号掩码
 - `maskCard()`: 卡号掩码
 - `maskID()`: 身份证掩码
 
 #### 11. 编码解码工具
+
 - `encodeBase64()`: Base64编码
 - `decodeBase64()`: Base64解码
 - `encodeJSON()`: JSON编码
 - `decodeJSON()`: JSON解码
 
 #### 12. 下载工具
+
 - `downloadFile()`: 下载文件
 - `downloadJSON()`: 下载JSON
 - `downloadCSV()`: 下载CSV
 
 #### 13. 剪贴板工具
+
 - `copyToClipboard()`: 复制到剪贴板
 
 #### 14. URL工具
+
 - `parseQuery()`: 解析查询参数
 - `stringifyQuery()`: 序列化查询参数
 - `getQueryParams()`: 获取查询参数
@@ -432,12 +458,14 @@ const theme = useTheme()
 - `removeQueryParam()`: 移除查询参数
 
 #### 15. 设备检测工具
+
 - `isMobile()`: 检测移动设备
 - `isTablet()`: 检测平板设备
 - `isDesktop()`: 检测桌面设备
 - `isTouchDevice()`: 检测触摸设备
 
 #### 16. DOM工具
+
 - `getViewportSize()`: 获取视口大小
 - `getScrollPosition()`: 获取滚动位置
 - `scrollToTop()`: 滚动到顶部
@@ -451,6 +479,7 @@ const theme = useTheme()
 - `replaceElement()`: 替换元素
 
 #### 17. 事件工具
+
 - `addEventListener()`: 添加事件监听
 - `removeEventListener()`: 移除事件监听
 - `dispatchEvent()`: 派发事件
@@ -459,12 +488,14 @@ const theme = useTheme()
 - `stopImmediatePropagation()`: 立即停止事件传播
 
 #### 18. 生成器工具
+
 - `generateId()`: 生成唯一ID
 - `generatePassword()`: 生成密码
 - `generateToken()`: 生成令牌
 - `hashString()`: 哈希字符串
 
 #### 19. 对象工具
+
 - `isEmpty()`: 检查是否为空
 - `isObject()`: 检查是否为对象
 - `isArray()`: 检查是否为数组
@@ -479,12 +510,14 @@ const theme = useTheme()
 - `cloneDeep()`: 深度克隆
 
 #### 20. 动画工具
+
 - `easeInOutQuad()`: 二次缓动
 - `easeInOutCubic()`: 三次缓动
 - `easeInOutQuart()`: 四次缓动
 - `easeInOutQuint()`: 五次缓动
 
 #### 21. 其他工具
+
 - `sleep()`: 睡眠
 - `random()`: 随机整数
 - `randomFloat()`: 随机浮点数
@@ -530,6 +563,7 @@ frontend/apps/admin-dashboard/
 **文件**: `src/styles/tailwind.css`
 
 **主要内容**:
+
 ```css
 @tailwind base;
 @tailwind components;
@@ -539,11 +573,11 @@ frontend/apps/admin-dashboard/
   * {
     @apply border-neutral-200;
   }
-  
+
   body {
     @apply bg-neutral-50 text-neutral-900 font-sans antialiased;
   }
-  
+
   html {
     @apply scroll-smooth;
   }
@@ -553,35 +587,35 @@ frontend/apps/admin-dashboard/
   .btn {
     @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
   }
-  
+
   .btn-primary {
     @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
   }
-  
+
   .card {
     @apply bg-white rounded-lg shadow-md border border-neutral-200;
   }
-  
+
   .input {
     @apply w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
   }
-  
+
   .badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
-  
+
   .badge-primary {
     @apply bg-primary-100 text-primary-800;
   }
-  
+
   .badge-success {
     @apply bg-success-100 text-success-800;
   }
-  
+
   .badge-warning {
     @apply bg-warning-100 text-warning-800;
   }
-  
+
   .badge-danger {
     @apply bg-danger-100 text-danger-800;
   }
@@ -591,33 +625,33 @@ frontend/apps/admin-dashboard/
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-  
+
   .scrollbar-thin {
     scrollbar-width: thin;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-track {
     @apply bg-neutral-100;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb {
     @apply bg-neutral-300 rounded-full;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     @apply bg-neutral-400;
   }
@@ -631,12 +665,14 @@ frontend/apps/admin-dashboard/
 ### 阶段2：组件迁移（预计2-3周）
 
 **主要任务**:
+
 1. 迁移所有UI组件到Radix UI
 2. 创建完整的组件库
 3. 编写组件文档
 4. 创建组件示例
 
 **具体任务**:
+
 - [ ] 迁移Input组件
 - [ ] 迁移Card组件
 - [ ] 迁移Badge组件
@@ -729,12 +765,14 @@ frontend/apps/admin-dashboard/
 ### 阶段3：系统集成（预计1-2周）
 
 **主要任务**:
+
 1. 集成AI功能
 2. 集成Closed Loop
 3. 更新现有页面
 4. 测试所有功能
 
 **具体任务**:
+
 - [ ] 集成智能菜单系统
 - [ ] 集成智能表单系统
 - [ ] 集成智能数据分析系统
@@ -746,12 +784,14 @@ frontend/apps/admin-dashboard/
 ### 阶段4：优化测试（预计1周）
 
 **主要任务**:
+
 1. 性能优化
 2. 单元测试
 3. 集成测试
 4. 用户验收测试
 
 **具体任务**:
+
 - [ ] 性能优化
 - [ ] 编写单元测试
 - [ ] 进行集成测试
@@ -765,29 +805,29 @@ frontend/apps/admin-dashboard/
 
 ### 文件统计
 
-| 类型 | 数量 |
-|------|------|
-| 新增文件 | 10 |
-| 修改文件 | 4 |
-| 删除文件 | 0 |
-| 总计 | 14 |
+| 类型     | 数量 |
+| -------- | ---- |
+| 新增文件 | 10   |
+| 修改文件 | 4    |
+| 删除文件 | 0    |
+| 总计     | 14   |
 
 ### 代码统计
 
-| 类型 | 行数 |
-|------|------|
+| 类型       | 行数  |
+| ---------- | ----- |
 | TypeScript | 2000+ |
-| CSS | 100+ |
-| JSON | 50+ |
-| 总计 | 2150+ |
+| CSS        | 100+  |
+| JSON       | 50+   |
+| 总计       | 2150+ |
 
 ### 组件统计
 
-| 类型 | 数量 |
-|------|------|
-| 已创建组件 | 3 |
-| 计划组件 | 100+ |
-| 工具函数 | 200+ |
+| 类型       | 数量 |
+| ---------- | ---- |
+| 已创建组件 | 3    |
+| 计划组件   | 100+ |
+| 工具函数   | 200+ |
 
 ---
 

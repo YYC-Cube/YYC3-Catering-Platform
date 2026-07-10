@@ -26,7 +26,7 @@ const logFormat = winston.format.combine(
   }),
   winston.format.errors({ stack: true }),
   winston.format.splat(),
-  winston.format.json()
+  winston.format.json(),
 );
 
 // 控制台日志格式
@@ -35,11 +35,9 @@ const consoleFormat = winston.format.combine(
   winston.format.timestamp({
     format: 'YYYY-MM-DD HH:mm:ss',
   }),
-  winston.format.printf((info) => {
-    return `${info.timestamp} [${info.level}] ${info.message}${
-      info.stack ? `\n${info.stack}` : ''
-    }`;
-  })
+  winston.format.printf(info => {
+    return `${info.timestamp} [${info.level}] ${info.message}${info.stack ? `\n${info.stack}` : ''}`;
+  }),
 );
 
 // 日志传输配置
@@ -49,7 +47,7 @@ const transports = [
     format: consoleFormat,
     level: config.logging.level,
   }),
-  
+
   // 按天滚动的错误日志
   new DailyRotateFile({
     filename: path.join(config.logging.filePath, 'error-%DATE%.log'),
@@ -60,7 +58,7 @@ const transports = [
     level: 'error',
     format: logFormat,
   }),
-  
+
   // 按天滚动的所有日志
   new DailyRotateFile({
     filename: path.join(config.logging.filePath, 'combined-%DATE%.log'),
@@ -70,7 +68,7 @@ const transports = [
     maxFiles: '30d',
     level: config.logging.level,
     format: logFormat,
-  })
+  }),
 ];
 
 // 创建日志实例

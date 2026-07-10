@@ -12,7 +12,7 @@ export enum LogLevel {
   INFO = 'info',
   WARN = 'warn',
   ERROR = 'error',
-  FATAL = 'fatal'
+  FATAL = 'fatal',
 }
 
 export interface LoggerConfig {
@@ -43,7 +43,7 @@ export class Logger {
       serviceName: process.env.SERVICE_NAME || 'unknown',
       enableConsole: true,
       enableFile: false,
-      ...config
+      ...config,
     };
   }
 
@@ -108,7 +108,7 @@ export class Logger {
         service: this.config.serviceName,
         component: this.componentName,
         message,
-        ...(data ? { data } : {})
+        ...(data ? { data } : {}),
       };
 
       // 输出到控制台
@@ -139,7 +139,7 @@ export class Logger {
   private consoleLog(logEntry: any): void {
     const { timestamp, level, service, component, message, data } = logEntry;
     const formattedMessage = `${timestamp} [${service}] [${component}] [${level.toUpperCase()}] ${message}`;
-    
+
     switch (level) {
       case LogLevel.DEBUG:
         console.debug(formattedMessage, data);

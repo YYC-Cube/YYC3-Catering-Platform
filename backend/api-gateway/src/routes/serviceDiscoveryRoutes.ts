@@ -24,7 +24,7 @@ router.get('/', (req: Request, res: Response) => {
   const servicesInfo = services.map(serviceName => {
     const instances = serviceRegistry.getAllInstances(serviceName);
     const status = serviceRegistry.getServiceStatus(serviceName);
-    
+
     return {
       name: serviceName,
       status,

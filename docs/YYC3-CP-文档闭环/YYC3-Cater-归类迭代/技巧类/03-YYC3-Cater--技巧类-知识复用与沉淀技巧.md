@@ -10,9 +10,11 @@
 **@tags**：YYC³,文档
 
 ---
+
 # 知识复用与沉淀技巧
 
 ## 文档信息
+
 - 文档类型：技巧类
 - 所属阶段：YYC3-Cater--归类迭代
 - 遵循规范：五高五标五化要求
@@ -87,23 +89,23 @@ const DEFAULT_REUSE_GOALS: KnowledgeReuseGoals = {
   efficiency: {
     developmentEfficiency: 0.8,
     problemSolvingSpeed: 0.75,
-    decisionEfficiency: 0.7
+    decisionEfficiency: 0.7,
   },
   quality: {
     codeQuality: 0.85,
     architectureQuality: 0.85,
-    productQuality: 0.8
+    productQuality: 0.8,
   },
   cost: {
     developmentCostReduction: 0.7,
     maintenanceCostReduction: 0.75,
-    trainingCostReduction: 0.8
+    trainingCostReduction: 0.8,
   },
   capability: {
     teamCapabilityImprovement: 0.8,
     knowledgeCoverage: 0.85,
-    innovationCapability: 0.75
-  }
+    innovationCapability: 0.75,
+  },
 };
 ```
 
@@ -119,21 +121,21 @@ const DEFAULT_REUSE_GOALS: KnowledgeReuseGoals = {
  */
 enum KnowledgeType {
   /** 代码知识 */
-  CODE = 'code',
+  CODE = "code",
   /** 架构知识 */
-  ARCHITECTURE = 'architecture',
+  ARCHITECTURE = "architecture",
   /** 设计知识 */
-  DESIGN = 'design',
+  DESIGN = "design",
   /** 技术知识 */
-  TECHNOLOGY = 'technology',
+  TECHNOLOGY = "technology",
   /** 业务知识 */
-  BUSINESS = 'business',
+  BUSINESS = "business",
   /** 经验知识 */
-  EXPERIENCE = 'experience',
+  EXPERIENCE = "experience",
   /** 最佳实践 */
-  BEST_PRACTICE = 'best_practice',
+  BEST_PRACTICE = "best_practice",
   /** 模式知识 */
-  PATTERN = 'pattern'
+  PATTERN = "pattern",
 }
 
 /**
@@ -161,29 +163,29 @@ interface KnowledgeCategory {
  */
 class KnowledgeTaxonomy {
   private categories: Map<string, KnowledgeCategory> = new Map();
-  
+
   /**
    * 添加分类
    */
   addCategory(category: KnowledgeCategory): void {
     this.categories.set(category.categoryId, category);
   }
-  
+
   /**
    * 获取分类树
    */
   getTree(): KnowledgeCategory[] {
     const roots: KnowledgeCategory[] = [];
-    
+
     for (const category of this.categories.values()) {
       if (!category.parentId) {
         roots.push(this.buildSubtree(category));
       }
     }
-    
+
     return roots;
   }
-  
+
   /**
    * 构建子树
    */
@@ -191,27 +193,25 @@ class KnowledgeTaxonomy {
     const children = Array.from(this.categories.values())
       .filter(c => c.parentId === category.categoryId)
       .map(c => this.buildSubtree(c));
-    
+
     return {
       ...category,
-      children
+      children,
     };
   }
-  
+
   /**
    * 按类型查找分类
    */
   findByType(type: KnowledgeType): KnowledgeCategory[] {
-    return Array.from(this.categories.values())
-      .filter(c => c.types.includes(type));
+    return Array.from(this.categories.values()).filter(c => c.types.includes(type));
   }
-  
+
   /**
    * 按标签查找分类
    */
   findByTag(tag: string): KnowledgeCategory[] {
-    return Array.from(this.categories.values())
-      .filter(c => c.tags.includes(tag));
+    return Array.from(this.categories.values()).filter(c => c.tags.includes(tag));
   }
 }
 ```
@@ -260,15 +260,15 @@ interface KnowledgeMetadata {
  */
 enum KnowledgeStatus {
   /** 草稿 */
-  DRAFT = 'draft',
+  DRAFT = "draft",
   /** 审核中 */
-  REVIEW = 'review',
+  REVIEW = "review",
   /** 已发布 */
-  PUBLISHED = 'published',
+  PUBLISHED = "published",
   /** 已归档 */
-  ARCHIVED = 'archived',
+  ARCHIVED = "archived",
   /** 已废弃 */
-  DEPRECATED = 'deprecated'
+  DEPRECATED = "deprecated",
 }
 
 /**
@@ -276,14 +276,14 @@ enum KnowledgeStatus {
  */
 class MetadataManager {
   private metadata: Map<string, KnowledgeMetadata> = new Map();
-  
+
   /**
    * 添加元数据
    */
   addMetadata(metadata: KnowledgeMetadata): void {
     this.metadata.set(metadata.knowledgeId, metadata);
   }
-  
+
   /**
    * 更新元数据
    */
@@ -293,7 +293,7 @@ class MetadataManager {
       Object.assign(metadata, updates, { updatedAt: new Date() });
     }
   }
-  
+
   /**
    * 增加访问次数
    */
@@ -303,7 +303,7 @@ class MetadataManager {
       metadata.accessCount++;
     }
   }
-  
+
   /**
    * 增加复用次数
    */
@@ -313,7 +313,7 @@ class MetadataManager {
       metadata.reuseCount++;
     }
   }
-  
+
   /**
    * 添加评分
    */
@@ -325,7 +325,7 @@ class MetadataManager {
       metadata.rating = totalRating / metadata.reviewCount;
     }
   }
-  
+
   /**
    * 搜索元数据
    */
@@ -380,13 +380,13 @@ interface KnowledgeBaseConfig {
  */
 enum StorageType {
   /** 文件系统 */
-  FILE_SYSTEM = 'file_system',
+  FILE_SYSTEM = "file_system",
   /** 数据库 */
-  DATABASE = 'database',
+  DATABASE = "database",
   /** 对象存储 */
-  OBJECT_STORAGE = 'object_storage',
+  OBJECT_STORAGE = "object_storage",
   /** 混合存储 */
-  HYBRID = 'hybrid'
+  HYBRID = "hybrid",
 }
 
 /**
@@ -394,11 +394,11 @@ enum StorageType {
  */
 interface IndexConfig {
   /** 索引类型 */
-  indexType: 'full_text' | 'keyword' | 'semantic';
+  indexType: "full_text" | "keyword" | "semantic";
   /** 索引字段 */
   indexFields: string[];
   /** 更新策略 */
-  updateStrategy: 'real_time' | 'batch' | 'scheduled';
+  updateStrategy: "real_time" | "batch" | "scheduled";
   /** 更新间隔（毫秒） */
   updateInterval?: number;
 }
@@ -408,7 +408,7 @@ interface IndexConfig {
  */
 interface AccessControl {
   /** 访问策略 */
-  policy: 'public' | 'private' | 'restricted';
+  policy: "public" | "private" | "restricted";
   /** 允许的角色 */
   allowedRoles?: string[];
   /** 允许的用户 */
@@ -422,7 +422,7 @@ interface BackupConfig {
   /** 是否启用备份 */
   enabled: boolean;
   /** 备份频率 */
-  frequency: 'hourly' | 'daily' | 'weekly';
+  frequency: "hourly" | "daily" | "weekly";
   /** 保留天数 */
   retentionDays: number;
   /** 备份位置 */
@@ -436,29 +436,29 @@ class KnowledgeBase {
   private config: KnowledgeBaseConfig;
   private metadataManager: MetadataManager;
   private taxonomy: KnowledgeTaxonomy;
-  
+
   constructor(config: KnowledgeBaseConfig) {
     this.config = config;
     this.metadataManager = new MetadataManager();
     this.taxonomy = new KnowledgeTaxonomy();
   }
-  
+
   /**
    * 初始化知识库
    */
   async initialize(): Promise<void> {
     // 初始化存储
     await this.initializeStorage();
-    
+
     // 初始化索引
     await this.initializeIndex();
-    
+
     // 初始化备份
     if (this.config.backupConfig.enabled) {
       await this.initializeBackup();
     }
   }
-  
+
   /**
    * 初始化存储
    */
@@ -479,14 +479,14 @@ class KnowledgeBase {
         break;
     }
   }
-  
+
   /**
    * 初始化索引
    */
   private async initializeIndex(): Promise<void> {
     // 初始化索引
   }
-  
+
   /**
    * 初始化备份
    */
@@ -508,7 +508,7 @@ interface KnowledgeStorage {
   /** 知识内容 */
   content: string;
   /** 内容类型 */
-  contentType: 'text' | 'code' | 'markdown' | 'html' | 'json';
+  contentType: "text" | "code" | "markdown" | "html" | "json";
   /** 附件 */
   attachments?: Attachment[];
   /** 相关知识 */
@@ -536,21 +536,21 @@ interface Attachment {
  */
 class StorageManager {
   private storage: Map<string, KnowledgeStorage> = new Map();
-  
+
   /**
    * 存储知识
    */
   async store(knowledgeId: string, storage: KnowledgeStorage): Promise<void> {
     this.storage.set(knowledgeId, storage);
   }
-  
+
   /**
    * 获取知识
    */
   async retrieve(knowledgeId: string): Promise<KnowledgeStorage | null> {
     return this.storage.get(knowledgeId) || null;
   }
-  
+
   /**
    * 更新知识
    */
@@ -560,26 +560,26 @@ class StorageManager {
       Object.assign(storage, updates);
     }
   }
-  
+
   /**
    * 删除知识
    */
   async delete(knowledgeId: string): Promise<void> {
     this.storage.delete(knowledgeId);
   }
-  
+
   /**
    * 搜索知识内容
    */
   async searchContent(query: string): Promise<KnowledgeStorage[]> {
     const results: KnowledgeStorage[] = [];
-    
+
     for (const storage of this.storage.values()) {
       if (storage.content.toLowerCase().includes(query.toLowerCase())) {
         results.push(storage);
       }
     }
-    
+
     return results;
   }
 }
@@ -597,13 +597,13 @@ class StorageManager {
  */
 enum RetrievalStrategy {
   /** 关键词检索 */
-  KEYWORD = 'keyword',
+  KEYWORD = "keyword",
   /** 全文检索 */
-  FULL_TEXT = 'full_text',
+  FULL_TEXT = "full_text",
   /** 语义检索 */
-  SEMANTIC = 'semantic',
+  SEMANTIC = "semantic",
   /** 混合检索 */
-  HYBRID = 'hybrid'
+  HYBRID = "hybrid",
 }
 
 /**
@@ -633,9 +633,9 @@ interface RetrievalQuery {
     max: number;
   };
   /** 排序方式 */
-  sortBy?: 'relevance' | 'rating' | 'date' | 'popularity';
+  sortBy?: "relevance" | "rating" | "date" | "popularity";
   /** 排序顺序 */
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: "asc" | "desc";
   /** 分页 */
   pagination?: {
     page: number;
@@ -667,15 +667,12 @@ interface RetrievalResult {
 class KnowledgeRetriever {
   private metadataManager: MetadataManager;
   private storageManager: StorageManager;
-  
-  constructor(
-    metadataManager: MetadataManager,
-    storageManager: StorageManager
-  ) {
+
+  constructor(metadataManager: MetadataManager, storageManager: StorageManager) {
     this.metadataManager = metadataManager;
     this.storageManager = storageManager;
   }
-  
+
   /**
    * 检索知识
    */
@@ -687,7 +684,7 @@ class KnowledgeRetriever {
   }> {
     // 根据检索策略执行检索
     let results: RetrievalResult[] = [];
-    
+
     switch (query.strategy) {
       case RetrievalStrategy.KEYWORD:
         results = await this.keywordSearch(query);
@@ -702,27 +699,27 @@ class KnowledgeRetriever {
         results = await this.hybridSearch(query);
         break;
     }
-    
+
     // 过滤
     results = this.filterResults(results, query);
-    
+
     // 排序
     results = this.sortResults(results, query);
-    
+
     // 分页
     const { page = 1, pageSize = 10 } = query.pagination || {};
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
     const paginatedResults = results.slice(start, end);
-    
+
     return {
       results: paginatedResults,
       total: results.length,
       page,
-      pageSize
+      pageSize,
     };
   }
-  
+
   /**
    * 关键词搜索
    */
@@ -731,35 +728,35 @@ class KnowledgeRetriever {
       types: query.types,
       categoryId: query.categoryIds?.[0],
       tags: query.tags,
-      author: query.authors?.[0]
+      author: query.authors?.[0],
     });
-    
+
     return metadataList.map(metadata => ({
       knowledgeId: metadata.knowledgeId,
       title: metadata.title,
       description: metadata.description,
       relevanceScore: this.calculateKeywordRelevance(metadata, query.query),
       summary: metadata.description,
-      highlights: []
+      highlights: [],
     }));
   }
-  
+
   /**
    * 全文搜索
    */
   private async fullTextSearch(query: RetrievalQuery): Promise<RetrievalResult[]> {
     const storages = await this.storageManager.searchContent(query.query);
-    
+
     return storages.map(storage => ({
       knowledgeId: storage.knowledgeId,
       title: storage.knowledgeId,
-      description: '',
+      description: "",
       relevanceScore: this.calculateFullTextRelevance(storage, query.query),
       summary: this.generateSummary(storage.content, query.query),
-      highlights: this.generateHighlights(storage.content, query.query)
+      highlights: this.generateHighlights(storage.content, query.query),
     }));
   }
-  
+
   /**
    * 语义搜索
    */
@@ -767,7 +764,7 @@ class KnowledgeRetriever {
     // 实现语义搜索
     return [];
   }
-  
+
   /**
    * 混合搜索
    */
@@ -775,7 +772,7 @@ class KnowledgeRetriever {
     // 结合多种搜索策略
     return [];
   }
-  
+
   /**
    * 计算关键词相关度
    */
@@ -784,45 +781,45 @@ class KnowledgeRetriever {
     const title = metadata.title.toLowerCase();
     const description = metadata.description.toLowerCase();
     const tags = metadata.tags.map(t => t.toLowerCase());
-    
+
     let score = 0;
-    
+
     // 标题匹配
     for (const keyword of keywords) {
       if (title.includes(keyword)) score += 0.5;
     }
-    
+
     // 描述匹配
     for (const keyword of keywords) {
       if (description.includes(keyword)) score += 0.3;
     }
-    
+
     // 标签匹配
     for (const keyword of keywords) {
       if (tags.includes(keyword)) score += 0.2;
     }
-    
+
     return score;
   }
-  
+
   /**
    * 计算全文相关度
    */
   private calculateFullTextRelevance(storage: KnowledgeStorage, query: string): number {
     const content = storage.content.toLowerCase();
     const keywords = query.toLowerCase().split(/\s+/);
-    
+
     let matchCount = 0;
     for (const keyword of keywords) {
-      const matches = content.match(new RegExp(keyword, 'g'));
+      const matches = content.match(new RegExp(keyword, "g"));
       if (matches) {
         matchCount += matches.length;
       }
     }
-    
-    return matchCount / content.length * 100;
+
+    return (matchCount / content.length) * 100;
   }
-  
+
   /**
    * 生成摘要
    */
@@ -830,40 +827,40 @@ class KnowledgeRetriever {
     const maxLength = 200;
     const queryLower = query.toLowerCase();
     const contentLower = content.toLowerCase();
-    
+
     // 查找查询词首次出现的位置
     const index = contentLower.indexOf(queryLower);
-    
+
     if (index === -1) {
-      return content.substring(0, maxLength) + '...';
+      return content.substring(0, maxLength) + "...";
     }
-    
+
     // 生成包含查询词的摘要
     const start = Math.max(0, index - 50);
     const end = Math.min(content.length, index + query.length + 150);
-    
-    return (start > 0 ? '...' : '') + content.substring(start, end) + (end < content.length ? '...' : '');
+
+    return (start > 0 ? "..." : "") + content.substring(start, end) + (end < content.length ? "..." : "");
   }
-  
+
   /**
    * 生成高亮
    */
   private generateHighlights(content: string, query: string): string[] {
     const keywords = query.toLowerCase().split(/\s+/);
     const highlights: string[] = [];
-    
+
     for (const keyword of keywords) {
-      const regex = new RegExp(`.{0,50}${keyword}.{0,50}`, 'gi');
+      const regex = new RegExp(`.{0,50}${keyword}.{0,50}`, "gi");
       const matches = content.match(regex);
-      
+
       if (matches) {
         highlights.push(...matches.slice(0, 3));
       }
     }
-    
+
     return highlights;
   }
-  
+
   /**
    * 过滤结果
    */
@@ -872,46 +869,43 @@ class KnowledgeRetriever {
       if (query.ratingRange) {
         const metadata = this.metadataManager.search({})[0];
         if (!metadata) return false;
-        if (metadata.rating < query.ratingRange.min || 
-            metadata.rating > query.ratingRange.max) {
+        if (metadata.rating < query.ratingRange.min || metadata.rating > query.ratingRange.max) {
           return false;
         }
       }
       return true;
     });
   }
-  
+
   /**
    * 排序结果
    */
   private sortResults(results: RetrievalResult[], query: RetrievalQuery): RetrievalResult[] {
-    const sortBy = query.sortBy || 'relevance';
-    const sortOrder = query.sortOrder || 'desc';
-    
+    const sortBy = query.sortBy || "relevance";
+    const sortOrder = query.sortOrder || "desc";
+
     return results.sort((a, b) => {
       let comparison = 0;
-      
+
       switch (sortBy) {
-        case 'relevance':
+        case "relevance":
           comparison = a.relevanceScore - b.relevanceScore;
           break;
-        case 'rating':
+        case "rating":
           comparison = this.getRating(a.knowledgeId) - this.getRating(b.knowledgeId);
           break;
-        case 'date':
-          comparison = this.getUpdatedAt(a.knowledgeId).getTime() - 
-                       this.getUpdatedAt(b.knowledgeId).getTime();
+        case "date":
+          comparison = this.getUpdatedAt(a.knowledgeId).getTime() - this.getUpdatedAt(b.knowledgeId).getTime();
           break;
-        case 'popularity':
-          comparison = this.getReuseCount(a.knowledgeId) - 
-                       this.getReuseCount(b.knowledgeId);
+        case "popularity":
+          comparison = this.getReuseCount(a.knowledgeId) - this.getReuseCount(b.knowledgeId);
           break;
       }
-      
-      return sortOrder === 'asc' ? comparison : -comparison;
+
+      return sortOrder === "asc" ? comparison : -comparison;
     });
   }
-  
+
   /**
    * 获取评分
    */
@@ -919,7 +913,7 @@ class KnowledgeRetriever {
     const metadata = this.metadataManager.search({})[0];
     return metadata?.rating || 0;
   }
-  
+
   /**
    * 获取更新时间
    */
@@ -927,7 +921,7 @@ class KnowledgeRetriever {
     const metadata = this.metadataManager.search({})[0];
     return metadata?.updatedAt || new Date();
   }
-  
+
   /**
    * 获取复用次数
    */
@@ -950,15 +944,15 @@ class KnowledgeRetriever {
  */
 enum SedimentationPhase {
   /** 收集 */
-  COLLECTION = 'collection',
+  COLLECTION = "collection",
   /** 整理 */
-  ORGANIZATION = 'organization',
+  ORGANIZATION = "organization",
   /** 验证 */
-  VALIDATION = 'validation',
+  VALIDATION = "validation",
   /** 归档 */
-  ARCHIVAL = 'archival',
+  ARCHIVAL = "archival",
   /** 发布 */
-  PUBLICATION = 'publication'
+  PUBLICATION = "publication",
 }
 
 /**
@@ -967,21 +961,21 @@ enum SedimentationPhase {
 class SedimentationProcess {
   private currentPhase: SedimentationPhase = SedimentationPhase.COLLECTION;
   private collectedKnowledge: Map<string, any> = new Map();
-  
+
   /**
    * 收集知识
    */
   collect(knowledgeId: string, knowledge: any): void {
     this.collectedKnowledge.set(knowledgeId, knowledge);
   }
-  
+
   /**
    * 整理知识
    */
   organize(knowledgeId: string, metadata: KnowledgeMetadata): void {
     // 整理知识
   }
-  
+
   /**
    * 验证知识
    */
@@ -989,33 +983,33 @@ class SedimentationProcess {
     // 验证知识
     return Promise.resolve(true);
   }
-  
+
   /**
    * 归档知识
    */
   archive(knowledgeId: string): void {
     // 归档知识
   }
-  
+
   /**
    * 发布知识
    */
   publish(knowledgeId: string): void {
     // 发布知识
   }
-  
+
   /**
    * 进入下一阶段
    */
   nextPhase(): void {
     const phases = Object.values(SedimentationPhase);
     const currentIndex = phases.indexOf(this.currentPhase);
-    
+
     if (currentIndex < phases.length - 1) {
       this.currentPhase = phases[currentIndex + 1];
     }
   }
-  
+
   /**
    * 获取当前阶段
    */
@@ -1043,10 +1037,10 @@ class KnowledgeExtractor {
     return {
       patterns: [],
       bestPractices: [],
-      antiPatterns: []
+      antiPatterns: [],
     };
   }
-  
+
   /**
    * 从文档中提取知识
    */
@@ -1058,19 +1052,14 @@ class KnowledgeExtractor {
     return {
       keyPoints: [],
       decisions: [],
-      lessons: []
+      lessons: [],
     };
   }
-  
+
   /**
    * 从会议中提取知识
    */
-  extractFromMeeting(meeting: {
-    attendees: string[];
-    agenda: string[];
-    notes: string;
-    decisions: string[];
-  }): {
+  extractFromMeeting(meeting: { attendees: string[]; agenda: string[]; notes: string; decisions: string[] }): {
     decisions: string[];
     actionItems: string[];
     insights: string[];
@@ -1078,10 +1067,10 @@ class KnowledgeExtractor {
     return {
       decisions: meeting.decisions,
       actionItems: [],
-      insights: []
+      insights: [],
     };
   }
-  
+
   /**
    * 从项目中提取知识
    */
@@ -1103,9 +1092,9 @@ class KnowledgeExtractor {
       technologies: project.technologies,
       lessons: project.challenges.map((challenge, index) => ({
         challenge,
-        solution: project.solutions[index]
+        solution: project.solutions[index],
       })),
-      patterns: []
+      patterns: [],
     };
   }
 }
@@ -1123,17 +1112,17 @@ class KnowledgeExtractor {
  */
 enum ReuseScenario {
   /** 代码复用 */
-  CODE_REUSE = 'code_reuse',
+  CODE_REUSE = "code_reuse",
   /** 架构复用 */
-  ARCHITECTURE_REUSE = 'architecture_reuse',
+  ARCHITECTURE_REUSE = "architecture_reuse",
   /** 设计复用 */
-  DESIGN_REUSE = 'design_reuse',
+  DESIGN_REUSE = "design_reuse",
   /** 技术复用 */
-  TECHNOLOGY_REUSE = 'technology_reuse',
+  TECHNOLOGY_REUSE = "technology_reuse",
   /** 经验复用 */
-  EXPERIENCE_REUSE = 'experience_reuse',
+  EXPERIENCE_REUSE = "experience_reuse",
   /** 解决方案复用 */
-  SOLUTION_REUSE = 'solution_reuse'
+  SOLUTION_REUSE = "solution_reuse",
 }
 
 /**
@@ -1173,11 +1162,11 @@ interface ReuseRecord {
 class KnowledgeReuser {
   private reuseRecords: Map<string, ReuseRecord[]> = new Map();
   private retriever: KnowledgeRetriever;
-  
+
   constructor(retriever: KnowledgeRetriever) {
     this.retriever = retriever;
   }
-  
+
   /**
    * 查找可复用知识
    */
@@ -1187,16 +1176,16 @@ class KnowledgeReuser {
     context?: string;
   }): Promise<RetrievalResult[]> {
     const retrievalQuery: RetrievalQuery = {
-      query: query.keywords.join(' '),
+      query: query.keywords.join(" "),
       strategy: RetrievalStrategy.HYBRID,
-      sortBy: 'popularity',
-      sortOrder: 'desc'
+      sortBy: "popularity",
+      sortOrder: "desc",
     };
-    
+
     const { results } = await this.retriever.retrieve(retrievalQuery);
     return results;
   }
-  
+
   /**
    * 复用知识
    */
@@ -1206,18 +1195,18 @@ class KnowledgeReuser {
       knowledgeId,
       scenario,
       reuser,
-      reusedAt: new Date()
+      reusedAt: new Date(),
     };
-    
+
     const records = this.reuseRecords.get(knowledgeId) || [];
     records.push(record);
     this.reuseRecords.set(knowledgeId, records);
   }
-  
+
   /**
    * 记录复用效果
    */
-  recordReuseEffect(knowledgeId: string, recordId: string, effect: ReuseRecord['effect']): void {
+  recordReuseEffect(knowledgeId: string, recordId: string, effect: ReuseRecord["effect"]): void {
     const records = this.reuseRecords.get(knowledgeId);
     if (records) {
       const record = records.find(r => r.recordId === recordId);
@@ -1226,7 +1215,7 @@ class KnowledgeReuser {
       }
     }
   }
-  
+
   /**
    * 提供反馈
    */
@@ -1240,7 +1229,7 @@ class KnowledgeReuser {
       }
     }
   }
-  
+
   /**
    * 获取复用统计
    */
@@ -1252,22 +1241,20 @@ class KnowledgeReuser {
     costReduced: number;
   } {
     const records = this.reuseRecords.get(knowledgeId) || [];
-    
+
     const totalReuses = records.length;
     const ratings = records.filter(r => r.rating !== undefined).map(r => r.rating!);
-    const averageRating = ratings.length > 0 
-      ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length 
-      : 0;
+    const averageRating = ratings.length > 0 ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length : 0;
     const timeSaved = records.reduce((sum, r) => sum + (r.effect?.timeSaved || 0), 0);
     const qualityImproved = records.reduce((sum, r) => sum + (r.effect?.qualityImproved || 0), 0);
     const costReduced = records.reduce((sum, r) => sum + (r.effect?.costReduced || 0), 0);
-    
+
     return {
       totalReuses,
       averageRating,
       timeSaved,
       qualityImproved,
-      costReduced
+      costReduced,
     };
   }
 }
@@ -1281,13 +1268,13 @@ class KnowledgeReuser {
  */
 enum RecommendationStrategy {
   /** 基于内容 */
-  CONTENT_BASED = 'content_based',
+  CONTENT_BASED = "content_based",
   /** 基于协同过滤 */
-  COLLABORATIVE_FILTERING = 'collaborative_filtering',
+  COLLABORATIVE_FILTERING = "collaborative_filtering",
   /** 基于热度 */
-  POPULARITY_BASED = 'popularity_based',
+  POPULARITY_BASED = "popularity_based",
   /** 混合推荐 */
-  HYBRID = 'hybrid'
+  HYBRID = "hybrid",
 }
 
 /**
@@ -1311,11 +1298,11 @@ interface RecommendationResult {
  */
 class KnowledgeRecommender {
   private retriever: KnowledgeRetriever;
-  
+
   constructor(retriever: KnowledgeRetriever) {
     this.retriever = retriever;
   }
-  
+
   /**
    * 推荐知识
    */
@@ -1329,9 +1316,9 @@ class KnowledgeRecommender {
   }): Promise<RecommendationResult[]> {
     const strategy = context.strategy || RecommendationStrategy.HYBRID;
     const limit = context.limit || 10;
-    
+
     let results: RecommendationResult[] = [];
-    
+
     switch (strategy) {
       case RecommendationStrategy.CONTENT_BASED:
         results = await this.contentBasedRecommendation(context);
@@ -1346,32 +1333,32 @@ class KnowledgeRecommender {
         results = await this.hybridRecommendation(context);
         break;
     }
-    
+
     return results.slice(0, limit);
   }
-  
+
   /**
    * 基于内容的推荐
    */
   private async contentBasedRecommendation(context: any): Promise<RecommendationResult[]> {
     const query: RetrievalQuery = {
-      query: context.keywords?.join(' ') || '',
+      query: context.keywords?.join(" ") || "",
       strategy: RetrievalStrategy.SEMANTIC,
-      sortBy: 'relevance',
-      sortOrder: 'desc'
+      sortBy: "relevance",
+      sortOrder: "desc",
     };
-    
+
     const { results } = await this.retriever.retrieve(query);
-    
+
     return results.map(result => ({
       knowledgeId: result.knowledgeId,
       title: result.title,
       description: result.description,
-      reason: '基于内容相似度推荐',
-      score: result.relevanceScore
+      reason: "基于内容相似度推荐",
+      score: result.relevanceScore,
     }));
   }
-  
+
   /**
    * 基于协同过滤的推荐
    */
@@ -1379,29 +1366,29 @@ class KnowledgeRecommender {
     // 实现协同过滤推荐
     return [];
   }
-  
+
   /**
    * 基于热度的推荐
    */
   private async popularityBasedRecommendation(context: any): Promise<RecommendationResult[]> {
     const query: RetrievalQuery = {
-      query: '',
+      query: "",
       strategy: RetrievalStrategy.KEYWORD,
-      sortBy: 'popularity',
-      sortOrder: 'desc'
+      sortBy: "popularity",
+      sortOrder: "desc",
     };
-    
+
     const { results } = await this.retriever.retrieve(query);
-    
+
     return results.map(result => ({
       knowledgeId: result.knowledgeId,
       title: result.title,
       description: result.description,
-      reason: '基于热度推荐',
-      score: result.relevanceScore
+      reason: "基于热度推荐",
+      score: result.relevanceScore,
     }));
   }
-  
+
   /**
    * 混合推荐
    */
@@ -1425,57 +1412,27 @@ class KnowledgeRecommender {
 class KnowledgeManagementBestPractices {
   private static practices = [
     {
-      category: '知识收集',
-      practices: [
-        '建立知识收集机制',
-        '鼓励知识分享',
-        '定期收集项目经验',
-        '记录技术决策',
-        '归档会议纪要'
-      ]
+      category: "知识收集",
+      practices: ["建立知识收集机制", "鼓励知识分享", "定期收集项目经验", "记录技术决策", "归档会议纪要"],
     },
     {
-      category: '知识整理',
-      practices: [
-        '建立分类体系',
-        '添加元数据',
-        '编写清晰描述',
-        '关联相关知识',
-        '定期更新内容'
-      ]
+      category: "知识整理",
+      practices: ["建立分类体系", "添加元数据", "编写清晰描述", "关联相关知识", "定期更新内容"],
     },
     {
-      category: '知识验证',
-      practices: [
-        '建立审核流程',
-        '验证知识准确性',
-        '检查内容完整性',
-        '评估知识价值',
-        '更新过时知识'
-      ]
+      category: "知识验证",
+      practices: ["建立审核流程", "验证知识准确性", "检查内容完整性", "评估知识价值", "更新过时知识"],
     },
     {
-      category: '知识共享',
-      practices: [
-        '建立共享平台',
-        '提供搜索功能',
-        '推荐相关知识',
-        '促进知识交流',
-        '建立激励机制'
-      ]
+      category: "知识共享",
+      practices: ["建立共享平台", "提供搜索功能", "推荐相关知识", "促进知识交流", "建立激励机制"],
     },
     {
-      category: '知识复用',
-      practices: [
-        '推广复用文化',
-        '提供复用工具',
-        '记录复用效果',
-        '收集复用反馈',
-        '持续优化知识'
-      ]
-    }
+      category: "知识复用",
+      practices: ["推广复用文化", "提供复用工具", "记录复用效果", "收集复用反馈", "持续优化知识"],
+    },
   ];
-  
+
   /**
    * 获取最佳实践
    */
@@ -1494,54 +1451,42 @@ class KnowledgeManagementBestPractices {
 class KnowledgeReuseChecklist {
   private static checkItems = [
     {
-      category: '知识质量',
-      items: [
-        '知识是否准确可靠',
-        '知识是否完整全面',
-        '知识是否清晰易懂',
-        '知识是否及时更新',
-        '知识是否有充分文档'
-      ]
+      category: "知识质量",
+      items: ["知识是否准确可靠", "知识是否完整全面", "知识是否清晰易懂", "知识是否及时更新", "知识是否有充分文档"],
     },
     {
-      category: '复用可行性',
+      category: "复用可行性",
       items: [
-        '知识是否适用于当前场景',
-        '知识是否易于理解和应用',
-        '知识是否有充分的示例',
-        '知识是否有明确的依赖',
-        '知识是否有风险说明'
-      ]
+        "知识是否适用于当前场景",
+        "知识是否易于理解和应用",
+        "知识是否有充分的示例",
+        "知识是否有明确的依赖",
+        "知识是否有风险说明",
+      ],
     },
     {
-      category: '复用价值',
+      category: "复用价值",
       items: [
-        '复用是否能节省时间',
-        '复用是否能提高质量',
-        '复用是否能降低成本',
-        '复用是否能减少风险',
-        '复用是否能促进学习'
-      ]
+        "复用是否能节省时间",
+        "复用是否能提高质量",
+        "复用是否能降低成本",
+        "复用是否能减少风险",
+        "复用是否能促进学习",
+      ],
     },
     {
-      category: '复用准备',
-      items: [
-        '是否理解知识内容',
-        '是否评估复用风险',
-        '是否准备复用环境',
-        '是否制定复用计划',
-        '是否准备回退方案'
-      ]
-    }
+      category: "复用准备",
+      items: ["是否理解知识内容", "是否评估复用风险", "是否准备复用环境", "是否制定复用计划", "是否准备回退方案"],
+    },
   ];
-  
+
   /**
    * 获取检查清单
    */
   static getChecklist(): typeof KnowledgeReuseChecklist.checkItems {
     return this.checkItems;
   }
-  
+
   /**
    * 执行检查
    */
@@ -1550,13 +1495,13 @@ class KnowledgeReuseChecklist {
     failed: string[];
     passRate: number;
   } {
-    const allItems = this.checkItems.flatMap(category => 
+    const allItems = this.checkItems.flatMap(category =>
       category.items.map(item => ({ category: category.category, item }))
     );
-    
+
     const passed: string[] = [];
     const failed: string[] = [];
-    
+
     for (const { category, item } of allItems) {
       if (checks.get(item)) {
         passed.push(item);
@@ -1564,9 +1509,9 @@ class KnowledgeReuseChecklist {
         failed.push(item);
       }
     }
-    
+
     const passRate = (passed.length / allItems.length) * 100;
-    
+
     return { passed, failed, passRate };
   }
 }
@@ -1595,13 +1540,10 @@ class KnowledgeReuseChecklist {
 
 ---
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for the Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
-
-
-
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for the Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 ## 概述
 
@@ -1622,8 +1564,6 @@ class KnowledgeReuseChecklist {
 - 减少代码错误
 - 优化系统性能
 - 提升代码可维护性
-
-
 
 ## 核心概念
 
@@ -1652,8 +1592,6 @@ class KnowledgeReuseChecklist {
    - 只实现当前需要的功能
    - 避免过度工程
    - 保持代码精简
-
-
 
 ## 实施步骤
 
@@ -1691,7 +1629,7 @@ npm install --save-dev typescript @types/node
 // 创建主文件
 // src/index.ts
 function main() {
-  console.log('Hello, YYC³!');
+  console.log("Hello, YYC³!");
 }
 
 main();
@@ -1707,8 +1645,6 @@ npm run dev
 npm test
 ```
 
-
-
 ## 代码示例
 
 ### 代码示例
@@ -1721,7 +1657,7 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
-const message = greet('YYC³');
+const message = greet("YYC³");
 console.log(message); // 输出: Hello, YYC³!
 ```
 
@@ -1736,9 +1672,9 @@ async function fetchData(url: string): Promise<any> {
 }
 
 // 使用示例
-fetchData('https://api.example.com/data')
+fetchData("https://api.example.com/data")
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error("Error:", error));
 ```
 
 #### 示例3：错误处理
@@ -1746,9 +1682,12 @@ fetchData('https://api.example.com/data')
 ```typescript
 // 自定义错误类
 class ValidationError extends Error {
-  constructor(public field: string, message: string) {
+  constructor(
+    public field: string,
+    message: string
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -1756,20 +1695,18 @@ class ValidationError extends Error {
 function validateEmail(email: string): void {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    throw new ValidationError('email', '邮箱格式不正确');
+    throw new ValidationError("email", "邮箱格式不正确");
   }
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (error) {
   if (error instanceof ValidationError) {
     console.error(`验证失败: ${error.field} - ${error.message}`);
   }
 }
 ```
-
-
 
 ## 注意事项
 
@@ -1778,6 +1715,7 @@ try {
 #### 常见陷阱
 
 1. **异步操作错误**
+
 ```typescript
 // ❌ 错误：没有等待异步操作
 async function processData() {
@@ -1793,17 +1731,18 @@ async function processData() {
 ```
 
 2. **内存泄漏**
+
 ```typescript
 // ❌ 错误：没有清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 }, []); // 缺少清理函数
 
 // ✅ 正确：清理事件监听器
 useEffect(() => {
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
   };
 }, []);
 ```
@@ -1811,6 +1750,7 @@ useEffect(() => {
 #### 性能注意事项
 
 1. **避免不必要的重渲染**
+
 ```typescript
 // ❌ 错误：每次都创建新对象
 <Component data={{ value: 1 }} />
@@ -1821,6 +1761,7 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 ```
 
 2. **避免大对象传递**
+
 ```typescript
 // ❌ 错误：传递整个大对象
 <Component user={user} />
@@ -1829,8 +1770,6 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 <Component userName={user.name} userId={user.id} />
 ```
 
-
-
 ## 最佳实践
 
 ### 最佳实践
@@ -1838,21 +1777,23 @@ const memoizedData = useMemo(() => ({ value: 1 }), []);
 #### 代码规范
 
 1. **命名规范**
+
 ```typescript
 // 变量：camelCase
-const userName = 'John';
+const userName = "John";
 
 // 常量：UPPER_SNAKE_CASE
 const MAX_RETRY_COUNT = 3;
 
 // 类：PascalCase
-class UserService { }
+class UserService {}
 
 // 接口：PascalCase，前缀I（可选）
-interface IUserService { }
+interface IUserService {}
 ```
 
 2. **注释规范**
+
 ```typescript
 /**
  * 创建用户
@@ -1861,10 +1802,7 @@ interface IUserService { }
  * @returns 创建的用户对象
  * @throws {Error} 当邮箱已存在时抛出错误
  */
-async function createUser(
-  email: string, 
-  password: string
-): Promise<User> {
+async function createUser(email: string, password: string): Promise<User> {
   // 实现
 }
 ```
@@ -1890,16 +1828,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
-      error: err.message
+      error: err.message,
     });
   }
-  
+
   // 记录未预期的错误
-  logger.error('Unexpected error:', err);
-  
+  logger.error("Unexpected error:", err);
+
   return res.status(500).json({
     success: false,
-    error: '服务器内部错误'
+    error: "服务器内部错误",
   });
 });
 ```
@@ -1908,26 +1846,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ```typescript
 // 结构化日志
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  level: "info",
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // 使用日志
-logger.info('User created', { userId: user.id, email: user.email });
-logger.error('Database connection failed', { error: error.message });
+logger.info("User created", { userId: user.id, email: user.email });
+logger.error("Database connection failed", { error: error.message });
 ```
-
-
 
 ## 常见问题
 
@@ -1943,7 +1876,7 @@ async function handleRequest() {
     const result = await fetchData();
     return result;
   } catch (error) {
-    console.error('请求失败:', error);
+    console.error("请求失败:", error);
     throw error;
   }
 }
@@ -1975,14 +1908,12 @@ const MemoizedComponent = React.memo(({ data }) => {
 
 ```typescript
 // Zustand示例
-const useStore = create((set) => ({
+const useStore = create(set => ({
   count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 }))
+  increment: () => set(state => ({ count: state.count + 1 })),
+  decrement: () => set(state => ({ count: state.count - 1 })),
 }));
 ```
-
-
 
 ## 案例分析
 
@@ -1993,17 +1924,20 @@ const useStore = create((set) => ({
 **问题**：页面加载时间过长，用户体验差。
 
 **分析**：
+
 - 首次内容绘制(FCP)：3.2秒
 - 最大内容绘制(LCP)：5.8秒
 - 累积布局偏移(CLS)：0.25
 
 **解决方案**：
+
 1. 实现代码分割和懒加载
 2. 优化图片加载（使用WebP格式，添加loading="lazy"）
 3. 启用Gzip压缩
 4. 使用CDN加速静态资源
 
 **结果**：
+
 - FCP：1.2秒（↓62.5%）
 - LCP：2.1秒（↓63.8%）
 - CLS：0.08（↓68%）
@@ -2013,17 +1947,20 @@ const useStore = create((set) => ({
 **问题**：错误信息不清晰，难以定位问题。
 
 **分析**：
+
 - 错误信息过于简单
 - 缺少错误上下文
 - 没有错误追踪
 
 **解决方案**：
+
 1. 实现自定义错误类
 2. 添加错误堆栈追踪
 3. 集成错误监控工具（Sentry）
 4. 实现错误日志记录
 
 **结果**：
+
 - 错误定位时间减少70%
 - 错误解决率提高40%
 - 用户投诉减少60%
@@ -2033,21 +1970,23 @@ const useStore = create((set) => ({
 **问题**：代码重复率高，维护困难。
 
 **分析**：
+
 - 代码重复率：35%
 - 函数平均长度：120行
 - 圈复杂度：15
 
 **解决方案**：
+
 1. 提取公共逻辑到工具函数
 2. 使用设计模式重构
 3. 拆分大函数
 4. 添加单元测试
 
 **结果**：
+
 - 代码重复率：8%（↓77%）
 - 函数平均长度：35行（↓71%）
 - 圈复杂度：5（↓67%）
-
 
 ## 相关文档
 

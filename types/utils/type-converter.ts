@@ -6,10 +6,7 @@
  * @created 2026-01-03
  */
 
-import type {
-  AuthUser,
-  FrontendUser,
-} from '../entities/user';
+import type { AuthUser, FrontendUser } from '../entities/user';
 import { UserRole } from '../entities/user'; // 用 import 而不是 import type
 import type { PageData } from '../services/api';
 
@@ -48,9 +45,7 @@ export class TypeConverter {
       avatar: authUser.avatar,
       phone: authUser.phone,
       status: authUser.status,
-      createdAt: typeof authUser.createdAt === 'string'
-        ? authUser.createdAt
-        : authUser.createdAt.toISOString(),
+      createdAt: typeof authUser.createdAt === 'string' ? authUser.createdAt : authUser.createdAt.toISOString(),
       lastLoginAt: authUser.lastLoginAt
         ? typeof authUser.lastLoginAt === 'string'
           ? authUser.lastLoginAt
@@ -87,10 +82,7 @@ export class TypeConverter {
   /**
    * 转换分页数据
    */
-  static convertPaginationData<T, U>(
-    data: PageData<T>,
-    converter: (item: T) => U
-  ): PageData<U> {
+  static convertPaginationData<T, U>(data: PageData<T>, converter: (item: T) => U): PageData<U> {
     return {
       ...data,
       items: data.items.map(converter),

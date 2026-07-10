@@ -1,16 +1,28 @@
 /**
  * YYC³餐饮行业智能化平台 - 管理后台Vite配置
+ * @see https://vitejs.dev/config/
+ * @see AGENTS.md / docs/deployment.md (GitHub Pages 部署说明)
  */
 
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
-// https://vitejs.dev/config/
-export default defineConfig({
+// GitHub Pages 部署:
+// - 使用自定义域名 cater.yyc3.vip → 从根路径提供, base = '/'
+// - 未使用自定义域名 (https://yyccube.github.io/YYC3-Catering-Platform/) → base = '/YYC3-Catering-Platform/'
+// 通过 VITE_BASE_PATH 环境变量覆盖,默认 '/'
+const resolveBasePath = (mode: string): string => {
+  const env = loadEnv(mode, process.cwd(), 'VITE_')
+  return env.VITE_BASE_PATH || '/'
+}
+
+export default defineConfig(({ mode }) => ({
+  base: resolveBasePath(mode),
+
   plugins: [
     vue({
       template: {
@@ -120,15 +132,8 @@ export default defineConfig({
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
   },
 
-  experimental: {
-    renderBuiltUrl(filename: string, { hostType }: { hostType: 'js' | 'css' | 'html' }) {
-      if (hostType === 'js') {
-        return { js: `https://cdn.yyc3.com/${filename}` }
-      } else {
-        return { relative: true }
-      }
-    }
-  },
+  // NOTE: 此前的 experimental.renderBuiltUrl 将 JS 资源硬编码到 https://cdn.yyc3.com/
+  // 该 CDN 未就绪会导致 GitHub Pages 部署后 JS 404。已移除,回退到 Vite 默认相对路径解析。
 
   preview: {
     host: '0.0.0.0',
@@ -142,4 +147,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))

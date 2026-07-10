@@ -16,7 +16,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org)
-[![React](https://img.shields.io/badge/React-18+-61DAFB.svg)](https://reactjs.org)
+[![Vue](https://img.shields.io/badge/Vue-3.4+-42b883.svg)](https://vuejs.org)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF.svg)](https://vitejs.dev)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-brightgreen.svg)](https://nodejs.org)
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
@@ -83,10 +83,15 @@ YYC³餐饮行业智能化平台是一个面向现代餐饮企业的全栈智能
 
 - **Node.js**：18+
 - **TypeScript**：5.0+
-- **npm**：9.0+ 或 **pnpm**：8.0+ (推荐)
-- **PostgreSQL**：13+
+- **pnpm**：9.0+ (推荐，CI 使用) / **npm**：9.0+
+- **Bun**：1.0+ (api-service 运行时)
+- **PostgreSQL**：13+ (api-service) 与 **MySQL**：8+ (其余服务，见各服务 package.json)
 - **Redis**：6.0+
+- **Docker** + **Docker Compose**（本地基础设施栈）
+- **Helm**：3.9+（K8s 部署）
 - **Git**：2.30+
+
+> ⚠️ 本仓库为 **pnpm 单仓多包** 结构，详细架构与约定见 `AGENTS.md`，改进路线见 `PLAN.md`。
 
 ### 安装运行
 
@@ -95,22 +100,24 @@ YYC³餐饮行业智能化平台是一个面向现代餐饮企业的全栈智能
 git clone https://github.com/YYC-Cube/yyc3-catering-platform.git
 cd yyc3-catering-platform
 
-# 安装依赖（推荐使用pnpm）
-cd ui
+# 安装依赖（必须使用 pnpm，postinstall 会执行 scripts/setup-env.js）
 pnpm install
-
-# 或使用npm
-npm install
 
 # 配置环境变量
 cp .env.example .env
 # 编辑 .env 文件，填入必要的配置
 
-# 启动开发服务器
+# 启动开发服务器（管理后台 + api-service 并发）
 pnpm run dev
 
-# 或使用npm
-npm run dev
+# 或分别启动各端
+pnpm run dev:admin      # 管理后台
+pnpm run dev:customer   # 顾客端
+pnpm run dev:staff      # 员工端
+pnpm run dev:backend    # api-service
+
+# 启动本地基础设施（MySQL/Redis/Kafka/RabbitMQ/Consul/Nacos/ELK/Prometheus/Grafana）
+pnpm run docker:up
 ```
 
 ### 访问应用
@@ -185,28 +192,30 @@ npm run dev
 
 ## 🛠️ 技术栈
 
-### 前端技术栈
+### 前端技术栈（frontend/apps/）
 
-- **框架**：React 18+ + TypeScript 5.3+
+- **框架**：Vue 3.4 + `<script setup lang="ts">` + TypeScript 5.3+
 - **构建工具**：Vite 5.4+
-- **UI组件库**：自定义组件系统（YUButton、YUTable、YUAvatar等）
-- **状态管理**：React Hooks + Context API
-- **路由**：React Router 6+
-- **样式方案**：CSS Modules + Tailwind CSS（可选）
-- **图表库**：ECharts 5.4+
-- **测试框架**：Vitest + @testing-library/react + @testing-library/jest-dom
-- **开发工具**：ESLint + Prettier + TypeScript
+- **UI 组件库**：Element Plus + @element-plus/icons-vue + radix-vue + lucide-vue-next
+- **状态管理**：Pinia
+- **路由**：Vue Router 4
+- **样式方案**：SCSS + Tailwind CSS 4 + CSS 设计令牌（`--color-primary` 等）
+- **图表库**：ECharts 5.4（vue-echarts）+ Recharts
+- **多语言**：内建 i18n（zh-CN / en-US / ja-JP）
+- **测试框架**：Vitest + @vue/test-utils + @testing-library/vue（单测） / Playwright（E2E）
+- **开发工具**：ESLint + Prettier + TypeScript（严格模式）
 
-### 后端技术栈
+### 后端技术栈（backend/services/）
 
-- **运行时**：Node.js 18+ + Bun 1.0+
-- **框架**：Express.js 4.18 + Hono 4.0 + TypeScript
-- **数据库**：PostgreSQL 13+ + Redis 6.0+
-- **消息队列**：Kafka
-- **缓存**：Redis (分布式缓存 + 会话管理)
-- **认证**：JWT + bcryptjs
-- **API文档**：Swagger/OpenAPI
-- **文档知识库**：Hono + Bun + Zod + UUID
+- **运行时**：Node.js 18+（Express 服务）+ Bun 1.0+（api-service）
+- **框架**：Express.js + sequelize-typescript（多数服务） / Bun 原生 HTTP（api-service）
+- **数据库**：MySQL 8（user/order/payment/menu 等，via sequelize-typescript）+ PostgreSQL（api-service）
+- **消息队列**：Kafka + RabbitMQ（通知服务）
+- **缓存**：Redis（分布式缓存 + 会话 + 限流）
+- **服务发现**：Consul + Nacos
+- **认证**：JWT（jose / jsonwebtoken）+ bcryptjs
+- **日志**：Winston（结构化日志，中文输出）
+- **API 网关**：Express + http-proxy-middleware（反向代理 + 鉴权 + 限流）
 
 ### AI技术栈
 
@@ -215,130 +224,101 @@ npm run dev
 - **多模态**：文本 + 语音 + 图像 + 视频
 - **机器学习**：TensorFlow.js + 预测分析 + 推荐算法
 
-### DevOps技术栈
+### DevOps 技术栈
 
-- **容器化**：Docker + Docker Compose
-- **编排**：Kubernetes (规划中)
-- **CI/CD**：GitHub Actions / GitLab CI (规划中)
-- **监控**：Prometheus + Grafana (规划中)
-- **日志**：ELK Stack (规划中)
+- **容器化**：Docker + Docker Compose（含 MySQL/Redis/Kafka/RabbitMQ/Consul/Nacos/ELK/Prometheus/Grafana）
+- **编排**：Kubernetes + Helm（`helm/` 伞形图表 + `infra/phase1/iac/helm/charts/` 各服务子图表）
+- **多云 IaC**：Terraform（AWS / 阿里云 / 腾讯云）+ 各云 K8s 清单（EKS / ACK / TKE）
+- **CI/CD**：GitHub Actions（`ci-cd.yml` 主流水线 + `gateway-ci.yml` 网关流水线 + `codeql.yml` 安全分析）
+- **监控**：Prometheus + Grafana（已配置）
+- **日志**：ELK Stack（Elasticsearch + Logstash + Kibana）
 
 ---
 
 ## 📁 项目结构
 
 ```
-yyc3-catering-platform/
-├── ui/                            # React前端应用
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── components/        # 核心UI组件
-│   │   │   │   ├── YUButton.tsx   # 按钮组件
-│   │   │   │   ├── YUTable.tsx    # 表格组件
-│   │   │   │   ├── YUAvatar.tsx   # 头像组件
-│   │   │   │   ├── YUInput.tsx    # 输入框组件
-│   │   │   │   └── ...            # 其他组件
-│   │   │   ├── demos/             # 业务演示页面
-│   │   │   │   ├── DemoIndex.tsx  # 演示中心
-│   │   │   │   ├── OrderManagementDemo.tsx  # 订单管理演示
-│   │   │   │   └── MenuManagementDemo.tsx    # 菜单管理演示
-│   │   │   ├── CustomerMenuPage.tsx  # 顾客菜单页面
-│   │   │   └── ComponentShowcase.tsx  # 组件展示页面
-│   │   ├── styles/                # 全局样式
-│   │   ├── types/                 # TypeScript类型定义
-│   │   └── __tests__/             # 测试文件
-│   │       └── components/        # 组件测试
-│   ├── public/                    # 静态资源
-│   ├── package.json               # 前端依赖配置
-│   ├── vite.config.ts             # Vite配置
-│   ├── vitest.config.ts           # Vitest测试配置
-│   └── vitest.setup.ts            # 测试环境设置
-├── backend/                       # 后端服务目录
-│   ├── api-gateway/              # API网关服务
-│   ├── services/                 # 微服务集群
-│   │   ├── ai-assistant/         # AI助手服务
-│   │   ├── smart-kitchen/        # 智慧后厨服务
-│   │   ├── o2o-system/           # O2O系统服务
-│   │   ├── chain-ops/            # 连锁运营服务
-│   │   ├── food-safety/          # 食品安全服务
-│   │   └── knowledge-base/        # 文档知识库服务
-│   ├── libs/                     # 共享库目录
-│   │   ├── key-management/       # 密钥管理库
-│   │   ├── logger/               # 日志系统库
-│   │   └── rabbitmq/             # 消息队列库
-│   └── database/                 # 数据库管理
-├── agentic-core/                  # 智能代理核心
-│   ├── src/
-│   │   ├── models/               # AI模型目录
-│   │   ├── systems/              # 智能系统目录
-│   │   └── utils/                # 工具函数目录
-├── docs/                          # 文档目录
-│   ├── YYC3-CP-设计文档/         # 设计文档
-│   │   ├── UI设计与业务功能融合可视化展示.md
-│   │   └── UI交互体验演示文档.md
-│   ├── api/                       # API文档目录
-│   ├── YYC3-Cater-Platform-文档闭环/  # 项目文档
-│   └── 智枢服务化平台/            # 服务化平台文档
-├── tests/                         # 测试目录
-│   ├── api/                       # API测试目录
-│   └── e2e/                       # 端到端测试目录
-├── docker-compose.yaml            # Docker编排文件
-├── package.json                   # 项目配置文件
-├── tsconfig.json                  # TypeScript配置文件
-└── README.md                      # 项目说明文件
+yyc3-catering-platform/                # pnpm 单仓多包
+├── frontend/apps/                      # 前端工作区
+│   ├── admin-dashboard/                # @yyc3/admin-dashboard 管理后台（Element Plus + Pinia + ECharts）
+│   ├── customer-app/                   # 顾客端
+│   └── staff-app/                      # 员工端
+├── backend/
+│   ├── services/                       # 微服务集群（pnpm workspace）
+│   │   ├── api-gateway/                # Express 反向代理网关 (port 3200)
+│   │   ├── api-service/                # Bun + PostgreSQL 核心 API
+│   │   ├── user-service/               # Express + MySQL (port 3201)
+│   │   ├── order-service/              # (port 3203)
+│   │   ├── payment-service/            # (port 3204)
+│   │   ├── notification-service/       # RabbitMQ (port 3205)
+│   │   ├── menu-service/
+│   │   ├── analytics-service/          # (port 3303)
+│   │   ├── smart-kitchen/              # 自带 docker-compose + Prometheus + Mosquitto
+│   │   ├── smart-ops-service/
+│   │   ├── ai-assistant/
+│   │   ├── service-registry/           # Consul 服务发现
+│   │   ├── redis-cache/
+│   │   ├── delivery-service / chain-operation / food-safety / o2o-system
+│   │   └── microservice-template/      # 📌 新微服务脚手架（规范基准）
+│   ├── shared/                         # @yyc3/shared-types (ApiResponse / Auth)
+│   ├── common/                         # @yyc3/common (Logger / EventBus / Communication)
+│   └── monitoring/
+├── agentic-core/                       # AI 代理框架（独立 workspace 包）
+├── types/                              # @yyc3/types 共享 .d.ts 实体定义
+├── helm/                               # 根 Helm 图表 (yyc3-catering-platform)
+├── infra/phase1/                       # 多云 IaC：Terraform + K8s 清单 + 各服务 Helm 子图表
+├── prometheus/  grafana/              # 监控配置
+├── docker-compose.yaml                 # 本地基础设施栈
+├── tests/                              # 顶层集成 / API 测试
+├── docs/                               # 文档（多为中文 .md：规划/运维/设计）
+├── scripts/                            # setup-env.js / 安全修复脚本
+├── AGENTS.md                           # 🤖 AI 代理工作指南
+├── PLAN.md                             # 📋 完善推进方案（本文档）
+├── package.json  pnpm-workspace.yaml   # workspace 与脚本入口
+└── tsconfig.json                       # 严格模式根配置
 ```
+
+> 各服务端口映射、命名规范、响应信封等约定详见 `AGENTS.md`。
 
 ---
 
 ## 📊 项目状态
 
-### 整体完成度：95%
+### 模块完成度
 
 | 模块 | 完成度 | 状态 |
 |------|--------|------|
-| **前端应用** | 95% | ✅ 核心功能完整 |
-| **后端服务** | 100% | ✅ 核心架构完整 |
-| **AI集成** | 100% | ✅ 多模型支持 |
-| **数据库** | 100% | ✅ 企业级架构 |
-| **测试框架** | 100% | ✅ 测试环境完整 |
-| **部署配置** | 0% | ❌ 待开发 |
+| **前端应用（admin/customer/staff）** | ~85% | ✅ Vue 3 核心功能完整 |
+| **后端微服务** | ~70% | ⚠️ 核心服务完整，4 个 stub 服务待实现（见 PLAN.md D4） |
+| **AI 集成** | ~80% | ✅ 多模型适配器 + agentic-core |
+| **数据库** | ~80% | ✅ MySQL + PostgreSQL 双栈 |
+| **测试框架** | ~60% | ⚠️ 核心 service 有单测，stub 服务缺失 |
+| **部署配置** | ~75% | ✅ Helm + 多云 IaC 已就绪（12 服务缺 Dockerfile，见 PLAN.md D6） |
 
 ### 已完成核心组件
 
-#### 前端组件（React + TypeScript）
+#### 前端（Vue 3 + TypeScript）
 
-- ✅ **核心UI组件**：YUButton、YUTable、YUAvatar、YUInput、YUSelect、YUTag、YUBadge等
-- ✅ **业务演示页面**：订单管理演示、菜单管理演示、演示中心
-- ✅ **测试覆盖**：45个测试用例全部通过（YUButton 18个、YUTable 27个）
-- ✅ **主题系统**：模块化主题配色（海洋蓝、紫罗兰、翡翠绿、珊瑚橙等）
-- ✅ **响应式设计**：移动端、平板、桌面端适配
-- ✅ **交互体验**：加载状态、悬停效果、过渡动画
+- ✅ 管理后台：Element Plus + Pinia + vue-router，含侧边栏/头部/通知/主题色系统
+- ✅ 业务视图：订单、客户、菜单、连锁、数据看板、客户生命周期等
+- ✅ AI 子系统：`src/lib/ai-widget`（AutonomousAIEngine / MemorySystem / ToolRegistry / 模型适配器）
+- ✅ 图表组件：ECharts 封装（营收、客流、订单状态、Top 菜品）
+- ✅ 国际化：zh-CN / en-US / ja-JP
 
-#### 后端组件（32个TypeScript文件）
+#### 后端（Node/Express + Bun）
 
-- ✅ API网关：认证、授权、限流、日志、多租户
-- ✅ 智能代理核心：AgenticCore、GoalManager、ActionPlanner
-- ✅ 微服务集群：AI助手、智慧后厨、O2O系统、连锁运营、食品安全、文档知识库
-- ✅ 数据库迁移：50+核心表结构
+- ✅ API 网关：http-proxy-middleware 反向代理 + 鉴权 + 限流 + 服务路由
+- ✅ 微服务集群：user / order / payment / menu / notification / analytics / smart-kitchen / smart-ops 等
+- ✅ 共享层：`backend/shared`（类型）+ `backend/common`（Logger / EventBus / Communication）
+- ✅ 数据模型：sequelize-typescript + UUID 主键 + snake_case 列
 
-### 待完善功能
+### 待完善功能（详见 PLAN.md）
 
-#### 🔴 高优先级 (立即处理)
-
-1. **Docker部署配置** - 创建Dockerfile + docker-compose.yml
-2. **业务页面开发** - 基于演示页面开发实际业务功能
-3. **API集成** - 前后端API对接
-
-#### 🟠 中优先级 (1个月内)
-
-1. **监控系统** - 集成Prometheus + Grafana
-2. **性能优化** - 数据库优化 + 缓存策略
-3. **安全防护** - 安全中间件 + 防护措施
-
-#### 🟡 低优先级 (2-3个月)
-
-1. **文档完善** - API文档 + 用户手册
-2. **国际化支持** - 多语言支持 + 本地化
+- 🔴 **stub 服务实现**：o2o-system / chain-operation / food-safety / delivery-service
+- 🔴 **凭据治理**：docker-compose 硬编码弱口令改环境变量注入（D5）
+- 🟠 **Dockerfile 补齐**：12 个服务尚无容器化定义（D6）
+- 🟠 **测试覆盖**：stub 服务补 tsconfig + 单测骨架（D4）
+- 🟡 **三 gateway 目录归并**：backend/gateway / backend/api-gateway / backend/services/api-gateway（D6）
 
 ---
 
@@ -351,37 +331,42 @@ yyc3-catering-platform/
 git clone https://github.com/YYC-Cube/yyc3-catering-platform.git
 cd yyc3-catering-platform
 
-# 2. 安装前端依赖
-cd ui
+# 2. 安装依赖（必须使用 pnpm）
 pnpm install
 
 # 3. 配置环境变量
 cp .env.example .env
 vim .env
 
-# 4. 启动前端开发服务器
-pnpm run dev
+# 4. 启动本地基础设施（可选，需 Docker）
+pnpm run docker:up     # MySQL/Redis/Kafka/RabbitMQ/Consul/Nacos/ELK/Prometheus/Grafana
 
-# 5. 运行测试
-pnpm run test
+# 5. 启动开发服务器
+pnpm run dev           # 管理后台 + api-service
+
+# 6. 运行测试
+pnpm run test          # unit + integration
+pnpm run test:e2e      # Playwright（admin-dashboard）
 ```
 
-### 生产环境部署
+### 生产环境部署（Helm / Kubernetes）
 
 ```bash
-# 1. 构建生产版本
-cd ui
-pnpm run build
+# 1. 构建前后端产物
+pnpm run build         # build:frontend && build:backend
 
-# 2. 使用Docker部署
-docker-compose -f docker-compose.prod.yml up -d
+# 2. 使用 Helm 部署到 K8s
+pnpm run deploy:dev    # 开发环境：namespace=yyc3-dev
+pnpm run deploy:prod   # 生产环境：namespace=yyc3-prod（3 副本 + HPA）
 
-# 3. 检查服务状态
-docker-compose ps
+# 3. 数据库迁移（CI 中自动执行，本地可手动）
+pnpm run db:migrate
 
-# 4. 查看日志
-docker-compose logs -f
+# 4. 检查服务状态
+kubectl get pods -n yyc3-prod
 ```
+
+> 多云（AWS EKS / 阿里云 ACK / 腾讯云 TKE）IaC 配置位于 `infra/phase1/iac/`。
 
 ### 文档知识库服务部署
 
@@ -399,25 +384,21 @@ curl http://localhost:3001/api/knowledge-base/health
 
 ## 📖 文档
 
-### 设计文档
+### 开发者必读
 
-- [UI设计与业务功能融合可视化展示](./docs/YYC3-CP-设计文档/UI设计与业务功能融合可视化展示.md) - 业务模块架构、组件映射、页面布局示例
-- [UI交互体验演示文档](./docs/YYC3-CP-设计文档/UI交互体验演示文档.md) - 交互状态、动画效果、响应式设计、可访问性
+- **[AGENTS.md](./AGENTS.md)** — 🤖 AI 代理 / 开发者工作指南：命令、架构、约定、陷阱（最全的工作参考）
+- **[PLAN.md](./PLAN.md)** — 📋 全局多维度完善推进方案：7 大维度现状与路线图
+- [贡献指南](./CONTRIBUTING.md) — 环境、规范、提交流程
+- [更新日志](./CHANGELOG.md)
 
-### 项目文档
+### 设计与项目文档
 
 - [架构设计文档](./docs/YYC3-Cater-Platform-文档闭环/)
 - [API接口文档](./docs/api/)
 - [智枢服务化平台](./docs/智枢服务化平台/)
 - [数据库设计文档](./docs/数据库设计文档.md)
 - [文档索引](./docs/文档索引.md)
-
-### 开发文档
-
-- [开发规范](./.trae/rules/)
-- [代码规范](./.eslintrc.js)
-- [提交规范](./CONTRIBUTING.md)
-- [更新日志](./CHANGELOG.md)
+- [代码规范](./.eslintrc.cjs) · [Prettier 配置](./.prettierrc.js)
 
 ---
 

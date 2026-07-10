@@ -135,7 +135,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: backend-build
-          path: dist/backend/
+          # 各服务 tsc 输出到 backend/services/<svc>/dist（非根 dist/backend）
+          path: backend/services/*/dist/
   
   # 构建前端
   build-frontend:
@@ -165,7 +166,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-build
-          path: frontend/dist/
+          # 各 app vite build 输出到 frontend/apps/<app>/dist（非根 frontend/dist）
+          path: frontend/apps/*/dist/
 
   # 安全扫描
   security-scan:
@@ -195,14 +197,15 @@ jobs:
       - name: 运行代码安全扫描
         run: pnpm run lint:security
       
-      # 容器镜像扫描（如果有Dockerfile的话）
+      # 容器镜像扫描（api-gateway 已有 Dockerfile）
       - name: 设置 Docker Buildx
         uses: docker/setup-buildx-action@v2
       
       - name: 构建后端Docker镜像
         uses: docker/build-push-action@v4
         with:
-          context: ./backend
+          # 指向已存在 Dockerfile 的服务（backend/ 根无 Dockerfile）
+          context: ./backend/services/api-gateway
           push: false
           load: true
           tags: yyc3-backend:latest

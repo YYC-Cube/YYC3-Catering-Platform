@@ -49,6 +49,8 @@
   "workspaces": [
     "frontend/*",
     "backend/services/*",
+    "backend/common",
+    "backend/shared",
     "agentic-core"
   ],
   "keywords": [

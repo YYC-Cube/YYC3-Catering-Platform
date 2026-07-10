@@ -1,0 +1,83 @@
+# YYC³ 餐饮平台 — GitHub Pages 部署
+# 将管理后台 (admin-dashboard) 构建并发布到 GitHub Pages
+# 自定义域名: cater.yyc3.vip (已在仓库 Settings → Pages 配置)
+# 文档: docs/deployment.md / AGENTS.md
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/apps/admin-dashboard/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+# 允许同时运行一次,避免并发部署冲突
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+# GitHub Pages 部署所需的权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: 构建管理后台
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 构建管理后台
+        env:
+          # 自定义域名从根路径提供;若将来改为 <user>.github.io/<repo> 则设为 /YYC3-Catering-Platform/
+          VITE_BASE_PATH: '/'
+          # 后端 API 基址(生产);未配置时前端回退到 localhost,仅 UI 可用
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+        run: pnpm --filter @yyc3/admin-dashboard build
+
+      - name: SPA 404 回退
+        # GitHub Pages 不支持服务端 SPA fallback;复制 index.html 为 404.html
+        # 使刷新深层路由时不返回 GitHub 默认 404 页
+        run: |
+          cp frontend/apps/admin-dashboard/dist/index.html \
+             frontend/apps/admin-dashboard/dist/404.html
+
+      - name: 添加 .nojekyll
+        # 禁用 Jekyll 处理,避免以下划线开头的资源被忽略
+        run: touch frontend/apps/admin-dashboard/dist/.nojekyll
+
+      - name: 上传 Pages 产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/apps/admin-dashboard/dist
+
+  deploy:
+    name: 部署到 GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 部署
+        id: deployment
+        uses: actions/deploy-pages@v4

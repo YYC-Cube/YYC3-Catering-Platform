@@ -212,12 +212,20 @@ initializeIntelligentServices().then(() => {
   app.mount('#app')
 })
 
-// PWA 注册（如果启用）
+// PWA 注册(仅当 /sw.js 实际存在时;fetch 探测避免 404 噪声)
 if ('serviceWorker' in navigator && (import.meta as any).env.PROD) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    fetch('/sw.js', { method: 'HEAD' })
+      .then((res) => {
+        if (res.ok) {
+          return navigator.serviceWorker.register('/sw.js')
+        }
+        return null
+      })
       .then((registration) => {
-        console.log('SW registered: ', registration)
+        if (registration) {
+          console.log('SW registered: ', registration)
+        }
       })
       .catch((registrationError) => {
         console.log('SW registration failed: ', registrationError)

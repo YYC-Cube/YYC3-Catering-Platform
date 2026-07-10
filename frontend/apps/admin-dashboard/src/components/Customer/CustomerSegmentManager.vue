@@ -573,7 +573,7 @@ onMounted(() => {
       min-height: 600px;
 
       .segment-list {
-        border-right: 1px solid $border-color;
+        border-right: 1px solid $border-base;
         padding-right: $spacing-4;
         overflow-y: auto;
         max-height: 600px;
@@ -582,7 +582,7 @@ onMounted(() => {
           padding: $spacing-3;
           margin-bottom: $spacing-3;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
           cursor: pointer;
           transition: all 0.3s;

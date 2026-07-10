@@ -5,7 +5,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { KitchenStats, KitchenStatus } from '@/types/dashboard';
-import { kitchenApi } from '@/api/kitchen';
+import kitchenAPI from '@/api/kitchen';
 
 export const useKitchenStore = defineStore('kitchen', () => {
   // 状态
@@ -31,7 +31,7 @@ export const useKitchenStore = defineStore('kitchen', () => {
   const loadKitchenStats = async () => {
     loading.value = true;
     try {
-      const response = await kitchenApi.getKitchenStats();
+      const response = await kitchenAPI.getKitchenStats();
       if (response.success) {
         kitchenStats.value = response.data;
       }
@@ -46,7 +46,7 @@ export const useKitchenStore = defineStore('kitchen', () => {
   const loadKitchenStatus = async () => {
     loading.value = true;
     try {
-      const response = await kitchenApi.getKitchenStatus();
+      const response = await kitchenAPI.getKitchenStatus();
       if (response.success) {
         kitchenItems.value = response.data;
       }
@@ -60,7 +60,7 @@ export const useKitchenStore = defineStore('kitchen', () => {
 
   const updateItemStatus = async (itemId: string, status: KitchenStatus['status']) => {
     try {
-      const response = await kitchenApi.updateKitchenItemStatus(itemId, status);
+      const response = await kitchenAPI.updateKitchenItemStatus(itemId, status);
       if (response.success) {
         const item = kitchenItems.value.find(i => i.id === itemId);
         if (item) {

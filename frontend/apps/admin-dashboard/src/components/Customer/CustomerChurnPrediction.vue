@@ -797,7 +797,7 @@ onMounted(() => {
           gap: $spacing-4;
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
           transition: all 0.3s;
 
@@ -873,7 +873,7 @@ onMounted(() => {
         .factor-chart {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
 
           .chart-title {
@@ -952,7 +952,7 @@ onMounted(() => {
           .intervention-item {
             padding: $spacing-4;
             background: $white;
-            border: 1px solid $border-color;
+            border: 1px solid $border-base;
             border-radius: $border-radius-md;
 
             .intervention-header {

@@ -797,7 +797,7 @@ onMounted(() => {
         .rfm-metric {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
 
           .metric-header {
@@ -886,7 +886,7 @@ onMounted(() => {
         .segment-card {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
           margin-bottom: $spacing-4;
           transition: all 0.3s;
@@ -952,7 +952,7 @@ onMounted(() => {
         .analysis-chart {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
 
           .chart-title {

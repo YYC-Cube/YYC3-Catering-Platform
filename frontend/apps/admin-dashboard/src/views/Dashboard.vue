@@ -688,6 +688,8 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/variables.scss';
+
 .dashboard {
   padding: var(--spacing-lg);
   background-color: var(--background-color-secondary);

@@ -606,7 +606,7 @@ onMounted(() => {
         .stage-card {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
           margin-bottom: $spacing-4;
           transition: all 0.3s;
@@ -784,7 +784,7 @@ onMounted(() => {
             gap: $spacing-3;
             padding: $spacing-4;
             background: $white;
-            border: 1px solid $border-color;
+            border: 1px solid $border-base;
             border-radius: $border-radius-md;
             border-left: 4px solid;
 

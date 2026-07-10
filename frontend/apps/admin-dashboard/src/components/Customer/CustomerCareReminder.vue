@@ -976,7 +976,7 @@ onMounted(() => {
           gap: $spacing-4;
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
           transition: all 0.3s;
 

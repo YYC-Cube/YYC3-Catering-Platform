@@ -18,6 +18,7 @@ $info-light: #F4F4F5;
 $text-primary: #303133;
 $text-regular: #606266;
 $text-secondary: #909399;
+$text-tertiary: #a8abb2;
 $text-placeholder: #c0c4cc;
 
 // 扩展色彩
@@ -38,6 +39,7 @@ $border-extra-light: #f2f6fc;
 $bg-white: #ffffff;
 $bg-page: #f2f3f5;
 $bg-overlay: rgba(255, 255, 255, 0.9);
+$background-light: #f5f7fa;
 
 // 阴影
 $box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
@@ -57,6 +59,7 @@ $font-size-extra-large: 20px;
 $font-size-large: 18px;
 $font-size-medium: 16px;
 $font-size-base: 14px;
+$font-size-body: 14px;
 $font-size-small: 13px;
 $font-size-sm: 14px;
 $font-size-xs: 12px;
@@ -80,9 +83,11 @@ $spacing-mini: 4px;
 $border-radius-base: 4px;
 $border-radius-small: 2px;
 $border-radius-sm: 2px;
+$border-radius-md: 6px;
 $border-radius-large: 6px;
 $border-radius-lg: 6px;
 $border-radius-round: 20px;
+$border-radius-full: 9999px;
 
 // 动画
 $transition-base: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -119,17 +124,17 @@ $dark-text-secondary: #909399;
   --warning-color: $warning-color;
   --danger-color: $danger-color;
   --info-color: $info-color;
-  
+
   --text-primary: $text-primary;
   --text-regular: $text-regular;
   --text-secondary: $text-secondary;
   --text-placeholder: $text-placeholder;
-  
+
   --border-base: $border-base;
   --border-light: $border-light;
   --border-lighter: $border-lighter;
   --border-extra-light: $border-extra-light;
-  
+
   --bg-white: $bg-white;
   --bg-page: $bg-page;
   --bg-overlay: $bg-overlay;

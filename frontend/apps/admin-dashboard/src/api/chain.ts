@@ -7,7 +7,7 @@
  * @created 2025-01-20
  */
 
-import { httpClient } from '@/utils/http'
+import request from '@/utils/request'
 
 export enum StoreType {
   DIRECT = 'direct',
@@ -370,7 +370,7 @@ export class ChainAPI {
       if (params?.district) queryString.set('district', params.district)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/stores?${queryString}` : `${this.baseUrl}/stores`
-      const response = await httpClient.get<{ success: boolean; data: { items: Store[]; pagination: any }; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data: { items: Store[]; pagination: any }; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get stores failed:', error)
@@ -392,7 +392,7 @@ export class ChainAPI {
 
   async getStore(id: number): Promise<{ success: boolean; data?: Store; message?: string }> {
     try {
-      const response = await httpClient.get<{ success: boolean; data?: Store; message?: string }>(`${this.baseUrl}/stores/${id}`)
+      const response = await request.get<{ success: boolean; data?: Store; message?: string }>(`${this.baseUrl}/stores/${id}`)
       return response
     } catch (error) {
       console.error('Get store failed:', error)
@@ -405,7 +405,7 @@ export class ChainAPI {
 
   async createStore(storeData: CreateStoreRequest): Promise<{ success: boolean; data?: Store; message?: string }> {
     try {
-      const response = await httpClient.post<{ success: boolean; data?: Store; message?: string }>(`${this.baseUrl}/stores`, storeData)
+      const response = await request.post<{ success: boolean; data?: Store; message?: string }>(`${this.baseUrl}/stores`, storeData)
       return response
     } catch (error) {
       console.error('Create store failed:', error)
@@ -418,7 +418,7 @@ export class ChainAPI {
 
   async updateStore(id: number, storeData: UpdateStoreRequest): Promise<{ success: boolean; data?: Store; message?: string }> {
     try {
-      const response = await httpClient.put<{ success: boolean; data?: Store; message?: string }>(`${this.baseUrl}/stores/${id}`, storeData)
+      const response = await request.put<{ success: boolean; data?: Store; message?: string }>(`${this.baseUrl}/stores/${id}`, storeData)
       return response
     } catch (error) {
       console.error('Update store failed:', error)
@@ -431,7 +431,7 @@ export class ChainAPI {
 
   async deleteStore(id: number): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await httpClient.delete<{ success: boolean; message?: string }>(`${this.baseUrl}/stores/${id}`)
+      const response = await request.delete<{ success: boolean; message?: string }>(`${this.baseUrl}/stores/${id}`)
       return response
     } catch (error) {
       console.error('Delete store failed:', error)
@@ -444,7 +444,7 @@ export class ChainAPI {
 
   async updateStoreStatus(id: number, status: StoreStatus): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await httpClient.patch<{ success: boolean; message?: string }>(`${this.baseUrl}/stores/${id}/status`, { status })
+      const response = await request.patch<{ success: boolean; message?: string }>(`${this.baseUrl}/stores/${id}/status`, { status })
       return response
     } catch (error) {
       console.error('Update store status failed:', error)
@@ -462,7 +462,7 @@ export class ChainAPI {
       if (endDate) queryString.set('endDate', endDate)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/stores/${id}/stats?${queryString}` : `${this.baseUrl}/stores/${id}/stats`
-      const response = await httpClient.get<{ success: boolean; data?: StoreStats; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data?: StoreStats; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get store stats failed:', error)
@@ -485,7 +485,7 @@ export class ChainAPI {
       if (params?.status) queryString.set('status', params.status)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/employees?${queryString}` : `${this.baseUrl}/employees`
-      const response = await httpClient.get<{ success: boolean; data: { items: Employee[]; pagination: any }; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data: { items: Employee[]; pagination: any }; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get employees failed:', error)
@@ -507,7 +507,7 @@ export class ChainAPI {
 
   async getEmployee(id: number): Promise<{ success: boolean; data?: Employee; message?: string }> {
     try {
-      const response = await httpClient.get<{ success: boolean; data?: Employee; message?: string }>(`${this.baseUrl}/employees/${id}`)
+      const response = await request.get<{ success: boolean; data?: Employee; message?: string }>(`${this.baseUrl}/employees/${id}`)
       return response
     } catch (error) {
       console.error('Get employee failed:', error)
@@ -520,7 +520,7 @@ export class ChainAPI {
 
   async createEmployee(employeeData: CreateEmployeeRequest): Promise<{ success: boolean; data?: Employee; message?: string }> {
     try {
-      const response = await httpClient.post<{ success: boolean; data?: Employee; message?: string }>(`${this.baseUrl}/employees`, employeeData)
+      const response = await request.post<{ success: boolean; data?: Employee; message?: string }>(`${this.baseUrl}/employees`, employeeData)
       return response
     } catch (error) {
       console.error('Create employee failed:', error)
@@ -533,7 +533,7 @@ export class ChainAPI {
 
   async updateEmployee(id: number, employeeData: UpdateEmployeeRequest): Promise<{ success: boolean; data?: Employee; message?: string }> {
     try {
-      const response = await httpClient.put<{ success: boolean; data?: Employee; message?: string }>(`${this.baseUrl}/employees/${id}`, employeeData)
+      const response = await request.put<{ success: boolean; data?: Employee; message?: string }>(`${this.baseUrl}/employees/${id}`, employeeData)
       return response
     } catch (error) {
       console.error('Update employee failed:', error)
@@ -546,7 +546,7 @@ export class ChainAPI {
 
   async deleteEmployee(id: number): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await httpClient.delete<{ success: boolean; message?: string }>(`${this.baseUrl}/employees/${id}`)
+      const response = await request.delete<{ success: boolean; message?: string }>(`${this.baseUrl}/employees/${id}`)
       return response
     } catch (error) {
       console.error('Delete employee failed:', error)
@@ -559,7 +559,7 @@ export class ChainAPI {
 
   async transferEmployee(id: number, transferData: TransferEmployeeRequest): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await httpClient.post<{ success: boolean; message?: string }>(`${this.baseUrl}/employees/${id}/transfer`, transferData)
+      const response = await request.post<{ success: boolean; message?: string }>(`${this.baseUrl}/employees/${id}/transfer`, transferData)
       return response
     } catch (error) {
       console.error('Transfer employee failed:', error)
@@ -572,7 +572,7 @@ export class ChainAPI {
 
   async updateEmployeePermissions(id: number, permissions: string[]): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await httpClient.put<{ success: boolean; message?: string }>(`${this.baseUrl}/employees/${id}/permissions`, { permissions })
+      const response = await request.put<{ success: boolean; message?: string }>(`${this.baseUrl}/employees/${id}/permissions`, { permissions })
       return response
     } catch (error) {
       console.error('Update employee permissions failed:', error)
@@ -590,7 +590,7 @@ export class ChainAPI {
       if (endDate) queryString.set('endDate', endDate)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/employees/${id}/performance?${queryString}` : `${this.baseUrl}/employees/${id}/performance`
-      const response = await httpClient.get<{ success: boolean; data?: EmployeePerformance; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data?: EmployeePerformance; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get employee performance failed:', error)
@@ -612,7 +612,7 @@ export class ChainAPI {
       if (params?.status) queryString.set('status', params.status)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/inventory?${queryString}` : `${this.baseUrl}/inventory`
-      const response = await httpClient.get<{ success: boolean; data: { items: Inventory[]; pagination: any }; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data: { items: Inventory[]; pagination: any }; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get inventory failed:', error)
@@ -634,7 +634,7 @@ export class ChainAPI {
 
   async getInventoryItem(id: number): Promise<{ success: boolean; data?: Inventory; message?: string }> {
     try {
-      const response = await httpClient.get<{ success: boolean; data?: Inventory; message?: string }>(`${this.baseUrl}/inventory/${id}`)
+      const response = await request.get<{ success: boolean; data?: Inventory; message?: string }>(`${this.baseUrl}/inventory/${id}`)
       return response
     } catch (error) {
       console.error('Get inventory item failed:', error)
@@ -647,7 +647,7 @@ export class ChainAPI {
 
   async restockInventory(restockData: RestockInventoryRequest): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await httpClient.post<{ success: boolean; message?: string }>(`${this.baseUrl}/inventory/restock`, restockData)
+      const response = await request.post<{ success: boolean; message?: string }>(`${this.baseUrl}/inventory/restock`, restockData)
       return response
     } catch (error) {
       console.error('Restock inventory failed:', error)
@@ -660,7 +660,7 @@ export class ChainAPI {
 
   async transferInventory(transferData: TransferInventoryRequest): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await httpClient.post<{ success: boolean; message?: string }>(`${this.baseUrl}/inventory/transfer`, transferData)
+      const response = await request.post<{ success: boolean; message?: string }>(`${this.baseUrl}/inventory/transfer`, transferData)
       return response
     } catch (error) {
       console.error('Transfer inventory failed:', error)
@@ -673,7 +673,7 @@ export class ChainAPI {
 
   async checkInventory(checkData: CheckInventoryRequest): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await httpClient.post<{ success: boolean; message?: string }>(`${this.baseUrl}/inventory/check`, checkData)
+      const response = await request.post<{ success: boolean; message?: string }>(`${this.baseUrl}/inventory/check`, checkData)
       return response
     } catch (error) {
       console.error('Check inventory failed:', error)
@@ -690,7 +690,7 @@ export class ChainAPI {
       if (storeId) queryString.set('storeId', storeId.toString())
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/inventory/warnings?${queryString}` : `${this.baseUrl}/inventory/warnings`
-      const response = await httpClient.get<{ success: boolean; data: Inventory[]; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data: Inventory[]; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get inventory warnings failed:', error)
@@ -709,7 +709,7 @@ export class ChainAPI {
       if (endDate) queryString.set('endDate', endDate)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/stats/stores?${queryString}` : `${this.baseUrl}/stats/stores`
-      const response = await httpClient.get<{ success: boolean; data: StoreStats[]; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data: StoreStats[]; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get store stats overview failed:', error)
@@ -729,7 +729,7 @@ export class ChainAPI {
       if (endDate) queryString.set('endDate', endDate)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/stats/employees?${queryString}` : `${this.baseUrl}/stats/employees`
-      const response = await httpClient.get<{ success: boolean; data: EmployeePerformance[]; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data: EmployeePerformance[]; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get employee performance overview failed:', error)
@@ -750,7 +750,7 @@ export class ChainAPI {
       if (dimension) queryString.set('dimension', dimension)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/stats/revenue?${queryString}` : `${this.baseUrl}/stats/revenue`
-      const response = await httpClient.get<{ success: boolean; data: RevenueComparison[]; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data: RevenueComparison[]; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get revenue comparison failed:', error)
@@ -770,7 +770,7 @@ export class ChainAPI {
       if (endDate) queryString.set('endDate', endDate)
 
       const endpoint = queryString.toString() ? `${this.baseUrl}/stats/trends?${queryString}` : `${this.baseUrl}/stats/trends`
-      const response = await httpClient.get<{ success: boolean; data: TrendData[]; message?: string }>(endpoint)
+      const response = await request.get<{ success: boolean; data: TrendData[]; message?: string }>(endpoint)
       return response
     } catch (error) {
       console.error('Get trend analysis failed:', error)

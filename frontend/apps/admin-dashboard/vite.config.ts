@@ -4,12 +4,9 @@
  * @see AGENTS.md / docs/deployment.md (GitHub Pages 部署说明)
  */
 
-import { defineConfig, loadEnv } from 'vite'
-import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { resolve } from 'path'
+import { defineConfig, loadEnv } from 'vite'
 
 // GitHub Pages 部署:
 // - 使用自定义域名 cater.yyc3.vip → 从根路径提供, base = '/'
@@ -50,7 +47,7 @@ export default defineConfig(({ mode }) => ({
   css: {
     preprocessorOptions: {
       scss: {
-        // 移除自动导入，改为手动导入以避免变量冲突
+        // 不使用 additionalData;各组件按需 @use/@import 变量文件
       }
     },
     postcss: './postcss.config.js'

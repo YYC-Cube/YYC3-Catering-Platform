@@ -486,7 +486,7 @@ onMounted(() => {
       min-height: 500px;
 
       .category-tree {
-        border-right: 1px solid $border-color;
+        border-right: 1px solid $border-base;
         padding-right: $spacing-4;
 
         :deep(.el-tree) {

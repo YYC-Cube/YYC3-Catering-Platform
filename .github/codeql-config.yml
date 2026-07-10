@@ -21,6 +21,8 @@ paths-ignore:
   - archive
   - docs
 
-# 排除已知的废弃代码
+# 使用 security-and-quality 查询套件
+# 注意: +security-and-quality 仅适用于 javascript-typescript,
+#   actions 语言使用默认查询套件,不在此指定
 queries:
-  - uses: +security-and-quality
+  - uses: security-and-quality

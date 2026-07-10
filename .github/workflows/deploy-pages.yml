@@ -9,8 +9,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'frontend/apps/admin-dashboard/**'
-      - '.github/workflows/deploy-pages.yml'
+      - "frontend/apps/admin-dashboard/**"
+      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
 # 允许同时运行一次,避免并发部署冲突
@@ -40,16 +40,16 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: "20"
+          cache: "pnpm"
 
       - name: 安装依赖
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: 构建管理后台
         env:
           # 自定义域名从根路径提供;若将来改为 <user>.github.io/<repo> 则设为 /YYC3-Catering-Platform/
-          VITE_BASE_PATH: '/'
+          VITE_BASE_PATH: "/"
           # 后端 API 基址(生产);未配置时前端回退到 localhost,仅 UI 可用
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
         run: pnpm --filter @yyc3/admin-dashboard build

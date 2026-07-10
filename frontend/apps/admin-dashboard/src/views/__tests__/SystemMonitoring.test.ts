@@ -13,7 +13,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import SystemMonitoring from '@/views/SystemMonitoring.vue'
 import { systemMonitorAPI } from '@/api/system-monitor'
-import MetricChart from '@/components/Charts/MetricChart.vue'
+import MetricChart from '@/components/charts/MetricChart.vue'
 import AlertDetail from '@/components/System/AlertDetail.vue'
 import LogDetail from '@/components/System/LogDetail.vue'
 import AlertRuleForm from '@/components/System/AlertRuleForm.vue'
@@ -91,7 +91,7 @@ vi.mock('@/api/system-monitor', () => ({
   }
 }))
 
-vi.mock('@/components/Charts/MetricChart.vue', () => ({
+vi.mock('@/components/charts/MetricChart.vue', () => ({
   name: 'MetricChart',
   template: '<div class="metric-chart-mock"></div>',
   props: ['metric']

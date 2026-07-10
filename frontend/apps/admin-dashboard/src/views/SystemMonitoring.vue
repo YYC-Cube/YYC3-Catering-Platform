@@ -495,7 +495,7 @@ import {
   AlertSeverity,
   LogLevel
 } from '@/api/system-monitor'
-import MetricChart from '@/components/Charts/MetricChart.vue'
+import MetricChart from '@/components/charts/MetricChart.vue'
 import AlertDetail from '@/components/System/AlertDetail.vue'
 import LogDetail from '@/components/System/LogDetail.vue'
 import AlertRuleForm from '@/components/System/AlertRuleForm.vue'

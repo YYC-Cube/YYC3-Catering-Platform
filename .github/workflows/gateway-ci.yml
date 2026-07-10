@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend/gateway
-        run: bun install --frozen-lockfile
+        run: bun install --no-frozen-lockfile
 
       - name: Type check
         working-directory: ./backend/gateway
@@ -74,7 +74,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend/gateway
-        run: bun install --frozen-lockfile
+        run: bun install --no-frozen-lockfile
 
       - name: Create SonarQube report
         working-directory: ./backend/gateway
@@ -120,7 +120,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend/gateway
-        run: bun install --frozen-lockfile
+        run: bun install --no-frozen-lockfile
 
       - name: Run tests
         working-directory: ./backend/gateway

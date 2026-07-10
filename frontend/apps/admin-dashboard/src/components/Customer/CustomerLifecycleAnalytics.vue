@@ -672,7 +672,7 @@ onMounted(() => {
         .metric-card {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
           transition: all 0.3s;
 
@@ -742,7 +742,7 @@ onMounted(() => {
         .chart-container {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
 
           .chart-title {
@@ -765,7 +765,7 @@ onMounted(() => {
         .flow-chart {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
 
           .flow-title {
@@ -842,7 +842,7 @@ onMounted(() => {
         .conversion-metrics {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
 
           .metric-item {
@@ -901,7 +901,7 @@ onMounted(() => {
         .value-segment {
           padding: $spacing-4;
           background: $white;
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
 
           .segment-header {

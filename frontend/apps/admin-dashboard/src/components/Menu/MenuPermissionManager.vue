@@ -501,7 +501,7 @@ onMounted(() => {
       min-height: 600px;
 
       .role-section {
-        border-right: 1px solid $border-color;
+        border-right: 1px solid $border-base;
         padding-right: $spacing-4;
 
         h3 {

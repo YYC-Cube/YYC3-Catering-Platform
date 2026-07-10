@@ -690,7 +690,7 @@ onMounted(() => {
 
       .assigned-section {
         .staff-tasks {
-          border: 1px solid $border-color;
+          border: 1px solid $border-base;
           border-radius: $border-radius-md;
           padding: $spacing-2;
           margin-bottom: $spacing-2;
@@ -706,7 +706,7 @@ onMounted(() => {
             justify-content: space-between;
             align-items: center;
             padding-bottom: $spacing-2;
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid $border-base;
             margin-bottom: $spacing-2;
 
             .staff-info {

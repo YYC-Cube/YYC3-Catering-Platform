@@ -213,11 +213,12 @@
                 <el-dropdown @command="(cmd) => handleEmployeeAction(cmd, row)">
                   <el-button link type="primary" :icon="MoreFilled">更多</el-button>
                   <template #dropdown>
-                    <el-dropdown-item command="transfer">调店</el-dropdown-item>
-                    <el-dropdown-item command="performance">绩效</el-dropdown-item>
-                    <el-dropdown-item command="permissions">权限</el-dropdown-item>
-                    <el-dropdown-item command="delete" divided>删除</el-dropdown-item>
-                  </el-dropdown-menu>
+                    <el-dropdown-menu>
+                      <el-dropdown-item command="transfer">调店</el-dropdown-item>
+                      <el-dropdown-item command="performance">绩效</el-dropdown-item>
+                      <el-dropdown-item command="permissions">权限</el-dropdown-item>
+                      <el-dropdown-item command="delete" divided>删除</el-dropdown-item>
+                    </el-dropdown-menu>
                   </template>
                 </el-dropdown>
               </template>
@@ -308,9 +309,10 @@
                 <el-dropdown @command="(cmd) => handleInventoryAction(cmd, row)">
                   <el-button link type="primary" :icon="MoreFilled">更多</el-button>
                   <template #dropdown>
-                    <el-dropdown-item command="transfer">调拨</el-dropdown-item>
-                    <el-dropdown-item command="check">盘点</el-dropdown-item>
-                  </el-dropdown-menu>
+                    <el-dropdown-menu>
+                      <el-dropdown-item command="transfer">调拨</el-dropdown-item>
+                      <el-dropdown-item command="check">盘点</el-dropdown-item>
+                    </el-dropdown-menu>
                   </template>
                 </el-dropdown>
               </template>
@@ -859,7 +861,7 @@ onMounted(async () => {
   await loadInventory()
   await loadStoreStats()
   await loadEmployeePerformance()
-  
+
   await nextTick()
   initCharts()
 })

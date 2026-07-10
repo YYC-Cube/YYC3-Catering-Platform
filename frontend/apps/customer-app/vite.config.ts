@@ -33,7 +33,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import './src/styles/_shared.scss';`,
+        additionalData: `:root { --color-text-primary: #303133; --color-text-regular: #606266; --color-text-secondary: #909399; --color-primary: #409eff; --color-success: #67c23a; --color-warning: #e6a23c; --color-danger: #f56c6c; --color-info: #909399; --bg-color: #f5f7fa; --border-color: #e4e7ed; }`,
       },
     },
   },

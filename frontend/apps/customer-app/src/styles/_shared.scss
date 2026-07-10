@@ -1,5 +1,13 @@
-// 引入统一的设计令牌系统
-@import '@yyc3/ui-system/src/styles/design-tokens.scss';
-
-// 引入统一的全局样式
-@import '@yyc3/ui-system/src/styles/global.scss';
+// 设计令牌系统 (替代 @yyc3/ui-system，子模块未初始化)
+:root {
+  --color-text-primary: #303133;
+  --color-text-regular: #606266;
+  --color-text-secondary: #909399;
+  --color-primary: #409eff;
+  --color-success: #67c23a;
+  --color-warning: #e6a23c;
+  --color-danger: #f56c6c;
+  --color-info: #909399;
+  --bg-color: #f5f7fa;
+  --border-color: #e4e7ed;
+}

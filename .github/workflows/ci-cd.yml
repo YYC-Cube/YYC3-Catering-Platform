@@ -21,11 +21,11 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20'
           cache: 'pnpm'
       
       - name: 安装依赖
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       
       - name: 代码格式检查
         run: pnpm run format
@@ -53,11 +53,11 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20'
           cache: 'pnpm'
       
       - name: 安装依赖
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       
       - name: 运行测试获取覆盖率报告
         run: pnpm run test:coverage
@@ -89,11 +89,11 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20'
           cache: 'pnpm'
       
       - name: 安装依赖
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       
       - name: 运行单元测试
         run: pnpm run test:unit
@@ -122,11 +122,11 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20'
           cache: 'pnpm'
       
       - name: 安装依赖
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       
       - name: 构建后端
         run: pnpm run build:backend
@@ -153,11 +153,11 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20'
           cache: 'pnpm'
       
       - name: 安装依赖
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       
       - name: 构建前端
         run: pnpm run build:frontend
@@ -184,11 +184,11 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20'
           cache: 'pnpm'
       
       - name: 安装依赖
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       
       # 代码安全扫描
       - name: 安装安全扫描工具
@@ -237,7 +237,7 @@ jobs:
       url: https://dev.yyc3-catering.com
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Helm
         uses: azure/setup-helm@v3
@@ -327,7 +327,7 @@ jobs:
       url: https://api.yyc3-catering.com
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Helm
         uses: azure/setup-helm@v3

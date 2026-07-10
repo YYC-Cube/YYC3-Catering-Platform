@@ -1,6 +1,7 @@
 <div align="center">
 
-<img src="pulibc/yyc3-article-cover-3.png" alt="YYC³ 餐饮行业智能化平台" width="100%">
+<img src="public/Family-001.png"
+alt="YYC³ 餐饮行业智能化平台" width="100%">
 
 </div>
 

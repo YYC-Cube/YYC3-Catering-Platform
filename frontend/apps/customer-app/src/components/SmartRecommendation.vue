@@ -10,16 +10,16 @@
 
 <script setup lang="ts">
 interface Recommendation {
-  id: string
-  name: string
-  reason: string
+  id: string;
+  name: string;
+  reason: string;
 }
 
 defineProps<{
-  recommendations: Recommendation[]
-}>()
+  recommendations: Recommendation[];
+}>();
 
 defineEmits<{
-  dismiss: []
-}>()
+  dismiss: [];
+}>();
 </script>

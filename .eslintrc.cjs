@@ -30,6 +30,7 @@ module.exports = {
     'frontend',
     'backend',
     // 忽略旧的类型定义文件
+    'types/**/*.d.ts',
     'types/unified.d.ts',
     'types/global.d.ts',
     'types/api-versioning.d.ts',
